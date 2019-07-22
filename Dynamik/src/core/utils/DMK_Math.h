@@ -3,10 +3,10 @@
 /*
  Math library for the Dynamik Engine.
 
- Author:	Dhiraj Wishal & Chamindu Abeysekera
- Date:		28/6/2019 (IN PROGRESS)
- IDE:		MS VS 2019/ MS VS Code
+ Author:	Dhiraj Wishal
  Project:	Dynamik Engine
+ Date:		--/--/----
+ IDE:		MS Visual Studio Community 2019
 
  DMK_Math.h file.
 */

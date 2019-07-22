@@ -1,5 +1,15 @@
 #pragma once
 
+/*
+ Private data types for Dynamik
+
+ Author:	Dhiraj Wishal
+ Project:	Dynamik Engine
+ Date:		--/--/----
+ IDE:		MS Visual Studio Community 2019
+
+*/
+
 namespace Dynamik {
 
 	typedef signed char			int8;

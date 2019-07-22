@@ -2,9 +2,9 @@
 
 // ----------
  Author:	Dhiraj Wishal, Chamindu Abeysekera
- Date:		15/06/2019	(DEVELOPMENTS ONGOING)
- IDE:		MS Visual Studio 2019
  Project:	Dynamik Engine
+ Date:		15/06/2019	(DEVELOPMENTS ONGOING)
+ IDE:		MS Visual Studio Community 2019
 
  architecture.txt file.
 // ----------

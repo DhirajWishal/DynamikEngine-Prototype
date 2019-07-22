@@ -5,9 +5,9 @@
  GameObject data type for Dynamik Engine
 
  Author:	Dhiraj Wishal
- Date:		19/06/2019 (IN PROGRESS)
- IDE:		MS Visual Studio 2019
  Project:	Dynamik Engine
+ Date:		19/06/2019	(DEVELOPMENTS ONGOING)
+ IDE:		MS Visual Studio Community 2019
 
  GameObject.cpp file.
  */

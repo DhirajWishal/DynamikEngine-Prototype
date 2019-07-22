@@ -4,9 +4,9 @@
  Dynamik Engine main header.
 
  Author:	Dhiraj Wishal
- Date:		15/06/2019	(DEVELOPMENTS ONGOING)
- IDE:		MS Visual Studio 2019
  Project:	Dynamik Engine
+ Date:		15/6/2019	(DEVELOPMENTS ONGOING)
+ IDE:		MS Visual Studio Community 2019
 
  Dynamik.h file.
 */

@@ -1,3 +1,12 @@
+/*
+ Main application file.
+
+ Author:	Dhiraj Wishal
+ Project:	Dynamik Engine
+ Date:		--/--/----
+ IDE:		MS Visual Studio Community 2019
+*/
+
 #include <Dynamik.h>
 
 class Engine : public Dynamik::Application {

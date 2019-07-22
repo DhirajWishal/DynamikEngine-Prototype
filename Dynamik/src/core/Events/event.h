@@ -2,7 +2,11 @@
 
 /*
  - Event System -
- Dynamik Engine
+
+ Author:	Dhiraj Wishal
+ Project:	Dynamik Engine
+ Date:		--/--/----
+ IDE:		MS Visual Studio Community 2019
 
  @Reference: The Cherno Project: Hazel Engine(Game engine series)
 */

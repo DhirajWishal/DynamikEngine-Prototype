@@ -78,4 +78,7 @@
   <ItemGroup>
     <None Include="architecture.txt" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="IMPORTANT.txt" />
+  </ItemGroup>
 </Project>

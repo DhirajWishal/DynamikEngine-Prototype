@@ -2,6 +2,11 @@
 /*
  Dynamik Engine (Pre-build)
  Entry Point
+
+ Author:	Dhiraj Wishal
+ Project:	Dynamik Engine
+ Date:		--/--/----
+ IDE:		MS Visual Studio Community 2019
 */
 
 

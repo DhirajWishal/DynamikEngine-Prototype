@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="GameLibraries">
+      <UniqueIdentifier>{BC96F661-2857-7298-F191-BB155D11B774}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameLibraries\GameObject">
+      <UniqueIdentifier>{BC23F27B-A848-41FC-D193-268CBD17401A}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameLibraries\GameObject\utils">
+      <UniqueIdentifier>{3C12AE5D-2838-78C4-117E-FD8FFD429D90}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src">
+      <UniqueIdentifier>{2DAB880B-99B4-887C-2230-9F7C8E38947C}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\core">
+      <UniqueIdentifier>{C55F2ECF-B12C-89DA-DA45-7782C671BE68}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\core\Events">
+      <UniqueIdentifier>{09FC8B37-7587-F9FB-7E98-7CF0EAA255FC}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="GameLibraries\GameObject\GameObject.h">
+      <Filter>GameLibraries\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Dynamik.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Events\applicationEvent.h">
+      <Filter>src\core\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Events\event.h">
+      <Filter>src\core\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Events\keyEvent.h">
+      <Filter>src\core\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Events\mouseEvent.h">
+      <Filter>src\core\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\application.h">
+      <Filter>src\core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\entryPoint.h">
+      <Filter>src\core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\log.h">
+      <Filter>src\core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\dmkafx.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\utils\DMK_Error.h" />
+    <ClInclude Include="src\core\utils\DMK_DataTypes.h" />
+    <ClInclude Include="src\core\utils\safeLock.h" />
+    <ClInclude Include="src\core\core.h">
+      <Filter>src\core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\utils\DMK_Math.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="GameLibraries\GameObject\GameObject.cpp">
+      <Filter>GameLibraries\GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\application.cpp">
+      <Filter>src\core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\log.cpp">
+      <Filter>src\core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\dmkafx.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\utils\safeLock.cpp" />
+    <ClCompile Include="src\core\utils\DMK_Math.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="architecture.txt" />
+  </ItemGroup>
+</Project>

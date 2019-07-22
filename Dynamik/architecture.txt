@@ -1,0 +1,92 @@
+---------- ########## ////////// DYNAMIK ENGINE \\\\\\\\\\ ########## ----------
+
+// ----------
+ Author:	Dhiraj Wishal, Chamindu Abeysekera
+ Date:		15/06/2019	(DEVELOPMENTS ONGOING)
+ IDE:		MS Visual Studio 2019
+ Project:	Dynamik Engine
+
+ architecture.txt file.
+// ----------
+
+Basic Game Engine Components:
+Graphics Engine
+Audio Engine
+Rendering & Vision-Input Engine
+I/O Devices
+DLL files and Drivers/Device APIs
+
+---------- ########## ////////// ********** \\\\\\\\\\ ########## ----------
+Runtime Engine Architecture	(Game Engine Architecture)
+
+Main Components:
+Target Hardware	(Computer system or console which the game will run on: PC, Phones, Playstations)
+Device Drivers
+OS	(Windows, MacOS, Linux, Android, iOS)
+Third Party SDKs	- OpenGL, Vulkan, DirectX	(Graphics)
+					- Havoc, PhysX, ODE	(Physics)
+					- Boost, Folly, Kynapse, Granny, Euphoria	(Algorithms & Resource Management)
+					* Data Structures
+					* Graphics
+					* Collision and Physics
+					* Character Animations
+					* Biomechanical Character Models
+Platform Independent Layer	("wrap" the software for Cross-Platform Support)
+							- Platform Detection
+							- Atomic Data types
+							- Collections and Iterations
+							- File Systems
+							- Networking
+							- Hi-Res Timer
+							- Threading Library
+							- Graphics Wrapper
+							- Physics/ Collition Wrapper
+Core Systems	(All main functionalities- codes)
+				- Assertions
+				- Memory Management
+				- Math Library (Private library or GLM)
+				- Custom Data structures and Algorithms
+Resource Manager	- 3D Modules
+					- Texture Resource
+					- Material Resource
+					- Font Resource
+					- Skeleton Resource
+					- Collision Resource
+					- Physics Parameters
+					- Game World/ Map
+Rendering Engine	- Low-Level Renderer
+					- Graphics Device Interface
+					- Other Rendering Components
+					- Scene Graph/ Culling Optimizations
+					- Visual Effects and Partical Effects
+					- Front End
+Profiling and Debugging tools	- Intel VTune
+								- IBM Qualtify & Purify
+								- Insure++
+								- Valgrind
+Collision and Physics	- Rigid Body Dynamics
+Animation	- Sprite/ Texture Animations
+			- Rigid Body Hierarchy Animations
+			- Skeletal Animations
+			- Vertex Animations
+			- Morph Animations
+Human Interface Devices	- Keyboard
+						- Mouse
+						- Joypad
+						- Specialized controllers
+Audio Engine
+Online Multiplayer/ Networking	- Single-screen Multiplayer
+								- Split-screen Multiplayer
+								- Networked Multiplayer
+								- Massively Multiplayer Online Games (MMOG)
+Gameplay Foundation Systems	- Game World and Object Models
+							- Event System
+							- Scrypting System
+							- AI Foundations
+Game Specific Systems	- Weapons, Powerups, Vehicles, Puzzles
+						- Game Specific Rendering
+						- Player Mechanics
+						- Game Cameras
+						- AI (Decision Making, Actions, Path Finding(A*))
+
+---------- ########## ////////// DYNAMIK ENGINE- ENGINE ARCHITECTURE \\\\\\\\\\ ########## ----------

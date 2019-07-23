@@ -18,25 +18,29 @@ namespace Dynamik {
 	// GameObject(objName, path, xPos, yPos, zPos);  
 	GameObject::GameObject(std::string name, std::string path, float x, float y, float z) {
 		myName = name;
-		objFile.open(path, std::ios::in);
 		TRFM->myPosition[TRFM->X] = x;
 		TRFM->myPosition[TRFM->Y] = y;
 		TRFM->myPosition[TRFM->Z] = z;
 
-		if (!objFile.is_open())
-			ERROR_DEFINE("The specified file is unavailable.");	// ERROR: The specified file is unavailable.
+		if (path != "NONE") {
+			objFile.open(path, std::ios::in);
+			if (!objFile.is_open())
+				ERROR_DEFINE("The specified file is unavailable.");	// ERROR: The specified file is unavailable.
+		}
 	}
 
 	// GameObject("objName", "path", xPos, yPos, zPos);  
 	GameObject::GameObject(const char* name, const  char* path, float x, float y, float z) {
 		myName = name;
-		objFile.open(path, std::ios::in);
 		TRFM->myPosition[TRFM->X] = x;
 		TRFM->myPosition[TRFM->Y] = y;
 		TRFM->myPosition[TRFM->Z] = z;
 
-		if (!objFile.is_open())
-			ERROR_DEFINE("The specified file is unavailable.");	// ERROR: The specified file is unavailable.
+		if (path != "NONE") {
+			objFile.open(path, std::ios::in);
+			if (!objFile.is_open())
+				ERROR_DEFINE("The specified file is unavailable.");	// ERROR: The specified file is unavailable.
+		}
 	}
 
 	// GameObject distructor  

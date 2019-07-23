@@ -1,0 +1,152 @@
+// ----------
+
+Author(s):	Dhiraj Wishal, Chamindu Abeysekera
+Project:	Dynamik Engine
+Date:		--/--/----
+IDE:		MS Visual Studio Community 2019, MS Visual Studio Code
+
+Developer Team:
+* Dhiraj Wishal
+* Chamindu Abeysekera
+* Helitha Senarathne
+
+Dynamik Engine Architecture.txt file.
+
+// ----------
+
+---------- ########## ////////// DYNAMIK ENGINE- IN DEPTH \\\\\\\\\\ ########## ----------
+
+Dynamik Engine	- Launcher
+				- Engine
+
+# The Launcher activates the Game Engine.
+# Any modification to the engine (non-developer) can be done through the Launcher with 
+  the Dynamik API.
+# The Laucher and the Engine has its own windows. The Engine's window will get initialized 
+  once the user activates the Game Engine. 
+
+ _________________________________________________________ 
+| GAME ENGINE                                             |
+|  ________________________  ___________________________  |
+| |                        ||                           | |
+| |                        ||                           | |
+| |                        ||                           | |
+| |                        ||                           | |
+| |       LAUNCHER         ||          ENGINE           | |
+| |                        ||                           | |
+| |                        ||                           | |
+| |                        ||                           | |
+| |________________________||___________________________| |
+|_________________________________________________________|
+
+ __________________________________________________________
+|                                                          |
+|                                                          |
+|                        ENGINE                            |
+|                                                          |
+|__________________________________________________________|
+|                                                          |
+|                       LAUNCHER                           |
+|__________________________________________________________|
+
+
+ ---------- Launcher ----------
+The first program to run in the engine. This contains,
+* Games
+* Market
+* Settings
+* Studio (World Creator)
+* Launcher and Engine settings
+* Login
+* Engine API
+* Network Client
+* Database
+* Developer Tools (Dev mode)
+
+---------- Engine ----------
+The engine is the second program which is loaded by the Launcher. The engine contains the 
+code necessary to run the game. The engine contains,
+* Advanced Dynamic Graphics Renderer (ADGR)
+* Physics Engine (PhysiX by NVIDIA)
+* Memory Management
+* Resource Management
+* AI Engine
+* Player Mechanics
+* Custom Data Structures
+* Custom Data Types
+* Human Interface Device Management
+* Game specific Menus and Settings
+* Console
+* File Management
+* Audio Engine
+* Device Drivers
+* Event System
+
+---------- Engine- Advanced Dynamic Graphics Renderer ----------
+The ADGR contains two main components.
+* Core
+* Renderer
+
+
+ __________________          ____________________________________               ____________________
+|                  |        |                                    |             |                    |
+|                  |        |               CORE                 | ----------> |      DISPLAY       |
+|                  |        |____________________________________|             |____________________|
+|    GAME ENGINE   |        |                                    |
+|                  | -----> |             RENDERER               |            
+|                  | <----- |                                    |
+|__________________|        |____________________________________| 
+
+
+ADGR- Core:
+* Graphics Pipeline
+* Shaders
+* Swapchain
+* Framebuffers
+* Third-party SDKs (Vulkan, OpenGL)
+* Rendering modes (Game, Video, Image)
+* Window creation
+
+# The Core cannot be re-programmed. Only certain values can be tweaked with the ADGR API.
+# Data can only be passed to the Core by the Renderer layer.
+
+ADGR- Renderer:
+* Dynamic Wind
+* Dynamic Lighting (Ray tracing)
+* Shader compilation
+* Buffers (Index, Vertex)
+* Texture Management
+* Mesh Managemant
+* Physics Engine Sync.
+* Audio Engine Sync.
+* ADGR API
+* Custom Data Structures
+* Transformations
+* Renderer math
+
+# The Game Engine interacts only with the Renderer layer. This layer has the authority to tweak the 
+  Core.
+# Video Player, Image Viewer, Gameplay/ Camera Angles are initialized in this layer.
+
+---------- Engine- Memory Management ----------
+Heap Allocation:
+The Memory Manager of the Dynamik Engine utilizes the Double-buffered Stack Allocator. Custom
+Data Types are also defined here.
+
+
+ ____________________________________________________________________________________________
+|                              |                                 |                           |
+|                              |                                 |                           |
+|           LOWER              | ----->                   <----- |           UPPER           |
+|                              |                                 |                           |
+|______________________________|_________________________________|___________________________|
+High index pointers                                                         Low index pointers
+
+
+Defragmentation:
+Uses the Shift Allocation technique. In this way, in the lower bound stack, the "in use" blocks of
+memory gets shifted to the higher index, and the upper bound stack the "in use" blocks of memory 
+gets shifted to the lower index. This way empty blocks get moved to the middle where free blocks
+are located.
+
+---------- ########## ////////// DYNAMIK ENGINE- ENGINE ARCHITECTURE \\\\\\\\\\ ########## ----------

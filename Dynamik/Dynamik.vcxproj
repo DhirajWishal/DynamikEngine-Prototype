@@ -9,8 +9,8 @@
       <Configuration>Release</Configuration>
       <Platform>x64</Platform>
     </ProjectConfiguration>
-    <ProjectConfiguration Include="Distrib|x64">
-      <Configuration>Distrib</Configuration>
+    <ProjectConfiguration Include="Distribution|x64">
+      <Configuration>Distribution</Configuration>
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
@@ -20,7 +20,6 @@
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>Dynamik</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
-    <ProjectName>Dynamik</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
@@ -35,7 +34,7 @@
     <CharacterSet>Unicode</CharacterSet>
     <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Distrib|x64'" Label="Configuration">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Distribution|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
@@ -50,7 +49,7 @@
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
-  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Distrib|x64'">
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Distribution|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
@@ -68,10 +67,10 @@
     <TargetName>Dynamik</TargetName>
     <TargetExt>.dll</TargetExt>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Distrib|x64'">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Distribution|x64'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(SolutionDir)bin\$(Configuration)-$(Platform)\$(ProjectName)\</OutDir>
-    <IntDir>$(SolutionDir)intDir\$(Configuration)-$(Platform)\$(ProjectName)\Distrib\Dynamik\</IntDir>
+    <IntDir>$(SolutionDir)intDir\$(Configuration)-$(Platform)\$(ProjectName)\Distribution\Dynamik\</IntDir>
     <TargetName>Dynamik</TargetName>
     <TargetExt>.dll</TargetExt>
   </PropertyGroup>
@@ -121,12 +120,12 @@
       <Command>IF EXIST $(SolutionDir)bin\$(Configuration)-$(Platform)Dynamik\Dynamik.dll\ (xcopy /Q /E /Y /I $(SolutionDir)bin\$(Configuration)-$(Platform)Dynamik\Dynamik.dll $(SolutionDir)bin\$(Configuration)-$(Platform)Application &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)bin\$(Configuration)-$(Platform)Dynamik\Dynamik.dll $(SolutionDir)bin\$(Configuration)-$(Platform)Application &gt; nul)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Distrib|x64'">
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Distribution|x64'">
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>dmkafx.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>DMK_PLATFORM_WINDOWS;DMK_BUILD_DLL;_WINDLL;GLFW_INCLUDE_NONE;DMK_distrib;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>DMK_PLATFORM_WINDOWS;DMK_BUILD_DLL;_WINDLL;GLFW_INCLUDE_NONE;DMK_DISTRIBUTION;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(SolutionDir)libs;$(SolutionDir)Dynamik\src;$(SolutionDir)Dynamik\GameLibraries;$(SolutionDir)libs\GLFW\include;$(SolutionDir)libs\Glad\include;$(SolutionDir)libs\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -147,11 +146,7 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="src\core\utils\DMK_Math.h" />
     <ClInclude Include="GameLibraries\GameObject\GameObject.h" />
-    <ClInclude Include="src\core\utils\safeLock.h" />
-    <ClInclude Include="src\core\utils\DMK_DataTypes.h" />
-    <ClInclude Include="src\core\utils\DMK_Error.h" />
     <ClInclude Include="src\Dynamik.h" />
     <ClInclude Include="src\core\Events\applicationEvent.h" />
     <ClInclude Include="src\core\Events\event.h" />
@@ -161,23 +156,21 @@
     <ClInclude Include="src\core\core.h" />
     <ClInclude Include="src\core\entryPoint.h" />
     <ClInclude Include="src\core\log.h" />
+    <ClInclude Include="src\core\utils\DMK_DataTypes.h" />
+    <ClInclude Include="src\core\utils\DMK_Error.h" />
+    <ClInclude Include="src\core\utils\DMK_Math.h" />
+    <ClInclude Include="src\core\utils\safeLock.h" />
     <ClInclude Include="src\dmkafx.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\core\utils\DMK_Math.cpp" />
     <ClCompile Include="GameLibraries\GameObject\GameObject.cpp" />
-    <ClCompile Include="src\core\utils\safeLock.cpp" />
     <ClCompile Include="src\core\application.cpp" />
     <ClCompile Include="src\core\log.cpp" />
+    <ClCompile Include="src\core\utils\DMK_Math.cpp" />
+    <ClCompile Include="src\core\utils\safeLock.cpp" />
     <ClCompile Include="src\dmkafx.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="architecture.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="IMPORTANT.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

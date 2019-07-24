@@ -331,3 +331,5 @@ ASALocalRun/
 
 # Other Files
 *gitUpload.bat
+bin/
+backup/

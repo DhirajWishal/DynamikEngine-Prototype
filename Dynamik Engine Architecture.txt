@@ -1,6 +1,6 @@
 // ----------
 
-Author(s):	Dhiraj Wishal, Chamindu Abeysekera
+Author(s):	Dhiraj Wishal
 Project:	Dynamik Engine
 Date:		--/--/----
 IDE:		MS Visual Studio Community 2019, MS Visual Studio Code
@@ -8,7 +8,7 @@ IDE:		MS Visual Studio Community 2019, MS Visual Studio Code
 Developer Team:
 * Dhiraj Wishal
 * Chamindu Abeysekera
-* Helitha Senarathne
+* Helitha Senaratne
 
 Dynamik Engine Architecture.txt file.
 

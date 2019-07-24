@@ -67,6 +67,46 @@ The first program to run in the engine. This contains,
 * Database
 * Developer Tools (Dev mode)
 
+---------- Launcher- Basic load ups ----------
+After the user launches the Launcher App, the first screen the user will get promped is the Login
+screen. Here the user can either enter the Login details and continue with the experience or 
+create a new account to proceed. After the user has successfully logged in, the user has a big
+menu consisting of the Game window, Market, Studio and the Settings Menu. The Launcher also should 
+consist with an option to get to the About window.
+Inorder to start the Engine, the user must first select a game or must hit the "Run" option in the
+Studio. These are the only two places where the user can activate the Engine.
+
+@ The user does no have the authority to start the Engine. Only the engine is capable to do so.
+@ The Launcher must have its own Audio Engine if any audio playback is required.
+
+The Game Engine settings will only be altered by the Launcher and the changed must be made in the
+Game Engine. The Launcher also will manage the user database.
+
+---------- Launcher- Main Menu ----------
+The Main Menu gives easy access to the user with the other services supported by the Launcher (Eg:
+Studio). The Menu must also be colourful and visually pleasing.
+
+---------- Launcher- Studio ----------
+Studio is one of the biggest components of the Launcher App. It consists of,
+* Simmulated World
+* File systems
+* Scriptors and Script Interpreters
+* Assets handler
+* World Editor tools
+* Game Engine Tools
+* L2E (Launcher-to-Engine) Command line
+* Shader Compilers
+* Debugging Tools
+* Performance Profilers
+
+The Studio will also have a "Run" option where it would activate the Engine and run the current
+scene in real time.
+
+---------- Launcher- Settings Menu ----------
+The Settings Menu consists of options to manipulate both Launcher and Engine settings. The settings menu
+must have different sub menus for different major components (Eg: Engine: Brightness, Audio Volume.. 
+Launcher: Brightness, Editor Theme..)
+
 ---------- Engine ----------
 The engine is the second program which is loaded by the Launcher. The engine contains the 
 code necessary to run the game. The engine contains,

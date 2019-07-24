@@ -94,8 +94,8 @@ project "Application"
 	kind "ConsoleApp"
 	language "C++"
 
-	targetdir ("$(SolutionDir)bin/" .. outputDir .. "/$(ProjectName)")
-	objdir ("$(SolutionDir)intDir/" .. outputDir .. "/$(ProjectName)")
+	targetdir ("$(SolutionDir)bin/" .. outputDir .. "/$(ProjectName)-bin")
+	objdir ("$(SolutionDir)intDir/" .. outputDir .. "/$(ProjectName)-obj")
 
 	files {
 		"Application/src/**.h",

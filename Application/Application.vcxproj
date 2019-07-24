@@ -55,22 +55,22 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <OutDir>$(SolutionDir)bin\$(Configuration)-$(Platform)\$(ProjectName)\</OutDir>
-    <IntDir>$(SolutionDir)intDir\$(Configuration)-$(Platform)\$(ProjectName)\Debug\Application\</IntDir>
+    <OutDir>$(SolutionDir)bin\$(Configuration)-$(Platform)\$(ProjectName)-bin\</OutDir>
+    <IntDir>$(SolutionDir)intDir\$(Configuration)-$(Platform)\$(ProjectName)-obj\Debug\</IntDir>
     <TargetName>Application</TargetName>
     <TargetExt>.exe</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <OutDir>$(SolutionDir)bin\$(Configuration)-$(Platform)\$(ProjectName)\</OutDir>
-    <IntDir>$(SolutionDir)intDir\$(Configuration)-$(Platform)\$(ProjectName)\Release\Application\</IntDir>
+    <OutDir>$(SolutionDir)bin\$(Configuration)-$(Platform)\$(ProjectName)-bin\</OutDir>
+    <IntDir>$(SolutionDir)intDir\$(Configuration)-$(Platform)\$(ProjectName)-obj\Release\</IntDir>
     <TargetName>Application</TargetName>
     <TargetExt>.exe</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Distribution|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <OutDir>$(SolutionDir)bin\$(Configuration)-$(Platform)\$(ProjectName)\</OutDir>
-    <IntDir>$(SolutionDir)intDir\$(Configuration)-$(Platform)\$(ProjectName)\Distribution\Application\</IntDir>
+    <OutDir>$(SolutionDir)bin\$(Configuration)-$(Platform)\$(ProjectName)-bin\</OutDir>
+    <IntDir>$(SolutionDir)intDir\$(Configuration)-$(Platform)\$(ProjectName)-obj\Distribution\</IntDir>
     <TargetName>Application</TargetName>
     <TargetExt>.exe</TargetExt>
   </PropertyGroup>

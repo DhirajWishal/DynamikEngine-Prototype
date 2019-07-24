@@ -19,7 +19,8 @@ IncludeDir = {}
 IncludeDir["GLFW"] = "$(SolutionDir)libs/GLFW/include"
 IncludeDir["Glad"] = "$(SolutionDir)libs/Glad/include"
 IncludeDir["glm"] = "$(SolutionDir)libs/glm"
---IncludeDir["Vulkan"] = "E:\Programming\Codes\Game Development\Libraries\VulkanSDK\1.1.108.0\Include"	--Include the Vulkan SDK Include path here
+--IncludeDir["Vulkan"] = "E:\Programming\Codes\Game Development\Libraries\VulkanSDK\1.1.108.0\Include"	
+--Include the Vulkan SDK Include path here
 
 project "Dynamik"
 	location "Dynamik"
@@ -112,6 +113,51 @@ project "Application"
 
 	filter "system:windows"
 		cppdialect "C++17"
+		staticruntime "On"
+		systemversion "latest"
+
+		defines {
+			"DMK_PLATFORM_WINDOWS",
+		}
+
+	filter "configurations:Debug"
+		defines "DMK_DEBUG"
+		symbols "On"
+		
+	filter "configurations:Release"
+		defines "DMK_RELEASE"
+		optimize "On"
+
+	filter "configurations:Distrib"
+		defines "DMK_distrib"
+		optimize "On"
+
+project "Launcher"
+	location "Launcher"
+	kind "ConsoleApp"
+	language "C#"
+
+	targetdir ("$(SolutionDir)bin/" .. outputDir .. "/$(ProjectName)")
+	objdir ("$(SolutionDir)intDir/" .. outputDir .. "/$(ProjectName)")
+
+	files {
+		"Launcher/src/**.h",
+		"Launcher/src/**.cpp"
+	}
+
+	includedirs {
+		"$(SolutionDir)libs",
+		"$(SolutionDir)Dynamik/src",
+		"$(SolutionDir)Dynamik/GameLibraries",
+		"$(SolutionDir)lib/libs"
+	}
+
+	links {
+		"Dynamik"
+	}
+
+	filter "system:windows"
+		--cppdialect "C++17"
 		staticruntime "On"
 		systemversion "latest"
 

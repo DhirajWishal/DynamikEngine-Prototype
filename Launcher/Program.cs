@@ -1,4 +1,15 @@
-﻿using System;
+﻿/*
+ * Main Launcher File.
+ * 
+ * Author:  Helitha Senaratne
+ * Project: Dynamik Engine
+ * Date:    --/--/----
+ * IDE:     MS Visual Studio Community 2019
+ * 
+ * Program.cs file.
+ */
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;

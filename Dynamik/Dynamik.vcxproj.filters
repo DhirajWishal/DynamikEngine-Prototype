@@ -87,4 +87,8 @@
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="IMPORTANT.txt" />
+    <None Include="architecture.txt" />
+  </ItemGroup>
 </Project>

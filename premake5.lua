@@ -36,6 +36,7 @@ project "Dynamik"
 	pchsource "Dynamik/src/dmkafx.cpp"
 
 	files {
+		"Dynamik/**.txt",
 		"Dynamik/src/**.h",
 		"Dynamik/src/**.cpp",
 		"Dynamik/src/**.txt",
@@ -145,6 +146,20 @@ project "Launcher"
 	files {
 		"Launcher/**.cs",
 		"Launcher/**.config"
+	}
+	
+	links {
+		"Microsoft.CSharp",
+		"System",
+		"System.Core",
+		"System.Data",
+		"System.Data.DataSetExtensions",
+		"System.Deployment",
+		"System.Drawing",
+		"System.Net.Http",
+		"System.Windows.Forms",
+		"System.Xml",
+		"System.Xml.Linq"
 	}
 
 	filter "system:windows"

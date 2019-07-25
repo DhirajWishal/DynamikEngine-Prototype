@@ -181,10 +181,10 @@ Data Types are also defined here.
  ____________________________________________________________________________________________
 |                              |                                 |                           |
 |                              |                                 |                           |
-|           LOWER              | ----->                   <----- |           UPPER           |
+|           LOWER              | ----->                   <----- |          HIGHER           |
 |                              |                                 |                           |
 |______________________________|_________________________________|___________________________|
-High index pointers                                                         Low index pointers
+Low index pointers                                                         High index pointers
 
 
 Defragmentation:

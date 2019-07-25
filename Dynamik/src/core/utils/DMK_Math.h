@@ -14,7 +14,8 @@
 #include "DMK_DataTypes.h"
 
 namespace Dynamik {
-
-	// to the (=)pow(base, exponent);
-	int64 pow(int32 base, int16 exp);
+	namespace utils {
+		// to the (=)pow(base, exponent);
+		int64 pow(int32 base, int16 exp);
+	}
 }

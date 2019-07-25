@@ -54,20 +54,7 @@ Dynamik Engine	- Launcher
 |_________________|
 
 
- ---------- Launcher ----------
-The first program to run in the engine. This contains,
-* Games
-* Market
-* Settings
-* Studio (World Creator)
-* Launcher and Engine settings
-* Login
-* Engine API
-* Network Client
-* Database
-* Developer Tools (Dev mode)
-
----------- Launcher- Basic load ups ----------
+ ---------- Launcher- Basic load ups ----------
 After the user launches the Launcher App, the first screen the user will get promped is the Login
 screen. Here the user can either enter the Login details and continue with the experience or 
 create a new account to proceed. After the user has successfully logged in, the user has a big
@@ -181,10 +168,10 @@ Data Types are also defined here.
  ____________________________________________________________________________________________
 |                              |                                 |                           |
 |                              |                                 |                           |
-|           LOWER              | ----->                   <----- |           UPPER           |
+|           LOWER              | ----->                   <----- |          HIGHER           |
 |                              |                                 |                           |
 |______________________________|_________________________________|___________________________|
-High index pointers                                                         Low index pointers
+Low index pointers                                                         High index pointers
 
 
 Defragmentation:

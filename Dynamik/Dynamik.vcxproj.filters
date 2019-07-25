@@ -66,6 +66,10 @@
     <ClInclude Include="src\dmkafx.h">
       <Filter>src</Filter>
     </ClInclude>
+    <ClInclude Include="src\core\Managers\MemoryManager.h" />
+    <ClInclude Include="src\core\utils\DMK_Functions.h" />
+    <ClInclude Include="src\core\utils\dataStructures\linkedLists.h" />
+    <ClInclude Include="src\core\utils\dataStructures\heap.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameLibraries\GameObject\GameObject.cpp">
@@ -86,6 +90,10 @@
     <ClCompile Include="src\dmkafx.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="src\core\Managers\MemoryManager.cpp" />
+    <ClCompile Include="src\core\utils\DMK_Functions.cpp" />
+    <ClCompile Include="src\core\utils\dataStructures\linkedLists.cpp" />
+    <ClCompile Include="src\core\utils\dataStructures\heap.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="IMPORTANT.txt" />

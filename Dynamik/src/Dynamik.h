@@ -23,10 +23,14 @@
 #include "core/core.h"
 #include "core/log.h"
 
+#include "core/Managers/MemoryManager.h"
+
 #include "core/utils/DMK_DataTypes.h"
 #include "core/utils/DMK_Error.h"
 #include "core/utils/DMK_Math.h"
 #include "core/utils/safeLock.h"
+#include "core/utils/dataStructures/heap.h"
+#include "core/utils/dataStructures/linkedLists.h"
 
 #include <GameObject/GameObject.h>
 

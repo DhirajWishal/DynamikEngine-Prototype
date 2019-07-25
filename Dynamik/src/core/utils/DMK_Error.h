@@ -1,6 +1,7 @@
 #pragma once
 
 namespace Dynamik {
+	namespace utils {
 
 #ifdef DMK_PLATFORM_WINDOWS
 #define TRIGGER_ERROR_BREAKPOINT	__debugbreak()
@@ -19,7 +20,7 @@ namespace Dynamik {
 										TRIGGER_ERROR_BREAKPOINT;	\
 										}
 
-	// ----------
+		// ----------
 #endif
-
+	}
 }

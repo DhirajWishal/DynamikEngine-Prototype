@@ -147,6 +147,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="GameLibraries\GameObject\GameObject.h" />
+    <ClInclude Include="src\core\Managers\MemoryManager.h" />
+    <ClInclude Include="src\core\utils\dataStructures\heap.h" />
+    <ClInclude Include="src\core\utils\dataStructures\linkedLists.h" />
+    <ClInclude Include="src\core\utils\DMK_Functions.h" />
     <ClInclude Include="src\Dynamik.h" />
     <ClInclude Include="src\core\Events\applicationEvent.h" />
     <ClInclude Include="src\core\Events\event.h" />
@@ -166,6 +170,10 @@
     <ClCompile Include="GameLibraries\GameObject\GameObject.cpp" />
     <ClCompile Include="src\core\application.cpp" />
     <ClCompile Include="src\core\log.cpp" />
+    <ClCompile Include="src\core\Managers\MemoryManager.cpp" />
+    <ClCompile Include="src\core\utils\dataStructures\heap.cpp" />
+    <ClCompile Include="src\core\utils\dataStructures\linkedLists.cpp" />
+    <ClCompile Include="src\core\utils\DMK_Functions.cpp" />
     <ClCompile Include="src\core\utils\DMK_Math.cpp" />
     <ClCompile Include="src\core\utils\safeLock.cpp" />
     <ClCompile Include="src\dmkafx.cpp">

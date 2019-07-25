@@ -2,11 +2,14 @@
 #include "safeLock.h"
 
 namespace Dynamik {
-	safeLock::safeLock() {
+	namespace utils {
 
-	}
+		safeLock::safeLock() {
 
-	safeLock::~safeLock() {
+		}
 
+		safeLock::~safeLock() {
+
+		}
 	}
 }

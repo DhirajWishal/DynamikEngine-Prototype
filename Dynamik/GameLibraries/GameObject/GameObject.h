@@ -20,7 +20,7 @@
 
 // Dynamik namespace
 namespace Dynamik {
-
+	using namespace utils;
 	/* DEFINES AND MACROS (LOCAL/ GLOBAL) */
 	/* DEFAULTS */
 #define DEFAULT_POSITION_X 0.0f

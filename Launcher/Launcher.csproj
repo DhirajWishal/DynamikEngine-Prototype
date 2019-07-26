@@ -18,8 +18,8 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>$(SolutionDir)bin\$(Configuration)-$(Platform)\$(ProjectName)\</OutputPath>
-    <BaseIntermediateOutputPath>$(SolutionDir)intDir\$(Configuration)-$(Platform)\$(ProjectName)\Debug\Launcher\</BaseIntermediateOutputPath>
+    <OutputPath>$(SolutionDir)bin\$(Configuration)-$(Platform)\Launcher\</OutputPath>
+    <BaseIntermediateOutputPath>$(SolutionDir)intDir\$(Configuration)-$(Platform)\Launcher\Debug\</BaseIntermediateOutputPath>
     <IntermediateOutputPath>$(BaseIntermediateOutputPath)</IntermediateOutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
@@ -29,8 +29,8 @@
     <PlatformTarget>x64</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>$(SolutionDir)bin\$(Configuration)-$(Platform)\$(ProjectName)\</OutputPath>
-    <BaseIntermediateOutputPath>$(SolutionDir)intDir\$(Configuration)-$(Platform)\$(ProjectName)\Release\Launcher\</BaseIntermediateOutputPath>
+    <OutputPath>$(SolutionDir)bin\$(Configuration)-$(Platform)\Launcher\</OutputPath>
+    <BaseIntermediateOutputPath>$(SolutionDir)intDir\$(Configuration)-$(Platform)\Launcher\Release\</BaseIntermediateOutputPath>
     <IntermediateOutputPath>$(BaseIntermediateOutputPath)</IntermediateOutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
@@ -40,8 +40,8 @@
     <PlatformTarget>x64</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>$(SolutionDir)bin\$(Configuration)-$(Platform)\$(ProjectName)\</OutputPath>
-    <BaseIntermediateOutputPath>$(SolutionDir)intDir\$(Configuration)-$(Platform)\$(ProjectName)\Distribution\Launcher\</BaseIntermediateOutputPath>
+    <OutputPath>$(SolutionDir)bin\$(Configuration)-$(Platform)\Launcher\</OutputPath>
+    <BaseIntermediateOutputPath>$(SolutionDir)intDir\$(Configuration)-$(Platform)\Launcher\Distribution\</BaseIntermediateOutputPath>
     <IntermediateOutputPath>$(BaseIntermediateOutputPath)</IntermediateOutputPath>
     <DefineConstants></DefineConstants>
     <ErrorReport>prompt</ErrorReport>

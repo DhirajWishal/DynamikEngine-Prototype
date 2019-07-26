@@ -26,6 +26,7 @@
 #include "core/Managers/MemoryManager.h"
 
 #include "core/utils/DMK_DataTypes.h"
+#include "core/utils/DMK_Functions.h"
 #include "core/utils/DMK_Error.h"
 #include "core/utils/DMK_Math.h"
 #include "core/utils/safeLock.h"

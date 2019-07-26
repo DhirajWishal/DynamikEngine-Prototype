@@ -95,10 +95,12 @@ project "Application"
 	kind "ConsoleApp"
 	language "C++"
 
-	targetdir ("$(SolutionDir)bin/" .. outputDir .. "/$(ProjectName)-bin")
-	objdir ("$(SolutionDir)intDir/" .. outputDir .. "/$(ProjectName)-obj")
+	targetdir ("$(SolutionDir)bin/" .. outputDir .. "/$(ProjectName)")
+	objdir ("$(SolutionDir)intDir/" .. outputDir .. "/$(ProjectName)")
 
 	files {
+		"Application/**.h",
+		"Application/**.cpp",
 		"Application/src/**.h",
 		"Application/src/**.cpp"
 	}
@@ -140,8 +142,8 @@ project "Launcher"
 	kind "WindowedApp"
 	language "C#"
 
-	targetdir ("$(SolutionDir)bin/" .. outputDir .. "/$(ProjectName)")
-	objdir ("$(SolutionDir)intDir/" .. outputDir .. "/$(ProjectName)")
+	targetdir ("$(SolutionDir)bin/" .. outputDir .. "/Launcher")
+	objdir ("$(SolutionDir)intDir/" .. outputDir .. "/Launcher")
 
 	files {
 		"Launcher/**.cs",

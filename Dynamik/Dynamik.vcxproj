@@ -147,34 +147,34 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="GameLibraries\GameObject\GameObject.h" />
-    <ClInclude Include="src\core\Managers\MemoryManager.h" />
-    <ClInclude Include="src\core\utils\dataStructures\heap.h" />
-    <ClInclude Include="src\core\utils\dataStructures\linkedLists.h" />
-    <ClInclude Include="src\core\utils\DMK_Functions.h" />
     <ClInclude Include="src\Dynamik.h" />
     <ClInclude Include="src\core\Events\applicationEvent.h" />
     <ClInclude Include="src\core\Events\event.h" />
     <ClInclude Include="src\core\Events\keyEvent.h" />
     <ClInclude Include="src\core\Events\mouseEvent.h" />
+    <ClInclude Include="src\core\Managers\MemoryManager.h" />
     <ClInclude Include="src\core\application.h" />
     <ClInclude Include="src\core\core.h" />
     <ClInclude Include="src\core\entryPoint.h" />
     <ClInclude Include="src\core\log.h" />
     <ClInclude Include="src\core\utils\DMK_DataTypes.h" />
     <ClInclude Include="src\core\utils\DMK_Error.h" />
+    <ClInclude Include="src\core\utils\DMK_Functions.h" />
     <ClInclude Include="src\core\utils\DMK_Math.h" />
+    <ClInclude Include="src\core\utils\dataStructures\heap.h" />
+    <ClInclude Include="src\core\utils\dataStructures\linkedLists.h" />
     <ClInclude Include="src\core\utils\safeLock.h" />
     <ClInclude Include="src\dmkafx.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameLibraries\GameObject\GameObject.cpp" />
+    <ClCompile Include="src\core\Managers\MemoryManager.cpp" />
     <ClCompile Include="src\core\application.cpp" />
     <ClCompile Include="src\core\log.cpp" />
-    <ClCompile Include="src\core\Managers\MemoryManager.cpp" />
-    <ClCompile Include="src\core\utils\dataStructures\heap.cpp" />
-    <ClCompile Include="src\core\utils\dataStructures\linkedLists.cpp" />
     <ClCompile Include="src\core\utils\DMK_Functions.cpp" />
     <ClCompile Include="src\core\utils\DMK_Math.cpp" />
+    <ClCompile Include="src\core\utils\dataStructures\heap.cpp" />
+    <ClCompile Include="src\core\utils\dataStructures\linkedLists.cpp" />
     <ClCompile Include="src\core\utils\safeLock.cpp" />
     <ClCompile Include="src\dmkafx.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>

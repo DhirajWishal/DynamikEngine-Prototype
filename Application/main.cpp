@@ -8,6 +8,7 @@
 */
 
 #include <Dynamik.h>
+#include "src/imports.h"
 
 class Engine : public Dynamik::Application {
 public:

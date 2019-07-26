@@ -16,8 +16,14 @@
     <Filter Include="src\core\Events">
       <UniqueIdentifier>{09FC8B37-7587-F9FB-7E98-7CF0EAA255FC}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\core\Managers">
+      <UniqueIdentifier>{42AF0E70-AEC5-0C06-F73C-98276392DD8D}</UniqueIdentifier>
+    </Filter>
     <Filter Include="src\core\utils">
       <UniqueIdentifier>{0571F388-F13E-E78E-DAD2-57B5C63FC3F3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\core\utils\dataStructures">
+      <UniqueIdentifier>{320DD582-9E25-BCAC-67D2-4B46D3A95046}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -39,6 +45,9 @@
     <ClInclude Include="src\core\Events\mouseEvent.h">
       <Filter>src\core\Events</Filter>
     </ClInclude>
+    <ClInclude Include="src\core\Managers\MemoryManager.h">
+      <Filter>src\core\Managers</Filter>
+    </ClInclude>
     <ClInclude Include="src\core\application.h">
       <Filter>src\core</Filter>
     </ClInclude>
@@ -57,8 +66,17 @@
     <ClInclude Include="src\core\utils\DMK_Error.h">
       <Filter>src\core\utils</Filter>
     </ClInclude>
+    <ClInclude Include="src\core\utils\DMK_Functions.h">
+      <Filter>src\core\utils</Filter>
+    </ClInclude>
     <ClInclude Include="src\core\utils\DMK_Math.h">
       <Filter>src\core\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\utils\dataStructures\heap.h">
+      <Filter>src\core\utils\dataStructures</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\utils\dataStructures\linkedLists.h">
+      <Filter>src\core\utils\dataStructures</Filter>
     </ClInclude>
     <ClInclude Include="src\core\utils\safeLock.h">
       <Filter>src\core\utils</Filter>
@@ -66,14 +84,13 @@
     <ClInclude Include="src\dmkafx.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="src\core\Managers\MemoryManager.h" />
-    <ClInclude Include="src\core\utils\DMK_Functions.h" />
-    <ClInclude Include="src\core\utils\dataStructures\linkedLists.h" />
-    <ClInclude Include="src\core\utils\dataStructures\heap.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameLibraries\GameObject\GameObject.cpp">
       <Filter>GameLibraries\GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\Managers\MemoryManager.cpp">
+      <Filter>src\core\Managers</Filter>
     </ClCompile>
     <ClCompile Include="src\core\application.cpp">
       <Filter>src\core</Filter>
@@ -81,8 +98,17 @@
     <ClCompile Include="src\core\log.cpp">
       <Filter>src\core</Filter>
     </ClCompile>
+    <ClCompile Include="src\core\utils\DMK_Functions.cpp">
+      <Filter>src\core\utils</Filter>
+    </ClCompile>
     <ClCompile Include="src\core\utils\DMK_Math.cpp">
       <Filter>src\core\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\utils\dataStructures\heap.cpp">
+      <Filter>src\core\utils\dataStructures</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\utils\dataStructures\linkedLists.cpp">
+      <Filter>src\core\utils\dataStructures</Filter>
     </ClCompile>
     <ClCompile Include="src\core\utils\safeLock.cpp">
       <Filter>src\core\utils</Filter>
@@ -90,10 +116,6 @@
     <ClCompile Include="src\dmkafx.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="src\core\Managers\MemoryManager.cpp" />
-    <ClCompile Include="src\core\utils\DMK_Functions.cpp" />
-    <ClCompile Include="src\core\utils\dataStructures\linkedLists.cpp" />
-    <ClCompile Include="src\core\utils\dataStructures\heap.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="IMPORTANT.txt" />

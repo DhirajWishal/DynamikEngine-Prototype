@@ -26,6 +26,6 @@ namespace Dynamik {
 	}
 
 	MemoryManager::Pointer MemoryManager::getPointer() {
-
+		return nullptr;
 	}
 }

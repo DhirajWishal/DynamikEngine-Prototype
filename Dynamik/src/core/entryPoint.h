@@ -21,6 +21,9 @@ int main(int argc, char** argv) {
 	DMK_FATAL("Hello World");
 	DMK_CORE_ERROR("NULL_PTR");
 
+	int x = Dynamik::utils::max(10, 20);
+	DMK_INFO((const char*)x);
+
 	auto application = Dynamik::createApplication();
 	application->run();
 

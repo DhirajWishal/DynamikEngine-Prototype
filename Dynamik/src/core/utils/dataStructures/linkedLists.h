@@ -11,12 +11,14 @@
  linkedList.h file.
 */
 
+#include "core/core.h"
+
 namespace Dynamik {
 	namespace utils {
 
 		/* Singly Linked List */
 		template<class T>
-		class sLnkLst {
+		class DMK_API sLnkLst {
 		public:
 			T data = nullptr;
 
@@ -25,7 +27,7 @@ namespace Dynamik {
 
 		/* Doubly Linked List */
 		template<class T>
-		class dLnkLst {
+		class DMK_API dLnkLst {
 		public:
 			T data = nullptr;
 

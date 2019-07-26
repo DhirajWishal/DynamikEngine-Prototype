@@ -11,13 +11,14 @@
  heap.h file.
 */
 
+#include "core/core.h"
 #include "core/utils/DMK_DataTypes.h"
 
 namespace Dynamik {
 	namespace utils {
 		/* Min Heap Data Structure */
 		template<class Alloc>
-		class minHeap {
+		class DMK_API minHeap {
 		public:
 			minHeap(uint32 size);
 			~minHeap() {}
@@ -25,19 +26,20 @@ namespace Dynamik {
 			void insert(Alloc value);
 			void pop(Alloc value);
 
+			Alloc getValue(uint32 index);
+
 		private:
-			uint32 getLeft(uint32 parent);
-			uint32 getRight(uint32 parent);
-			uint32 getParent(uint32 child);
+			inline uint32 getLeft(uint32 parent);
+			inline uint32 getRight(uint32 parent);
+			inline uint32 getParent(uint32 child);
 
 			Alloc arr[];
-
 			uint32 myIndex = 0;
 		};
 
 		/* Max Heap Data Structure */
 		template<class Alloc>
-		class maxHeap {
+		class DMK_API maxHeap {
 		public:
 			maxHeap(uint32 size);
 			~maxHeap() {}
@@ -45,9 +47,14 @@ namespace Dynamik {
 			void insert(Alloc value);
 			void pop(Alloc value);
 
-		private:
-			Alloc arr[];
+			Alloc getValue(uint32 index);
 
+		private:
+			inline uint32 getLeft(uint32 parent);
+			inline uint32 getRight(uint32 parent);
+			inline uint32 getParent(uint32 child);
+
+			Alloc arr[];
 			uint32 myIndex;
 		};
 

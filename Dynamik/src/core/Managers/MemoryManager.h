@@ -16,7 +16,7 @@
 namespace Dynamik {
 	class MemoryManager {
 	public:
-		typedef uint32 Pointer;
+		typedef uint32* Pointer;
 
 		MemoryManager();
 		~MemoryManager();

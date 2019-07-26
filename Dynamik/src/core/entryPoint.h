@@ -24,6 +24,12 @@ int main(int argc, char** argv) {
 	int x = Dynamik::utils::max(10, 20);
 	DMK_INFO((const char*)x);
 
+	Dynamik::utils::minHeap<int> myHeap(100);
+
+	myHeap.insert(100);
+	myHeap.insert(200);
+	myHeap.insert(1);
+
 	auto application = Dynamik::createApplication();
 	application->run();
 

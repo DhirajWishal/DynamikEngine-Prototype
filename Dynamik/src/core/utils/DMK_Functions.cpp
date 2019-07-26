@@ -1,6 +1,6 @@
 /*
  Stand alone function library for the Dynamik Engine
- 
+
  Author:	Dhiraj Wishal
  Project:	Dynamik Engine
  Date:		--/--/----
@@ -14,35 +14,17 @@
 
 namespace Dynamik {
 	namespace utils {
-		/* ---------- MAX FUNCTIONS ---------- */
-		// var = utils::max(first, secons);
-		int32 max(int32 first, int32 second)
-		{
-			if (first > second)
-				return first;
-			else
-				return second;
-		}
-
-		// var = utils::max(first, secons);
-		uint32 max(uint32 first, uint32 second)
-		{
-			if (first > second)
-				return (first);
-			else
-				return (second);
-		}
-
-		// var = utils::max(first, secons);
-		float max(float first, float second)
-		{
-			if (first > second)
-				return (first);
-			else
-				return (second);
-		}
-
 		/* ---------- MIN FUNCTIONS ---------- */
+		// var = utils::min(first, secons);
+		template<class Alloc>
+		Alloc min(Alloc first, Alloc second)
+		{
+			if (first < second)
+				return (Alloc)first;
+			else
+				return (Alloc)second;
+		}
+
 		// var = utils::min(first, secons);
 		int32 min(int32 first, int32 second)
 		{
@@ -70,7 +52,54 @@ namespace Dynamik {
 				return (second);
 		}
 
+		/* ---------- MAX FUNCTIONS ---------- */
+		// var = utils::max(first, secons);
+		template<class Alloc>
+		Alloc max(Alloc first, Alloc second)
+		{
+			if (first > second)
+				return (Alloc)first;
+			else
+				return (Alloc)second;
+		}
+
+		// var = utils::max(first, secons);
+		int32 max(int32 first, int32 second)
+		{
+			if (first > second)
+				return first;
+			else
+				return second;
+		}
+
+		// var = utils::max(first, secons);
+		uint32 max(uint32 first, uint32 second)
+		{
+			if (first > second)
+				return (first);
+			else
+				return (second);
+		}
+
+		// var = utils::max(first, secons);
+		float max(float first, float second)
+		{
+			if (first > second)
+				return (first);
+			else
+				return (second);
+		}
+
 		/* ---------- SWAP FUNCTIONS ---------- */
+		// var = utils::swap(&first, &secons);
+		template<class Alloc>
+		void swap(Alloc* first, Alloc* second)
+		{
+			Alloc* temp = first;
+			first = second;
+			second = temp;
+		}
+
 		// var = utils::swap(&first, &secons);
 		void swap(int32* first, int32* second)
 		{

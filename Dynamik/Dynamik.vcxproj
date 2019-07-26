@@ -165,6 +165,7 @@
     <ClInclude Include="src\core\utils\dataStructures\linkedLists.h" />
     <ClInclude Include="src\core\utils\safeLock.h" />
     <ClInclude Include="src\dmkafx.h" />
+    <ClInclude Include="src\Wrapper\dll_wrapper.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameLibraries\GameObject\GameObject.cpp" />
@@ -179,6 +180,7 @@
     <ClCompile Include="src\dmkafx.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="src\Wrapper\dll_wrapper.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="IMPORTANT.txt" />

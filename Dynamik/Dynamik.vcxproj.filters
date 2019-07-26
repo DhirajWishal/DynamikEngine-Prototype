@@ -84,6 +84,7 @@
     <ClInclude Include="src\dmkafx.h">
       <Filter>src</Filter>
     </ClInclude>
+    <ClInclude Include="src\Wrapper\dll_wrapper.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameLibraries\GameObject\GameObject.cpp">
@@ -116,6 +117,7 @@
     <ClCompile Include="src\dmkafx.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="src\Wrapper\dll_wrapper.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="IMPORTANT.txt" />

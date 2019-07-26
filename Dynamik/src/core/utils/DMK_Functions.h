@@ -16,17 +16,23 @@
 
 namespace Dynamik {
 	namespace utils {
-		// var = utils::max(first, secons);
-		DMK_API int32 max(int32 first, int32 second);
-		DMK_API uint32 max(uint32 first, uint32 second);
-		DMK_API float max(float first, float second);
-
 		// var = utils::min(first, secons);
+		template<class Alloc>
+		DMK_API Alloc min(Alloc first, Alloc second);
 		DMK_API int32 min(int32 first, int32 second);
 		DMK_API uint32 min(uint32 first, uint32 second);
 		DMK_API float min(float first, float second);
 
+		// var = utils::max(first, secons);
+		template<class Alloc>
+		DMK_API Alloc max(Alloc first, Alloc second);
+		DMK_API int32 max(int32 first, int32 second);
+		DMK_API uint32 max(uint32 first, uint32 second);
+		DMK_API float max(float first, float second);
+
 		// var = utils::swap(&first, &secons);
+		template<class Alloc>
+		DMK_API void swap(Alloc* first, Alloc* second);
 		DMK_API void swap(int32* first, int32* second);
 		DMK_API void swap(uint32* first, uint32* second);
 		DMK_API void swap(float* first, float* second);

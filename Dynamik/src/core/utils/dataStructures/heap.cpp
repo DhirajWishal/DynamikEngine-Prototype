@@ -19,7 +19,7 @@ namespace Dynamik {
 		/* ---------- ########## ////////// MIN HEAP \\\\\\\\\\ ########## ---------- */
 		template<class Alloc>
 		minHeap<Alloc>::minHeap(uint32 size) {
-			memset(&arr, nullptr, size);
+			arr.resize(size);
 		}
 
 		template<class Alloc>
@@ -30,13 +30,11 @@ namespace Dynamik {
 				if (arr[i] <= arr[getParent(i)])
 					swap(arr[i], arr[getParent(i)]);
 
-			// TODO: Formatting
-
 			myIndex++;
 		}
 
 		template<class Alloc>
-		void minHeap<Alloc>::pop(Alloc value) {
+		void minHeap<Alloc>::pop() {
 			arr[0] = 0;
 
 			swap(arr[0], arr[myIndex - 1]);
@@ -59,6 +57,25 @@ namespace Dynamik {
 		}
 
 		template<class Alloc>
+		std::vector<Alloc> minHeap<Alloc>::sort() {
+			std::deque<Alloc> q;
+			std::vector<Alloc> end;
+
+			for (auto e : arr)
+				q.push(e);
+
+			for (int i = 0; i < arr.size(); i++) {
+				end.push_back(q.front());
+				q.pop_front();
+				swap(&q.front(), &q.back());
+
+				for (auto i = q.size(); i <= 0; i--)
+					if (q[i] <= q[getParent(i)])
+						swap(&q[i], &q[getParent(i)]);
+			}
+		}
+
+		template<class Alloc>
 		uint32 minHeap<Alloc>::getLeft(uint32 parent) {
 			return 2 * parent + 1;
 		}
@@ -76,7 +93,7 @@ namespace Dynamik {
 		/* ---------- ########## ////////// MAX HEAP \\\\\\\\\\ ########## ---------- */
 		template<class Alloc>
 		maxHeap<Alloc>::maxHeap(uint32 size) {
-			memset(&arr, nullptr, size);
+			arr.resize(size);
 		}
 
 		template<class Alloc>
@@ -87,13 +104,11 @@ namespace Dynamik {
 				if (arr[i] >= arr[getParent(i)])
 					swap(arr[i], arr[getParent(i)]);
 
-			// TODO: Formatting
-
 			myIndex++;
 		}
 
 		template<class Alloc>
-		void maxHeap<Alloc>::pop(Alloc value) {
+		void maxHeap<Alloc>::pop() {
 			arr[0] = 0;
 
 			swap(arr[0], arr[myIndex - 1]);

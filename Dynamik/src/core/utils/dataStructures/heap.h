@@ -24,16 +24,17 @@ namespace Dynamik {
 			~minHeap() {}
 
 			void insert(Alloc value);
-			void pop(Alloc value);
+			void pop();
 
 			Alloc getValue(uint32 index);
+			std::vector<Alloc> sort();
 
 		private:
 			inline uint32 getLeft(uint32 parent);
 			inline uint32 getRight(uint32 parent);
 			inline uint32 getParent(uint32 child);
 
-			Alloc arr[];
+			std::vector<Alloc> arr;
 			uint32 myIndex = 0;
 		};
 
@@ -45,7 +46,7 @@ namespace Dynamik {
 			~maxHeap() {}
 
 			void insert(Alloc value);
-			void pop(Alloc value);
+			void pop();
 
 			Alloc getValue(uint32 index);
 
@@ -54,7 +55,7 @@ namespace Dynamik {
 			inline uint32 getRight(uint32 parent);
 			inline uint32 getParent(uint32 child);
 
-			Alloc arr[];
+			std::vector<Alloc> arr;
 			uint32 myIndex;
 		};
 

@@ -19,6 +19,24 @@
 #include <queue>
 #include <deque>
 
+#ifdef DMK_PLATFORM_WINDOWS
+#include <fstream>
+
+#include <array>
+#include <optional>
+
+#define GLFW_INCLUDE_VULKAN
+#define GLFW_DLL
+#include <GLFW/glfw3.h>
+
+#endif
+
+#define GLM_FORCE_RADIANS
+#define GLM_FORCE_DEPTH_ZERO_TO_ONE
+#include <glm/glm.hpp>
+#include <glm/vec4.hpp>
+#include <glm/mat4x4.hpp>
+
 #ifdef PLG_PLATFROM_WINDOWS
 #include <Windows.h>
 

@@ -10,6 +10,18 @@
     <Filter Include="src">
       <UniqueIdentifier>{2DAB880B-99B4-887C-2230-9F7C8E38947C}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Platform">
+      <UniqueIdentifier>{21CA02E5-0D2D-9289-B6B2-CA3FA2F45D0C}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Platform\Windows">
+      <UniqueIdentifier>{5B054582-4794-CE4B-F0B2-E246DC20DFF1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Platform\Windows\utils">
+      <UniqueIdentifier>{1B6F5118-077F-FDE8-7038-62075C67EC81}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Wrapper">
+      <UniqueIdentifier>{FDF70A47-69AD-833C-F2A1-7D135E567A40}</UniqueIdentifier>
+    </Filter>
     <Filter Include="src\core">
       <UniqueIdentifier>{C55F2ECF-B12C-89DA-DA45-7782C671BE68}</UniqueIdentifier>
     </Filter>
@@ -32,6 +44,18 @@
     </ClInclude>
     <ClInclude Include="src\Dynamik.h">
       <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\Windows.h">
+      <Filter>src\Platform</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\Windows\utils\readFile.h">
+      <Filter>src\Platform\Windows\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\Windows\window.h">
+      <Filter>src\Platform\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Wrapper\dll_wrapper.h">
+      <Filter>src\Wrapper</Filter>
     </ClInclude>
     <ClInclude Include="src\core\Events\applicationEvent.h">
       <Filter>src\core\Events</Filter>
@@ -84,11 +108,19 @@
     <ClInclude Include="src\dmkafx.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="src\Wrapper\dll_wrapper.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameLibraries\GameObject\GameObject.cpp">
       <Filter>GameLibraries\GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\Windows\utils\readFile.cpp">
+      <Filter>src\Platform\Windows\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\Windows\window.cpp">
+      <Filter>src\Platform\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Wrapper\dll_wrapper.cpp">
+      <Filter>src\Wrapper</Filter>
     </ClCompile>
     <ClCompile Include="src\core\Managers\MemoryManager.cpp">
       <Filter>src\core\Managers</Filter>
@@ -117,7 +149,6 @@
     <ClCompile Include="src\dmkafx.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="src\Wrapper\dll_wrapper.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="IMPORTANT.txt" />

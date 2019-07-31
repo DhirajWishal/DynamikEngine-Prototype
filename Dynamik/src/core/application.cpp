@@ -11,6 +11,10 @@ namespace Dynamik {
 	}
 
 	void Application::run() {
-		while (true);
+		while (true) {
+			myRenderingEngine.initRenderer();
+			myRenderingEngine.run();
+			myRenderingEngine.end();
+		}
 	}
 }

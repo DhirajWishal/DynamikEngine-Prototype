@@ -1,0 +1,68 @@
+---------- Advanced Dynamic Graphics Renderer project discription ----------
+project "ADGR"
+	location "components/ADGR"
+	kind "StaticLib"
+	language "C++"
+	cppdialect "c++17"
+	staticruntime "On"
+
+	targetdir ("$(SolutionDir)bin/" .. outputDir .. "/$(ProjectName)")
+	objdir ("$(SolutionDir)intDir/" .. outputDir .. "/$(ProjectName)")
+
+	pchheader "adgrafx.h"
+	pchsource "components/ADGR/src/adgrafx.cpp"
+
+	files {
+		"components/ADGR/**.h",
+		"components/ADGR/**.cpp",
+		"components/ADGR/src/**.h",
+		"components/ADGR/src/**.cpp"
+	}
+
+	includedirs {
+		"$(SolutionDir)libs",
+		"$(SolutionDir)Dynamik/src",
+		"$(SolutionDir)Dynamik/GameLibraries",
+		"$(SolutionDir)lib/libs",
+		"$(solutionDir)components/ADGR",
+		"$(solutionDir)components/ADGR/src",
+		"$(SolutionDir)libs/glm/**.hpp",
+		"$(SolutionDir)libs/glm/**.inl",
+		"%{IncludeDir.GLFW}",
+		"%{IncludeDir.glm}",
+		"%{IncludeDir.Vulkan}"
+	}
+
+	libdirs {
+		"$(SolutionDir)libs/GLFW/lib-vc2015",
+		"E:/Programming/Codes/Game Development/Libraries/VulkanSDK/1.1.108.0/Lib"
+	}
+
+	links { 
+		"vulkan-1",
+		"glfw3"
+		--"opengl32",
+	}
+
+	filter "system:windows"
+		systemversion "latest"
+
+		defines {
+			"DMK_PLATFORM_WINDOWS",
+			"DMK_ADGR_USE_VULKAN"
+		}
+
+	filter "configurations:Debug"
+		defines "DMK_DEBUG"
+		runtime "Debug"
+		symbols "On"
+		
+	filter "configurations:Release"
+		defines "DMK_RELEASE"
+		runtime "Release"
+		optimize "On"
+
+	filter "configurations:Distribution"
+		defines "DMK_DISTRIBUTION"
+		runtime "Release"
+		optimize "On"

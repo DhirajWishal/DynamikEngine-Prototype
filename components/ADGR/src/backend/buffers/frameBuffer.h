@@ -9,28 +9,32 @@
  IDE:		MS Visual Studio Community 2019
 */
 
-#include "buffer.h"
+#include "src/backend/interface.h"
 
 namespace Dynamik {
 	namespace ADGR {
 		namespace core {
 
-			class DMK_API frameBuffer : public Buffer {
+			class ADGR_API frameBuffer {
 			public:
-				frameBuffer();
+				frameBuffer(VkDevice* device);
 				~frameBuffer() {}
 
 				void initBuffer(std::vector<VkImageView> swapChainImageViews,
-					VkRenderPass renderPass, VkExtent2D swapChainExtent) override;
+					VkRenderPass renderPass, VkExtent2D swapChainExtent);
 
-				void deleteBuffers();
+				void deleteFrameBuffers();
 
-				inline size_t getFrameBuffersSize() const { return myFrameBuffer.size(); }
-				inline VkFramebuffer getFrame(uint32_t pos) const { return myFrameBuffer[pos]; }
-				inline std::vector<VkFramebuffer> getFrameBuffers() const { return myFrameBuffer; }
+				uint32_t getFrameBuffersSize() const { return frameBuff.size(); }
+				VkFramebuffer getFrame(uint32_t pos) const { return frameBuff[pos]; }
+				std::vector<VkFramebuffer> getFrameBuffers() const { return frameBuff; }
 
 			private:
-				size_t mySize = 30;
+				VkDevice* myDevice;
+
+				std::vector<VkFramebuffer> frameBuff;
+
+				uint32_t mySize = 30;
 			};
 		}
 	}

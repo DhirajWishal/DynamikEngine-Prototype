@@ -7,8 +7,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Application", "Application\
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Dynamik", "Dynamik\Dynamik.vcxproj", "{928A7598-FE69-F433-0782-7F0A73E05A95}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Launcher", "Launcher\Launcher.csproj", "{57ACF9E2-4379-54EE-6C92-429658BE897C}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -34,12 +32,6 @@ Global
 		{928A7598-FE69-F433-0782-7F0A73E05A95}.Distribution|x64.Build.0 = Distribution|x64
 		{928A7598-FE69-F433-0782-7F0A73E05A95}.Release|x64.ActiveCfg = Release|x64
 		{928A7598-FE69-F433-0782-7F0A73E05A95}.Release|x64.Build.0 = Release|x64
-		{57ACF9E2-4379-54EE-6C92-429658BE897C}.Debug|x64.ActiveCfg = Debug|x64
-		{57ACF9E2-4379-54EE-6C92-429658BE897C}.Debug|x64.Build.0 = Debug|x64
-		{57ACF9E2-4379-54EE-6C92-429658BE897C}.Distribution|x64.ActiveCfg = Distribution|x64
-		{57ACF9E2-4379-54EE-6C92-429658BE897C}.Distribution|x64.Build.0 = Distribution|x64
-		{57ACF9E2-4379-54EE-6C92-429658BE897C}.Release|x64.ActiveCfg = Release|x64
-		{57ACF9E2-4379-54EE-6C92-429658BE897C}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

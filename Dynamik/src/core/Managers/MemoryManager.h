@@ -25,7 +25,7 @@ namespace Dynamik {
 		Pointer getPointer();
 
 	private:
-
+		void* marker = nullptr;
 	};
 
 }

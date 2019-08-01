@@ -10,28 +10,28 @@
 #include "adgrafx.h"
 #include "commandBuffer.h"
 #include "indexBuffer.h"
-#include "vertexBuffer.h"
 #include "backend/queues/queues.h"
 
 namespace Dynamik {
 	namespace ADGR {
 		namespace core {
-			commandBuffer::commandBuffer(VkDevice* device, VkPhysicalDevice* physicalDevice,
-				VkCommandPool* commandPool) : Buffer(device, physicalDevice, commandPool) {
+			commandBuffer::commandBuffer(VkDevice* device, VkCommandPool* commandPool) :
+				myDevice(device), myCommandPool(commandPool) {
 			}
 
-			void commandBuffer::initBuffer(VkRenderPass renderPass, VkExtent2D swapChainExtent,
-				VkPipeline graphicsPipeline) {
-				mySize = (size_t)myFrameBuffer.size();
-				myCommandBuffer.resize(mySize);
+			void commandBuffer::initBuffer(VkCommandPool commandPool, VkRenderPass renderPass,
+				std::vector<VkFramebuffer> frameBuff, VkExtent2D swapChainExtent, VkPipeline graphicsPipeline,
+				VkBuffer vertexBuffer, VkBuffer indexBuffer) {
+				mySize = frameBuff.size();
+				commandBuff.resize(mySize);
 
 				VkCommandBufferAllocateInfo allocInfo = {};
 				allocInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO;
-				allocInfo.commandPool = *myCommandPool;
+				allocInfo.commandPool = commandPool;
 				allocInfo.level = VK_COMMAND_BUFFER_LEVEL_PRIMARY;
-				allocInfo.commandBufferCount = (uint32)mySize;
+				allocInfo.commandBufferCount = mySize;
 
-				if (vkAllocateCommandBuffers(*myDevice, &allocInfo, myCommandBuffer.data()) != VK_SUCCESS)
+				if (vkAllocateCommandBuffers(*myDevice, &allocInfo, commandBuff.data()) != VK_SUCCESS)
 					throw std::runtime_error("failed to allocate command buffers!");
 
 				for (size_t i = 0; i < mySize; i++) {
@@ -40,14 +40,13 @@ namespace Dynamik {
 					beginInfo.flags = VK_COMMAND_BUFFER_USAGE_SIMULTANEOUS_USE_BIT;
 					beginInfo.pInheritanceInfo = nullptr;
 
-					if (vkBeginCommandBuffer(myCommandBuffer[i], &beginInfo) != VK_SUCCESS)
+					if (vkBeginCommandBuffer(commandBuff[i], &beginInfo) != VK_SUCCESS)
 						throw std::runtime_error("failed to begin recording command buffer!");
 
 					VkRenderPassBeginInfo renderPassInfo = {};
 					renderPassInfo.sType = VK_STRUCTURE_TYPE_RENDER_PASS_BEGIN_INFO;
 					renderPassInfo.renderPass = renderPass;
-					renderPassInfo.framebuffer = myFrameBuffer[i];
-
+					renderPassInfo.framebuffer = frameBuff[i];
 					renderPassInfo.renderArea.offset = { 0, 0 };
 					renderPassInfo.renderArea.extent = swapChainExtent;
 
@@ -55,27 +54,27 @@ namespace Dynamik {
 					renderPassInfo.clearValueCount = 1;
 					renderPassInfo.pClearValues = &clearColor;
 
-					vkCmdBeginRenderPass(myCommandBuffer[i], &renderPassInfo, VK_SUBPASS_CONTENTS_INLINE);
+					vkCmdBeginRenderPass(commandBuff[i], &renderPassInfo, VK_SUBPASS_CONTENTS_INLINE);
 
-					vkCmdBindPipeline(myCommandBuffer[i], VK_PIPELINE_BIND_POINT_GRAPHICS, graphicsPipeline);
+					vkCmdBindPipeline(commandBuff[i], VK_PIPELINE_BIND_POINT_GRAPHICS, graphicsPipeline);
 
-					VkBuffer vertexBuffers[] = { *myVertexBuffer };
+					VkBuffer vertexBuffers[] = { vertexBuffer };
 					VkDeviceSize offsets[] = { 0 };
-					vkCmdBindVertexBuffers(myCommandBuffer[i], 0, 1, vertexBuffers, offsets);
+					vkCmdBindVertexBuffers(commandBuff[i], 0, 1, vertexBuffers, offsets);
 
-					vkCmdBindIndexBuffer(myCommandBuffer[i], *myIndexBuffer, 0, VK_INDEX_TYPE_UINT16);
+					vkCmdBindIndexBuffer(commandBuff[i], indexBuffer, 0, VK_INDEX_TYPE_UINT16);
 
-					vkCmdDrawIndexed(myCommandBuffer[i], static_cast<uint32_t>(indices.size()), 1, 0, 0, 0);
+					vkCmdDrawIndexed(commandBuff[i], static_cast<uint32_t>(indices.size()), 1, 0, 0, 0);
 
-					vkCmdEndRenderPass(myCommandBuffer[i]);
+					vkCmdEndRenderPass(commandBuff[i]);
 
-					if (vkEndCommandBuffer(myCommandBuffer[i]) != VK_SUCCESS)
+					if (vkEndCommandBuffer(commandBuff[i]) != VK_SUCCESS)
 						throw std::runtime_error("failed to record command buffer!");
 				}
 			}
 
-			void commandBuffer::initCommandPool(VkSurfaceKHR surface) {
-				queueFamilyindices queueFamilyIndices = findQueueFamilies(*myPhysicalDevice, surface);
+			void commandBuffer::initCommandPool(VkPhysicalDevice physicalDevice, VkSurfaceKHR surface) {
+				queueFamilyindices queueFamilyIndices = findQueueFamilies(physicalDevice, surface);
 
 				VkCommandPoolCreateInfo poolInfo = {};
 				poolInfo.sType = VK_STRUCTURE_TYPE_COMMAND_POOL_CREATE_INFO;

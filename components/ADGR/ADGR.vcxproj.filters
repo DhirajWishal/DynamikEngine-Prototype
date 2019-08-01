@@ -1,173 +1,199 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Platform">
-      <UniqueIdentifier>{2AC788B4-1694-E3BF-3FAD-D1672BD9184E}</UniqueIdentifier>
+    <Filter Include="src">
+      <UniqueIdentifier>{2DAB880B-99B4-887C-2230-9F7C8E38947C}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Platform\Windows">
-      <UniqueIdentifier>{64FBD71A-50F4-F66C-7926-DCF1657ED678}</UniqueIdentifier>
+    <Filter Include="src\Platform">
+      <UniqueIdentifier>{21CA02E5-0D2D-9289-B6B2-CA3FA2F45D0C}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Platform\Windows\utils">
-      <UniqueIdentifier>{E4079181-D001-BAD3-B96E-50E4A5072040}</UniqueIdentifier>
+    <Filter Include="src\Platform\Windows">
+      <UniqueIdentifier>{5B054582-4794-CE4B-F0B2-E246DC20DFF1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="backend">
-      <UniqueIdentifier>{ED260B65-5906-8A00-621E-15D7CE7CF061}</UniqueIdentifier>
+    <Filter Include="src\Platform\Windows\utils">
+      <UniqueIdentifier>{1B6F5118-077F-FDE8-7038-62075C67EC81}</UniqueIdentifier>
     </Filter>
-    <Filter Include="backend\buffers">
-      <UniqueIdentifier>{891B4280-F5A6-AF44-FEB7-32396AC20B45}</UniqueIdentifier>
+    <Filter Include="src\Wrapper">
+      <UniqueIdentifier>{FDF70A47-69AD-833C-F2A1-7D135E567A40}</UniqueIdentifier>
     </Filter>
-    <Filter Include="backend\device">
-      <UniqueIdentifier>{0CACD17B-F879-C581-E10D-36A8CD7AA1E6}</UniqueIdentifier>
+    <Filter Include="src\backend">
+      <UniqueIdentifier>{0427456E-70DC-BD63-F9D0-B73A6585B467}</UniqueIdentifier>
     </Filter>
-    <Filter Include="backend\extensions">
-      <UniqueIdentifier>{0CBA5CDD-F89D-1D33-61FE-17864D0108B5}</UniqueIdentifier>
+    <Filter Include="src\backend\buffers">
+      <UniqueIdentifier>{A042AA9A-0CA4-87A8-9511-CE5A0172BE67}</UniqueIdentifier>
     </Filter>
-    <Filter Include="backend\instance">
-      <UniqueIdentifier>{91D8C802-7DD1-E754-A603-CDD9925BC760}</UniqueIdentifier>
+    <Filter Include="src\backend\device">
+      <UniqueIdentifier>{43CCB5D9-2FB0-762F-9810-7182841361B1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="backend\others">
-      <UniqueIdentifier>{311E8296-1DEC-759C-0680-E6C2F2EC5101}</UniqueIdentifier>
+    <Filter Include="src\backend\extensions">
+      <UniqueIdentifier>{C31D34D4-AF17-5D26-9884-F336841DC392}</UniqueIdentifier>
     </Filter>
-    <Filter Include="backend\pipeline">
-      <UniqueIdentifier>{D285A9EF-BE7E-C841-E7B0-ADC6D308A84D}</UniqueIdentifier>
+    <Filter Include="src\backend\instance">
+      <UniqueIdentifier>{88E2356A-7471-BF33-1D90-D32E09FECFD9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="backend\queues">
-      <UniqueIdentifier>{34253D9B-20F3-30A1-0987-A1C7F5F30C06}</UniqueIdentifier>
+    <Filter Include="src\backend\others">
+      <UniqueIdentifier>{683E66F4-5422-274A-BD82-219DA98511CC}</UniqueIdentifier>
     </Filter>
-    <Filter Include="backend\swapchain">
-      <UniqueIdentifier>{BAC744C4-26DE-425A-6F55-CE7BDBAA13E2}</UniqueIdentifier>
+    <Filter Include="src\backend\pipeline">
+      <UniqueIdentifier>{C98F1657-B51E-A020-5E3D-B41B4AABB0C6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="backend\validators">
-      <UniqueIdentifier>{753B2964-611F-EAB9-CA7F-E40CB682D43B}</UniqueIdentifier>
+    <Filter Include="src\backend\queues">
+      <UniqueIdentifier>{6B4521F9-5729-E24E-C089-DCA1AC8CCCD0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="backend\validators\debugger">
-      <UniqueIdentifier>{89CDF262-F5DA-2049-7EC1-1C34EACDECFF}</UniqueIdentifier>
+    <Filter Include="src\backend\swapchain">
+      <UniqueIdentifier>{91105319-FD7C-0E14-C670-A671329C307C}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\backend\validators">
+      <UniqueIdentifier>{2C9F005B-1899-29AD-0106-C0BDED9E8F19}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\backend\validators\debugger">
+      <UniqueIdentifier>{204F57F5-8C32-6635-9535-947101982C86}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Platform\Windows.h">
-      <Filter>Platform</Filter>
+      <Filter>src\Platform</Filter>
     </ClInclude>
     <ClInclude Include="src\Platform\Windows\utils\readFile.h">
-      <Filter>Platform\Windows\utils</Filter>
+      <Filter>src\Platform\Windows\utils</Filter>
     </ClInclude>
     <ClInclude Include="src\Platform\Windows\window.h">
-      <Filter>Platform\Windows</Filter>
+      <Filter>src\Platform\Windows</Filter>
     </ClInclude>
-    <ClInclude Include="src\Renderer.h" />
-    <ClInclude Include="src\adgrafx.h" />
+    <ClInclude Include="src\Renderer.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Wrapper\dll_wrapper.h">
+      <Filter>src\Wrapper</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Wrapper\internal_wrapper.h">
+      <Filter>src\Wrapper</Filter>
+    </ClInclude>
+    <ClInclude Include="src\adgrafx.h">
+      <Filter>src</Filter>
+    </ClInclude>
     <ClInclude Include="src\backend\buffers\buffer.h">
-      <Filter>backend\buffers</Filter>
+      <Filter>src\backend\buffers</Filter>
     </ClInclude>
     <ClInclude Include="src\backend\buffers\commandBuffer.h">
-      <Filter>backend\buffers</Filter>
+      <Filter>src\backend\buffers</Filter>
     </ClInclude>
     <ClInclude Include="src\backend\buffers\frameBuffer.h">
-      <Filter>backend\buffers</Filter>
+      <Filter>src\backend\buffers</Filter>
     </ClInclude>
     <ClInclude Include="src\backend\buffers\indexBuffer.h">
-      <Filter>backend\buffers</Filter>
+      <Filter>src\backend\buffers</Filter>
     </ClInclude>
     <ClInclude Include="src\backend\buffers\vertexBuffer.h">
-      <Filter>backend\buffers</Filter>
+      <Filter>src\backend\buffers</Filter>
     </ClInclude>
     <ClInclude Include="src\backend\core.h">
-      <Filter>backend</Filter>
+      <Filter>src\backend</Filter>
     </ClInclude>
     <ClInclude Include="src\backend\defines.h">
-      <Filter>backend</Filter>
+      <Filter>src\backend</Filter>
     </ClInclude>
     <ClInclude Include="src\backend\device\device.h">
-      <Filter>backend\device</Filter>
+      <Filter>src\backend\device</Filter>
     </ClInclude>
     <ClInclude Include="src\backend\extensions\extensions.h">
-      <Filter>backend\extensions</Filter>
+      <Filter>src\backend\extensions</Filter>
     </ClInclude>
     <ClInclude Include="src\backend\instance\instance.h">
-      <Filter>backend\instance</Filter>
+      <Filter>src\backend\instance</Filter>
+    </ClInclude>
+    <ClInclude Include="src\backend\interface.h">
+      <Filter>src\backend</Filter>
     </ClInclude>
     <ClInclude Include="src\backend\others\semaphores.h">
-      <Filter>backend\others</Filter>
+      <Filter>src\backend\others</Filter>
     </ClInclude>
     <ClInclude Include="src\backend\others\syncObjects.h">
-      <Filter>backend\others</Filter>
+      <Filter>src\backend\others</Filter>
     </ClInclude>
     <ClInclude Include="src\backend\pipeline\pipeline.h">
-      <Filter>backend\pipeline</Filter>
+      <Filter>src\backend\pipeline</Filter>
     </ClInclude>
     <ClInclude Include="src\backend\queues\queues.h">
-      <Filter>backend\queues</Filter>
+      <Filter>src\backend\queues</Filter>
     </ClInclude>
     <ClInclude Include="src\backend\swapchain\swapChain.h">
-      <Filter>backend\swapchain</Filter>
+      <Filter>src\backend\swapchain</Filter>
     </ClInclude>
     <ClInclude Include="src\backend\validators\debugger\debugger.h">
-      <Filter>backend\validators\debugger</Filter>
+      <Filter>src\backend\validators\debugger</Filter>
     </ClInclude>
     <ClInclude Include="src\backend\validators\validators.h">
-      <Filter>backend\validators</Filter>
+      <Filter>src\backend\validators</Filter>
     </ClInclude>
-    <ClInclude Include="src\Wrapper\dll_wrapper.h" />
-    <ClInclude Include="src\Wrapper\internal_wrapper.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="main.cpp" />
     <ClCompile Include="src\Platform\Windows\utils\readFile.cpp">
-      <Filter>Platform\Windows\utils</Filter>
+      <Filter>src\Platform\Windows\utils</Filter>
     </ClCompile>
     <ClCompile Include="src\Platform\Windows\window.cpp">
-      <Filter>Platform\Windows</Filter>
+      <Filter>src\Platform\Windows</Filter>
     </ClCompile>
-    <ClCompile Include="src\Renderer.cpp" />
-    <ClCompile Include="src\adgrafx.cpp" />
+    <ClCompile Include="src\Renderer.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Wrapper\dll_wrapper.cpp">
+      <Filter>src\Wrapper</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Wrapper\internal_wrapper.cpp">
+      <Filter>src\Wrapper</Filter>
+    </ClCompile>
+    <ClCompile Include="src\adgrafx.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
     <ClCompile Include="src\backend\buffers\buffer.cpp">
-      <Filter>backend\buffers</Filter>
+      <Filter>src\backend\buffers</Filter>
     </ClCompile>
     <ClCompile Include="src\backend\buffers\commandBuffer.cpp">
-      <Filter>backend\buffers</Filter>
+      <Filter>src\backend\buffers</Filter>
     </ClCompile>
     <ClCompile Include="src\backend\buffers\frameBuffer.cpp">
-      <Filter>backend\buffers</Filter>
+      <Filter>src\backend\buffers</Filter>
     </ClCompile>
     <ClCompile Include="src\backend\buffers\indexBuffer.cpp">
-      <Filter>backend\buffers</Filter>
+      <Filter>src\backend\buffers</Filter>
     </ClCompile>
     <ClCompile Include="src\backend\buffers\vertexBuffer.cpp">
-      <Filter>backend\buffers</Filter>
+      <Filter>src\backend\buffers</Filter>
     </ClCompile>
     <ClCompile Include="src\backend\core.cpp">
-      <Filter>backend</Filter>
+      <Filter>src\backend</Filter>
     </ClCompile>
     <ClCompile Include="src\backend\device\device.cpp">
-      <Filter>backend\device</Filter>
+      <Filter>src\backend\device</Filter>
     </ClCompile>
     <ClCompile Include="src\backend\extensions\extensions.cpp">
-      <Filter>backend\extensions</Filter>
+      <Filter>src\backend\extensions</Filter>
     </ClCompile>
     <ClCompile Include="src\backend\instance\instance.cpp">
-      <Filter>backend\instance</Filter>
+      <Filter>src\backend\instance</Filter>
     </ClCompile>
     <ClCompile Include="src\backend\others\semaphores.cpp">
-      <Filter>backend\others</Filter>
+      <Filter>src\backend\others</Filter>
     </ClCompile>
     <ClCompile Include="src\backend\others\syncObjects.cpp">
-      <Filter>backend\others</Filter>
+      <Filter>src\backend\others</Filter>
     </ClCompile>
     <ClCompile Include="src\backend\pipeline\pipeline.cpp">
-      <Filter>backend\pipeline</Filter>
+      <Filter>src\backend\pipeline</Filter>
     </ClCompile>
     <ClCompile Include="src\backend\queues\queues.cpp">
-      <Filter>backend\queues</Filter>
+      <Filter>src\backend\queues</Filter>
     </ClCompile>
     <ClCompile Include="src\backend\swapchain\swapChain.cpp">
-      <Filter>backend\swapchain</Filter>
+      <Filter>src\backend\swapchain</Filter>
     </ClCompile>
     <ClCompile Include="src\backend\validators\debugger\debugger.cpp">
-      <Filter>backend\validators\debugger</Filter>
+      <Filter>src\backend\validators\debugger</Filter>
     </ClCompile>
     <ClCompile Include="src\backend\validators\validators.cpp">
-      <Filter>backend\validators</Filter>
+      <Filter>src\backend\validators</Filter>
     </ClCompile>
-    <ClCompile Include="src\Wrapper\dll_wrapper.cpp" />
-    <ClCompile Include="src\Wrapper\internal_wrapper.cpp" />
   </ItemGroup>
 </Project>

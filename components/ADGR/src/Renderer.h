@@ -9,13 +9,13 @@
  IDE:		MS Visual Studio Community 2019
 */
 
-#include "core/core.h"
+#include "backend/interface.h"
 #include "backend/core.h"
 
 namespace Dynamik {
 	namespace ADGR {
 
-		class DMK_API Renderer {
+		class ADGR_API Renderer {
 		public:
 			Renderer();
 			~Renderer();

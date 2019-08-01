@@ -9,7 +9,7 @@
  IDE:		MS Visual Studio Community 2019
 */
 
-#include "buffer.h"
+#include "src/backend/interface.h"
 #include "vertexBuffer.h"
 #include "core/utils/DMK_DataTypes.h"
 
@@ -17,25 +17,26 @@ namespace Dynamik {
 	namespace ADGR {
 		namespace core {
 
-			class DMK_API indexBuffer : public Buffer {
+			class ADGR_API indexBuffer {
 			public:
-				indexBuffer(VkBuffer* indexBuffer, VkDeviceMemory* indexBufferMemory);
+				indexBuffer(VkDevice* device, VkBuffer* buffer, VkDeviceMemory* bufferMemory);
 				~indexBuffer() {}
 
-				void initBuffer(VkQueue graphicsQueue) override;
-				void deleteBuffer();
+				void initBuffer(vertexBuffer* vertexBuffer, VkCommandPool commandPool,
+					VkQueue graphicsQueue);
+				void deleteIndexBuffer();
 
-				void setVertexBuffer(vertexBuffer* vertBuff);
-				inline VkBuffer getBuffer() { return *myIndexBuffer; }
+				VkBuffer getIndexBuffer() { return *myIndexBuffer; }
 
 			private:
-				vertexBuffer* myVertexBuffer;
+				VkDevice* myDevice;
+				VkBuffer* myIndexBuffer;
+				VkDeviceMemory* myIndexBufferMemory;
+			};
+
+			const std::vector<uint16_t> indices = {
+				0, 1, 2, 2, 3, 0
 			};
 		}
-		const std::vector<Dynamik::utils::uint16> indices = {
-			0, 1, 2, 2, 3, 0
-		};
 	}
 }
-
-

@@ -79,7 +79,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>adgrafx.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>DMK_PLATFORM_WINDOWS;DMK_BUILD_DLL;DMK_ADGR_USE_VULKAN;DMK_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>DMK_PLATFORM_WINDOWS;DMK_BUILD_DLL;GLFW_INCLUDE_VULKAN;DMK_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(SolutionDir)libs;$(SolutionDir)Dynamik\src;$(SolutionDir)Dynamik\GameLibraries;$(SolutionDir)lib\libs;$(solutionDir)components\ADGR;$(solutionDir)components\ADGR\src;$(SolutionDir)libs\GLFW\include;$(SolutionDir)libs\glm;E:\Programming\Codes\Game Development\Libraries\VulkanSDK\1.1.108.0\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
@@ -99,7 +99,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>adgrafx.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>DMK_PLATFORM_WINDOWS;DMK_BUILD_DLL;DMK_ADGR_USE_VULKAN;DMK_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>DMK_PLATFORM_WINDOWS;DMK_BUILD_DLL;GLFW_INCLUDE_VULKAN;DMK_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(SolutionDir)libs;$(SolutionDir)Dynamik\src;$(SolutionDir)Dynamik\GameLibraries;$(SolutionDir)lib\libs;$(solutionDir)components\ADGR;$(solutionDir)components\ADGR\src;$(SolutionDir)libs\GLFW\include;$(SolutionDir)libs\glm;E:\Programming\Codes\Game Development\Libraries\VulkanSDK\1.1.108.0\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -123,7 +123,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>adgrafx.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>DMK_PLATFORM_WINDOWS;DMK_BUILD_DLL;DMK_ADGR_USE_VULKAN;DMK_DISTRIBUTION;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>DMK_PLATFORM_WINDOWS;DMK_BUILD_DLL;GLFW_INCLUDE_VULKAN;DMK_DISTRIBUTION;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(SolutionDir)libs;$(SolutionDir)Dynamik\src;$(SolutionDir)Dynamik\GameLibraries;$(SolutionDir)lib\libs;$(solutionDir)components\ADGR;$(solutionDir)components\ADGR\src;$(SolutionDir)libs\GLFW\include;$(SolutionDir)libs\glm;E:\Programming\Codes\Game Development\Libraries\VulkanSDK\1.1.108.0\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -147,6 +147,8 @@
     <ClInclude Include="src\Platform\Windows\utils\readFile.h" />
     <ClInclude Include="src\Platform\Windows\window.h" />
     <ClInclude Include="src\Renderer.h" />
+    <ClInclude Include="src\Wrapper\dll_wrapper.h" />
+    <ClInclude Include="src\Wrapper\internal_wrapper.h" />
     <ClInclude Include="src\adgrafx.h" />
     <ClInclude Include="src\backend\buffers\buffer.h" />
     <ClInclude Include="src\backend\buffers\commandBuffer.h" />
@@ -158,6 +160,7 @@
     <ClInclude Include="src\backend\device\device.h" />
     <ClInclude Include="src\backend\extensions\extensions.h" />
     <ClInclude Include="src\backend\instance\instance.h" />
+    <ClInclude Include="src\backend\interface.h" />
     <ClInclude Include="src\backend\others\semaphores.h" />
     <ClInclude Include="src\backend\others\syncObjects.h" />
     <ClInclude Include="src\backend\pipeline\pipeline.h" />
@@ -165,13 +168,14 @@
     <ClInclude Include="src\backend\swapchain\swapChain.h" />
     <ClInclude Include="src\backend\validators\debugger\debugger.h" />
     <ClInclude Include="src\backend\validators\validators.h" />
-    <ClInclude Include="src\Wrapper\dll_wrapper.h" />
-    <ClInclude Include="src\Wrapper\internal_wrapper.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="main.cpp" />
     <ClCompile Include="src\Platform\Windows\utils\readFile.cpp" />
     <ClCompile Include="src\Platform\Windows\window.cpp" />
     <ClCompile Include="src\Renderer.cpp" />
+    <ClCompile Include="src\Wrapper\dll_wrapper.cpp" />
+    <ClCompile Include="src\Wrapper\internal_wrapper.cpp" />
     <ClCompile Include="src\adgrafx.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
@@ -191,8 +195,6 @@
     <ClCompile Include="src\backend\swapchain\swapChain.cpp" />
     <ClCompile Include="src\backend\validators\debugger\debugger.cpp" />
     <ClCompile Include="src\backend\validators\validators.cpp" />
-    <ClCompile Include="src\Wrapper\dll_wrapper.cpp" />
-    <ClCompile Include="src\Wrapper\internal_wrapper.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

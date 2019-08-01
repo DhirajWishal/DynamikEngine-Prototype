@@ -15,16 +15,17 @@ namespace Dynamik {
 	namespace ADGR {
 		namespace core {
 
-			indexBuffer::indexBuffer(VkBuffer* indexBuffer, VkDeviceMemory* indexBufferMemory) :
-				Buffer(indexBuffer, indexBufferMemory) {
+			indexBuffer::indexBuffer(VkDevice* device, VkBuffer* buffer, VkDeviceMemory* bufferMemory) :
+				myDevice(device), myIndexBuffer(buffer), myIndexBufferMemory(bufferMemory) {
 			}
 
-			void indexBuffer::initBuffer(VkQueue graphicsQueue) {
+			void indexBuffer::initBuffer(vertexBuffer* vertexBuffer, VkCommandPool commandPool,
+				VkQueue graphicsQueue) {
 				VkDeviceSize bufferSize = sizeof(indices[0]) * indices.size();
 
 				VkBuffer stagingBuffer;
 				VkDeviceMemory stagingBufferMemory;
-				myVertexBuffer->createBuffer(bufferSize, VK_BUFFER_USAGE_TRANSFER_SRC_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT
+				vertexBuffer->createBuffer(bufferSize, VK_BUFFER_USAGE_TRANSFER_SRC_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT
 					| VK_MEMORY_PROPERTY_HOST_COHERENT_BIT, stagingBuffer, stagingBufferMemory);
 
 				void* data;
@@ -32,22 +33,18 @@ namespace Dynamik {
 				memcpy(data, indices.data(), (size_t)bufferSize);
 				vkUnmapMemory(*myDevice, stagingBufferMemory);
 
-				myVertexBuffer->createBuffer(bufferSize, VK_BUFFER_USAGE_TRANSFER_DST_BIT | VK_BUFFER_USAGE_INDEX_BUFFER_BIT,
+				vertexBuffer->createBuffer(bufferSize, VK_BUFFER_USAGE_TRANSFER_DST_BIT | VK_BUFFER_USAGE_INDEX_BUFFER_BIT,
 					VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT, *myIndexBuffer, *myIndexBufferMemory);
 
-				myVertexBuffer->copyBuffer(stagingBuffer, *myIndexBuffer, bufferSize, graphicsQueue);
+				vertexBuffer->copyBuffer(stagingBuffer, *myIndexBuffer, bufferSize, commandPool, graphicsQueue);
 
 				vkDestroyBuffer(*myDevice, stagingBuffer, nullptr);
 				vkFreeMemory(*myDevice, stagingBufferMemory, nullptr);
 			}
 
-			void indexBuffer::deleteBuffer() {
+			void indexBuffer::deleteIndexBuffer() {
 				vkDestroyBuffer(*myDevice, *myIndexBuffer, nullptr);
 				vkFreeMemory(*myDevice, *myIndexBufferMemory, nullptr);
-			}
-
-			void indexBuffer::setVertexBuffer(vertexBuffer* vertBuff) {
-				myVertexBuffer = vertBuff;
 			}
 		}
 	}

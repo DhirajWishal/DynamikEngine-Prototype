@@ -35,5 +35,7 @@
 
 #include <GameObject/GameObject.h>
 
+#include "src/Renderer.h"
+
 /* ENTRY POINT */
 #include "core/entryPoint.h"

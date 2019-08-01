@@ -22,7 +22,7 @@ namespace Dynamik {
 
 			}
 
-			void core::startup() {
+			void ADGR_API core::startup() {
 				// create Vulkan Instance
 				instance.createInstance();
 
@@ -57,33 +57,35 @@ namespace Dynamik {
 				pipeline.initPipeline(swapChainExtent, myPipelineLayout);
 				pipeline.deleteShaders();
 
+				myDevice;
+
 				// create frame buffers
 				swapchainFrameBuffers.initBuffer(swapChainImageViews, myRenderPass, swapChainExtent);
 
 				// create command pool
-				commandBuffer.initCommandPool(mySurface);
+				commandBuffer.initCommandPool(myPhysicalDevice, mySurface);
 
 				// create the vertex buffer
-				vertexBuffer.initBuffer(graphicsQueue);
+				vertexBuffer.initBuffer(myCommandPool, graphicsQueue);
 
 				// create index buffer
-				indexBuffer.setVertexBuffer(&vertexBuffer);
-				indexBuffer.initBuffer(graphicsQueue);
+				indexBuffer.initBuffer(&vertexBuffer, myCommandPool, graphicsQueue);
 
 				// other initializing functions
-				commandBuffer.initBuffer(myRenderPass, swapChainExtent, graphicsPipeline);
+				commandBuffer.initBuffer(myCommandPool, myRenderPass, swapchainFrameBuffers.getFrameBuffers(),
+					swapChainExtent, graphicsPipeline, vertexBuffer.getVertexBuffer(), indexBuffer.getIndexBuffer());
 				initSyncObjects(myDevice, &imageAvailableSemaphores, &renderFinishedSemaphores, &inFlightFences);
 			}
 
-			void core::shutdown() {
+			void ADGR_API core::shutdown() {
 				// clean the swapchain
 				swapchain.cleanUp(myDevice, swapchainFrameBuffers.getFrameBuffers(),
-					myCommandPool, commandBuffer.getcommandBuffers(), graphicsPipeline, myPipelineLayout,
+					myCommandPool, commandBuffer.getCommanBuffer(), graphicsPipeline, myPipelineLayout,
 					myRenderPass, swapChainImageViews);
 
 				// delete index and vertex buffers
-				indexBuffer.deleteBuffer();
-				vertexBuffer.deleteBuffer();
+				indexBuffer.deleteIndexBuffer();
+				vertexBuffer.deleteVertexBuffer();
 
 				// delete frames in flight
 				for (size_t i = 0; i < MAX_FRAMES_IN_FLIGHT; i++) {
@@ -109,7 +111,7 @@ namespace Dynamik {
 				glfwTerminate();
 			}
 
-			void core::recreateSwapChain() {
+			void ADGR_API core::recreateSwapChain() {
 				// get new width and height
 				int width = 0, height = 0;
 				while (width == 0 || height == 0) {
@@ -121,7 +123,7 @@ namespace Dynamik {
 
 				// cleanup the swapchain
 				swapchain.cleanUp(myDevice, swapchainFrameBuffers.getFrameBuffers(),
-					myCommandPool, commandBuffer.getcommandBuffers(), graphicsPipeline, myPipelineLayout,
+					myCommandPool, commandBuffer.getCommanBuffer(), graphicsPipeline, myPipelineLayout,
 					myRenderPass, swapChainImageViews);
 
 				// initialize the swapchain
@@ -146,10 +148,11 @@ namespace Dynamik {
 				swapchainFrameBuffers.initBuffer(swapChainImageViews, myRenderPass, swapChainExtent);
 
 				// initialize the command buffer
-				commandBuffer.initBuffer(myRenderPass, swapChainExtent, graphicsPipeline);
+				commandBuffer.initBuffer(myCommandPool, myRenderPass, swapchainFrameBuffers.getFrameBuffers(),
+					swapChainExtent, graphicsPipeline, VertexBuffer, IndexBuffer);
 			}
 
-			void core::drawFrame() {
+			void ADGR_API core::drawFrame() {
 				vkWaitForFences(myDevice, 1, &inFlightFences[currentFrame],
 					VK_TRUE, std::numeric_limits<uint64_t>::max());
 				//vkResetFences(c_device, 1, &inFlightFences[currentFrame]);
@@ -174,7 +177,7 @@ namespace Dynamik {
 				submitInfo.pWaitSemaphores = waitSemaphores;
 				submitInfo.pWaitDstStageMask = waitStages;
 
-				std::vector<VkCommandBuffer> commandBufferss = commandBuffer.getcommandBuffers();
+				std::vector<VkCommandBuffer> commandBufferss = commandBuffer.getCommanBuffer();
 				submitInfo.commandBufferCount = 1;
 				submitInfo.pCommandBuffers = &commandBufferss[imageIndex];
 
@@ -211,7 +214,7 @@ namespace Dynamik {
 				currentFrame = (currentFrame + 1) % MAX_FRAMES_IN_FLIGHT;
 			}
 
-			void core::initWindow() {
+			void ADGR_API core::initWindow() {
 				glfwInit();
 
 				glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);

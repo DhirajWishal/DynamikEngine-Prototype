@@ -1,68 +1,42 @@
----------- Advanced Dynamic Graphics Renderer project discription ----------
-project "ADGR"
-	location "components/ADGR"
-	kind "StaticLib"
-	language "C++"
-	cppdialect "c++17"
-	staticruntime "On"
+---------- Launcher project discription ----------
+project "Launcher"
+	location "Launcher"
+	kind "WindowedApp"
+	language "C#"
 
-	targetdir ("$(SolutionDir)bin/" .. outputDir .. "/$(ProjectName)")
-	objdir ("$(SolutionDir)intDir/" .. outputDir .. "/$(ProjectName)")
-
-	pchheader "adgrafx.h"
-	pchsource "components/ADGR/src/adgrafx.cpp"
+	targetdir ("$(SolutionDir)bin/" .. outputDir .. "/Launcher")
+	objdir ("$(SolutionDir)intDir/" .. outputDir .. "/Launcher")
 
 	files {
-		"components/ADGR/**.h",
-		"components/ADGR/**.cpp",
-		"components/ADGR/src/**.h",
-		"components/ADGR/src/**.cpp"
+		"Launcher/**.cs",
+		"Launcher/**.config"
 	}
-
-	includedirs {
-		"$(SolutionDir)libs",
-		"$(SolutionDir)Dynamik/src",
-		"$(SolutionDir)Dynamik/GameLibraries",
-		"$(SolutionDir)lib/libs",
-		"$(solutionDir)components/ADGR",
-		"$(solutionDir)components/ADGR/src",
-		"$(SolutionDir)libs/glm/**.hpp",
-		"$(SolutionDir)libs/glm/**.inl",
-		"%{IncludeDir.GLFW}",
-		"%{IncludeDir.glm}",
-		"%{IncludeDir.Vulkan}"
-	}
-
-	libdirs {
-		"$(SolutionDir)libs/GLFW/lib-vc2015",
-		"E:/Programming/Codes/Game Development/Libraries/VulkanSDK/1.1.108.0/Lib"
-	}
-
-	links { 
-		"vulkan-1",
-		"glfw3"
-		--"opengl32",
+	
+	links {
+		"Microsoft.CSharp",
+		"System",
+		"System.Core",
+		"System.Data",
+		"System.Data.DataSetExtensions",
+		"System.Deployment",
+		"System.Drawing",
+		"System.Net.Http",
+		"System.Windows.Forms",
+		"System.Xml",
+		"System.Xml.Linq"
 	}
 
 	filter "system:windows"
+		staticruntime "On"
 		systemversion "latest"
 
-		defines {
-			"DMK_PLATFORM_WINDOWS",
-			"DMK_ADGR_USE_VULKAN"
-		}
-
 	filter "configurations:Debug"
-		defines "DMK_DEBUG"
-		runtime "Debug"
+		defines { "DEBUG", "TRACE" }
 		symbols "On"
 		
 	filter "configurations:Release"
-		defines "DMK_RELEASE"
-		runtime "Release"
+		defines { "TRACE" }
 		optimize "On"
 
 	filter "configurations:Distribution"
-		defines "DMK_DISTRIBUTION"
-		runtime "Release"
-		optimize "On"
+		optimize "On

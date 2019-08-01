@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Renderer.h"
+#include "src/Renderer.h"
 #include "core.h"
 
 namespace Dynamik {

@@ -9,27 +9,31 @@
  IDE:		MS Visual Studio Community 2019
 */
 
-#include "buffer.h"
+#include "src/backend/interface.h"
 
 namespace Dynamik {
 	namespace ADGR {
 		namespace core {
 
-			class DMK_API commandBuffer : public Buffer {
+			class ADGR_API commandBuffer {
 			public:
-				commandBuffer(VkDevice* device, VkPhysicalDevice* physicalDevice,
-					VkCommandPool* commandPool);
+				commandBuffer(VkDevice* device, VkCommandPool* commandPool);
 				~commandBuffer() {}
 
-				void initBuffer(VkRenderPass renderPass, VkExtent2D swapChainExtent,
-					VkPipeline graphicsPipeline) override;
-				void initCommandPool(VkSurfaceKHR surface);
+				void initBuffer(VkCommandPool commandPool, VkRenderPass renderPass,
+					std::vector<VkFramebuffer> frameBuff, VkExtent2D swapChainExtent,
+					VkPipeline graphicsPipeline, VkBuffer vertexBuffer, VkBuffer indexBuffer);
 
-				inline std::vector<VkCommandBuffer> getcommandBuffers() { return myCommandBuffer; };
+				void initCommandPool(VkPhysicalDevice physicalDevice, VkSurfaceKHR surface);
+
+				std::vector<VkCommandBuffer> getCommanBuffer() { return commandBuff; };
 
 			private:
-				size_t mySize = 30;
-				std::vector<VkCommandBuffer> myCommandBuffer;
+				VkDevice* myDevice;
+				VkCommandPool* myCommandPool;
+
+				uint32_t mySize = 30;
+				std::vector<VkCommandBuffer> commandBuff;
 			};
 		}
 	}

@@ -19,7 +19,7 @@ namespace Dynamik {
 		"CORE LOG:> "
 	};
 
-	void Log::LOG(int severity, ccp msg) {
+	void Log::LOG(int severity, std::string msg) {
 		char tmpBuff[128];
 		std::time_t myTime;
 		_tzset();
@@ -32,25 +32,25 @@ namespace Dynamik {
 
 	}
 
-	void Log::INFO_LOG(ccp msg) {
+	void Log::INFO_LOG(std::string msg) {
 		LOG(INFO_L, msg);
 	}
 
-	void Log::WARN_LOG(ccp msg) {
+	void Log::WARN_LOG(std::string msg) {
 		LOG(WARN_L, msg);
 	}
 
-	void Log::ERROR_LOG(ccp msg) {
+	void Log::ERROR_LOG(std::string msg) {
 		LOG(ERROR_L, msg);
 	}
 
-	void Log::FATAL_LOG(ccp msg, ccp file, int line) {
+	void Log::FATAL_LOG(std::string msg, std::string file, int line) {
 		Log::changeToColor(FATAL_L);
 		std::cout << "[" << file << ":" << line << "] " << LOG_INFO[FATAL_L]
 			<< msg << normal << std::endl;
 	}
 
-	void Log::CORE_LOG(ccp msg) {
+	void Log::CORE_LOG(std::string msg) {
 		LOG(CORE_INFO_L, msg);
 	}
 

@@ -1,0 +1,11 @@
+Welcome to the Dynamik Engine!
+validation layer: Added messenger
+validation layer: Added messenger
+validation layer: Invalid PipelineLayout Object 0xcdcdcdcdcdcdcdcd. The Vulkan spec states: If pipelineLayout is not VK_NULL_HANDLE, pipelineLayout must be a valid VkPipelineLayout handle (https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VUID-vkDestroyPipelineLayout-pipelineLayout-parameter)
+VUID-vkDestroyPipelineLayout-pipelineLayout-parameter(ERROR / SPEC): msgNum: 0 - Invalid PipelineLayout Object 0xcdcdcdcdcdcdcdcd. The Vulkan spec states: If pipelineLayout is not VK_NULL_HANDLE, pipelineLayout must be a valid VkPipelineLayout handle (https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VUID-vkDestroyPipelineLayout-pipelineLayout-parameter)
+    Objects: 1
+        [0] 0xcdcdcdcdcdcdcdcd, type: 17, name: NULL
+validation layer: Invalid PipelineLayout Object 0xcdcdcdcdcdcdcdcd. The Vulkan spec states: If pipelineLayout is not VK_NULL_HANDLE, pipelineLayout must be a valid VkPipelineLayout handle (https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VUID-vkDestroyPipelineLayout-pipelineLayout-parameter)
+VUID-vkDestroyPipelineLayout-pipelineLayout-parameter(ERROR / SPEC): msgNum: 0 - Invalid PipelineLayout Object 0xcdcdcdcdcdcdcdcd. The Vulkan spec states: If pipelineLayout is not VK_NULL_HANDLE, pipelineLayout must be a valid VkPipelineLayout handle (https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VUID-vkDestroyPipelineLayout-pipelineLayout-parameter)
+    Objects: 1
+        [0] 0xcdcdcdcdcdcdcdcd, type: 17, name: NULL

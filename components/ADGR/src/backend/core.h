@@ -9,21 +9,6 @@
  IDE:		MS Visual Studio Community 2019
 */
 
-#if 0
-#ifdef DMK_PLATFORM_WINDOWS
-#ifdef DMK_ADGR_USE_VULKAN
-
-#elif defined(DMK_ADGR_USE_DX12)
-
-#elif defined(DMK_ADGR_USE_OPENGL)
-
-#else
-#error What are you?
-#endif
-
-#endif
-#endif
-
 /* ---------- ########## ////////// CORE INCLUDES \\\\\\\\\\ ########## ---------- */
 #include "buffers/buffer.h"
 #include "buffers/commandBuffer.h"
@@ -46,13 +31,13 @@
 #include "Platform/Windows.h"
 
 #include "core/utils/DMK_DataTypes.h"
-#include "core/core.h"
+#include "backend/interface.h"
 
 namespace Dynamik {
 	namespace ADGR {
 		namespace core {
 
-			class core {
+			class ADGR_API core {
 			public:
 				core();
 				~core();
@@ -70,56 +55,54 @@ namespace Dynamik {
 				static void framebufferResizeCallback(GLFWwindow* window, int width, int height);
 
 			private:
-				GLFWwindow* window;
+				GLFWwindow* window = nullptr;
 
-				VkInstance myInstance = VK_NULL_HANDLE;
-				VkDebugUtilsMessengerEXT debugMessenger = VK_NULL_HANDLE;
-				VkPhysicalDevice myPhysicalDevice = VK_NULL_HANDLE;
-				VkDevice myDevice = VK_NULL_HANDLE;
-				VkSurfaceKHR mySurface = VK_NULL_HANDLE;
-				VkSwapchainKHR mySwapchain = VK_NULL_HANDLE;
-				VkRenderPass myRenderPass = VK_NULL_HANDLE;
-				VkPipelineLayout myPipelineLayout = VK_NULL_HANDLE;
-				VkCommandPool myCommandPool = VK_NULL_HANDLE;
+				VkInstance myInstance;
+				VkDebugUtilsMessengerEXT debugMessenger;
+				VkPhysicalDevice myPhysicalDevice;
+				VkDevice myDevice;
+				VkSurfaceKHR mySurface;
+				VkSwapchainKHR mySwapchain;
+				VkRenderPass myRenderPass;
+				VkPipelineLayout myPipelineLayout;
+				VkCommandPool myCommandPool;
 
-				VkBuffer VertexBuffer = VK_NULL_HANDLE;
-				VkDeviceMemory vertexBufferMemory = VK_NULL_HANDLE;
-				VkBuffer IndexBuffer = VK_NULL_HANDLE;
-				VkDeviceMemory indexBufferMemory = VK_NULL_HANDLE;
+				VkBuffer VertexBuffer;
+				VkDeviceMemory vertexBufferMemory;
+				VkBuffer IndexBuffer;
+				VkDeviceMemory indexBufferMemory;
 
-				VkSemaphore imageAvailableSemaphore = VK_NULL_HANDLE;
-				VkSemaphore renderFinishedSemaphore = VK_NULL_HANDLE;
+				VkSemaphore imageAvailableSemaphore;
+				VkSemaphore renderFinishedSemaphore;
 				std::vector<VkSemaphore> imageAvailableSemaphores;
 				std::vector<VkSemaphore> renderFinishedSemaphores;
 				std::vector<VkFence> inFlightFences;
 
-				VkPipeline graphicsPipeline = VK_NULL_HANDLE;
+				VkPipeline graphicsPipeline;
 
-				VkQueue graphicsQueue = VK_NULL_HANDLE;
-				VkQueue presentQueue = VK_NULL_HANDLE;
+				VkQueue graphicsQueue;
+				VkQueue presentQueue;
 
 				std::vector<VkImage> swapChainImages;
 				VkFormat swapChainImageFormat;
 				VkExtent2D swapChainExtent;
 				std::vector<VkImageView> swapChainImageViews;
 
-				Buffer myMainBuffer;
-
 				instance instance{ &myInstance };
 				device device{ &myDevice, &myPhysicalDevice, &mySurface };
 				debugger debugger{ &myInstance, &debugMessenger };
 				swapChain swapchain{ &myDevice, &mySwapchain, &myPhysicalDevice, &mySurface };
-				frameBuffer swapchainFrameBuffers;
+				frameBuffer swapchainFrameBuffers{ &myDevice };
+				commandBuffer commandBuffer{ &myDevice, &myCommandPool };
 				pipeline pipeline{ &myDevice, &myRenderPass, &graphicsPipeline };
-				commandBuffer commandBuffer{ &myDevice, &myPhysicalDevice, &myCommandPool };
-				vertexBuffer vertexBuffer{ &VertexBuffer, &vertexBufferMemory, NULL };
-				indexBuffer indexBuffer{ &IndexBuffer, &indexBufferMemory };
+				vertexBuffer vertexBuffer{ &myDevice, &myPhysicalDevice, &VertexBuffer, &vertexBufferMemory };
+				indexBuffer indexBuffer{ &myDevice, &IndexBuffer, &indexBufferMemory };
 
 				uint32 currentFrame = 0;
 				bool frameBufferResized = false;
 
-				std::string vertexShaderPath = "shaders/vert.spv";
-				std::string fragmentShaderPath = "shaders/frag.spv";
+				std::string vertexShaderPath = "E:/Projects/Dynamik Engine/Dynamik/components/Shaders/vert.spv";
+				std::string fragmentShaderPath = "E:/Projects/Dynamik Engine/Dynamik/components/Shaders/frag.spv";
 			};
 		}
 	}

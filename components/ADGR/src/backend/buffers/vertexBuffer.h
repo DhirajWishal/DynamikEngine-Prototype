@@ -9,31 +9,11 @@
  IDE:		MS Visual Studio Community 2019
 */
 
-#include "buffer.h"
+#include "src/backend/interface.h"
 
 namespace Dynamik {
 	namespace ADGR {
 		namespace core {
-
-			class DMK_API vertexBuffer : public Buffer {
-			public:
-				vertexBuffer(VkBuffer* vertexBuffer, VkDeviceMemory* vertexBufferMemory, uint32 type);
-				~vertexBuffer() {}
-
-				void initBuffer(VkQueue graphicsQueue) override;
-				void deleteBuffer();
-
-				void copyData();
-				void createBuffer(VkDeviceSize size, VkBufferUsageFlags usage,
-					VkMemoryPropertyFlags properties, VkBuffer& buffer,
-					VkDeviceMemory& bufferMemory);
-				void copyBuffer(VkBuffer srcBuffer, VkBuffer dstBuffer, VkDeviceSize size,
-					VkQueue graphicsQueue);
-
-			private:
-				uint32 findMemoryType(uint32 typeFilter, VkMemoryPropertyFlags properties);
-
-			};
 
 			struct vertex {
 				glm::vec2 position;
@@ -48,6 +28,37 @@ namespace Dynamik {
 				{{0.5f, -0.5f}, {0.0f, 1.0f, 0.0f}},
 				{{0.5f, 0.5f}, {0.0f, 0.0f, 1.0f}},
 				{{-0.5f, 0.5f}, {1.0f, 1.0f, 1.0f}}
+			};
+
+			class ADGR_API vertexBuffer {
+			public:
+				vertexBuffer(VkDevice* device, VkPhysicalDevice* physicalDevice,
+					VkBuffer* vertexBuffer, VkDeviceMemory* vertexBufferMemory);
+				~vertexBuffer() {}
+
+				void initBuffer(VkCommandPool commandPool, VkQueue graphicsQueue);
+				void deleteVertexBuffer();
+
+				VkBuffer getVertexBuffer() const { return *myVertexBuffer; }
+
+				void copyData();
+
+				// create additional buffers
+				void createBuffer(VkDeviceSize size, VkBufferUsageFlags usage,
+					VkMemoryPropertyFlags properties, VkBuffer& buffer,
+					VkDeviceMemory& bufferMemory);
+
+				void copyBuffer(VkBuffer srcBuffer, VkBuffer dstBuffer, VkDeviceSize size,
+					VkCommandPool commandPool, VkQueue graphicsQueue);
+
+			private:
+				VkDevice* myDevice;
+				VkPhysicalDevice* myPhysicalDevice;
+				VkBuffer* myVertexBuffer;
+				VkDeviceMemory* myVertexBufferMemory;
+
+				uint32_t findMemoryType(uint32_t typeFilter, VkMemoryPropertyFlags properties);
+
 			};
 		}
 	}

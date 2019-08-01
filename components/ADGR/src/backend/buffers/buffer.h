@@ -10,13 +10,13 @@
 */
 
 #include "core/utils/DMK_DataTypes.h"
-#include "core/core.h"
+#include "backend/interface.h"
 
 namespace Dynamik {
 	namespace ADGR {
 		namespace core {
 
-			class DMK_API Buffer {
+			class ADGR_API Buffer {
 			public:
 				Buffer(VkDevice* device, VkPhysicalDevice* physicalDevice,
 					VkCommandPool* commandPool, std::vector<VkFramebuffer>& frameBuffer,
@@ -44,7 +44,7 @@ namespace Dynamik {
 				//virtual VkBuffer getBuffer() { return; }
 
 			protected:
-				VkDevice* myDevice = nullptr;
+				VkDevice* myDevice;
 				VkPhysicalDevice* myPhysicalDevice = nullptr;
 
 				VkCommandPool* myCommandPool = nullptr;

@@ -21,16 +21,8 @@
 #include <functional>
 #include <set>
 
-#ifdef DMK_ADGR_USE_VULKAN
-#define GLFW_INCLUDE_VULKAN
 #define GLFW_DLL
 #include <GLFW/glfw3.h>
-
-#elif defined(DMK_ADGR_USE_OPENGL)
-#include <GLFW/glfw3.h>
-#else
-
-#endif
 
 #define GLM_FORCE_RADIANS
 #define GLM_FORCE_DEPTH_ZERO_TO_ONE

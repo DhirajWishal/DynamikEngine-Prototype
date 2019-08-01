@@ -14,13 +14,14 @@ namespace Dynamik {
 	namespace ADGR {
 		namespace core {
 
-			frameBuffer::frameBuffer() {
+			frameBuffer::frameBuffer(VkDevice* device) :
+				myDevice(device) {
 			}
 
 			void frameBuffer::initBuffer(std::vector<VkImageView> swapChainImageViews,
 				VkRenderPass renderPass, VkExtent2D swapChainExtent) {
 				mySize = swapChainImageViews.size();
-				myFrameBuffer.resize(mySize);
+				frameBuff.resize(mySize);
 				for (size_t i = 0; i < mySize; i++) {
 					VkImageView attachments[] = {
 						swapChainImageViews[i]
@@ -35,14 +36,15 @@ namespace Dynamik {
 					framebufferInfo.height = swapChainExtent.height;
 					framebufferInfo.layers = 1;
 
-					if (vkCreateFramebuffer(*myDevice, &framebufferInfo, nullptr, &myFrameBuffer[i]) != VK_SUCCESS)
+					if (vkCreateFramebuffer(*myDevice, &framebufferInfo, nullptr, &frameBuff[i]) != VK_SUCCESS)
 						throw std::runtime_error("failed to create framebuffer!");
 				}
 			}
 
-			void frameBuffer::deleteBuffers() {
-				for (auto framebuffer : myFrameBuffer)
+			void frameBuffer::deleteFrameBuffers() {
+				for (auto framebuffer : frameBuff) {
 					vkDestroyFramebuffer(*myDevice, framebuffer, nullptr);
+				}
 			}
 		}
 	}

@@ -10,17 +10,41 @@
 #include "adgrafx.h"
 #include "vertexBuffer.h"
 
-#define VERTEX_BUFFER 1
-
 namespace Dynamik {
 	namespace ADGR {
 		namespace core {
 
-			vertexBuffer::vertexBuffer(VkBuffer* vertexBuffer, VkDeviceMemory* vertexBufferMemory, uint32 type) :
-				Buffer(vertexBuffer, vertexBufferMemory, type) {
+			VkVertexInputBindingDescription vertex::getBindingDescription() {
+				VkVertexInputBindingDescription bindingDescription = {};
+				bindingDescription.binding = 0;
+				bindingDescription.stride = sizeof(vertex);
+				bindingDescription.inputRate = VK_VERTEX_INPUT_RATE_VERTEX;
+
+				return bindingDescription;
 			}
 
-			void vertexBuffer::initBuffer(VkQueue graphicsQueue) {
+			std::array<VkVertexInputAttributeDescription, 2> vertex::getAttributeDescriptions() {
+				std::array<VkVertexInputAttributeDescription, 2> attributeDescriptions = {};
+				attributeDescriptions[0].binding = 0;
+				attributeDescriptions[0].location = 0;
+				attributeDescriptions[0].format = VK_FORMAT_R32G32_SFLOAT;
+				attributeDescriptions[0].offset = offsetof(vertex, position);
+
+				attributeDescriptions[1].binding = 0;
+				attributeDescriptions[1].location = 1;
+				attributeDescriptions[1].format = VK_FORMAT_R32G32B32_SFLOAT;
+				attributeDescriptions[1].offset = offsetof(vertex, color);
+
+				return attributeDescriptions;
+			}
+
+			vertexBuffer::vertexBuffer(VkDevice* device, VkPhysicalDevice* physicalDevice,
+				VkBuffer* vertexBuffer, VkDeviceMemory* vertexBufferMemory) :
+				myDevice(device), myPhysicalDevice(physicalDevice), myVertexBuffer(vertexBuffer),
+				myVertexBufferMemory(vertexBufferMemory) {
+			}
+
+			void vertexBuffer::initBuffer(VkCommandPool commandPool, VkQueue graphicsQueue) {
 				VkDeviceSize bufferSize = sizeof(vertices[0]) * vertices.size();
 
 				VkBuffer stagingBuffer;
@@ -36,18 +60,18 @@ namespace Dynamik {
 				createBuffer(bufferSize, VK_BUFFER_USAGE_TRANSFER_DST_BIT | VK_BUFFER_USAGE_VERTEX_BUFFER_BIT,
 					VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT, *myVertexBuffer, *myVertexBufferMemory);
 
-				copyBuffer(stagingBuffer, *myVertexBuffer, bufferSize, graphicsQueue);
+				copyBuffer(stagingBuffer, *myVertexBuffer, bufferSize, commandPool, graphicsQueue);
 
 				vkDestroyBuffer(*myDevice, stagingBuffer, nullptr);
 				vkFreeMemory(*myDevice, stagingBufferMemory, nullptr);
 			}
 
-			void vertexBuffer::deleteBuffer() {
+			void vertexBuffer::deleteVertexBuffer() {
 				vkDestroyBuffer(*myDevice, *myVertexBuffer, nullptr);
 				vkFreeMemory(*myDevice, *myVertexBufferMemory, nullptr);
 			}
 
-			uint32 vertexBuffer::findMemoryType(uint32 typeFilter, VkMemoryPropertyFlags properties) {
+			uint32_t vertexBuffer::findMemoryType(uint32_t typeFilter, VkMemoryPropertyFlags properties) {
 				VkPhysicalDeviceMemoryProperties memProperties;
 				vkGetPhysicalDeviceMemoryProperties(*myPhysicalDevice, &memProperties);
 
@@ -82,16 +106,14 @@ namespace Dynamik {
 					throw std::runtime_error("failed to allocate buffer memory!");
 
 				vkBindBufferMemory(*myDevice, buffer, bufferMemory, 0);
-
-
 			}
 
 			void vertexBuffer::copyBuffer(VkBuffer srcBuffer, VkBuffer dstBuffer, VkDeviceSize size,
-				VkQueue graphicsQueue) {
+				VkCommandPool commandPool, VkQueue graphicsQueue) {
 				VkCommandBufferAllocateInfo allocInfo = {};
 				allocInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO;
 				allocInfo.level = VK_COMMAND_BUFFER_LEVEL_PRIMARY;
-				allocInfo.commandPool = *myCommandPool;
+				allocInfo.commandPool = commandPool;
 				allocInfo.commandBufferCount = 1;
 
 				VkCommandBuffer commandBuffer;
@@ -104,8 +126,6 @@ namespace Dynamik {
 				vkBeginCommandBuffer(commandBuffer, &beginInfo);
 
 				VkBufferCopy copyRegion = {};
-				copyRegion.srcOffset = 0; // Optional
-				copyRegion.dstOffset = 0; // Optional
 				copyRegion.size = size;
 				vkCmdCopyBuffer(commandBuffer, srcBuffer, dstBuffer, 1, &copyRegion);
 
@@ -119,35 +139,11 @@ namespace Dynamik {
 				vkQueueSubmit(graphicsQueue, 1, &submitInfo, VK_NULL_HANDLE);
 				vkQueueWaitIdle(graphicsQueue);
 
-				vkFreeCommandBuffers(*myDevice, *myCommandPool, 1, &commandBuffer);
+				vkFreeCommandBuffers(*myDevice, commandPool, 1, &commandBuffer);
 			}
 
 			void vertexBuffer::copyData() {
 
-			}
-
-			VkVertexInputBindingDescription vertex::getBindingDescription() {
-				VkVertexInputBindingDescription bindingDescription = {};
-				bindingDescription.binding = 0;
-				bindingDescription.stride = sizeof(vertex);
-				bindingDescription.inputRate = VK_VERTEX_INPUT_RATE_VERTEX;
-
-				return bindingDescription;
-			}
-
-			std::array<VkVertexInputAttributeDescription, 2> vertex::getAttributeDescriptions() {
-				std::array<VkVertexInputAttributeDescription, 2> attributeDescriptions = {};
-				attributeDescriptions[0].binding = 0;
-				attributeDescriptions[0].location = 0;
-				attributeDescriptions[0].format = VK_FORMAT_R32G32_SFLOAT;
-				attributeDescriptions[0].offset = offsetof(vertex, position);
-
-				attributeDescriptions[1].binding = 0;
-				attributeDescriptions[1].location = 1;
-				attributeDescriptions[1].format = VK_FORMAT_R32G32B32_SFLOAT;
-				attributeDescriptions[1].offset = offsetof(vertex, color);
-
-				return attributeDescriptions;
 			}
 		}
 	}

@@ -14,6 +14,7 @@
 #include "buffers/commandBuffer.h"
 #include "buffers/frameBuffer.h"
 #include "buffers/indexBuffer.h"
+#include "buffers/uniformBuffer.h"
 #include "buffers/vertexBuffer.h"
 #include "device/device.h"
 #include "extensions/extensions.h"
@@ -29,6 +30,7 @@
 #include "defines.h"
 
 #include "Platform/Windows.h"
+#include "Platform/Windows/utils/loadIcon.h"
 
 #include "core/utils/DMK_DataTypes.h"
 #include "backend/interface.h"
@@ -72,6 +74,13 @@ namespace Dynamik {
 				VkBuffer IndexBuffer;
 				VkDeviceMemory indexBufferMemory;
 
+				std::vector<VkBuffer> UniformBuffers;
+				std::vector<VkDeviceMemory> uniformBuffersMemory;
+
+				VkDescriptorPool descriptorPool;
+				VkDescriptorSetLayout descriptorSetLayout;
+				std::vector<VkDescriptorSet> descriptorSets;
+
 				VkSemaphore imageAvailableSemaphore;
 				VkSemaphore renderFinishedSemaphore;
 				std::vector<VkSemaphore> imageAvailableSemaphores;
@@ -96,7 +105,9 @@ namespace Dynamik {
 				commandBuffer commandBuffer{ &myDevice, &myCommandPool };
 				pipeline pipeline{ &myDevice, &myRenderPass, &graphicsPipeline };
 				vertexBuffer vertexBuffer{ &myDevice, &myPhysicalDevice, &VertexBuffer, &vertexBufferMemory };
-				indexBuffer indexBuffer{ &myDevice, &IndexBuffer, &indexBufferMemory };
+				indexBuffer indexBuffer{ &myDevice, &myPhysicalDevice, &IndexBuffer, &indexBufferMemory };
+				uniformBuffer uniformBuffer{ &myDevice, &myPhysicalDevice, &UniformBuffers,
+					&uniformBuffersMemory, &descriptorPool, &descriptorSets, &descriptorSetLayout };
 
 				uint32 currentFrame = 0;
 				bool frameBufferResized = false;

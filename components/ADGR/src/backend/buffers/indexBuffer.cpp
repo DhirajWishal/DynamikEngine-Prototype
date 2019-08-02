@@ -9,14 +9,15 @@
 
 #include "adgrafx.h"
 #include "indexBuffer.h"
-#include "vertexBuffer.h"
+#include "buffer.h"
 
 namespace Dynamik {
 	namespace ADGR {
 		namespace core {
 
-			indexBuffer::indexBuffer(VkDevice* device, VkBuffer* buffer, VkDeviceMemory* bufferMemory) :
-				myDevice(device), myIndexBuffer(buffer), myIndexBufferMemory(bufferMemory) {
+			indexBuffer::indexBuffer(VkDevice* device, VkPhysicalDevice* physicalDevice, VkBuffer* buffer,
+				VkDeviceMemory* bufferMemory) :
+				myDevice(device), myPhysicalDevice(physicalDevice), myIndexBuffer(buffer), myIndexBufferMemory(bufferMemory) {
 			}
 
 			void indexBuffer::initBuffer(vertexBuffer* vertexBuffer, VkCommandPool commandPool,
@@ -25,7 +26,7 @@ namespace Dynamik {
 
 				VkBuffer stagingBuffer;
 				VkDeviceMemory stagingBufferMemory;
-				vertexBuffer->createBuffer(bufferSize, VK_BUFFER_USAGE_TRANSFER_SRC_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT
+				createBuffer(*myDevice, *myPhysicalDevice, bufferSize, VK_BUFFER_USAGE_TRANSFER_SRC_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT
 					| VK_MEMORY_PROPERTY_HOST_COHERENT_BIT, stagingBuffer, stagingBufferMemory);
 
 				void* data;
@@ -33,10 +34,10 @@ namespace Dynamik {
 				memcpy(data, indices.data(), (size_t)bufferSize);
 				vkUnmapMemory(*myDevice, stagingBufferMemory);
 
-				vertexBuffer->createBuffer(bufferSize, VK_BUFFER_USAGE_TRANSFER_DST_BIT | VK_BUFFER_USAGE_INDEX_BUFFER_BIT,
+				createBuffer(*myDevice, *myPhysicalDevice, bufferSize, VK_BUFFER_USAGE_TRANSFER_DST_BIT | VK_BUFFER_USAGE_INDEX_BUFFER_BIT,
 					VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT, *myIndexBuffer, *myIndexBufferMemory);
 
-				vertexBuffer->copyBuffer(stagingBuffer, *myIndexBuffer, bufferSize, commandPool, graphicsQueue);
+				copyBuffer(*myDevice, stagingBuffer, *myIndexBuffer, bufferSize, commandPool, graphicsQueue);
 
 				vkDestroyBuffer(*myDevice, stagingBuffer, nullptr);
 				vkFreeMemory(*myDevice, stagingBufferMemory, nullptr);

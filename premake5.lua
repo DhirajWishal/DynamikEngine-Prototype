@@ -85,10 +85,6 @@ project "Dynamik"
 			"GLFW_INCLUDE_NONE"
 		}
 
-		postbuildcommands {
-			"{COPY} $(SolutionDir)bin/$(Configuration)-$(Platform)Dynamik/Dynamik.dll $(SolutionDir)bin/$(Configuration)-$(Platform)Application/"
-		}
-
 	filter "configurations:Debug"
 		defines "DMK_DEBUG"
 		symbols "On"
@@ -140,6 +136,11 @@ project "Application"
 		"glfw3dll",
 		"opengl32",
 		"vulkan-1"
+	}
+
+	postbuildcommands {
+		"{copy} $(SolutionDir)bin\\$(Configuration)-$(Platform)\\ADGR\\ADGR.dll $(SolutionDir)bin\\$(Configuration)-$(Platform)\\Application",
+		"{copy} $(SolutionDir)bin\\$(Configuration)-$(Platform)\\Dynamik\\Dynamik.dll $(SolutionDir)bin\\$(Configuration)-$(Platform)\\Application"
 	}
 
 	filter "system:windows"

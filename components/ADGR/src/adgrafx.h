@@ -20,6 +20,7 @@
 #include <optional>
 #include <functional>
 #include <set>
+#include <chrono>
 
 #define GLFW_DLL
 #include <GLFW/glfw3.h>
@@ -29,5 +30,6 @@
 #include <glm/glm.hpp>
 #include <glm/vec4.hpp>
 #include <glm/mat4x4.hpp>
+#include <glm/gtc/matrix_transform.hpp>
 
 #endif

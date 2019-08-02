@@ -1,5 +1,6 @@
 #include "adgrafx.h"
-/*#include "src/Renderer.h"
+/*
+#include "src/Renderer.h"
 
 int main() {
 	Dynamik::ADGR::Renderer myRenderer;

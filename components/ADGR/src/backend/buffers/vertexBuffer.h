@@ -41,24 +41,11 @@ namespace Dynamik {
 
 				VkBuffer getVertexBuffer() const { return *myVertexBuffer; }
 
-				void copyData();
-
-				// create additional buffers
-				void createBuffer(VkDeviceSize size, VkBufferUsageFlags usage,
-					VkMemoryPropertyFlags properties, VkBuffer& buffer,
-					VkDeviceMemory& bufferMemory);
-
-				void copyBuffer(VkBuffer srcBuffer, VkBuffer dstBuffer, VkDeviceSize size,
-					VkCommandPool commandPool, VkQueue graphicsQueue);
-
 			private:
 				VkDevice* myDevice;
 				VkPhysicalDevice* myPhysicalDevice;
 				VkBuffer* myVertexBuffer;
 				VkDeviceMemory* myVertexBufferMemory;
-
-				uint32_t findMemoryType(uint32_t typeFilter, VkMemoryPropertyFlags properties);
-
 			};
 		}
 	}

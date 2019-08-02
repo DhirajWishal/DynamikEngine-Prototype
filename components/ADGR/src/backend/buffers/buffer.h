@@ -16,50 +16,15 @@ namespace Dynamik {
 	namespace ADGR {
 		namespace core {
 
-			class ADGR_API Buffer {
-			public:
-				Buffer(VkDevice* device, VkPhysicalDevice* physicalDevice,
-					VkCommandPool* commandPool, std::vector<VkFramebuffer>& frameBuffer,
-					VkBuffer* indexBuffer, VkDeviceMemory* indexBufferMemory,
-					VkBuffer* vertexBuffer, VkDeviceMemory* vertexBufferMemory);
-				Buffer(VkDevice* device, VkPhysicalDevice* physicalDevice,
-					VkCommandPool* commandPool);
-				Buffer(std::vector<VkFramebuffer>& frameBuffer);
-				Buffer(VkBuffer* indexBuffer, VkDeviceMemory* indexBufferMemory);
-				Buffer(VkBuffer* vertexBuffer, VkDeviceMemory* vertexBufferMemory, uint32 type);
-				Buffer() {}
+			void createBuffer(VkDevice device, VkPhysicalDevice physicalDevice, VkDeviceSize size,
+				VkBufferUsageFlags usage, VkMemoryPropertyFlags properties, VkBuffer& buffer,
+				VkDeviceMemory& bufferMemory);
 
-				virtual ~Buffer() {};
+			uint32 findMemoryType(uint32_t typeFilter, VkMemoryPropertyFlags properties,
+				VkPhysicalDevice physicalDevice);
 
-				virtual void initBuffer() {}
-				virtual void initBuffer(std::vector<VkImageView> swapChainImageViews,
-					VkRenderPass renderPass, VkExtent2D swapChainExtent) {}
-				//virtual void initBuffer(VkQueue graphicsQueue, vertexBuffer* myVertexBuffer) {}
-				virtual void initBuffer(VkRenderPass renderPass, VkExtent2D swapChainExtent,
-					VkPipeline graphicsPipeline) {}
-				virtual void initBuffer(VkQueue graphicsQueue) {}
-
-				//virtual void deleteBuffer() {}
-
-				//virtual VkBuffer getBuffer() { return; }
-
-			protected:
-				VkDevice* myDevice;
-				VkPhysicalDevice* myPhysicalDevice = nullptr;
-
-				VkCommandPool* myCommandPool = nullptr;
-
-				std::vector<VkFramebuffer> myFrameBuffer = {};
-
-				VkBuffer* myIndexBuffer = nullptr;
-				VkDeviceMemory* myIndexBufferMemory = nullptr;
-
-				VkBuffer* myVertexBuffer = nullptr;
-				VkDeviceMemory* myVertexBufferMemory = nullptr;
-
-			private:
-
-			};
+			void copyBuffer(VkDevice device, VkBuffer srcBuffer, VkBuffer dstBuffer, VkDeviceSize size,
+				VkCommandPool commandPool, VkQueue graphicsQueue);
 		}
 	}
 }

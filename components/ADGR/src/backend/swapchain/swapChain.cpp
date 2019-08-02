@@ -22,7 +22,7 @@ namespace Dynamik {
 				myPhysicalDevice(physicalDevice), mySurface(surface) {
 			}
 
-			void Dynamik::ADGR::core::swapChain::initSwapChain(GLFWwindow& window, std::vector<VkImage>* swapChainImages,
+			void swapChain::initSwapChain(GLFWwindow& window, std::vector<VkImage>* swapChainImages,
 				VkFormat* swapChainImageFormat, VkExtent2D* swapChainExtent) {
 				swapChainSupportDetails swapChainSupport = querySwapChainSupport(myPhysicalDevice, mySurface);
 
@@ -80,11 +80,11 @@ namespace Dynamik {
 				*swapChainExtent = extent;
 			}
 
-			void Dynamik::ADGR::core::swapChain::deleteSwapChain() {
+			void swapChain::deleteSwapChain() {
 				vkDestroySwapchainKHR(*myDevice, *mySwapChain, nullptr);
 			}
 
-			void Dynamik::ADGR::core::swapChain::initImageViews(std::vector<VkImageView>* swapChainImageViews,
+			void swapChain::initImageViews(std::vector<VkImageView>* swapChainImageViews,
 				std::vector<VkImage> swapChainImages, VkFormat swapChainImageFormat) {
 				swapChainImageViews->resize(swapChainImages.size());
 
@@ -112,14 +112,16 @@ namespace Dynamik {
 				}
 			}
 
-			void Dynamik::ADGR::core::swapChain::deleteImageViews(std::vector<VkImageView>* swapChainImageViews) {
+			void swapChain::deleteImageViews(std::vector<VkImageView>* swapChainImageViews) {
 				for (auto imageView : *swapChainImageViews)
 					vkDestroyImageView(*myDevice, imageView, nullptr);
 			}
 
-			void Dynamik::ADGR::core::swapChain::cleanUp(VkDevice device, std::vector<VkFramebuffer> swapChainFramebuffers,
+			void swapChain::cleanUp(VkDevice device, std::vector<VkFramebuffer> swapChainFramebuffers,
 				VkCommandPool commandPool, std::vector<VkCommandBuffer> commandBuffers, VkPipeline graphicsPipeline,
-				VkPipelineLayout pipelineLayout, VkRenderPass renderPass, std::vector<VkImageView> swapChainImageViews) {
+				VkPipelineLayout pipelineLayout, VkRenderPass renderPass, std::vector<VkImageView> swapChainImageViews,
+				std::vector<VkImage> swapChainImages, std::vector<VkBuffer> uniformBuffers,
+				std::vector<VkDeviceMemory> uniformBuffersMemory, VkDescriptorPool descriptorPool) {
 				for (size_t i = 0; i < swapChainFramebuffers.size(); i++)
 					vkDestroyFramebuffer(device, swapChainFramebuffers[i], nullptr);
 
@@ -134,10 +136,17 @@ namespace Dynamik {
 					vkDestroyImageView(device, swapChainImageViews[i], nullptr);
 
 				vkDestroySwapchainKHR(device, *mySwapChain, nullptr);
+
+				for (size_t i = 0; i < swapChainImages.size(); i++) {
+					vkDestroyBuffer(device, uniformBuffers[i], nullptr);
+					vkFreeMemory(device, uniformBuffersMemory[i], nullptr);
+				}
+
+				vkDestroyDescriptorPool(device, descriptorPool, nullptr);
 			}
 
-			Dynamik::ADGR::core::swapChainSupportDetails querySwapChainSupport(VkPhysicalDevice device, VkSurfaceKHR surface) {
-				Dynamik::ADGR::core::swapChainSupportDetails details;
+			swapChainSupportDetails querySwapChainSupport(VkPhysicalDevice device, VkSurfaceKHR surface) {
+				swapChainSupportDetails details;
 				vkGetPhysicalDeviceSurfaceCapabilitiesKHR(device, surface, &details.capabilities);
 
 				uint32_t formatCount;
@@ -160,7 +169,7 @@ namespace Dynamik {
 				return details;
 			}
 
-			Dynamik::ADGR::core::swapChainSupportDetails Dynamik::ADGR::core::swapChain::querySwapChainSupport(VkPhysicalDevice* device, VkSurfaceKHR* surface) {
+			swapChainSupportDetails swapChain::querySwapChainSupport(VkPhysicalDevice* device, VkSurfaceKHR* surface) {
 				swapChainSupportDetails details;
 				vkGetPhysicalDeviceSurfaceCapabilitiesKHR(*device, *surface, &details.capabilities);
 
@@ -184,7 +193,7 @@ namespace Dynamik {
 				return details;
 			}
 
-			VkSurfaceFormatKHR Dynamik::ADGR::core::swapChain::chooseSwapSurfaceFormat(const std::vector<VkSurfaceFormatKHR>& availableFormats) {
+			VkSurfaceFormatKHR swapChain::chooseSwapSurfaceFormat(const std::vector<VkSurfaceFormatKHR>& availableFormats) {
 				for (const auto& availableFormat : availableFormats)
 					if (availableFormat.format == VK_FORMAT_B8G8R8A8_UNORM
 						&& availableFormat.colorSpace == VK_COLOR_SPACE_SRGB_NONLINEAR_KHR)
@@ -193,7 +202,7 @@ namespace Dynamik {
 				return availableFormats[0];
 			}
 
-			VkPresentModeKHR Dynamik::ADGR::core::swapChain::chooseSwapPresentMode(const std::vector<VkPresentModeKHR>& availablePresentModes) {
+			VkPresentModeKHR swapChain::chooseSwapPresentMode(const std::vector<VkPresentModeKHR>& availablePresentModes) {
 				VkPresentModeKHR bestMode = VK_PRESENT_MODE_FIFO_KHR;
 
 				for (const auto& availablePresentMode : availablePresentModes) {
@@ -207,7 +216,7 @@ namespace Dynamik {
 				return bestMode;
 			}
 
-			VkExtent2D Dynamik::ADGR::core::swapChain::chooseSwapExtent(const VkSurfaceCapabilitiesKHR& capabilities) {
+			VkExtent2D swapChain::chooseSwapExtent(const VkSurfaceCapabilitiesKHR& capabilities) {
 				if (capabilities.currentExtent.width != std::numeric_limits<uint32_t>::max())
 					return capabilities.currentExtent;
 				else {
@@ -225,7 +234,7 @@ namespace Dynamik {
 				}
 			}
 
-			VkExtent2D Dynamik::ADGR::core::swapChain::chooseSwapExtent(GLFWwindow& window, const VkSurfaceCapabilitiesKHR& capabilities) {
+			VkExtent2D swapChain::chooseSwapExtent(GLFWwindow& window, const VkSurfaceCapabilitiesKHR& capabilities) {
 				if (capabilities.currentExtent.width != std::numeric_limits<uint32_t>::max())
 					return capabilities.currentExtent;
 				else {
@@ -246,8 +255,8 @@ namespace Dynamik {
 				}
 			}
 
-			Dynamik::ADGR::core::swapChainSupportDetails querySwapChainSupport(VkPhysicalDevice* device, VkSurfaceKHR* surface) {
-				Dynamik::ADGR::core::swapChainSupportDetails details;
+			swapChainSupportDetails querySwapChainSupport(VkPhysicalDevice* device, VkSurfaceKHR* surface) {
+				swapChainSupportDetails details;
 				vkGetPhysicalDeviceSurfaceCapabilitiesKHR(*device, *surface, &details.capabilities);
 
 				uint32_t formatCount;

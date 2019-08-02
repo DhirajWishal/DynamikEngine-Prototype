@@ -84,6 +84,9 @@
     <ClInclude Include="src\backend\buffers\indexBuffer.h">
       <Filter>src\backend\buffers</Filter>
     </ClInclude>
+    <ClInclude Include="src\backend\buffers\uniformBuffer.h">
+      <Filter>src\backend\buffers</Filter>
+    </ClInclude>
     <ClInclude Include="src\backend\buffers\vertexBuffer.h">
       <Filter>src\backend\buffers</Filter>
     </ClInclude>
@@ -126,6 +129,7 @@
     <ClInclude Include="src\backend\validators\validators.h">
       <Filter>src\backend\validators</Filter>
     </ClInclude>
+    <ClInclude Include="src\Platform\Windows\utils\loadIcon.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -157,6 +161,9 @@
       <Filter>src\backend\buffers</Filter>
     </ClCompile>
     <ClCompile Include="src\backend\buffers\indexBuffer.cpp">
+      <Filter>src\backend\buffers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\backend\buffers\uniformBuffer.cpp">
       <Filter>src\backend\buffers</Filter>
     </ClCompile>
     <ClCompile Include="src\backend\buffers\vertexBuffer.cpp">
@@ -195,5 +202,6 @@
     <ClCompile Include="src\backend\validators\validators.cpp">
       <Filter>src\backend\validators</Filter>
     </ClCompile>
+    <ClCompile Include="src\Platform\Windows\utils\loadIcon.cpp" />
   </ItemGroup>
 </Project>

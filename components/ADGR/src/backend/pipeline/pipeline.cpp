@@ -98,12 +98,11 @@ namespace Dynamik {
 
 			// initialize the pipeline
 			// initPipeline(device, swapChainExtent, pipelineLayout, renderPass, graphicsPipeline);
-			void pipeline::initPipeline(VkExtent2D swapChainExtent, VkPipelineLayout pipelineLayout) {
+			void pipeline::initPipeline(VkExtent2D swapChainExtent, VkPipelineLayout* pipelineLayout,
+				VkDescriptorSetLayout* descriptorSetLayout) {
 				// initialize the vertex inputs
 				VkPipelineVertexInputStateCreateInfo vertexInputInfo = {};
 				vertexInputInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO;
-				vertexInputInfo.vertexBindingDescriptionCount = 0;
-				vertexInputInfo.vertexAttributeDescriptionCount = 0;
 
 				auto bindingDescription = vertex::getBindingDescription();
 				auto attributeDescriptions = vertex::getAttributeDescriptions();
@@ -149,7 +148,7 @@ namespace Dynamik {
 				rasterizer.polygonMode = VK_POLYGON_MODE_FILL;
 				rasterizer.lineWidth = 1.0f;
 				rasterizer.cullMode = VK_CULL_MODE_BACK_BIT;
-				rasterizer.frontFace = VK_FRONT_FACE_CLOCKWISE;
+				rasterizer.frontFace = VK_FRONT_FACE_COUNTER_CLOCKWISE;
 				rasterizer.depthBiasEnable = VK_FALSE;
 
 				// initialize multisampling
@@ -160,7 +159,10 @@ namespace Dynamik {
 
 				// initialize the color blender
 				VkPipelineColorBlendAttachmentState colorBlendAttachment = {};
-				colorBlendAttachment.colorWriteMask = VK_COLOR_COMPONENT_R_BIT | VK_COLOR_COMPONENT_G_BIT | VK_COLOR_COMPONENT_B_BIT | VK_COLOR_COMPONENT_A_BIT;
+				colorBlendAttachment.colorWriteMask = VK_COLOR_COMPONENT_R_BIT
+					| VK_COLOR_COMPONENT_G_BIT
+					| VK_COLOR_COMPONENT_B_BIT
+					| VK_COLOR_COMPONENT_A_BIT;
 				colorBlendAttachment.blendEnable = VK_FALSE;
 
 				// initialize the color blender state
@@ -178,11 +180,12 @@ namespace Dynamik {
 				// initialize the pipeline layout
 				VkPipelineLayoutCreateInfo pipelineLayoutInfo = {};
 				pipelineLayoutInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO;
-				pipelineLayoutInfo.setLayoutCount = 0;
-				pipelineLayoutInfo.pushConstantRangeCount = 0;
+				pipelineLayoutInfo.setLayoutCount = 1;
+				pipelineLayoutInfo.pSetLayouts = descriptorSetLayout;
+				//pipelineLayoutInfo.pushConstantRangeCount = 0;
 
 				// create the pipeline layout
-				if (vkCreatePipelineLayout(*myDevice, &pipelineLayoutInfo, nullptr, &pipelineLayout) != VK_SUCCESS)
+				if (vkCreatePipelineLayout(*myDevice, &pipelineLayoutInfo, nullptr, pipelineLayout) != VK_SUCCESS)
 					throw std::runtime_error("failed to create pipeline layout!");
 
 				VkPipelineShaderStageCreateInfo shaderStages[] = {
@@ -201,7 +204,7 @@ namespace Dynamik {
 				pipelineInfo.pRasterizationState = &rasterizer;
 				pipelineInfo.pMultisampleState = &multisampling;
 				pipelineInfo.pColorBlendState = &colorBlending;
-				pipelineInfo.layout = pipelineLayout;
+				pipelineInfo.layout = *pipelineLayout;
 				pipelineInfo.renderPass = *myRenderPass;
 				pipelineInfo.subpass = 0;
 				pipelineInfo.basePipelineHandle = VK_NULL_HANDLE;

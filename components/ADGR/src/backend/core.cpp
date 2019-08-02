@@ -49,15 +49,17 @@ namespace Dynamik {
 				// create the render pass
 				pipeline.initRenderPass(swapChainImageFormat);
 
+				// create the uniform buffer descriptor
+				uniformBuffer.createDescripterSetLayout();
+				uniformBuffer.initDescripterPool(swapChainImages);
+
 				// create the graphics pipeline
 				auto vertShaderCode = utils::readFile(vertexShaderPath);
 				auto fragShaderCode = utils::readFile(fragmentShaderPath);
 
 				pipeline.initShaders(vertShaderCode, fragShaderCode);
-				pipeline.initPipeline(swapChainExtent, myPipelineLayout);
+				pipeline.initPipeline(swapChainExtent, &myPipelineLayout, uniformBuffer.getDescriptorSetLayout());
 				pipeline.deleteShaders();
-
-				myDevice;
 
 				// create frame buffers
 				swapchainFrameBuffers.initBuffer(swapChainImageViews, myRenderPass, swapChainExtent);
@@ -71,9 +73,17 @@ namespace Dynamik {
 				// create index buffer
 				indexBuffer.initBuffer(&vertexBuffer, myCommandPool, graphicsQueue);
 
+				// create uniform buffer
+				uniformBuffer.initBuffer(swapChainImages);
+				uniformBuffer.initDescripterPool(swapChainImages);
+				uniformBuffer.initDescripterSets(swapChainImages);
+
+				myPipelineLayout;
+
 				// other initializing functions
 				commandBuffer.initBuffer(myCommandPool, myRenderPass, swapchainFrameBuffers.getFrameBuffers(),
-					swapChainExtent, graphicsPipeline, vertexBuffer.getVertexBuffer(), indexBuffer.getIndexBuffer());
+					swapChainExtent, graphicsPipeline, vertexBuffer.getVertexBuffer(), indexBuffer.getIndexBuffer(),
+					myPipelineLayout, descriptorSets);
 				initSyncObjects(myDevice, &imageAvailableSemaphores, &renderFinishedSemaphores, &inFlightFences);
 			}
 
@@ -81,7 +91,8 @@ namespace Dynamik {
 				// clean the swapchain
 				swapchain.cleanUp(myDevice, swapchainFrameBuffers.getFrameBuffers(),
 					myCommandPool, commandBuffer.getCommanBuffer(), graphicsPipeline, myPipelineLayout,
-					myRenderPass, swapChainImageViews);
+					myRenderPass, swapChainImageViews, swapChainImages, UniformBuffers, uniformBuffersMemory,
+					descriptorPool);
 
 				// delete index and vertex buffers
 				indexBuffer.deleteIndexBuffer();
@@ -124,7 +135,8 @@ namespace Dynamik {
 				// cleanup the swapchain
 				swapchain.cleanUp(myDevice, swapchainFrameBuffers.getFrameBuffers(),
 					myCommandPool, commandBuffer.getCommanBuffer(), graphicsPipeline, myPipelineLayout,
-					myRenderPass, swapChainImageViews);
+					myRenderPass, swapChainImageViews, swapChainImages, UniformBuffers, uniformBuffersMemory,
+					descriptorPool);
 
 				// initialize the swapchain
 				swapchain.initSwapChain(*window, &swapChainImages,
@@ -141,15 +153,21 @@ namespace Dynamik {
 				auto fragShaderCode = utils::readFile(fragmentShaderPath);
 
 				pipeline.initShaders(vertShaderCode, fragShaderCode);
-				pipeline.initPipeline(swapChainExtent, myPipelineLayout);
+				pipeline.initPipeline(swapChainExtent, &myPipelineLayout, uniformBuffer.getDescriptorSetLayout());
 				pipeline.deleteShaders();
 
 				// initialize the frame buffer
 				swapchainFrameBuffers.initBuffer(swapChainImageViews, myRenderPass, swapChainExtent);
 
+				// initialize the uniform buffer
+				uniformBuffer.initBuffer(swapChainImages);
+				uniformBuffer.initDescripterPool(swapChainImages);
+				uniformBuffer.initDescripterSets(swapChainImages);
+
 				// initialize the command buffer
 				commandBuffer.initBuffer(myCommandPool, myRenderPass, swapchainFrameBuffers.getFrameBuffers(),
-					swapChainExtent, graphicsPipeline, VertexBuffer, IndexBuffer);
+					swapChainExtent, graphicsPipeline, VertexBuffer, IndexBuffer, myPipelineLayout,
+					descriptorSets);
 			}
 
 			void ADGR_API core::drawFrame() {
@@ -168,6 +186,27 @@ namespace Dynamik {
 				else if (result != VK_SUCCESS && result != VK_SUBOPTIMAL_KHR)
 					throw std::runtime_error("failed to acquire swap chain image!");
 
+				uniformBuffer.updateBuffer(imageIndex, swapChainExtent, currentFrame);
+
+				// **********	**********	**********	**********	**********
+				/*				static auto startTime = std::chrono::high_resolution_clock::now();
+
+				auto currentTime = std::chrono::high_resolution_clock::now();
+				float time = std::chrono::duration<float, std::chrono::seconds::period>(currentTime - startTime).count();
+
+				UniformBufferObject ubo = {};
+				ubo.model = glm::rotate(glm::mat4(1.0f), time * glm::radians(90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+				ubo.view = glm::lookAt(glm::vec3(2.0f, 2.0f, 2.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+				ubo.proj = glm::perspective(glm::radians(45.0f), swapChainExtent.width / (float)swapChainExtent.height, 0.1f, 10.0f);
+				ubo.proj[1][1] *= -1;
+
+				void* data;
+				vkMapMemory(myDevice, uniformBuffersMemory.at(currentFrame), 0, sizeof(ubo), 0, &data);
+				memcpy(data, &ubo, sizeof(ubo));
+				vkUnmapMemory(myDevice, uniformBuffersMemory.at(currentFrame));
+				*/
+				// **********	**********	**********	**********	**********
+
 				VkSubmitInfo submitInfo = {};
 				submitInfo.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO;
 
@@ -177,9 +216,8 @@ namespace Dynamik {
 				submitInfo.pWaitSemaphores = waitSemaphores;
 				submitInfo.pWaitDstStageMask = waitStages;
 
-				std::vector<VkCommandBuffer> commandBufferss = commandBuffer.getCommanBuffer();
-				submitInfo.commandBufferCount = 1;
-				submitInfo.pCommandBuffers = &commandBufferss[imageIndex];
+				submitInfo.commandBufferCount = 1; 
+				submitInfo.pCommandBuffers = commandBuffer.getFrame(imageIndex);
 
 				VkSemaphore signalSemaphores[] = { renderFinishedSemaphores[currentFrame] };
 				submitInfo.signalSemaphoreCount = 1;
@@ -200,7 +238,6 @@ namespace Dynamik {
 				presentInfo.swapchainCount = 1;
 				presentInfo.pSwapchains = swapChains;
 				presentInfo.pImageIndices = &imageIndex;
-				presentInfo.pResults = nullptr; // Optional
 
 				result = vkQueuePresentKHR(presentQueue, &presentInfo);
 
@@ -222,6 +259,10 @@ namespace Dynamik {
 				window = glfwCreateWindow(WIDTH, HEIGHT, "Dynamik Engine", nullptr, nullptr);
 				glfwSetWindowUserPointer(window, this);
 				glfwSetFramebufferSizeCallback(window, framebufferResizeCallback);
+
+				GLFWimage icon;
+				//icon = load_icon("E:/Projects/Dynamik Engine/Dynamik/core assets/icons/icon1.png")
+				glfwSetWindowIcon(window, 0, NULL);
 			}
 
 			void core::framebufferResizeCallback(GLFWwindow* window, int width, int height) {

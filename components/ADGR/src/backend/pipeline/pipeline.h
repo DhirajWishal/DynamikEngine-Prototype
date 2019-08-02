@@ -24,7 +24,8 @@ namespace Dynamik {
 				void initShaders(std::vector<char> vertShaderCode, std::vector<char> fragShaderCode);
 
 				// initialize the pipeline
-				void initPipeline(VkExtent2D swapChainExtent, VkPipelineLayout pipelineLayout);
+				void initPipeline(VkExtent2D swapChainExtent, VkPipelineLayout* pipelineLayout,
+					VkDescriptorSetLayout* descriptorSetLayout);
 
 				// delete the shaders
 				void deleteShaders();

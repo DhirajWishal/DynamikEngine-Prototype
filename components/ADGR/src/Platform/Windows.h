@@ -13,5 +13,6 @@
 #include "Windows/window.h"
 
 #include "Windows/utils/readFile.h"
+#include "Windows/utils/loadIcon.h"
 
 #endif

@@ -19,7 +19,8 @@ namespace Dynamik {
 
 			class ADGR_API indexBuffer {
 			public:
-				indexBuffer(VkDevice* device, VkBuffer* buffer, VkDeviceMemory* bufferMemory);
+				indexBuffer(VkDevice* device, VkPhysicalDevice* physicalDevice, VkBuffer* buffer,
+					VkDeviceMemory* bufferMemory);
 				~indexBuffer() {}
 
 				void initBuffer(vertexBuffer* vertexBuffer, VkCommandPool commandPool,
@@ -30,6 +31,8 @@ namespace Dynamik {
 
 			private:
 				VkDevice* myDevice;
+				VkPhysicalDevice* myPhysicalDevice;
+
 				VkBuffer* myIndexBuffer;
 				VkDeviceMemory* myIndexBufferMemory;
 			};

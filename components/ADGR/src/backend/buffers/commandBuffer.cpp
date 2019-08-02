@@ -21,7 +21,8 @@ namespace Dynamik {
 
 			void commandBuffer::initBuffer(VkCommandPool commandPool, VkRenderPass renderPass,
 				std::vector<VkFramebuffer> frameBuff, VkExtent2D swapChainExtent, VkPipeline graphicsPipeline,
-				VkBuffer vertexBuffer, VkBuffer indexBuffer) {
+				VkBuffer vertexBuffer, VkBuffer indexBuffer, VkPipelineLayout pipelineLayout,
+				std::vector<VkDescriptorSet> descriptorSet) {
 				mySize = frameBuff.size();
 				commandBuff.resize(mySize);
 
@@ -63,6 +64,9 @@ namespace Dynamik {
 					vkCmdBindVertexBuffers(commandBuff[i], 0, 1, vertexBuffers, offsets);
 
 					vkCmdBindIndexBuffer(commandBuff[i], indexBuffer, 0, VK_INDEX_TYPE_UINT16);
+
+					vkCmdBindDescriptorSets(commandBuff[i], VK_PIPELINE_BIND_POINT_GRAPHICS,
+						pipelineLayout, 0, 1, &descriptorSet[i], 0, nullptr);
 
 					vkCmdDrawIndexed(commandBuff[i], static_cast<uint32_t>(indices.size()), 1, 0, 0, 0);
 

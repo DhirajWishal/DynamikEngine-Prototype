@@ -40,7 +40,8 @@ namespace Dynamik {
 
 				void cleanUp(VkDevice device, std::vector<VkFramebuffer> swapChainFramebuffers, VkCommandPool commandPool,
 					std::vector<VkCommandBuffer> commandBuffers, VkPipeline graphicsPipeline, VkPipelineLayout pipelineLayout,
-					VkRenderPass renderPass, std::vector<VkImageView> swapChainImageViews);
+					VkRenderPass renderPass, std::vector<VkImageView> swapChainImageViews, std::vector<VkImage> swapChainImages, std::vector<VkBuffer> uniformBuffers,
+					std::vector<VkDeviceMemory> uniformBuffersMemory, VkDescriptorPool descriptorPool);
 
 				swapChainSupportDetails querySwapChainSupport(VkPhysicalDevice* device, VkSurfaceKHR* surface);
 				VkExtent2D chooseSwapExtent(const VkSurfaceCapabilitiesKHR& capabilities);

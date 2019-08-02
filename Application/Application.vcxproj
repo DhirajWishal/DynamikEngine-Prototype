@@ -91,6 +91,10 @@
       <AdditionalDependencies>glfw3dll.lib;opengl32.lib;vulkan-1.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)libs\GLFW\lib-vc2019;E:\Programming\Codes\Game Development\Libraries\VulkanSDK\1.1.108.0\Lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
+    <PostBuildEvent>
+      <Command>IF EXIST $(SolutionDir)bin\$(Configuration)-$(Platform)\ADGR\ADGR.dll\ (xcopy /Q /E /Y /I $(SolutionDir)bin\$(Configuration)-$(Platform)\ADGR\ADGR.dll $(SolutionDir)bin\$(Configuration)-$(Platform)\Application &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)bin\$(Configuration)-$(Platform)\ADGR\ADGR.dll $(SolutionDir)bin\$(Configuration)-$(Platform)\Application &gt; nul)
+IF EXIST $(SolutionDir)bin\$(Configuration)-$(Platform)\Dynamik\Dynamik.dll\ (xcopy /Q /E /Y /I $(SolutionDir)bin\$(Configuration)-$(Platform)\Dynamik\Dynamik.dll $(SolutionDir)bin\$(Configuration)-$(Platform)\Application &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)bin\$(Configuration)-$(Platform)\Dynamik\Dynamik.dll $(SolutionDir)bin\$(Configuration)-$(Platform)\Application &gt; nul)</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -113,6 +117,10 @@
       <AdditionalDependencies>glfw3dll.lib;opengl32.lib;vulkan-1.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)libs\GLFW\lib-vc2019;E:\Programming\Codes\Game Development\Libraries\VulkanSDK\1.1.108.0\Lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
+    <PostBuildEvent>
+      <Command>IF EXIST $(SolutionDir)bin\$(Configuration)-$(Platform)\ADGR\ADGR.dll\ (xcopy /Q /E /Y /I $(SolutionDir)bin\$(Configuration)-$(Platform)\ADGR\ADGR.dll $(SolutionDir)bin\$(Configuration)-$(Platform)\Application &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)bin\$(Configuration)-$(Platform)\ADGR\ADGR.dll $(SolutionDir)bin\$(Configuration)-$(Platform)\Application &gt; nul)
+IF EXIST $(SolutionDir)bin\$(Configuration)-$(Platform)\Dynamik\Dynamik.dll\ (xcopy /Q /E /Y /I $(SolutionDir)bin\$(Configuration)-$(Platform)\Dynamik\Dynamik.dll $(SolutionDir)bin\$(Configuration)-$(Platform)\Application &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)bin\$(Configuration)-$(Platform)\Dynamik\Dynamik.dll $(SolutionDir)bin\$(Configuration)-$(Platform)\Application &gt; nul)</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Distribution|x64'">
     <ClCompile>
@@ -135,6 +143,10 @@
       <AdditionalDependencies>glfw3dll.lib;opengl32.lib;vulkan-1.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)libs\GLFW\lib-vc2019;E:\Programming\Codes\Game Development\Libraries\VulkanSDK\1.1.108.0\Lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
+    <PostBuildEvent>
+      <Command>IF EXIST $(SolutionDir)bin\$(Configuration)-$(Platform)\ADGR\ADGR.dll\ (xcopy /Q /E /Y /I $(SolutionDir)bin\$(Configuration)-$(Platform)\ADGR\ADGR.dll $(SolutionDir)bin\$(Configuration)-$(Platform)\Application &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)bin\$(Configuration)-$(Platform)\ADGR\ADGR.dll $(SolutionDir)bin\$(Configuration)-$(Platform)\Application &gt; nul)
+IF EXIST $(SolutionDir)bin\$(Configuration)-$(Platform)\Dynamik\Dynamik.dll\ (xcopy /Q /E /Y /I $(SolutionDir)bin\$(Configuration)-$(Platform)\Dynamik\Dynamik.dll $(SolutionDir)bin\$(Configuration)-$(Platform)\Application &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)bin\$(Configuration)-$(Platform)\Dynamik\Dynamik.dll $(SolutionDir)bin\$(Configuration)-$(Platform)\Application &gt; nul)</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="src\imports.h" />

@@ -3,6 +3,8 @@
 
 namespace Dynamik {
 	Application::Application() {
+		myRenderingEngine.setMipLevel(5.0f);
+
 		myRenderingEngine.initRenderer();
 	}
 

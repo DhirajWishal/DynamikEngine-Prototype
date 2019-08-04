@@ -11,7 +11,9 @@
 
 /* ---------- ########## ////////// CORE INCLUDES \\\\\\\\\\ ########## ---------- */
 #include "buffers/buffer.h"
+#include "buffers/colorBuffer.h"
 #include "buffers/commandBuffer.h"
+#include "buffers/depthBuffer.h"
 #include "buffers/frameBuffer.h"
 #include "buffers/indexBuffer.h"
 #include "buffers/uniformBuffer.h"
@@ -19,9 +21,11 @@
 #include "device/device.h"
 #include "extensions/extensions.h"
 #include "instance/instance.h"
+#include "loader/model.h"
 #include "pipeline/pipeline.h"
 #include "queues/queues.h"
 #include "swapchain/swapChain.h"
+#include "texture/texture.h"
 #include "validators/debugger/debugger.h"
 #include "validators/validators.h"
 
@@ -46,8 +50,8 @@ namespace Dynamik {
 
 				void startup();
 				void shutdown();
-				void recreateSwapChain();
 				void drawFrame();
+				void recreateSwapChain();
 
 				void initWindow();
 
@@ -55,6 +59,10 @@ namespace Dynamik {
 				VkDevice getDevice() { return myDevice; }
 
 				static void framebufferResizeCallback(GLFWwindow* window, int width, int height);
+
+				// helper functions;
+
+				void setMipLevels(float);
 
 			private:
 				GLFWwindow* window = nullptr;
@@ -73,6 +81,22 @@ namespace Dynamik {
 				VkDeviceMemory vertexBufferMemory;
 				VkBuffer IndexBuffer;
 				VkDeviceMemory indexBufferMemory;
+				VkBuffer StagingBuffer;
+				VkDeviceMemory stagingBufferMemory;
+
+				uint32 mipLevels;
+				VkImage textureImage;
+				VkDeviceMemory textureImageMemory;
+				VkImageView textureImageView;
+				VkSampler textureSampler;
+				VkSampleCountFlagBits msaaSamples = VK_SAMPLE_COUNT_1_BIT;
+				VkImage colorImage;
+				VkDeviceMemory colorImageMemory;
+				VkImageView colorImageView;
+
+				VkImage depthImage;
+				VkDeviceMemory depthImageMemory;
+				VkImageView depthImageView;
 
 				std::vector<VkBuffer> UniformBuffers;
 				std::vector<VkDeviceMemory> uniformBuffersMemory;
@@ -108,12 +132,25 @@ namespace Dynamik {
 				indexBuffer indexBuffer{ &myDevice, &myPhysicalDevice, &IndexBuffer, &indexBufferMemory };
 				uniformBuffer uniformBuffer{ &myDevice, &myPhysicalDevice, &UniformBuffers,
 					&uniformBuffersMemory, &descriptorPool, &descriptorSets, &descriptorSetLayout };
+				texture texture{ &myDevice, &myPhysicalDevice, &StagingBuffer, &stagingBufferMemory,
+					&textureImage, &textureImageMemory, &textureImageView, &textureSampler, &mipLevels };
+				depthBuffer depthBuffer{ &myDevice, &myPhysicalDevice, &depthImage, &depthImageMemory,
+					&depthImageView };
+				colorBuffer colorBuffer{ &myDevice, &myPhysicalDevice, &colorImage, &colorImageMemory,
+					&colorImageView };
+
+				model myModel;
 
 				uint32 currentFrame = 0;
 				bool frameBufferResized = false;
 
-				std::string vertexShaderPath = "E:/Projects/Dynamik Engine/Dynamik/components/Shaders/vert.spv";
-				std::string fragmentShaderPath = "E:/Projects/Dynamik Engine/Dynamik/components/Shaders/frag.spv";
+				std::vector<std::vector<std::string>> shaderPath;
+				std::vector<std::vector<std::string>> assetsPath;
+
+				const std::string vertexShaderPath = "E:/Projects/Dynamik Engine/Dynamik/components/Shaders/vert.spv";
+				const std::string fragmentShaderPath = "E:/Projects/Dynamik Engine/Dynamik/components/Shaders/frag.spv";
+				const std::string MODEL_PATH = "E:/Projects/Dynamik Engine/Dynamik/core assets/models/chalet.obj";
+				const std::string TEXTURE_PATH = "E:/Projects/Dynamik Engine/Dynamik/core assets/textures/chalet.jpg";
 			};
 		}
 	}

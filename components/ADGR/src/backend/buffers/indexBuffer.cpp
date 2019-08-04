@@ -20,8 +20,9 @@ namespace Dynamik {
 				myDevice(device), myPhysicalDevice(physicalDevice), myIndexBuffer(buffer), myIndexBufferMemory(bufferMemory) {
 			}
 
-			void indexBuffer::initBuffer(vertexBuffer* vertexBuffer, VkCommandPool commandPool,
+			void indexBuffer::initBuffer(vertexBuffer* vertexBuffer, model myModel, VkCommandPool commandPool,
 				VkQueue graphicsQueue) {
+				std::vector<uint32> indices = myModel.getIndeices();
 				VkDeviceSize bufferSize = sizeof(indices[0]) * indices.size();
 
 				VkBuffer stagingBuffer;

@@ -20,7 +20,7 @@ namespace Dynamik {
 				VkBufferUsageFlags usage, VkMemoryPropertyFlags properties, VkBuffer& buffer,
 				VkDeviceMemory& bufferMemory);
 
-			uint32 findMemoryType(uint32_t typeFilter, VkMemoryPropertyFlags properties,
+			uint32 findMemoryType(uint32 typeFilter, VkMemoryPropertyFlags properties,
 				VkPhysicalDevice physicalDevice);
 
 			void copyBuffer(VkDevice device, VkBuffer srcBuffer, VkBuffer dstBuffer, VkDeviceSize size,

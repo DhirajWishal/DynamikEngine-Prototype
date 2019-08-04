@@ -1,5 +1,5 @@
 #include "adgrafx.h"
-/*
+
 #include "src/Renderer.h"
 
 int main() {
@@ -9,4 +9,6 @@ int main() {
 	myRenderer.end();
 
 	return 0;
-}*/
+}
+
+// topping off at 3,696 code lines (03/08/2019)

@@ -10,25 +10,11 @@
 */
 
 #include "src/backend/interface.h"
+#include "src/backend/loader/model.h"
 
 namespace Dynamik {
 	namespace ADGR {
 		namespace core {
-
-			struct vertex {
-				glm::vec2 position;
-				glm::vec3 color;
-
-				static VkVertexInputBindingDescription getBindingDescription();
-				static std::array<VkVertexInputAttributeDescription, 2> getAttributeDescriptions();
-			};
-
-			const std::vector<vertex> vertices = {
-				{{-0.5f, -0.5f}, {1.0f, 0.0f, 0.0f}},
-				{{0.5f, -0.5f}, {0.0f, 1.0f, 0.0f}},
-				{{0.5f, 0.5f}, {0.0f, 0.0f, 1.0f}},
-				{{-0.5f, 0.5f}, {1.0f, 1.0f, 1.0f}}
-			};
 
 			class ADGR_API vertexBuffer {
 			public:
@@ -36,7 +22,8 @@ namespace Dynamik {
 					VkBuffer* vertexBuffer, VkDeviceMemory* vertexBufferMemory);
 				~vertexBuffer() {}
 
-				void initBuffer(VkCommandPool commandPool, VkQueue graphicsQueue);
+				void initBuffer(VkCommandPool commandPool, VkQueue graphicsQueue,
+					model myModel);
 				void deleteVertexBuffer();
 
 				VkBuffer getVertexBuffer() const { return *myVertexBuffer; }
@@ -50,5 +37,3 @@ namespace Dynamik {
 		}
 	}
 }
-
-

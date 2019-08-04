@@ -12,6 +12,7 @@
 #include "src/backend/interface.h"
 #include "vertexBuffer.h"
 #include "core/utils/DMK_DataTypes.h"
+#include "backend/loader/model.h"
 
 namespace Dynamik {
 	namespace ADGR {
@@ -23,7 +24,7 @@ namespace Dynamik {
 					VkDeviceMemory* bufferMemory);
 				~indexBuffer() {}
 
-				void initBuffer(vertexBuffer* vertexBuffer, VkCommandPool commandPool,
+				void initBuffer(vertexBuffer* vertexBuffer, model myModel, VkCommandPool commandPool,
 					VkQueue graphicsQueue);
 				void deleteIndexBuffer();
 
@@ -35,10 +36,6 @@ namespace Dynamik {
 
 				VkBuffer* myIndexBuffer;
 				VkDeviceMemory* myIndexBufferMemory;
-			};
-
-			const std::vector<uint16_t> indices = {
-				0, 1, 2, 2, 3, 0
 			};
 		}
 	}

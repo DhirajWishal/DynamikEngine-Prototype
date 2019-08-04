@@ -15,7 +15,7 @@ namespace Dynamik {
 		namespace core {
 
 			std::vector<const char*> getRequiredExtentions(bool vaidationLayer) {
-				uint32_t glfwExtentionCount = 0;
+				uint32 glfwExtentionCount = 0;
 				const char** glfwExtentions;
 				glfwExtentions = glfwGetRequiredInstanceExtensions(&glfwExtentionCount);
 

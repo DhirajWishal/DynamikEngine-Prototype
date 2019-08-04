@@ -19,19 +19,23 @@ namespace Dynamik {
 			}
 
 			void frameBuffer::initBuffer(std::vector<VkImageView> swapChainImageViews,
-				VkRenderPass renderPass, VkExtent2D swapChainExtent) {
+				VkRenderPass renderPass, VkExtent2D swapChainExtent, VkImageView depthImageView,
+				VkImageView colorImageView) {
 				mySize = swapChainImageViews.size();
 				frameBuff.resize(mySize);
+
 				for (size_t i = 0; i < mySize; i++) {
-					VkImageView attachments[] = {
-						swapChainImageViews[i]
+					std::array<VkImageView, 3> attachments = {
+							colorImageView,
+							depthImageView,
+							swapChainImageViews[i]
 					};
 
 					VkFramebufferCreateInfo framebufferInfo = {};
 					framebufferInfo.sType = VK_STRUCTURE_TYPE_FRAMEBUFFER_CREATE_INFO;
 					framebufferInfo.renderPass = renderPass;
-					framebufferInfo.attachmentCount = 1;
-					framebufferInfo.pAttachments = attachments;
+					framebufferInfo.attachmentCount = static_cast<uint32_t>(attachments.size());
+					framebufferInfo.pAttachments = attachments.data();
 					framebufferInfo.width = swapChainExtent.width;
 					framebufferInfo.height = swapChainExtent.height;
 					framebufferInfo.layers = 1;

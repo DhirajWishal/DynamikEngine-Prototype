@@ -14,6 +14,7 @@
 #include "backend/extensions/extensions.h"
 #include "backend/validators/validators.h"
 #include "backend/swapchain/swapChain.h"
+#include "backend/buffers/depthBuffer.h"
 
 #include "core/utils/DMK_DataTypes.h"
 
@@ -61,6 +62,8 @@ namespace Dynamik {
 				}
 
 				VkPhysicalDeviceFeatures deviceFeatures = {};
+				deviceFeatures.samplerAnisotropy = VK_TRUE;
+				deviceFeatures.sampleRateShading = VK_TRUE; // enable sample shading feature for the device
 
 				VkDeviceCreateInfo createInfo = {};
 				createInfo.sType = VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO;
@@ -85,7 +88,7 @@ namespace Dynamik {
 				vkGetDeviceQueue(*myDevice, indices.presentFamily.value(), 0, presentQueue);
 			}
 
-			void device::pickPhysicalDevice(VkInstance instance) {
+			void device::pickPhysicalDevice(VkInstance instance, VkSampleCountFlagBits* msaaSamples) {
 				uint32 deviceCount = 0;
 				vkEnumeratePhysicalDevices(instance, &deviceCount, nullptr);
 
@@ -100,6 +103,7 @@ namespace Dynamik {
 				for (const auto& device : devices) {
 					if (isDeviceSuitable(device)) {
 						*myPhysicalDevice = device;
+						*msaaSamples = getMaxUsableSampleCount(*myPhysicalDevice);
 						break;
 					}
 				}
@@ -120,7 +124,13 @@ namespace Dynamik {
 						&& !swapChainSupport.presentModes.empty();
 				}
 
-				return indices.isComplete() && extensionsSupported && swapChainAdequate;
+				VkPhysicalDeviceFeatures supportedFeatures;
+				vkGetPhysicalDeviceFeatures(device, &supportedFeatures);
+
+				return indices.isComplete() 
+					&& extensionsSupported 
+					&& swapChainAdequate 
+					&& supportedFeatures.samplerAnisotropy;
 			}
 
 			int device::rateDeviceSuitability() {

@@ -26,7 +26,7 @@ namespace Dynamik {
 
 				void initLogicalDevice(VkSurfaceKHR surface,
 					VkQueue* graphicsQueue, VkQueue* presentQueue);
-				void pickPhysicalDevice(VkInstance instance);
+				void pickPhysicalDevice(VkInstance instance, VkSampleCountFlagBits* msaaSamples);
 				bool isDeviceSuitable(VkPhysicalDevice device);
 				int rateDeviceSuitability();
 

@@ -7,6 +7,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Application", "Application\
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Dynamik", "Dynamik\Dynamik.vcxproj", "{928A7598-FE69-F433-0782-7F0A73E05A95}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Managers", "components\Managers\Managers.vcxproj", "{B34CFEBD-9F19-59C9-C832-4771B45E8E57}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -32,6 +34,12 @@ Global
 		{928A7598-FE69-F433-0782-7F0A73E05A95}.Distribution|x64.Build.0 = Distribution|x64
 		{928A7598-FE69-F433-0782-7F0A73E05A95}.Release|x64.ActiveCfg = Release|x64
 		{928A7598-FE69-F433-0782-7F0A73E05A95}.Release|x64.Build.0 = Release|x64
+		{B34CFEBD-9F19-59C9-C832-4771B45E8E57}.Debug|x64.ActiveCfg = Debug|x64
+		{B34CFEBD-9F19-59C9-C832-4771B45E8E57}.Debug|x64.Build.0 = Debug|x64
+		{B34CFEBD-9F19-59C9-C832-4771B45E8E57}.Distribution|x64.ActiveCfg = Distribution|x64
+		{B34CFEBD-9F19-59C9-C832-4771B45E8E57}.Distribution|x64.Build.0 = Distribution|x64
+		{B34CFEBD-9F19-59C9-C832-4771B45E8E57}.Release|x64.ActiveCfg = Release|x64
+		{B34CFEBD-9F19-59C9-C832-4771B45E8E57}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -11,6 +11,7 @@
 #include "pipeline.h"
 
 #include "backend/buffers/vertexBuffer.h"
+#include "backend/buffers/depthBuffer.h"
 
 namespace Dynamik {
 	namespace ADGR {
@@ -22,53 +23,82 @@ namespace Dynamik {
 
 			// initialize the render pass
 			// initRenderPass(device, &renderPass, swapChainExtent);
-			void pipeline::initRenderPass(VkFormat swapChainImageFormat) {
+			void pipeline::initRenderPass(VkFormat swapChainImageFormat, VkPhysicalDevice physicalDevice,
+				VkSampleCountFlagBits msaaSamples) {
 				// attachment descriptions
 				VkAttachmentDescription colorAttachment = {};
 				colorAttachment.format = swapChainImageFormat;
-				colorAttachment.samples = VK_SAMPLE_COUNT_1_BIT;
+				colorAttachment.samples = msaaSamples;
 				colorAttachment.loadOp = VK_ATTACHMENT_LOAD_OP_CLEAR;
 				colorAttachment.storeOp = VK_ATTACHMENT_STORE_OP_STORE;
 				colorAttachment.stencilLoadOp = VK_ATTACHMENT_LOAD_OP_DONT_CARE;
 				colorAttachment.stencilStoreOp = VK_ATTACHMENT_STORE_OP_DONT_CARE;
 				colorAttachment.initialLayout = VK_IMAGE_LAYOUT_UNDEFINED;
-				colorAttachment.finalLayout = VK_IMAGE_LAYOUT_PRESENT_SRC_KHR;
+				colorAttachment.finalLayout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
+
+				VkAttachmentDescription depthAttachment = {};
+				depthAttachment.format = findDepthFormat(physicalDevice);
+				depthAttachment.samples = msaaSamples;
+				depthAttachment.loadOp = VK_ATTACHMENT_LOAD_OP_CLEAR;
+				depthAttachment.storeOp = VK_ATTACHMENT_STORE_OP_DONT_CARE;
+				depthAttachment.stencilLoadOp = VK_ATTACHMENT_LOAD_OP_DONT_CARE;
+				depthAttachment.stencilStoreOp = VK_ATTACHMENT_STORE_OP_DONT_CARE;
+				depthAttachment.initialLayout = VK_IMAGE_LAYOUT_UNDEFINED;
+				depthAttachment.finalLayout = VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL;
+
+				VkAttachmentDescription colorAttachmentResolve = {};
+				colorAttachmentResolve.format = swapChainImageFormat;
+				colorAttachmentResolve.samples = VK_SAMPLE_COUNT_1_BIT;
+				colorAttachmentResolve.loadOp = VK_ATTACHMENT_LOAD_OP_DONT_CARE;
+				colorAttachmentResolve.storeOp = VK_ATTACHMENT_STORE_OP_STORE;
+				colorAttachmentResolve.stencilLoadOp = VK_ATTACHMENT_LOAD_OP_DONT_CARE;
+				colorAttachmentResolve.stencilStoreOp = VK_ATTACHMENT_STORE_OP_DONT_CARE;
+				colorAttachmentResolve.initialLayout = VK_IMAGE_LAYOUT_UNDEFINED;
+				colorAttachmentResolve.finalLayout = VK_IMAGE_LAYOUT_PRESENT_SRC_KHR;
 
 				// attachment references
 				VkAttachmentReference colorAttachmentRef = {};
 				colorAttachmentRef.attachment = 0;
 				colorAttachmentRef.layout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
 
+				VkAttachmentReference depthAttachmentRef = {};
+				depthAttachmentRef.attachment = 1;
+				depthAttachmentRef.layout = VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL;
+
+				VkAttachmentReference colorAttachmentResolveRef = {};
+				colorAttachmentResolveRef.attachment = 2;
+				colorAttachmentResolveRef.layout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
+
 				// subpasses
 				VkSubpassDescription subpass = {};
 				subpass.pipelineBindPoint = VK_PIPELINE_BIND_POINT_GRAPHICS;
 				subpass.colorAttachmentCount = 1;
 				subpass.pColorAttachments = &colorAttachmentRef;
-
-				// render pass info
-				VkRenderPassCreateInfo renderPassInfo = {};
-				renderPassInfo.sType = VK_STRUCTURE_TYPE_RENDER_PASS_CREATE_INFO;
-				renderPassInfo.attachmentCount = 1;
-				renderPassInfo.pAttachments = &colorAttachment;
-				renderPassInfo.subpassCount = 1;
-				renderPassInfo.pSubpasses = &subpass;
-
-				// create the render pass
-				if (vkCreateRenderPass(*myDevice, &renderPassInfo, nullptr, myRenderPass) != VK_SUCCESS)
-					throw std::runtime_error("failed to create render pass!");
+				subpass.pDepthStencilAttachment = &depthAttachmentRef;
+				subpass.pResolveAttachments = &colorAttachmentResolveRef;
 
 				VkSubpassDependency dependency = {};
 				dependency.srcSubpass = VK_SUBPASS_EXTERNAL;
 				dependency.dstSubpass = 0;
-
 				dependency.srcStageMask = VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT;
 				dependency.srcAccessMask = 0;
-
 				dependency.dstStageMask = VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT;
 				dependency.dstAccessMask = VK_ACCESS_COLOR_ATTACHMENT_READ_BIT | VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT;
 
+				// render pass info
+				std::array<VkAttachmentDescription, 3> attachments = { colorAttachment, depthAttachment, colorAttachmentResolve };
+				VkRenderPassCreateInfo renderPassInfo = {};
+				renderPassInfo.sType = VK_STRUCTURE_TYPE_RENDER_PASS_CREATE_INFO;
+				renderPassInfo.attachmentCount = static_cast<uint32_t>(attachments.size());
+				renderPassInfo.pAttachments = attachments.data();
+				renderPassInfo.subpassCount = 1;
+				renderPassInfo.pSubpasses = &subpass;
 				renderPassInfo.dependencyCount = 1;
 				renderPassInfo.pDependencies = &dependency;
+
+				// create the render pass
+				if (vkCreateRenderPass(*myDevice, &renderPassInfo, nullptr, myRenderPass) != VK_SUCCESS)
+					throw std::runtime_error("failed to create render pass!");
 			}
 
 			// initialize the shaders
@@ -99,7 +129,7 @@ namespace Dynamik {
 			// initialize the pipeline
 			// initPipeline(device, swapChainExtent, pipelineLayout, renderPass, graphicsPipeline);
 			void pipeline::initPipeline(VkExtent2D swapChainExtent, VkPipelineLayout* pipelineLayout,
-				VkDescriptorSetLayout* descriptorSetLayout) {
+				VkDescriptorSetLayout* descriptorSetLayout, VkSampleCountFlagBits msaaSamples) {
 				// initialize the vertex inputs
 				VkPipelineVertexInputStateCreateInfo vertexInputInfo = {};
 				vertexInputInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO;
@@ -108,7 +138,7 @@ namespace Dynamik {
 				auto attributeDescriptions = vertex::getAttributeDescriptions();
 
 				vertexInputInfo.vertexBindingDescriptionCount = 1;
-				vertexInputInfo.vertexAttributeDescriptionCount = static_cast<uint32_t>(attributeDescriptions.size());
+				vertexInputInfo.vertexAttributeDescriptionCount = static_cast<uint32>(attributeDescriptions.size());
 				vertexInputInfo.pVertexBindingDescriptions = &bindingDescription;
 				vertexInputInfo.pVertexAttributeDescriptions = attributeDescriptions.data();
 
@@ -154,8 +184,17 @@ namespace Dynamik {
 				// initialize multisampling
 				VkPipelineMultisampleStateCreateInfo multisampling = {};
 				multisampling.sType = VK_STRUCTURE_TYPE_PIPELINE_MULTISAMPLE_STATE_CREATE_INFO;
-				multisampling.sampleShadingEnable = VK_FALSE;
-				multisampling.rasterizationSamples = VK_SAMPLE_COUNT_1_BIT;
+				multisampling.rasterizationSamples = msaaSamples;
+				multisampling.sampleShadingEnable = VK_TRUE; // enable sample shading in the pipeline
+				multisampling.minSampleShading = .2f; // min fraction for sample shading; closer to one is smoother
+
+				VkPipelineDepthStencilStateCreateInfo depthStencil = {};
+				depthStencil.sType = VK_STRUCTURE_TYPE_PIPELINE_DEPTH_STENCIL_STATE_CREATE_INFO;
+				depthStencil.depthTestEnable = VK_TRUE;
+				depthStencil.depthWriteEnable = VK_TRUE;
+				depthStencil.depthCompareOp = VK_COMPARE_OP_LESS;
+				depthStencil.depthBoundsTestEnable = VK_FALSE;
+				depthStencil.stencilTestEnable = VK_FALSE;
 
 				// initialize the color blender
 				VkPipelineColorBlendAttachmentState colorBlendAttachment = {};
@@ -182,7 +221,6 @@ namespace Dynamik {
 				pipelineLayoutInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO;
 				pipelineLayoutInfo.setLayoutCount = 1;
 				pipelineLayoutInfo.pSetLayouts = descriptorSetLayout;
-				//pipelineLayoutInfo.pushConstantRangeCount = 0;
 
 				// create the pipeline layout
 				if (vkCreatePipelineLayout(*myDevice, &pipelineLayoutInfo, nullptr, pipelineLayout) != VK_SUCCESS)
@@ -203,6 +241,7 @@ namespace Dynamik {
 				pipelineInfo.pViewportState = &viewportState;
 				pipelineInfo.pRasterizationState = &rasterizer;
 				pipelineInfo.pMultisampleState = &multisampling;
+				pipelineInfo.pDepthStencilState = &depthStencil;
 				pipelineInfo.pColorBlendState = &colorBlending;
 				pipelineInfo.layout = *pipelineLayout;
 				pipelineInfo.renderPass = *myRenderPass;
@@ -229,7 +268,7 @@ namespace Dynamik {
 				VkShaderModuleCreateInfo createInfo = {};
 				createInfo.sType = VK_STRUCTURE_TYPE_SHADER_MODULE_CREATE_INFO;
 				createInfo.codeSize = code.size();
-				createInfo.pCode = reinterpret_cast<const uint32_t*>(code.data());
+				createInfo.pCode = reinterpret_cast<const uint32*>(code.data());
 
 				VkShaderModule shaderModule;
 				if (vkCreateShaderModule(device, &createInfo, nullptr, &shaderModule) != VK_SUCCESS)

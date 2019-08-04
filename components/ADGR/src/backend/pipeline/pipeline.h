@@ -9,6 +9,8 @@
  IDE:		MS Visual Studio Community 2019
 */
 
+#include "core/utils/DMK_DataTypes.h"
+
 namespace Dynamik {
 	namespace ADGR {
 		namespace core {
@@ -18,14 +20,15 @@ namespace Dynamik {
 			public:
 				pipeline(VkDevice* device, VkRenderPass* renderPass, VkPipeline* graphicsPipeline);
 				// initialize the render pass
-				void initRenderPass(VkFormat swapChainImageFormat);
+				void initRenderPass(VkFormat swapChainImageFormat, VkPhysicalDevice physicalDevice,
+					VkSampleCountFlagBits msaaSamples);
 
 				// initialize the shaders
 				void initShaders(std::vector<char> vertShaderCode, std::vector<char> fragShaderCode);
 
 				// initialize the pipeline
 				void initPipeline(VkExtent2D swapChainExtent, VkPipelineLayout* pipelineLayout,
-					VkDescriptorSetLayout* descriptorSetLayout);
+					VkDescriptorSetLayout* descriptorSetLayout, VkSampleCountFlagBits msaaSamples);
 
 				// delete the shaders
 				void deleteShaders();

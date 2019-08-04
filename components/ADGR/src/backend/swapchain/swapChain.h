@@ -9,6 +9,8 @@
  IDE:		MS Visual Studio Community 2019
 */
 
+#include "core/utils/DMK_DataTypes.h"
+
 namespace Dynamik {
 	namespace ADGR {
 		namespace core {
@@ -35,7 +37,7 @@ namespace Dynamik {
 				void deleteSwapChain();
 
 				void initImageViews(std::vector<VkImageView>* swapChainImageViews,
-					std::vector<VkImage> swapChainImages, VkFormat swapChainImageFormat);
+					std::vector<VkImage> swapChainImages, VkFormat swapChainImageFormat, uint32 mipLevels);
 				void deleteImageViews(std::vector<VkImageView>* swapChainImageViews);
 
 				void cleanUp(VkDevice device, std::vector<VkFramebuffer> swapChainFramebuffers, VkCommandPool commandPool,

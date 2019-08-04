@@ -80,7 +80,7 @@
       <PrecompiledHeaderFile>adgrafx.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>DMK_PLATFORM_WINDOWS;DMK_BUILD_DLL;GLFW_INCLUDE_VULKAN;DMK_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)libs;$(SolutionDir)Dynamik\src;$(SolutionDir)Dynamik\GameLibraries;$(SolutionDir)lib\libs;$(solutionDir)components\ADGR;$(solutionDir)components\ADGR\src;$(SolutionDir)libs\GLFW\include;$(SolutionDir)libs\glm;E:\Programming\Codes\Game Development\Libraries\VulkanSDK\1.1.108.0\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)libs;$(SolutionDir)Dynamik\src;$(SolutionDir)Dynamik\GameLibraries;$(SolutionDir)lib\libs;$(solutionDir)components\ADGR;$(solutionDir)components\ADGR\src;$(SolutionDir)libs\GLFW\include;$(SolutionDir)libs\glm;$(SolutionDir)libs\stb-master;$(SolutionDir)libs\tinyobjloader-master;E:\Programming\Codes\Game Development\Libraries\VulkanSDK\1.1.108.0\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
@@ -100,7 +100,7 @@
       <PrecompiledHeaderFile>adgrafx.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>DMK_PLATFORM_WINDOWS;DMK_BUILD_DLL;GLFW_INCLUDE_VULKAN;DMK_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)libs;$(SolutionDir)Dynamik\src;$(SolutionDir)Dynamik\GameLibraries;$(SolutionDir)lib\libs;$(solutionDir)components\ADGR;$(solutionDir)components\ADGR\src;$(SolutionDir)libs\GLFW\include;$(SolutionDir)libs\glm;E:\Programming\Codes\Game Development\Libraries\VulkanSDK\1.1.108.0\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)libs;$(SolutionDir)Dynamik\src;$(SolutionDir)Dynamik\GameLibraries;$(SolutionDir)lib\libs;$(solutionDir)components\ADGR;$(solutionDir)components\ADGR\src;$(SolutionDir)libs\GLFW\include;$(SolutionDir)libs\glm;$(SolutionDir)libs\stb-master;$(SolutionDir)libs\tinyobjloader-master;E:\Programming\Codes\Game Development\Libraries\VulkanSDK\1.1.108.0\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -124,7 +124,7 @@
       <PrecompiledHeaderFile>adgrafx.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>DMK_PLATFORM_WINDOWS;DMK_BUILD_DLL;GLFW_INCLUDE_VULKAN;DMK_DISTRIBUTION;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)libs;$(SolutionDir)Dynamik\src;$(SolutionDir)Dynamik\GameLibraries;$(SolutionDir)lib\libs;$(solutionDir)components\ADGR;$(solutionDir)components\ADGR\src;$(SolutionDir)libs\GLFW\include;$(SolutionDir)libs\glm;E:\Programming\Codes\Game Development\Libraries\VulkanSDK\1.1.108.0\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)libs;$(SolutionDir)Dynamik\src;$(SolutionDir)Dynamik\GameLibraries;$(SolutionDir)lib\libs;$(solutionDir)components\ADGR;$(solutionDir)components\ADGR\src;$(SolutionDir)libs\GLFW\include;$(SolutionDir)libs\glm;$(SolutionDir)libs\stb-master;$(SolutionDir)libs\tinyobjloader-master;E:\Programming\Codes\Game Development\Libraries\VulkanSDK\1.1.108.0\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -152,22 +152,27 @@
     <ClInclude Include="src\Wrapper\internal_wrapper.h" />
     <ClInclude Include="src\adgrafx.h" />
     <ClInclude Include="src\backend\buffers\buffer.h" />
+    <ClInclude Include="src\backend\buffers\colorBuffer.h" />
     <ClInclude Include="src\backend\buffers\commandBuffer.h" />
+    <ClInclude Include="src\backend\buffers\depthBuffer.h" />
     <ClInclude Include="src\backend\buffers\frameBuffer.h" />
     <ClInclude Include="src\backend\buffers\indexBuffer.h" />
     <ClInclude Include="src\backend\buffers\uniformBuffer.h" />
     <ClInclude Include="src\backend\buffers\vertexBuffer.h" />
     <ClInclude Include="src\backend\core.h" />
+    <ClInclude Include="src\backend\data\data.h" />
     <ClInclude Include="src\backend\defines.h" />
     <ClInclude Include="src\backend\device\device.h" />
     <ClInclude Include="src\backend\extensions\extensions.h" />
     <ClInclude Include="src\backend\instance\instance.h" />
     <ClInclude Include="src\backend\interface.h" />
+    <ClInclude Include="src\backend\loader\model.h" />
     <ClInclude Include="src\backend\others\semaphores.h" />
     <ClInclude Include="src\backend\others\syncObjects.h" />
     <ClInclude Include="src\backend\pipeline\pipeline.h" />
     <ClInclude Include="src\backend\queues\queues.h" />
     <ClInclude Include="src\backend\swapchain\swapChain.h" />
+    <ClInclude Include="src\backend\texture\texture.h" />
     <ClInclude Include="src\backend\validators\debugger\debugger.h" />
     <ClInclude Include="src\backend\validators\validators.h" />
   </ItemGroup>
@@ -183,7 +188,9 @@
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="src\backend\buffers\buffer.cpp" />
+    <ClCompile Include="src\backend\buffers\colorBuffer.cpp" />
     <ClCompile Include="src\backend\buffers\commandBuffer.cpp" />
+    <ClCompile Include="src\backend\buffers\depthBuffer.cpp" />
     <ClCompile Include="src\backend\buffers\frameBuffer.cpp" />
     <ClCompile Include="src\backend\buffers\indexBuffer.cpp" />
     <ClCompile Include="src\backend\buffers\uniformBuffer.cpp" />
@@ -192,11 +199,13 @@
     <ClCompile Include="src\backend\device\device.cpp" />
     <ClCompile Include="src\backend\extensions\extensions.cpp" />
     <ClCompile Include="src\backend\instance\instance.cpp" />
+    <ClCompile Include="src\backend\loader\model.cpp" />
     <ClCompile Include="src\backend\others\semaphores.cpp" />
     <ClCompile Include="src\backend\others\syncObjects.cpp" />
     <ClCompile Include="src\backend\pipeline\pipeline.cpp" />
     <ClCompile Include="src\backend\queues\queues.cpp" />
     <ClCompile Include="src\backend\swapchain\swapChain.cpp" />
+    <ClCompile Include="src\backend\texture\texture.cpp" />
     <ClCompile Include="src\backend\validators\debugger\debugger.cpp" />
     <ClCompile Include="src\backend\validators\validators.cpp" />
   </ItemGroup>

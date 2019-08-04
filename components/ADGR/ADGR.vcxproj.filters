@@ -22,6 +22,9 @@
     <Filter Include="src\backend\buffers">
       <UniqueIdentifier>{A042AA9A-0CA4-87A8-9511-CE5A0172BE67}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\backend\data">
+      <UniqueIdentifier>{0D2B7527-F923-9479-2256-79FE0EAE7385}</UniqueIdentifier>
+    </Filter>
     <Filter Include="src\backend\device">
       <UniqueIdentifier>{43CCB5D9-2FB0-762F-9810-7182841361B1}</UniqueIdentifier>
     </Filter>
@@ -30,6 +33,9 @@
     </Filter>
     <Filter Include="src\backend\instance">
       <UniqueIdentifier>{88E2356A-7471-BF33-1D90-D32E09FECFD9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\backend\loader">
+      <UniqueIdentifier>{6A6D08ED-5651-C942-BFB1-C395ABB4B3C4}</UniqueIdentifier>
     </Filter>
     <Filter Include="src\backend\others">
       <UniqueIdentifier>{683E66F4-5422-274A-BD82-219DA98511CC}</UniqueIdentifier>
@@ -43,6 +49,9 @@
     <Filter Include="src\backend\swapchain">
       <UniqueIdentifier>{91105319-FD7C-0E14-C670-A671329C307C}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\backend\texture">
+      <UniqueIdentifier>{84A83DE0-F009-1BEE-7977-61A0E5D751AD}</UniqueIdentifier>
+    </Filter>
     <Filter Include="src\backend\validators">
       <UniqueIdentifier>{2C9F005B-1899-29AD-0106-C0BDED9E8F19}</UniqueIdentifier>
     </Filter>
@@ -53,6 +62,9 @@
   <ItemGroup>
     <ClInclude Include="src\Platform\Windows.h">
       <Filter>src\Platform</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\Windows\utils\loadIcon.h">
+      <Filter>src\Platform\Windows\utils</Filter>
     </ClInclude>
     <ClInclude Include="src\Platform\Windows\utils\readFile.h">
       <Filter>src\Platform\Windows\utils</Filter>
@@ -75,7 +87,13 @@
     <ClInclude Include="src\backend\buffers\buffer.h">
       <Filter>src\backend\buffers</Filter>
     </ClInclude>
+    <ClInclude Include="src\backend\buffers\colorBuffer.h">
+      <Filter>src\backend\buffers</Filter>
+    </ClInclude>
     <ClInclude Include="src\backend\buffers\commandBuffer.h">
+      <Filter>src\backend\buffers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\backend\buffers\depthBuffer.h">
       <Filter>src\backend\buffers</Filter>
     </ClInclude>
     <ClInclude Include="src\backend\buffers\frameBuffer.h">
@@ -93,6 +111,9 @@
     <ClInclude Include="src\backend\core.h">
       <Filter>src\backend</Filter>
     </ClInclude>
+    <ClInclude Include="src\backend\data\data.h">
+      <Filter>src\backend\data</Filter>
+    </ClInclude>
     <ClInclude Include="src\backend\defines.h">
       <Filter>src\backend</Filter>
     </ClInclude>
@@ -107,6 +128,9 @@
     </ClInclude>
     <ClInclude Include="src\backend\interface.h">
       <Filter>src\backend</Filter>
+    </ClInclude>
+    <ClInclude Include="src\backend\loader\model.h">
+      <Filter>src\backend\loader</Filter>
     </ClInclude>
     <ClInclude Include="src\backend\others\semaphores.h">
       <Filter>src\backend\others</Filter>
@@ -123,16 +147,21 @@
     <ClInclude Include="src\backend\swapchain\swapChain.h">
       <Filter>src\backend\swapchain</Filter>
     </ClInclude>
+    <ClInclude Include="src\backend\texture\texture.h">
+      <Filter>src\backend\texture</Filter>
+    </ClInclude>
     <ClInclude Include="src\backend\validators\debugger\debugger.h">
       <Filter>src\backend\validators\debugger</Filter>
     </ClInclude>
     <ClInclude Include="src\backend\validators\validators.h">
       <Filter>src\backend\validators</Filter>
     </ClInclude>
-    <ClInclude Include="src\Platform\Windows\utils\loadIcon.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="src\Platform\Windows\utils\loadIcon.cpp">
+      <Filter>src\Platform\Windows\utils</Filter>
+    </ClCompile>
     <ClCompile Include="src\Platform\Windows\utils\readFile.cpp">
       <Filter>src\Platform\Windows\utils</Filter>
     </ClCompile>
@@ -154,7 +183,13 @@
     <ClCompile Include="src\backend\buffers\buffer.cpp">
       <Filter>src\backend\buffers</Filter>
     </ClCompile>
+    <ClCompile Include="src\backend\buffers\colorBuffer.cpp">
+      <Filter>src\backend\buffers</Filter>
+    </ClCompile>
     <ClCompile Include="src\backend\buffers\commandBuffer.cpp">
+      <Filter>src\backend\buffers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\backend\buffers\depthBuffer.cpp">
       <Filter>src\backend\buffers</Filter>
     </ClCompile>
     <ClCompile Include="src\backend\buffers\frameBuffer.cpp">
@@ -181,6 +216,9 @@
     <ClCompile Include="src\backend\instance\instance.cpp">
       <Filter>src\backend\instance</Filter>
     </ClCompile>
+    <ClCompile Include="src\backend\loader\model.cpp">
+      <Filter>src\backend\loader</Filter>
+    </ClCompile>
     <ClCompile Include="src\backend\others\semaphores.cpp">
       <Filter>src\backend\others</Filter>
     </ClCompile>
@@ -196,12 +234,14 @@
     <ClCompile Include="src\backend\swapchain\swapChain.cpp">
       <Filter>src\backend\swapchain</Filter>
     </ClCompile>
+    <ClCompile Include="src\backend\texture\texture.cpp">
+      <Filter>src\backend\texture</Filter>
+    </ClCompile>
     <ClCompile Include="src\backend\validators\debugger\debugger.cpp">
       <Filter>src\backend\validators\debugger</Filter>
     </ClCompile>
     <ClCompile Include="src\backend\validators\validators.cpp">
       <Filter>src\backend\validators</Filter>
     </ClCompile>
-    <ClCompile Include="src\Platform\Windows\utils\loadIcon.cpp" />
   </ItemGroup>
 </Project>

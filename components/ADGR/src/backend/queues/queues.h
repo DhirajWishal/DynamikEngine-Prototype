@@ -9,13 +9,15 @@
  IDE:		MS Visual Studio Community 2019
 */
 
+#include "core/utils/DMK_DataTypes.h"
+
 namespace Dynamik {
 	namespace ADGR {
 		namespace core {
 
 			struct queueFamilyindices {
-				std::optional<uint32_t> graphicsFamily;
-				std::optional<uint32_t> presentFamily;
+				std::optional<uint32> graphicsFamily;
+				std::optional<uint32> presentFamily;
 
 				bool isComplete() {
 					return graphicsFamily.has_value() && presentFamily.has_value();

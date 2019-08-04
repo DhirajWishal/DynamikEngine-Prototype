@@ -10,6 +10,7 @@
 */
 
 #include "debugger/debugger.h"
+#include "core/utils/DMK_DataTypes.h"
 
 namespace Dynamik {
 	namespace ADGR {

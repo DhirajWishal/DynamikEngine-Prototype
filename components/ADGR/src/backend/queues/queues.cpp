@@ -17,7 +17,7 @@ namespace Dynamik {
 			queueFamilyindices findQueueFamilies(VkPhysicalDevice device, VkSurfaceKHR surface) {
 				queueFamilyindices indices;
 
-				uint32_t queueFamilyCount = 0;
+				uint32 queueFamilyCount = 0;
 				vkGetPhysicalDeviceQueueFamilyProperties(device, &queueFamilyCount, nullptr);
 
 				std::vector<VkQueueFamilyProperties> queueFamilies(queueFamilyCount);

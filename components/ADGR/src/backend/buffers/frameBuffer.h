@@ -10,6 +10,7 @@
 */
 
 #include "src/backend/interface.h"
+#include "core/utils/DMK_DataTypes.h"
 
 namespace Dynamik {
 	namespace ADGR {
@@ -21,12 +22,13 @@ namespace Dynamik {
 				~frameBuffer() {}
 
 				void initBuffer(std::vector<VkImageView> swapChainImageViews,
-					VkRenderPass renderPass, VkExtent2D swapChainExtent);
+					VkRenderPass renderPass, VkExtent2D swapChainExtent,
+					VkImageView depthImageView, VkImageView colorImageView);
 
 				void deleteFrameBuffers();
 
-				uint32_t getFrameBuffersSize() const { return frameBuff.size(); }
-				VkFramebuffer getFrame(uint32_t pos) const { return frameBuff[pos]; }
+				uint32 getFrameBuffersSize() const { return frameBuff.size(); }
+				VkFramebuffer getFrame(uint32 pos) const { return frameBuff[pos]; }
 				std::vector<VkFramebuffer> getFrameBuffers() const { return frameBuff; }
 
 			private:
@@ -34,7 +36,7 @@ namespace Dynamik {
 
 				std::vector<VkFramebuffer> frameBuff;
 
-				uint32_t mySize = 30;
+				uint32 mySize = 30;
 			};
 		}
 	}

@@ -51,5 +51,9 @@ namespace Dynamik {
 			rendererCore.shutdown();
 		}
 
+		void Renderer::setMipLevel(float value) {
+			rendererCore.setMipLevels(value);
+		}
+
 	}
 }

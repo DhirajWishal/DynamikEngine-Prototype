@@ -24,5 +24,7 @@ namespace Dynamik {
 		typedef unsigned long long	uint64;
 
 		typedef const char* ccp;
+
+		typedef uintptr_t			pointer;
 	}
 }

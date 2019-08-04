@@ -20,6 +20,8 @@ IncludeDir["GLFW"] = "$(SolutionDir)libs/GLFW/include"
 --IncludeDir["GLFW"] = "E:/Programming/Libraries/GLFW/glfw-3.2.1.bin.WIN64/include"
 IncludeDir["Glad"] = "$(SolutionDir)libs/Glad/include"
 IncludeDir["glm"] = "$(SolutionDir)libs/glm"
+IncludeDir["stb"] = "$(SolutionDir)libs/stb-master"
+IncludeDir["tol"] = "$(SolutionDir)libs/tinyobjloader-master"
 IncludeDir["Vulkan"] = "E:/Programming/Codes/Game Development/Libraries/VulkanSDK/1.1.108.0/Include"	
 --Include the Vulkan SDK Include path here
 
@@ -57,6 +59,8 @@ project "Dynamik"
 		"%{IncludeDir.GLFW}",
 		"%{IncludeDir.Glad}",
 		"%{IncludeDir.glm}",
+		"%{IncludeDir.stb}",
+		"%{IncludeDir.tol}",
 		"%{IncludeDir.Vulkan}"
 	}
 
@@ -122,6 +126,8 @@ project "Application"
 		"%{IncludeDir.GLFW}",
 		"%{IncludeDir.Glad}",
 		"%{IncludeDir.glm}",
+		"%{IncludeDir.stb}",
+		"%{IncludeDir.tol}",
 		"%{IncludeDir.Vulkan}"
 	}
 
@@ -197,6 +203,8 @@ project "ADGR"
 		"$(SolutionDir)libs/glm/**.inl",
 		"%{IncludeDir.GLFW}",
 		"%{IncludeDir.glm}",
+		"%{IncludeDir.stb}",
+		"%{IncludeDir.tol}",
 		"%{IncludeDir.Vulkan}"
 	}
 
@@ -233,4 +241,76 @@ project "ADGR"
 	filter "configurations:Distribution"
 		defines "DMK_DISTRIBUTION"
 		--runtime "Release"
+		optimize "On"
+
+---------- Managers library ----------
+project "Managers"
+	location "components/Managers"
+	kind "StaticLib"
+	language "C++"
+	cppdialect "c++17"
+	staticruntime "On"
+
+	targetdir ("$(SolutionDir)bin/" .. outputDir .. "/$(ProjectName)")
+	objdir ("$(SolutionDir)intDir/" .. outputDir .. "/$(ProjectName)")
+
+	pchheader "mngafx.h"
+	pchsource "components/Managers/src/mngafx.cpp"
+
+	files {
+		"components/Managers/**.h",
+		"components/Managers/**.cpp",
+		"components/Managers/src/**.h",
+		"components/Managers/src/**.cpp"
+	}
+
+	includedirs {
+		--"$(SolutionDir)libs",
+		"$(SolutionDir)Dynamik/src",
+		--"$(SolutionDir)Dynamik/GameLibraries",
+		--"$(SolutionDir)lib/libs",
+		--"$(solutionDir)components/ADGR",
+		--"$(solutionDir)components/ADGR/src",
+		"$(solutionDir)components/Managers/src",
+		"$(SolutionDir)libs/glm/**.hpp",
+		"$(SolutionDir)libs/glm/**.inl",
+		"%{IncludeDir.GLFW}",
+		"%{IncludeDir.glm}",
+		"%{IncludeDir.stb}",
+		"%{IncludeDir.tol}",
+		"%{IncludeDir.Vulkan}"
+	}
+
+	libdirs {
+		--"$(SolutionDir)libs/GLFW/lib-vc2019",
+		--"E:/Programming/Codes/Game Development/Libraries/VulkanSDK/1.1.108.0/Lib"
+	}
+
+	links { 
+		--"glfw3dll",
+		--"opengl32",
+		--"vulkan-1"
+	}
+
+	filter "system:windows"
+		systemversion "latest"
+
+		defines {
+			"DMK_PLATFORM_WINDOWS",
+			--"GLFW_INCLUDE_VULKAN"
+		}
+
+	filter "configurations:Debug"
+		defines "DMK_DEBUG"
+		runtime "Debug"
+		symbols "On"
+		
+	filter "configurations:Release"
+		defines "DMK_RELEASE"
+		runtime "Release"
+		optimize "On"
+
+	filter "configurations:Distribution"
+		defines "DMK_DISTRIBUTION"
+		runtime "Release"
 		optimize "On"

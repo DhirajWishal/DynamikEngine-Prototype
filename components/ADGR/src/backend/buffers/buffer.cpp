@@ -9,6 +9,7 @@
 
 #include "adgrafx.h"
 #include "buffer.h"
+#include "commandBuffer.h"
 
 namespace Dynamik {
 	namespace ADGR {
@@ -41,11 +42,11 @@ namespace Dynamik {
 				vkBindBufferMemory(device, buffer, bufferMemory, 0);
 			}
 
-			uint32 findMemoryType(uint32_t typeFilter, VkMemoryPropertyFlags properties, VkPhysicalDevice physicalDevice) {
+			uint32 findMemoryType(uint32 typeFilter, VkMemoryPropertyFlags properties, VkPhysicalDevice physicalDevice) {
 				VkPhysicalDeviceMemoryProperties memProperties;
 				vkGetPhysicalDeviceMemoryProperties(physicalDevice, &memProperties);
 
-				for (uint32_t i = 0; i < memProperties.memoryTypeCount; i++)
+				for (uint32 i = 0; i < memProperties.memoryTypeCount; i++)
 					if ((typeFilter & (1 << i)) && (memProperties.memoryTypes[i].propertyFlags
 						& properties) == properties)
 						return i;
@@ -55,36 +56,13 @@ namespace Dynamik {
 
 			void copyBuffer(VkDevice device, VkBuffer srcBuffer, VkBuffer dstBuffer, VkDeviceSize size,
 				VkCommandPool commandPool, VkQueue graphicsQueue) {
-				VkCommandBufferAllocateInfo allocInfo = {};
-				allocInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO;
-				allocInfo.level = VK_COMMAND_BUFFER_LEVEL_PRIMARY;
-				allocInfo.commandPool = commandPool;
-				allocInfo.commandBufferCount = 1;
-
-				VkCommandBuffer commandBuffer;
-				vkAllocateCommandBuffers(device, &allocInfo, &commandBuffer);
-
-				VkCommandBufferBeginInfo beginInfo = {};
-				beginInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO;
-				beginInfo.flags = VK_COMMAND_BUFFER_USAGE_ONE_TIME_SUBMIT_BIT;
-
-				vkBeginCommandBuffer(commandBuffer, &beginInfo);
+				VkCommandBuffer commandBuffer = beginSingleTimeCommands(device, commandPool);
 
 				VkBufferCopy copyRegion = {};
 				copyRegion.size = size;
 				vkCmdCopyBuffer(commandBuffer, srcBuffer, dstBuffer, 1, &copyRegion);
 
-				vkEndCommandBuffer(commandBuffer);
-
-				VkSubmitInfo submitInfo = {};
-				submitInfo.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO;
-				submitInfo.commandBufferCount = 1;
-				submitInfo.pCommandBuffers = &commandBuffer;
-
-				vkQueueSubmit(graphicsQueue, 1, &submitInfo, VK_NULL_HANDLE);
-				vkQueueWaitIdle(graphicsQueue);
-
-				vkFreeCommandBuffers(device, commandPool, 1, &commandBuffer);
+				endSingleTimeCommands(device, commandPool, commandBuffer, graphicsQueue);
 			}
 
 			void copyData() {

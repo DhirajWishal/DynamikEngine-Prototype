@@ -11,6 +11,7 @@
 #include "swapChain.h"
 #include "backend/buffers/indexBuffer.h"
 #include "backend/queues/queues.h"
+#include "backend/texture/texture.h"
 
 namespace Dynamik {
 	namespace ADGR {
@@ -30,7 +31,7 @@ namespace Dynamik {
 				VkPresentModeKHR presentMode = chooseSwapPresentMode(swapChainSupport.presentModes);
 				VkExtent2D extent = chooseSwapExtent(window, swapChainSupport.capabilities);
 
-				uint32_t imageCount = swapChainSupport.capabilities.minImageCount + 1;
+				uint32 imageCount = swapChainSupport.capabilities.minImageCount + 1;
 				if (swapChainSupport.capabilities.maxImageCount > 0
 					&& imageCount > swapChainSupport.capabilities.maxImageCount)
 					imageCount = swapChainSupport.capabilities.maxImageCount;
@@ -47,7 +48,7 @@ namespace Dynamik {
 				//createInfo.imageUsage = VK_IMAGE_USAGE_TRANSFER_DST_BIT;
 
 				queueFamilyindices indices = Dynamik::ADGR::core::findQueueFamilies(*myPhysicalDevice, *mySurface);
-				uint32_t queueFamilyindices[] = {
+				uint32 queueFamilyindices[] = {
 					indices.graphicsFamily.value(),
 					indices.presentFamily.value()
 				};
@@ -85,30 +86,12 @@ namespace Dynamik {
 			}
 
 			void swapChain::initImageViews(std::vector<VkImageView>* swapChainImageViews,
-				std::vector<VkImage> swapChainImages, VkFormat swapChainImageFormat) {
+				std::vector<VkImage> swapChainImages, VkFormat swapChainImageFormat, uint32 mipLevels) {
 				swapChainImageViews->resize(swapChainImages.size());
 
-				for (size_t i = 0; i < swapChainImages.size(); i++) {
-					VkImageViewCreateInfo createInfo = {};
-					createInfo.sType = VK_STRUCTURE_TYPE_IMAGE_VIEW_CREATE_INFO;
-					createInfo.image = swapChainImages[i];
-
-					createInfo.viewType = VK_IMAGE_VIEW_TYPE_2D;
-					createInfo.format = swapChainImageFormat;
-
-					createInfo.components.r = VK_COMPONENT_SWIZZLE_IDENTITY;
-					createInfo.components.g = VK_COMPONENT_SWIZZLE_IDENTITY;
-					createInfo.components.b = VK_COMPONENT_SWIZZLE_IDENTITY;
-					createInfo.components.a = VK_COMPONENT_SWIZZLE_IDENTITY;
-
-					createInfo.subresourceRange.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
-					createInfo.subresourceRange.baseMipLevel = 0;
-					createInfo.subresourceRange.levelCount = 1;
-					createInfo.subresourceRange.baseArrayLayer = 0;
-					createInfo.subresourceRange.layerCount = 1;
-
-					if (vkCreateImageView(*myDevice, &createInfo, nullptr, &swapChainImageViews->at(i)) != VK_SUCCESS)
-						throw std::runtime_error("Failed to create Image views!");
+				for (uint32_t i = 0; i < swapChainImages.size(); i++) {
+					swapChainImageViews->at(i) = createImageView(*myDevice, swapChainImages[i], swapChainImageFormat,
+						VK_IMAGE_ASPECT_COLOR_BIT, 1);
 				}
 			}
 
@@ -125,7 +108,7 @@ namespace Dynamik {
 				for (size_t i = 0; i < swapChainFramebuffers.size(); i++)
 					vkDestroyFramebuffer(device, swapChainFramebuffers[i], nullptr);
 
-				vkFreeCommandBuffers(device, commandPool, static_cast<uint32_t>(commandBuffers.size()),
+				vkFreeCommandBuffers(device, commandPool, static_cast<uint32>(commandBuffers.size()),
 					commandBuffers.data());
 
 				vkDestroyPipeline(device, graphicsPipeline, nullptr);
@@ -149,7 +132,7 @@ namespace Dynamik {
 				swapChainSupportDetails details;
 				vkGetPhysicalDeviceSurfaceCapabilitiesKHR(device, surface, &details.capabilities);
 
-				uint32_t formatCount;
+				uint32 formatCount;
 				vkGetPhysicalDeviceSurfaceFormatsKHR(device, surface, &formatCount, nullptr);
 
 				if (formatCount != 0) {
@@ -157,7 +140,7 @@ namespace Dynamik {
 					vkGetPhysicalDeviceSurfaceFormatsKHR(device, surface, &formatCount, details.formats.data());
 				}
 
-				uint32_t presentModeCount;
+				uint32 presentModeCount;
 				vkGetPhysicalDeviceSurfacePresentModesKHR(device, surface, &presentModeCount, nullptr);
 
 				if (presentModeCount != 0) {
@@ -173,7 +156,7 @@ namespace Dynamik {
 				swapChainSupportDetails details;
 				vkGetPhysicalDeviceSurfaceCapabilitiesKHR(*device, *surface, &details.capabilities);
 
-				uint32_t formatCount;
+				uint32 formatCount;
 				vkGetPhysicalDeviceSurfaceFormatsKHR(*device, *surface, &formatCount, nullptr);
 
 				if (formatCount != 0) {
@@ -181,7 +164,7 @@ namespace Dynamik {
 					vkGetPhysicalDeviceSurfaceFormatsKHR(*device, *surface, &formatCount, details.formats.data());
 				}
 
-				uint32_t presentModeCount;
+				uint32 presentModeCount;
 				vkGetPhysicalDeviceSurfacePresentModesKHR(*device, *surface, &presentModeCount, nullptr);
 
 				if (presentModeCount != 0) {
@@ -217,7 +200,7 @@ namespace Dynamik {
 			}
 
 			VkExtent2D swapChain::chooseSwapExtent(const VkSurfaceCapabilitiesKHR& capabilities) {
-				if (capabilities.currentExtent.width != std::numeric_limits<uint32_t>::max())
+				if (capabilities.currentExtent.width != std::numeric_limits<uint32>::max())
 					return capabilities.currentExtent;
 				else {
 					VkExtent2D actualExtent = {
@@ -235,15 +218,15 @@ namespace Dynamik {
 			}
 
 			VkExtent2D swapChain::chooseSwapExtent(GLFWwindow& window, const VkSurfaceCapabilitiesKHR& capabilities) {
-				if (capabilities.currentExtent.width != std::numeric_limits<uint32_t>::max())
+				if (capabilities.currentExtent.width != std::numeric_limits<uint32>::max())
 					return capabilities.currentExtent;
 				else {
 					int width, height;
 					glfwGetFramebufferSize(&window, &width, &height);
 
 					VkExtent2D actualExtent = {
-						static_cast<uint32_t>(width),
-						static_cast<uint32_t>(height)
+						static_cast<uint32>(width),
+						static_cast<uint32>(height)
 					};
 
 					actualExtent.width = std::max(capabilities.minImageExtent.width,
@@ -259,7 +242,7 @@ namespace Dynamik {
 				swapChainSupportDetails details;
 				vkGetPhysicalDeviceSurfaceCapabilitiesKHR(*device, *surface, &details.capabilities);
 
-				uint32_t formatCount;
+				uint32 formatCount;
 				vkGetPhysicalDeviceSurfaceFormatsKHR(*device, *surface, &formatCount, nullptr);
 
 				if (formatCount != 0) {
@@ -267,7 +250,7 @@ namespace Dynamik {
 					vkGetPhysicalDeviceSurfaceFormatsKHR(*device, *surface, &formatCount, details.formats.data());
 				}
 
-				uint32_t presentModeCount;
+				uint32 presentModeCount;
 				vkGetPhysicalDeviceSurfacePresentModesKHR(*device, *surface, &presentModeCount, nullptr);
 
 				if (presentModeCount != 0) {

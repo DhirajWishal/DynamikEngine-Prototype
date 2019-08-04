@@ -15,7 +15,7 @@ namespace Dynamik {
 		namespace core {
 
 			bool checkValidationLayerSupport() {
-				uint32_t layerCount;
+				uint32 layerCount;
 				vkEnumerateInstanceLayerProperties(&layerCount, nullptr);
 
 				std::vector<VkLayerProperties> availableLayers(layerCount);

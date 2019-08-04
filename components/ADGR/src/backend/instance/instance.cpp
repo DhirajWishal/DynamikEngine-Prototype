@@ -37,12 +37,12 @@ namespace Dynamik {
 				createInfo.pApplicationInfo = &appInfo;
 
 				auto extentions = getRequiredExtentions(enableValidationLayers);
-				createInfo.enabledExtensionCount = static_cast<uint32_t>(extentions.size());
+				createInfo.enabledExtensionCount = static_cast<uint32>(extentions.size());
 				createInfo.ppEnabledExtensionNames = extentions.data();
 
 				VkDebugUtilsMessengerCreateInfoEXT debugCreateInfo;
 				if (enableValidationLayers) {
-					createInfo.enabledLayerCount = static_cast<uint32_t>(validationLayer.size());
+					createInfo.enabledLayerCount = static_cast<uint32>(validationLayer.size());
 					createInfo.ppEnabledLayerNames = validationLayer.data();
 
 					populateDebugMessegerCreateInfo(debugCreateInfo);

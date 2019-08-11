@@ -131,13 +131,18 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="src\file\fileManager.h" />
-    <ClInclude Include="src\memory\memoryManager.h" />
+    <ClInclude Include="src\Platform\Windows.h" />
+    <ClInclude Include="src\Platform\Windows\file\fileManager.h" />
+    <ClInclude Include="src\Platform\Windows\file\readFile.h" />
+    <ClInclude Include="src\Platform\Windows\memory\memoryManager.h" />
+    <ClInclude Include="src\Platform\Windows\window.h" />
     <ClInclude Include="src\mngafx.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\file\fileManager.cpp" />
-    <ClCompile Include="src\memory\memoryManager.cpp" />
+    <ClCompile Include="src\Platform\Windows\file\fileManager.cpp" />
+    <ClCompile Include="src\Platform\Windows\file\readFile.cpp" />
+    <ClCompile Include="src\Platform\Windows\memory\memoryManager.cpp" />
+    <ClCompile Include="src\Platform\Windows\window.cpp" />
     <ClCompile Include="src\mngafx.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>

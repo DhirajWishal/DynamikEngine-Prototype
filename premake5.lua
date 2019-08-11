@@ -13,22 +13,22 @@ configurationMacro = "$(Configuration)"
 platformMacro = "$(Platform)"
 projectNameMacro = "$(ProjectName)"
 
-includePath =  "$(SolutionDir)Dynamik/lib/spdlog/include"
-
 IncludeDir = {}
 IncludeDir["GLFW"] = "$(SolutionDir)libs/GLFW/include"
---IncludeDir["GLFW"] = "E:/Programming/Libraries/GLFW/glfw-3.2.1.bin.WIN64/include"
 IncludeDir["Glad"] = "$(SolutionDir)libs/Glad/include"
 IncludeDir["glm"] = "$(SolutionDir)libs/glm"
 IncludeDir["stb"] = "$(SolutionDir)libs/stb-master"
 IncludeDir["tol"] = "$(SolutionDir)libs/tinyobjloader-master"
-IncludeDir["Vulkan"] = "E:/Programming/Codes/Game Development/Libraries/VulkanSDK/1.1.108.0/Include"	
+IncludeDir["spdlog"] = "$(SolutionDir)Dynamik/lib/spdlog/include"
+IncludeDir["Vulkan"] = "E:/Programming/Codes/Game Development/Libraries/VulkanSDK/1.1.108.0/Include"
 --Include the Vulkan SDK Include path here
 
 --include "Launcher"
---include "ADGR"
+include "components/ADGR"
+include "components/Events"
+include "components/DevConsole"
 
----------- Dynamik Engine project discription ----------
+---------- Dynamik Engine project description ----------
 project "Dynamik"
 	location "Dynamik"
 	kind "SharedLib"
@@ -55,7 +55,10 @@ project "Dynamik"
 		"$(SolutionDir)libs",
 		"$(SolutionDir)Dynamik/src",
 		"$(SolutionDir)Dynamik/GameLibraries",
-		"$(SolutionDir)components/ADGR/",
+		"$(SolutionDir)components/ADGR",
+		"$(SolutionDir)components/ADGR/src",
+		"$(SolutionDir)components/Events/src",
+		"$(SolutionDir)components/DevConsole/src",
 		"%{IncludeDir.GLFW}",
 		"%{IncludeDir.Glad}",
 		"%{IncludeDir.glm}",
@@ -71,6 +74,7 @@ project "Dynamik"
 
 	links { 
 		"ADGR",
+		"Events",
 		"glfw3dll",
 		"opengl32",
 		"vulkan-1"
@@ -91,17 +95,20 @@ project "Dynamik"
 
 	filter "configurations:Debug"
 		defines "DMK_DEBUG"
+		--buildoptions "\\MDd"
 		symbols "On"
 		
 	filter "configurations:Release"
 		defines "DMK_RELEASE"
+		--buildoptions "\\MD"
 		optimize "On"
 
 	filter "configurations:Distribution"
 		defines "DMK_DISTRIBUTION"
+		--buildoptions "\\MD"
 		optimize "On"
 
----------- Application project discription ----------
+---------- Application project description ----------
 project "Application"
 	location "Application"
 	kind "ConsoleApp"
@@ -123,6 +130,9 @@ project "Application"
 		"$(SolutionDir)Dynamik/GameLibraries",
 		"$(SolutionDir)lib/libs",
 		"$(solutionDir)components/ADGR",
+		"$(solutionDir)components/ADGR/src",
+		"$(solutionDir)components/Events/src",
+		"$(solutionDir)components/DevConsole/src",
 		"%{IncludeDir.GLFW}",
 		"%{IncludeDir.Glad}",
 		"%{IncludeDir.glm}",
@@ -139,13 +149,14 @@ project "Application"
 	links {
 		"Dynamik",
 		"ADGR",
+		"Events",
 		"glfw3dll",
 		"opengl32",
 		"vulkan-1"
 	}
 
 	postbuildcommands {
-		"{copy} $(SolutionDir)bin\\$(Configuration)-$(Platform)\\ADGR\\ADGR.dll $(SolutionDir)bin\\$(Configuration)-$(Platform)\\Application",
+		"{copy} $(SolutionDir)bin\\$(Configuration)-$(Platform)\\Sampler\\Sampler.dll $(SolutionDir)bin\\$(Configuration)-$(Platform)\\Application",
 		"{copy} $(SolutionDir)bin\\$(Configuration)-$(Platform)\\Dynamik\\Dynamik.dll $(SolutionDir)bin\\$(Configuration)-$(Platform)\\Application"
 	}
 
@@ -161,19 +172,22 @@ project "Application"
 
 	filter "configurations:Debug"
 		defines "DMK_DEBUG"
+		--buildoptions "/MTd"
 		symbols "On"
 		
 	filter "configurations:Release"
 		defines "DMK_RELEASE"
+		--buildoptions "/MT"
 		optimize "On"
 
 	filter "configurations:Distribution"
 		defines "DMK_DISTRIBUTION"
+		--buildoptions "/MT"
 		optimize "On"
 
----------- Advanced Dynamic Graphics Renderer project discription ----------
-project "ADGR"
-	location "components/ADGR"
+---------- Sampler project description ----------
+project "Sampler"
+	location "components/Sampler"
 	kind "SharedLib"
 	language "C++"
 	cppdialect "c++17"
@@ -182,14 +196,14 @@ project "ADGR"
 	targetdir ("$(SolutionDir)bin/" .. outputDir .. "/$(ProjectName)")
 	objdir ("$(SolutionDir)intDir/" .. outputDir .. "/$(ProjectName)")
 
-	pchheader "adgrafx.h"
-	pchsource "components/ADGR/src/adgrafx.cpp"
+	pchheader "smpafx.h"
+	pchsource "components/Sampler/src/smpafx.cpp"
 
 	files {
-		"components/ADGR/**.h",
-		"components/ADGR/**.cpp",
-		"components/ADGR/src/**.h",
-		"components/ADGR/src/**.cpp"
+		"components/Sampler/**.h",
+		"components/Sampler/**.cpp",
+		"components/Sampler/src/**.h",
+		"components/Sampler/src/**.cpp"
 	}
 
 	includedirs {
@@ -197,8 +211,8 @@ project "ADGR"
 		"$(SolutionDir)Dynamik/src",
 		"$(SolutionDir)Dynamik/GameLibraries",
 		"$(SolutionDir)lib/libs",
-		"$(solutionDir)components/ADGR",
-		"$(solutionDir)components/ADGR/src",
+		"$(solutionDir)components/Sampler",
+		"$(solutionDir)components/Sampler/src",
 		"$(SolutionDir)libs/glm/**.hpp",
 		"$(SolutionDir)libs/glm/**.inl",
 		"%{IncludeDir.GLFW}",
@@ -269,8 +283,8 @@ project "Managers"
 		"$(SolutionDir)Dynamik/src",
 		--"$(SolutionDir)Dynamik/GameLibraries",
 		--"$(SolutionDir)lib/libs",
-		--"$(solutionDir)components/ADGR",
-		--"$(solutionDir)components/ADGR/src",
+		--"$(solutionDir)components/Sampler",
+		--"$(solutionDir)components/Sampler/src",
 		"$(solutionDir)components/Managers/src",
 		"$(SolutionDir)libs/glm/**.hpp",
 		"$(SolutionDir)libs/glm/**.inl",

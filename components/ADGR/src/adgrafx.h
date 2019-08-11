@@ -11,7 +11,6 @@
 
 #ifdef DMK_PLATFORM_WINDOWS
 
-#define GLFW_DLL
 #include <GLFW/glfw3.h>
 
 #define GLM_FORCE_RADIANS

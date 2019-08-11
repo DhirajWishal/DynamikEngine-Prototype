@@ -29,7 +29,7 @@ namespace Dynamik {
 
 		}
 
-		ADGR_API void Renderer::initRenderer() {
+		void Renderer::initRenderer() {
 			rendererCore.initWindow();
 			rendererCore.startup();
 		}

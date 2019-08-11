@@ -8,6 +8,7 @@
 #include <functional>
 #include <cstdint>
 #include <ctime>
+#include <chrono>
 
 #include <string>
 #include <sstream>

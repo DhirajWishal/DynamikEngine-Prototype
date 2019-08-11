@@ -24,8 +24,15 @@ namespace Dynamik {
 		inline static void INFO_LOG(std::string);
 		inline static void WARN_LOG(std::string);
 		inline static void ERROR_LOG(std::string);
-		inline static void FATAL_LOG(std::string, std::string, int);
+		inline static void FATAL_LOG(std::string, ccp, int);
 		inline static void CORE_LOG(std::string);
+
+		inline static void LOG(int, ccp);
+		inline static void INFO_LOG(ccp);
+		inline static void WARN_LOG(ccp);
+		inline static void ERROR_LOG(ccp);
+		inline static void FATAL_LOG(ccp, ccp, int);
+		inline static void CORE_LOG(ccp);
 
 	private:
 		inline static void changeToColor(int);
@@ -40,7 +47,7 @@ namespace Dynamik {
 #define DMK_INFO(...) ::Dynamik::Log::INFO_LOG(__VA_ARGS__)
 #define DMK_WARN(...) ::Dynamik::Log::WARN_LOG(__VA_ARGS__)
 #define DMK_ERROR(...) ::Dynamik::Log::ERROR_LOG(__VA_ARGS__)
-#define DMK_FATAL(...) ::Dynamik::Log::FATAL_LOG((std::string)__VA_ARGS__, (std::string)__FILE__, __LINE__)
+#define DMK_FATAL(...) ::Dynamik::Log::FATAL_LOG(__VA_ARGS__, __FILE__, __LINE__)
 
 #define DMK_LOGGER(...) 
 

@@ -31,7 +31,7 @@ namespace Dynamik {
 				glfwSetWindowUserPointer(window, this);
 				glfwSetFramebufferSizeCallback(window, framebufferResizeCallback);
 
-				GLFWimage icon;
+				//GLFWimage icon;
 				//icon = load_icon("E:/Projects/Dynamik Engine/Dynamik/core assets/icons/icon1.png")
 				glfwSetWindowIcon(window, 0, NULL);
 			}

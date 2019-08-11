@@ -8,8 +8,10 @@ namespace Dynamik {
 			std::fstream icon;
 			icon.open(path, std::ios::in);
 
-			if (!icon.is_open())
+			if (!icon.is_open()) {
 				std::runtime_error("Icon not found");
+				//return NULL;
+			}
 			else
 				return icon;
 		}

@@ -67,54 +67,54 @@ namespace Dynamik {
 			private:
 				GLFWwindow* window = nullptr;
 
-				VkInstance myInstance;
-				VkDebugUtilsMessengerEXT debugMessenger;
-				VkPhysicalDevice myPhysicalDevice;
-				VkDevice myDevice;
-				VkSurfaceKHR mySurface;
-				VkSwapchainKHR mySwapchain;
-				VkRenderPass myRenderPass;
-				VkPipelineLayout myPipelineLayout;
-				VkCommandPool myCommandPool;
+				VkInstance myInstance = nullptr;
+				VkDebugUtilsMessengerEXT debugMessenger = nullptr;
+				VkPhysicalDevice myPhysicalDevice = nullptr;
+				VkDevice myDevice = nullptr;
+				VkSurfaceKHR mySurface = nullptr;
+				VkSwapchainKHR mySwapchain = nullptr;
+				VkRenderPass myRenderPass = nullptr;
+				VkPipelineLayout myPipelineLayout = nullptr;
+				VkCommandPool myCommandPool = nullptr;
 
-				VkBuffer VertexBuffer;
-				VkDeviceMemory vertexBufferMemory;
-				VkBuffer IndexBuffer;
-				VkDeviceMemory indexBufferMemory;
-				VkBuffer StagingBuffer;
-				VkDeviceMemory stagingBufferMemory;
+				VkBuffer VertexBuffer = nullptr;
+				VkDeviceMemory vertexBufferMemory = nullptr;
+				VkBuffer IndexBuffer = nullptr;
+				VkDeviceMemory indexBufferMemory = nullptr;
+				VkBuffer StagingBuffer = nullptr;
+				VkDeviceMemory stagingBufferMemory = nullptr;
 
-				uint32 mipLevels;
-				VkImage textureImage;
-				VkDeviceMemory textureImageMemory;
-				VkImageView textureImageView;
-				VkSampler textureSampler;
+				uint32 mipLevels = 0;
+				VkImage textureImage = nullptr;
+				VkDeviceMemory textureImageMemory = nullptr;
+				VkImageView textureImageView = nullptr;
+				VkSampler textureSampler = nullptr;
 				VkSampleCountFlagBits msaaSamples = VK_SAMPLE_COUNT_1_BIT;
-				VkImage colorImage;
-				VkDeviceMemory colorImageMemory;
-				VkImageView colorImageView;
+				VkImage colorImage = nullptr;
+				VkDeviceMemory colorImageMemory = nullptr;
+				VkImageView colorImageView = nullptr;
 
-				VkImage depthImage;
-				VkDeviceMemory depthImageMemory;
-				VkImageView depthImageView;
+				VkImage depthImage = nullptr;
+				VkDeviceMemory depthImageMemory = nullptr;
+				VkImageView depthImageView = nullptr;
 
 				std::vector<VkBuffer> UniformBuffers;
 				std::vector<VkDeviceMemory> uniformBuffersMemory;
 
-				VkDescriptorPool descriptorPool;
-				VkDescriptorSetLayout descriptorSetLayout;
+				VkDescriptorPool descriptorPool = nullptr;
+				VkDescriptorSetLayout descriptorSetLayout = nullptr;
 				std::vector<VkDescriptorSet> descriptorSets;
 
-				VkSemaphore imageAvailableSemaphore;
-				VkSemaphore renderFinishedSemaphore;
+				VkSemaphore imageAvailableSemaphore = nullptr;
+				VkSemaphore renderFinishedSemaphore = nullptr;
 				std::vector<VkSemaphore> imageAvailableSemaphores;
 				std::vector<VkSemaphore> renderFinishedSemaphores;
 				std::vector<VkFence> inFlightFences;
 
-				VkPipeline graphicsPipeline;
+				VkPipeline graphicsPipeline = nullptr;
 
-				VkQueue graphicsQueue;
-				VkQueue presentQueue;
+				VkQueue graphicsQueue = nullptr;
+				VkQueue presentQueue = nullptr;
 
 				std::vector<VkImage> swapChainImages;
 				VkFormat swapChainImageFormat;

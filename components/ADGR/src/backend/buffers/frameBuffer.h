@@ -27,7 +27,7 @@ namespace Dynamik {
 
 				void deleteFrameBuffers();
 
-				uint32 getFrameBuffersSize() const { return frameBuff.size(); }
+				size_t getFrameBuffersSize() const { return frameBuff.size(); }
 				VkFramebuffer getFrame(uint32 pos) const { return frameBuff[pos]; }
 				std::vector<VkFramebuffer> getFrameBuffers() const { return frameBuff; }
 
@@ -36,7 +36,7 @@ namespace Dynamik {
 
 				std::vector<VkFramebuffer> frameBuff;
 
-				uint32 mySize = 30;
+				size_t mySize = 30;
 			};
 		}
 	}

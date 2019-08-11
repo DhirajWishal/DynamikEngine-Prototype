@@ -33,9 +33,11 @@
 #include "core/utils/dataStructures/heap.h"
 #include "core/utils/dataStructures/linkedLists.h"
 
-#include <GameObject/GameObject.h>
+//#include <GameObject/GameObject.h>
 
-#include "src/Renderer.h"
+#include "Renderer.h"
+#include "Layers/layer.h"
+#include "event.h"
 
 /* ENTRY POINT */
 #include "core/entryPoint.h"

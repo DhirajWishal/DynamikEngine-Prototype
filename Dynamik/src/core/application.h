@@ -1,7 +1,10 @@
 #pragma once
 
-#include "src/Renderer.h"
 #include "core.h"
+#include "src/Renderer.h"
+#include "event.h"
+#include "src/Layers/layer.h"
+#include "src/Layers/layerStack.h"
 
 namespace Dynamik {
 	class DMK_API Application {
@@ -11,8 +14,15 @@ namespace Dynamik {
 
 		void run();
 
+		void onEvent(Event& event);
+
+		void pushLayer(ADGR::Layer* layer);
+		void pushOverlay(ADGR::Layer* layer);
+
 	private:
 		ADGR::Renderer myRenderingEngine;
+
+		ADGR::layerStack layerStack;
 	};
 
 	// Defined by the Client

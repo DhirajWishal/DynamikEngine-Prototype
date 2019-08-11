@@ -12,23 +12,21 @@ namespace Dynamik {
 	const char normal[8] = { 0x1b, '[', '0', ';', '3', '9', 'm', 0 };	// default
 
 	std::vector<std::string> LOG_INFO = {
-		"INFO:> ",
-		"WARN:> ",
-		"ERROR:> ",
-		"FATAL:> ",
-		"CORE LOG:> "
+		"INFO-> ",
+		"WARN-> ",
+		"ERROR-> ",
+		"FATAL-> ",
+		"CORE LOG-> "
 	};
 
 	void Log::LOG(int severity, std::string msg) {
 		char tmpBuff[128];
-		std::time_t myTime;
 		_tzset();
 
 		Log::changeToColor(severity);
 
 		_strtime_s(tmpBuff, 128);
-		printf("[%s]", tmpBuff);
-		std::cout << LOG_INFO[severity] << msg << normal << std::endl;
+		printf("[%s] %s%s%s\n", tmpBuff, LOG_INFO[severity].c_str(), msg.c_str(), normal);
 
 	}
 
@@ -44,13 +42,45 @@ namespace Dynamik {
 		LOG(ERROR_L, msg);
 	}
 
-	void Log::FATAL_LOG(std::string msg, std::string file, int line) {
+	void Log::FATAL_LOG(std::string msg, ccp file, int line) {
 		Log::changeToColor(FATAL_L);
-		std::cout << "[" << file << ":" << line << "] " << LOG_INFO[FATAL_L]
-			<< msg << normal << std::endl;
+
+		printf("[%s:%u] %s%s%s\n", file, line, LOG_INFO[FATAL_L].c_str(), msg.c_str(), normal);
 	}
 
 	void Log::CORE_LOG(std::string msg) {
+		LOG(CORE_INFO_L, msg);
+	}
+
+	void Log::LOG(int severity, ccp msg) {
+		char tmpBuff[128];
+		_tzset();
+
+		Log::changeToColor(severity);
+
+		_strtime_s(tmpBuff, 128);
+		printf("[%s] %s%s%s\n", tmpBuff, LOG_INFO[severity].c_str(), msg, normal);
+	}
+
+	void Log::INFO_LOG(ccp msg) {
+		LOG(INFO_L, msg);
+	}
+
+	void Log::WARN_LOG(ccp msg) {
+		LOG(WARN_L, msg);
+	}
+
+	void Log::ERROR_LOG(ccp msg) {
+		LOG(ERROR_L, msg);
+	}
+
+	void Log::FATAL_LOG(ccp msg, ccp file, int line) {
+		Log::changeToColor(FATAL_L);
+
+		printf("[%s:%u] %s%s%s\n", file, line, LOG_INFO[FATAL_L].c_str(), msg, normal);
+	}
+
+	void Log::CORE_LOG(ccp msg) {
 		LOG(CORE_INFO_L, msg);
 	}
 

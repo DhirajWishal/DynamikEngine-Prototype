@@ -37,7 +37,7 @@ namespace Dynamik {
 				VkDevice* myDevice;
 				VkCommandPool* myCommandPool;
 
-				uint32 mySize = 30;
+				size_t mySize = 30;
 				std::vector<VkCommandBuffer> commandBuff;
 			};
 

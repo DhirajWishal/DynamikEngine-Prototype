@@ -333,3 +333,5 @@ ASALocalRun/
 *gitUpload.bat
 bin/
 backup/
+libs/*.html
+libs/*.xml

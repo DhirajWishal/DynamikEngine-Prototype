@@ -19,18 +19,13 @@ int main(int argc, char** argv) {
 
 		//Dynamik::GameObject obj("NONE", "NONE", 0.0f, 0.0f, 0.0f);
 
-		//DMK_FATAL((std::string)"Hello World");
-		//DMK_CORE_ERROR("NULL_PTR");
+		DMK_FATAL((std::string)"Hello World");
+		DMK_CORE_ERROR("NULL_PTR");
 
-		//int x = Dynamik::utils::max(10, 20);
-		//DMK_INFO((const char*)x);
-		//printf((const char*)x);
+		int x = Dynamik::utils::max(10, 20);
+		DMK_INFO((const char*)x);
 
-		//Dynamik::utils::minHeap<int> myHeap(100);
-
-		//myHeap.insert(100);
-		//myHeap.insert(200);
-		//myHeap.insert(1);
+		Dynamik::utils::minHeap<int> myHeap(100);
 
 		auto application = Dynamik::createApplication();
 		application->run();

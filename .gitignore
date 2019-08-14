@@ -335,4 +335,4 @@ bin/
 backup/
 libs/*.html
 libs/*.xml
-!ex-libs
+!ex-libs/

@@ -10,6 +10,8 @@
 #include "adgrafx.h"
 #include "model.h"
 
+
+
 #define TINYOBJLOADER_IMPLEMENTATION
 #include <tiny_obj_loader.h>
 
@@ -84,7 +86,7 @@ namespace Dynamik {
 
 				if (!tinyobj::LoadObj(&attrib, &shapes, &materials, &warn, &err,
 					"E:/Projects/Dynamik Engine/Dynamik/core assets/models/chalet.obj"))
-					throw std::runtime_error(warn + err);
+					DMK_CORE_FATAL(warn + err);
 
 				std::unordered_map<vertex, uint32_t> uniqueVertices = {};
 

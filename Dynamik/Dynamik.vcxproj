@@ -145,11 +145,8 @@
   <ItemGroup>
     <ClInclude Include="GameLibraries\GameObject\GameObject.h" />
     <ClInclude Include="src\Dynamik.h" />
-    <ClInclude Include="src\Wrapper\dll_wrapper.h" />
-    <ClInclude Include="src\core\Managers\MemoryManager.h" />
     <ClInclude Include="src\core\application.h" />
     <ClInclude Include="src\core\core.h" />
-    <ClInclude Include="src\core\entryPoint.h" />
     <ClInclude Include="src\core\log.h" />
     <ClInclude Include="src\core\utils\DMK_DataTypes.h" />
     <ClInclude Include="src\core\utils\DMK_Error.h" />
@@ -162,8 +159,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameLibraries\GameObject\GameObject.cpp" />
-    <ClCompile Include="src\Wrapper\dll_wrapper.cpp" />
-    <ClCompile Include="src\core\Managers\MemoryManager.cpp" />
     <ClCompile Include="src\core\application.cpp" />
     <ClCompile Include="src\core\log.cpp" />
     <ClCompile Include="src\core\utils\DMK_Functions.cpp" />
@@ -190,4 +185,4 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
-</Project>
+</Project> 

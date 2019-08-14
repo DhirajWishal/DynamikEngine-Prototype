@@ -11,6 +11,8 @@
 #include "commandBuffer.h"
 #include "backend/queues/queues.h"
 
+
+
 namespace Dynamik {
 	namespace ADGR {
 		namespace core {
@@ -32,7 +34,7 @@ namespace Dynamik {
 				allocInfo.commandBufferCount = mySize;
 
 				if (vkAllocateCommandBuffers(*myDevice, &allocInfo, commandBuff.data()) != VK_SUCCESS)
-					throw std::runtime_error("failed to allocate command buffers!");
+					DMK_CORE_FATAL("failed to allocate command buffers!");
 
 				for (size_t i = 0; i < mySize; i++) {
 					VkCommandBufferBeginInfo beginInfo = {};
@@ -40,7 +42,7 @@ namespace Dynamik {
 					beginInfo.flags = VK_COMMAND_BUFFER_USAGE_SIMULTANEOUS_USE_BIT;
 
 					if (vkBeginCommandBuffer(commandBuff[i], &beginInfo) != VK_SUCCESS)
-						throw std::runtime_error("failed to begin recording command buffer!");
+						DMK_CORE_FATAL("failed to begin recording command buffer!");
 
 					VkRenderPassBeginInfo renderPassInfo = {};
 					renderPassInfo.sType = VK_STRUCTURE_TYPE_RENDER_PASS_BEGIN_INFO;
@@ -74,7 +76,7 @@ namespace Dynamik {
 					vkCmdEndRenderPass(commandBuff[i]);
 
 					if (vkEndCommandBuffer(commandBuff[i]) != VK_SUCCESS)
-						throw std::runtime_error("failed to record command buffer!");
+						DMK_CORE_FATAL("failed to record command buffer!");
 				}
 			}
 
@@ -87,7 +89,7 @@ namespace Dynamik {
 				poolInfo.flags = 0;
 
 				if (vkCreateCommandPool(*myDevice, &poolInfo, nullptr, myCommandPool) != VK_SUCCESS)
-					throw std::runtime_error("failed to create command pool!");
+					DMK_CORE_FATAL("failed to create command pool!");
 			}
 
 			VkCommandBuffer beginSingleTimeCommands(VkDevice device, VkCommandPool commandPool) {

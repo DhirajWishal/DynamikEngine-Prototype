@@ -11,6 +11,8 @@
 #include "buffer.h"
 #include "commandBuffer.h"
 
+
+
 namespace Dynamik {
 	namespace ADGR {
 		namespace core {
@@ -23,7 +25,7 @@ namespace Dynamik {
 				bufferInfo.sharingMode = VK_SHARING_MODE_EXCLUSIVE;
 
 				if (vkCreateBuffer(device, &bufferInfo, nullptr, &buffer) != VK_SUCCESS) {
-					throw std::runtime_error("failed to create buffer!");
+					DMK_CORE_FATAL("failed to create buffer!");
 				}
 
 				VkMemoryRequirements memRequirements;
@@ -36,7 +38,7 @@ namespace Dynamik {
 					physicalDevice);
 
 				if (vkAllocateMemory(device, &allocInfo, nullptr, &bufferMemory) != VK_SUCCESS) {
-					throw std::runtime_error("failed to allocate buffer memory!");
+					DMK_CORE_FATAL("failed to allocate buffer memory!");
 				}
 
 				vkBindBufferMemory(device, buffer, bufferMemory, 0);
@@ -51,7 +53,7 @@ namespace Dynamik {
 						& properties) == properties)
 						return i;
 
-				throw std::runtime_error("failed to find suitable memory type!");
+				DMK_CORE_FATAL("failed to find suitable memory type!");
 			}
 
 			void copyBuffer(VkDevice device, VkBuffer srcBuffer, VkBuffer dstBuffer, VkDeviceSize size,

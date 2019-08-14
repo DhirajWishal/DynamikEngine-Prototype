@@ -130,14 +130,16 @@
   <ItemGroup>
     <ClInclude Include="src\applicationEvent.h" />
     <ClInclude Include="src\event.h" />
+    <ClInclude Include="src\input.h" />
+    <ClInclude Include="src\keyCodes.h" />
     <ClInclude Include="src\keyEvent.h" />
     <ClInclude Include="src\mouseEvent.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="applicationEvent.cpp" />
-    <ClCompile Include="event.cpp" />
-    <ClCompile Include="keyEvent.cpp" />
-    <ClCompile Include="mouseEvent.cpp" />
+    <ClCompile Include="src\applicationEvent.cpp" />
+    <ClCompile Include="src\event.cpp" />
+    <ClCompile Include="src\keyEvent.cpp" />
+    <ClCompile Include="src\mouseEvent.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="premake5.lua" />
@@ -145,4 +147,4 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
-</Project>
+</Project> 

@@ -11,6 +11,7 @@
 
 #ifdef DMK_PLATFORM_WINDOWS
 #include "Windows/window.h"
+#include "Windows/inputs.h"
 
 #include "Windows/utils/readFile.h"
 #include "Windows/utils/loadIcon.h"

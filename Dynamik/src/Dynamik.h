@@ -23,7 +23,7 @@
 #include "core/core.h"
 #include "core/log.h"
 
-#include "core/Managers/MemoryManager.h"
+#include "event.h"
 
 #include "core/utils/DMK_DataTypes.h"
 #include "core/utils/DMK_Functions.h"
@@ -39,5 +39,4 @@
 #include "Layers/layer.h"
 #include "event.h"
 
-/* ENTRY POINT */
-#include "core/entryPoint.h"
+

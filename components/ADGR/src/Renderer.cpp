@@ -39,12 +39,7 @@ namespace Dynamik {
 		}
 
 		void Renderer::run() {
-			while (!glfwWindowShouldClose(rendererCore.getWindow())) {
-				glfwPollEvents();
-				draw();
-			}
-
-			vkDeviceWaitIdle(rendererCore.getDevice());
+			draw();
 		}
 
 		void Renderer::end() {
@@ -53,6 +48,18 @@ namespace Dynamik {
 
 		void Renderer::setMipLevel(float value) {
 			rendererCore.setMipLevels(value);
+		}
+
+		bool Renderer::getWindowCloseEvent() {
+			return glfwWindowShouldClose(rendererCore.getWindow());
+		}
+
+		void Renderer::pollEvents() {
+			glfwPollEvents();
+		}
+
+		void Renderer::idleCall() {
+			vkDeviceWaitIdle(rendererCore.getDevice());
 		}
 
 	}

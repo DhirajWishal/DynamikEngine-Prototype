@@ -13,6 +13,8 @@
 #include "backend/queues/queues.h"
 #include "backend/texture/texture.h"
 
+
+
 namespace Dynamik {
 	namespace ADGR {
 		namespace core {
@@ -71,7 +73,7 @@ namespace Dynamik {
 				createInfo.oldSwapchain = VK_NULL_HANDLE;
 
 				if (vkCreateSwapchainKHR(*myDevice, &createInfo, nullptr, mySwapChain))
-					throw std::runtime_error("Failed to create Swap Chain!");
+					DMK_CORE_FATAL("Failed to create Swap Chain!");
 
 				vkGetSwapchainImagesKHR(*myDevice, *mySwapChain, &imageCount, nullptr);
 				swapChainImages->resize(imageCount);

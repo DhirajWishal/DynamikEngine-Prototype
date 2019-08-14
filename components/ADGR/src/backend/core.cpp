@@ -10,6 +10,8 @@
 #include "adgrafx.h"
 #include "core.h"
 
+
+
 namespace Dynamik {
 	namespace ADGR {
 		namespace core {
@@ -23,17 +25,19 @@ namespace Dynamik {
 			}
 
 			void ADGR_API core::initWindow() {
-				glfwInit();
+				//glfwInit();
+				//
+				//glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
+				//
+				//window = glfwCreateWindow(WIDTH, HEIGHT, "Dynamik Engine", nullptr, nullptr);
+				//glfwSetWindowUserPointer(window, this);
+				//glfwSetFramebufferSizeCallback(window, framebufferResizeCallback);
 
-				glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
-
-				window = glfwCreateWindow(WIDTH, HEIGHT, "Dynamik Engine", nullptr, nullptr);
-				glfwSetWindowUserPointer(window, this);
-				glfwSetFramebufferSizeCallback(window, framebufferResizeCallback);
+				myWindow = std::unique_ptr<windows::Window>(windows::windowsWindow::create());
 
 				//GLFWimage icon;
 				//icon = load_icon("E:/Projects/Dynamik Engine/Dynamik/core assets/icons/icon1.png")
-				glfwSetWindowIcon(window, 0, NULL);
+				//glfwSetWindowIcon(window, 0, NULL);
 			}
 
 			void ADGR_API core::startup() {
@@ -45,7 +49,7 @@ namespace Dynamik {
 
 				// create the window instance
 				if (glfwCreateWindowSurface(myInstance, window, nullptr, &mySurface) != VK_SUCCESS)
-					throw std::runtime_error("Failed to create window surface!");
+					DMK_CORE_FATAL("Failed to create window surface!");
 
 				// pick the needed physical device
 				device.pickPhysicalDevice(myInstance, &msaaSamples);
@@ -174,7 +178,7 @@ namespace Dynamik {
 					return;
 				}
 				else if (result != VK_SUCCESS && result != VK_SUBOPTIMAL_KHR)
-					throw std::runtime_error("failed to acquire swap chain image!");
+					DMK_CORE_FATAL("failed to acquire swap chain image!");
 
 				uniformBuffer.updateBuffer(imageIndex, swapChainExtent);
 
@@ -196,7 +200,7 @@ namespace Dynamik {
 				vkResetFences(myDevice, 1, &inFlightFences[currentFrame]);
 
 				if (vkQueueSubmit(graphicsQueue, 1, &submitInfo, inFlightFences[currentFrame]) != VK_SUCCESS)
-					throw std::runtime_error("failed to submit draw command buffer!");
+					DMK_CORE_FATAL("failed to submit draw command buffer!");
 
 				VkPresentInfoKHR presentInfo = {};
 				presentInfo.sType = VK_STRUCTURE_TYPE_PRESENT_INFO_KHR;
@@ -216,9 +220,11 @@ namespace Dynamik {
 					recreateSwapChain();
 				}
 				else if (result != VK_SUCCESS)
-					throw std::runtime_error("failed to present swap chain image!");
+					DMK_CORE_FATAL("failed to present swap chain image!");
 
 				currentFrame = (currentFrame + 1) % MAX_FRAMES_IN_FLIGHT;
+
+				myWindow->onUpdate();
 			}
 
 			void ADGR_API core::recreateSwapChain() {

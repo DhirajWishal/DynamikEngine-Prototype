@@ -16,9 +16,10 @@
 
 namespace Dynamik {
 	namespace utils {
+
 		/* Min Heap Data Structure */
 		template<class Alloc>
-		class DMK_API minHeap {
+		class minHeap {
 		public:
 			minHeap(uint32 size);
 			~minHeap() {}
@@ -40,7 +41,7 @@ namespace Dynamik {
 
 		/* Max Heap Data Structure */
 		template<class Alloc>
-		class DMK_API maxHeap {
+		class maxHeap {
 		public:
 			maxHeap(uint32 size);
 			~maxHeap() {}
@@ -59,5 +60,16 @@ namespace Dynamik {
 			uint32 myIndex;
 		};
 
+		// Exporting/ Importing minHeap class
+		DMK_API minHeap<int>;
+		DMK_API minHeap<uint32>;
+		DMK_API minHeap<float>;
+		DMK_API minHeap<double>;
+
+		// Exporting/ Importing maxHeap class
+		DMK_API maxHeap<int>;
+		DMK_API maxHeap<uint32>;
+		DMK_API maxHeap<float>;
+		DMK_API maxHeap<double>;
 	}
 }

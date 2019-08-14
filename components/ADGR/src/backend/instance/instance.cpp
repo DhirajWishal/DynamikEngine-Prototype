@@ -13,6 +13,8 @@
 #include "backend/validators/validators.h"
 #include "backend/extensions/extensions.h"
 
+
+
 namespace Dynamik {
 	namespace ADGR {
 		namespace core {
@@ -22,7 +24,7 @@ namespace Dynamik {
 
 			void instance::createInstance() {
 				if (enableValidationLayers && !checkValidationLayerSupport())
-					throw std::runtime_error("validation layers requested, but not available!");
+					DMK_CORE_FATAL("validation layers requested, but not available!");
 
 				VkApplicationInfo appInfo = {};
 				appInfo.sType = VK_STRUCTURE_TYPE_APPLICATION_INFO;
@@ -55,7 +57,7 @@ namespace Dynamik {
 				}
 
 				if (vkCreateInstance(&createInfo, nullptr, myInstance) != VK_SUCCESS)
-					throw std::runtime_error("Failed to create instance!");
+					DMK_CORE_FATAL("Failed to create instance!");
 			}
 
 			void instance::deleteInstance() {

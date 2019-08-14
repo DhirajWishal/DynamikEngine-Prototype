@@ -37,5 +37,8 @@
 #include <set>
 #include <unordered_map>
 #include <functional>
+#include <memory>
+
+#include "core/log.h"
 
 #endif

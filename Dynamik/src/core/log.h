@@ -58,5 +58,19 @@ namespace Dynamik {
 #define DMK_CORE_FATAL(...) ::Dynamik::Log::FATAL_LOG(__VA_ARGS__, __FILE__, __LINE__)
 #define DMK_CORE_MSG(...) ::Dynamik::Log::CORE_LOG(__VA_ARGS__)
 
+// assertions
+#ifdef DMK_DEBUG
+#define DMK_CORE_ASSERT(x, ...)		{								\
+										if(!(x)) {					\
+											 DMK_CORE_ERROR(__VA_ARGS__);	\
+											 __debugbreak();		\
+										}							\
+									}
+
+#else
+#define DMK_CORE_ASSERT(x, ...)	
+
+#endif
+
 // ----------
 #endif

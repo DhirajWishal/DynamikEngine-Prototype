@@ -146,6 +146,7 @@
     <ClInclude Include="src\Layers\layer.h" />
     <ClInclude Include="src\Layers\layerStack.h" />
     <ClInclude Include="src\Platform\Windows.h" />
+    <ClInclude Include="src\Platform\Windows\inputs.h" />
     <ClInclude Include="src\Platform\Windows\utils\loadIcon.h" />
     <ClInclude Include="src\Platform\Windows\utils\readFile.h" />
     <ClInclude Include="src\Platform\Windows\window.h" />
@@ -182,6 +183,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="src\Layers\layer.cpp" />
     <ClCompile Include="src\Layers\layerStack.cpp" />
+    <ClCompile Include="src\Platform\Windows\inputs.cpp" />
     <ClCompile Include="src\Platform\Windows\utils\loadIcon.cpp" />
     <ClCompile Include="src\Platform\Windows\utils\readFile.cpp" />
     <ClCompile Include="src\Platform\Windows\window.cpp" />
@@ -224,4 +226,4 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
-</Project>
+</Project> 

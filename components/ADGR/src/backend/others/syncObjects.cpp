@@ -11,6 +11,8 @@
 #include "syncObjects.h"
 #include "backend/defines.h"
 
+
+
 namespace Dynamik {
 	namespace ADGR {
 		namespace core {
@@ -32,7 +34,7 @@ namespace Dynamik {
 					if (vkCreateSemaphore(device, &semaphoreInfo, nullptr, &imageAvailableSemaphores->at(i)) != VK_SUCCESS ||
 						vkCreateSemaphore(device, &semaphoreInfo, nullptr, &renderFinishedSemaphores->at(i)) != VK_SUCCESS ||
 						vkCreateFence(device, &fenceInfo, nullptr, &inFlightFences->at(i)) != VK_SUCCESS)
-						throw std::runtime_error("failed to create synchronization objects for a frame!");
+						DMK_CORE_FATAL("failed to create synchronization objects for a frame!");
 				}
 			}
 		}

@@ -67,58 +67,58 @@ namespace Dynamik {
 			private:
 				GLFWwindow* window = nullptr;
 
-				VkInstance myInstance = nullptr;
-				VkDebugUtilsMessengerEXT debugMessenger = nullptr;
-				VkPhysicalDevice myPhysicalDevice = nullptr;
-				VkDevice myDevice = nullptr;
-				VkSurfaceKHR mySurface = nullptr;
-				VkSwapchainKHR mySwapchain = nullptr;
-				VkRenderPass myRenderPass = nullptr;
-				VkPipelineLayout myPipelineLayout = nullptr;
-				VkCommandPool myCommandPool = nullptr;
+				VkInstance myInstance = VK_NULL_HANDLE;
+				VkDevice myDevice = VK_NULL_HANDLE;
+				VkPhysicalDevice myPhysicalDevice = VK_NULL_HANDLE;
+				VkDebugUtilsMessengerEXT debugMessenger = VK_NULL_HANDLE;
+				VkSurfaceKHR mySurface = VK_NULL_HANDLE;
+				VkSwapchainKHR mySwapchain = VK_NULL_HANDLE;
+				VkRenderPass myRenderPass = VK_NULL_HANDLE;
+				VkPipelineLayout myPipelineLayout = VK_NULL_HANDLE;
+				VkCommandPool myCommandPool = VK_NULL_HANDLE;
 
-				VkBuffer VertexBuffer = nullptr;
-				VkDeviceMemory vertexBufferMemory = nullptr;
-				VkBuffer IndexBuffer = nullptr;
-				VkDeviceMemory indexBufferMemory = nullptr;
-				VkBuffer StagingBuffer = nullptr;
-				VkDeviceMemory stagingBufferMemory = nullptr;
+				VkBuffer VertexBuffer = VK_NULL_HANDLE;
+				VkDeviceMemory vertexBufferMemory = VK_NULL_HANDLE;
+				VkBuffer IndexBuffer = VK_NULL_HANDLE;
+				VkDeviceMemory indexBufferMemory = VK_NULL_HANDLE;
+				VkBuffer StagingBuffer = VK_NULL_HANDLE;
+				VkDeviceMemory stagingBufferMemory = VK_NULL_HANDLE;
 
 				uint32 mipLevels = 0;
-				VkImage textureImage = nullptr;
-				VkDeviceMemory textureImageMemory = nullptr;
-				VkImageView textureImageView = nullptr;
-				VkSampler textureSampler = nullptr;
+				VkImage textureImage = VK_NULL_HANDLE;
+				VkDeviceMemory textureImageMemory = VK_NULL_HANDLE;
+				VkImageView textureImageView = VK_NULL_HANDLE;
+				VkSampler textureSampler = VK_NULL_HANDLE;
 				VkSampleCountFlagBits msaaSamples = VK_SAMPLE_COUNT_1_BIT;
-				VkImage colorImage = nullptr;
-				VkDeviceMemory colorImageMemory = nullptr;
-				VkImageView colorImageView = nullptr;
+				VkImage colorImage = VK_NULL_HANDLE;
+				VkDeviceMemory colorImageMemory = VK_NULL_HANDLE;
+				VkImageView colorImageView = VK_NULL_HANDLE;
 
-				VkImage depthImage = nullptr;
-				VkDeviceMemory depthImageMemory = nullptr;
-				VkImageView depthImageView = nullptr;
+				VkImage depthImage = VK_NULL_HANDLE;
+				VkDeviceMemory depthImageMemory = VK_NULL_HANDLE;
+				VkImageView depthImageView = VK_NULL_HANDLE;
 
 				std::vector<VkBuffer> UniformBuffers;
 				std::vector<VkDeviceMemory> uniformBuffersMemory;
 
-				VkDescriptorPool descriptorPool = nullptr;
-				VkDescriptorSetLayout descriptorSetLayout = nullptr;
+				VkDescriptorPool descriptorPool = VK_NULL_HANDLE;
+				VkDescriptorSetLayout descriptorSetLayout = VK_NULL_HANDLE;
 				std::vector<VkDescriptorSet> descriptorSets;
 
-				VkSemaphore imageAvailableSemaphore = nullptr;
-				VkSemaphore renderFinishedSemaphore = nullptr;
+				VkSemaphore imageAvailableSemaphore = VK_NULL_HANDLE;
+				VkSemaphore renderFinishedSemaphore = VK_NULL_HANDLE;
 				std::vector<VkSemaphore> imageAvailableSemaphores;
 				std::vector<VkSemaphore> renderFinishedSemaphores;
 				std::vector<VkFence> inFlightFences;
 
-				VkPipeline graphicsPipeline = nullptr;
+				VkPipeline graphicsPipeline = VK_NULL_HANDLE;
 
-				VkQueue graphicsQueue = nullptr;
-				VkQueue presentQueue = nullptr;
+				VkQueue graphicsQueue = VK_NULL_HANDLE;
+				VkQueue presentQueue = VK_NULL_HANDLE;
 
 				std::vector<VkImage> swapChainImages;
-				VkFormat swapChainImageFormat;
-				VkExtent2D swapChainExtent;
+				VkFormat swapChainImageFormat = VK_FORMAT_UNDEFINED;
+				VkExtent2D swapChainExtent = { 0, 0 };
 				std::vector<VkImageView> swapChainImageViews;
 
 				instance instance{ &myInstance };
@@ -140,6 +140,8 @@ namespace Dynamik {
 					&colorImageView };
 
 				model myModel;
+
+				std::unique_ptr<windows::Window> myWindow;
 
 				uint32 currentFrame = 0;
 				bool frameBufferResized = false;

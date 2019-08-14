@@ -42,7 +42,7 @@ namespace Dynamik {
 				imageInfo.sharingMode = VK_SHARING_MODE_EXCLUSIVE;
 
 				if (vkCreateImage(device, &imageInfo, nullptr, &image) != VK_SUCCESS)
-					throw std::runtime_error("failed to create image!");
+					DMK_CORE_FATAL("failed to create image!");
 
 				VkMemoryRequirements memRequirements;
 				vkGetImageMemoryRequirements(device, image, &memRequirements);
@@ -54,7 +54,7 @@ namespace Dynamik {
 					VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT, physicalDevice);
 
 				if (vkAllocateMemory(device, &allocInfo, nullptr, &imageMemory) != VK_SUCCESS)
-					throw std::runtime_error("failed to allocate image memory!");
+					DMK_CORE_FATAL("failed to allocate image memory!");
 
 				vkBindImageMemory(device, image, imageMemory, 0);
 			}
@@ -74,7 +74,7 @@ namespace Dynamik {
 
 				VkImageView imageView;
 				if (vkCreateImageView(device, &viewInfo, nullptr, &imageView) != VK_SUCCESS)
-					throw std::runtime_error("failed to create texture image view!");
+					DMK_CORE_FATAL("failed to create texture image view!");
 
 				return imageView;
 			}
@@ -141,7 +141,7 @@ namespace Dynamik {
 					destinationStage = VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT;
 				}
 				else {
-					throw std::invalid_argument("unsupported layout transition!");
+					DMK_CORE_FATAL("unsupported layout transition!");
 				}
 
 				vkCmdPipelineBarrier(
@@ -206,15 +206,15 @@ namespace Dynamik {
 			}
 
 			void texture::initTexture(VkCommandPool commandPool, VkQueue graphicsQueue) {
+				// here
 				stbi_uc* pixels = stbi_load("E:/Projects/Dynamik Engine/Dynamik/core assets/textures/chalet.jpg",
 					&texWidth, &texHeight, &texChannels,
 					STBI_rgb_alpha);
 				VkDeviceSize imageSize = texWidth * texHeight * 4;
 				*myMipLevels = static_cast<uint32>(std::floor(std::log2(std::max(texWidth, texHeight)))) + 1;
 
-				if (!pixels) {
-					throw std::runtime_error("failed to load texture image!");
-				}
+				if (!pixels)
+					DMK_CORE_FATAL("failed to load texture image!");
 
 				VkBuffer stagingBuffer;
 				VkDeviceMemory stagingBufferMemory;
@@ -227,6 +227,7 @@ namespace Dynamik {
 				memcpy(data, pixels, static_cast<size_t>(imageSize));
 				vkUnmapMemory(*myDevice, stagingBufferMemory);
 
+				// here
 				stbi_image_free(pixels);
 
 				createImage(*myDevice, *myPhysicalDevice, texWidth, texHeight, VK_FORMAT_R8G8B8A8_UNORM, VK_IMAGE_TILING_OPTIMAL,
@@ -271,7 +272,7 @@ namespace Dynamik {
 				samplerInfo.mipLodBias = 0; // Optional
 
 				if (vkCreateSampler(*myDevice, &samplerInfo, nullptr, myTextureSampler) != VK_SUCCESS)
-					throw std::runtime_error("failed to create texture sampler!");
+					DMK_CORE_FATAL("failed to create texture sampler!");
 			}
 
 			void texture::deleteTexture() {
@@ -288,7 +289,7 @@ namespace Dynamik {
 				vkGetPhysicalDeviceFormatProperties(*myPhysicalDevice, imageFormat, &formatProperties);
 
 				if (!(formatProperties.optimalTilingFeatures & VK_FORMAT_FEATURE_SAMPLED_IMAGE_FILTER_LINEAR_BIT))
-					throw std::runtime_error("texture image format does not support linear blitting!");
+					DMK_CORE_FATAL("texture image format does not support linear blitting!");
 
 				VkCommandBuffer commandBuff = beginSingleTimeCommands(*myDevice, commandPool);
 

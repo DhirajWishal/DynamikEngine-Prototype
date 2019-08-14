@@ -14,3 +14,6 @@
 #endif
 
 #define BIT(x) (1 << x)
+
+#define DMK_SUCCESS		0
+#define DMK_FAIL		-1

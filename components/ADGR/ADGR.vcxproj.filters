@@ -72,6 +72,9 @@
     <ClInclude Include="src\Platform\Windows.h">
       <Filter>src\Platform</Filter>
     </ClInclude>
+    <ClInclude Include="src\Platform\Windows\inputs.h">
+      <Filter>src\Platform\Windows</Filter>
+    </ClInclude>
     <ClInclude Include="src\Platform\Windows\utils\loadIcon.h">
       <Filter>src\Platform\Windows\utils</Filter>
     </ClInclude>
@@ -173,6 +176,9 @@
     </ClCompile>
     <ClCompile Include="src\Layers\layerStack.cpp">
       <Filter>src\Layers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\Windows\inputs.cpp">
+      <Filter>src\Platform\Windows</Filter>
     </ClCompile>
     <ClCompile Include="src\Platform\Windows\utils\loadIcon.cpp">
       <Filter>src\Platform\Windows\utils</Filter>

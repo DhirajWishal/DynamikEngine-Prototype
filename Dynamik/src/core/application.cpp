@@ -4,7 +4,7 @@
 namespace Dynamik {
 
 	Application::Application() {
-		myRenderingEngine.setMipLevel(5.0f);
+		myRenderingEngine.setMipLevel(1.0f);
 
 		myRenderingEngine.initRenderer();
 	}
@@ -14,11 +14,14 @@ namespace Dynamik {
 	}
 
 	DMK_API void Application::run() {
-		while (true) {
-			myRenderingEngine.run();
+		while (!myRenderingEngine.getWindowCloseEvent()) {
+			myRenderingEngine.draw();
+
 			for (auto layer : layerStack)
 				layer->update();
 		}
+
+		myRenderingEngine.idleCall();
 	}
 
 	void Application::pushLayer(ADGR::Layer* layer) {

@@ -10,6 +10,8 @@
 #include "adgrafx.h"
 #include "frameBuffer.h"
 
+
+
 namespace Dynamik {
 	namespace ADGR {
 		namespace core {
@@ -41,7 +43,7 @@ namespace Dynamik {
 					framebufferInfo.layers = 1;
 
 					if (vkCreateFramebuffer(*myDevice, &framebufferInfo, nullptr, &frameBuff[i]) != VK_SUCCESS)
-						throw std::runtime_error("failed to create framebuffer!");
+						DMK_CORE_FATAL("failed to create framebuffer!");
 				}
 			}
 

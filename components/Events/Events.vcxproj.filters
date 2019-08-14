@@ -12,6 +12,12 @@
     <ClInclude Include="src\event.h">
       <Filter>src</Filter>
     </ClInclude>
+    <ClInclude Include="src\input.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\keyCodes.h">
+      <Filter>src</Filter>
+    </ClInclude>
     <ClInclude Include="src\keyEvent.h">
       <Filter>src</Filter>
     </ClInclude>
@@ -20,10 +26,18 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="applicationEvent.cpp" />
-    <ClCompile Include="event.cpp" />
-    <ClCompile Include="keyEvent.cpp" />
-    <ClCompile Include="mouseEvent.cpp" />
+    <ClCompile Include="src\applicationEvent.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\event.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\keyEvent.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mouseEvent.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="premake5.lua" />

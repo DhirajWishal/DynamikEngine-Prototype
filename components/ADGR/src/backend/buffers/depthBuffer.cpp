@@ -2,6 +2,8 @@
 #include "depthBuffer.h"
 #include "backend/texture/texture.h"
 
+
+
 namespace Dynamik {
 	namespace ADGR {
 		namespace core {
@@ -46,7 +48,7 @@ namespace Dynamik {
 						return format;
 				}
 
-				throw std::runtime_error("failed to find supported format!");
+				DMK_CORE_FATAL("failed to find supported format!");
 			}
 
 			void depthBuffer::deleteBuffer() {
@@ -70,7 +72,7 @@ namespace Dynamik {
 					}
 				}
 
-				throw std::runtime_error("failed to find supported format!");
+				DMK_CORE_FATAL("failed to find supported format!");
 			}
 
 			VkFormat depthBuffer::findDepthFormat() {

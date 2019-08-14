@@ -10,14 +10,8 @@
     <Filter Include="src">
       <UniqueIdentifier>{2DAB880B-99B4-887C-2230-9F7C8E38947C}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\Wrapper">
-      <UniqueIdentifier>{FDF70A47-69AD-833C-F2A1-7D135E567A40}</UniqueIdentifier>
-    </Filter>
     <Filter Include="src\core">
       <UniqueIdentifier>{C55F2ECF-B12C-89DA-DA45-7782C671BE68}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\core\Managers">
-      <UniqueIdentifier>{42AF0E70-AEC5-0C06-F73C-98276392DD8D}</UniqueIdentifier>
     </Filter>
     <Filter Include="src\core\utils">
       <UniqueIdentifier>{0571F388-F13E-E78E-DAD2-57B5C63FC3F3}</UniqueIdentifier>
@@ -33,19 +27,10 @@
     <ClInclude Include="src\Dynamik.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="src\Wrapper\dll_wrapper.h">
-      <Filter>src\Wrapper</Filter>
-    </ClInclude>
-    <ClInclude Include="src\core\Managers\MemoryManager.h">
-      <Filter>src\core\Managers</Filter>
-    </ClInclude>
     <ClInclude Include="src\core\application.h">
       <Filter>src\core</Filter>
     </ClInclude>
     <ClInclude Include="src\core\core.h">
-      <Filter>src\core</Filter>
-    </ClInclude>
-    <ClInclude Include="src\core\entryPoint.h">
       <Filter>src\core</Filter>
     </ClInclude>
     <ClInclude Include="src\core\log.h">
@@ -79,12 +64,6 @@
   <ItemGroup>
     <ClCompile Include="GameLibraries\GameObject\GameObject.cpp">
       <Filter>GameLibraries\GameObject</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Wrapper\dll_wrapper.cpp">
-      <Filter>src\Wrapper</Filter>
-    </ClCompile>
-    <ClCompile Include="src\core\Managers\MemoryManager.cpp">
-      <Filter>src\core\Managers</Filter>
     </ClCompile>
     <ClCompile Include="src\core\application.cpp">
       <Filter>src\core</Filter>

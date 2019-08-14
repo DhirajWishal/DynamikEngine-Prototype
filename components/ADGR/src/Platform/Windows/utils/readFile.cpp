@@ -10,6 +10,8 @@
 #include "adgrafx.h"
 #include "readFile.h"
 
+
+
 namespace Dynamik {
 	namespace ADGR {
 		namespace utils {
@@ -18,7 +20,7 @@ namespace Dynamik {
 				std::ifstream file(filePath, std::ios::ate | std::ios::binary);
 
 				if (!file.is_open())
-					throw std::runtime_error("Failed to Open file!");
+					DMK_CORE_FATAL("Failed to Open file!");
 
 				size_t fileSize = (size_t)file.tellg();
 				std::vector<char> buffer(fileSize);

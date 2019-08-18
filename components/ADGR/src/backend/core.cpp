@@ -41,57 +41,8 @@ namespace Dynamik {
 				//GLFWkeyfun
 				glfwSetKeyCallback(window, onKeyEvent);
 
-
-
-				//glfwSetKeyCallback(window, [](GLFWwindow* window, int keycode, int scancode,
-				//	int action, int mods) {
-				//	printf("LAMBDA RUNNING");
-				//	//coreProps* data = (coreProps*)glfwGetWindowUserPointer(window);
-				//	char x = (char) glfwGetWindowUserPointer(window);
-				//	printf("%c",x);
-				//	/*switch (action) {
-				//		case GLFW_PRESS: {
-				//			KeyPressedEvent event(keycode, 0);
-				//			data->eventCallbackFunc(event);
-				//
-				//			break;
-				//		}
-				//		case GLFW_RELEASE: {
-				//			KeyReleasedEvent event(keycode);
-				//			data->eventCallbackFunc(event);
-				//
-				//			break;
-				//		}
-				//		case GLFW_REPEAT: {
-				//			KeyPressedEvent event(keycode, 1);
-				//			data->eventCallbackFunc(event);
-				//
-				//			break;
-				//		}
-				//	}*/
-				//});
-				//
-				//glfwSetMouseButtonCallback(window, [](GLFWwindow* window, int button, int action, int mods) {
-				//	/*coreProps* data = (coreProps*)glfwGetWindowUserPointer(window);
-				//
-				//	switch (action) {
-				//		case GLFW_PRESS: {
-				//			MouseButtonPressedEvent event(button);
-				//			data->eventCallbackFunc(event);
-				//
-				//			break;
-				//		}
-				//		case GLFW_RELEASE: {
-				//			MouseButtonReleasedEvent event(button);
-				//			data->eventCallbackFunc(event);
-				//
-				//			break;
-				//		}
-				//		default:
-				//			break;
-				//	}*/
-				//});
-				//
+				glfwSetMouseButtonCallback(window, onMouseButtonEvent);
+				
 				//glfwSetScrollCallback(window, [](GLFWwindow* window, double xOffset, double yOffset) {
 				//	/*coreProps* data = (coreProps*)glfwGetWindowUserPointer(window);
 				//
@@ -405,9 +356,27 @@ namespace Dynamik {
 					break;
 				}
 				}
-				//
-				//CoreProps::getInstance().key(keycode, action, &core::getInstance());
-				//printf("RUNNING IN GLFW CALL\n");
+			}
+
+			void core::onMouseButtonEvent(GLFWwindow* window, int button, int action, int mods) {
+				auto data = reinterpret_cast<core*>(glfwGetWindowUserPointer(window));
+
+				switch (action) {
+				case GLFW_PRESS: {
+					MouseButtonPressedEvent event(button);
+					data->eventCallbackFunc(event);
+
+					break;
+				}
+				case GLFW_RELEASE: {
+					MouseButtonReleasedEvent event(button);
+					data->eventCallbackFunc(event);
+
+					break;
+				}
+				default:
+					break;
+				}
 			}
 		}
 	}

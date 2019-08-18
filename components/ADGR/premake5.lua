@@ -1,7 +1,7 @@
 ---------- ADGR project ----------
 
 project "ADGR"
-	kind "ConsoleApp"
+	kind "SharedLib"
 	language "C++"
 	cppdialect "c++17"
 	staticruntime "On"

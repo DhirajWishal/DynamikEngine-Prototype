@@ -10,15 +10,6 @@
     <Filter Include="src">
       <UniqueIdentifier>{2DAB880B-99B4-887C-2230-9F7C8E38947C}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\Platform">
-      <UniqueIdentifier>{21CA02E5-0D2D-9289-B6B2-CA3FA2F45D0C}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\Platform\Windows">
-      <UniqueIdentifier>{5B054582-4794-CE4B-F0B2-E246DC20DFF1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\Platform\Windows\utils">
-      <UniqueIdentifier>{1B6F5118-077F-FDE8-7038-62075C67EC81}</UniqueIdentifier>
-    </Filter>
     <Filter Include="src\core">
       <UniqueIdentifier>{C55F2ECF-B12C-89DA-DA45-7782C671BE68}</UniqueIdentifier>
     </Filter>
@@ -38,21 +29,6 @@
     </ClInclude>
     <ClInclude Include="src\Dynamik.h">
       <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Platform\Windows.h">
-      <Filter>src\Platform</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Platform\Windows\inputs.h">
-      <Filter>src\Platform\Windows</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Platform\Windows\utils\loadIcon.h">
-      <Filter>src\Platform\Windows\utils</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Platform\Windows\utils\readFile.h">
-      <Filter>src\Platform\Windows\utils</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Platform\Windows\window.h">
-      <Filter>src\Platform\Windows</Filter>
     </ClInclude>
     <ClInclude Include="src\core\application.h">
       <Filter>src\core</Filter>
@@ -95,18 +71,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Platform\Windows\inputs.cpp">
-      <Filter>src\Platform\Windows</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Platform\Windows\utils\loadIcon.cpp">
-      <Filter>src\Platform\Windows\utils</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Platform\Windows\utils\readFile.cpp">
-      <Filter>src\Platform\Windows\utils</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Platform\Windows\window.cpp">
-      <Filter>src\Platform\Windows</Filter>
-    </ClCompile>
     <ClCompile Include="src\core\application.cpp">
       <Filter>src\core</Filter>
     </ClCompile>

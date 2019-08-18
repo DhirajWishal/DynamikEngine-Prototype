@@ -6,20 +6,19 @@
 void fakeupdate() {
 	using namespace Dynamik::Audio;
 	AudioEngine engine = AudioEngine();
-	BackgroundAudioController contro("media/ophelia.mp3");
-	engine.addAudioController(contro);
+	//BackgroundAudioController contro("media/ophelia.mp3");
+	//engine.addAudioController(contro);
 
 	BasicAudioController contro2("media/explosion.wav");
-	
+	contro2.isLooped = true;
 
-	float i = 0.0f; 
-	contro2.isLooped = false;
+
 	while (true) {
 		engine.update();
 		char x;
 		std::cin >> x;
 		if (x == 'b') {
-			contro.isPaused = !contro.isPaused;
+			//contro.isPaused = !contro.isPaused;
 		}
 		else if (x == 'g') {
 			engine.addAudioController(contro2);
@@ -39,8 +38,8 @@ class AA {
 };
 
 int main() {
-	while (true) std::cout << AA::getInstance().b;
-	//fakeupdate();
+	//while (true) std::cout << AA::getInstance().b;
+	fakeupdate();
 	return 0;
 }
 

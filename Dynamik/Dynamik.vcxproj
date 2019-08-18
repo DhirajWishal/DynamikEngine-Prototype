@@ -145,11 +145,6 @@
   <ItemGroup>
     <ClInclude Include="GameLibraries\GameObject\GameObject.h" />
     <ClInclude Include="src\Dynamik.h" />
-    <ClInclude Include="src\Platform\Windows.h" />
-    <ClInclude Include="src\Platform\Windows\inputs.h" />
-    <ClInclude Include="src\Platform\Windows\utils\loadIcon.h" />
-    <ClInclude Include="src\Platform\Windows\utils\readFile.h" />
-    <ClInclude Include="src\Platform\Windows\window.h" />
     <ClInclude Include="src\core\application.h" />
     <ClInclude Include="src\core\core.h" />
     <ClInclude Include="src\core\log.h" />
@@ -165,10 +160,6 @@
     <ClInclude Include="src\dmkafx.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Platform\Windows\inputs.cpp" />
-    <ClCompile Include="src\Platform\Windows\utils\loadIcon.cpp" />
-    <ClCompile Include="src\Platform\Windows\utils\readFile.cpp" />
-    <ClCompile Include="src\Platform\Windows\window.cpp" />
     <ClCompile Include="src\core\application.cpp" />
     <ClCompile Include="src\core\log.cpp" />
     <ClCompile Include="src\core\object mechanics\loadGameObjects.cpp" />

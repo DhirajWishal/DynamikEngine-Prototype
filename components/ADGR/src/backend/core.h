@@ -83,6 +83,7 @@ namespace Dynamik {
 			private:
 				static void onKeyEvent(GLFWwindow* window, int keycode, int scancode,
 					int action, int mods);
+				static void onMouseButtonEvent(GLFWwindow* window, int button, int action, int mods);
 
 				void onEvent(Event& event);
 

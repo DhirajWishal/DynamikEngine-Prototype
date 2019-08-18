@@ -78,7 +78,7 @@
     <ClCompile>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>DMK_PLATFORM_WINDOWS;DMK_BUILD_DLL;DMK_DEBUG;AUDIO_LOG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>DMK_PLATFORM_WINDOWS;DMK_BUILD_DLL;DMK_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(SolutionDir)libs;$(SolutionDir)Dynamik\src;$(SolutionDir)Dynamik\GameLibraries;$(SolutionDir)lib\libs;$(SolutionDir)components\Audio;$(SolutionDir)components\Audio\src;$(SolutionDir)libs\irrKlang\include;$(SolutionDir)components\ADGR;$(SolutionDir)components\ADGR\src;$(SolutionDir)components\Events\src;$(SolutionDir)libs\stb-master;$(SolutionDir)libs\tinyobjloader-master;$(SolutionDir)\libs\irrKlang\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
@@ -139,12 +139,12 @@
   <ItemGroup>
     <ClInclude Include="main.h" />
     <ClInclude Include="src\Audio.h" />
-    <ClInclude Include="src\core\AudioObjectControllers\BackgroundAudioController.h" />
-    <ClInclude Include="src\core\AudioObjectControllers\BasicAudioController.h" />
-    <ClInclude Include="src\core\log.h" />
     <ClInclude Include="src\core\AudioEngine.h" />
     <ClInclude Include="src\core\AudioObject.h" />
     <ClInclude Include="src\core\AudioObjectController.h" />
+    <ClInclude Include="src\core\AudioObjectControllers\BackgroundAudioController.h" />
+    <ClInclude Include="src\core\AudioObjectControllers\BasicAudioController.h" />
+    <ClInclude Include="src\core\log.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -161,9 +161,6 @@
     <ProjectReference Include="..\Events\Events.vcxproj">
       <Project>{3A8963B1-262B-8E87-0FE6-A1DBFB2615D8}</Project>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Media Include="media\bell.wav" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

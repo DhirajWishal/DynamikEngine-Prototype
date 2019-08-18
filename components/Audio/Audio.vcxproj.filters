@@ -7,6 +7,9 @@
     <Filter Include="src\core">
       <UniqueIdentifier>{C55F2ECF-B12C-89DA-DA45-7782C671BE68}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\core\AudioObjectControllers">
+      <UniqueIdentifier>{942D1B86-0011-2AC6-0914-58027576F016}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h" />
@@ -22,9 +25,15 @@
     <ClInclude Include="src\core\AudioObjectController.h">
       <Filter>src\core</Filter>
     </ClInclude>
-    <ClInclude Include="src\core\log.h" />
-    <ClInclude Include="src\core\AudioObjectControllers\BasicAudioController.h" />
-    <ClInclude Include="src\core\AudioObjectControllers\BackgroundAudioController.h" />
+    <ClInclude Include="src\core\AudioObjectControllers\BackgroundAudioController.h">
+      <Filter>src\core\AudioObjectControllers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\AudioObjectControllers\BasicAudioController.h">
+      <Filter>src\core\AudioObjectControllers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\log.h">
+      <Filter>src\core</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -37,13 +46,14 @@
     <ClCompile Include="src\core\AudioObjectController.cpp">
       <Filter>src\core</Filter>
     </ClCompile>
-    <ClCompile Include="src\core\AudioObjectControllers\BasicAudioController.cpp" />
-    <ClCompile Include="src\core\AudioObjectControllers\BackgroundAudioController.cpp" />
+    <ClCompile Include="src\core\AudioObjectControllers\BackgroundAudioController.cpp">
+      <Filter>src\core\AudioObjectControllers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\AudioObjectControllers\BasicAudioController.cpp">
+      <Filter>src\core\AudioObjectControllers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="premake5.lua" />
-  </ItemGroup>
-  <ItemGroup>
-    <Media Include="media\bell.wav" />
   </ItemGroup>
 </Project>

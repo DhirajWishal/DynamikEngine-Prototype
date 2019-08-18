@@ -149,9 +149,9 @@ namespace Dynamik {
 				std::vector<std::vector<std::string>> shaderPath;
 				std::vector<std::vector<std::string>> assetsPath;
 
-				const std::string vertexShaderPath = "E:/Projects/Dynamik Engine/Dynamik/components/Shaders/vert.spv";
-				const std::string fragmentShaderPath = "E:/Projects/Dynamik Engine/Dynamik/components/Shaders/frag.spv";
-				std::string MODEL_PATH = "E:/Projects/Dynamik Engine/Dynamik/core assets/models/chalet.obj";
+				const std::string vertexShaderPath = "E:/Work/Gaming/Dynamik/components/Shaders/vert.spv";
+				const std::string fragmentShaderPath = "E:/Work/Gaming/Dynamik/components/Shaders/frag.spv";
+				std::string MODEL_PATH = "E:/Work/Gaming/Dynamik/core assets/models/chalet.obj";
 				std::string TEXTURE_PATH = "E:/Projects/Dynamik Engine/Dynamik/core assets/textures/chalet.jpg";
 			};
 		}

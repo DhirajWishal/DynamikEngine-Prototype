@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
+    <Filter Include="Audio">
+      <UniqueIdentifier>{9718D90C-032D-01BE-CCAE-A41D3882FDEE}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Audio\src">
+      <UniqueIdentifier>{2E4A6D8E-9AB4-2105-E3F2-D2AA4F9CFF59}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Audio\src\core">
+      <UniqueIdentifier>{668723A7-5255-17AD-3BE9-87D32756F311}</UniqueIdentifier>
+    </Filter>
     <Filter Include="src">
       <UniqueIdentifier>{2DAB880B-99B4-887C-2230-9F7C8E38947C}</UniqueIdentifier>
     </Filter>
@@ -57,6 +66,21 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\Audio\main.h">
+      <Filter>Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Audio\src\Audio.h">
+      <Filter>Audio\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Audio\src\core\AudioEngine.h">
+      <Filter>Audio\src\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Audio\src\core\AudioObject.h">
+      <Filter>Audio\src\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Audio\src\core\AudioObjectController.h">
+      <Filter>Audio\src\core</Filter>
+    </ClInclude>
     <ClInclude Include="src\Data Structures\index.h">
       <Filter>src\Data Structures</Filter>
     </ClInclude>
@@ -155,6 +179,18 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\Audio\main.cpp">
+      <Filter>Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Audio\src\core\AudioEngine.cpp">
+      <Filter>Audio\src\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Audio\src\core\AudioObject.cpp">
+      <Filter>Audio\src\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Audio\src\core\AudioObjectController.cpp">
+      <Filter>Audio\src\core</Filter>
+    </ClCompile>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="src\Layers\layer.cpp">
       <Filter>src\Layers</Filter>
@@ -239,6 +275,9 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\Audio\premake5.lua">
+      <Filter>Audio</Filter>
+    </None>
     <None Include="premake5.lua" />
   </ItemGroup>
 </Project>

@@ -209,7 +209,7 @@ namespace Dynamik {
 
 			void texture::initTexture(VkCommandPool commandPool, VkQueue graphicsQueue) {
 				resource::TextureData texData;
-				std::string path("E:/Projects/Dynamik Engine/Dynamik/core assets/textures/chalet.jpg");
+				std::string path("E:/Work/Gaming/Dynamik/core assets/textures/chalet.jpg");
 				
 				unsigned char* pixels = texData.loadTexture(path);
 

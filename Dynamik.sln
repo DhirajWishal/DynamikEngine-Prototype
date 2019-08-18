@@ -15,6 +15,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Events", "components\Events
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Managers", "components\Managers\Managers.vcxproj", "{B34CFEBD-9F19-59C9-C832-4771B45E8E57}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Platform", "components\Platform\Platform.vcxproj", "{2AC788B4-1694-E3BF-3FAD-D1672BD9184E}"
+EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Sampler", "components\Sampler\Sampler.vcxproj", "{396719E3-A546-987E-AE5E-23551ABDFEDF}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestBuild", "components\TestBuild\TestBuild.vcxproj", "{F595D608-6100-8B7F-AA3E-3C2516E868D4}"
@@ -68,6 +70,12 @@ Global
 		{B34CFEBD-9F19-59C9-C832-4771B45E8E57}.Distribution|x64.Build.0 = Distribution|x64
 		{B34CFEBD-9F19-59C9-C832-4771B45E8E57}.Release|x64.ActiveCfg = Release|x64
 		{B34CFEBD-9F19-59C9-C832-4771B45E8E57}.Release|x64.Build.0 = Release|x64
+		{2AC788B4-1694-E3BF-3FAD-D1672BD9184E}.Debug|x64.ActiveCfg = Debug|x64
+		{2AC788B4-1694-E3BF-3FAD-D1672BD9184E}.Debug|x64.Build.0 = Debug|x64
+		{2AC788B4-1694-E3BF-3FAD-D1672BD9184E}.Distribution|x64.ActiveCfg = Distribution|x64
+		{2AC788B4-1694-E3BF-3FAD-D1672BD9184E}.Distribution|x64.Build.0 = Distribution|x64
+		{2AC788B4-1694-E3BF-3FAD-D1672BD9184E}.Release|x64.ActiveCfg = Release|x64
+		{2AC788B4-1694-E3BF-3FAD-D1672BD9184E}.Release|x64.Build.0 = Release|x64
 		{396719E3-A546-987E-AE5E-23551ABDFEDF}.Debug|x64.ActiveCfg = Debug|x64
 		{396719E3-A546-987E-AE5E-23551ABDFEDF}.Debug|x64.Build.0 = Debug|x64
 		{396719E3-A546-987E-AE5E-23551ABDFEDF}.Distribution|x64.ActiveCfg = Distribution|x64

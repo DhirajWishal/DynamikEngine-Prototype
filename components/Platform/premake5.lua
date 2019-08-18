@@ -1,16 +1,13 @@
----------- ADGR project ----------
+---------- Platform project ----------
 
-project "ADGR"
-	kind "ConsoleApp"
+project "Platform"
+	kind "StaticLib"
 	language "C++"
 	cppdialect "c++17"
 	staticruntime "On"
 
 	targetdir ("$(SolutionDir)bin/" .. outputDir .. "/$(ProjectName)")
 	objdir ("$(SolutionDir)intDir/" .. outputDir .. "/$(ProjectName)")
-
-	pchheader "adgrafx.h"
-	pchsource "src/adgrafx.cpp"
 
 	files {
 		"**.h",
@@ -29,7 +26,6 @@ project "ADGR"
 		"$(SolutionDir)components/ADGR/src",
 		"$(SolutionDir)components/Events/src",
 		"$(SolutionDir)components/Managers/src",
-		"$(SolutionDir)components/Platform/src",
 		"$(SolutionDir)components/Dynamik/src",
 		"$(SolutionDir)libs/glm/**.hpp",
 		"$(SolutionDir)libs/glm/**.inl",
@@ -50,7 +46,6 @@ project "ADGR"
 		"opengl32",
 		"vulkan-1",
 		"Events",
-		"Platform",
 		"Managers"
 	}
 

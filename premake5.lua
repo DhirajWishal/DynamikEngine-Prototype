@@ -32,6 +32,7 @@ include "components/ADGR"
 include "components/Events"
 include "components/DevConsole"
 include "components/Audio"
+include "components/Platform"
 
 -- test build include
 include "components/TestBuild"
@@ -66,6 +67,7 @@ project "Dynamik"
 		"$(SolutionDir)components/ADGR",
 		"$(SolutionDir)components/ADGR/src",
 		"$(SolutionDir)components/Events/src",
+		"$(SolutionDir)components/Platform/src",
 		"$(SolutionDir)components/DevConsole/src",
 		"%{IncludeDir.GLFW}",
 		"%{IncludeDir.Glad}",
@@ -83,6 +85,7 @@ project "Dynamik"
 	links { 
 		"ADGR",
 		"Events",
+		"Platform",
 		"glfw3dll",
 		"opengl32",
 		"vulkan-1"
@@ -140,6 +143,7 @@ project "Application"
 		"$(solutionDir)components/ADGR",
 		"$(solutionDir)components/ADGR/src",
 		"$(solutionDir)components/Events/src",
+		"$(solutionDir)components/Platform/src",
 		"$(solutionDir)components/DevConsole/src",
 		"%{IncludeDir.GLFW}",
 		"%{IncludeDir.Glad}",
@@ -158,6 +162,7 @@ project "Application"
 		"Dynamik",
 		"ADGR",
 		"Events",
+		"Platform",
 		"glfw3dll",
 		"opengl32",
 		"vulkan-1"

@@ -12,6 +12,6 @@
 #ifdef DMK_PLATFORM_WINDOWS
 #include "Windows/window.h"
 
-#include "Windows/utils/readFile.h"
+#include "Platform.h"
 
 #endif

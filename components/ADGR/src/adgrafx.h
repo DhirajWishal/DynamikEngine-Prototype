@@ -42,6 +42,4 @@
 #include "core/log.h"
 #include "core/utils/DMK_DataTypes.h"
 
-#include "Platform/Windows/resource/imageLoader.h"
-
 #endif

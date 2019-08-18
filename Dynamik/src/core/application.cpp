@@ -25,20 +25,22 @@ namespace Dynamik {
 	}
 
 	void Application::pushLayer(ADGR::Layer* layer) {
-		//layerStack.pushLayer(layer);
+		layerStack.pushLayer(layer);
 	}
 
 	void Application::pushOverlay(ADGR::Layer* layer) {
-		//layerStack.pushOverLay(layer);
+		layerStack.pushOverLay(layer);
 	}
 
-	void Application::onEvent(Event& event) {
-		//EventDispatcher dispatcher(event);
-		//
-		//for (auto it = layerStack.end(); it != layerStack.begin();) {
-		//	(*--it)->onEvent(event);
-		//	if (event.handled)
-		//		break;
-		//}
-	}
+	//void Application::onEvent(Event& event) {
+	//	EventDispatcher dispatcher(event);
+	//
+	//	DMK_CORE_INFO(event.toString());
+	//	
+	//	for (auto it = layerStack.end(); it != layerStack.begin();) {
+	//		(*--it)->onEvent(event);
+	//		if (event.handled)
+	//			break;
+	//	}
+	//}
 }

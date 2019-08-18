@@ -23,9 +23,6 @@
 #include "core/core.h"
 #include "core/log.h"
 
-#include "event.h"
-
-
 #include "core/utils/DMK_Functions.h"
 #include "core/utils/DMK_Error.h"
 #include "core/utils/DMK_Math.h"
@@ -34,9 +31,5 @@
 #include "core/utils/dataStructures/linkedLists.h"
 
 #include <GameObject/GameObject.h>
-
-#include "Renderer.h"
-#include "Layers/layer.h"
-#include "event.h"
 
 #include "core/object mechanics/submitAsset.h"

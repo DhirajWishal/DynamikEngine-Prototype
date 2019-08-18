@@ -12,6 +12,8 @@
 #include "backend/interface.h"
 #include "backend/core.h"
 
+#include "Platform.h"
+
 namespace Dynamik {
 	namespace ADGR {
 

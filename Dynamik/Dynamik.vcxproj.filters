@@ -42,6 +42,9 @@
     <ClInclude Include="src\core\object mechanics\loadGameObjects.h">
       <Filter>src\core\object mechanics</Filter>
     </ClInclude>
+    <ClInclude Include="src\core\object mechanics\submitAsset.h">
+      <Filter>src\core\object mechanics</Filter>
+    </ClInclude>
     <ClInclude Include="src\core\utils\DMK_DataTypes.h">
       <Filter>src\core\utils</Filter>
     </ClInclude>
@@ -66,12 +69,6 @@
     <ClInclude Include="src\dmkafx.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="src\core\object mechanics\submitAsset.h" />
-    <ClInclude Include="src\Platform\Windows\utils\loadIcon.h" />
-    <ClInclude Include="src\Platform\Windows\utils\readFile.h" />
-    <ClInclude Include="src\Platform\Windows\inputs.h" />
-    <ClInclude Include="src\Platform\Windows\window.h" />
-    <ClInclude Include="src\Platform\Windows.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\core\application.cpp">
@@ -101,10 +98,6 @@
     <ClCompile Include="src\dmkafx.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="src\Platform\Windows\utils\loadIcon.cpp" />
-    <ClCompile Include="src\Platform\Windows\utils\readFile.cpp" />
-    <ClCompile Include="src\Platform\Windows\inputs.cpp" />
-    <ClCompile Include="src\Platform\Windows\window.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="IMPORTANT.txt" />

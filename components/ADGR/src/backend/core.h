@@ -33,11 +33,14 @@
 #include "others/syncObjects.h"
 #include "defines.h"
 
-#include "Platform/Windows.h"
-#include "Platform/Windows/utils/loadIcon.h"
+#include "Platform.h"
 
 #include "core/utils/DMK_DataTypes.h"
 #include "backend/interface.h"
+
+#include "keyEvent.h"
+#include "mouseEvent.h"
+#include "applicationEvent.h"
 
 namespace Dynamik {
 	namespace ADGR {
@@ -52,6 +55,10 @@ namespace Dynamik {
 				void shutdown();
 				void drawFrame();
 				void recreateSwapChain();
+				//static core& getInstance() {
+				//	static core curr;
+				//	return curr;
+				//}
 
 				void initWindow();
 
@@ -64,7 +71,21 @@ namespace Dynamik {
 
 				void setMipLevels(float);
 
+				using eventCallbackFunction = std::function<void(Event&)>;
+
+				struct Events {
+					eventCallbackFunction callbackFunc;
+				} eventData;
+
+				void eventCallbackFunc(Event& event);
+
+				int dumbshit = 10;
 			private:
+				static void onKeyEvent(GLFWwindow* window, int keycode, int scancode,
+					int action, int mods);
+
+				void onEvent(Event& event);
+
 				GLFWwindow* window;
 
 				VkInstance myInstance = VK_NULL_HANDLE;
@@ -153,7 +174,55 @@ namespace Dynamik {
 				const std::string fragmentShaderPath = "E:/Projects/Dynamik Engine/Dynamik/components/Shaders/frag.spv";
 				std::string MODEL_PATH = "E:/Projects/Dynamik Engine/Dynamik/core assets/models/chalet.obj";
 				std::string TEXTURE_PATH = "E:/Projects/Dynamik Engine/Dynamik/core assets/textures/chalet.jpg";
+
+				windows::Window myWindowHandler;
+
+				struct coreProps {
+					std::string title = "Dynamik Engine";
+					unsigned int width = 1280;
+					unsigned int height = 720;
+
+
+				}myProps;
 			};
+
+			//class CoreProps {
+			//	core* myRef;
+			//	
+			//public:
+			//	//static void init(core* core) { current.myRef = core; }
+			//
+			//
+			//	static CoreProps& getInstance() {
+			//		static CoreProps current;
+			//		//if (&current == nullptr) current = new CoreProps;
+			//		return current;
+			//	}
+			//	void key(int keycode, int action, core* core) {
+			//		printf("%d", keycode);
+			//
+			//		switch (action) {
+			//		case GLFW_PRESS: {
+			//			KeyPressedEvent event(keycode, 0);
+			//			core->eventCallbackFunc(event);
+			//
+			//			break;
+			//		}
+			//		case GLFW_RELEASE: {
+			//			KeyReleasedEvent event(keycode);
+			//			core->eventCallbackFunc(event);
+			//
+			//			break;
+			//		}
+			//		case GLFW_REPEAT: {
+			//			KeyPressedEvent event(keycode, 1);
+			//			core->eventCallbackFunc(event);
+			//
+			//			break;
+			//		}
+			//		}
+			//	}
+			//};
 		}
 	}
 }

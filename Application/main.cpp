@@ -54,7 +54,7 @@ int main(int argc, char** argv) {
 	try {
 		printf("Welcome to the Dynamik Engine!\n");
 
-		Dynamik::GameObject obj("NONE", "NONE", 0.0f, 0.0f, 0.0f);
+		//Dynamik::GameObject obj("NONE", "NONE", 0.0f, 0.0f, 0.0f);
 
 		DMK_FATAL("Hello World");
 		DMK_CORE_ERROR("NULL_PTR");

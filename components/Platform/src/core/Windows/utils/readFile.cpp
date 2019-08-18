@@ -7,7 +7,7 @@
  IDE:		MS Visual Studio Community 2019
 */
 
-#include "adgrafx.h"
+#include "dmkafx.h"
 #include "readFile.h"
 
 

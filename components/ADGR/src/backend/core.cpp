@@ -10,7 +10,7 @@
 #include "adgrafx.h"
 #include "core.h"
 
-
+#define BIND_EVENT_FUNCTION(x)	std::bind(&Dynamik::ADGR::core::core::x, this, std::placeholders::_1)
 
 namespace Dynamik {
 	namespace ADGR {
@@ -25,19 +25,86 @@ namespace Dynamik {
 			}
 
 			void ADGR_API core::initWindow() {
+
 				glfwInit();
-				
+				//myWindowHandler.create();
+
 				glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
-				
-				window = glfwCreateWindow(WIDTH, HEIGHT, "Dynamik Engine", nullptr, nullptr);
+
+				window = glfwCreateWindow(1280, 720, "Dynamik Engine", nullptr, nullptr);
+				glfwMakeContextCurrent(window);
+
 				glfwSetWindowUserPointer(window, this);
+				//glfwSetWindowUserPointer(window, this);
 				glfwSetFramebufferSizeCallback(window, framebufferResizeCallback);
+				myWindowHandler.setEventCallback(BIND_EVENT_FUNCTION(onEvent));
+				//GLFWkeyfun
+				glfwSetKeyCallback(window, onKeyEvent);
 
-				//myWindow = std::unique_ptr<windows::Window>(windows::windowsWindow::create());
 
-				//GLFWimage icon;
-				//icon = load_icon("E:/Projects/Dynamik Engine/Dynamik/core assets/icons/icon1.png")
-				//glfwSetWindowIcon(window, 0, NULL);
+
+				//glfwSetKeyCallback(window, [](GLFWwindow* window, int keycode, int scancode,
+				//	int action, int mods) {
+				//	printf("LAMBDA RUNNING");
+				//	//coreProps* data = (coreProps*)glfwGetWindowUserPointer(window);
+				//	char x = (char) glfwGetWindowUserPointer(window);
+				//	printf("%c",x);
+				//	/*switch (action) {
+				//		case GLFW_PRESS: {
+				//			KeyPressedEvent event(keycode, 0);
+				//			data->eventCallbackFunc(event);
+				//
+				//			break;
+				//		}
+				//		case GLFW_RELEASE: {
+				//			KeyReleasedEvent event(keycode);
+				//			data->eventCallbackFunc(event);
+				//
+				//			break;
+				//		}
+				//		case GLFW_REPEAT: {
+				//			KeyPressedEvent event(keycode, 1);
+				//			data->eventCallbackFunc(event);
+				//
+				//			break;
+				//		}
+				//	}*/
+				//});
+				//
+				//glfwSetMouseButtonCallback(window, [](GLFWwindow* window, int button, int action, int mods) {
+				//	/*coreProps* data = (coreProps*)glfwGetWindowUserPointer(window);
+				//
+				//	switch (action) {
+				//		case GLFW_PRESS: {
+				//			MouseButtonPressedEvent event(button);
+				//			data->eventCallbackFunc(event);
+				//
+				//			break;
+				//		}
+				//		case GLFW_RELEASE: {
+				//			MouseButtonReleasedEvent event(button);
+				//			data->eventCallbackFunc(event);
+				//
+				//			break;
+				//		}
+				//		default:
+				//			break;
+				//	}*/
+				//});
+				//
+				//glfwSetScrollCallback(window, [](GLFWwindow* window, double xOffset, double yOffset) {
+				//	/*coreProps* data = (coreProps*)glfwGetWindowUserPointer(window);
+				//
+				//	MouseScrolledEvent event((float)xOffset, (float)yOffset);
+				//	data->eventCallbackFunc(event);*/
+				//});
+				//
+				//glfwSetCursorPosCallback(window, [](GLFWwindow* window, double xPos, double yPos) {
+				//	coreProps* data = (coreProps*)glfwGetWindowUserPointer(window);
+				//
+				//	MouseMovedEvent event((float)xPos, (float)yPos);
+				//	data->eventCallbackFunc(event);
+				//});
 			}
 
 			void ADGR_API core::startup() {
@@ -181,6 +248,7 @@ namespace Dynamik {
 				currentFrame = (currentFrame + 1) % MAX_FRAMES_IN_FLIGHT;
 
 				//myWindow->onUpdate();
+				myWindowHandler.onUpdate();
 			}
 
 			void ADGR_API core::shutdown() {
@@ -293,6 +361,53 @@ namespace Dynamik {
 
 			void core::setMipLevels(float level) {
 				texture.minMipLevel = level;
+			}
+
+			void core::onEvent(Event& event) {
+				printf("%p", event);
+
+				EventDispatcher dispatcher(event);
+			}
+			using eventCallbackFunction = std::function<void(Event&)>;
+			void core::eventCallbackFunc(Event& event)
+			{
+				printf("%s", "I was called");
+			}
+
+			void core::onKeyEvent(GLFWwindow* window, int keycode, int scancode,
+				int action, int mods) {
+				auto data = reinterpret_cast<core*>(glfwGetWindowUserPointer(window));
+				//
+				printf("%d", data->dumbshit);
+				//
+				switch (action) {
+				case GLFW_PRESS: {
+					KeyPressedEvent event(keycode, 0);
+					//data->eventData.callbackFunc(event);
+					data->eventCallbackFunc(event);
+
+					printf("KEY PRSSED");
+
+					break;
+				}
+				case GLFW_RELEASE: {
+					//KeyReleasedEvent event(keycode);
+					//data->eventData.callbackFunc(event);
+
+					printf("KEY RELEASED");
+
+					break;
+				}
+				case GLFW_REPEAT: {
+					KeyPressedEvent event(keycode, 1);
+					data->eventData.callbackFunc(event);
+
+					break;
+				}
+				}
+				//
+				//CoreProps::getInstance().key(keycode, action, &core::getInstance());
+				//printf("RUNNING IN GLFW CALL\n");
 			}
 		}
 	}

@@ -14,8 +14,6 @@ namespace Dynamik {
 
 		void run();
 
-		void onEvent(Event& event);
-
 		void pushLayer(ADGR::Layer* layer);
 		void pushOverlay(ADGR::Layer* layer);
 

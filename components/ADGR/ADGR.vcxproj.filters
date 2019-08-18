@@ -4,17 +4,11 @@
     <Filter Include="src">
       <UniqueIdentifier>{2DAB880B-99B4-887C-2230-9F7C8E38947C}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Data Structures">
+      <UniqueIdentifier>{1A6D9C1F-86CE-792D-0F3C-C0DF7B9CB0EC}</UniqueIdentifier>
+    </Filter>
     <Filter Include="src\Layers">
       <UniqueIdentifier>{4C4DA51D-3805-E76A-A10C-C0C68DE3815B}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\Platform">
-      <UniqueIdentifier>{21CA02E5-0D2D-9289-B6B2-CA3FA2F45D0C}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\Platform\Windows">
-      <UniqueIdentifier>{5B054582-4794-CE4B-F0B2-E246DC20DFF1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\Platform\Windows\utils">
-      <UniqueIdentifier>{1B6F5118-077F-FDE8-7038-62075C67EC81}</UniqueIdentifier>
     </Filter>
     <Filter Include="src\Wrapper">
       <UniqueIdentifier>{FDF70A47-69AD-833C-F2A1-7D135E567A40}</UniqueIdentifier>
@@ -63,6 +57,12 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Data Structures\index.h">
+      <Filter>src\Data Structures</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Data Structures\vertex.h">
+      <Filter>src\Data Structures</Filter>
+    </ClInclude>
     <ClInclude Include="src\Layers\layer.h">
       <Filter>src\Layers</Filter>
     </ClInclude>
@@ -153,8 +153,6 @@
     <ClInclude Include="src\backend\validators\validators.h">
       <Filter>src\backend\validators</Filter>
     </ClInclude>
-    <ClInclude Include="src\Data Structures\vertex.h" />
-    <ClInclude Include="src\Data Structures\index.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />

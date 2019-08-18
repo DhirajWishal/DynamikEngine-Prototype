@@ -40,6 +40,40 @@ namespace Dynamik {
 
 /* VARIABLES AND CONSTANTS (LOCAL/ GLOBAL) */
 	// Transform Component
+	enum objectType {
+		TEXTURE,
+		MODEL
+	};
+
+	enum mipLevels {
+		DEFAULT,
+		DYNAMIC
+	};
+
+	enum behaviour {
+		PHYSICAL_BODY,
+		VIRTUAL_BODY,
+		PLAYER,
+		ENEMY,
+		ENTITY
+	};
+
+	enum CAM_FLAGS {
+		Skybox
+	};
+
+	enum CAM_MASK {
+		Everything
+	};
+
+	enum CAM_PROJECTION {
+		Perspective
+	};
+
+	enum AUD_OUTPUT {
+		NONE
+	};
+
 	struct TransformProperties {
 		enum COORDINATES {
 			X, Y, Z
@@ -116,40 +150,6 @@ namespace Dynamik {
 		BehaviourProperties behaviourProperties;
 	};
 
-	enum objectType {
-		TEXTURE,
-		MODEL
-	};
-
-	enum mipLevels {
-		DEFAULT,
-		DYNAMIC
-	};
-
-	enum behaviour {
-		PHYSICAL_BODY,
-		VIRTUAL_BODY,
-		PLAYER,
-		ENEMY,
-		ENTITY
-	};
-
-	enum CAM_FLAGS {
-		Skybox
-	};
-
-	enum CAM_MASK {
-		Everything
-	};
-
-	enum CAM_PROJECTION {
-		Perspective
-	};
-
-	enum AUD_OUTPUT {
-		NONE
-	};
-
 	/*
 	 GameObject definition.
 	 GameObject class can be used to send and get data from the Rendering API specifically designed
@@ -202,7 +202,6 @@ namespace Dynamik {
 		virtual void setTransformScale(float* x, float* y, float* z) {}
 
 		/* ---------- ########## \\\\\\\\\\ CAMERA ////////// ########## ---------- */
-		virtual void initCamera() {}
 		virtual void initCamera() {}
 		virtual void initCamera(CameraProperties props) {}
 

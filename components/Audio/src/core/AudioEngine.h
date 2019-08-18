@@ -2,17 +2,21 @@
 
 
 #include <irrKlang.h>
-#include <core/log.h>
+#include "AudioObject.h"
 #include "AudioObjectController.h"
+#include <list>
 
 namespace Dynamik{
 	 namespace Audio {
 		 class AudioEngine {
-			 public :
+		 private :
+			 irrklang::ISoundEngine* irrklangEngine;
+			 std::list<AudioObject> audioObjectList;
 
-			 irrklang::ISoundEngine *irrklangEngine;
+			 public :			 
 			 AudioEngine();
 			 bool addAudioController(AudioObjectController &controller);
+			 void update();
 		 };
 	}
 }

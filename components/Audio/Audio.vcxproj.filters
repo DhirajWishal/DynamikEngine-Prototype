@@ -22,6 +22,9 @@
     <ClInclude Include="src\core\AudioObjectController.h">
       <Filter>src\core</Filter>
     </ClInclude>
+    <ClInclude Include="src\core\log.h" />
+    <ClInclude Include="src\core\AudioObjectControllers\BasicAudioController.h" />
+    <ClInclude Include="src\core\AudioObjectControllers\BackgroundAudioController.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -34,8 +37,13 @@
     <ClCompile Include="src\core\AudioObjectController.cpp">
       <Filter>src\core</Filter>
     </ClCompile>
+    <ClCompile Include="src\core\AudioObjectControllers\BasicAudioController.cpp" />
+    <ClCompile Include="src\core\AudioObjectControllers\BackgroundAudioController.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="premake5.lua" />
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="media\bell.wav" />
   </ItemGroup>
 </Project>

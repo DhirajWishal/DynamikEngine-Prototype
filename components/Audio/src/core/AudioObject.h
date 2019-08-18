@@ -5,11 +5,19 @@
 
 namespace Dynamik {
 	namespace Audio {
-		irrklang::ISoundEngine* audioEngine;
-		AudioObjectController* controller;
-
 		class AudioObject {
+			irrklang::ISoundEngine* audioEngine;
+			AudioObjectController* controller;
+			irrklang::ISound* sound;
+
+		public:
 			AudioObject(irrklang::ISoundEngine* audioEngine, AudioObjectController& _controller);
+			void update();
+		private :
+			void play();
+			void pause();
 		};
+
+
 	}
 }

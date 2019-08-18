@@ -25,6 +25,7 @@ IncludeDir["Vulkan"] = "E:/Work/Gaming/Vulkan SDK/Vulkan SDK/1.1.108.0/Include"
 IncludeDir["boost"] = "E:/Programming/Modules and Runtime/boost_1_70_0"
 IncludeDir["gil"] = "$(SolutionDir)libs/gil/boost"
 IncludeDir["jpeg"] = "$(SolutionDir)libs/gil/jpeg-6b"
+IncludeDir["irrKlang"] = "$(SolutionDir)/libs/irrKlang/include"
 
 --include "Launcher"
 include "components/ADGR"

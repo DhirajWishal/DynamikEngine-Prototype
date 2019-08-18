@@ -43,7 +43,7 @@ namespace Dynamik {
 					framebufferInfo.layers = 1;
 
 					if (vkCreateFramebuffer(*myDevice, &framebufferInfo, nullptr, &frameBuff[i]) != VK_SUCCESS)
-						DMK_CORE_FATAL("failed to create framebuffer!");
+						std::runtime_error("failed to create framebuffer!");
 				}
 			}
 

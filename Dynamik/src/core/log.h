@@ -1,7 +1,6 @@
 #pragma once
 #pragma warning(disable:4996)
 
-#include "dmkafx.h"
 #include "core.h"
 
 #if defined(DMK_PLATFORM_WINDOWS)
@@ -60,11 +59,11 @@ namespace Dynamik {
 
 // assertions
 #ifdef DMK_DEBUG
-#define DMK_CORE_ASSERT(x, ...)		{								\
-										if(!(x)) {					\
+#define DMK_CORE_ASSERT(x, ...)		{										\
+										if(!(x)) {							\
 											 DMK_CORE_ERROR(__VA_ARGS__);	\
-											 __debugbreak();		\
-										}							\
+											 __debugbreak();				\
+										}									\
 									}
 
 #else

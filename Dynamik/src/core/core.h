@@ -4,6 +4,8 @@
 #ifdef DMK_BUILD_DLL
 #define DMK_API __declspec(dllexport)
 
+#define DMK_CORE
+
 #else
 #define DMK_API __declspec(dllimport)
 

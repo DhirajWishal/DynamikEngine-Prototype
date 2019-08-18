@@ -144,10 +144,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="GameLibraries\GameObject\GameObject.h" />
+    <ClInclude Include="src\core\object mechanics\submitAsset.h" />
     <ClInclude Include="src\Dynamik.h" />
     <ClInclude Include="src\core\application.h" />
     <ClInclude Include="src\core\core.h" />
     <ClInclude Include="src\core\log.h" />
+    <ClInclude Include="src\core\object mechanics\loadGameObjects.h" />
     <ClInclude Include="src\core\utils\DMK_DataTypes.h" />
     <ClInclude Include="src\core\utils\DMK_Error.h" />
     <ClInclude Include="src\core\utils\DMK_Functions.h" />
@@ -156,11 +158,16 @@
     <ClInclude Include="src\core\utils\dataStructures\linkedLists.h" />
     <ClInclude Include="src\core\utils\safeLock.h" />
     <ClInclude Include="src\dmkafx.h" />
+    <ClInclude Include="src\Platform\Windows.h" />
+    <ClInclude Include="src\Platform\Windows\inputs.h" />
+    <ClInclude Include="src\Platform\Windows\utils\loadIcon.h" />
+    <ClInclude Include="src\Platform\Windows\utils\readFile.h" />
+    <ClInclude Include="src\Platform\Windows\window.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="GameLibraries\GameObject\GameObject.cpp" />
     <ClCompile Include="src\core\application.cpp" />
     <ClCompile Include="src\core\log.cpp" />
+    <ClCompile Include="src\core\object mechanics\loadGameObjects.cpp" />
     <ClCompile Include="src\core\utils\DMK_Functions.cpp" />
     <ClCompile Include="src\core\utils\DMK_Math.cpp" />
     <ClCompile Include="src\core\utils\dataStructures\heap.cpp" />
@@ -169,6 +176,10 @@
     <ClCompile Include="src\dmkafx.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="src\Platform\Windows\inputs.cpp" />
+    <ClCompile Include="src\Platform\Windows\utils\loadIcon.cpp" />
+    <ClCompile Include="src\Platform\Windows\utils\readFile.cpp" />
+    <ClCompile Include="src\Platform\Windows\window.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="IMPORTANT.txt" />
@@ -185,4 +196,4 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
-</Project> 
+</Project>

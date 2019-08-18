@@ -53,7 +53,7 @@ namespace Dynamik {
 
 				if (vkCreateDescriptorSetLayout(*myDevice, &layoutInfo, nullptr,
 					myDescriptorSetLayout) != VK_SUCCESS)
-					DMK_CORE_FATAL("failed to create descriptor set layout!");
+					std::runtime_error("failed to create descriptor set layout!");
 			}
 
 			void uniformBuffer::initDescripterPool(std::vector<VkImage> swapChainImages) {
@@ -70,7 +70,7 @@ namespace Dynamik {
 				poolInfo.maxSets = static_cast<uint32>(swapChainImages.size());
 
 				if (vkCreateDescriptorPool(*myDevice, &poolInfo, nullptr, myDescriptorPool) != VK_SUCCESS)
-					DMK_CORE_FATAL("failed to create descriptor pool!");
+					std::runtime_error("failed to create descriptor pool!");
 			}
 
 			void uniformBuffer::deleteDescripter() {
@@ -117,7 +117,7 @@ namespace Dynamik {
 
 				myDescriptorSets->resize(swapChainImages.size());
 				if (vkAllocateDescriptorSets(*myDevice, &allocInfo, myDescriptorSets->data()) != VK_SUCCESS)
-					DMK_CORE_FATAL("failed to allocate descriptor sets!");
+					std::runtime_error("failed to allocate descriptor sets!");
 
 				for (size_t i = 0; i < swapChainImages.size(); i++) {
 					VkDescriptorBufferInfo bufferInfo = {};

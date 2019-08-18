@@ -100,7 +100,7 @@ namespace Dynamik {
 
 				// create the render pass
 				if (vkCreateRenderPass(*myDevice, &renderPassInfo, nullptr, myRenderPass) != VK_SUCCESS)
-					DMK_CORE_FATAL("failed to create render pass!");
+					std::runtime_error("failed to create render pass!");
 			}
 
 			// initialize the shaders
@@ -226,7 +226,7 @@ namespace Dynamik {
 
 				// create the pipeline layout
 				if (vkCreatePipelineLayout(*myDevice, &pipelineLayoutInfo, nullptr, pipelineLayout) != VK_SUCCESS)
-					DMK_CORE_FATAL("failed to create pipeline layout!");
+					std::runtime_error("failed to create pipeline layout!");
 
 				VkPipelineShaderStageCreateInfo shaderStages[] = {
 					getVertShaderStageInfo(),
@@ -253,7 +253,7 @@ namespace Dynamik {
 				// create the pipeline
 				if (vkCreateGraphicsPipelines(*myDevice, VK_NULL_HANDLE, 1,
 					&pipelineInfo, nullptr, myGraphicsPipeline) != VK_SUCCESS)
-					DMK_CORE_FATAL("failed to create graphics pipeline!");
+					std::runtime_error("failed to create graphics pipeline!");
 			}
 
 			// delete the shaders
@@ -274,7 +274,7 @@ namespace Dynamik {
 
 				VkShaderModule shaderModule;
 				if (vkCreateShaderModule(device, &createInfo, nullptr, &shaderModule) != VK_SUCCESS)
-					DMK_CORE_FATAL("Failed to create Shader module!");
+					std::runtime_error("Failed to create Shader module!");
 
 				return shaderModule;
 			}

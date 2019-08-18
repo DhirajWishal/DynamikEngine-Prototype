@@ -1,7 +1,7 @@
 ---------- ADGR project ----------
 
 project "ADGR"
-	kind "SharedLib"
+	kind "ConsoleApp"
 	language "C++"
 	cppdialect "c++17"
 	staticruntime "On"
@@ -25,9 +25,11 @@ project "ADGR"
 		"$(SolutionDir)Dynamik/src",
 		"$(SolutionDir)Dynamik/GameLibraries",
 		"$(SolutionDir)lib/libs",
-		"$(solutionDir)components/ADGR",
-		"$(solutionDir)components/ADGR/src",
-		"$(solutionDir)components/Events/src",
+		"$(SolutionDir)components/ADGR",
+		"$(SolutionDir)components/ADGR/src",
+		"$(SolutionDir)components/Events/src",
+		"$(SolutionDir)components/Managers/src",
+		"$(SolutionDir)components/Dynamik/src",
 		"$(SolutionDir)libs/glm/**.hpp",
 		"$(SolutionDir)libs/glm/**.inl",
 		"%{IncludeDir.GLFW}",
@@ -46,7 +48,8 @@ project "ADGR"
 		"glfw3dll",
 		"opengl32",
 		"vulkan-1",
-		"Events"
+		"Events",
+		"Managers"
 	}
 
 	filter "system:windows"
@@ -61,17 +64,14 @@ project "ADGR"
 	filter "configurations:Debug"
 		defines "DMK_DEBUG"
 		runtime "Debug"
-		--buildoptions "/MDd"
 		symbols "On"
 		
 	filter "configurations:Release"
 		defines "DMK_RELEASE"
 		runtime "Release"
-		--buildoptions "/MD"
 		optimize "On"
 
 	filter "configurations:Distribution"
 		defines "DMK_DISTRIBUTION"
 		runtime "Release"
-		--buildoptions "/MD"
 		optimize "On"

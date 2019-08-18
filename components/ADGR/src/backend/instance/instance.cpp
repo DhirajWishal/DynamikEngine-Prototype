@@ -24,7 +24,7 @@ namespace Dynamik {
 
 			void instance::createInstance() {
 				if (enableValidationLayers && !checkValidationLayerSupport())
-					DMK_CORE_FATAL("validation layers requested, but not available!");
+					std::runtime_error("validation layers requested, but not available!");
 
 				VkApplicationInfo appInfo = {};
 				appInfo.sType = VK_STRUCTURE_TYPE_APPLICATION_INFO;
@@ -57,7 +57,7 @@ namespace Dynamik {
 				}
 
 				if (vkCreateInstance(&createInfo, nullptr, myInstance) != VK_SUCCESS)
-					DMK_CORE_FATAL("Failed to create instance!");
+					std::runtime_error("Failed to create instance!");
 			}
 
 			void instance::deleteInstance() {

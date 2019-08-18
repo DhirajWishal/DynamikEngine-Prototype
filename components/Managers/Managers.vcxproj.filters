@@ -13,6 +13,9 @@
     <Filter Include="Platform\Windows\memory">
       <UniqueIdentifier>{6C8EFB9F-D8C5-4337-E1CF-A75A4D866A30}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Platform\Windows\resource">
+      <UniqueIdentifier>{1B8A6238-874C-96C2-D0FC-244F3CFE6EA0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Platform\Windows.h">
@@ -27,10 +30,14 @@
     <ClInclude Include="src\Platform\Windows\memory\memoryManager.h">
       <Filter>Platform\Windows\memory</Filter>
     </ClInclude>
+    <ClInclude Include="src\Platform\Windows\resource\imageLoader.h">
+      <Filter>Platform\Windows\resource</Filter>
+    </ClInclude>
     <ClInclude Include="src\Platform\Windows\window.h">
       <Filter>Platform\Windows</Filter>
     </ClInclude>
     <ClInclude Include="src\mngafx.h" />
+    <ClInclude Include="src\Platform\Windows\resource\objectLoader.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Platform\Windows\file\fileManager.cpp">
@@ -42,9 +49,13 @@
     <ClCompile Include="src\Platform\Windows\memory\memoryManager.cpp">
       <Filter>Platform\Windows\memory</Filter>
     </ClCompile>
+    <ClCompile Include="src\Platform\Windows\resource\imageLoader.cpp">
+      <Filter>Platform\Windows\resource</Filter>
+    </ClCompile>
     <ClCompile Include="src\Platform\Windows\window.cpp">
       <Filter>Platform\Windows</Filter>
     </ClCompile>
     <ClCompile Include="src\mngafx.cpp" />
+    <ClCompile Include="src\Platform\Windows\resource\objectLoader.cpp" />
   </ItemGroup>
 </Project>

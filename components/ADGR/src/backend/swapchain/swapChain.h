@@ -15,8 +15,8 @@ namespace Dynamik {
 	namespace ADGR {
 		namespace core {
 
-			const int WIDTH = 800;
-			const int HEIGHT = 600;
+			const int WIDTH = 1280;
+			const int HEIGHT = 720;
 
 			struct swapChainSupportDetails {
 				VkSurfaceCapabilitiesKHR capabilities;

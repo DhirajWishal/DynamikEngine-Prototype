@@ -12,6 +12,8 @@
 #include "core/utils/DMK_DataTypes.h"
 #include "backend/interface.h"
 
+#include "Data Structures/vertex.h"
+
 namespace Dynamik {
 	namespace ADGR {
 		namespace core {
@@ -27,16 +29,14 @@ namespace Dynamik {
 				bool operator==(const vertex& other) const {
 					return pos == other.pos && color == other.color && texCoord == other.texCoord;
 				}
-
 			};
 
 			class ADGR_API model {
 			public:
-				model(std::string path);
 				model();
 				~model();
 
-				void loadModel();
+				void loadModel(std::string& path);
 
 				std::vector<vertex> getVertices() { return vertices; }
 				std::vector<uint32> getIndeices() { return indices; }

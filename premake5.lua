@@ -22,11 +22,18 @@ IncludeDir["tol"] = "$(SolutionDir)libs/tinyobjloader-master"
 IncludeDir["spdlog"] = "$(SolutionDir)Dynamik/lib/spdlog/include"
 IncludeDir["Vulkan"] = "E:/Programming/Codes/Game Development/Libraries/VulkanSDK/1.1.108.0/Include"
 --Include the Vulkan SDK Include path here
+IncludeDir["boost"] = "E:/Programming/Modules and Runtime/boost_1_70_0"
+IncludeDir["gil"] = "$(SolutionDir)libs/gil/boost"
+IncludeDir["jpeg"] = "$(SolutionDir)libs/gil/jpeg-6b"
 
 --include "Launcher"
 include "components/ADGR"
 include "components/Events"
 include "components/DevConsole"
+include "components/Audio"
+
+-- test build include
+include "components/TestBuild"
 
 ---------- Dynamik Engine project description ----------
 project "Dynamik"

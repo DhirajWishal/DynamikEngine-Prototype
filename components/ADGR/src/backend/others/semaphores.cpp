@@ -30,7 +30,7 @@ namespace Dynamik {
 						!= VK_SUCCESS ||
 						vkCreateSemaphore(device, &semaphoreInfo, nullptr, &renderFinishedSemaphores->at(i)) 
 						!= VK_SUCCESS)
-						DMK_CORE_FATAL("failed to create semaphores for a frame!");
+						std::runtime_error("failed to create semaphores for a frame!");
 				}
 			}
 		}

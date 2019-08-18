@@ -69,21 +69,6 @@
     <ClInclude Include="src\Layers\layerStack.h">
       <Filter>src\Layers</Filter>
     </ClInclude>
-    <ClInclude Include="src\Platform\Windows.h">
-      <Filter>src\Platform</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Platform\Windows\inputs.h">
-      <Filter>src\Platform\Windows</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Platform\Windows\utils\loadIcon.h">
-      <Filter>src\Platform\Windows\utils</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Platform\Windows\utils\readFile.h">
-      <Filter>src\Platform\Windows\utils</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Platform\Windows\window.h">
-      <Filter>src\Platform\Windows</Filter>
-    </ClInclude>
     <ClInclude Include="src\Renderer.h">
       <Filter>src</Filter>
     </ClInclude>
@@ -168,6 +153,8 @@
     <ClInclude Include="src\backend\validators\validators.h">
       <Filter>src\backend\validators</Filter>
     </ClInclude>
+    <ClInclude Include="src\Data Structures\vertex.h" />
+    <ClInclude Include="src\Data Structures\index.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -176,18 +163,6 @@
     </ClCompile>
     <ClCompile Include="src\Layers\layerStack.cpp">
       <Filter>src\Layers</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Platform\Windows\inputs.cpp">
-      <Filter>src\Platform\Windows</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Platform\Windows\utils\loadIcon.cpp">
-      <Filter>src\Platform\Windows\utils</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Platform\Windows\utils\readFile.cpp">
-      <Filter>src\Platform\Windows\utils</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Platform\Windows\window.cpp">
-      <Filter>src\Platform\Windows</Filter>
     </ClCompile>
     <ClCompile Include="src\Renderer.cpp">
       <Filter>src</Filter>

@@ -25,7 +25,7 @@ namespace Dynamik {
 				bufferInfo.sharingMode = VK_SHARING_MODE_EXCLUSIVE;
 
 				if (vkCreateBuffer(device, &bufferInfo, nullptr, &buffer) != VK_SUCCESS) {
-					DMK_CORE_FATAL("failed to create buffer!");
+					std::runtime_error("failed to create buffer!");
 				}
 
 				VkMemoryRequirements memRequirements;
@@ -38,7 +38,7 @@ namespace Dynamik {
 					physicalDevice);
 
 				if (vkAllocateMemory(device, &allocInfo, nullptr, &bufferMemory) != VK_SUCCESS) {
-					DMK_CORE_FATAL("failed to allocate buffer memory!");
+					std::runtime_error("failed to allocate buffer memory!");
 				}
 
 				vkBindBufferMemory(device, buffer, bufferMemory, 0);
@@ -53,7 +53,7 @@ namespace Dynamik {
 						& properties) == properties)
 						return i;
 
-				DMK_CORE_FATAL("failed to find suitable memory type!");
+				std::runtime_error("failed to find suitable memory type!");
 			}
 
 			void copyBuffer(VkDevice device, VkBuffer srcBuffer, VkBuffer dstBuffer, VkDeviceSize size,

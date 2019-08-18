@@ -25,15 +25,15 @@ namespace Dynamik {
 			}
 
 			void ADGR_API core::initWindow() {
-				//glfwInit();
-				//
-				//glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
-				//
-				//window = glfwCreateWindow(WIDTH, HEIGHT, "Dynamik Engine", nullptr, nullptr);
-				//glfwSetWindowUserPointer(window, this);
-				//glfwSetFramebufferSizeCallback(window, framebufferResizeCallback);
+				glfwInit();
+				
+				glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
+				
+				window = glfwCreateWindow(WIDTH, HEIGHT, "Dynamik Engine", nullptr, nullptr);
+				glfwSetWindowUserPointer(window, this);
+				glfwSetFramebufferSizeCallback(window, framebufferResizeCallback);
 
-				myWindow = std::unique_ptr<windows::Window>(windows::windowsWindow::create());
+				//myWindow = std::unique_ptr<windows::Window>(windows::windowsWindow::create());
 
 				//GLFWimage icon;
 				//icon = load_icon("E:/Projects/Dynamik Engine/Dynamik/core assets/icons/icon1.png")
@@ -49,7 +49,7 @@ namespace Dynamik {
 
 				// create the window instance
 				if (glfwCreateWindowSurface(myInstance, window, nullptr, &mySurface) != VK_SUCCESS)
-					DMK_CORE_FATAL("Failed to create window surface!");
+					std::runtime_error("Failed to create window surface!");
 
 				// pick the needed physical device
 				device.pickPhysicalDevice(myInstance, &msaaSamples);
@@ -100,7 +100,7 @@ namespace Dynamik {
 				texture.initTextureSampler();
 
 				// initialize model
-				myModel.loadModel();
+				myModel.loadModel(MODEL_PATH);
 
 				// create the vertex buffer
 				vertexBuffer.initBuffer(myCommandPool, graphicsQueue, myModel);
@@ -118,6 +118,69 @@ namespace Dynamik {
 					swapChainExtent, graphicsPipeline, vertexBuffer.getVertexBuffer(), indexBuffer.getIndexBuffer(),
 					myPipelineLayout, descriptorSets, myModel);
 				initSyncObjects(myDevice, &imageAvailableSemaphores, &renderFinishedSemaphores, &inFlightFences);
+			}
+
+			void ADGR_API core::drawFrame() {
+				vkWaitForFences(myDevice, 1, &inFlightFences[currentFrame],
+					VK_TRUE, std::numeric_limits<uint64_t>::max());
+				//vkResetFences(c_device, 1, &inFlightFences[currentFrame]);
+
+				uint32 imageIndex;
+				VkResult result = vkAcquireNextImageKHR(myDevice, mySwapchain, std::numeric_limits<uint64_t>::max(),
+					imageAvailableSemaphores[currentFrame], VK_NULL_HANDLE, &imageIndex);
+
+				if (result == VK_ERROR_OUT_OF_DATE_KHR) {
+					recreateSwapChain();
+					return;
+				}
+				else if (result != VK_SUCCESS && result != VK_SUBOPTIMAL_KHR)
+					std::runtime_error("failed to acquire swap chain image!");
+
+				uniformBuffer.updateBuffer(imageIndex, swapChainExtent);
+
+				VkSubmitInfo submitInfo = {};
+				submitInfo.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO;
+
+				VkSemaphore waitSemaphores[] = { imageAvailableSemaphores[currentFrame] };
+				VkPipelineStageFlags waitStages[] = { VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT };
+				submitInfo.waitSemaphoreCount = 1;
+				submitInfo.pWaitSemaphores = waitSemaphores;
+				submitInfo.pWaitDstStageMask = waitStages;
+				submitInfo.commandBufferCount = 1;
+				submitInfo.pCommandBuffers = commandBuffer.getFrame(imageIndex);
+
+				VkSemaphore signalSemaphores[] = { renderFinishedSemaphores[currentFrame] };
+				submitInfo.signalSemaphoreCount = 1;
+				submitInfo.pSignalSemaphores = signalSemaphores;
+
+				vkResetFences(myDevice, 1, &inFlightFences[currentFrame]);
+
+				if (vkQueueSubmit(graphicsQueue, 1, &submitInfo, inFlightFences[currentFrame]) != VK_SUCCESS)
+					std::runtime_error("failed to submit draw command buffer!");
+
+				VkPresentInfoKHR presentInfo = {};
+				presentInfo.sType = VK_STRUCTURE_TYPE_PRESENT_INFO_KHR;
+
+				presentInfo.waitSemaphoreCount = 1;
+				presentInfo.pWaitSemaphores = signalSemaphores;
+
+				VkSwapchainKHR swapChains[] = { mySwapchain };
+				presentInfo.swapchainCount = 1;
+				presentInfo.pSwapchains = swapChains;
+				presentInfo.pImageIndices = &imageIndex;
+
+				result = vkQueuePresentKHR(presentQueue, &presentInfo);
+
+				if (result == VK_ERROR_OUT_OF_DATE_KHR || result == VK_SUBOPTIMAL_KHR || frameBufferResized) {
+					frameBufferResized = false;
+					recreateSwapChain();
+				}
+				else if (result != VK_SUCCESS)
+					std::runtime_error("failed to present swap chain image!");
+
+				currentFrame = (currentFrame + 1) % MAX_FRAMES_IN_FLIGHT;
+
+				//myWindow->onUpdate();
 			}
 
 			void ADGR_API core::shutdown() {
@@ -162,69 +225,6 @@ namespace Dynamik {
 				// distroy the window
 				glfwDestroyWindow(window);
 				glfwTerminate();
-			}
-
-			void ADGR_API core::drawFrame() {
-				vkWaitForFences(myDevice, 1, &inFlightFences[currentFrame],
-					VK_TRUE, std::numeric_limits<uint64_t>::max());
-				//vkResetFences(c_device, 1, &inFlightFences[currentFrame]);
-
-				uint32 imageIndex;
-				VkResult result = vkAcquireNextImageKHR(myDevice, mySwapchain, std::numeric_limits<uint64_t>::max(),
-					imageAvailableSemaphores[currentFrame], VK_NULL_HANDLE, &imageIndex);
-
-				if (result == VK_ERROR_OUT_OF_DATE_KHR) {
-					recreateSwapChain();
-					return;
-				}
-				else if (result != VK_SUCCESS && result != VK_SUBOPTIMAL_KHR)
-					DMK_CORE_FATAL("failed to acquire swap chain image!");
-
-				uniformBuffer.updateBuffer(imageIndex, swapChainExtent);
-
-				VkSubmitInfo submitInfo = {};
-				submitInfo.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO;
-
-				VkSemaphore waitSemaphores[] = { imageAvailableSemaphores[currentFrame] };
-				VkPipelineStageFlags waitStages[] = { VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT };
-				submitInfo.waitSemaphoreCount = 1;
-				submitInfo.pWaitSemaphores = waitSemaphores;
-				submitInfo.pWaitDstStageMask = waitStages;
-				submitInfo.commandBufferCount = 1;
-				submitInfo.pCommandBuffers = commandBuffer.getFrame(imageIndex);
-
-				VkSemaphore signalSemaphores[] = { renderFinishedSemaphores[currentFrame] };
-				submitInfo.signalSemaphoreCount = 1;
-				submitInfo.pSignalSemaphores = signalSemaphores;
-
-				vkResetFences(myDevice, 1, &inFlightFences[currentFrame]);
-
-				if (vkQueueSubmit(graphicsQueue, 1, &submitInfo, inFlightFences[currentFrame]) != VK_SUCCESS)
-					DMK_CORE_FATAL("failed to submit draw command buffer!");
-
-				VkPresentInfoKHR presentInfo = {};
-				presentInfo.sType = VK_STRUCTURE_TYPE_PRESENT_INFO_KHR;
-
-				presentInfo.waitSemaphoreCount = 1;
-				presentInfo.pWaitSemaphores = signalSemaphores;
-
-				VkSwapchainKHR swapChains[] = { mySwapchain };
-				presentInfo.swapchainCount = 1;
-				presentInfo.pSwapchains = swapChains;
-				presentInfo.pImageIndices = &imageIndex;
-
-				result = vkQueuePresentKHR(presentQueue, &presentInfo);
-
-				if (result == VK_ERROR_OUT_OF_DATE_KHR || result == VK_SUBOPTIMAL_KHR || frameBufferResized) {
-					frameBufferResized = false;
-					recreateSwapChain();
-				}
-				else if (result != VK_SUCCESS)
-					DMK_CORE_FATAL("failed to present swap chain image!");
-
-				currentFrame = (currentFrame + 1) % MAX_FRAMES_IN_FLIGHT;
-
-				myWindow->onUpdate();
 			}
 
 			void ADGR_API core::recreateSwapChain() {

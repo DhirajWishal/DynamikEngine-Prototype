@@ -88,7 +88,7 @@ namespace Dynamik {
 				populateDebugMessegerCreateInfo(createInfo);
 
 				if (createDebugUtilsMessengerEXT(&createInfo, nullptr, myDebugMessenger) != VK_SUCCESS)
-					DMK_CORE_FATAL("Failed to set up debug messenger!");
+					std::runtime_error("Failed to set up debug messenger!");
 			}
 
 			void debugger::deleteDebugger() {

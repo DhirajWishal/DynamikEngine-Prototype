@@ -83,7 +83,7 @@ namespace Dynamik {
 				}
 
 				if (vkCreateDevice(*myPhysicalDevice, &createInfo, nullptr, myDevice) != VK_SUCCESS)
-					DMK_CORE_FATAL("failed to create logical device!");
+					std::runtime_error("failed to create logical device!");
 
 				vkGetDeviceQueue(*myDevice, indices.graphicsFamily.value(), 0, graphicsQueue);
 				vkGetDeviceQueue(*myDevice, indices.presentFamily.value(), 0, presentQueue);
@@ -94,7 +94,7 @@ namespace Dynamik {
 				vkEnumeratePhysicalDevices(instance, &deviceCount, nullptr);
 
 				if (deviceCount == 0)
-					DMK_CORE_FATAL("Failed to find GPUs with Vulkan support!");
+					std::runtime_error("Failed to find GPUs with Vulkan support!");
 
 				std::vector<VkPhysicalDevice> devices(deviceCount);
 				vkEnumeratePhysicalDevices(instance, &deviceCount, devices.data());
@@ -110,7 +110,7 @@ namespace Dynamik {
 				}
 
 				if (*myPhysicalDevice == VK_NULL_HANDLE)
-					DMK_CORE_FATAL("Failed to find a suitable GPU!");
+					std::runtime_error("Failed to find a suitable GPU!");
 			}
 
 			bool device::isDeviceSuitable(VkPhysicalDevice device) {

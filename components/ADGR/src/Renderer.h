@@ -11,7 +11,6 @@
 
 #include "backend/interface.h"
 #include "backend/core.h"
-#include "core/utils/DMK_DataTypes.h"
 
 namespace Dynamik {
 	namespace ADGR {

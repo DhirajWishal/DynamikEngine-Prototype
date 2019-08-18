@@ -65,7 +65,7 @@ namespace Dynamik {
 				void setMipLevels(float);
 
 			private:
-				GLFWwindow* window = nullptr;
+				GLFWwindow* window;
 
 				VkInstance myInstance = VK_NULL_HANDLE;
 				VkDevice myDevice = VK_NULL_HANDLE;
@@ -151,8 +151,8 @@ namespace Dynamik {
 
 				const std::string vertexShaderPath = "E:/Projects/Dynamik Engine/Dynamik/components/Shaders/vert.spv";
 				const std::string fragmentShaderPath = "E:/Projects/Dynamik Engine/Dynamik/components/Shaders/frag.spv";
-				const std::string MODEL_PATH = "E:/Projects/Dynamik Engine/Dynamik/core assets/models/chalet.obj";
-				const std::string TEXTURE_PATH = "E:/Projects/Dynamik Engine/Dynamik/core assets/textures/chalet.jpg";
+				std::string MODEL_PATH = "E:/Projects/Dynamik Engine/Dynamik/core assets/models/chalet.obj";
+				std::string TEXTURE_PATH = "E:/Projects/Dynamik Engine/Dynamik/core assets/textures/chalet.jpg";
 			};
 		}
 	}

@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="src">
+      <UniqueIdentifier>{2DAB880B-99B4-887C-2230-9F7C8E38947C}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\core">
+      <UniqueIdentifier>{C55F2ECF-B12C-89DA-DA45-7782C671BE68}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\core\irrKlang">
+      <UniqueIdentifier>{6E34A96B-DA4A-A701-23C2-32238F177889}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\core\irrKlang\include">
+      <UniqueIdentifier>{E1E9A253-4DAC-D6DD-965C-656A025EAFBB}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\core\irrKlang\plugins">
+      <UniqueIdentifier>{5F0B136B-CBCD-46F5-147E-D581807F1FD3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\core\irrKlang\plugins\ikpMP3">
+      <UniqueIdentifier>{6276F476-4EC7-DFB8-772B-CE7A63DB7222}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\core\irrKlang\plugins\ikpMP3\decoder">
+      <UniqueIdentifier>{679F5A83-531C-4EC6-7C99-4EDA6875EA59}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="main.h" />
+    <ClInclude Include="src\Audio.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\audio_core.h">
+      <Filter>src\core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\interface.h">
+      <Filter>src\core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\irrKlang\include\ik_ESoundEngineOptions.h">
+      <Filter>src\core\irrKlang\include</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\irrKlang\include\ik_ESoundOutputDrivers.h">
+      <Filter>src\core\irrKlang\include</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\irrKlang\include\ik_EStreamModes.h">
+      <Filter>src\core\irrKlang\include</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\irrKlang\include\ik_IAudioRecorder.h">
+      <Filter>src\core\irrKlang\include</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\irrKlang\include\ik_IAudioStream.h">
+      <Filter>src\core\irrKlang\include</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\irrKlang\include\ik_IAudioStreamLoader.h">
+      <Filter>src\core\irrKlang\include</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\irrKlang\include\ik_IFileFactory.h">
+      <Filter>src\core\irrKlang\include</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\irrKlang\include\ik_IFileReader.h">
+      <Filter>src\core\irrKlang\include</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\irrKlang\include\ik_IRefCounted.h">
+      <Filter>src\core\irrKlang\include</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\irrKlang\include\ik_ISound.h">
+      <Filter>src\core\irrKlang\include</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\irrKlang\include\ik_ISoundDeviceList.h">
+      <Filter>src\core\irrKlang\include</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\irrKlang\include\ik_ISoundEffectControl.h">
+      <Filter>src\core\irrKlang\include</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\irrKlang\include\ik_ISoundEngine.h">
+      <Filter>src\core\irrKlang\include</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\irrKlang\include\ik_ISoundMixedOutputReceiver.h">
+      <Filter>src\core\irrKlang\include</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\irrKlang\include\ik_ISoundSource.h">
+      <Filter>src\core\irrKlang\include</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\irrKlang\include\ik_ISoundStopEventReceiver.h">
+      <Filter>src\core\irrKlang\include</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\irrKlang\include\ik_IVirtualRefCounted.h">
+      <Filter>src\core\irrKlang\include</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\irrKlang\include\ik_SAudioStreamFormat.h">
+      <Filter>src\core\irrKlang\include</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\irrKlang\include\ik_irrKlangTypes.h">
+      <Filter>src\core\irrKlang\include</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\irrKlang\include\ik_vec3d.h">
+      <Filter>src\core\irrKlang\include</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\irrKlang\include\irrKlang.h">
+      <Filter>src\core\irrKlang\include</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\irrKlang\plugins\ikpMP3\CIrrKlangAudioStreamLoaderMP3.h">
+      <Filter>src\core\irrKlang\plugins\ikpMP3</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\irrKlang\plugins\ikpMP3\CIrrKlangAudioStreamMP3.h">
+      <Filter>src\core\irrKlang\plugins\ikpMP3</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\irrKlang\plugins\ikpMP3\decoder\internal.h">
+      <Filter>src\core\irrKlang\plugins\ikpMP3\decoder</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\irrKlang\plugins\ikpMP3\decoder\mpaudec.h">
+      <Filter>src\core\irrKlang\plugins\ikpMP3\decoder</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\irrKlang\plugins\ikpMP3\decoder\mpaudectab.h">
+      <Filter>src\core\irrKlang\plugins\ikpMP3\decoder</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\irrKlang\plugins\ikpMP3\decoder\mpegaudio.h">
+      <Filter>src\core\irrKlang\plugins\ikpMP3\decoder</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\loopingAudio.h">
+      <Filter>src\core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\test.h">
+      <Filter>src\core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\irrKlang.h">
+      <Filter>src</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="src\core\audio_core.cpp">
+      <Filter>src\core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\irrKlang\plugins\ikpMP3\CIrrKlangAudioStreamLoaderMP3.cpp">
+      <Filter>src\core\irrKlang\plugins\ikpMP3</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\irrKlang\plugins\ikpMP3\CIrrKlangAudioStreamMP3.cpp">
+      <Filter>src\core\irrKlang\plugins\ikpMP3</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\irrKlang\plugins\ikpMP3\ikpMP3.cpp">
+      <Filter>src\core\irrKlang\plugins\ikpMP3</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\loopingAudio.cpp">
+      <Filter>src\core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\test.cpp">
+      <Filter>src\core</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="premake5.lua" />
+  </ItemGroup>
+</Project>

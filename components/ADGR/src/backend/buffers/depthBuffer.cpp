@@ -48,7 +48,7 @@ namespace Dynamik {
 						return format;
 				}
 
-				DMK_CORE_FATAL("failed to find supported format!");
+				std::runtime_error("failed to find supported format!");
 			}
 
 			void depthBuffer::deleteBuffer() {
@@ -72,7 +72,7 @@ namespace Dynamik {
 					}
 				}
 
-				DMK_CORE_FATAL("failed to find supported format!");
+				std::runtime_error("failed to find supported format!");
 			}
 
 			VkFormat depthBuffer::findDepthFormat() {

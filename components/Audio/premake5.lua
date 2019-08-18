@@ -28,16 +28,17 @@ project "Audio"
 		"$(SolutionDir)lib/libs",
 		"$(SolutionDir)components/Audio",
 		"$(SolutionDir)components/Audio/src",
-		"$(SolutionDir)components/Audio/src/core/irrKlang/include",	
+		"$(SolutionDir)libs/irrKlang/include",	
 		"$(SolutionDir)components/ADGR",
 		"$(SolutionDir)components/ADGR/src",
 		"$(SolutionDir)components/Events/src",
 		"%{IncludeDir.stb}",
-		"%{IncludeDir.tol}"
+		"%{IncludeDir.tol}",
+		"%{IncludeDir.irrKlang}"
 		}
 
 	libdirs{
-		"$(SolutionDir)components/Audio/src/core/irrKlang/lib/Winx64-visualStudio"
+		"$(SolutionDir)libs/irrKlang/lib/Winx64-visualStudio"
 	}
 
 	links { 

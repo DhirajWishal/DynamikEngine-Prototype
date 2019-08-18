@@ -20,7 +20,7 @@ IncludeDir["glm"] = "$(SolutionDir)libs/glm"
 IncludeDir["stb"] = "$(SolutionDir)libs/stb-master"
 IncludeDir["tol"] = "$(SolutionDir)libs/tinyobjloader-master"
 IncludeDir["spdlog"] = "$(SolutionDir)Dynamik/lib/spdlog/include"
-IncludeDir["Vulkan"] = "E:/Work/Gaming/Vulkan SDK/Vulkan SDK/1.1.108.0/Include"
+IncludeDir["Vulkan"] = "E:/Programming/Codes/Game Development/Libraries/VulkanSDK/1.1.108.0/Include"
 --Include the Vulkan SDK Include path here
 IncludeDir["boost"] = "E:/Programming/Modules and Runtime/boost_1_70_0"
 IncludeDir["gil"] = "$(SolutionDir)libs/gil/boost"
@@ -77,7 +77,7 @@ project "Dynamik"
 
 	libdirs {
 		"$(SolutionDir)libs/GLFW/lib-vc2019",
-		"E:/Work/Gaming/Vulkan SDK/Vulkan SDK/1.1.108.0/Lib"
+		"E:/Programming/Codes/Game Development/Libraries/VulkanSDK/1.1.108.0/Lib"
 	}
 
 	links { 
@@ -151,7 +151,7 @@ project "Application"
 
 	libdirs {
 		"$(SolutionDir)libs/GLFW/lib-vc2019",
-		"E:/Work/Gaming/Vulkan SDK/Vulkan SDK/1.1.108.0/Lib",
+		"E:/Programming/Codes/Game Development/Libraries/VulkanSDK/1.1.108.0/Lib",
 	}
 
 	links {
@@ -232,7 +232,7 @@ project "Sampler"
 
 	libdirs {
 		"$(SolutionDir)libs/GLFW/lib-vc2019",
-		"E:/Work/Gaming/Vulkan SDK/Vulkan SDK/1.1.108.0/Lib"
+		"E:/Programming/Codes/Game Development/Libraries/VulkanSDK/1.1.108.0/Lib"
 	}
 
 	links { 

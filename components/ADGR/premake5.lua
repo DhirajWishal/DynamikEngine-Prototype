@@ -1,6 +1,6 @@
----------- Audio project ----------
+---------- ADGR project ----------
 
-project "Audio"
+project "ADGR"
 	kind "ConsoleApp"
 	language "C++"
 	cppdialect "c++17"
@@ -41,7 +41,7 @@ project "Audio"
 
 	libdirs {
 		"$(SolutionDir)libs/GLFW/lib-vc2019",
-		"E:/Work/Gaming/Vulkan SDK/Vulkan SDK/1.1.108.0/Lib"
+		"E:/Programming/Codes/Game Development/Libraries/VulkanSDK/1.1.108.0/Lib"
 	}
 
 	links { 

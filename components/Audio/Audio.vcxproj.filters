@@ -13,27 +13,15 @@
     <ClInclude Include="src\Audio.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="src\core\AudioEngine.h">
-      <Filter>src\core</Filter>
-    </ClInclude>
-    <ClInclude Include="src\core\AudioObject.h">
-      <Filter>src\core</Filter>
-    </ClInclude>
-    <ClInclude Include="src\core\AudioObjectController.h">
-      <Filter>src\core</Filter>
-    </ClInclude>
+    <ClInclude Include="src\core\AudioCore.h" />
+    <ClInclude Include="src\core\AudioObjectController.h" />
+    <ClInclude Include="src\core\AudioObject.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="src\core\AudioEngine.cpp">
-      <Filter>src\core</Filter>
-    </ClCompile>
-    <ClCompile Include="src\core\AudioObject.cpp">
-      <Filter>src\core</Filter>
-    </ClCompile>
-    <ClCompile Include="src\core\AudioObjectController.cpp">
-      <Filter>src\core</Filter>
-    </ClCompile>
+    <ClCompile Include="src\core\AudioObject.cpp" />
+    <ClCompile Include="src\core\AudioObjectController.cpp" />
+    <ClCompile Include="src\core\AudioCore.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="premake5.lua" />

@@ -33,13 +33,11 @@
     <ClInclude Include="src\Platform\Windows\resource\imageLoader.h">
       <Filter>Platform\Windows\resource</Filter>
     </ClInclude>
-    <ClInclude Include="src\Platform\Windows\resource\objectLoader.h">
-      <Filter>Platform\Windows\resource</Filter>
-    </ClInclude>
     <ClInclude Include="src\Platform\Windows\window.h">
       <Filter>Platform\Windows</Filter>
     </ClInclude>
     <ClInclude Include="src\mngafx.h" />
+    <ClInclude Include="src\Platform\Windows\resource\objectLoader.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Platform\Windows\file\fileManager.cpp">
@@ -54,12 +52,10 @@
     <ClCompile Include="src\Platform\Windows\resource\imageLoader.cpp">
       <Filter>Platform\Windows\resource</Filter>
     </ClCompile>
-    <ClCompile Include="src\Platform\Windows\resource\objectLoader.cpp">
-      <Filter>Platform\Windows\resource</Filter>
-    </ClCompile>
     <ClCompile Include="src\Platform\Windows\window.cpp">
       <Filter>Platform\Windows</Filter>
     </ClCompile>
     <ClCompile Include="src\mngafx.cpp" />
+    <ClCompile Include="src\Platform\Windows\resource\objectLoader.cpp" />
   </ItemGroup>
 </Project>

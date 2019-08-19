@@ -16,7 +16,7 @@ public:
 	}
 
 	void update() override {
-		DMK_INFO("ExampleLayer::update");
+		//DMK_INFO("ExampleLayer::update");
 	}
 
 	void onEvent(Dynamik::Event& event) override {

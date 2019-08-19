@@ -73,19 +73,26 @@ namespace Dynamik {
 
 				using eventCallbackFunction = std::function<void(Event&)>;
 
-				struct Events {
-					eventCallbackFunction callbackFunc;
-				} eventData;
-
 				void eventCallbackFunc(Event& event);
 
-				int dumbshit = 10;
+				// temprary function
+				void keyEventHandler(int keycode);
+
 			private:
 				static void onKeyEvent(GLFWwindow* window, int keycode, int scancode,
 					int action, int mods);
 				static void onMouseButtonEvent(GLFWwindow* window, int button, int action, int mods);
+				static void onMouseScrolledEvent(GLFWwindow* window, double xOffset, double yOffset);
+				static void onCursorPosEvent(GLFWwindow* window, double xPos, double yPos);
 
 				void onEvent(Event& event);
+
+				void setEventCallback(const eventCallbackFunction& callback)
+				{
+					myEventCallbackFunction = callback;
+				}
+
+				eventCallbackFunction myEventCallbackFunction;
 
 				GLFWwindow* window;
 
@@ -168,6 +175,11 @@ namespace Dynamik {
 				uint32 currentFrame = 0;
 				bool frameBufferResized = false;
 
+				bool turnEventR = false;
+				bool turnEventL = false;
+				bool moveEventU = false;
+				bool moveEventD = false;
+
 				std::vector<std::vector<std::string>> shaderPath;
 				std::vector<std::vector<std::string>> assetsPath;
 
@@ -177,53 +189,7 @@ namespace Dynamik {
 				std::string TEXTURE_PATH = "E:/Projects/Dynamik Engine/Dynamik/core assets/textures/chalet.jpg";
 
 				windows::Window myWindowHandler;
-
-				struct coreProps {
-					std::string title = "Dynamik Engine";
-					unsigned int width = 1280;
-					unsigned int height = 720;
-
-
-				}myProps;
 			};
-
-			//class CoreProps {
-			//	core* myRef;
-			//	
-			//public:
-			//	//static void init(core* core) { current.myRef = core; }
-			//
-			//
-			//	static CoreProps& getInstance() {
-			//		static CoreProps current;
-			//		//if (&current == nullptr) current = new CoreProps;
-			//		return current;
-			//	}
-			//	void key(int keycode, int action, core* core) {
-			//		printf("%d", keycode);
-			//
-			//		switch (action) {
-			//		case GLFW_PRESS: {
-			//			KeyPressedEvent event(keycode, 0);
-			//			core->eventCallbackFunc(event);
-			//
-			//			break;
-			//		}
-			//		case GLFW_RELEASE: {
-			//			KeyReleasedEvent event(keycode);
-			//			core->eventCallbackFunc(event);
-			//
-			//			break;
-			//		}
-			//		case GLFW_REPEAT: {
-			//			KeyPressedEvent event(keycode, 1);
-			//			core->eventCallbackFunc(event);
-			//
-			//			break;
-			//		}
-			//		}
-			//	}
-			//};
 		}
 	}
 }

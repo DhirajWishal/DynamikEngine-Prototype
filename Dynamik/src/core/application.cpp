@@ -14,8 +14,13 @@ namespace Dynamik {
 	}
 
 	DMK_API void Application::run() {
+		myLoader.run();
+
 		while (!myRenderingEngine.getWindowCloseEvent()) {
 			myRenderingEngine.draw();
+			//myEvent = &myRenderingEngine.pollEvents();
+
+			onEvent(*myRenderingEngine.pollEvents());
 
 			for (auto layer : layerStack)
 				layer->update();
@@ -32,15 +37,17 @@ namespace Dynamik {
 		layerStack.pushOverLay(layer);
 	}
 
-	//void Application::onEvent(Event& event) {
-	//	EventDispatcher dispatcher(event);
-	//
-	//	DMK_CORE_INFO(event.toString());
-	//	
-	//	for (auto it = layerStack.end(); it != layerStack.begin();) {
-	//		(*--it)->onEvent(event);
-	//		if (event.handled)
-	//			break;
-	//	}
-	//}
+	void Application::onEvent(Event& event) {
+		if (&event != nullptr) {
+			EventDispatcher dispatcher(event);
+
+			DMK_CORE_INFO("Im on Event!");
+
+			for (auto it = layerStack.end(); it != layerStack.begin();) {
+				(*--it)->onEvent(event);
+				if (event.handled)
+					break;
+			}
+		}
+	}
 }

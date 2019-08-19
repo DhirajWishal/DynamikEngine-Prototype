@@ -3,4 +3,7 @@
 
 namespace Dynamik {
 
+	void InputLoader::run() {
+		myContainer = submit();
+	}
 }

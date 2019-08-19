@@ -167,6 +167,9 @@ IF EXIST $(SolutionDir)bin\$(Configuration)-$(Platform)\Dynamik\Dynamik.dll\ (xc
     <ProjectReference Include="..\components\Platform\Platform.vcxproj">
       <Project>{2AC788B4-1694-E3BF-3FAD-D1672BD9184E}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\components\TestBuild\TestBuild.vcxproj">
+      <Project>{F595D608-6100-8B7F-AA3E-3C2516E868D4}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

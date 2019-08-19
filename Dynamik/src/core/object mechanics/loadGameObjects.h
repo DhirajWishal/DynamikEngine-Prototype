@@ -1,5 +1,12 @@
 #pragma once
 
-namespace Dynamik {
+#include "submitAsset.h"
 
+namespace Dynamik {
+	
+	class InputLoader {
+		InputContainer myContainer;
+	public:
+		void run();
+	};
 }

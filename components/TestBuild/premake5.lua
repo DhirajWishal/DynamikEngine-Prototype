@@ -27,7 +27,7 @@ project "TestBuild"
 		"$(SolutionDir)lib/libs",
 		"$(solutionDir)components/TestBuild",
 		"$(solutionDir)components/TestBuild/src",
-		--"$(solutionDir)components/Events/src",
+		"$(solutionDir)components/Events/src",
 		--"$(SolutionDir)libs/glm/**.hpp",
 		--"$(SolutionDir)libs/glm/**.inl",
 		--"%{IncludeDir.GLFW}",

@@ -31,7 +31,8 @@ namespace Dynamik {
 				void deleteDescripter();
 
 				void initBuffer(std::vector<VkImage> swapChainImages);
-				void updateBuffer(uint32 currentImage, VkExtent2D swapChainExtent, bool turn[2], bool mov[2]);
+				void updateBuffer(uint32 currentImage, VkExtent2D swapChainExtent, bool turn[2], bool mov[2],
+					float pos[2]);
 
 				VkDescriptorSetLayout* getDescriptorSetLayout() { return myDescriptorSetLayout; }
 
@@ -46,8 +47,10 @@ namespace Dynamik {
 
 				float trn = 2.0f;
 				float move = 2.0f;
+				float position[2] = { 0.0f, 0.0f };
 
 				const float movementBias = .05f;
+				const float rotationBias = .05f;
 			};
 
 			struct UniformBufferObject {

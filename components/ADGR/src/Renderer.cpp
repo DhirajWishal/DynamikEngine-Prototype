@@ -54,12 +54,17 @@ namespace Dynamik {
 			return glfwWindowShouldClose(rendererCore.getWindow());
 		}
 
-		void Renderer::pollEvents() {
+		Event* Renderer::pollEvents() {
 			glfwPollEvents();
+			return rendererCore.getEvents();
 		}
 
 		void Renderer::idleCall() {
 			vkDeviceWaitIdle(rendererCore.getDevice());
+		}
+
+		void Renderer::bindKeys() {
+
 		}
 
 	}

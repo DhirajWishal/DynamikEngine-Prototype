@@ -34,6 +34,8 @@ include "components/DevConsole"
 include "components/Audio"
 include "components/Platform"
 
+include "components/Sampler"
+
 -- test build include
 include "components/TestBuild"
 
@@ -88,7 +90,8 @@ project "Dynamik"
 		"Platform",
 		"glfw3dll",
 		"opengl32",
-		"vulkan-1"
+		"vulkan-1",
+		"TestBuild"
 	}
 
 	filter "system:windows"
@@ -165,7 +168,8 @@ project "Application"
 		"Platform",
 		"glfw3dll",
 		"opengl32",
-		"vulkan-1"
+		"vulkan-1",
+		"TestBuild"
 	}
 
 	postbuildcommands {
@@ -196,78 +200,6 @@ project "Application"
 	filter "configurations:Distribution"
 		defines "DMK_DISTRIBUTION"
 		--buildoptions "/MT"
-		optimize "On"
-
----------- Sampler project description ----------
-project "Sampler"
-	location "components/Sampler"
-	kind "SharedLib"
-	language "C++"
-	cppdialect "c++17"
-	staticruntime "On"
-
-	targetdir ("$(SolutionDir)bin/" .. outputDir .. "/$(ProjectName)")
-	objdir ("$(SolutionDir)intDir/" .. outputDir .. "/$(ProjectName)")
-
-	pchheader "smpafx.h"
-	pchsource "components/Sampler/src/smpafx.cpp"
-
-	files {
-		"components/Sampler/**.h",
-		"components/Sampler/**.cpp",
-		"components/Sampler/src/**.h",
-		"components/Sampler/src/**.cpp"
-	}
-
-	includedirs {
-		"$(SolutionDir)libs",
-		"$(SolutionDir)Dynamik/src",
-		"$(SolutionDir)Dynamik/GameLibraries",
-		"$(SolutionDir)lib/libs",
-		"$(solutionDir)components/Sampler",
-		"$(solutionDir)components/Sampler/src",
-		"$(SolutionDir)libs/glm/**.hpp",
-		"$(SolutionDir)libs/glm/**.inl",
-		"%{IncludeDir.GLFW}",
-		"%{IncludeDir.glm}",
-		"%{IncludeDir.stb}",
-		"%{IncludeDir.tol}",
-		"%{IncludeDir.Vulkan}"
-	}
-
-	libdirs {
-		"$(SolutionDir)libs/GLFW/lib-vc2019",
-		"E:/Programming/Codes/Game Development/Libraries/VulkanSDK/1.1.108.0/Lib"
-	}
-
-	links { 
-		"glfw3dll",
-		"opengl32",
-		"vulkan-1"
-	}
-
-	filter "system:windows"
-		systemversion "latest"
-
-		defines {
-			"DMK_PLATFORM_WINDOWS",
-			"DMK_BUILD_DLL",
-			"GLFW_INCLUDE_VULKAN"
-		}
-
-	filter "configurations:Debug"
-		defines "DMK_DEBUG"
-		--runtime "Debug"
-		symbols "On"
-		
-	filter "configurations:Release"
-		defines "DMK_RELEASE"
-		--runtime "Release"
-		optimize "On"
-
-	filter "configurations:Distribution"
-		defines "DMK_DISTRIBUTION"
-		--runtime "Release"
 		optimize "On"
 
 ---------- Managers library ----------

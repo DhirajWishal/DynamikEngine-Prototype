@@ -14,6 +14,7 @@
 /* MAIN INCLUDES */
 #include "core/core.h"
 #include "core/utils/DMK_Error.h"
+#include "core/utils/DMK_DataTypes.h"
 
 #include "core/log.h"
 
@@ -165,7 +166,7 @@ namespace Dynamik {
 	 * HEAP ALLOCATION IS OPTIONAL YET RECOMMENDED *
 	 * PASS ALL VALUES BY REFERENCE (MEMORY AND CODE OPTIMIZATION) *
 	*/
-	class DMK_API GameObject {
+	class GameObject {
 	public:
 		/* ---------- ########## \\\\\\\\\\ CONSTRUCTOR AND DESTRUCTOR ////////// ########## ---------- */
 		GameObject(GameObjectProperties props) : myProperties(props) {}

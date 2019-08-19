@@ -7,6 +7,9 @@
     <Filter Include="GameLibraries\GameObject">
       <UniqueIdentifier>{BC23F27B-A848-41FC-D193-268CBD17401A}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameLibraries\Key Bindings">
+      <UniqueIdentifier>{E247040A-CE57-B0DA-3711-15F923409F73}</UniqueIdentifier>
+    </Filter>
     <Filter Include="src">
       <UniqueIdentifier>{2DAB880B-99B4-887C-2230-9F7C8E38947C}</UniqueIdentifier>
     </Filter>
@@ -26,6 +29,9 @@
   <ItemGroup>
     <ClInclude Include="GameLibraries\GameObject\GameObject.h">
       <Filter>GameLibraries\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="GameLibraries\Key Bindings\KeyBingings.h">
+      <Filter>GameLibraries\Key Bindings</Filter>
     </ClInclude>
     <ClInclude Include="src\Dynamik.h">
       <Filter>src</Filter>

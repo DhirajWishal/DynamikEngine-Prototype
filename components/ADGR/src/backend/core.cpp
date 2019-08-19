@@ -31,11 +31,16 @@ namespace Dynamik {
 				glfwInit();
 
 				glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
-
+#ifdef DMK_DEBUG
 				window = glfwCreateWindow(WIDTH, HEIGHT, "Dynamik Engine", nullptr, nullptr);
+
+#else
+				window = glfwCreateWindow(WIDTH, HEIGHT, "Dynamik Engine", glfwGetPrimaryMonitor(), nullptr);
+
+#endif
 				glfwMakeContextCurrent(window);
 
-				setEventCallback(BIND_EVENT_FUNCTION(onEvent));
+				//setEventCallback(BIND_EVENT_FUNCTION(onEvent));
 
 				glfwSetWindowUserPointer(window, this);
 				glfwSetFramebufferSizeCallback(window, framebufferResizeCallback);
@@ -143,7 +148,7 @@ namespace Dynamik {
 
 				bool arr[2] = { turnEventL, turnEventR };
 				bool mov[2] = { moveEventU, moveEventD };
-				uniformBuffer.updateBuffer(imageIndex, swapChainExtent, arr, mov);
+				uniformBuffer.updateBuffer(imageIndex, swapChainExtent, arr, mov, mousePos);
 
 				VkSubmitInfo submitInfo = {};
 				submitInfo.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO;
@@ -188,7 +193,7 @@ namespace Dynamik {
 				currentFrame = (currentFrame + 1) % MAX_FRAMES_IN_FLIGHT;
 
 				//myWindow->onUpdate();
-				myWindowHandler.onUpdate();
+				//myWindowHandler.onUpdate();
 			}
 
 			void ADGR_API core::shutdown() {
@@ -303,15 +308,10 @@ namespace Dynamik {
 				texture.minMipLevel = level;
 			}
 
-			void core::onEvent(Event& event) {
-				printf("%p\n", event);
-
-				EventDispatcher dispatcher(event);
-			}
 			using eventCallbackFunction = std::function<void(Event&)>;
 			void core::eventCallbackFunc(Event& event)
 			{
-				//printf("%s", "I was called\n");
+				myEvent = &event;
 			}
 
 			void core::onKeyEvent(GLFWwindow* window, int keycode, int scancode,
@@ -333,6 +333,10 @@ namespace Dynamik {
 					data->turnEventL = false;	// temp
 					data->moveEventU = false;	// temp
 					data->moveEventD = false;	// temp
+					data->rotEventL = false;	// temp
+					data->rotEventR = false;	// temp
+					data->rotEventU = false;	// temp
+					data->rotEventD = false;	// temp
 
 					break;
 				}
@@ -343,6 +347,9 @@ namespace Dynamik {
 
 					break;
 				}
+				default:
+					data->myEvent = nullptr;
+					break;
 				}
 			}
 
@@ -363,6 +370,7 @@ namespace Dynamik {
 					break;
 				}
 				default:
+					data->myEvent = nullptr;
 					break;
 				}
 			}
@@ -379,6 +387,7 @@ namespace Dynamik {
 
 				MouseMovedEvent event((float)xPos, (float)yPos);
 				data->eventCallbackFunc(event);
+				data->mouseMovedEventHandler(xPos, yPos);
 			}
 
 			void core::keyEventHandler(int keycode) {
@@ -461,17 +470,32 @@ namespace Dynamik {
 				case DMK_KEY_9:
 					break;
 				case DMK_KEY_UP:
+					rotEventU = true;
 					break;
 				case DMK_KEY_DOWN:
+					rotEventD = true;
 					break;
 				case DMK_KEY_LEFT:
+					rotEventL = true;
 					break;
 				case DMK_KEY_RIGHT:
+					rotEventR = true;
 					break;
 
 				default:
 					break;
 				}
+			}
+
+			void core::mouseMovedEventHandler(float x, float y) {
+				mousePos[0] = x;
+				mousePos[1] = y;
+			}
+
+			Event* core::getEvents() {
+				Event* tmp = myEvent;
+				myEvent = nullptr;
+				return tmp;
 			}
 		}
 	}

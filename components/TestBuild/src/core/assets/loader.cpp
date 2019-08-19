@@ -15,14 +15,11 @@ private:
 	Dynamik::GameObjectProperties myProps;
 };
 
-std::vector<Dynamik::GameObject> Dynamik::submit() {
-	std::vector<Dynamik::GameObject> submitQueue;
+Dynamik::InputContainer Dynamik::submit() {
 
-	return submitQueue;
-}
+	Dynamik::KeyBindings myBindings;
 
-int main() {
-	// bind charlet
+	Dynamik::InputContainer myContainer;
 
 	Dynamik::GameObjectProperties props;
 	props.name = "Charlet";
@@ -35,6 +32,7 @@ int main() {
 
 	charlet myCharlet(props);
 
+	myContainer.addToAssetsQueue(myCharlet);
 
-
+	return myContainer;
 }

@@ -14,15 +14,11 @@
 /* ---------- THIS HEADER FILE IS FOR CLIENT USE ---------- */
 
 /* STD INCLUDES(PRE-COMPILED HEADER) */
-#include "dmkafx.h"
+#include "core/object mechanics/submitAsset.h"
 
 /* EXTERNAL INCLUDES */
 
 /* CORE INCLUDES */
-#include "core/application.h"
-#include "core/core.h"
-#include "core/log.h"
-
 #include "core/utils/DMK_Functions.h"
 #include "core/utils/DMK_Error.h"
 #include "core/utils/DMK_Math.h"
@@ -30,6 +26,5 @@
 #include "core/utils/dataStructures/heap.h"
 #include "core/utils/dataStructures/linkedLists.h"
 
-#include <GameObject/GameObject.h>
-
-#include "core/object mechanics/submitAsset.h"
+#include "GameObject/GameObject.h"
+#include "Key Bindings/KeyBingings.h"

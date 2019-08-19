@@ -13,10 +13,6 @@
 #include "backend/buffers/commandBuffer.h"
 #include "backend/buffers/depthBuffer.h"
 
-// change with resource manager
-//#define STB_IMAGE_IMPLEMENTATION
-//#include <stb_image.h>
-
 #include "Platform/Windows/resource/imageLoader.h"
 
 namespace Dynamik {

@@ -79,4 +79,35 @@ namespace Dynamik {
 		return os << e.toString();
 	}
 
+	/* GLFW bindings */
+
+	struct keyEventProperties {
+		int keyCode;
+		int scancode;
+		int action;
+		int modes;
+	};
+
+	struct mouseButtonEventProperties {
+		int button;
+		int action;
+		int modes;
+	};
+
+	struct mouseScrolledEventProperties {
+		float posX;
+		float posY;
+	};
+
+	struct cursorPositionEventProperties {
+		float posX;
+		float posY;
+	};
+
+	struct eventProperties {
+		keyEventProperties keyEventProps;
+		mouseButtonEventProperties mouseButtonEventProps;
+		mouseScrolledEventProperties mouseScrolledProps;
+		cursorPositionEventProperties mouseCursorPositionProps;
+	};
 }

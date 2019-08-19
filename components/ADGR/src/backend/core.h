@@ -38,6 +38,7 @@
 #include "core/utils/DMK_DataTypes.h"
 #include "backend/interface.h"
 
+#include "event.h"
 #include "keyEvent.h"
 #include "mouseEvent.h"
 #include "applicationEvent.h"
@@ -77,6 +78,9 @@ namespace Dynamik {
 
 				// temprary function
 				void keyEventHandler(int keycode);
+				void mouseMovedEventHandler(float x, float y);
+
+				Event* getEvents();
 
 			private:
 				static void onKeyEvent(GLFWwindow* window, int keycode, int scancode,
@@ -84,8 +88,6 @@ namespace Dynamik {
 				static void onMouseButtonEvent(GLFWwindow* window, int button, int action, int mods);
 				static void onMouseScrolledEvent(GLFWwindow* window, double xOffset, double yOffset);
 				static void onCursorPosEvent(GLFWwindow* window, double xPos, double yPos);
-
-				void onEvent(Event& event);
 
 				void setEventCallback(const eventCallbackFunction& callback)
 				{
@@ -179,6 +181,14 @@ namespace Dynamik {
 				bool turnEventL = false;
 				bool moveEventU = false;
 				bool moveEventD = false;
+				bool rotEventL = false;
+				bool rotEventR = false;
+				bool rotEventU = false;
+				bool rotEventD = false;
+
+				Event* myEvent = nullptr;
+
+				float mousePos[2] = { 0.0f, 0.0f };	// x, y
 
 				std::vector<std::vector<std::string>> shaderPath;
 				std::vector<std::vector<std::string>> assetsPath;
@@ -187,8 +197,6 @@ namespace Dynamik {
 				const std::string fragmentShaderPath = "E:/Projects/Dynamik Engine/Dynamik/components/Shaders/frag.spv";
 				std::string MODEL_PATH = "E:/Projects/Dynamik Engine/Dynamik/core assets/models/chalet.obj";
 				std::string TEXTURE_PATH = "E:/Projects/Dynamik Engine/Dynamik/core assets/textures/chalet.jpg";
-
-				windows::Window myWindowHandler;
 			};
 		}
 	}

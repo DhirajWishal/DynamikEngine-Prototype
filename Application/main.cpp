@@ -7,7 +7,13 @@
  IDE:		MS Visual Studio Community 2019
 */
 
-#include <Dynamik.h>
+#include "dmkafx.h"
+
+#include "Layers/layerStack.h"
+#include "core/application.h"
+#include "core/utils/DMK_DataTypes.h"
+#include "core/utils/DMK_Functions.h"
+
 #include "src/imports.h"
 
 class layer : public Dynamik::ADGR::Layer {

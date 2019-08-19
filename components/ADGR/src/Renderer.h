@@ -29,10 +29,12 @@ namespace Dynamik {
 
 			void end();
 
+			void bindKeys();
+
 			// core functions
 
 			bool getWindowCloseEvent();
-			void pollEvents();
+			Event* pollEvents();
 			void idleCall();
 
 			void setMipLevel(float);

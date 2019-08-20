@@ -9,31 +9,26 @@
  IDE:		MS Visual Studio Community 2019
 */
 
-#include "backend/interface.h"
-#include "backend/core.h"
-#include "core/utils/DMK_DataTypes.h"
+#include "backend/backend.h"
 
 namespace Dynamik {
 	namespace ADGR {
-
-		class SMP_API Renderer {
+		using namespace core;
+		
+		class Renderer {
 		public:
 			Renderer();
 			~Renderer();
 
-			void initRenderer();
-			void draw();
-
-			void run();
-
-			void end();
-
-			// core functions
-
-			void setMipLevel(float);
-
 		private:
-			core::core rendererCore;
+			window myWindow;
+
+			instance myInstance;
+			device myDevice;
+			swapChain mySwapChain;
+			pipeline myPipeline;
+
+			debugger myDebugger{myInstance.getInstanceAddr(), myInstance.getdebugMessengerAddr()};
 		};
 	}
 }

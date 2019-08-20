@@ -37,7 +37,7 @@ include "components/Platform"
 include "components/Sampler"
 
 -- test build include
-include "components/TestBuild"
+include "components/Core"
 
 ---------- Dynamik Engine project description ----------
 project "Dynamik"
@@ -45,7 +45,7 @@ project "Dynamik"
 	kind "SharedLib"
 	language "C++"
 
-	targetdir ("$(SolutionDir)bin/" .. outputDir .. "/$(ProjectName)")
+	targetdir ("$(SolutionDir)bin/" .. outputDir .. "/Application")
 	objdir ("$(SolutionDir)intDir/" .. outputDir .. "/$(ProjectName)")
 
 	pchheader "dmkafx.h"
@@ -88,10 +88,10 @@ project "Dynamik"
 		"ADGR",
 		"Events",
 		"Platform",
+		"Core",
 		"glfw3dll",
 		"opengl32",
 		"vulkan-1",
-		"TestBuild"
 	}
 
 	filter "system:windows"
@@ -128,7 +128,7 @@ project "Application"
 	kind "ConsoleApp"
 	language "C++"
 
-	targetdir ("$(SolutionDir)bin/" .. outputDir .. "/$(ProjectName)")
+	targetdir ("$(SolutionDir)bin/" .. outputDir .. "/Application")
 	objdir ("$(SolutionDir)intDir/" .. outputDir .. "/$(ProjectName)")
 
 	files {
@@ -166,14 +166,13 @@ project "Application"
 		"ADGR",
 		"Events",
 		"Platform",
+		"Core",
 		"glfw3dll",
 		"opengl32",
 		"vulkan-1",
-		"TestBuild"
 	}
 
 	postbuildcommands {
-		"{copy} $(SolutionDir)bin\\$(Configuration)-$(Platform)\\Sampler\\Sampler.dll $(SolutionDir)bin\\$(Configuration)-$(Platform)\\Application",
 		"{copy} $(SolutionDir)bin\\$(Configuration)-$(Platform)\\Dynamik\\Dynamik.dll $(SolutionDir)bin\\$(Configuration)-$(Platform)\\Application"
 	}
 
@@ -210,7 +209,7 @@ project "Managers"
 	cppdialect "c++17"
 	staticruntime "On"
 
-	targetdir ("$(SolutionDir)bin/" .. outputDir .. "/$(ProjectName)")
+	targetdir ("$(SolutionDir)bin/" .. outputDir .. "/Application")
 	objdir ("$(SolutionDir)intDir/" .. outputDir .. "/$(ProjectName)")
 
 	pchheader "mngafx.h"

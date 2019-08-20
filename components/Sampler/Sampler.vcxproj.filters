@@ -19,38 +19,14 @@
     <Filter Include="src\Renderer\backend">
       <UniqueIdentifier>{4A3369DC-36C2-F2A5-DFE0-06A1CB4E034C}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\Renderer\backend\buffers">
-      <UniqueIdentifier>{E634219C-D2EF-1048-7BA7-899267415BD8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\Renderer\backend\data">
-      <UniqueIdentifier>{13D349AD-7F95-7D37-C845-0CC434475615}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\Renderer\backend\device">
-      <UniqueIdentifier>{C98D5427-359B-820D-BE81-7EF82A8E4EC4}</UniqueIdentifier>
+    <Filter Include="src\Renderer\backend\core">
+      <UniqueIdentifier>{028249AD-6E44-7D37-B7F4-0BC423F65515}</UniqueIdentifier>
     </Filter>
     <Filter Include="src\Renderer\backend\extensions">
       <UniqueIdentifier>{4932C46E-B515-D3AE-BE18-01EB2A7B99FF}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\Renderer\backend\instance">
-      <UniqueIdentifier>{8E1D8B9A-FA35-72C4-C3E2-015E2FBA065E}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\Renderer\backend\loader">
-      <UniqueIdentifier>{F02EA73A-5C3C-D520-E522-D10B512FA1D7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\Renderer\backend\others">
-      <UniqueIdentifier>{EEFF0442-5A0D-3328-E3F3-2E134F00FFDE}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\Renderer\backend\pipeline">
-      <UniqueIdentifier>{CFCA6B87-3BE3-52B1-0490-E24A7067E74A}</UniqueIdentifier>
-    </Filter>
     <Filter Include="src\Renderer\backend\queues">
       <UniqueIdentifier>{F106C046-5D14-EE2C-E6FA-E9175207BAE3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\Renderer\backend\swapchain">
-      <UniqueIdentifier>{57AC4F54-43D2-19BB-2C18-9F8618DD3E87}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\Renderer\backend\texture">
-      <UniqueIdentifier>{CA9AB4E1-B655-A48D-5F0D-1DD84BA7EE1D}</UniqueIdentifier>
     </Filter>
     <Filter Include="src\Renderer\backend\validators">
       <UniqueIdentifier>{B2B390F5-1E97-9F35-279A-CD7193FC6586}</UniqueIdentifier>
@@ -78,77 +54,44 @@
     <ClInclude Include="src\Renderer\Renderer.h">
       <Filter>src\Renderer</Filter>
     </ClInclude>
-    <ClInclude Include="src\Renderer\backend\buffers\buffer.h">
-      <Filter>src\Renderer\backend\buffers</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Renderer\backend\buffers\colorBuffer.h">
-      <Filter>src\Renderer\backend\buffers</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Renderer\backend\buffers\commandBuffer.h">
-      <Filter>src\Renderer\backend\buffers</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Renderer\backend\buffers\depthBuffer.h">
-      <Filter>src\Renderer\backend\buffers</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Renderer\backend\buffers\frameBuffer.h">
-      <Filter>src\Renderer\backend\buffers</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Renderer\backend\buffers\indexBuffer.h">
-      <Filter>src\Renderer\backend\buffers</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Renderer\backend\buffers\uniformBuffer.h">
-      <Filter>src\Renderer\backend\buffers</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Renderer\backend\buffers\vertexBuffer.h">
-      <Filter>src\Renderer\backend\buffers</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Renderer\backend\core.h">
+    <ClInclude Include="src\Renderer\backend\backend.h">
       <Filter>src\Renderer\backend</Filter>
     </ClInclude>
-    <ClInclude Include="src\Renderer\backend\data\data.h">
-      <Filter>src\Renderer\backend\data</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Renderer\backend\defines.h">
+    <ClInclude Include="src\Renderer\backend\controlHeader.h">
       <Filter>src\Renderer\backend</Filter>
     </ClInclude>
-    <ClInclude Include="src\Renderer\backend\device\device.h">
-      <Filter>src\Renderer\backend\device</Filter>
+    <ClInclude Include="src\Renderer\backend\core\Core.h">
+      <Filter>src\Renderer\backend\core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Renderer\backend\core\Device.h">
+      <Filter>src\Renderer\backend\core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Renderer\backend\core\Instance.h">
+      <Filter>src\Renderer\backend\core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Renderer\backend\core\Window.h">
+      <Filter>src\Renderer\backend\core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Renderer\backend\device.h">
+      <Filter>src\Renderer\backend</Filter>
     </ClInclude>
     <ClInclude Include="src\Renderer\backend\extensions\extensions.h">
       <Filter>src\Renderer\backend\extensions</Filter>
     </ClInclude>
-    <ClInclude Include="src\Renderer\backend\instance\instance.h">
-      <Filter>src\Renderer\backend\instance</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Renderer\backend\interface.h">
+    <ClInclude Include="src\Renderer\backend\instance.h">
       <Filter>src\Renderer\backend</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Renderer\backend\loader\model.h">
-      <Filter>src\Renderer\backend\loader</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Renderer\backend\others\semaphores.h">
-      <Filter>src\Renderer\backend\others</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Renderer\backend\others\syncObjects.h">
-      <Filter>src\Renderer\backend\others</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Renderer\backend\pipeline\pipeline.h">
-      <Filter>src\Renderer\backend\pipeline</Filter>
     </ClInclude>
     <ClInclude Include="src\Renderer\backend\queues\queues.h">
       <Filter>src\Renderer\backend\queues</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Renderer\backend\swapchain\swapChain.h">
-      <Filter>src\Renderer\backend\swapchain</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Renderer\backend\texture\texture.h">
-      <Filter>src\Renderer\backend\texture</Filter>
     </ClInclude>
     <ClInclude Include="src\Renderer\backend\validators\debugger\debugger.h">
       <Filter>src\Renderer\backend\validators\debugger</Filter>
     </ClInclude>
     <ClInclude Include="src\Renderer\backend\validators\validators.h">
       <Filter>src\Renderer\backend\validators</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Renderer\backend\window.h">
+      <Filter>src\Renderer\backend</Filter>
     </ClInclude>
     <ClInclude Include="src\Wrapper\dll_wrapper.h">
       <Filter>src\Wrapper</Filter>
@@ -159,6 +102,13 @@
     <ClInclude Include="src\smpafx.h">
       <Filter>src</Filter>
     </ClInclude>
+    <ClInclude Include="src\Renderer\backend\core\SwapChain.h" />
+    <ClInclude Include="src\Renderer\backend\swapChain.h" />
+    <ClInclude Include="src\Renderer\backend\core\Pipeline.h" />
+    <ClInclude Include="src\Renderer\backend\pipeline.h" />
+    <ClInclude Include="src\Renderer\backend\core\Buffer.h" />
+    <ClInclude Include="src\Renderer\backend\uniformBuffer.h" />
+    <ClInclude Include="src\Renderer\backend\functions\bufferFunctions.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -174,68 +124,26 @@
     <ClCompile Include="src\Renderer\Renderer.cpp">
       <Filter>src\Renderer</Filter>
     </ClCompile>
-    <ClCompile Include="src\Renderer\backend\buffers\buffer.cpp">
-      <Filter>src\Renderer\backend\buffers</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Renderer\backend\buffers\colorBuffer.cpp">
-      <Filter>src\Renderer\backend\buffers</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Renderer\backend\buffers\commandBuffer.cpp">
-      <Filter>src\Renderer\backend\buffers</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Renderer\backend\buffers\depthBuffer.cpp">
-      <Filter>src\Renderer\backend\buffers</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Renderer\backend\buffers\frameBuffer.cpp">
-      <Filter>src\Renderer\backend\buffers</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Renderer\backend\buffers\indexBuffer.cpp">
-      <Filter>src\Renderer\backend\buffers</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Renderer\backend\buffers\uniformBuffer.cpp">
-      <Filter>src\Renderer\backend\buffers</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Renderer\backend\buffers\vertexBuffer.cpp">
-      <Filter>src\Renderer\backend\buffers</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Renderer\backend\core.cpp">
+    <ClCompile Include="src\Renderer\backend\device.cpp">
       <Filter>src\Renderer\backend</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Renderer\backend\device\device.cpp">
-      <Filter>src\Renderer\backend\device</Filter>
     </ClCompile>
     <ClCompile Include="src\Renderer\backend\extensions\extensions.cpp">
       <Filter>src\Renderer\backend\extensions</Filter>
     </ClCompile>
-    <ClCompile Include="src\Renderer\backend\instance\instance.cpp">
-      <Filter>src\Renderer\backend\instance</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Renderer\backend\loader\model.cpp">
-      <Filter>src\Renderer\backend\loader</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Renderer\backend\others\semaphores.cpp">
-      <Filter>src\Renderer\backend\others</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Renderer\backend\others\syncObjects.cpp">
-      <Filter>src\Renderer\backend\others</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Renderer\backend\pipeline\pipeline.cpp">
-      <Filter>src\Renderer\backend\pipeline</Filter>
+    <ClCompile Include="src\Renderer\backend\instance.cpp">
+      <Filter>src\Renderer\backend</Filter>
     </ClCompile>
     <ClCompile Include="src\Renderer\backend\queues\queues.cpp">
       <Filter>src\Renderer\backend\queues</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Renderer\backend\swapchain\swapChain.cpp">
-      <Filter>src\Renderer\backend\swapchain</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Renderer\backend\texture\texture.cpp">
-      <Filter>src\Renderer\backend\texture</Filter>
     </ClCompile>
     <ClCompile Include="src\Renderer\backend\validators\debugger\debugger.cpp">
       <Filter>src\Renderer\backend\validators\debugger</Filter>
     </ClCompile>
     <ClCompile Include="src\Renderer\backend\validators\validators.cpp">
       <Filter>src\Renderer\backend\validators</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Renderer\backend\window.cpp">
+      <Filter>src\Renderer\backend</Filter>
     </ClCompile>
     <ClCompile Include="src\Wrapper\dll_wrapper.cpp">
       <Filter>src\Wrapper</Filter>
@@ -246,6 +154,10 @@
     <ClCompile Include="src\smpafx.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="src\Renderer\backend\swapChain.cpp" />
+    <ClCompile Include="src\Renderer\backend\pipeline.cpp" />
+    <ClCompile Include="src\Renderer\backend\uniformBuffer.cpp" />
+    <ClCompile Include="src\Renderer\backend\functions\bufferFunctions.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="premake5.lua" />

@@ -67,5 +67,9 @@ namespace Dynamik {
 
 		}
 
+		void Renderer::setAssetPaths(std::vector<std::string>& texture, std::vector<std::string>& model) {
+			rendererCore.setAssets(texture, model);
+		}
+
 	}
 }

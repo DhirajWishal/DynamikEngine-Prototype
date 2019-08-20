@@ -39,6 +39,8 @@ namespace Dynamik {
 
 			void setMipLevel(float);
 
+			void setAssetPaths(std::vector<std::string>& texture, std::vector<std::string>& model);
+
 		private:
 			core::core rendererCore;
 		};

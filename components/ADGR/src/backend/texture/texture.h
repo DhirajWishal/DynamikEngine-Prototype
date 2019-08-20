@@ -35,7 +35,7 @@ namespace Dynamik {
 					uint32* mipLevels);
 				~texture();
 
-				void initTexture(VkCommandPool commandPool, VkQueue graphicsQueue);
+				void initTexture(VkCommandPool commandPool, VkQueue graphicsQueue, std::string path);
 				void initTextureImageView();
 				void initTextureSampler();
 				void deleteTexture();

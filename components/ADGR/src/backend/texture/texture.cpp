@@ -32,7 +32,7 @@ namespace Dynamik {
 				imageInfo.extent.height = height;
 				imageInfo.extent.depth = 1;
 				imageInfo.mipLevels = mipLevels;
-				imageInfo.arrayLayers = 1;
+				imageInfo.arrayLayers = 2;
 				imageInfo.format = format;
 				imageInfo.initialLayout = VK_IMAGE_LAYOUT_UNDEFINED;
 				imageInfo.usage = usage;
@@ -203,11 +203,11 @@ namespace Dynamik {
 
 			}
 
-			void texture::initTexture(VkCommandPool commandPool, VkQueue graphicsQueue) {
+			void texture::initTexture(VkCommandPool commandPool, VkQueue graphicsQueue, std::string path) {
 				resource::TextureData texData;
-				std::string path("E:/Projects/Dynamik Engine/Dynamik/core assets/textures/chalet.jpg");
+				std::string myPath(path);
 				
-				unsigned char* pixels = texData.loadTexture(path);
+				unsigned char* pixels = texData.loadTexture(myPath);
 
 				texWidth = texData.texWidth, texHeight = texData.texHeight;
 

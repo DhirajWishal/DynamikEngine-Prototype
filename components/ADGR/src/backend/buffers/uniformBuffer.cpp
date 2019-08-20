@@ -11,8 +11,6 @@
 #include "uniformBuffer.h"
 #include "buffer.h"
 
-
-
 namespace Dynamik {
 	namespace ADGR {
 		namespace core {
@@ -84,7 +82,10 @@ namespace Dynamik {
 				myUniformBufferMemory->resize(swapChainImages.size());
 
 				for (size_t i = 0; i < swapChainImages.size(); i++) {
-					createBuffer(*myDevice, *myPhysicalDevice, bufferSize, VK_BUFFER_USAGE_UNIFORM_BUFFER_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT, myUniformBuffer->at(i), myUniformBufferMemory->at(i));
+					createBuffer(*myDevice, *myPhysicalDevice, bufferSize, VK_BUFFER_USAGE_UNIFORM_BUFFER_BIT,
+						VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT 
+						| VK_MEMORY_PROPERTY_HOST_COHERENT_BIT,
+						myUniformBuffer->at(i), myUniformBufferMemory->at(i));
 				}
 			}
 
@@ -121,7 +122,7 @@ namespace Dynamik {
 
 				UniformBufferObject ubo = {};
 				//ubo.model = glm::rotate(glm::mat4(1.0f), /*time **/ glm::radians(180.0f), glm::vec3(0.0f, 0.0f, 1.0f));
-				ubo.model = glm::rotate(glm::translate(glm::mat4(1.0f), glm::vec3(move, trn, 0.0f)), glm::radians(260.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+				ubo.model = glm::rotate(glm::translate(glm::mat4(myPos), glm::vec3(move, trn, 0.0f)), glm::radians(260.0f), glm::vec3(0.0f, 0.0f, 1.0f));
 				ubo.view = glm::lookAt(glm::vec3(0.5f, 3.0f, 0.5f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 1.0f));
 				ubo.proj = glm::perspective(glm::radians(45.0f), swapChainExtent.width / (float)swapChainExtent.height, 0.1f, 10.0f);
 				ubo.proj[1][1] *= -1;
@@ -130,6 +131,11 @@ namespace Dynamik {
 				vkMapMemory(*myDevice, myUniformBufferMemory->at(currentImage), 0, sizeof(ubo), 0, &data);
 				memcpy(data, &ubo, sizeof(ubo));
 				vkUnmapMemory(*myDevice, myUniformBufferMemory->at(currentImage));
+
+				if (myPos == 1.0f)
+					myPos = 2.0f;
+				else if (myPos == 2.0f)
+					myPos = 1.0f;
 			}
 
 			void uniformBuffer::initDescripterSets(std::vector<VkImage> swapChainImages,

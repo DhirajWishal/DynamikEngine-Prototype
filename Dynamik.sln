@@ -7,6 +7,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Application", "Application\
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Audio", "components\Audio\Audio.vcxproj", "{9718D90C-032D-01BE-CCAE-A41D3882FDEE}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Core", "components\Core\Core.vcxproj", "{2EB4837C-1AEB-840D-C3D7-6A10AFED000F}"
+EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DevCon", "components\DevConsole\DevCon.vcxproj", "{E45AE3AD-D0FC-0D84-B9B7-21D8A5F894D4}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Dynamik", "Dynamik\Dynamik.vcxproj", "{928A7598-FE69-F433-0782-7F0A73E05A95}"
@@ -18,8 +20,6 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Platform", "components\Platform\Platform.vcxproj", "{2AC788B4-1694-E3BF-3FAD-D1672BD9184E}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Sampler", "components\Sampler\Sampler.vcxproj", "{396719E3-A546-987E-AE5E-23551ABDFEDF}"
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestBuild", "components\TestBuild\TestBuild.vcxproj", "{F595D608-6100-8B7F-AA3E-3C2516E868D4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -46,6 +46,12 @@ Global
 		{9718D90C-032D-01BE-CCAE-A41D3882FDEE}.Distribution|x64.Build.0 = Distribution|x64
 		{9718D90C-032D-01BE-CCAE-A41D3882FDEE}.Release|x64.ActiveCfg = Release|x64
 		{9718D90C-032D-01BE-CCAE-A41D3882FDEE}.Release|x64.Build.0 = Release|x64
+		{2EB4837C-1AEB-840D-C3D7-6A10AFED000F}.Debug|x64.ActiveCfg = Debug|x64
+		{2EB4837C-1AEB-840D-C3D7-6A10AFED000F}.Debug|x64.Build.0 = Debug|x64
+		{2EB4837C-1AEB-840D-C3D7-6A10AFED000F}.Distribution|x64.ActiveCfg = Distribution|x64
+		{2EB4837C-1AEB-840D-C3D7-6A10AFED000F}.Distribution|x64.Build.0 = Distribution|x64
+		{2EB4837C-1AEB-840D-C3D7-6A10AFED000F}.Release|x64.ActiveCfg = Release|x64
+		{2EB4837C-1AEB-840D-C3D7-6A10AFED000F}.Release|x64.Build.0 = Release|x64
 		{E45AE3AD-D0FC-0D84-B9B7-21D8A5F894D4}.Debug|x64.ActiveCfg = Debug|x64
 		{E45AE3AD-D0FC-0D84-B9B7-21D8A5F894D4}.Debug|x64.Build.0 = Debug|x64
 		{E45AE3AD-D0FC-0D84-B9B7-21D8A5F894D4}.Distribution|x64.ActiveCfg = Distribution|x64
@@ -82,12 +88,6 @@ Global
 		{396719E3-A546-987E-AE5E-23551ABDFEDF}.Distribution|x64.Build.0 = Distribution|x64
 		{396719E3-A546-987E-AE5E-23551ABDFEDF}.Release|x64.ActiveCfg = Release|x64
 		{396719E3-A546-987E-AE5E-23551ABDFEDF}.Release|x64.Build.0 = Release|x64
-		{F595D608-6100-8B7F-AA3E-3C2516E868D4}.Debug|x64.ActiveCfg = Debug|x64
-		{F595D608-6100-8B7F-AA3E-3C2516E868D4}.Debug|x64.Build.0 = Debug|x64
-		{F595D608-6100-8B7F-AA3E-3C2516E868D4}.Distribution|x64.ActiveCfg = Distribution|x64
-		{F595D608-6100-8B7F-AA3E-3C2516E868D4}.Distribution|x64.Build.0 = Distribution|x64
-		{F595D608-6100-8B7F-AA3E-3C2516E868D4}.Release|x64.ActiveCfg = Release|x64
-		{F595D608-6100-8B7F-AA3E-3C2516E868D4}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

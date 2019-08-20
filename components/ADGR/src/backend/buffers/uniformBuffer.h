@@ -51,6 +51,8 @@ namespace Dynamik {
 
 				const float movementBias = .05f;
 				const float rotationBias = .05f;
+
+				float myPos = 1.0f;
 			};
 
 			struct UniformBufferObject {

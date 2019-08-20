@@ -7,9 +7,11 @@
  IDE:		MS Visual Studio Community 2019
 */
 
-#include "smpafx.h"
+#include "adgrafx.h"
 #include "debugger.h"
-#include "Renderer/backend/validators/validators.h"
+#include "backend/validators/validators.h"
+
+
 
 namespace Dynamik {
 	namespace ADGR {
@@ -86,7 +88,7 @@ namespace Dynamik {
 				populateDebugMessegerCreateInfo(createInfo);
 
 				if (createDebugUtilsMessengerEXT(&createInfo, nullptr, myDebugMessenger) != VK_SUCCESS)
-					throw std::runtime_error("Failed to set up debug messenger!");
+					std::runtime_error("Failed to set up debug messenger!");
 			}
 
 			void debugger::deleteDebugger() {

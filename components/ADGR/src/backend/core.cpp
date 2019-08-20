@@ -105,12 +105,15 @@ namespace Dynamik {
 					depthImageView, colorImageView);
 
 				// initialze textures
-				texture.initTexture(myCommandPool, graphicsQueue);
-				texture.initTextureImageView();
-				texture.initTextureSampler();
+				for (auto i : texturePath) {
+					texture.initTexture(myCommandPool, graphicsQueue, i);
+					texture.initTextureImageView();
+					texture.initTextureSampler();
+				}
 
 				// initialize model
-				myModel.loadModel(MODEL_PATH);
+				for (auto i : modelPath)
+					myModel.loadModel(i);
 
 				// create the vertex buffer
 				vertexBuffer.initBuffer(myCommandPool, graphicsQueue, myModel);

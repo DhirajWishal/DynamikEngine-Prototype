@@ -9,51 +9,31 @@
 
 #include "smpafx.h"
 #include "Renderer.h"
-#include "Renderer/backend/defines.h"
-
-#ifdef DMK_PLATFORM_WINDOWS
-#include "Platform/Windows.h"
-
-#else
-
-#endif
 
 namespace Dynamik {
 	namespace ADGR {
 
 		Renderer::Renderer() {
+			myWindow.init();
 
+			myInstance.init();
+			myDebugger.setupDebugMessenger();
+
+			myWindow.createWindowSurface();
+
+			mySwapChain.init();
+			mySwapChain.initImageViews();
+
+			myPipeline.initRenderPass();
+
+			myDevice.init();
 		}
 
 		Renderer::~Renderer() {
 
+
+			// final
+			myWindow.clear();
 		}
-
-		SMP_API void Renderer::initRenderer() {
-			rendererCore.initWindow();
-			rendererCore.startup();
-		}
-
-		void Renderer::draw() {
-			rendererCore.drawFrame();
-		}
-
-		void Renderer::run() {
-			while (!glfwWindowShouldClose(rendererCore.getWindow())) {
-				glfwPollEvents();
-				draw();
-			}
-
-			vkDeviceWaitIdle(rendererCore.getDevice());
-		}
-
-		void Renderer::end() {
-			rendererCore.shutdown();
-		}
-
-		void Renderer::setMipLevel(float value) {
-			rendererCore.setMipLevels(value);
-		}
-
 	}
 }

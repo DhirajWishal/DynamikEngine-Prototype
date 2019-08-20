@@ -5,7 +5,7 @@ project "Sampler"
 	cppdialect "c++17"
 	staticruntime "On"
 
-	targetdir ("$(SolutionDir)bin/" .. outputDir .. "/$(ProjectName)")
+	targetdir ("$(SolutionDir)bin/" .. outputDir .. "/Application")
 	objdir ("$(SolutionDir)intDir/" .. outputDir .. "/$(ProjectName)")
 
 	pchheader "smpafx.h"
@@ -26,6 +26,7 @@ project "Sampler"
 		"$(SolutionDir)lib/libs",
 		"$(solutionDir)components/Sampler",
 		"$(solutionDir)components/Sampler/src",
+		"$(solutionDir)components/Events/src",
 		"$(SolutionDir)libs/glm/**.hpp",
 		"$(SolutionDir)libs/glm/**.inl",
 		"%{IncludeDir.GLFW}",

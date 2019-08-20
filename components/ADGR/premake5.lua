@@ -6,7 +6,7 @@ project "ADGR"
 	cppdialect "c++17"
 	staticruntime "On"
 
-	targetdir ("$(SolutionDir)bin/" .. outputDir .. "/$(ProjectName)")
+	targetdir ("$(SolutionDir)bin/" .. outputDir .. "/Application")
 	objdir ("$(SolutionDir)intDir/" .. outputDir .. "/$(ProjectName)")
 
 	pchheader "adgrafx.h"

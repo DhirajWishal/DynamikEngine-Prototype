@@ -55,21 +55,21 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <OutDir>$(SolutionDir)bin\$(Configuration)-$(Platform)\$(ProjectName)\</OutDir>
+    <OutDir>$(SolutionDir)bin\$(Configuration)-$(Platform)\Application\</OutDir>
     <IntDir>$(SolutionDir)intDir\$(Configuration)-$(Platform)\$(ProjectName)\Debug\Application\</IntDir>
     <TargetName>Application</TargetName>
     <TargetExt>.exe</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <OutDir>$(SolutionDir)bin\$(Configuration)-$(Platform)\$(ProjectName)\</OutDir>
+    <OutDir>$(SolutionDir)bin\$(Configuration)-$(Platform)\Application\</OutDir>
     <IntDir>$(SolutionDir)intDir\$(Configuration)-$(Platform)\$(ProjectName)\Release\Application\</IntDir>
     <TargetName>Application</TargetName>
     <TargetExt>.exe</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Distribution|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <OutDir>$(SolutionDir)bin\$(Configuration)-$(Platform)\$(ProjectName)\</OutDir>
+    <OutDir>$(SolutionDir)bin\$(Configuration)-$(Platform)\Application\</OutDir>
     <IntDir>$(SolutionDir)intDir\$(Configuration)-$(Platform)\$(ProjectName)\Distribution\Application\</IntDir>
     <TargetName>Application</TargetName>
     <TargetExt>.exe</TargetExt>
@@ -92,8 +92,7 @@
       <AdditionalLibraryDirectories>$(SolutionDir)libs\GLFW\lib-vc2019;E:\Programming\Codes\Game Development\Libraries\VulkanSDK\1.1.108.0\Lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
-      <Command>IF EXIST $(SolutionDir)bin\$(Configuration)-$(Platform)\Sampler\Sampler.dll\ (xcopy /Q /E /Y /I $(SolutionDir)bin\$(Configuration)-$(Platform)\Sampler\Sampler.dll $(SolutionDir)bin\$(Configuration)-$(Platform)\Application &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)bin\$(Configuration)-$(Platform)\Sampler\Sampler.dll $(SolutionDir)bin\$(Configuration)-$(Platform)\Application &gt; nul)
-IF EXIST $(SolutionDir)bin\$(Configuration)-$(Platform)\Dynamik\Dynamik.dll\ (xcopy /Q /E /Y /I $(SolutionDir)bin\$(Configuration)-$(Platform)\Dynamik\Dynamik.dll $(SolutionDir)bin\$(Configuration)-$(Platform)\Application &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)bin\$(Configuration)-$(Platform)\Dynamik\Dynamik.dll $(SolutionDir)bin\$(Configuration)-$(Platform)\Application &gt; nul)</Command>
+      <Command>IF EXIST $(SolutionDir)bin\$(Configuration)-$(Platform)\Dynamik\Dynamik.dll\ (xcopy /Q /E /Y /I $(SolutionDir)bin\$(Configuration)-$(Platform)\Dynamik\Dynamik.dll $(SolutionDir)bin\$(Configuration)-$(Platform)\Application &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)bin\$(Configuration)-$(Platform)\Dynamik\Dynamik.dll $(SolutionDir)bin\$(Configuration)-$(Platform)\Application &gt; nul)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -118,8 +117,7 @@ IF EXIST $(SolutionDir)bin\$(Configuration)-$(Platform)\Dynamik\Dynamik.dll\ (xc
       <AdditionalLibraryDirectories>$(SolutionDir)libs\GLFW\lib-vc2019;E:\Programming\Codes\Game Development\Libraries\VulkanSDK\1.1.108.0\Lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
-      <Command>IF EXIST $(SolutionDir)bin\$(Configuration)-$(Platform)\Sampler\Sampler.dll\ (xcopy /Q /E /Y /I $(SolutionDir)bin\$(Configuration)-$(Platform)\Sampler\Sampler.dll $(SolutionDir)bin\$(Configuration)-$(Platform)\Application &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)bin\$(Configuration)-$(Platform)\Sampler\Sampler.dll $(SolutionDir)bin\$(Configuration)-$(Platform)\Application &gt; nul)
-IF EXIST $(SolutionDir)bin\$(Configuration)-$(Platform)\Dynamik\Dynamik.dll\ (xcopy /Q /E /Y /I $(SolutionDir)bin\$(Configuration)-$(Platform)\Dynamik\Dynamik.dll $(SolutionDir)bin\$(Configuration)-$(Platform)\Application &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)bin\$(Configuration)-$(Platform)\Dynamik\Dynamik.dll $(SolutionDir)bin\$(Configuration)-$(Platform)\Application &gt; nul)</Command>
+      <Command>IF EXIST $(SolutionDir)bin\$(Configuration)-$(Platform)\Dynamik\Dynamik.dll\ (xcopy /Q /E /Y /I $(SolutionDir)bin\$(Configuration)-$(Platform)\Dynamik\Dynamik.dll $(SolutionDir)bin\$(Configuration)-$(Platform)\Application &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)bin\$(Configuration)-$(Platform)\Dynamik\Dynamik.dll $(SolutionDir)bin\$(Configuration)-$(Platform)\Application &gt; nul)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Distribution|x64'">
@@ -144,8 +142,7 @@ IF EXIST $(SolutionDir)bin\$(Configuration)-$(Platform)\Dynamik\Dynamik.dll\ (xc
       <AdditionalLibraryDirectories>$(SolutionDir)libs\GLFW\lib-vc2019;E:\Programming\Codes\Game Development\Libraries\VulkanSDK\1.1.108.0\Lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
-      <Command>IF EXIST $(SolutionDir)bin\$(Configuration)-$(Platform)\Sampler\Sampler.dll\ (xcopy /Q /E /Y /I $(SolutionDir)bin\$(Configuration)-$(Platform)\Sampler\Sampler.dll $(SolutionDir)bin\$(Configuration)-$(Platform)\Application &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)bin\$(Configuration)-$(Platform)\Sampler\Sampler.dll $(SolutionDir)bin\$(Configuration)-$(Platform)\Application &gt; nul)
-IF EXIST $(SolutionDir)bin\$(Configuration)-$(Platform)\Dynamik\Dynamik.dll\ (xcopy /Q /E /Y /I $(SolutionDir)bin\$(Configuration)-$(Platform)\Dynamik\Dynamik.dll $(SolutionDir)bin\$(Configuration)-$(Platform)\Application &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)bin\$(Configuration)-$(Platform)\Dynamik\Dynamik.dll $(SolutionDir)bin\$(Configuration)-$(Platform)\Application &gt; nul)</Command>
+      <Command>IF EXIST $(SolutionDir)bin\$(Configuration)-$(Platform)\Dynamik\Dynamik.dll\ (xcopy /Q /E /Y /I $(SolutionDir)bin\$(Configuration)-$(Platform)\Dynamik\Dynamik.dll $(SolutionDir)bin\$(Configuration)-$(Platform)\Application &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)bin\$(Configuration)-$(Platform)\Dynamik\Dynamik.dll $(SolutionDir)bin\$(Configuration)-$(Platform)\Application &gt; nul)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -167,8 +164,8 @@ IF EXIST $(SolutionDir)bin\$(Configuration)-$(Platform)\Dynamik\Dynamik.dll\ (xc
     <ProjectReference Include="..\components\Platform\Platform.vcxproj">
       <Project>{2AC788B4-1694-E3BF-3FAD-D1672BD9184E}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\components\TestBuild\TestBuild.vcxproj">
-      <Project>{F595D608-6100-8B7F-AA3E-3C2516E868D4}</Project>
+    <ProjectReference Include="..\components\Core\Core.vcxproj">
+      <Project>{2EB4837C-1AEB-840D-C3D7-6A10AFED000F}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -4,6 +4,11 @@
 namespace Dynamik {
 
 	Application::Application() {
+		myLoader.run();
+
+		printf("%s %s\n", myLoader.getTexturePaths()[0].c_str(), myLoader.getModelPaths()[0].c_str());
+		myRenderingEngine.setAssetPaths(myLoader.getTexturePaths(), myLoader.getModelPaths());
+
 		myRenderingEngine.setMipLevel(1.0f);
 
 		myRenderingEngine.initRenderer();
@@ -14,8 +19,6 @@ namespace Dynamik {
 	}
 
 	DMK_API void Application::run() {
-		myLoader.run();
-
 		while (!myRenderingEngine.getWindowCloseEvent()) {
 			myRenderingEngine.draw();
 			//myEvent = &myRenderingEngine.pollEvents();

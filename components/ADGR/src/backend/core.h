@@ -82,6 +82,14 @@ namespace Dynamik {
 
 				Event* getEvents();
 
+				void setAssets(std::vector<std::string> textures, std::vector<std::string> models) {
+					texturePath = textures;
+					modelPath = models;
+				}
+
+				std::string MODEL_PATH = "";
+				std::string TEXTURE_PATH = "";
+
 			private:
 				static void onKeyEvent(GLFWwindow* window, int keycode, int scancode,
 					int action, int mods);
@@ -188,15 +196,15 @@ namespace Dynamik {
 
 				Event* myEvent = nullptr;
 
-				float mousePos[2] = { 0.0f, 0.0f };	// x, y
+				std::vector<std::string> modelPath;
+				std::vector<std::string> texturePath;
 
-				std::vector<std::vector<std::string>> shaderPath;
-				std::vector<std::vector<std::string>> assetsPath;
+				float mousePos[2] = { 0.0f, 0.0f };	// x, y
 
 				const std::string vertexShaderPath = "E:/Projects/Dynamik Engine/Dynamik/components/Shaders/vert.spv";
 				const std::string fragmentShaderPath = "E:/Projects/Dynamik Engine/Dynamik/components/Shaders/frag.spv";
-				std::string MODEL_PATH = "E:/Projects/Dynamik Engine/Dynamik/core assets/models/chalet.obj";
-				std::string TEXTURE_PATH = "E:/Projects/Dynamik Engine/Dynamik/core assets/textures/chalet.jpg";
+				//std::string MODEL_PATH = "E:/Projects/Dynamik Engine/Dynamik/core assets/models/chalet.obj";
+				//std::string TEXTURE_PATH = "E:/Projects/Dynamik Engine/Dynamik/core assets/textures/chalet.jpg";
 			};
 		}
 	}

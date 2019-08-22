@@ -13,6 +13,9 @@ namespace Dynamik {
 
 				void init() override;
 
+				VkDevice getDeviceCpy() { return *m_device; }
+				VkDevice* getDeviceRef() { return m_device; }
+
 			private:
 				void initPhysicalDevice() override;
 				void initLogicalDevice() override;

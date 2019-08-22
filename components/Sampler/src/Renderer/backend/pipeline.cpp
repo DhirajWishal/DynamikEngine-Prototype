@@ -95,15 +95,15 @@ namespace Dynamik {
 				VkPipelineLayoutCreateInfo pipelineLayoutInfo = {};
 				pipelineLayoutInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO;
 				pipelineLayoutInfo.setLayoutCount = 1;
-				pipelineLayoutInfo.pSetLayouts = descriptorSetLayout;
+				pipelineLayoutInfo.pSetLayouts = &descriptorSetLayout;
 
 				// create the pipeline layout
 				if (vkCreatePipelineLayout(*m_device, &pipelineLayoutInfo, nullptr, m_pipelineLayout) != VK_SUCCESS)
 					std::runtime_error("failed to create pipeline layout!");
 
 				VkPipelineShaderStageCreateInfo shaderStages[] = {
-					getVertShaderStageInfo(),
-					getFragShaderStageInfo()
+					vertexShaderStageInfo,
+					fragmentShaderStageInfo
 				};
 
 				// initialize the pipeline

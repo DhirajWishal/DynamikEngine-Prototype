@@ -5,10 +5,15 @@
 #include "validators/validators.h"
 #include "queues/queues.h"
 #include "controlHeader.h"
+#include "swapChain.h"
+
+#include "functions/bufferFunctions.h"
+
 
 namespace Dynamik {
 	namespace ADGR {
 		namespace core {
+			using namespace functions;
 
 			bool device::checkDeviceExtensionSupport(VkPhysicalDevice device) {
 				uint32_t extensionCount = 0;
@@ -32,7 +37,7 @@ namespace Dynamik {
 
 				bool swapChainAdequate = false;
 				if (extensionsSupported) {
-					swapChainSupportDetails swapChainSupport = querySwapChainSupport(device, *m_surface);
+					swapChainSupportDetails swapChainSupport = querySwapChainSupport(&physicalDevice, m_surface);
 					swapChainAdequate = !swapChainSupport.formats.empty()
 						&& !swapChainSupport.presentModes.empty();
 				}

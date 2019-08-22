@@ -2,10 +2,14 @@
 #include "swapChain.h"
 
 #include "controlHeader.h"
+#include "queues/queues.h"
+
+#include "functions/textureFunctions.h"
 
 namespace Dynamik {
 	namespace ADGR {
 		namespace core {
+			using namespace functions;
 
 			void swapChain::init() {
 				swapChainSupportDetails swapChainSupport = querySwapChainSupport(&physicalDevice, &surface);
@@ -215,8 +219,14 @@ namespace Dynamik {
 				m_swapChainImageViews->resize(swapChainImages.size());
 
 				for (uint32_t i = 0; i < swapChainImages.size(); i++) {
-					m_swapChainImageViews->at(i) = createImageView(*m_device, swapChainImages[i], swapChainImageFormat,
-						VK_IMAGE_ASPECT_COLOR_BIT, 1);
+					DMKCreateImageViewInfo info;
+					info.device = *m_device;
+					info.image = swapChainImages[i];
+					info.format = swapChainImageFormat;
+					info.aspectFlags = VK_IMAGE_ASPECT_COLOR_BIT;
+					info.mipLevels = 1;
+
+					m_swapChainImageViews->at(i) = createImageView(info);
 				}
 			}
 		}

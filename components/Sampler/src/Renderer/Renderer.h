@@ -20,6 +20,8 @@ namespace Dynamik {
 			Renderer();
 			~Renderer();
 
+			void loadObjectData();
+
 		private:
 			window myWindow;
 
@@ -27,8 +29,38 @@ namespace Dynamik {
 			device myDevice;
 			swapChain mySwapChain;
 			pipeline myPipeline;
+			uniformBufferManager uniformBuffer;
+			commandBufferManager myCommandBufferManager;
+			colorBufferManager myColorBufferManager;
+			depthBufferManager myDepthBufferManager;
+			frameBufferManager myFrameBufferManager;
+			textureManager myTextureManager;
+			modelManager myModelManager;
+			vertexBufferManager myVertexBufferManager;
+			indexBufferManager myIndexBufferManager;
+
+			shaderManager myShaderManager;
 
 			debugger myDebugger{myInstance.getInstanceAddr(), myInstance.getdebugMessengerAddr()};
+
+			std::vector<Vertex> vbo;
+			std::vector<uint32_t> ibo;
+
+			std::vector<VkSemaphore> imageAvailableSemaphore;
+			std::vector<VkSemaphore> renderFinishedSemaphore;
+			std::vector<VkFence> inFlightFence;
+
+			VkImage texImage;
+			VkDeviceMemory texImageMemory;
+
+			VkBuffer vertexBuffer;
+			VkDeviceMemory vertexBufferMemory;
+			VkBuffer indexBuffer;
+			VkDeviceMemory indexBufferMemory;
+			std::vector<VkBuffer> uniformBuffers;
+			std::vector<VkDeviceMemory> uniformBufferMemories;
+
+			std::vector<Vertex> vertices;
 		};
 	}
 }

@@ -46,6 +46,8 @@ namespace Dynamik {
 
 				std::vector<vertex> vertices;
 				std::vector<uint32> indices;
+
+				float offset = 0.0f;
 			};
 		}
 	}

@@ -1,42 +1,7 @@
----------- Launcher project discription ----------
-project "Launcher"
-	location "Launcher"
-	kind "WindowedApp"
-	language "C#"
+namespace Dynamik {
+	namespace ADGR {
+		namespace core {
 
-	targetdir ("$(SolutionDir)bin/" .. outputDir .. "/Launcher")
-	objdir ("$(SolutionDir)intDir/" .. outputDir .. "/Launcher")
-
-	files {
-		"Launcher/**.cs",
-		"Launcher/**.config"
+		}
 	}
-	
-	links {
-		"Microsoft.CSharp",
-		"System",
-		"System.Core",
-		"System.Data",
-		"System.Data.DataSetExtensions",
-		"System.Deployment",
-		"System.Drawing",
-		"System.Net.Http",
-		"System.Windows.Forms",
-		"System.Xml",
-		"System.Xml.Linq"
-	}
-
-	filter "system:windows"
-		staticruntime "On"
-		systemversion "latest"
-
-	filter "configurations:Debug"
-		defines { "DEBUG", "TRACE" }
-		symbols "On"
-		
-	filter "configurations:Release"
-		defines { "TRACE" }
-		optimize "On"
-
-	filter "configurations:Distribution"
-		optimize "On
+}

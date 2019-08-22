@@ -80,7 +80,7 @@
       <PrecompiledHeaderFile>smpafx.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>DMK_PLATFORM_WINDOWS;DMK_BUILD_DLL;GLFW_INCLUDE_VULKAN;DMK_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)libs;$(SolutionDir)Dynamik\src;$(SolutionDir)Dynamik\GameLibraries;$(SolutionDir)lib\libs;$(solutionDir)components\Sampler;$(solutionDir)components\Sampler\src;$(solutionDir)components\Events\src;$(SolutionDir)libs\GLFW\include;$(SolutionDir)libs\glm;$(SolutionDir)libs\stb-master;$(SolutionDir)libs\tinyobjloader-master;E:\Programming\Codes\Game Development\Libraries\VulkanSDK\1.1.108.0\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)libs;$(SolutionDir)Dynamik\src;$(SolutionDir)Dynamik\GameLibraries;$(SolutionDir)lib\libs;$(solutionDir)components\Sampler;$(solutionDir)components\Sampler\src;$(solutionDir)components\Events\src;$(solutionDir)components\Platform\src;$(solutionDir)components\Managers\src;$(SolutionDir)libs\GLFW\include;$(SolutionDir)libs\glm;$(SolutionDir)libs\stb-master;$(SolutionDir)libs\tinyobjloader-master;E:\Programming\Codes\Game Development\Libraries\VulkanSDK\1.1.108.0\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
@@ -99,7 +99,7 @@
       <PrecompiledHeaderFile>smpafx.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>DMK_PLATFORM_WINDOWS;DMK_BUILD_DLL;GLFW_INCLUDE_VULKAN;DMK_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)libs;$(SolutionDir)Dynamik\src;$(SolutionDir)Dynamik\GameLibraries;$(SolutionDir)lib\libs;$(solutionDir)components\Sampler;$(solutionDir)components\Sampler\src;$(solutionDir)components\Events\src;$(SolutionDir)libs\GLFW\include;$(SolutionDir)libs\glm;$(SolutionDir)libs\stb-master;$(SolutionDir)libs\tinyobjloader-master;E:\Programming\Codes\Game Development\Libraries\VulkanSDK\1.1.108.0\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)libs;$(SolutionDir)Dynamik\src;$(SolutionDir)Dynamik\GameLibraries;$(SolutionDir)lib\libs;$(solutionDir)components\Sampler;$(solutionDir)components\Sampler\src;$(solutionDir)components\Events\src;$(solutionDir)components\Platform\src;$(solutionDir)components\Managers\src;$(SolutionDir)libs\GLFW\include;$(SolutionDir)libs\glm;$(SolutionDir)libs\stb-master;$(SolutionDir)libs\tinyobjloader-master;E:\Programming\Codes\Game Development\Libraries\VulkanSDK\1.1.108.0\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -122,7 +122,7 @@
       <PrecompiledHeaderFile>smpafx.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>DMK_PLATFORM_WINDOWS;DMK_BUILD_DLL;GLFW_INCLUDE_VULKAN;DMK_DISTRIBUTION;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)libs;$(SolutionDir)Dynamik\src;$(SolutionDir)Dynamik\GameLibraries;$(SolutionDir)lib\libs;$(solutionDir)components\Sampler;$(solutionDir)components\Sampler\src;$(solutionDir)components\Events\src;$(SolutionDir)libs\GLFW\include;$(SolutionDir)libs\glm;$(SolutionDir)libs\stb-master;$(SolutionDir)libs\tinyobjloader-master;E:\Programming\Codes\Game Development\Libraries\VulkanSDK\1.1.108.0\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)libs;$(SolutionDir)Dynamik\src;$(SolutionDir)Dynamik\GameLibraries;$(SolutionDir)lib\libs;$(solutionDir)components\Sampler;$(solutionDir)components\Sampler\src;$(solutionDir)components\Events\src;$(solutionDir)components\Platform\src;$(solutionDir)components\Managers\src;$(SolutionDir)libs\GLFW\include;$(SolutionDir)libs\glm;$(SolutionDir)libs\stb-master;$(SolutionDir)libs\tinyobjloader-master;E:\Programming\Codes\Game Development\Libraries\VulkanSDK\1.1.108.0\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -140,28 +140,48 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="src\Renderer\backend\core\Buffer.h" />
-    <ClInclude Include="src\Renderer\backend\core\Pipeline.h" />
-    <ClInclude Include="src\Renderer\backend\core\SwapChain.h" />
-    <ClInclude Include="src\Renderer\backend\functions\bufferFunctions.h" />
-    <ClInclude Include="src\Renderer\backend\pipeline.h" />
-    <ClInclude Include="src\Renderer\backend\swapChain.h" />
-    <ClInclude Include="src\Renderer\backend\uniformBuffer.h" />
+    <ClInclude Include="src\Renderer\backend\data structures\Uniform.h" />
+    <ClInclude Include="src\Renderer\backend\indexBuffer.h" />
+    <ClInclude Include="src\Renderer\backend\core\Model.h" />
+    <ClInclude Include="src\Renderer\backend\functions\textureFunctions.h" />
+    <ClInclude Include="src\Renderer\backend\modelManager.h" />
+    <ClInclude Include="src\Renderer\backend\others\semaphores.h" />
+    <ClInclude Include="src\Renderer\backend\others\syncObjects.h" />
+    <ClInclude Include="src\Renderer\backend\vertexBuffer.h" />
     <ClInclude Include="src\Renderer\Platform\Windows.h" />
     <ClInclude Include="src\Renderer\Platform\Windows\utils\loadIcon.h" />
     <ClInclude Include="src\Renderer\Platform\Windows\utils\readFile.h" />
     <ClInclude Include="src\Renderer\Platform\Windows\window.h" />
     <ClInclude Include="src\Renderer\Renderer.h" />
     <ClInclude Include="src\Renderer\backend\backend.h" />
+    <ClInclude Include="src\Renderer\backend\colorBuffer.h" />
+    <ClInclude Include="src\Renderer\backend\commandBuffer.h" />
     <ClInclude Include="src\Renderer\backend\controlHeader.h" />
+    <ClInclude Include="src\Renderer\backend\core\Buffer.h" />
     <ClInclude Include="src\Renderer\backend\core\Core.h" />
     <ClInclude Include="src\Renderer\backend\core\Device.h" />
     <ClInclude Include="src\Renderer\backend\core\Instance.h" />
+    <ClInclude Include="src\Renderer\backend\core\Pipeline.h" />
+    <ClInclude Include="src\Renderer\backend\core\Shader.h" />
+    <ClInclude Include="src\Renderer\backend\core\SwapChain.h" />
+    <ClInclude Include="src\Renderer\backend\core\Texture.h" />
     <ClInclude Include="src\Renderer\backend\core\Window.h" />
+    <ClInclude Include="src\Renderer\backend\data structures\mesh.h" />
+    <ClInclude Include="src\Renderer\backend\data structures\vertex.h" />
+    <ClInclude Include="src\Renderer\backend\data structures\vulkan.h" />
+    <ClInclude Include="src\Renderer\backend\data types\typenames.h" />
+    <ClInclude Include="src\Renderer\backend\depthBuffer.h" />
     <ClInclude Include="src\Renderer\backend\device.h" />
     <ClInclude Include="src\Renderer\backend\extensions\extensions.h" />
+    <ClInclude Include="src\Renderer\backend\frameBuffer.h" />
+    <ClInclude Include="src\Renderer\backend\functions\bufferFunctions.h" />
     <ClInclude Include="src\Renderer\backend\instance.h" />
+    <ClInclude Include="src\Renderer\backend\pipeline.h" />
     <ClInclude Include="src\Renderer\backend\queues\queues.h" />
+    <ClInclude Include="src\Renderer\backend\shader.h" />
+    <ClInclude Include="src\Renderer\backend\swapChain.h" />
+    <ClInclude Include="src\Renderer\backend\texture.h" />
+    <ClInclude Include="src\Renderer\backend\uniformBuffer.h" />
     <ClInclude Include="src\Renderer\backend\validators\debugger\debugger.h" />
     <ClInclude Include="src\Renderer\backend\validators\validators.h" />
     <ClInclude Include="src\Renderer\backend\window.h" />
@@ -171,18 +191,31 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="src\Renderer\backend\functions\bufferFunctions.cpp" />
-    <ClCompile Include="src\Renderer\backend\pipeline.cpp" />
-    <ClCompile Include="src\Renderer\backend\swapChain.cpp" />
-    <ClCompile Include="src\Renderer\backend\uniformBuffer.cpp" />
+    <ClCompile Include="src\Renderer\backend\indexBuffer.cpp" />
+    <ClCompile Include="src\Renderer\backend\data structures\vertex.cpp" />
+    <ClCompile Include="src\Renderer\backend\functions\textureFunctions.cpp" />
+    <ClCompile Include="src\Renderer\backend\modelManager.cpp" />
+    <ClCompile Include="src\Renderer\backend\others\semaphores.cpp" />
+    <ClCompile Include="src\Renderer\backend\others\syncObjects.cpp" />
+    <ClCompile Include="src\Renderer\backend\vertexBuffer.cpp" />
     <ClCompile Include="src\Renderer\Platform\Windows\utils\loadIcon.cpp" />
     <ClCompile Include="src\Renderer\Platform\Windows\utils\readFile.cpp" />
     <ClCompile Include="src\Renderer\Platform\Windows\window.cpp" />
     <ClCompile Include="src\Renderer\Renderer.cpp" />
+    <ClCompile Include="src\Renderer\backend\colorBuffer.cpp" />
+    <ClCompile Include="src\Renderer\backend\commandBuffer.cpp" />
+    <ClCompile Include="src\Renderer\backend\depthBuffer.cpp" />
     <ClCompile Include="src\Renderer\backend\device.cpp" />
     <ClCompile Include="src\Renderer\backend\extensions\extensions.cpp" />
+    <ClCompile Include="src\Renderer\backend\frameBuffer.cpp" />
+    <ClCompile Include="src\Renderer\backend\functions\bufferFunctions.cpp" />
     <ClCompile Include="src\Renderer\backend\instance.cpp" />
+    <ClCompile Include="src\Renderer\backend\pipeline.cpp" />
     <ClCompile Include="src\Renderer\backend\queues\queues.cpp" />
+    <ClCompile Include="src\Renderer\backend\shader.cpp" />
+    <ClCompile Include="src\Renderer\backend\swapChain.cpp" />
+    <ClCompile Include="src\Renderer\backend\texture.cpp" />
+    <ClCompile Include="src\Renderer\backend\uniformBuffer.cpp" />
     <ClCompile Include="src\Renderer\backend\validators\debugger\debugger.cpp" />
     <ClCompile Include="src\Renderer\backend\validators\validators.cpp" />
     <ClCompile Include="src\Renderer\backend\window.cpp">
@@ -196,6 +229,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="premake5.lua" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="src\TODO list.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

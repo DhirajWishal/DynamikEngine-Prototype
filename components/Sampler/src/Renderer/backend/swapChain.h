@@ -32,6 +32,8 @@ namespace Dynamik {
 				std::vector<VkImage>* m_swapChainImages = &swapChainImages;
 				std::vector<VkImageView>* m_swapChainImageViews = &swapChainImageViews;
 			};
+
+			swapChainSupportDetails querySwapChainSupport(VkPhysicalDevice* device, VkSurfaceKHR* surface);
 		}
 	}
 }

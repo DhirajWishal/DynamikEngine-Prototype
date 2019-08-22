@@ -27,6 +27,8 @@ project "Sampler"
 		"$(solutionDir)components/Sampler",
 		"$(solutionDir)components/Sampler/src",
 		"$(solutionDir)components/Events/src",
+		"$(solutionDir)components/Platform/src",
+		"$(solutionDir)components/Managers/src",
 		"$(SolutionDir)libs/glm/**.hpp",
 		"$(SolutionDir)libs/glm/**.inl",
 		"%{IncludeDir.GLFW}",

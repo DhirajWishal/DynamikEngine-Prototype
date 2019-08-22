@@ -81,6 +81,7 @@ namespace Dynamik {
 				uniformBuffer.createDescripterSetLayout();
 				uniformBuffer.initDescripterPool(swapChainImages);
 
+				// could run multiple times
 				// create the graphics pipeline
 				auto vertShaderCode = utils::readFile(vertexShaderPath);
 				auto fragShaderCode = utils::readFile(fragmentShaderPath);
@@ -105,15 +106,14 @@ namespace Dynamik {
 					depthImageView, colorImageView);
 
 				// initialze textures
-				for (auto i : texturePath) {
-					texture.initTexture(myCommandPool, graphicsQueue, i);
+				for (int i = 0; i < 2; i++) {
+					texture.initTexture(myCommandPool, graphicsQueue, texturePath[i]);
 					texture.initTextureImageView();
 					texture.initTextureSampler();
-				}
 
-				// initialize model
-				for (auto i : modelPath)
-					myModel.loadModel(i);
+					// initialize model
+					myModel.loadModel(modelPath[i]);
+				}
 
 				// create the vertex buffer
 				vertexBuffer.initBuffer(myCommandPool, graphicsQueue, myModel);

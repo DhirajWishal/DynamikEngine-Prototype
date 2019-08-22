@@ -31,6 +31,16 @@ Dynamik::InputContainer Dynamik::submit() {
 	props.behaviourProperties.type = Dynamik::PHYSICAL_BODY;
 
 	charlet myCharlet(props);
+
+	//Dynamik::GameObjectProperties props2;
+	//props.name = "HandGun";
+	//props.ID = "0002";
+	//props.type = Dynamik::MODEL;
+	//props.objPath = "E:/Projects/Dynamik Engine/Dynamik/core assets/blend/Handgun_Packed.blend";
+	//props.texPath = "E:/Projects/Dynamik Engine/Dynamik/core assets/blend/textures/handgun_C.jpg";
+	//props.audioProperties.clipPath = "NONE";
+	//props.behaviourProperties.type = Dynamik::PHYSICAL_BODY;
+
 	charlet myCharlet2(props);
 
 	myContainer.addToAssetsQueue(myCharlet);

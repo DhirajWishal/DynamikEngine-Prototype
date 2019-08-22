@@ -336,3 +336,4 @@ backup/
 libs/*.html
 libs/*.xml
 !ex-libs/
+*premake5.lua

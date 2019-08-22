@@ -6,13 +6,35 @@ namespace Dynamik {
 	namespace ADGR {
 		namespace core {
 
-			class uniformBuffer : public Buffer {
-			public:
-				uniformBuffer() {}
-				~uniformBuffer() {}
+			struct DMKUniformBufferCreateInfo {
+				std::vector<VkBuffer>* buffers;
+				std::vector<VkDeviceMemory>* bufferMemories;
+			};
 
-				void init() override;
+			struct DMKDescriptorSetsInitInfo {
+				std::vector<VkBuffer>* uniformBuffers;
+			};
+
+			class uniformBufferManager : public Buffer {
+			public:
+				uniformBufferManager() {}
+				~uniformBufferManager() {}
+
 				void createDescriptorSetLayout() override;
+				void initDescriptorPool() override;
+				void initDescriptorSets(DMKDescriptorSetsInitInfo info);
+
+				void createUniformBuffers(DMKUniformBufferCreateInfo info);
+
+				void deleteBuffer(VkBuffer* buffer) override;
+
+			private:
+				VkDevice* m_device = &device;
+				VkDescriptorSetLayout* m_descriptorSetLayout = &descriptorSetLayout;
+				VkDescriptorPool* m_descriptorPool = &descriptorPool;
+				VkCommandPool* m_commandPool = &commandPool;
+
+				std::vector<VkDescriptorSet>* m_descriptorSets = &descriptorSets;
 			};
 		}
 	}

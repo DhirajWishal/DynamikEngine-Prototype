@@ -13,8 +13,6 @@
 #include "backend/validators/validators.h"
 #include "backend/extensions/extensions.h"
 
-
-
 namespace Dynamik {
 	namespace ADGR {
 		namespace core {

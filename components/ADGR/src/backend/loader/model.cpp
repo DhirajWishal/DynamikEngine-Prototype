@@ -90,8 +90,8 @@ namespace Dynamik {
 						vertex vertex = {};
 				
 						vertex.pos = {
-							attributes.vertices[3 * index.vertex_index + 0],
-							attributes.vertices[3 * index.vertex_index + 1],
+							attributes.vertices[3 * index.vertex_index + 0] + offset,
+							attributes.vertices[3 * index.vertex_index + 1] + offset,
 							attributes.vertices[3 * index.vertex_index + 2]
 						};
 				
@@ -110,7 +110,7 @@ namespace Dynamik {
 						indices.push_back(uniqueVertices[vertex]);
 					}
 				}
-
+				offset += 1.0f;
 			}
 		}
 	}

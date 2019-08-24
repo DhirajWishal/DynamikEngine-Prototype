@@ -2,8 +2,8 @@
 
 #include "adgrafx.h"
 
-#include "backend/vulkan/Renderer/core/controlHeader.h"
-#include "backend/vulkan/Renderer/core/data types/typenames.h"
+#include "backend/vulkan/core/controlHeader.h"
+#include "backend/vulkan/core/data types/typenames.h"
 
 namespace Dynamik {
 	namespace ADGR {

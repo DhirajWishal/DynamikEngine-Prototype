@@ -2,7 +2,7 @@
 
 #include "Core.h"
 
-#include "backend/vulkan/Renderer/core/data structures/vertex.h"
+#include "backend/vulkan/core/data structures/vertex.h"
 
 namespace Dynamik {
 	namespace ADGR {

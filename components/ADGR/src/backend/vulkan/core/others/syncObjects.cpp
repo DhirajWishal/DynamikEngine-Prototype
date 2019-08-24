@@ -9,7 +9,7 @@
 
 #include "adgrafx.h"
 #include "syncObjects.h"
-#include "backend/vulkan/Renderer/core/controlHeader.h"
+#include "backend/vulkan/core/controlHeader.h"
 
 namespace Dynamik {
 	namespace ADGR {

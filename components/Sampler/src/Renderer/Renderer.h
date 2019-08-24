@@ -13,38 +13,51 @@
 
 namespace Dynamik {
 	namespace ADGR {
-		using namespace core;
-		
+
 		class Renderer {
 		public:
 			Renderer();
 			~Renderer();
 
+			void init();
+			void drawFrame();
+			void shutdown();
+
+			void recreateSwapChain();
+
 			void loadObjectData();
+			void events() {
+				myWindow.pollEvents();
+			}
+			bool closeEvent() { return myWindow.closeEvent(); }
 
 		private:
-			window myWindow;
+			core::window myWindow;
 
-			instance myInstance;
-			device myDevice;
-			swapChain mySwapChain;
-			pipeline myPipeline;
-			uniformBufferManager uniformBuffer;
-			commandBufferManager myCommandBufferManager;
-			colorBufferManager myColorBufferManager;
-			depthBufferManager myDepthBufferManager;
-			frameBufferManager myFrameBufferManager;
-			textureManager myTextureManager;
-			modelManager myModelManager;
-			vertexBufferManager myVertexBufferManager;
-			indexBufferManager myIndexBufferManager;
+			VkInstance instance;
+			VkDevice device;
 
-			shaderManager myShaderManager;
+			core::instanceManager myInstance;
+			core::device myDevice;
+			core::swapChain mySwapChain;
+			core::pipeline myPipeline;
+			core::uniformBufferManager uniformBuffer;
+			core::commandBufferManager myCommandBufferManager;
+			core::colorBufferManager myColorBufferManager;
+			core::depthBufferManager myDepthBufferManager;
+			core::frameBufferManager myFrameBufferManager;
+			core::textureManager myTextureManager;
+			core::modelManager myModelManager;
+			core::vertexBufferManager myVertexBufferManager;
+			core::indexBufferManager myIndexBufferManager;
 
-			debugger myDebugger{myInstance.getInstanceAddr(), myInstance.getdebugMessengerAddr()};
+			core::shaderManager myShaderManager;
 
-			std::vector<Vertex> vbo;
+			core::debugger myDebugger{ myInstance.getInstanceAddr(), myInstance.getdebugMessengerAddr() };
+
+			std::vector<core::Vertex> vbo;
 			std::vector<uint32_t> ibo;
+			std::vector<VkDescriptorSet> descriptorSets;
 
 			std::vector<VkSemaphore> imageAvailableSemaphore;
 			std::vector<VkSemaphore> renderFinishedSemaphore;
@@ -60,7 +73,15 @@ namespace Dynamik {
 			std::vector<VkBuffer> uniformBuffers;
 			std::vector<VkDeviceMemory> uniformBufferMemories;
 
-			std::vector<Vertex> vertices;
+			VkSampler textureSampler;
+			VkImageView textureImageView;
+
+			std::vector<core::Vertex> vertices;
+
+			uint32_t currentFrame = 0;
+
+			core::keyEvent myEvent;
+
 		};
 	}
 }

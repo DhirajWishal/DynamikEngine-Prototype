@@ -46,6 +46,11 @@ namespace Dynamik {
 				vkDestroyBuffer(device, stagingBuffer, nullptr);
 				vkFreeMemory(device, stagingBufferMemory, nullptr);
 			}
+
+			void indexBufferManager::deleteBuffer(DMKindexBufferDeleteInfo info) {
+				vkDestroyBuffer(device, info.buffer, nullptr);
+				vkFreeMemory(device, info.bufferMemory, nullptr);
+			}
 		}
 	}
 }

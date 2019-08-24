@@ -23,3 +23,7 @@ TODO:
 	submition of the buffers
 	draw call
 		multiple buffer drawings
+
+	send light positions via push constants
+
+	multiple descriptor set support

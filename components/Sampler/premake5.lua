@@ -44,6 +44,8 @@ project "Sampler"
 	}
 
 	links { 
+		"Events",
+		"Platform",
 		"glfw3dll",
 		"opengl32",
 		"vulkan-1"

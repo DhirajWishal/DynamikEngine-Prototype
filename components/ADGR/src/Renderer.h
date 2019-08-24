@@ -10,7 +10,7 @@
 */
 
 #include "backend/interface.h"
-#include "backend/core.h"
+#include "core/core.h"
 
 #include "Platform.h"
 
@@ -42,7 +42,7 @@ namespace Dynamik {
 			void setAssetPaths(std::vector<std::string>& texture, std::vector<std::string>& model);
 
 		private:
-			core::core rendererCore;
+			core::Renderer rendererCore;
 		};
 	}
 }

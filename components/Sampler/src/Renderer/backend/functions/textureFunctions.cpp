@@ -9,7 +9,6 @@ namespace Dynamik {
 			namespace functions {
 
 				void createImage(DMKCreateImageInfo info) {
-
 					VkImageCreateInfo imageInfo = {};
 					imageInfo.sType = VK_STRUCTURE_TYPE_IMAGE_CREATE_INFO;
 					imageInfo.imageType = VK_IMAGE_TYPE_2D;
@@ -91,8 +90,8 @@ namespace Dynamik {
 					barrier.srcAccessMask = 0; // TODO
 					barrier.dstAccessMask = 0; // TODO
 
-					VkPipelineStageFlags sourceStage;
-					VkPipelineStageFlags destinationStage;
+					VkPipelineStageFlags sourceStage{};
+					VkPipelineStageFlags destinationStage{};
 
 					if (info.oldLayout == VK_IMAGE_LAYOUT_UNDEFINED && info.newLayout == VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL) {
 						barrier.srcAccessMask = 0;
@@ -139,7 +138,6 @@ namespace Dynamik {
 
 				void copyBufferToImage(DMKCopyBufferToImageInfo info) {
 					VkCommandBuffer commandBuffer = beginSingleTimeCommands(info.device, info.commandPool);
-
 
 					VkBufferImageCopy region = {};
 					region.bufferOffset = 0;

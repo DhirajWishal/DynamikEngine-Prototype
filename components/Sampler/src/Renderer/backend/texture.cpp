@@ -204,6 +204,9 @@ namespace Dynamik {
 
 				texData.freeData(pixels);
 
+				mipLevels = static_cast<uint32_t>(std::floor(std::log2(std::max(texData.texWidth,
+					texData.texHeight)))) + 1;
+
 				DMKCreateImageInfo info;
 				info.device = *m_device;
 				info.physicalDevice = physicalDevice;
@@ -215,8 +218,10 @@ namespace Dynamik {
 				info.properties = VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT;
 				info.image = initInfo.textureImage;
 				info.imageMemory = initInfo.textureImageMemory;
-				info.mipLevels = initInfo.mipLevels;
+				info.mipLevels = mipLevels;
 				info.numSamples = VK_SAMPLE_COUNT_1_BIT;
+
+				initInfo.mipLevels = mipLevels;
 
 				createImage(info);
 
@@ -226,6 +231,7 @@ namespace Dynamik {
 				transitionInfo.image = *initInfo.textureImage;
 				transitionInfo.format = initInfo.textureImageFormat;
 				transitionInfo.oldLayout = VK_IMAGE_LAYOUT_UNDEFINED;
+				transitionInfo.newLayout = VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL;
 				transitionInfo.graphicsQueue = graphicsQueue;
 				transitionInfo.mipLevels = initInfo.mipLevels;
 
@@ -312,15 +318,23 @@ namespace Dynamik {
 					std::runtime_error("failed to create texture sampler!");
 			}
 
-			void textureManager::initTextureImageViews(DMKInitTextureImageViewsInfo texInfo, DMKCreateImageViewInfo info) {
-				DMKCreateImageViewInfo info;
-				info.device = *m_device;
-				info.image = texInfo.textureImage;
-				info.format = texInfo.textureImageFormat;
-				info.mipLevels = texInfo.textureImageFormat;
-				info.aspectFlags = texInfo.flags;
+			void textureManager::deleteTexture(DMKTextureDeleteInfo info) {
+				vkDestroySampler(*m_device, info.sampler, nullptr);
+				vkDestroyImageView(*m_device, info.imageView, nullptr);
 
-				*m_textureImageView = createImageView(info);
+				vkDestroyImage(*m_device, info.texture, nullptr);
+				vkFreeMemory(*m_device, info.textureImageMemory, nullptr);
+			}
+
+			void textureManager::initTextureImageViews(DMKInitTextureImageViewsInfo texInfo, DMKCreateImageViewInfo info) {
+				DMKCreateImageViewInfo cinfo;
+				cinfo.device = *m_device;
+				cinfo.image = texInfo.textureImage;
+				cinfo.format = texInfo.textureImageFormat;
+				cinfo.mipLevels = texInfo.mipLevels;
+				cinfo.aspectFlags = texInfo.flags;
+
+				*info.textureImageView = createImageView(cinfo);
 			}
 		}
 	}

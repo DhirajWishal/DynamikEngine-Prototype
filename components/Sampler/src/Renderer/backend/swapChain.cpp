@@ -215,6 +215,30 @@ namespace Dynamik {
 				vkDestroySwapchainKHR(*m_device, *m_swapChain, nullptr);
 			}
 
+			void swapChain::cleanUp(DMKSwapChainCleanUpInfo info) {
+				for (size_t i = 0; i < frameBuffers.size(); i++)
+					vkDestroyFramebuffer(device, frameBuffers[i], nullptr);
+
+				vkFreeCommandBuffers(device, commandPool, static_cast<uint32>(commandBuffers.size()),
+					commandBuffers.data());
+
+				vkDestroyPipeline(device, graphicsPipeline, nullptr);
+				vkDestroyPipelineLayout(device, pipelineLayout, nullptr);
+				vkDestroyRenderPass(device, renderPass, nullptr);
+
+				for (size_t i = 0; i < swapChainImageViews.size(); i++)
+					vkDestroyImageView(device, swapChainImageViews[i], nullptr);
+
+				vkDestroySwapchainKHR(device, *m_swapChain, nullptr);
+
+				for (size_t i = 0; i < swapChainImages.size(); i++) {
+					vkDestroyBuffer(device, info.uniformBuffers[i], nullptr);
+					vkFreeMemory(device, info.uniformBufferMemories[i], nullptr);
+				}
+
+				vkDestroyDescriptorPool(device, descriptorPool, nullptr);
+			}
+
 			void swapChain::initImageViews() {
 				m_swapChainImageViews->resize(swapChainImages.size());
 

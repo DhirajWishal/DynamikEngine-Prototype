@@ -1,23 +1,6 @@
 #include "smpafx.h"
 #include "vertex.h"
 
-namespace std {
-	using Dynamik::ADGR::core::Vertex;
-
-	template<>
-	struct hash<Dynamik::ADGR::core::Vertex> {
-		size_t operator()(Vertex const& vertexs) const {
-			using Dynamik::ADGR::core::Vertex;
-			using glm::vec2;
-			using glm::vec3;
-
-			return ((hash<glm::vec3>()(vertexs.Position) ^
-				(hash<glm::vec3>()(vertexs.Color) << 1)) >> 1) ^
-				(hash<glm::vec2>()(vertexs.TexCoordinates) << 1);
-		}
-	};
-}
-
 namespace Dynamik {
 	namespace ADGR {
 		namespace core {

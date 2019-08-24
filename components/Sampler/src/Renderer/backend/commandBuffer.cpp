@@ -24,23 +24,18 @@ namespace Dynamik {
 			}
 
 			void commandBufferManager::bindCommands(DMKBindCommandBufferInfo info) {
-				commandBuffers.resize(info.frameBuffers.size());
+				commandBuffers.resize(frameBuffers.size());
 
 				VkCommandBufferAllocateInfo allocInfo = {};
 				allocInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO;
 				allocInfo.commandPool = commandPool;
 				allocInfo.level = VK_COMMAND_BUFFER_LEVEL_PRIMARY;
-				allocInfo.commandBufferCount = info.frameBuffers.size();
+				allocInfo.commandBufferCount = frameBuffers.size();
 
 				if (vkAllocateCommandBuffers(*m_device, &allocInfo, commandBuffers.data()) != VK_SUCCESS)
 					std::runtime_error("failed to allocate command buffers!");
 
-				const int count = info.vertexBuffers.size();
-
-				//VkBuffer vertexBuffers[count];
-
-
-				for (size_t i = 0; i < info.frameBuffers.size(); i++) {
+				for (size_t i = 0; i < frameBuffers.size(); i++) {
 					VkCommandBufferBeginInfo beginInfo = {};
 					beginInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO;
 					beginInfo.flags = VK_COMMAND_BUFFER_USAGE_SIMULTANEOUS_USE_BIT;
@@ -51,7 +46,7 @@ namespace Dynamik {
 					VkRenderPassBeginInfo renderPassInfo = {};
 					renderPassInfo.sType = VK_STRUCTURE_TYPE_RENDER_PASS_BEGIN_INFO;
 					renderPassInfo.renderPass = renderPass;
-					renderPassInfo.framebuffer = info.frameBuffers[i];
+					renderPassInfo.framebuffer = frameBuffers[i];
 					renderPassInfo.renderArea.offset = { 0, 0 };
 					renderPassInfo.renderArea.extent = swapChainExtent;
 
@@ -79,8 +74,13 @@ namespace Dynamik {
 
 					vkCmdBindIndexBuffer(commandBuffers[i], info.indexBuffer, 0, VK_INDEX_TYPE_UINT32);
 
+					//vkCmdBindDescriptorSets(commandBuffers[i], VK_PIPELINE_BIND_POINT_GRAPHICS,
+					//	pipelineLayout, 0, info.descriptorSets[i]->size(), info.descriptorSets[i]->data(), 0,
+					//	nullptr);
+
 					vkCmdBindDescriptorSets(commandBuffers[i], VK_PIPELINE_BIND_POINT_GRAPHICS,
-						pipelineLayout, 0, 1, &descriptorSets[i], 0, nullptr);
+						pipelineLayout, 0, 1, &info.descriptorSets[0]->at(i), 0,
+						nullptr);
 
 					vkCmdDrawIndexed(commandBuffers[i], static_cast<uint32>(info.indices.size()), 1, 0, 0, 0);
 

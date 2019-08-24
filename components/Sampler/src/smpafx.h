@@ -39,4 +39,6 @@
 #include <unordered_map>
 #include <functional>
 
+#define BIT(x) (1 << x)
+
 #endif

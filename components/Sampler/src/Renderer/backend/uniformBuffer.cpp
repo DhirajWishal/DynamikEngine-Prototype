@@ -22,13 +22,66 @@ namespace Dynamik {
 					bufferInfo.device = device;
 					bufferInfo.physicalDevice = physicalDevice;
 					bufferInfo.bufferSize = bufferSize;
-					bufferInfo.usage = VK_BUFFER_USAGE_TRANSFER_SRC_BIT;
+					bufferInfo.usage = VK_BUFFER_USAGE_UNIFORM_BUFFER_BIT;
 					bufferInfo.bufferMemoryPropertyflags = VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT;
 					bufferInfo.buffer = &info.buffers->at(i);
 					bufferInfo.bufferMemory = &info.bufferMemories->at(i);
 
 					functions::createBuffer(bufferInfo);
 				}
+			}
+
+			void uniformBufferManager::updateBuffer(DMKUniformBufferUpdateInfo info) {
+				// TODO: update
+				static auto startTime = std::chrono::high_resolution_clock::now();
+
+				auto currentTime = std::chrono::high_resolution_clock::now();
+				float time = std::chrono::duration<float, std::chrono::seconds::period>(currentTime - startTime).count();
+
+				if (info.turn[0])
+					trn += movementBias;
+
+				else if (info.turn[1])
+					trn -= movementBias;
+
+				else;
+				//trn = 0.0f;
+
+
+				if (info.move[0])
+					mve += movementBias;
+
+				else if (info.move[1])
+					mve -= movementBias;
+
+				else;
+
+				UniformBufferObject ubo = {};
+				ubo.model = glm::rotate(glm::translate(glm::mat4(1.0f), glm::vec3(mve, trn, 0.0f)), glm::radians(45.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+				ubo.view = glm::lookAt(glm::vec3(0.5f, 3.0f, 0.5f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+				ubo.proj = glm::perspective(glm::radians(45.0f), swapChainExtent.width / (float)swapChainExtent.height, 0.1f, 10.0f);
+				ubo.proj[1][1] *= -1;
+
+				void* data;
+				vkMapMemory(device, info.bufferMemory[info.currentImage], 0, sizeof(ubo), 0, &data);
+				memcpy(data, &ubo, sizeof(ubo));
+				vkUnmapMemory(device, info.bufferMemory[info.currentImage]);
+
+				/*
+				 vector<ubo> bufferData;
+				 bufferData[0] = pos;
+				 bufferData[1] = col;
+				 bufferData[2] = tex;
+
+				 vkCmdPushConstants(range, bufferData);
+
+				 in Vertex Shader:
+				 layout(push_constants) uniform PushBlock {
+					_dataType_ pos;
+					_dataType_ col;
+					_dataType_ tex;
+				 } pushBlockData;
+				*/
 			}
 
 			void uniformBufferManager::createDescriptorSetLayout() {
@@ -83,8 +136,8 @@ namespace Dynamik {
 				allocInfo.descriptorSetCount = static_cast<uint32>(swapChainImages.size());
 				allocInfo.pSetLayouts = layouts.data();
 
-				m_descriptorSets->resize(swapChainImages.size());
-				if (vkAllocateDescriptorSets(*m_device, &allocInfo, m_descriptorSets->data()) != VK_SUCCESS)
+				info.descriptorSets->resize(swapChainImages.size());
+				if (vkAllocateDescriptorSets(*m_device, &allocInfo, info.descriptorSets->data()) != VK_SUCCESS)
 					std::runtime_error("failed to allocate descriptor sets!");
 
 				for (size_t i = 0; i < swapChainImages.size(); i++) {
@@ -95,13 +148,13 @@ namespace Dynamik {
 
 					VkDescriptorImageInfo imageInfo = {};
 					imageInfo.imageLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
-					imageInfo.imageView = textureImageView;
-					imageInfo.sampler = textureSampler;
+					imageInfo.imageView = info.textureImageView;
+					imageInfo.sampler = info.textureSampler;
 
 					std::array<VkWriteDescriptorSet, 2> descriptorWrites = {};
 
 					descriptorWrites[0].sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
-					descriptorWrites[0].dstSet = m_descriptorSets->at(i);
+					descriptorWrites[0].dstSet = info.descriptorSets->at(i);
 					descriptorWrites[0].dstBinding = 0;
 					descriptorWrites[0].dstArrayElement = 0;
 					descriptorWrites[0].descriptorType = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;
@@ -109,7 +162,7 @@ namespace Dynamik {
 					descriptorWrites[0].pBufferInfo = &bufferInfo;
 
 					descriptorWrites[1].sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
-					descriptorWrites[1].dstSet = m_descriptorSets->at(i);
+					descriptorWrites[1].dstSet = info.descriptorSets->at(i);
 					descriptorWrites[1].dstBinding = 1;
 					descriptorWrites[1].dstArrayElement = 0;
 					descriptorWrites[1].descriptorType = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;

@@ -7,11 +7,9 @@
  IDE:		MS Visual Studio Community 2019
 */
 
-#include "adgrafx.h"
+#include "smpafx.h"
 #include "semaphores.h"
-#include "backend/defines.h"
-
-
+#include "Renderer/backend/controlHeader.h"
 
 namespace Dynamik {
 	namespace ADGR {

@@ -7,7 +7,7 @@
  IDE:		MS Visual Studio Community 2019
 */
 
-#include "adgrafx.h"
+#include "smpafx.h"
 #include "validators.h"
 
 namespace Dynamik {

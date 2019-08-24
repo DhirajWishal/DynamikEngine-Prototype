@@ -7,11 +7,9 @@
  IDE:		MS Visual Studio Community 2019
 */
 
-#include "adgrafx.h"
+#include "smpafx.h"
 #include "debugger.h"
-#include "backend/validators/validators.h"
-
-
+#include "Renderer/backend/validators/validators.h"
 
 namespace Dynamik {
 	namespace ADGR {

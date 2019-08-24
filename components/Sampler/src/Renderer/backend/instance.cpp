@@ -8,7 +8,7 @@ namespace Dynamik {
 	namespace ADGR {
 		namespace core {
 
-			void instance::init() {
+			void instanceManager::init() {
 				if (enableValidationLayers && !checkValidationLayerSupport())
 					std::runtime_error("validation layers requested, but not available!");
 
@@ -44,6 +44,12 @@ namespace Dynamik {
 
 				if (vkCreateInstance(&createInfo, nullptr, m_instance) != VK_SUCCESS)
 					std::runtime_error("Failed to create instance!");
+
+				instance = *m_instance;
+			}
+
+			void instanceManager::clear() {
+				vkDestroyInstance(*m_instance, nullptr);
 			}
 		}
 	}

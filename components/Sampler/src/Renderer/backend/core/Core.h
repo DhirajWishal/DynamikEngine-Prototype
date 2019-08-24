@@ -17,95 +17,96 @@ namespace Dynamik {
 				virtual void initCore() {}
 				virtual void drawFrame() {}
 				virtual void shutdownCore() {}
-				virtual void clear() {}
 
-				VkInstance getInstance() { return instance; }
-				VkInstance* getInstanceAddr() { return &instance; }
-				VkDevice getDevice() { return device; }
-				VkDevice* getDeviceAddr() { return &device; }
-				VkDebugUtilsMessengerEXT getdebugMessenger() { return debugMessenger; }
-				VkDebugUtilsMessengerEXT* getdebugMessengerAddr() { return &debugMessenger; }
+				virtual VkInstance getInstance() { return instance; }
+				virtual VkInstance* getInstanceAddr() { return &instance; }
+				virtual VkDevice getDevice() { return device; }
+				virtual VkDevice* getDeviceAddr() { return &device; }
+				virtual VkDebugUtilsMessengerEXT getdebugMessenger() { return debugMessenger; }
+				virtual VkDebugUtilsMessengerEXT* getdebugMessengerAddr() { return &debugMessenger; }
 
-			protected:
 				virtual void init() {}
 				virtual void clear() {}
 
-				GLFWwindow* windowsWindow = nullptr;
+			protected:
 
-				VkInstance instance = VK_NULL_HANDLE;
-				VkDevice device = VK_NULL_HANDLE;
-				VkPhysicalDevice physicalDevice = VK_NULL_HANDLE;
-				VkSurfaceKHR surface = VK_NULL_HANDLE;
-				VkDebugUtilsMessengerEXT debugMessenger = VK_NULL_HANDLE;
-				VkSwapchainKHR swapchain = VK_NULL_HANDLE;
-				VkSurfaceCapabilitiesKHR surfaceCapabilities;
-				VkRenderPass renderPass;
-
-				VkDescriptorSetLayout descriptorSetLayout;
-				VkDescriptorPool descriptorPool;
-				std::vector<VkDescriptorSet> descriptorSets;
-
-				VkCommandPool commandPool;
-				std::vector<VkCommandBuffer> commandBuffers;
-
-				std::vector<VkSemaphore> imageAvailableSemaphore;
-				std::vector<VkSemaphore> renderFinishedSemaphore;
-				std::vector<VkFence> inFlightFence;
-
-				VkExtent2D swapChainExtent;
-				VkFormat swapChainImageFormat = VK_FORMAT_UNDEFINED;
-				std::vector<VkImage> swapChainImages;
-				std::vector<VkImageView> swapChainImageViews;
-
-				std::vector<VkFramebuffer> frameBuffers;
-
-				VkPipeline graphicsPipeline;
-				VkPipelineLayout pipelineLayout;
-
-				VkQueue graphicsQueue;
-
-				VkSampleCountFlagBits msaaSamples = VK_SAMPLE_COUNT_1_BIT;
-
-				VkImage colorImage = VK_NULL_HANDLE;
-				VkDeviceMemory colorImageMemory = VK_NULL_HANDLE;
-				VkImageView colorImageView = VK_NULL_HANDLE;
-
-				VkImage depthImage = VK_NULL_HANDLE;
-				VkDeviceMemory depthImageMemory = VK_NULL_HANDLE;
-				VkImageView depthImageView = VK_NULL_HANDLE;
-
-				VkImage textureImage = VK_NULL_HANDLE;
-				VkDeviceMemory textureImageMemory = VK_NULL_HANDLE;
-				VkImageView textureImageView = VK_NULL_HANDLE;
-				VkSampler textureSampler = VK_NULL_HANDLE;
-
-				uint32_t mipLevels = 0;
-
-				bool frameBufferResizedEvent = false;
-				unsigned int WIDTH = 1280;
-				unsigned int HEIGHT = 720;
-
-				float minMipLevel;
-				float maxMipLevel;
-
-				DMK_ShaderCode vertexShaderCode;
-				VkShaderModule vertexShaderModule;
-				VkPipelineShaderStageCreateInfo vertexShaderStageInfo = {};
-
-				DMK_ShaderCode fragmentShaderCode;
-				VkShaderModule fragmentShaderModule;
-				VkPipelineShaderStageCreateInfo fragmentShaderStageInfo = {};
-
+				static GLFWwindow* windowsWindow;
+				
+				static VkInstance instance;
+				static VkDevice device;
+				static VkPhysicalDevice physicalDevice;
+				static VkSurfaceKHR surface;
+				static VkDebugUtilsMessengerEXT debugMessenger;
+				static VkSwapchainKHR swapchain;
+				static VkSurfaceCapabilitiesKHR surfaceCapabilities;
+				static VkRenderPass renderPass;
+				
+				static VkDescriptorSetLayout descriptorSetLayout;
+				static VkDescriptorPool descriptorPool;
+				static std::vector<VkDescriptorSet> descriptorSets;
+				
+				static VkCommandPool commandPool;
+				static std::vector<VkCommandBuffer> commandBuffers;
+				
+				static std::vector<VkSemaphore> imageAvailableSemaphore;
+				static std::vector<VkSemaphore> renderFinishedSemaphore;
+				static std::vector<VkFence> inFlightFence;
+				
+				static VkExtent2D swapChainExtent;
+				static VkFormat swapChainImageFormat;
+				static std::vector<VkImage> swapChainImages;
+				static std::vector<VkImageView> swapChainImageViews;
+				
+				static std::vector<VkFramebuffer> frameBuffers;
+				
+				static VkPipeline graphicsPipeline;
+				static VkPipelineLayout pipelineLayout;
+				
+				static VkQueue graphicsQueue;
+				static VkQueue presentQueue;
+				
+				static VkSampleCountFlagBits msaaSamples;
+				
+				static VkImage colorImage;
+				static VkDeviceMemory colorImageMemory;
+				static VkImageView colorImageView;
+				
+				static VkImage depthImage;
+				static VkDeviceMemory depthImageMemory;
+				static VkImageView depthImageView;
+				
+				static VkImage textureImage;
+				static VkDeviceMemory textureImageMemory;
+				static VkImageView textureImageView;
+				static VkSampler textureSampler;
+				
+				static uint32_t mipLevels;
+				
+				static bool frameBufferResizedEvent;
+				static unsigned int WIDTH;
+				static unsigned int HEIGHT;
+				
+				static float minMipLevel;
+				static float maxMipLevel;
+				
+				static DMK_ShaderCode vertexShaderCode;
+				static VkShaderModule vertexShaderModule;
+				static VkPipelineShaderStageCreateInfo vertexShaderStageInfo;
+				
+				static DMK_ShaderCode fragmentShaderCode;
+				static VkShaderModule fragmentShaderModule;
+				static VkPipelineShaderStageCreateInfo fragmentShaderStageInfo;
+				
 #ifdef USE_SHADER_TESSELLATION
-				DMK_ShaderCode tessellationShaderCode;
-				VkShaderModule tessellationShaderModule;
-				VkPipelineShaderStageCreateInfo tessellationShaderStageInfo = {};
-#endif
-
+				static DMK_ShaderCode tessellationShaderCode;
+				static VkShaderModule tessellationShaderModule;
+				static VkPipelineShaderStageCreateInfo tessellationShaderStageInfo = {};
+#endif			
+				
 #ifdef USE_SHADER_GEOMETRY
-				DMK_ShaderCode geometryShaderCode;
-				VkShaderModule geometryShaderModule;
-				VkPipelineShaderStageCreateInfo geometryShaderStageInfo = {};
+				static DMK_ShaderCode geometryShaderCode;
+				static VkShaderModule geometryShaderModule;
+				static VkPipelineShaderStageCreateInfo geometryShaderStageInfo = {};
 #endif
 			};
 		}

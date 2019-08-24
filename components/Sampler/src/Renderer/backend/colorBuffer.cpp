@@ -94,6 +94,12 @@ namespace Dynamik {
 
 				transitionImageLayout(transitionInfo);
 			}
+
+			void colorBufferManager::clear() {
+				vkDestroyImageView(*m_device, *m_colorImageView, nullptr);
+				vkDestroyImage(*m_device, *m_colorImage, nullptr);
+				vkFreeMemory(*m_device, *m_colorImageMemory, nullptr);
+			}
 		}
 	}
 }

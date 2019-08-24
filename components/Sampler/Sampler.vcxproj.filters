@@ -34,6 +34,9 @@
     <Filter Include="src\Renderer\backend\functions">
       <UniqueIdentifier>{52B4105D-3EDA-DAC3-2720-608F13E5FF8F}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Renderer\backend\others">
+      <UniqueIdentifier>{EEFF0442-5A0D-3328-E3F3-2E134F00FFDE}</UniqueIdentifier>
+    </Filter>
     <Filter Include="src\Renderer\backend\queues">
       <UniqueIdentifier>{F106C046-5D14-EE2C-E6FA-E9175207BAE3}</UniqueIdentifier>
     </Filter>
@@ -87,6 +90,9 @@
     <ClInclude Include="src\Renderer\backend\core\Instance.h">
       <Filter>src\Renderer\backend\core</Filter>
     </ClInclude>
+    <ClInclude Include="src\Renderer\backend\core\Model.h">
+      <Filter>src\Renderer\backend\core</Filter>
+    </ClInclude>
     <ClInclude Include="src\Renderer\backend\core\Pipeline.h">
       <Filter>src\Renderer\backend\core</Filter>
     </ClInclude>
@@ -101,6 +107,9 @@
     </ClInclude>
     <ClInclude Include="src\Renderer\backend\core\Window.h">
       <Filter>src\Renderer\backend\core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Renderer\backend\data structures\Uniform.h">
+      <Filter>src\Renderer\backend\data structures</Filter>
     </ClInclude>
     <ClInclude Include="src\Renderer\backend\data structures\mesh.h">
       <Filter>src\Renderer\backend\data structures</Filter>
@@ -129,8 +138,23 @@
     <ClInclude Include="src\Renderer\backend\functions\bufferFunctions.h">
       <Filter>src\Renderer\backend\functions</Filter>
     </ClInclude>
+    <ClInclude Include="src\Renderer\backend\functions\textureFunctions.h">
+      <Filter>src\Renderer\backend\functions</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Renderer\backend\indexBuffer.h">
+      <Filter>src\Renderer\backend</Filter>
+    </ClInclude>
     <ClInclude Include="src\Renderer\backend\instance.h">
       <Filter>src\Renderer\backend</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Renderer\backend\modelManager.h">
+      <Filter>src\Renderer\backend</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Renderer\backend\others\semaphores.h">
+      <Filter>src\Renderer\backend\others</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Renderer\backend\others\syncObjects.h">
+      <Filter>src\Renderer\backend\others</Filter>
     </ClInclude>
     <ClInclude Include="src\Renderer\backend\pipeline.h">
       <Filter>src\Renderer\backend</Filter>
@@ -156,6 +180,9 @@
     <ClInclude Include="src\Renderer\backend\validators\validators.h">
       <Filter>src\Renderer\backend\validators</Filter>
     </ClInclude>
+    <ClInclude Include="src\Renderer\backend\vertexBuffer.h">
+      <Filter>src\Renderer\backend</Filter>
+    </ClInclude>
     <ClInclude Include="src\Renderer\backend\window.h">
       <Filter>src\Renderer\backend</Filter>
     </ClInclude>
@@ -168,14 +195,6 @@
     <ClInclude Include="src\smpafx.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="src\Renderer\backend\functions\textureFunctions.h" />
-    <ClInclude Include="src\Renderer\backend\core\Model.h" />
-    <ClInclude Include="src\Renderer\backend\modelManager.h" />
-    <ClInclude Include="src\Renderer\backend\vertexBuffer.h" />
-    <ClInclude Include="src\Renderer\backend\indexBuffer.h" />
-    <ClInclude Include="src\Renderer\backend\data structures\Uniform.h" />
-    <ClInclude Include="src\Renderer\backend\others\semaphores.h" />
-    <ClInclude Include="src\Renderer\backend\others\syncObjects.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -197,6 +216,9 @@
     <ClCompile Include="src\Renderer\backend\commandBuffer.cpp">
       <Filter>src\Renderer\backend</Filter>
     </ClCompile>
+    <ClCompile Include="src\Renderer\backend\data structures\vertex.cpp">
+      <Filter>src\Renderer\backend\data structures</Filter>
+    </ClCompile>
     <ClCompile Include="src\Renderer\backend\depthBuffer.cpp">
       <Filter>src\Renderer\backend</Filter>
     </ClCompile>
@@ -212,8 +234,23 @@
     <ClCompile Include="src\Renderer\backend\functions\bufferFunctions.cpp">
       <Filter>src\Renderer\backend\functions</Filter>
     </ClCompile>
+    <ClCompile Include="src\Renderer\backend\functions\textureFunctions.cpp">
+      <Filter>src\Renderer\backend\functions</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Renderer\backend\indexBuffer.cpp">
+      <Filter>src\Renderer\backend</Filter>
+    </ClCompile>
     <ClCompile Include="src\Renderer\backend\instance.cpp">
       <Filter>src\Renderer\backend</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Renderer\backend\modelManager.cpp">
+      <Filter>src\Renderer\backend</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Renderer\backend\others\semaphores.cpp">
+      <Filter>src\Renderer\backend\others</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Renderer\backend\others\syncObjects.cpp">
+      <Filter>src\Renderer\backend\others</Filter>
     </ClCompile>
     <ClCompile Include="src\Renderer\backend\pipeline.cpp">
       <Filter>src\Renderer\backend</Filter>
@@ -239,6 +276,9 @@
     <ClCompile Include="src\Renderer\backend\validators\validators.cpp">
       <Filter>src\Renderer\backend\validators</Filter>
     </ClCompile>
+    <ClCompile Include="src\Renderer\backend\vertexBuffer.cpp">
+      <Filter>src\Renderer\backend</Filter>
+    </ClCompile>
     <ClCompile Include="src\Renderer\backend\window.cpp">
       <Filter>src\Renderer\backend</Filter>
     </ClCompile>
@@ -251,18 +291,9 @@
     <ClCompile Include="src\smpafx.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="src\Renderer\backend\functions\textureFunctions.cpp" />
-    <ClCompile Include="src\Renderer\backend\modelManager.cpp" />
-    <ClCompile Include="src\Renderer\backend\data structures\vertex.cpp" />
-    <ClCompile Include="src\Renderer\backend\vertexBuffer.cpp" />
-    <ClCompile Include="src\Renderer\backend\indexBuffer.cpp" />
-    <ClCompile Include="src\Renderer\backend\others\semaphores.cpp" />
-    <ClCompile Include="src\Renderer\backend\others\syncObjects.cpp" />
+    <ClCompile Include="src\Renderer\backend\core\Core.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="premake5.lua" />
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="src\TODO list.txt" />
   </ItemGroup>
 </Project>

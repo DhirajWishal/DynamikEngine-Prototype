@@ -49,6 +49,7 @@ namespace Dynamik {
 
 					if (vkCreateFramebuffer(*m_device, &framebufferInfo, nullptr, &info.frameBuffers->at(i)) != VK_SUCCESS)
 						std::runtime_error("failed to create framebuffer!");
+				}
 			}
 		}
 	}

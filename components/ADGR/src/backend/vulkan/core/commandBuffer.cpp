@@ -51,40 +51,51 @@ namespace Dynamik {
 					renderPassInfo.renderArea.extent = swapChainExtent;
 
 					std::array<VkClearValue, 2> clearValues = {};
-					clearValues[0].color = { 0.0f, 0.0f, 0.0f, 1.0f };
+					clearValues[0].color = {
+						clearScreenValues[0],	// Red
+						clearScreenValues[1],	// Green
+						clearScreenValues[2],	// Blue
+						clearScreenValues[3]	// Alpha
+					};
 					clearValues[1].depthStencil = { 1.0f, 0 };
 
 					renderPassInfo.clearValueCount = static_cast<uint32_t>(clearValues.size());
 					renderPassInfo.pClearValues = clearValues.data();
 
-					// draw command
+					/* BEGIN VULKAN COMMANDS */
 
+					// begin render pass
 					vkCmdBeginRenderPass(commandBuffers[i], &renderPassInfo, VK_SUBPASS_CONTENTS_INLINE);
 
+					/* TODO: pushConstants */
+					// pushConstants[0] = ...
+					// vkCmdPushConstants(commandBuffers[i], &pipelineLayout, VK_SHADER_STAGE_VERTEX_BIT,
+					//		0, pushConstants.size(), pushConstants.data());
+
+					// bind pipeline
 					vkCmdBindPipeline(commandBuffers[i], VK_PIPELINE_BIND_POINT_GRAPHICS, graphicsPipeline);
 
 					// vertex buffer bind
-
-					//VkBuffer vertexBuffers[info.vertexBuffers.size()] = { vertexBuffer };
 					VkDeviceSize offsets[] = { 0 };
-					vkCmdBindVertexBuffers(commandBuffers[i], 0, info.vertexBuffers.size(),
-						info.vertexBuffers.data(), offsets);
+					for (int count = 0; count < info.vertexBuffers.size(); count++)
+						vkCmdBindVertexBuffers(commandBuffers[i], count, 1,
+							&info.vertexBuffers[count], offsets);
 
 					// index buffer bind
-
 					vkCmdBindIndexBuffer(commandBuffers[i], info.indexBuffer, 0, VK_INDEX_TYPE_UINT32);
 
-					//vkCmdBindDescriptorSets(commandBuffers[i], VK_PIPELINE_BIND_POINT_GRAPHICS,
-					//	pipelineLayout, 0, info.descriptorSets[i]->size(), info.descriptorSets[i]->data(), 0,
-					//	nullptr);
+					// binding descriptor set(s)
+					for (int x = 0; x < info.descriptorSets.size(); x++) 
+						vkCmdBindDescriptorSets(commandBuffers[i], VK_PIPELINE_BIND_POINT_GRAPHICS,
+							pipelineLayout, x, 1, &info.descriptorSets[x]->at(i), 0, nullptr);
 
-					vkCmdBindDescriptorSets(commandBuffers[i], VK_PIPELINE_BIND_POINT_GRAPHICS,
-						pipelineLayout, 0, 1, &info.descriptorSets[0]->at(i), 0,
-						nullptr);
-
+					// draw command
 					vkCmdDrawIndexed(commandBuffers[i], static_cast<uint32>(info.indices.size()), 1, 0, 0, 0);
 
+					// end renderPass
 					vkCmdEndRenderPass(commandBuffers[i]);
+
+					/* END VULKAN COMMANDS */
 
 					if (vkEndCommandBuffer(commandBuffers[i]) != VK_SUCCESS)
 						std::runtime_error("failed to record command buffer!");

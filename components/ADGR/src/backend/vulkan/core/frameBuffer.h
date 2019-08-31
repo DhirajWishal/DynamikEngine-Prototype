@@ -13,7 +13,7 @@ namespace Dynamik {
 				VkImageView depthImageView;
 			};
 
-			class frameBufferManager : public Buffer {
+			class ADGR_API frameBufferManager : public Buffer {
 			public:
 				frameBufferManager() {}
 				~frameBufferManager() {}

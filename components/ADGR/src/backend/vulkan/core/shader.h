@@ -6,7 +6,7 @@ namespace Dynamik {
 	namespace ADGR {
 		namespace core {
 
-			class shaderManager : public Shader {
+			class ADGR_API shaderManager : public Shader {
 			public:
 				shaderManager() {}
 				~shaderManager() {}

@@ -38,6 +38,7 @@
 #include <unordered_map>
 #include <functional>
 #include <memory>
+#include <tuple>
 
 #include "core/log.h"
 #include "core/utils/DMK_DataTypes.h"

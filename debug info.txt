@@ -1,11 +1,11 @@
-Welcome to the Dynamik Engine!
-validation layer: Added messenger
-validation layer: Added messenger
-validation layer: Invalid PipelineLayout Object 0xcdcdcdcdcdcdcdcd. The Vulkan spec states: If pipelineLayout is not VK_NULL_HANDLE, pipelineLayout must be a valid VkPipelineLayout handle (https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VUID-vkDestroyPipelineLayout-pipelineLayout-parameter)
-VUID-vkDestroyPipelineLayout-pipelineLayout-parameter(ERROR / SPEC): msgNum: 0 - Invalid PipelineLayout Object 0xcdcdcdcdcdcdcdcd. The Vulkan spec states: If pipelineLayout is not VK_NULL_HANDLE, pipelineLayout must be a valid VkPipelineLayout handle (https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VUID-vkDestroyPipelineLayout-pipelineLayout-parameter)
-    Objects: 1
-        [0] 0xcdcdcdcdcdcdcdcd, type: 17, name: NULL
-validation layer: Invalid PipelineLayout Object 0xcdcdcdcdcdcdcdcd. The Vulkan spec states: If pipelineLayout is not VK_NULL_HANDLE, pipelineLayout must be a valid VkPipelineLayout handle (https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VUID-vkDestroyPipelineLayout-pipelineLayout-parameter)
-VUID-vkDestroyPipelineLayout-pipelineLayout-parameter(ERROR / SPEC): msgNum: 0 - Invalid PipelineLayout Object 0xcdcdcdcdcdcdcdcd. The Vulkan spec states: If pipelineLayout is not VK_NULL_HANDLE, pipelineLayout must be a valid VkPipelineLayout handle (https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VUID-vkDestroyPipelineLayout-pipelineLayout-parameter)
-    Objects: 1
-        [0] 0xcdcdcdcdcdcdcdcd, type: 17, name: NULL
+validation layer: descriptorSet #0 being bound is not compatible with overlapping descriptorSetLayout at index 0 of pipelineLayout 0x11 due to:
+ Binding 0 for DescriptorSetLayout 000000000000000B has a descriptorCount of 1 but binding 0 for DescriptorSetLayout 000000000000000C, which comes from pipelineLayout,
+ has a descriptorCount of 0. The Vulkan spec states: Each element of pDescriptorSets must have been allocated with a VkDescriptorSetLayout that matches 
+(is the same as, or identically defined as) the VkDescriptorSetLayout at set n in layout, where n is the sum of firstSet and the index into pDescriptorSets 
+(https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VUID-vkCmdBindDescriptorSets-pDescriptorSets-00358)
+                                                                         
+VUID-vkCmdBindDescriptorSets-pDescriptorSets-00358(ERROR / SPEC): msgNum: 0 - descriptorSet #0 being bound is not compatible with overlapping descriptorSetLayout 
+at index 0 of pipelineLayout 0x11 due to: Binding 0 for DescriptorSetLayout 000000000000000B has a descriptorCount of 1 but binding 0 for DescriptorSetLayout 
+000000000000000C, which comes from pipelineLayout, has a descriptorCount of 0. The Vulkan spec states: Each element of pDescriptorSets must have been allocated 
+with a VkDescriptorSetLayout that matches (is the same as, or identically defined as) the VkDescriptorSetLayout at set n in layout, where n is the sum of firstSet 
+and the index into pDescriptorSets (https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VUID-vkCmdBindDescriptorSets-pDescriptorSets-00358)                                    Objects: 1                                                                                                                  [0] 0x40, type: 23, name: NULL

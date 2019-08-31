@@ -218,10 +218,10 @@ namespace Dynamik {
 				info.properties = VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT;
 				info.image = initInfo.textureImage;
 				info.imageMemory = initInfo.textureImageMemory;
-				info.mipLevels = mipLevels;
+				info.mipLevels = initInfo.mipLevels;
 				info.numSamples = VK_SAMPLE_COUNT_1_BIT;
 
-				initInfo.mipLevels = mipLevels;
+				//initInfo.mipLevels = mipLevels;
 
 				createImage(info);
 
@@ -310,7 +310,7 @@ namespace Dynamik {
 				samplerInfo.compareEnable = VK_FALSE;
 				samplerInfo.compareOp = VK_COMPARE_OP_ALWAYS;
 				samplerInfo.mipmapMode = VK_SAMPLER_MIPMAP_MODE_LINEAR;
-				samplerInfo.minLod = *minMip; // change this for varing mip levels
+				samplerInfo.minLod = *minMip; // change this for varying mip levels
 				samplerInfo.maxLod = static_cast<float>(*maxMip);
 				samplerInfo.mipLodBias = 0; // Optional
 

@@ -16,6 +16,9 @@
     <Filter Include="src\core">
       <UniqueIdentifier>{C55F2ECF-B12C-89DA-DA45-7782C671BE68}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\core\media">
+      <UniqueIdentifier>{945D5A88-802B-4E8E-69BF-BEB4552C2AF3}</UniqueIdentifier>
+    </Filter>
     <Filter Include="src\core\object mechanics">
       <UniqueIdentifier>{56F0F844-C2B2-2CCF-0B63-BB5B776405AD}</UniqueIdentifier>
     </Filter>
@@ -108,5 +111,8 @@
   <ItemGroup>
     <None Include="IMPORTANT.txt" />
     <None Include="architecture.txt" />
+    <None Include="src\core\media\license.txt">
+      <Filter>src\core\media</Filter>
+    </None>
   </ItemGroup>
 </Project>

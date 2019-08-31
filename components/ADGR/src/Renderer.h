@@ -14,6 +14,9 @@
 
 #include "Platform.h"
 
+#include "keyEvent.h"
+#include "mouseEvent.h"
+
 namespace Dynamik {
 	namespace ADGR {
 
@@ -34,15 +37,12 @@ namespace Dynamik {
 			// core functions
 
 			bool getWindowCloseEvent();
-			Event* pollEvents();
+			std::tuple<keyEventData*, mouseEventData*> pollEvents();
 			void idleCall();
 
 			void setMipLevel(float);
 
 			void setAssetPaths(std::vector<std::string>& texture, std::vector<std::string>& model);
-
-		private:
-			core::Renderer rendererCore;
 		};
 	}
 }

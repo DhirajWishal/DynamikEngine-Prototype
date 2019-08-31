@@ -26,6 +26,7 @@ IncludeDir["boost"] = "E:/Programming/Modules and Runtime/boost_1_70_0"
 IncludeDir["gil"] = "$(SolutionDir)libs/gil/boost"
 IncludeDir["jpeg"] = "$(SolutionDir)libs/gil/jpeg-6b"
 IncludeDir["irrKlang"] = "$(SolutionDir)/libs/irrKlang/include"
+IncludeDir["assimp"] = "$(SolutionDir)/libs/assimp"
 
 --include "Launcher"
 include "components/ADGR"
@@ -38,6 +39,9 @@ include "components/Sampler"
 
 -- test build include
 include "components/Core"
+
+-- Libraries
+--include "components/Libraries/ADGR_Vulkan_API"
 
 ---------- Dynamik Engine project description ----------
 project "Dynamik"
@@ -68,6 +72,7 @@ project "Dynamik"
 		"$(SolutionDir)Dynamik/GameLibraries",
 		"$(SolutionDir)components/ADGR",
 		"$(SolutionDir)components/ADGR/src",
+		"$(SolutionDir)components/Audio/src",
 		"$(SolutionDir)components/Events/src",
 		"$(SolutionDir)components/Platform/src",
 		"$(SolutionDir)components/DevConsole/src",
@@ -76,6 +81,8 @@ project "Dynamik"
 		"%{IncludeDir.glm}",
 		"%{IncludeDir.stb}",
 		"%{IncludeDir.tol}",
+		"%{IncludeDir.irrKlang}",
+		"%{IncludeDir.assimp}",
 		"%{IncludeDir.Vulkan}"
 	}
 
@@ -86,6 +93,7 @@ project "Dynamik"
 
 	links { 
 		"ADGR",
+		"Audio",
 		"Events",
 		"Platform",
 		"Core",
@@ -145,6 +153,7 @@ project "Application"
 		"$(SolutionDir)lib/libs",
 		"$(solutionDir)components/ADGR",
 		"$(solutionDir)components/ADGR/src",
+		"$(solutionDir)components/Audio/src",
 		"$(solutionDir)components/Events/src",
 		"$(solutionDir)components/Platform/src",
 		"$(solutionDir)components/DevConsole/src",
@@ -153,6 +162,8 @@ project "Application"
 		"%{IncludeDir.glm}",
 		"%{IncludeDir.stb}",
 		"%{IncludeDir.tol}",
+		"%{IncludeDir.irrKlang}",
+		"%{IncludeDir.assimp}",
 		"%{IncludeDir.Vulkan}"
 	}
 
@@ -164,6 +175,7 @@ project "Application"
 	links {
 		"Dynamik",
 		"ADGR",
+		"Audio",
 		"Events",
 		"Platform",
 		"Core",

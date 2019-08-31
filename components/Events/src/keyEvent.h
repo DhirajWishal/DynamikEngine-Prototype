@@ -52,4 +52,10 @@ namespace Dynamik {
 
 		EVENT_CLASS_TYPE(keyTyped)
 	};
+
+	struct keyEventData {
+		KeyPressedEvent keyPressedEvent;
+		KeyReleasedEvent keyReleasedEvent;
+		KeyPressedEvent keyRepeatEvent;
+	};
 }

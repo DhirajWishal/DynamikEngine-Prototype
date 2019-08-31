@@ -2,8 +2,6 @@
 
 #include "core/Texture.h"
 
-#include "functions/textureFunctions.h"
-
 namespace Dynamik {
 	namespace ADGR {
 		namespace core {
@@ -33,6 +31,7 @@ namespace Dynamik {
 
 			struct DMKInitTextureSamplerInfo {
 				VkSampler* textureSampler;
+				uint32_t mipLevel;
 
 				VkFilter magFilter;
 				VkFilter minFilter;
@@ -60,7 +59,7 @@ namespace Dynamik {
 				VkDeviceMemory textureImageMemory;
 			};
 
-			class textureManager : public Texture {
+			class ADGR_API textureManager : public Texture {
 			public:
 				textureManager() {}
 				~textureManager() {}

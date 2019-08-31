@@ -11,6 +11,8 @@
 #include "Renderer.h"
 #include "backend/defines.h"
 
+#include "backend/vulkan/ADGR_Vulkan_API.h"
+
 #ifdef DMK_PLATFORM_WINDOWS
 #include "Platform/Windows.h"
 
@@ -21,6 +23,8 @@
 namespace Dynamik {
 	namespace ADGR {
 
+		vulkanRenderer rendererCore;
+
 		Renderer::Renderer() {
 
 		}
@@ -30,8 +34,7 @@ namespace Dynamik {
 		}
 
 		void Renderer::initRenderer() {
-			rendererCore.initWindow();
-			rendererCore.startup();
+			rendererCore.init();
 		}
 
 		void Renderer::draw() {
@@ -47,16 +50,22 @@ namespace Dynamik {
 		}
 
 		void Renderer::setMipLevel(float value) {
-			rendererCore.setMipLevels(value);
 		}
 
 		bool Renderer::getWindowCloseEvent() {
-			return glfwWindowShouldClose(rendererCore.getWindow());
+			return rendererCore.closeEvent();
 		}
 
-		Event* Renderer::pollEvents() {
-			glfwPollEvents();
-			return rendererCore.getEvents();
+		std::tuple<keyEventData*, mouseEventData*> Renderer::pollEvents() {
+			rendererCore.events();
+
+			keyEventData* prop = nullptr;
+
+			auto [ked, med] = rendererCore.getEvent();
+			
+			if (ked != prop)
+				return rendererCore.getEvent();
+			return { nullptr, nullptr };
 		}
 
 		void Renderer::idleCall() {
@@ -68,7 +77,7 @@ namespace Dynamik {
 		}
 
 		void Renderer::setAssetPaths(std::vector<std::string>& texture, std::vector<std::string>& model) {
-			rendererCore.setAssets(texture, model);
+			//rendererCore.setAssets(texture, model);
 		}
 
 	}

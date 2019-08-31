@@ -1,9 +1,14 @@
 #pragma once
 
-#include "adgrafx.h"
-
 #include "backend/vulkan/core/controlHeader.h"
 #include "backend/vulkan/core/data types/typenames.h"
+#include "data structures/vertex.h"
+
+#include "backend/vulkan/core/functions/textureFunctions.h"
+
+#include "backend/interface.h"
+
+#include "Event.h"
 
 namespace Dynamik {
 	namespace ADGR {
@@ -29,7 +34,6 @@ namespace Dynamik {
 				virtual void clear() {}
 
 			protected:
-
 				static GLFWwindow* windowsWindow;
 				
 				static VkInstance instance;
@@ -58,6 +62,8 @@ namespace Dynamik {
 				static std::vector<VkImageView> swapChainImageViews;
 				
 				static std::vector<VkFramebuffer> frameBuffers;
+
+				static std::vector<float> clearScreenValues;
 				
 				static VkPipeline graphicsPipeline;
 				static VkPipelineLayout pipelineLayout;
@@ -93,21 +99,20 @@ namespace Dynamik {
 				static VkShaderModule vertexShaderModule;
 				static VkPipelineShaderStageCreateInfo vertexShaderStageInfo;
 				
-				static DMK_ShaderCode fragmentShaderCode;
-				static VkShaderModule fragmentShaderModule;
-				static VkPipelineShaderStageCreateInfo fragmentShaderStageInfo;
-				
 #ifdef USE_SHADER_TESSELLATION
 				static DMK_ShaderCode tessellationShaderCode;
 				static VkShaderModule tessellationShaderModule;
 				static VkPipelineShaderStageCreateInfo tessellationShaderStageInfo = {};
-#endif			
-				
+#endif				
 #ifdef USE_SHADER_GEOMETRY
 				static DMK_ShaderCode geometryShaderCode;
 				static VkShaderModule geometryShaderModule;
 				static VkPipelineShaderStageCreateInfo geometryShaderStageInfo = {};
 #endif
+
+				static DMK_ShaderCode fragmentShaderCode;
+				static VkShaderModule fragmentShaderModule;
+				static VkPipelineShaderStageCreateInfo fragmentShaderStageInfo;
 			};
 		}
 	}

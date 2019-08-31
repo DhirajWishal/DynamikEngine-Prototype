@@ -2,9 +2,10 @@
 
 #include "core.h"
 #include "src/Renderer.h"
-#include "event.h"
 #include "src/Layers/layer.h"
 #include "src/Layers/layerStack.h"
+
+#include "Audio.h"
 
 #include "object mechanics/loadGameObjects.h"
 
@@ -19,7 +20,7 @@ namespace Dynamik {
 		void pushLayer(ADGR::Layer* layer);
 		void pushOverlay(ADGR::Layer* layer);
 
-		void onEvent(Event& event);
+		void onEvent(keyEventData ked);
 
 	private:
 		ADGR::Renderer myRenderingEngine;
@@ -29,6 +30,8 @@ namespace Dynamik {
 		ADGR::layerStack layerStack;
 
 		InputLoader myLoader;
+
+		Audio::AudioEngine myEngine;
 	};
 
 	// Defined by the Client

@@ -80,7 +80,7 @@
       <PrecompiledHeaderFile>dmkafx.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>DMK_PLATFORM_WINDOWS;DMK_BUILD_DLL;_WINDLL;GLFW_INCLUDE_VULKAN;GLFW_INCLUDE_NONE;DMK_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)libs;$(SolutionDir)Dynamik\src;$(SolutionDir)Dynamik\GameLibraries;$(SolutionDir)components\ADGR;$(SolutionDir)components\ADGR\src;$(SolutionDir)components\Events\src;$(SolutionDir)components\Platform\src;$(SolutionDir)components\DevConsole\src;$(SolutionDir)libs\GLFW\include;$(SolutionDir)libs\Glad\include;$(SolutionDir)libs\glm;$(SolutionDir)libs\stb-master;$(SolutionDir)libs\tinyobjloader-master;E:\Programming\Codes\Game Development\Libraries\VulkanSDK\1.1.108.0\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)libs;$(SolutionDir)Dynamik\src;$(SolutionDir)Dynamik\GameLibraries;$(SolutionDir)components\ADGR;$(SolutionDir)components\ADGR\src;$(SolutionDir)components\Audio\src;$(SolutionDir)components\Events\src;$(SolutionDir)components\Platform\src;$(SolutionDir)components\DevConsole\src;$(SolutionDir)libs\GLFW\include;$(SolutionDir)libs\Glad\include;$(SolutionDir)libs\glm;$(SolutionDir)libs\stb-master;$(SolutionDir)libs\tinyobjloader-master;$(SolutionDir)\libs\irrKlang\include;$(SolutionDir)\libs\assimp;E:\Programming\Codes\Game Development\Libraries\VulkanSDK\1.1.108.0\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
@@ -100,7 +100,7 @@
       <PrecompiledHeaderFile>dmkafx.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>DMK_PLATFORM_WINDOWS;DMK_BUILD_DLL;_WINDLL;GLFW_INCLUDE_VULKAN;GLFW_INCLUDE_NONE;DMK_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)libs;$(SolutionDir)Dynamik\src;$(SolutionDir)Dynamik\GameLibraries;$(SolutionDir)components\ADGR;$(SolutionDir)components\ADGR\src;$(SolutionDir)components\Events\src;$(SolutionDir)components\Platform\src;$(SolutionDir)components\DevConsole\src;$(SolutionDir)libs\GLFW\include;$(SolutionDir)libs\Glad\include;$(SolutionDir)libs\glm;$(SolutionDir)libs\stb-master;$(SolutionDir)libs\tinyobjloader-master;E:\Programming\Codes\Game Development\Libraries\VulkanSDK\1.1.108.0\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)libs;$(SolutionDir)Dynamik\src;$(SolutionDir)Dynamik\GameLibraries;$(SolutionDir)components\ADGR;$(SolutionDir)components\ADGR\src;$(SolutionDir)components\Audio\src;$(SolutionDir)components\Events\src;$(SolutionDir)components\Platform\src;$(SolutionDir)components\DevConsole\src;$(SolutionDir)libs\GLFW\include;$(SolutionDir)libs\Glad\include;$(SolutionDir)libs\glm;$(SolutionDir)libs\stb-master;$(SolutionDir)libs\tinyobjloader-master;$(SolutionDir)\libs\irrKlang\include;$(SolutionDir)\libs\assimp;E:\Programming\Codes\Game Development\Libraries\VulkanSDK\1.1.108.0\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -124,7 +124,7 @@
       <PrecompiledHeaderFile>dmkafx.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>DMK_PLATFORM_WINDOWS;DMK_BUILD_DLL;_WINDLL;GLFW_INCLUDE_VULKAN;GLFW_INCLUDE_NONE;DMK_DISTRIBUTION;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)libs;$(SolutionDir)Dynamik\src;$(SolutionDir)Dynamik\GameLibraries;$(SolutionDir)components\ADGR;$(SolutionDir)components\ADGR\src;$(SolutionDir)components\Events\src;$(SolutionDir)components\Platform\src;$(SolutionDir)components\DevConsole\src;$(SolutionDir)libs\GLFW\include;$(SolutionDir)libs\Glad\include;$(SolutionDir)libs\glm;$(SolutionDir)libs\stb-master;$(SolutionDir)libs\tinyobjloader-master;E:\Programming\Codes\Game Development\Libraries\VulkanSDK\1.1.108.0\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)libs;$(SolutionDir)Dynamik\src;$(SolutionDir)Dynamik\GameLibraries;$(SolutionDir)components\ADGR;$(SolutionDir)components\ADGR\src;$(SolutionDir)components\Audio\src;$(SolutionDir)components\Events\src;$(SolutionDir)components\Platform\src;$(SolutionDir)components\DevConsole\src;$(SolutionDir)libs\GLFW\include;$(SolutionDir)libs\Glad\include;$(SolutionDir)libs\glm;$(SolutionDir)libs\stb-master;$(SolutionDir)libs\tinyobjloader-master;$(SolutionDir)\libs\irrKlang\include;$(SolutionDir)\libs\assimp;E:\Programming\Codes\Game Development\Libraries\VulkanSDK\1.1.108.0\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -176,10 +176,14 @@
   <ItemGroup>
     <None Include="IMPORTANT.txt" />
     <None Include="architecture.txt" />
+    <None Include="src\core\media\license.txt" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\components\ADGR\ADGR.vcxproj">
       <Project>{E3DE817C-CF15-830D-7802-69106418FF0E}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\components\Audio\Audio.vcxproj">
+      <Project>{9718D90C-032D-01BE-CCAE-A41D3882FDEE}</Project>
     </ProjectReference>
     <ProjectReference Include="..\components\Events\Events.vcxproj">
       <Project>{3A8963B1-262B-8E87-0FE6-A1DBFB2615D8}</Project>

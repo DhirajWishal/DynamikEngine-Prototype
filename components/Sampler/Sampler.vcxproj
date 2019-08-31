@@ -191,13 +191,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="src\Renderer\backend\core\Core.cpp" />
     <ClCompile Include="src\Renderer\Platform\Windows\utils\loadIcon.cpp" />
     <ClCompile Include="src\Renderer\Platform\Windows\utils\readFile.cpp" />
     <ClCompile Include="src\Renderer\Platform\Windows\window.cpp" />
     <ClCompile Include="src\Renderer\Renderer.cpp" />
     <ClCompile Include="src\Renderer\backend\colorBuffer.cpp" />
     <ClCompile Include="src\Renderer\backend\commandBuffer.cpp" />
+    <ClCompile Include="src\Renderer\backend\core\Core.cpp" />
     <ClCompile Include="src\Renderer\backend\data structures\vertex.cpp" />
     <ClCompile Include="src\Renderer\backend\depthBuffer.cpp" />
     <ClCompile Include="src\Renderer\backend\device.cpp" />

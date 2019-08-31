@@ -16,7 +16,7 @@ namespace Dynamik {
 				std::vector<uint32_t> indices;
 			};
 
-			class commandBufferManager : public Buffer {
+			class ADGR_API commandBufferManager : public Buffer {
 			public:
 				commandBufferManager() {}
 				~commandBufferManager() {}

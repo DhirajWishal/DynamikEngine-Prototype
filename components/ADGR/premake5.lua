@@ -37,6 +37,7 @@ project "ADGR"
 		"%{IncludeDir.glm}",
 		"%{IncludeDir.stb}",
 		"%{IncludeDir.tol}",
+		"%{IncludeDir.assimp}",
 		"%{IncludeDir.Vulkan}"
 	}
 

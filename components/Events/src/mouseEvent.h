@@ -74,4 +74,14 @@ namespace Dynamik {
 
 		EVENT_CLASS_TYPE(mouseButtonReleased)
 	};
+
+	struct mouseEventData {
+		MouseButtonPressedEvent mouseButtonPressedEvent;
+		MouseButtonReleasedEvent mouseButonReleasedEvent;
+
+		MouseMovedEvent mouseMovedEvent;
+
+		MouseScrolledEvent mouseScrolledEvent;
+
+	};
 }

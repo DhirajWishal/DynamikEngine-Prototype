@@ -216,6 +216,9 @@
     <ClCompile Include="src\Renderer\backend\commandBuffer.cpp">
       <Filter>src\Renderer\backend</Filter>
     </ClCompile>
+    <ClCompile Include="src\Renderer\backend\core\Core.cpp">
+      <Filter>src\Renderer\backend\core</Filter>
+    </ClCompile>
     <ClCompile Include="src\Renderer\backend\data structures\vertex.cpp">
       <Filter>src\Renderer\backend\data structures</Filter>
     </ClCompile>
@@ -291,7 +294,6 @@
     <ClCompile Include="src\smpafx.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="src\Renderer\backend\core\Core.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="premake5.lua" />

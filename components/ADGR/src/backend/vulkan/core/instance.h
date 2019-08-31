@@ -6,7 +6,7 @@ namespace Dynamik {
 	namespace ADGR {
 		namespace core {
 
-			class instanceManager : public Instance {
+			class ADGR_API instanceManager : public Instance {
 			public:
 				instanceManager() {}
 				~instanceManager() {}

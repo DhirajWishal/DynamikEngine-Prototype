@@ -2,8 +2,6 @@
 
 #include "core/Buffer.h"
 
-#include "data structures/vertex.h"
-
 namespace Dynamik {
 	namespace ADGR {
 		namespace core {
@@ -20,7 +18,7 @@ namespace Dynamik {
 				VkDeviceMemory bufferMemory;
 			};
 
-			class vertexBufferManager : public Buffer {
+			class ADGR_API vertexBufferManager : public Buffer {
 			public:
 				vertexBufferManager() {}
 				~vertexBufferManager() {}

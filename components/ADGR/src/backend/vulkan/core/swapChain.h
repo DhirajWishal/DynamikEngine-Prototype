@@ -11,7 +11,7 @@ namespace Dynamik {
 				std::vector<VkDeviceMemory> uniformBufferMemories;
 			};
 
-			class swapChain : public SwapChain {
+			class ADGR_API swapChain : public SwapChain {
 			public:
 				swapChain() {}
 				~swapChain() {}

@@ -110,6 +110,10 @@ namespace Dynamik {
 			modelInfo.vertices = &vbo;
 			modelInfo.indices = &ibo;
 
+			std::vector<float> offsets = { 0.0f, 0.0f, 0.0f };
+
+			modelInfo.vertexOffset = offsets;
+
 			myModelManager.loadModel(modelInfo);
 
 			// vert buff creation

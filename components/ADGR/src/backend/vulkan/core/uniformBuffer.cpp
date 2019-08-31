@@ -56,8 +56,24 @@ namespace Dynamik {
 
 				else;
 
+				if (info.upDown[0])
+					up += upDownBias;
+
+				else if (info.upDown[1])
+					up -= upDownBias;
+
+				else;
+
+				if (info.rotation[1])
+					rotation += rotationBias;
+
+				else if (info.rotation[0])
+					rotation -= rotationBias;
+
+				else;
+
 				UniformBufferObject ubo = {};
-				ubo.model = glm::rotate(glm::translate(glm::mat4(1.0f), glm::vec3(mve, trn, 0.0f)), glm::radians(45.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+				ubo.model = glm::rotate(glm::translate(glm::mat4(1.0f), glm::vec3(mve, trn, up)), /*time */ glm::radians(rotation), glm::vec3(0.0f, 0.0f, 1.0f));
 				ubo.view = glm::lookAt(glm::vec3(0.5f, 3.0f, 0.5f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 1.0f));
 				ubo.proj = glm::perspective(glm::radians(45.0f), swapChainExtent.width / (float)swapChainExtent.height, 0.1f, 10.0f);
 				ubo.proj[1][1] *= -1;
@@ -84,19 +100,26 @@ namespace Dynamik {
 				*/
 			}
 
-			void uniformBufferManager::createDescriptorSetLayout() {
+			void uniformBufferManager::createDescriptorSetLayout(DMKUniformBufferCreateDescriptorSetLayoutInfo info) {
 				VkDescriptorSetLayoutBinding uboLayoutBinding = {};
-				uboLayoutBinding.binding = 0;
+				uboLayoutBinding.binding = info.bindIndex[0]; // info.bindIndex;
 				uboLayoutBinding.descriptorCount = 1;
 				uboLayoutBinding.descriptorType = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;
 				uboLayoutBinding.pImmutableSamplers = nullptr; // Optional
 				uboLayoutBinding.stageFlags = VK_SHADER_STAGE_VERTEX_BIT;
 
+				//VkDescriptorSetLayoutBinding dynamicUboLayoutBinding = {};
+				//dynamicUboLayoutBinding.binding = info.bindIndex[1]; // info.bindIndex;
+				//dynamicUboLayoutBinding.descriptorCount = 1;
+				//dynamicUboLayoutBinding.descriptorType = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER_DYNAMIC;
+				//dynamicUboLayoutBinding.pImmutableSamplers = nullptr; // Optional
+				//dynamicUboLayoutBinding.stageFlags = VK_SHADER_STAGE_VERTEX_BIT;
+
 				VkDescriptorSetLayoutBinding samplerLayoutBinding = {};
-				samplerLayoutBinding.binding = 1;
+				samplerLayoutBinding.binding = info.bindIndex[1]; // info.bindIndex;
 				samplerLayoutBinding.descriptorCount = 1;
 				samplerLayoutBinding.descriptorType = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
-				samplerLayoutBinding.pImmutableSamplers = nullptr;
+				samplerLayoutBinding.pImmutableSamplers = nullptr; // Optional
 				samplerLayoutBinding.stageFlags = VK_SHADER_STAGE_FRAGMENT_BIT;
 
 				std::array<VkDescriptorSetLayoutBinding, 2> bindings = { uboLayoutBinding, samplerLayoutBinding };
@@ -105,15 +128,17 @@ namespace Dynamik {
 				layoutInfo.bindingCount = static_cast<uint32_t>(bindings.size());
 				layoutInfo.pBindings = bindings.data();
 
-				if (vkCreateDescriptorSetLayout(*m_device, &layoutInfo, nullptr,
-					m_descriptorSetLayout) != VK_SUCCESS)
+				if (vkCreateDescriptorSetLayout(*m_device, &layoutInfo, nullptr, info.layout) != VK_SUCCESS)
 					std::runtime_error("failed to create descriptor set layout!");
 			}
 
-			void uniformBufferManager::initDescriptorPool() {
+			void uniformBufferManager::initDescriptorPool(VkDescriptorPool* descriptorPool) {
 				std::array<VkDescriptorPoolSize, 2> poolSizes = {};
 				poolSizes[0].type = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;
 				poolSizes[0].descriptorCount = static_cast<uint32>(swapChainImages.size());
+
+				//poolSizes[1].type = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;
+				//poolSizes[1].descriptorCount = static_cast<uint32>(swapChainImages.size());
 
 				poolSizes[1].type = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
 				poolSizes[1].descriptorCount = static_cast<uint32>(swapChainImages.size());
@@ -124,15 +149,15 @@ namespace Dynamik {
 				poolInfo.pPoolSizes = poolSizes.data();
 				poolInfo.maxSets = static_cast<uint32>(swapChainImages.size());
 
-				if (vkCreateDescriptorPool(*m_device, &poolInfo, nullptr, m_descriptorPool) != VK_SUCCESS)
+				if (vkCreateDescriptorPool(*m_device, &poolInfo, nullptr, descriptorPool) != VK_SUCCESS)
 					std::runtime_error("failed to create descriptor pool!");
 			}
 
 			void uniformBufferManager::initDescriptorSets(DMKDescriptorSetsInitInfo info) {
-				std::vector<VkDescriptorSetLayout> layouts(swapChainImages.size(), *m_descriptorSetLayout);
+				std::vector<VkDescriptorSetLayout> layouts(swapChainImages.size(), *info.layout);
 				VkDescriptorSetAllocateInfo allocInfo = {};
 				allocInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_ALLOCATE_INFO;
-				allocInfo.descriptorPool = *m_descriptorPool;
+				allocInfo.descriptorPool = info.descriptorPool;
 				allocInfo.descriptorSetCount = static_cast<uint32>(swapChainImages.size());
 				allocInfo.pSetLayouts = layouts.data();
 
@@ -155,15 +180,23 @@ namespace Dynamik {
 
 					descriptorWrites[0].sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
 					descriptorWrites[0].dstSet = info.descriptorSets->at(i);
-					descriptorWrites[0].dstBinding = 0;
+					descriptorWrites[0].dstBinding = info.bindIndex[0];
 					descriptorWrites[0].dstArrayElement = 0;
 					descriptorWrites[0].descriptorType = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;
 					descriptorWrites[0].descriptorCount = 1;
 					descriptorWrites[0].pBufferInfo = &bufferInfo;
 
+					//descriptorWrites[1].sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
+					//descriptorWrites[1].dstSet = info.descriptorSets->at(i);
+					//descriptorWrites[1].dstBinding = info.bindIndex[1];
+					//descriptorWrites[1].dstArrayElement = 0;
+					//descriptorWrites[1].descriptorType = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER_DYNAMIC;
+					//descriptorWrites[1].descriptorCount = 1;
+					//descriptorWrites[1].pBufferInfo = &bufferInfo;
+
 					descriptorWrites[1].sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
 					descriptorWrites[1].dstSet = info.descriptorSets->at(i);
-					descriptorWrites[1].dstBinding = 1;
+					descriptorWrites[1].dstBinding = info.bindIndex[1];
 					descriptorWrites[1].dstArrayElement = 0;
 					descriptorWrites[1].descriptorType = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
 					descriptorWrites[1].descriptorCount = 1;
@@ -171,7 +204,7 @@ namespace Dynamik {
 
 					vkUpdateDescriptorSets(*m_device, static_cast<uint32_t>(descriptorWrites.size()),
 						descriptorWrites.data(), 0, nullptr);
-				}
+				} // make two descriptor layouts for each descriptor set
 			}
 
 			void uniformBufferManager::deleteBuffer(VkBuffer* buffer) {

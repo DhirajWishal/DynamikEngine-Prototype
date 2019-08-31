@@ -11,6 +11,7 @@
 
 #include "debugger/debugger.h"
 #include "core/utils/DMK_DataTypes.h"
+#include "backend/Interface.h"
 
 namespace Dynamik {
 	namespace ADGR {
@@ -18,8 +19,8 @@ namespace Dynamik {
 
 			const std::vector<const char*> validationLayer = {
 				"VK_LAYER_LUNARG_standard_validation",
-				"VK_LAYER_LUNARG_core_validation",
-				"VK_LAYER_KHRONOS_validation"
+				//"VK_LAYER_LUNARG_core_validation",
+				//"VK_LAYER_KHRONOS_validation"
 			};
 
 #ifdef DMK_DEBUG

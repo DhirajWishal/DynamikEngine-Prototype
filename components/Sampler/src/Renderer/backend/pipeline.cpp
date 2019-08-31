@@ -33,8 +33,8 @@ namespace Dynamik {
 				viewport.y = 0.0f;
 				viewport.width = (float)swapChainExtent.width;
 				viewport.height = (float)swapChainExtent.height;
-				viewport.minDepth = 0.0f;
-				viewport.maxDepth = 1.0f;
+				viewport.minDepth = -5.0f;
+				viewport.maxDepth = 5.0f;
 
 				// initialize the scissor
 				VkRect2D scissor = {};

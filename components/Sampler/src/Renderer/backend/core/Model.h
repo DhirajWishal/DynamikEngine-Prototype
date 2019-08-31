@@ -14,7 +14,7 @@ namespace Dynamik {
 				std::vector<Vertex>* vertices;
 				std::vector<uint32_t>* indices;
 
-				float vertexOffset[3] = { 0.0f, 0.0f, 0.0f };	// x, y, z
+				std::vector<float> vertexOffset = { 0.0f, 0.0f, 0.0f };	// x, y, z
 			};
 
 			class Model : public Core {

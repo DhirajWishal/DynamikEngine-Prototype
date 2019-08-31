@@ -1,7 +1,6 @@
 #include "adgrafx.h"
 #include "pipeline.h"
 
-#include "data structures/vertex.h"
 #include "functions/bufferFunctions.h"
 
 namespace Dynamik {
@@ -9,16 +8,16 @@ namespace Dynamik {
 		namespace core {
 			using namespace functions;
 
-			void pipeline::init() {
+			void pipeline::init(DMKPipelineInitInfo info) {
 				VkPipelineVertexInputStateCreateInfo vertexInputInfo = {};
 				vertexInputInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO;
 
-				auto bindingDescription = Vertex::getBindingDescription();
-				auto attributeDescriptions = Vertex::getAttributeDescriptions();
+				auto bindingDescription = Vertex::getBindingDescription(2);
+				auto attributeDescriptions = Vertex::getAttributeDescriptions(2);
 
-				vertexInputInfo.vertexBindingDescriptionCount = 1;
+				vertexInputInfo.vertexBindingDescriptionCount = bindingDescription.size();
 				vertexInputInfo.vertexAttributeDescriptionCount = static_cast<uint32_t>(attributeDescriptions.size());
-				vertexInputInfo.pVertexBindingDescriptions = &bindingDescription;
+				vertexInputInfo.pVertexBindingDescriptions = bindingDescription.data();
 				vertexInputInfo.pVertexAttributeDescriptions = attributeDescriptions.data();
 
 				// initialize the input assembler
@@ -95,15 +94,33 @@ namespace Dynamik {
 				colorBlending.blendConstants[2] = 0.0f;
 				colorBlending.blendConstants[3] = 0.0f;
 
+				//VkPushConstantRange pushConsInfo = {};
+				//pushConsInfo.stageFlags = VK_SHADER_STAGE_VERTEX_BIT;
+				//pushConsInfo.size = sizeof(pushConstants);
+				//pushConsInfo.offset = 0;
+
 				// initialize the pipeline layout
 				VkPipelineLayoutCreateInfo pipelineLayoutInfo = {};
 				pipelineLayoutInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO;
-				pipelineLayoutInfo.setLayoutCount = 1;
-				pipelineLayoutInfo.pSetLayouts = &descriptorSetLayout;
+				pipelineLayoutInfo.setLayoutCount = static_cast<uint32_t>(info.layouts.size());
+				pipelineLayoutInfo.pSetLayouts = info.layouts.data();
+				//pipelineLayoutInfo.pushConstantRangeCount = 1;	// make support for multiple
+				//pipelineLayoutInfo.pPushConstantRanges = &pushConsInfo;
 
 				// create the pipeline layout
 				if (vkCreatePipelineLayout(*m_device, &pipelineLayoutInfo, nullptr, m_pipelineLayout) != VK_SUCCESS)
 					std::runtime_error("failed to create pipeline layout!");
+
+				std::vector<VkDynamicState> dynamicState = {
+					VK_DYNAMIC_STATE_VIEWPORT,
+					VK_DYNAMIC_STATE_SCISSOR
+				};
+
+				VkPipelineDynamicStateCreateInfo dynamicStateInfo = {};
+				dynamicStateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_DYNAMIC_STATE_CREATE_INFO;
+				dynamicStateInfo.dynamicStateCount = dynamicState.size();
+				dynamicStateInfo.pDynamicStates = dynamicState.data();
+				dynamicStateInfo.flags = 0;
 
 				VkPipelineShaderStageCreateInfo shaderStages[] = {
 					vertexShaderStageInfo,
@@ -126,10 +143,10 @@ namespace Dynamik {
 				pipelineInfo.renderPass = renderPass;
 				pipelineInfo.subpass = 0;
 				pipelineInfo.basePipelineHandle = VK_NULL_HANDLE;
+				//pipelineInfo.pDynamicState = &dynamicStateInfo;
 
 				// create the pipeline
-				if (vkCreateGraphicsPipelines(*m_device, VK_NULL_HANDLE, 1,
-					&pipelineInfo, nullptr, m_pipeline) != VK_SUCCESS)
+				if (vkCreateGraphicsPipelines(*m_device, VK_NULL_HANDLE, 1, &pipelineInfo, nullptr, m_pipeline) != VK_SUCCESS)
 					std::runtime_error("failed to create graphics pipeline!");
 			}
 
@@ -178,7 +195,7 @@ namespace Dynamik {
 				colorAttachmentResolveRef.attachment = 2;
 				colorAttachmentResolveRef.layout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
 
-				// subpasses
+				// sub passes
 				VkSubpassDescription subpass = {};
 				subpass.pipelineBindPoint = VK_PIPELINE_BIND_POINT_GRAPHICS;
 				subpass.colorAttachmentCount = 1;

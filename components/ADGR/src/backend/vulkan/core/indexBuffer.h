@@ -18,7 +18,7 @@ namespace Dynamik {
 				VkDeviceMemory bufferMemory;
 			};
 
-			class indexBufferManager : public Buffer {
+			class ADGR_API indexBufferManager : public Buffer {
 			public:
 				indexBufferManager() {}
 				~indexBufferManager() {}

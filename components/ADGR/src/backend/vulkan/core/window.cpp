@@ -12,14 +12,20 @@ namespace Dynamik {
 
 			void window::init() {
 				glfwInit();
-				glfwInit();
 
 				glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
 #ifdef DMK_DEBUG
 				m_window = glfwCreateWindow(WIDTH, HEIGHT, "Dynamik Engine", nullptr, nullptr);
 
 #else
-				window = glfwCreateWindow(WIDTH, HEIGHT, "Dynamik Engine", glfwGetPrimaryMonitor(), nullptr);
+				GLFWmonitor* monitor = glfwGetPrimaryMonitor();
+				const GLFWvidmode* mode = glfwGetVideoMode(monitor);
+				glfwWindowHint(GLFW_RED_BITS, mode->redBits);
+				glfwWindowHint(GLFW_GREEN_BITS, mode->greenBits);
+				glfwWindowHint(GLFW_BLUE_BITS, mode->blueBits);
+				glfwWindowHint(GLFW_REFRESH_RATE, mode->refreshRate);
+
+				m_window = glfwCreateWindow(mode->width, mode->height, "Dynamik Engine", monitor, NULL);
 
 #endif
 				glfwMakeContextCurrent(m_window);
@@ -40,9 +46,8 @@ namespace Dynamik {
 				printf("%s\n", renderer);
 			}
 
-			void window::eventCallbackFunc(Event& event)
-			{
-				myEvent = &event;
+			void window::eventCallbackFunc(KeyPressedEvent& event) {
+				myData.event = &event;
 			}
 
 			void window::framebufferResizeCallback(GLFWwindow* win, int width, int height) {
@@ -57,14 +62,16 @@ namespace Dynamik {
 				switch (action) {
 				case DMK_PRESS: {
 					KeyPressedEvent kp_event(keycode, 0);
-					data->eventCallbackFunc(kp_event);
+					//data->eventCallbackFunc(kp_event);
 					data->keyEventHandler(keycode);
+					//data->ked->keyPressedEvent = kp_event;
 
 					break;
 				}
 				case DMK_RELEASE: {
 					KeyReleasedEvent kr_event(keycode);
-					data->eventCallbackFunc(kr_event);
+					//data->eventCallbackFunc(kr_event);
+					//data->ked->keyReleasedEvent = kr_event;
 					data->kE.turnEventR = false;	// temp
 					data->kE.turnEventL = false;	// temp
 					data->kE.moveEventU = false;	// temp
@@ -78,13 +85,14 @@ namespace Dynamik {
 				}
 				case DMK_REPEAT: {
 					KeyPressedEvent krep_event(keycode, 1);
-					data->eventCallbackFunc(krep_event);
+					//data->eventCallbackFunc(krep_event);
+					//data->ked->keyRepeatEvent = krep_event;
 					data->keyEventHandler(keycode);
 
 					break;
 				}
 				default:
-					data->myEvent = nullptr;
+					data->myData.event = nullptr;
 					break;
 				}
 			}
@@ -95,18 +103,18 @@ namespace Dynamik {
 				switch (action) {
 				case DMK_PRESS: {
 					MouseButtonPressedEvent mbp_event(button);
-					data->eventCallbackFunc(mbp_event);
+					//data->eventCallbackFunc(mbp_event);
 
 					break;
 				}
 				case DMK_RELEASE: {
 					MouseButtonReleasedEvent mbr_event(button);
-					data->eventCallbackFunc(mbr_event);
+					//data->eventCallbackFunc(mbr_event);
 
 					break;
 				}
 				default:
-					data->myEvent = nullptr;
+					data->myData.event = nullptr;
 					break;
 				}
 			}
@@ -115,14 +123,14 @@ namespace Dynamik {
 				auto data = reinterpret_cast<window*>(glfwGetWindowUserPointer(win));
 
 				MouseScrolledEvent event((float)xOffset, (float)yOffset);
-				data->eventCallbackFunc(event);
+				//data->eventCallbackFunc(event);
 			}
 
 			void window::onCursorPosEvent(GLFWwindow* win, double xPos, double yPos) {
 				auto data = reinterpret_cast<window*>(glfwGetWindowUserPointer(win));
 
 				MouseMovedEvent event((float)xPos, (float)yPos);
-				data->eventCallbackFunc(event);
+				//data->eventCallbackFunc(event);
 			}
 
 			bool window::createWindowSurface() {

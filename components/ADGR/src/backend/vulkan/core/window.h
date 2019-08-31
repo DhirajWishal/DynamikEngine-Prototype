@@ -1,7 +1,9 @@
 #pragma once
 
 #include "core/Window.h"
-#include "Event.h"
+
+#include "keyEvent.h"
+#include "mouseEvent.h"
 
 namespace Dynamik {
 	namespace ADGR {
@@ -18,13 +20,15 @@ namespace Dynamik {
 				bool turnEventL = false;
 				bool moveEventU = false;
 				bool moveEventD = false;
+				bool upDownEventU = false;
+				bool upDownEventD = false;
 				bool rotEventL = false;
 				bool rotEventR = false;
 				bool rotEventU = false;
 				bool rotEventD = false;
 			};
 
-			class window : public Window {
+			class ADGR_API window : public Window {
 			public:
 				window() {}
 				~window() {}
@@ -45,10 +49,15 @@ namespace Dynamik {
 
 				keyEvent getKeyEvent();
 
+				std::tuple<keyEventData*, mouseEventData*> getEvent() { 
+					std::tuple<keyEventData*, mouseEventData*> data = { ked, med };
+					return data;
+				}
+
 			private:
 				void keyEventHandler(int keycode);
 
-				using eventCallbackFunction = std::function<void(Event&)>;
+				using eventCallbackFunction = std::function<void(Event&, int)>;
 
 				GLFWwindow* m_window = windowsWindow;
 
@@ -66,7 +75,13 @@ namespace Dynamik {
 				static void onMouseButtonEvent(GLFWwindow* window, int button, int action, int mods);
 				static void onMouseScrolledEvent(GLFWwindow* window, double xOffset, double yOffset);
 				static void onCursorPosEvent(GLFWwindow* window, double xPos, double yPos);
-				void eventCallbackFunc(Event& event);
+
+				void eventCallbackFunc(KeyPressedEvent& event);
+				void eventCallbackFunc(KeyReleasedEvent& event);
+				void eventCallbackFunc(MouseButtonPressedEvent& event);
+				void eventCallbackFunc(MouseButtonReleasedEvent& event);
+				void eventCallbackFunc(MouseScrolledEvent& event);
+				void eventCallbackFunc(MouseMovedEvent& event);
 
 				void setEventCallback(const eventCallbackFunction& callback)
 				{
@@ -75,9 +90,13 @@ namespace Dynamik {
 
 				eventCallbackFunction myEventCallbackFunction;
 
-				Event* myEvent;
+				eventData myData;
 
 				keyEvent kE;
+
+				//codes
+				mouseEventData* med;
+				keyEventData* ked;
 			};
 		}
 	}

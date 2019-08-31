@@ -1,7 +1,7 @@
 ---------- Audio project ----------
 
 project "Audio"
-	kind "ConsoleApp"
+	kind "StaticLib"
 	language "C++"
 	cppdialect "c++17"
 	staticruntime "On"

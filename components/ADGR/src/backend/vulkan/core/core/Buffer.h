@@ -19,7 +19,7 @@ namespace Dynamik {
 				virtual void deleteBuffer(VkBuffer* buffer) {}
 
 			protected:
-				virtual void createDescriptorSetLayout() {}
+				virtual void createDescriptorSetLayout(VkDescriptorSetLayout* layout) {}
 				virtual void initDescriptorPool() {}
 			};
 		}

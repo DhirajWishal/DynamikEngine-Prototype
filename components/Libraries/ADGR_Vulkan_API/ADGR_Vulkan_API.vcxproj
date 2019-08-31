@@ -1,0 +1,238 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Distribution|x64">
+      <Configuration>Distribution</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{CCEB1755-3877-8519-4188-080EAD92E119}</ProjectGuid>
+    <IgnoreWarnCompileDuplicatedFilename>true</IgnoreWarnCompileDuplicatedFilename>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>ADGR_Vulkan_API</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Distribution|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Distribution|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <OutDir>$(SolutionDir)bin\$(Configuration)-$(Platform)\Application\</OutDir>
+    <IntDir>$(SolutionDir)intDir\$(Configuration)-$(Platform)\$(ProjectName)\Debug\ADGR_Vulkan_API\</IntDir>
+    <TargetName>ADGR_Vulkan_API</TargetName>
+    <TargetExt>.lib</TargetExt>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <OutDir>$(SolutionDir)bin\$(Configuration)-$(Platform)\Application\</OutDir>
+    <IntDir>$(SolutionDir)intDir\$(Configuration)-$(Platform)\$(ProjectName)\Release\ADGR_Vulkan_API\</IntDir>
+    <TargetName>ADGR_Vulkan_API</TargetName>
+    <TargetExt>.lib</TargetExt>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Distribution|x64'">
+    <OutDir>$(SolutionDir)bin\$(Configuration)-$(Platform)\Application\</OutDir>
+    <IntDir>$(SolutionDir)intDir\$(Configuration)-$(Platform)\$(ProjectName)\Distribution\ADGR_Vulkan_API\</IntDir>
+    <TargetName>ADGR_Vulkan_API</TargetName>
+    <TargetExt>.lib</TargetExt>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>vkafx.h</PrecompiledHeaderFile>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>DMK_PLATFORM_WINDOWS;DMK_BUILD_DLL;GLFW_INCLUDE_VULKAN;DMK_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir)libs;$(SolutionDir)Dynamik\src;$(SolutionDir)Dynamik\GameLibraries;$(SolutionDir)lib\libs;$(SolutionDir)components\Libraries\ADGR_Vulkan_API;$(SolutionDir)components\Libraries\ADGR_Vulkan_API\src;$(SolutionDir)components\Events\src;$(SolutionDir)components\Managers\src;$(SolutionDir)components\Platform\src;$(SolutionDir)components\Dynamik\src;$(SolutionDir)libs\GLFW\include;$(SolutionDir)libs\glm;$(SolutionDir)libs\stb-master;$(SolutionDir)libs\tinyobjloader-master;E:\Programming\Codes\Game Development\Libraries\VulkanSDK\1.1.108.0\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <Optimization>Disabled</Optimization>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+    <Lib>
+      <AdditionalDependencies>glfw3dll.lib;opengl32.lib;vulkan-1.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)libs\GLFW\lib-vc2019;E:\Programming\Codes\Game Development\Libraries\VulkanSDK\1.1.108.0\Lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>vkafx.h</PrecompiledHeaderFile>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>DMK_PLATFORM_WINDOWS;DMK_BUILD_DLL;GLFW_INCLUDE_VULKAN;DMK_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir)libs;$(SolutionDir)Dynamik\src;$(SolutionDir)Dynamik\GameLibraries;$(SolutionDir)lib\libs;$(SolutionDir)components\Libraries\ADGR_Vulkan_API;$(SolutionDir)components\Libraries\ADGR_Vulkan_API\src;$(SolutionDir)components\Events\src;$(SolutionDir)components\Managers\src;$(SolutionDir)components\Platform\src;$(SolutionDir)components\Dynamik\src;$(SolutionDir)libs\GLFW\include;$(SolutionDir)libs\glm;$(SolutionDir)libs\stb-master;$(SolutionDir)libs\tinyobjloader-master;E:\Programming\Codes\Game Development\Libraries\VulkanSDK\1.1.108.0\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <Optimization>Full</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <StringPooling>true</StringPooling>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+    <Lib>
+      <AdditionalDependencies>glfw3dll.lib;opengl32.lib;vulkan-1.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)libs\GLFW\lib-vc2019;E:\Programming\Codes\Game Development\Libraries\VulkanSDK\1.1.108.0\Lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Distribution|x64'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>vkafx.h</PrecompiledHeaderFile>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>DMK_PLATFORM_WINDOWS;DMK_BUILD_DLL;GLFW_INCLUDE_VULKAN;DMK_DISTRIBUTION;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir)libs;$(SolutionDir)Dynamik\src;$(SolutionDir)Dynamik\GameLibraries;$(SolutionDir)lib\libs;$(SolutionDir)components\Libraries\ADGR_Vulkan_API;$(SolutionDir)components\Libraries\ADGR_Vulkan_API\src;$(SolutionDir)components\Events\src;$(SolutionDir)components\Managers\src;$(SolutionDir)components\Platform\src;$(SolutionDir)components\Dynamik\src;$(SolutionDir)libs\GLFW\include;$(SolutionDir)libs\glm;$(SolutionDir)libs\stb-master;$(SolutionDir)libs\tinyobjloader-master;E:\Programming\Codes\Game Development\Libraries\VulkanSDK\1.1.108.0\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <Optimization>Full</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <StringPooling>true</StringPooling>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+    <Lib>
+      <AdditionalDependencies>glfw3dll.lib;opengl32.lib;vulkan-1.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)libs\GLFW\lib-vc2019;E:\Programming\Codes\Game Development\Libraries\VulkanSDK\1.1.108.0\Lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="ADGR_Vulkan_API.h" />
+    <ClInclude Include="src\core\backend.h" />
+    <ClInclude Include="src\core\colorBuffer.h" />
+    <ClInclude Include="src\core\commandBuffer.h" />
+    <ClInclude Include="src\core\controlHeader.h" />
+    <ClInclude Include="src\core\core\Buffer.h" />
+    <ClInclude Include="src\core\core\Core.h" />
+    <ClInclude Include="src\core\core\Device.h" />
+    <ClInclude Include="src\core\core\Instance.h" />
+    <ClInclude Include="src\core\core\Model.h" />
+    <ClInclude Include="src\core\core\Pipeline.h" />
+    <ClInclude Include="src\core\core\Shader.h" />
+    <ClInclude Include="src\core\core\SwapChain.h" />
+    <ClInclude Include="src\core\core\Texture.h" />
+    <ClInclude Include="src\core\core\Window.h" />
+    <ClInclude Include="src\core\data structures\Uniform.h" />
+    <ClInclude Include="src\core\data structures\mesh.h" />
+    <ClInclude Include="src\core\data structures\vertex.h" />
+    <ClInclude Include="src\core\data structures\vulkan.h" />
+    <ClInclude Include="src\core\data types\typenames.h" />
+    <ClInclude Include="src\core\depthBuffer.h" />
+    <ClInclude Include="src\core\device.h" />
+    <ClInclude Include="src\core\extensions\extensions.h" />
+    <ClInclude Include="src\core\frameBuffer.h" />
+    <ClInclude Include="src\core\functions\bufferFunctions.h" />
+    <ClInclude Include="src\core\functions\textureFunctions.h" />
+    <ClInclude Include="src\core\indexBuffer.h" />
+    <ClInclude Include="src\core\instance.h" />
+    <ClInclude Include="src\core\modelManager.h" />
+    <ClInclude Include="src\core\others\semaphores.h" />
+    <ClInclude Include="src\core\others\syncObjects.h" />
+    <ClInclude Include="src\core\pipeline.h" />
+    <ClInclude Include="src\core\queues\queues.h" />
+    <ClInclude Include="src\core\shader.h" />
+    <ClInclude Include="src\core\swapChain.h" />
+    <ClInclude Include="src\core\texture.h" />
+    <ClInclude Include="src\core\uniformBuffer.h" />
+    <ClInclude Include="src\core\validators\debugger\debugger.h" />
+    <ClInclude Include="src\core\validators\validators.h" />
+    <ClInclude Include="src\core\vertexBuffer.h" />
+    <ClInclude Include="src\core\window.h" />
+    <ClInclude Include="src\vkafx.h" />
+    <ClInclude Include="src\vulkanRenderer.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\core\colorBuffer.cpp" />
+    <ClCompile Include="src\core\commandBuffer.cpp" />
+    <ClCompile Include="src\core\core\Core.cpp" />
+    <ClCompile Include="src\core\data structures\vertex.cpp" />
+    <ClCompile Include="src\core\depthBuffer.cpp" />
+    <ClCompile Include="src\core\device.cpp" />
+    <ClCompile Include="src\core\extensions\extensions.cpp" />
+    <ClCompile Include="src\core\frameBuffer.cpp" />
+    <ClCompile Include="src\core\functions\bufferFunctions.cpp" />
+    <ClCompile Include="src\core\functions\textureFunctions.cpp" />
+    <ClCompile Include="src\core\indexBuffer.cpp" />
+    <ClCompile Include="src\core\instance.cpp" />
+    <ClCompile Include="src\core\modelManager.cpp" />
+    <ClCompile Include="src\core\others\semaphores.cpp" />
+    <ClCompile Include="src\core\others\syncObjects.cpp" />
+    <ClCompile Include="src\core\pipeline.cpp" />
+    <ClCompile Include="src\core\queues\queues.cpp" />
+    <ClCompile Include="src\core\shader.cpp" />
+    <ClCompile Include="src\core\swapChain.cpp" />
+    <ClCompile Include="src\core\texture.cpp" />
+    <ClCompile Include="src\core\uniformBuffer.cpp" />
+    <ClCompile Include="src\core\validators\debugger\debugger.cpp" />
+    <ClCompile Include="src\core\validators\validators.cpp" />
+    <ClCompile Include="src\core\vertexBuffer.cpp" />
+    <ClCompile Include="src\core\window.cpp" />
+    <ClCompile Include="src\vkafx.cpp">
+      <PrecompiledHeader>Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="src\vulkanRenderer.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="premake5.lua" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Events\Events.vcxproj">
+      <Project>{3A8963B1-262B-8E87-0FE6-A1DBFB2615D8}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Platform\Platform.vcxproj">
+      <Project>{2AC788B4-1694-E3BF-3FAD-D1672BD9184E}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Managers\Managers.vcxproj">
+      <Project>{B34CFEBD-9F19-59C9-C832-4771B45E8E57}</Project>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

@@ -81,6 +81,22 @@ namespace Dynamik {
 
 	/* GLFW bindings */
 
+	enum EventType {
+		KEY_PRESSED_EVENT,
+		KEY_RELEASED_EVENT,
+		KEY_REPEAT_EVENT,
+		MOUSE_BUTTON_PRESSED_EVENT,
+		MOUSE_BUTTON_RELEASED_EVENT,
+		MOUSE_SCROLLED_EVENT,
+		MOUSE_MOVED_EVENT,
+		APPLICATION_EVENT
+	};
+
+	struct eventData {
+		Event* event = nullptr;
+		EventType type;
+	};
+
 	struct keyEventProperties {
 		int keyCode;
 		int scancode;

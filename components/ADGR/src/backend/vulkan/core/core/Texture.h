@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Core.h"
+#include "Platform/Windows/resource/imageLoader.h"
 
 namespace Dynamik {
 	namespace ADGR {
@@ -14,6 +15,26 @@ namespace Dynamik {
 				int height;
 
 				uint32_t mipLevels;
+
+				// for skybox and cubamap
+				uint32_t size;
+				VkBuffer* stagingBuffer;
+				VkImageLayout imageLayout;
+				VkImageView* imageView;
+				VkSampler imageSampler;
+			};
+
+			struct DMKSkyboxInitInfo {
+				std::string path = "";
+
+				VkImage* skyboxImage;
+				VkImageLayout imageLayout;
+				VkSampler imageSampler;
+
+				VkFormat imageFormat;
+				VkDeviceMemory *imageMemory;
+
+				uint32_t mipLevels;
 			};
 
 			class Texture : public Core {
@@ -21,8 +42,12 @@ namespace Dynamik {
 				Texture() {}
 				virtual ~Texture() {}
 
+				virtual void loadTexture(std::string path, resource::TextureType type) {}
 				virtual void loadTexture(std::string path) {}
 				virtual void generateMipMaps(DMKGenerateMipMapInfo info) {}
+
+				virtual void initSkybox(DMKSkyboxInitInfo info) {}
+				virtual void deleteSkybox() {}
 
 			};
 		}

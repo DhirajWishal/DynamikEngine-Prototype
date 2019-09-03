@@ -2,21 +2,25 @@
 
 #include "core/Buffer.h"
 
+#include "data structures/DMK_ADGR_DataStructures.h"
+
 namespace Dynamik {
 	namespace ADGR {
 		namespace core {
 
 			struct DMKBindCommandBufferInfo {
-				std::vector<VkFramebuffer> frameBuffers;
-				std::vector<std::vector<VkDescriptorSet>*> descriptorSets;
+				std::vector<VkFramebuffer> frameBuffers = {};
+				std::vector<std::vector<VkDescriptorSet>*> descriptorSets = {};
 
-				VkBuffer indexBuffer;
+				VkBuffer indexBuffer = VK_NULL_HANDLE;
 
-				std::vector<VkBuffer> vertexBuffers;
-				std::vector<uint32_t> indices;
+				std::vector<VkBuffer> vertexBuffers = {};
+				std::vector<uint32_t> indices = {};
+
+				DMKVulkanSkyboxCommandBufferBindData skybox;
 			};
 
-			class ADGR_API commandBufferManager : public Buffer {
+			class commandBufferManager : public Buffer {
 			public:
 				commandBufferManager() {}
 				~commandBufferManager() {}

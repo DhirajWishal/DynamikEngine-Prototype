@@ -96,7 +96,7 @@ namespace Dynamik {
 				}
 
 				if (vkCreateDevice(physicalDevice, &createInfo, nullptr, m_device) != VK_SUCCESS)
-					std::runtime_error("failed to create logical device!");
+					DMK_CORE_FATAL("failed to create logical device!");
 
 				vkGetDeviceQueue(*m_device, indices.graphicsFamily.value(), 0, &graphicsQueue);
 				vkGetDeviceQueue(*m_device, indices.presentFamily.value(), 0, &presentQueue);
@@ -107,7 +107,7 @@ namespace Dynamik {
 				vkEnumeratePhysicalDevices(*m_instance, &deviceCount, nullptr);
 
 				if (deviceCount == 0)
-					std::runtime_error("Failed to find GPUs with Vulkan support!");
+					DMK_CORE_FATAL("Failed to find GPUs with Vulkan support!");
 
 				std::vector<VkPhysicalDevice> devices(deviceCount);
 				vkEnumeratePhysicalDevices(instance, &deviceCount, devices.data());
@@ -116,14 +116,47 @@ namespace Dynamik {
 
 				for (const auto& device : devices) {
 					if (isDeviceSuitable(device)) {
-						*myPhysicalDevice = device;
+
+						auto props = VkPhysicalDeviceProperties{};
+						vkGetPhysicalDeviceProperties(device, &props);
+
+						if (props.deviceType == VkPhysicalDeviceType::VK_PHYSICAL_DEVICE_TYPE_DISCRETE_GPU)
+							* myPhysicalDevice = device;
+						else if (props.deviceType == VkPhysicalDeviceType::VK_PHYSICAL_DEVICE_TYPE_INTEGRATED_GPU)
+							* myPhysicalDevice = device;
+						else
+							*myPhysicalDevice = device;
+
 						*m_msaaSamples = getMaxUsableSampleCount(*m_physicalDevice);
 						break;
 					}
 				}
 
 				if (*m_physicalDevice == VK_NULL_HANDLE)
-					std::runtime_error("Failed to find a suitable GPU!");
+					DMK_CORE_FATAL("Failed to find a suitable GPU!");
+
+				auto props = VkPhysicalDeviceProperties{};
+				vkGetPhysicalDeviceProperties(*m_physicalDevice, &props);
+
+#if defined(DMK_DEBUG) || defined(DMK_RELEASE)
+				printf("\n\t---------- VULKAN PHYSICAL DEVICE INFO ----------\n");
+				printf("API Version: %I32d\n", props.apiVersion);
+				printf("Driver Version: %I32d\n", props.driverVersion);
+				printf("Vendor ID: %I32d\n", props.vendorID);
+				printf("Device ID: %I32d\n", props.deviceID);
+
+				if (props.deviceType == VkPhysicalDeviceType::VK_PHYSICAL_DEVICE_TYPE_DISCRETE_GPU)
+					printf("Device Type: Discrete GPU (external)\n");
+				else if (props.deviceType == VkPhysicalDeviceType::VK_PHYSICAL_DEVICE_TYPE_INTEGRATED_GPU)
+					printf("Device Type: Integrated GPU (onboard)\n");
+				else
+					printf("Device Type: *UNIDENTIFIED\n");
+
+				printf("Device Name: %s\n", props.deviceName);
+				printf("\t-------------------------------------------------\n\n");
+
+ // ----------
+#endif
 			}
 		}
 	}

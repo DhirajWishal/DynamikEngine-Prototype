@@ -126,6 +126,9 @@
     <ClInclude Include="src\backend\vulkan\core\core\Window.h">
       <Filter>src\backend\vulkan\core\core</Filter>
     </ClInclude>
+    <ClInclude Include="src\backend\vulkan\core\data structures\DMK_ADGR_DataStructures.h">
+      <Filter>src\backend\vulkan\core\data structures</Filter>
+    </ClInclude>
     <ClInclude Include="src\backend\vulkan\core\data structures\Uniform.h">
       <Filter>src\backend\vulkan\core\data structures</Filter>
     </ClInclude>
@@ -207,7 +210,7 @@
     <ClInclude Include="src\backend\vulkan\vulkanRenderer.h">
       <Filter>src\backend\vulkan</Filter>
     </ClInclude>
-    <ClInclude Include="src\backend\vulkan\core\data structures\DMK_ADGR_DataStructures.h" />
+    <ClInclude Include="src\backend\vulkan\core\skybox.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -307,6 +310,7 @@
     <ClCompile Include="src\backend\vulkan\vulkanRenderer.cpp">
       <Filter>src\backend\vulkan</Filter>
     </ClCompile>
+    <ClCompile Include="src\backend\vulkan\core\skybox.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="premake5.lua" />

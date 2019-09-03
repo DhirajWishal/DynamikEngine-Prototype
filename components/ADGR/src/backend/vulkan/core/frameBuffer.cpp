@@ -5,7 +5,7 @@ namespace Dynamik {
 	namespace ADGR {
 		namespace core {
 			void frameBufferManager::init() {
-				mySize = swapChainImageViews.size();
+				mySize = static_cast<uint32_t>(swapChainImageViews.size());
 				m_frameBuffers->resize(mySize);
 
 				for (size_t i = 0; i < mySize; i++) {
@@ -25,7 +25,7 @@ namespace Dynamik {
 					framebufferInfo.layers = 1;
 
 					if (vkCreateFramebuffer(*m_device, &framebufferInfo, nullptr, &m_frameBuffers->at(i)) != VK_SUCCESS)
-						std::runtime_error("failed to create framebuffer!");
+						DMK_CORE_FATAL("failed to create framebuffer!");
 				}
 			}
 			void frameBufferManager::createFrameBuffers(DMKFrameBuffersCreateInfo info) {
@@ -48,7 +48,7 @@ namespace Dynamik {
 					framebufferInfo.layers = 1;
 
 					if (vkCreateFramebuffer(*m_device, &framebufferInfo, nullptr, &info.frameBuffers->at(i)) != VK_SUCCESS)
-						std::runtime_error("failed to create framebuffer!");
+						DMK_CORE_FATAL("failed to create framebuffer!");
 				}
 			}
 		}

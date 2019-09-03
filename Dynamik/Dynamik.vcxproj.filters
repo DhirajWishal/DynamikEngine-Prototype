@@ -45,9 +45,6 @@
     <ClInclude Include="src\core\core.h">
       <Filter>src\core</Filter>
     </ClInclude>
-    <ClInclude Include="src\core\log.h">
-      <Filter>src\core</Filter>
-    </ClInclude>
     <ClInclude Include="src\core\object mechanics\loadGameObjects.h">
       <Filter>src\core\object mechanics</Filter>
     </ClInclude>
@@ -81,9 +78,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\core\application.cpp">
-      <Filter>src\core</Filter>
-    </ClCompile>
-    <ClCompile Include="src\core\log.cpp">
       <Filter>src\core</Filter>
     </ClCompile>
     <ClCompile Include="src\core\object mechanics\loadGameObjects.cpp">

@@ -28,7 +28,12 @@ namespace Dynamik {
 				bool rotEventD = false;
 			};
 
-			class ADGR_API window : public Window {
+			struct cursorEvent {
+				float x;
+				float y;
+			};
+
+			class window : public Window {
 			public:
 				window() {}
 				~window() {}
@@ -48,9 +53,10 @@ namespace Dynamik {
 				void frameBufferResizedUpdate(bool state) { frameBufferResized = state; }
 
 				keyEvent getKeyEvent();
+				cursorEvent getCursorEvent();
 
-				std::tuple<keyEventData*, mouseEventData*> getEvent() { 
-					std::tuple<keyEventData*, mouseEventData*> data = { ked, med };
+				std::tuple<int, mouseEventData*> getEvent() { 
+					std::tuple<int, mouseEventData*> data = { keyCodeOne, med };
 					return data;
 				}
 
@@ -93,10 +99,13 @@ namespace Dynamik {
 				eventData myData;
 
 				keyEvent kE;
+				cursorEvent cE;
 
 				//codes
 				mouseEventData* med;
 				keyEventData* ked;
+
+				int keyCodeOne;
 			};
 		}
 	}

@@ -34,6 +34,7 @@ include "components/Events"
 include "components/DevConsole"
 include "components/Audio"
 include "components/Platform"
+include "components/Debugger"
 
 include "components/Sampler"
 
@@ -76,6 +77,7 @@ project "Dynamik"
 		"$(SolutionDir)components/Events/src",
 		"$(SolutionDir)components/Platform/src",
 		"$(SolutionDir)components/DevConsole/src",
+		"$(SolutionDir)components/Debugger/src",
 		"%{IncludeDir.GLFW}",
 		"%{IncludeDir.Glad}",
 		"%{IncludeDir.glm}",
@@ -100,6 +102,7 @@ project "Dynamik"
 		"glfw3dll",
 		"opengl32",
 		"vulkan-1",
+		"Debugger"
 	}
 
 	filter "system:windows"
@@ -157,6 +160,7 @@ project "Application"
 		"$(solutionDir)components/Events/src",
 		"$(solutionDir)components/Platform/src",
 		"$(solutionDir)components/DevConsole/src",
+		"$(SolutionDir)components/Debugger/src",
 		"%{IncludeDir.GLFW}",
 		"%{IncludeDir.Glad}",
 		"%{IncludeDir.glm}",
@@ -182,6 +186,7 @@ project "Application"
 		"glfw3dll",
 		"opengl32",
 		"vulkan-1",
+		"Debugger"
 	}
 
 	postbuildcommands {
@@ -242,6 +247,7 @@ project "Managers"
 		--"$(solutionDir)components/Sampler",
 		--"$(solutionDir)components/Sampler/src",
 		"$(solutionDir)components/Managers/src",
+		"$(SolutionDir)components/Debugger/src",
 		"$(SolutionDir)libs/glm/**.hpp",
 		"$(SolutionDir)libs/glm/**.inl",
 		"%{IncludeDir.GLFW}",
@@ -259,7 +265,8 @@ project "Managers"
 	links { 
 		--"glfw3dll",
 		--"opengl32",
-		--"vulkan-1"
+		--"vulkan-1",
+		"Debugger"
 	}
 
 	filter "system:windows"

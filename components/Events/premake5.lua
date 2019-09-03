@@ -19,7 +19,12 @@ project "Events"
 
 	includedirs {
 		"$(SolutionDir)/components/Events/src",
+		"$(SolutionDir)components/Debugger/src",
 		"$(SolutionDir)Dynamik/src"
+	}
+
+	links {
+		"Debugger"
 	}
 
 	filter "system:windows"

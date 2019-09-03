@@ -10,7 +10,7 @@ namespace Dynamik {
 				std::vector<VkDescriptorSetLayout_T*> layouts;
 			};
 
-			class ADGR_API pipeline : public Pipeline {
+			class pipeline : public Pipeline {
 			public:
 				pipeline() {}
 				~pipeline() {}

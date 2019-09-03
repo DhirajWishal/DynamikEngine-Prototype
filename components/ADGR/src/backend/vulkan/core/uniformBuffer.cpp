@@ -31,7 +31,7 @@ namespace Dynamik {
 				}
 			}
 
-			void uniformBufferManager::updateBuffer(DMKUniformBufferUpdateInfo info) {
+			void uniformBufferManager::updateBuffer2D(DMKUniformBufferUpdateInfo info) {
 				// TODO: update
 				static auto startTime = std::chrono::high_resolution_clock::now();
 
@@ -73,9 +73,86 @@ namespace Dynamik {
 				else;
 
 				UniformBufferObject ubo = {};
-				ubo.model = glm::rotate(glm::translate(glm::mat4(1.0f), glm::vec3(mve, trn, up)), /*time */ glm::radians(rotation), glm::vec3(0.0f, 0.0f, 1.0f));
-				ubo.view = glm::lookAt(glm::vec3(0.5f, 3.0f, 0.5f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 1.0f));
-				ubo.proj = glm::perspective(glm::radians(45.0f), swapChainExtent.width / (float)swapChainExtent.height, 0.1f, 10.0f);
+				//ubo.model = glm::rotate(glm::translate(glm::mat4(1.0f), glm::vec3(mve, trn, up)),
+				//	/*time */ glm::radians(rotation), glm::vec3(0.0f, 0.0f, 1.0f));
+
+				ubo.model = glm::ortho(mve, trn, rotation, up, 1.0f,10.0f);
+				//ubo.model = glm::frustum(mve, trn, rotation, up, 0.1f, 10.0f);
+
+				ubo.view = glm::lookAt(glm::vec3(0.5f, 3.0f, 0.5f), glm::vec3(0.0f, 0.0f, 0.0f),
+					glm::vec3(0.0f, 0.0f, 1.0f));
+				//ubo.proj = glm::perspective(glm::radians(45.0f), swapChainExtent.width / (float)swapChainExtent.height, 0.001f, 10.0f);
+				ubo.proj = glm::ortho(-10.0f, 10.0f, -10.0f, 10.0f, 0.0f, 100.0f);
+				ubo.proj[1][1] *= -1;
+
+				void* data;
+				vkMapMemory(device, info.bufferMemory[info.currentImage], 0, sizeof(ubo), 0, &data);
+				memcpy(data, &ubo, sizeof(ubo));
+				vkUnmapMemory(device, info.bufferMemory[info.currentImage]);
+			}
+
+			void uniformBufferManager::updateBuffer3D(DMKUniformBufferUpdateInfo info) {
+				// TODO: update
+				static auto startTime = std::chrono::high_resolution_clock::now();
+
+				auto currentTime = std::chrono::high_resolution_clock::now();
+				float time = std::chrono::duration<float, std::chrono::seconds::period>(currentTime - startTime).count();
+
+				if (info.turn[0])
+					trn += movementBias;
+
+				else if (info.turn[1])
+					trn -= movementBias;
+
+				else;
+				//trn = 0.0f;
+
+
+				if (info.move[0])
+					mve += movementBias;
+
+				else if (info.move[1])
+					mve -= movementBias;
+
+				else;
+
+				if (info.upDown[0])
+					up += upDownBias;
+
+				else if (info.upDown[1])
+					up -= upDownBias;
+
+				else;
+
+				if (info.rotation[1])
+					rotation += rotationBias;
+
+				else if (info.rotation[0])
+					rotation -= rotationBias;
+
+				else;
+
+				UniformBufferObject ubo = {};
+				ubo.model = glm::rotate(glm::translate(glm::mat4(1.0f), glm::vec3(mve, trn, up)),
+					/*time */ glm::radians(rotation), glm::vec3(0.0f, 0.0f, 1.0f))
+					* glm::rotate(glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.005f, 0.0f)),
+						/*time */ glm::radians(rotation), glm::vec3(0.0f, 1.0f, 0.0f));
+
+				//ubo.model = glm::mat4(glm::mat4(1.0f),
+				//	glm::rotate(glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.005f, 0.0f)), glm::radians(rotation), glm::vec3(0.0f, 1.0f, 0.0f)),
+				//	glm::rotate(glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.005f, 0.0f)), glm::radians(rotation), glm::vec3(0.0f, 1.0f, 0.0f)),
+				//	glm::rotate(glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.005f, 0.0f)), glm::radians(rotation), glm::vec3(0.0f, 1.0f, 0.0f)));
+
+				//+ glm::rotate(glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.005f, 0.0f)),
+				//	/*time */ glm::radians(270.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+
+				//ubo.model = glm::ortho(mve, trn, rotation, up, 1.0f,10.0f);
+			    //ubo.model = glm::frustum(1.0f, 1.0f, 5.0f, 5.0f, 0.1f, 10.0f);
+				// left, right, bottom, top
+
+				ubo.view = glm::lookAt(glm::vec3(0.5f, 3.0f, 0.5f), glm::vec3(0.0f, 0.0f, 0.0f),
+					glm::vec3(0.0f, 0.0f, 1.0f));
+				ubo.proj = glm::perspective(glm::radians(45.0f), swapChainExtent.width / (float)swapChainExtent.height, 0.001f, 10.0f);
 				ubo.proj[1][1] *= -1;
 
 				void* data;
@@ -129,7 +206,7 @@ namespace Dynamik {
 				layoutInfo.pBindings = bindings.data();
 
 				if (vkCreateDescriptorSetLayout(*m_device, &layoutInfo, nullptr, info.layout) != VK_SUCCESS)
-					std::runtime_error("failed to create descriptor set layout!");
+					DMK_CORE_FATAL("failed to create descriptor set layout!");
 			}
 
 			void uniformBufferManager::initDescriptorPool(VkDescriptorPool* descriptorPool) {
@@ -150,7 +227,7 @@ namespace Dynamik {
 				poolInfo.maxSets = static_cast<uint32>(swapChainImages.size());
 
 				if (vkCreateDescriptorPool(*m_device, &poolInfo, nullptr, descriptorPool) != VK_SUCCESS)
-					std::runtime_error("failed to create descriptor pool!");
+					DMK_CORE_FATAL("failed to create descriptor pool!");
 			}
 
 			void uniformBufferManager::initDescriptorSets(DMKDescriptorSetsInitInfo info) {
@@ -163,7 +240,7 @@ namespace Dynamik {
 
 				info.descriptorSets->resize(swapChainImages.size());
 				if (vkAllocateDescriptorSets(*m_device, &allocInfo, info.descriptorSets->data()) != VK_SUCCESS)
-					std::runtime_error("failed to allocate descriptor sets!");
+					DMK_CORE_FATAL("failed to allocate descriptor sets!");
 
 				for (size_t i = 0; i < swapChainImages.size(); i++) {
 					VkDescriptorBufferInfo bufferInfo = {};

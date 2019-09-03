@@ -20,6 +20,7 @@ namespace Dynamik {
 #else
 				GLFWmonitor* monitor = glfwGetPrimaryMonitor();
 				const GLFWvidmode* mode = glfwGetVideoMode(monitor);
+
 				glfwWindowHint(GLFW_RED_BITS, mode->redBits);
 				glfwWindowHint(GLFW_GREEN_BITS, mode->greenBits);
 				glfwWindowHint(GLFW_BLUE_BITS, mode->blueBits);
@@ -39,7 +40,7 @@ namespace Dynamik {
 				glfwSetScrollCallback(m_window, onMouseScrolledEvent);
 				glfwSetCursorPosCallback(m_window, onCursorPosEvent);
 
-				const GLubyte* vendor = glGetString(GL_VENDOR); // Returns the vendor
+				const GLubyte* vendor = glGetString(GL_VENDOR);		// Returns the vendor
 				const GLubyte* renderer = glGetString(GL_RENDERER); // Returns a hint to the model
 
 				printf("%s\n", vendor);
@@ -62,31 +63,26 @@ namespace Dynamik {
 				switch (action) {
 				case DMK_PRESS: {
 					KeyPressedEvent kp_event(keycode, 0);
-					//data->eventCallbackFunc(kp_event);
 					data->keyEventHandler(keycode);
-					//data->ked->keyPressedEvent = kp_event;
 
 					break;
 				}
 				case DMK_RELEASE: {
 					KeyReleasedEvent kr_event(keycode);
-					//data->eventCallbackFunc(kr_event);
-					//data->ked->keyReleasedEvent = kr_event;
 					data->kE.turnEventR = false;	// temp
 					data->kE.turnEventL = false;	// temp
 					data->kE.moveEventU = false;	// temp
 					data->kE.moveEventD = false;	// temp
-					data->kE.rotEventL = false;	// temp
-					data->kE.rotEventR = false;	// temp
-					data->kE.rotEventU = false;	// temp
-					data->kE.rotEventD = false;	// temp
+					data->kE.rotEventL = false;		// temp
+					data->kE.rotEventR = false;		// temp
+					data->kE.rotEventU = false;		// temp
+					data->kE.rotEventD = false;		// temp
+					data->keyCodeOne = NULL;
 
 					break;
 				}
 				case DMK_REPEAT: {
 					KeyPressedEvent krep_event(keycode, 1);
-					//data->eventCallbackFunc(krep_event);
-					//data->ked->keyRepeatEvent = krep_event;
 					data->keyEventHandler(keycode);
 
 					break;
@@ -103,13 +99,11 @@ namespace Dynamik {
 				switch (action) {
 				case DMK_PRESS: {
 					MouseButtonPressedEvent mbp_event(button);
-					//data->eventCallbackFunc(mbp_event);
 
 					break;
 				}
 				case DMK_RELEASE: {
 					MouseButtonReleasedEvent mbr_event(button);
-					//data->eventCallbackFunc(mbr_event);
 
 					break;
 				}
@@ -123,19 +117,19 @@ namespace Dynamik {
 				auto data = reinterpret_cast<window*>(glfwGetWindowUserPointer(win));
 
 				MouseScrolledEvent event((float)xOffset, (float)yOffset);
-				//data->eventCallbackFunc(event);
 			}
 
 			void window::onCursorPosEvent(GLFWwindow* win, double xPos, double yPos) {
 				auto data = reinterpret_cast<window*>(glfwGetWindowUserPointer(win));
+				data->cE.x = (float)xPos;
+				data->cE.y = (float)yPos;
 
 				MouseMovedEvent event((float)xPos, (float)yPos);
-				//data->eventCallbackFunc(event);
 			}
 
 			bool window::createWindowSurface() {
 				if (glfwCreateWindowSurface(*m_instance, m_window, nullptr, m_surface) != VK_SUCCESS) {
-					std::runtime_error("Failed to create window surface!");
+					DMK_CORE_FATAL("Failed to create window surface!");
 					return false;
 				}
 
@@ -171,8 +165,12 @@ namespace Dynamik {
 				return kE;
 			}
 
-			void window::keyEventHandler(int keycode) {
+			cursorEvent window::getCursorEvent()
+			{
+				return cE;
+			}
 
+			void window::keyEventHandler(int keycode) {
 				switch (keycode) {
 				case DMK_KEY_A:
 					kE.moveEventD = true;
@@ -187,6 +185,7 @@ namespace Dynamik {
 				case DMK_KEY_E:
 					break;
 				case DMK_KEY_F:
+					keyCodeOne = keycode;
 					break;
 				case DMK_KEY_G:
 					break;

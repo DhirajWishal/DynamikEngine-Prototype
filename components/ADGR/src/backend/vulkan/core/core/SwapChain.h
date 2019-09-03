@@ -7,9 +7,9 @@ namespace Dynamik {
 		namespace core {
 
 			struct swapChainSupportDetails {
-				VkSurfaceCapabilitiesKHR capabilities;
-				std::vector<VkSurfaceFormatKHR> formats;
-				std::vector<VkPresentModeKHR> presentModes;
+				VkSurfaceCapabilitiesKHR capabilities = {};
+				std::vector<VkSurfaceFormatKHR> formats = {};
+				std::vector<VkPresentModeKHR> presentModes = {};
 			};
 
 			class SwapChain : public Core {

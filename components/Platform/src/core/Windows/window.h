@@ -18,9 +18,9 @@ namespace Dynamik {
 		namespace windows {
 
 			struct windowProperties {
-				std::string title;
-				unsigned int width;
-				unsigned int height;
+				std::string title = {};
+				unsigned int width = 0;
+				unsigned int height = 0;
 
 				bool vSync = false;
 
@@ -55,14 +55,14 @@ namespace Dynamik {
 				bool isVSync() { return myProps.vSync; }
 
 				void create();
-				void setFramebufferResizeCallback();
+				void setFramebufferResizeCallback() {}
 
 				GLFWwindow* getWindow() { return myWindow; }
 
 			private:
-				GLFWwindow* myWindow;
+				GLFWwindow* myWindow = nullptr;
 
-				windowProperties myProps;
+				windowProperties myProps = {};
 
 				struct events {
 					windowProperties myProps = myProps;

@@ -31,7 +31,7 @@ namespace Dynamik {
 				std::string warn, err;
 
 				if (!tinyobj::LoadObj(&attributes, &shapes, &materials, &warn, &err, info.path.c_str()))
-					std::runtime_error(warn + err);
+					DMK_CORE_FATAL((warn + err).c_str());
 
 				std::unordered_map<Vertex, uint32_t> uniqueVertices = {};
 

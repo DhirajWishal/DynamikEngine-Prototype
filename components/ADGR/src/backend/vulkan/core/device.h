@@ -6,7 +6,7 @@ namespace Dynamik {
 	namespace ADGR {
 		namespace core {
 
-			class ADGR_API device : public Device {
+			class device : public Device {
 			public:
 				device() {}
 				~device() {}

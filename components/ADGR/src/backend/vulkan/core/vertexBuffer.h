@@ -7,18 +7,18 @@ namespace Dynamik {
 		namespace core {
 
 			struct DMKVertexBufferCreateInfo {
-				std::vector<Vertex> vertices;
+				std::vector<Vertex> vertices = {};
 
-				VkBuffer* buffer;
-				VkDeviceMemory* buffereMemory;
+				VkBuffer* buffer = VK_NULL_HANDLE;
+				VkDeviceMemory* buffereMemory = VK_NULL_HANDLE;
 			};
 
 			struct DMKVertexBufferDeleteInfo {
-				VkBuffer buffer;
-				VkDeviceMemory bufferMemory;
+				VkBuffer buffer = VK_NULL_HANDLE;
+				VkDeviceMemory bufferMemory = VK_NULL_HANDLE;
 			};
 
-			class ADGR_API vertexBufferManager : public Buffer {
+			class vertexBufferManager : public Buffer {
 			public:
 				vertexBufferManager() {}
 				~vertexBufferManager() {}

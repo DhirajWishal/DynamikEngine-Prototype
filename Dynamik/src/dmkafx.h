@@ -9,6 +9,8 @@
 #include <cstdint>
 #include <ctime>
 #include <chrono>
+#include <thread>
+#include <optional>
 
 #include <string>
 #include <sstream>
@@ -37,8 +39,16 @@
 #include <glm/vec4.hpp>
 #include <glm/mat4x4.hpp>
 
-#ifdef PLG_PLATFROM_WINDOWS
+#ifdef DMK_PLATFORM_WINDOWS
 #include <Windows.h>
+
+#ifdef min
+#undef min
+#endif
+
+#ifdef max
+#undef max
+#endif
 
 // ----------
 #endif

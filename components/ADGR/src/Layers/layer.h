@@ -19,7 +19,7 @@ namespace Dynamik {
 			inline const std::string& getName() const { return debugName; }
 
 		protected:
-			std::string debugName;
+			std::string debugName = "";
 		};
 	}
 }

@@ -30,7 +30,7 @@ project "ADGR"
 		"$(SolutionDir)components/Events/src",
 		"$(SolutionDir)components/Managers/src",
 		"$(SolutionDir)components/Platform/src",
-		"$(SolutionDir)components/Dynamik/src",
+		"$(SolutionDir)components/Debugger/src",
 		"$(SolutionDir)libs/glm/**.hpp",
 		"$(SolutionDir)libs/glm/**.inl",
 		"%{IncludeDir.GLFW}",
@@ -52,7 +52,8 @@ project "ADGR"
 		"vulkan-1",
 		"Events",
 		"Platform",
-		"Managers"
+		"Managers",
+		"Debugger"
 	}
 
 	filter "system:windows"

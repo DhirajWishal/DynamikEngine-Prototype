@@ -26,7 +26,7 @@ project "Platform"
 		"$(SolutionDir)components/ADGR/src",
 		"$(SolutionDir)components/Events/src",
 		"$(SolutionDir)components/Managers/src",
-		"$(SolutionDir)components/Dynamik/src",
+		"$(SolutionDir)components/Debugger/src",
 		"$(SolutionDir)libs/glm/**.hpp",
 		"$(SolutionDir)libs/glm/**.inl",
 		"%{IncludeDir.GLFW}",
@@ -46,7 +46,8 @@ project "Platform"
 		"opengl32",
 		"vulkan-1",
 		"Events",
-		"Managers"
+		"Managers",
+		"Debugger"
 	}
 
 	filter "system:windows"

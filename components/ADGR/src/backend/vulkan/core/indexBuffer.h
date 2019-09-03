@@ -7,18 +7,18 @@ namespace Dynamik {
 		namespace core {
 
 			struct DMKIndexBufferCreateInfo {
-				std::vector<uint32_t> indices;
+				std::vector<uint32_t> indices = {};
 
-				VkBuffer* buffer;
-				VkDeviceMemory* buffereMemory;
+				VkBuffer* buffer = VK_NULL_HANDLE;
+				VkDeviceMemory* buffereMemory = VK_NULL_HANDLE;
 			};
 
 			struct DMKindexBufferDeleteInfo {
-				VkBuffer buffer;
-				VkDeviceMemory bufferMemory;
+				VkBuffer buffer = VK_NULL_HANDLE;
+				VkDeviceMemory bufferMemory = VK_NULL_HANDLE;
 			};
 
-			class ADGR_API indexBufferManager : public Buffer {
+			class indexBufferManager : public Buffer {
 			public:
 				indexBufferManager() {}
 				~indexBufferManager() {}

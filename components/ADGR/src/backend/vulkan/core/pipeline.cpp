@@ -15,7 +15,7 @@ namespace Dynamik {
 				auto bindingDescription = Vertex::getBindingDescription(2);
 				auto attributeDescriptions = Vertex::getAttributeDescriptions(2);
 
-				vertexInputInfo.vertexBindingDescriptionCount = bindingDescription.size();
+				vertexInputInfo.vertexBindingDescriptionCount = static_cast<uint32_t>(bindingDescription.size());
 				vertexInputInfo.vertexAttributeDescriptionCount = static_cast<uint32_t>(attributeDescriptions.size());
 				vertexInputInfo.pVertexBindingDescriptions = bindingDescription.data();
 				vertexInputInfo.pVertexAttributeDescriptions = attributeDescriptions.data();
@@ -109,7 +109,7 @@ namespace Dynamik {
 
 				// create the pipeline layout
 				if (vkCreatePipelineLayout(*m_device, &pipelineLayoutInfo, nullptr, m_pipelineLayout) != VK_SUCCESS)
-					std::runtime_error("failed to create pipeline layout!");
+					DMK_CORE_FATAL("failed to create pipeline layout!");
 
 				std::vector<VkDynamicState> dynamicState = {
 					VK_DYNAMIC_STATE_VIEWPORT,
@@ -118,7 +118,7 @@ namespace Dynamik {
 
 				VkPipelineDynamicStateCreateInfo dynamicStateInfo = {};
 				dynamicStateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_DYNAMIC_STATE_CREATE_INFO;
-				dynamicStateInfo.dynamicStateCount = dynamicState.size();
+				dynamicStateInfo.dynamicStateCount = static_cast<uint32_t>(dynamicState.size());
 				dynamicStateInfo.pDynamicStates = dynamicState.data();
 				dynamicStateInfo.flags = 0;
 
@@ -147,7 +147,7 @@ namespace Dynamik {
 
 				// create the pipeline
 				if (vkCreateGraphicsPipelines(*m_device, VK_NULL_HANDLE, 1, &pipelineInfo, nullptr, m_pipeline) != VK_SUCCESS)
-					std::runtime_error("failed to create graphics pipeline!");
+					DMK_CORE_FATAL("failed to create graphics pipeline!");
 			}
 
 			void pipeline::initRenderPass() {
@@ -224,7 +224,7 @@ namespace Dynamik {
 
 				// create the render pass
 				if (vkCreateRenderPass(device, &renderPassInfo, nullptr, &renderPass) != VK_SUCCESS)
-					std::runtime_error("failed to create render pass!");
+					DMK_CORE_FATAL("failed to create render pass!");
 			}
 		}
 	}

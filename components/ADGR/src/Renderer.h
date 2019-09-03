@@ -37,12 +37,12 @@ namespace Dynamik {
 			// core functions
 
 			bool getWindowCloseEvent();
-			std::tuple<keyEventData*, mouseEventData*> pollEvents();
+			std::tuple<int, mouseEventData*> pollEvents();
 			void idleCall();
 
 			void setMipLevel(float);
-
 			void setAssetPaths(std::vector<std::string>& texture, std::vector<std::string>& model);
+			inline void setProgress(uint32_t* progress);
 		};
 	}
 }

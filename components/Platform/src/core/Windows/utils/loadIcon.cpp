@@ -12,10 +12,10 @@ namespace Dynamik {
 
 			if (!icon.is_open()) {
 				std::runtime_error("Icon not found");
-				//return NULL;
+				return std::fstream();
 			}
-			else
-				return icon;
+
+			return icon;
 		}
 	}
 }

@@ -11,6 +11,8 @@
 #include "semaphores.h"
 #include "backend/vulkan/core/controlHeader.h"
 
+#include "backend/defines.h"
+
 namespace Dynamik {
 	namespace ADGR {
 		namespace core {
@@ -28,7 +30,7 @@ namespace Dynamik {
 						!= VK_SUCCESS ||
 						vkCreateSemaphore(device, &semaphoreInfo, nullptr, &renderFinishedSemaphores->at(i)) 
 						!= VK_SUCCESS)
-						std::runtime_error("failed to create semaphores for a frame!");
+						DMK_CORE_FATAL("failed to create semaphores for a frame!");
 				}
 			}
 		}

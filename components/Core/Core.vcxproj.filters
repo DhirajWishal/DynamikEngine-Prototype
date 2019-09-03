@@ -30,4 +30,12 @@
   <ItemGroup>
     <None Include="premake5.lua" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="paths.txt">
+      <Filter>src\core\assets</Filter>
+    </Text>
+    <Text Include="model.txt">
+      <Filter>src\core\assets</Filter>
+    </Text>
+  </ItemGroup>
 </Project>

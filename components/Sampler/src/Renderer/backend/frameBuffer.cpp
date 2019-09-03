@@ -5,7 +5,7 @@ namespace Dynamik {
 	namespace ADGR {
 		namespace core {
 			void frameBufferManager::init() {
-				mySize = swapChainImageViews.size();
+				mySize = static_cast<uint32_t>(swapChainImageViews.size());
 				m_frameBuffers->resize(mySize);
 
 				for (size_t i = 0; i < mySize; i++) {

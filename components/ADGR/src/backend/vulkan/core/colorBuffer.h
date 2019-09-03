@@ -14,7 +14,7 @@ namespace Dynamik {
 				VkSampleCountFlagBits msaaSamples;
 			};
 
-			class ADGR_API colorBufferManager : public Buffer {
+			class colorBufferManager : public Buffer {
 			public:
 				colorBufferManager() {}
 				~colorBufferManager() {}

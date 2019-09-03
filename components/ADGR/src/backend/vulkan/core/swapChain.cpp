@@ -67,7 +67,7 @@ namespace Dynamik {
 				createInfo.oldSwapchain = VK_NULL_HANDLE;
 
 				if (vkCreateSwapchainKHR(*m_device, &createInfo, nullptr, m_swapChain))
-					std::runtime_error("Failed to create Swap Chain!");
+					DMK_CORE_FATAL("Failed to create Swap Chain!");
 
 				vkGetSwapchainImagesKHR(*m_device, *m_swapChain, &imageCount, nullptr);
 				m_swapChainImages->resize(imageCount);

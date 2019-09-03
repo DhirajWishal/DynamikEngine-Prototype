@@ -56,16 +56,16 @@ namespace Dynamik {
 			return rendererCore.closeEvent();
 		}
 
-		std::tuple<keyEventData*, mouseEventData*> Renderer::pollEvents() {
+		std::tuple<int, mouseEventData*> Renderer::pollEvents() {
 			rendererCore.events();
 
-			keyEventData* prop = nullptr;
+			int prop = NULL;
 
 			auto [ked, med] = rendererCore.getEvent();
 			
 			if (ked != prop)
 				return rendererCore.getEvent();
-			return { nullptr, nullptr };
+			return { NULL, nullptr };
 		}
 
 		void Renderer::idleCall() {
@@ -77,8 +77,11 @@ namespace Dynamik {
 		}
 
 		void Renderer::setAssetPaths(std::vector<std::string>& texture, std::vector<std::string>& model) {
-			//rendererCore.setAssets(texture, model);
+			rendererCore.setModelPaths(model, texture);
 		}
 
+		void Renderer::setProgress(uint32_t* progress) {
+			rendererCore.setProgress(progress);
+		}
 	}
 }

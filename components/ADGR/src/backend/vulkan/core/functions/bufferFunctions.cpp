@@ -1,6 +1,8 @@
 #include "adgrafx.h"
 #include "bufferFunctions.h"
 
+#include "backend/defines.h"
+
 namespace Dynamik {
 	namespace ADGR {
 		namespace core {
@@ -13,9 +15,8 @@ namespace Dynamik {
 					bufferInfo.usage = info.usage;
 					bufferInfo.sharingMode = VK_SHARING_MODE_EXCLUSIVE;
 
-					if (vkCreateBuffer(info.device, &bufferInfo, nullptr, info.buffer) != VK_SUCCESS) {
-						std::runtime_error("failed to create buffer!");
-					}
+					if (vkCreateBuffer(info.device, &bufferInfo, nullptr, info.buffer) != VK_SUCCESS)
+						DMK_CORE_FATAL("failed to create buffer!");
 
 					VkMemoryRequirements memRequirements;
 					vkGetBufferMemoryRequirements(info.device, *info.buffer, &memRequirements);
@@ -26,9 +27,8 @@ namespace Dynamik {
 					allocInfo.memoryTypeIndex = findMemoryType(memRequirements.memoryTypeBits, info.bufferMemoryPropertyflags,
 						info.physicalDevice);
 
-					if (vkAllocateMemory(info.device, &allocInfo, nullptr, info.bufferMemory) != VK_SUCCESS) {
-						std::runtime_error("failed to allocate buffer memory!");
-					}
+					if (vkAllocateMemory(info.device, &allocInfo, nullptr, info.bufferMemory) != VK_SUCCESS) 
+						DMK_CORE_FATAL("failed to allocate buffer memory!");
 
 					vkBindBufferMemory(info.device, *info.buffer, *info.bufferMemory, 0);
 				}
@@ -42,7 +42,8 @@ namespace Dynamik {
 							& properties) == properties)
 							return i;
 
-					std::runtime_error("failed to find suitable memory type!");
+					DMK_CORE_FATAL("failed to find suitable memory type!");
+					return 0;
 				}
 
 				void copyBuffer(VkDevice device, VkBuffer srcBuffer, VkBuffer dstBuffer, VkDeviceSize size,
@@ -109,7 +110,8 @@ namespace Dynamik {
 						}
 					}
 
-					std::runtime_error("failed to find supported format!");
+					DMK_CORE_FATAL("failed to find supported format!");
+					return VkFormat();
 				}
 
 				VkFormat findDepthFormat(VkPhysicalDevice physicalDevice) {

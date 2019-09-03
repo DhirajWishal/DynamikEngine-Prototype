@@ -15,7 +15,7 @@
 #include <sstream>
 #include <functional>
 
-#include "core/core.h"
+#define BIT(x) (1 << x)
 
 namespace Dynamik {
 
@@ -94,7 +94,7 @@ namespace Dynamik {
 
 	struct eventData {
 		Event* event = nullptr;
-		EventType type;
+		EventType type = {};
 	};
 
 	struct keyEventProperties {

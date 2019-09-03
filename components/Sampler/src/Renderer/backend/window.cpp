@@ -19,7 +19,7 @@ namespace Dynamik {
 				m_window = glfwCreateWindow(WIDTH, HEIGHT, "Dynamik Engine", nullptr, nullptr);
 
 #else
-				window = glfwCreateWindow(WIDTH, HEIGHT, "Dynamik Engine", glfwGetPrimaryMonitor(), nullptr);
+				m_window = glfwCreateWindow(WIDTH, HEIGHT, "Dynamik Engine", glfwGetPrimaryMonitor(), nullptr);
 
 #endif
 				glfwMakeContextCurrent(m_window);

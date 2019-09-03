@@ -14,6 +14,8 @@
 #include "core/utils/DMK_DataTypes.h"
 #include "core/utils/DMK_Functions.h"
 
+#include "debugger.h"
+
 #include "src/imports.h"
 
 class layer : public Dynamik::ADGR::Layer {
@@ -58,17 +60,9 @@ Dynamik::Application* Dynamik::createApplication();
 /* ---------- ########## ////////// MAIN LOOP \\\\\\\\\\ ########## ---------- */
 int main(int argc, char** argv) {
 	try {
-		printf("Welcome to the Dynamik Engine!\n");
+		printf("\t\t----------|| Welcome to the Dynamik Engine! ||----------\n");
 
-		//Dynamik::GameObject obj("NONE", "NONE", 0.0f, 0.0f, 0.0f);
-
-		DMK_FATAL("Hello World");
-		DMK_CORE_ERROR("NULL_PTR");
-
-		int x = Dynamik::utils::max(10, 20);
-		//DMK_INFO((ccp)x);
-
-		//Dynamik::utils::minHeap<int> myHeap = 100;
+		DMK_CORE_INFO(12);
 
 		auto application = Dynamik::createApplication();
 		application->run();

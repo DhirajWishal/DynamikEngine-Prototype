@@ -8,21 +8,21 @@ namespace Dynamik {
 			using namespace functions;
 
 			struct DMKInitTextureInfo {
-				std::string path;
-				
-				VkFormat textureImageFormat;
-				VkImage* textureImage;
-				VkDeviceMemory* textureImageMemory;
+				std::string path = "";
 
-				uint32_t mipLevels;
+				VkFormat textureImageFormat = VK_FORMAT_UNDEFINED;
+				VkImage* textureImage = VK_NULL_HANDLE;
+				VkDeviceMemory* textureImageMemory = VK_NULL_HANDLE;
+
+				uint32_t mipLevels = 1;
 			};
 
 			struct DMKInitTextureImageViewsInfo {
-				VkFormat textureImageFormat;
-				VkImage textureImage;
+				VkFormat textureImageFormat = VK_FORMAT_UNDEFINED;
+				VkImage textureImage = VK_NULL_HANDLE;
 
-				uint32_t mipLevels;
-				VkImageAspectFlags flags;
+				uint32_t mipLevels = 1;
+				VkImageAspectFlags flags = 0;
 
 				DMKInitTextureImageViewsInfo(
 					VkImageAspectFlags flgs = VK_IMAGE_ASPECT_COLOR_BIT
@@ -30,15 +30,15 @@ namespace Dynamik {
 			};
 
 			struct DMKInitTextureSamplerInfo {
-				VkSampler* textureSampler;
-				uint32_t mipLevel;
+				VkSampler* textureSampler = VK_NULL_HANDLE;
+				uint32_t mipLevel = 1;
 
-				VkFilter magFilter;
-				VkFilter minFilter;
+				VkFilter magFilter = VK_FILTER_NEAREST;
+				VkFilter minFilter = VK_FILTER_NEAREST;
 
-				VkSamplerAddressMode modeU;
-				VkSamplerAddressMode modeV;
-				VkSamplerAddressMode modeW;
+				VkSamplerAddressMode modeU = VK_SAMPLER_ADDRESS_MODE_REPEAT;
+				VkSamplerAddressMode modeV = VK_SAMPLER_ADDRESS_MODE_REPEAT;
+				VkSamplerAddressMode modeW = VK_SAMPLER_ADDRESS_MODE_REPEAT;
 
 				DMKInitTextureSamplerInfo(
 					VkFilter mag = VK_FILTER_LINEAR,
@@ -53,18 +53,18 @@ namespace Dynamik {
 			};
 
 			struct DMKTextureDeleteInfo {
-				VkSampler sampler;
-				VkImageView imageView;
-				VkImage texture;
-				VkDeviceMemory textureImageMemory;
+				VkSampler sampler = VK_NULL_HANDLE;
+				VkImageView imageView = VK_NULL_HANDLE;
+				VkImage texture = VK_NULL_HANDLE;
+				VkDeviceMemory textureImageMemory = VK_NULL_HANDLE;
 			};
 
-			class ADGR_API textureManager : public Texture {
+			class textureManager : public Texture {
 			public:
 				textureManager() {}
 				~textureManager() {}
 
-				void loadTexture(std::string path) override;
+				void loadTexture(std::string path, resource::TextureType type) override;
 				void initTextureImageView();
 				void initTextureSampler();
 
@@ -77,10 +77,10 @@ namespace Dynamik {
 
 			private:
 				VkDevice* m_device = &device;
-				VkImage *m_textureImage = &textureImage;
-				VkDeviceMemory *m_textureImageMemory = &textureImageMemory;
-				VkImageView *m_textureImageView = &textureImageView;
-				VkSampler *m_textureSampler = &textureSampler;
+				VkImage* m_textureImage = &textureImage;
+				VkDeviceMemory* m_textureImageMemory = &textureImageMemory;
+				VkImageView* m_textureImageView = &textureImageView;
+				VkSampler* m_textureSampler = &textureSampler;
 
 				uint32_t* m_mipLevels = &mipLevels;
 

@@ -23,6 +23,7 @@ project "DevCon"
 		"$(SolutionDir)components/DevConsole",
 		"$(SolutionDir)components/DevConsole/src",
 		"$(SolutionDir)Dynamik/src",
+		"$(SolutionDir)components/Debugger/src",
 		"%{IncludeDir.GLFW}",
 		"%{IncludeDir.Glad}",
 		"%{IncludeDir.glm}",
@@ -32,7 +33,8 @@ project "DevCon"
 	}
 
 	links {
-		"Dynamik"
+		"Dynamik",
+		"Debugger"
 	}
 
 	filter "system:windows"

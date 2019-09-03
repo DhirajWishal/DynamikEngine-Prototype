@@ -18,12 +18,18 @@
 #include "core/functions/textureFunctions.h"
 #include "core/controlHeader.h"
 
+#include "debugger.h"
+
 namespace Dynamik {
 	namespace ADGR {
 		using namespace core;
 		using namespace functions;
 
-		FPS myFPSCal;
+#ifdef DMK_DEBUG
+		Debugger::benchmark::FPS myFPSCal;
+
+ // ----------
+#endif
 
 		vulkanRenderer::vulkanRenderer() {
 		}
@@ -33,73 +39,95 @@ namespace Dynamik {
 
 		void vulkanRenderer::init() {
 			myWindow.init();
+			INC_PROGRESS;
 
 			myInstance.init();
+			INC_PROGRESS;
 
+#ifdef DMK_DEBUG
 			myDebugger.setupDebugMessenger();
+			INC_PROGRESS;
+// ----------
+#endif
 
 			myWindow.createWindowSurface();
+			INC_PROGRESS;
 
 			myDevice.init();
+			INC_PROGRESS;
 
 			mySwapChain.init();
 			mySwapChain.initImageViews();
+			INC_PROGRESS;
 
 			myPipeline.initRenderPass();
+			INC_PROGRESS;
 
 			// first layout
 			DMKUniformBufferCreateDescriptorSetLayoutInfo layoutInfo;
 			layoutInfo.layout = &layout;
 			layoutInfo.bindIndex = { 0, 1 };
 			uniformBuffer.createDescriptorSetLayout(layoutInfo);
+			INC_PROGRESS;
 
 			// second layout
 			DMKUniformBufferCreateDescriptorSetLayoutInfo layoutInfo2;
 			layoutInfo2.layout = &layout2;
 			layoutInfo2.bindIndex = { 0, 1 };
 			uniformBuffer.createDescriptorSetLayout(layoutInfo2);
+			INC_PROGRESS;
 
 			uniformBuffer.initDescriptorPool(&descriptorPool);
 			uniformBuffer.initDescriptorPool(&descriptorPool2);
+			INC_PROGRESS;
 
 			myShaderManager.loadShader(utils::readFile("E:/Projects/Dynamik Engine/Dynamik/components/Shaders/vert.spv"),
 				VERTEX_SHADER);
 			myShaderManager.loadShader(utils::readFile("E:/Projects/Dynamik Engine/Dynamik/components/Shaders/frag.spv"),
 				FRAGMENT_SHADER);
 			myShaderManager.init();
+			INC_PROGRESS;
 
 			std::vector<VkDescriptorSetLayout_T*> layouts = { layout, layout2 };
 			DMKPipelineInitInfo initInfo;
 			initInfo.layouts = layouts;
 			myPipeline.init(initInfo);
+			INC_PROGRESS;
 
 			myShaderManager.deleteShaders();
+			INC_PROGRESS;
 
 			myCommandBufferManager.initCommandPool();
+			INC_PROGRESS;
 
 			// TODO: manually initialization
 			myColorBufferManager.initResources();
+			INC_PROGRESS;
 
 			// TODO: manually initialization
 			myDepthBufferManager.init();
+			INC_PROGRESS;
 
 			// TODO: manually initialization
 			myFrameBufferManager.init();
+			INC_PROGRESS;
 
 			// texture creation - init
 			DMKInitTextureInfo textureInfo;
-			textureInfo.path = "E:/Projects/Dynamik Engine/Dynamik/core assets/textures/chalet.jpg";
+			textureInfo.path = texturePaths[0];
 			textureInfo.textureImage = &texImage;
 			textureInfo.textureImageMemory = &texImageMemory;
 			textureInfo.textureImageFormat = VK_FORMAT_R8G8B8A8_UNORM;
 			textureInfo.mipLevels = myMipLevel;
 			myTextureManager.initTexture(textureInfo);
+			INC_PROGRESS;
 
 			// texture - imageViews
 			DMKInitTextureImageViewsInfo viewInfo;
 			viewInfo.textureImage = texImage;
 			viewInfo.textureImageFormat = VK_FORMAT_R8G8B8A8_UNORM;
 			viewInfo.mipLevels = myMipLevel;
+			INC_PROGRESS;
 
 			DMKCreateImageViewInfo cImgVewinfo;
 			cImgVewinfo.device = myDevice.getDeviceCpy();
@@ -109,6 +137,7 @@ namespace Dynamik {
 			cImgVewinfo.aspectFlags = VK_IMAGE_ASPECT_COLOR_BIT;
 			cImgVewinfo.textureImageView = &textureImageView;
 			myTextureManager.initTextureImageViews(viewInfo, cImgVewinfo);
+			INC_PROGRESS;
 
 			// texture - sampler
 			DMKInitTextureSamplerInfo samplerInfo;
@@ -120,30 +149,34 @@ namespace Dynamik {
 			samplerInfo.minFilter = VK_FILTER_LINEAR;
 			samplerInfo.mipLevel = myMipLevel;
 			myTextureManager.initTextureSampler(samplerInfo);
+			INC_PROGRESS;
 
 			// load Model
 			DMKVulkanRendererLoadObjectInfo loadModelInfo;
-			loadModelInfo.path = "E:/Projects/Dynamik Engine/Dynamik/core assets/models/chalet.obj";
+			loadModelInfo.path = modelPaths[0];
 			loadModelInfo.vertexBufferObject = &terrainVBO;
 			loadModelInfo.indexBufferObject = &ibo;
 			loadModelInfo.offsets = { 0.0f, 0.0f, 0.0f };
 			loadObject(loadModelInfo);
+			INC_PROGRESS;
 
 			// load second Model
 			DMKVulkanRendererLoadObjectInfo loadModelInfo2;
-			loadModelInfo2.path = "E:/Projects/Dynamik Engine/Dynamik/core assets/models/chalet.obj";
+			loadModelInfo2.path = modelPaths[1];
 			loadModelInfo2.vertexBufferObject = &terrainVBO;
 			loadModelInfo2.indexBufferObject = &ibo;
 			loadModelInfo2.offsets = { 0.0f, -2.0f, 0.0f };
 			loadObject(loadModelInfo2);
+			INC_PROGRESS;
 
 			// load third Model
 			DMKVulkanRendererLoadObjectInfo loadModelInfo3;
-			loadModelInfo3.path = "E:/Projects/Dynamik Engine/Dynamik/core assets/models/chalet.obj";
+			loadModelInfo3.path = modelPaths[0];
 			loadModelInfo3.vertexBufferObject = &vbo2;
 			loadModelInfo3.indexBufferObject = &ibo;
 			loadModelInfo3.offsets = { 0.0f, 0.0f, 0.0f };
 			loadObject(loadModelInfo3);
+			INC_PROGRESS;
 
 			// init vertexBuffer
 			DMKVulkanRendererCreateVertexBufferInfo vertBuffInfo;
@@ -151,6 +184,7 @@ namespace Dynamik {
 			vertBuffInfo.bufferMemory = &terrainVertexBufferMemory;
 			vertBuffInfo.vertexBufferObject = terrainVBO;
 			createVertexBuffer(vertBuffInfo);
+			INC_PROGRESS;
 
 			// init secons vertexBuffer
 			DMKVulkanRendererCreateVertexBufferInfo vertBuffInfo2;
@@ -158,6 +192,7 @@ namespace Dynamik {
 			vertBuffInfo2.bufferMemory = &vertexBufferMemory2;
 			vertBuffInfo2.vertexBufferObject = vbo2;
 			createVertexBuffer(vertBuffInfo2);
+			INC_PROGRESS;
 
 			// init indexBuffer
 			DMKVulkanRendererCreateIndexBufferInfo idxBuffInfo;
@@ -165,22 +200,26 @@ namespace Dynamik {
 			idxBuffInfo.bufferMemory = &indexBufferMemory;
 			idxBuffInfo.indexBufferObject = ibo;
 			createIndexBuffer(idxBuffInfo);
+			INC_PROGRESS;
 
 			// uniform buffer creation
 			DMKVulkanRendererCreateUniformBufferInfo uBuffInfo;
 			uBuffInfo.buffer = &uniformBuffers;
 			uBuffInfo.bufferMemory = &uniformBufferMemories;
 			createUniformBuffer(uBuffInfo);
+			INC_PROGRESS;
 
 			// second uniform buffer
 			DMKVulkanRendererCreateUniformBufferInfo uBuffInfo2;
 			uBuffInfo2.buffer = &uniformBuffers2;
 			uBuffInfo2.bufferMemory = &uniformBufferMemories2;
 			createUniformBuffer(uBuffInfo2);
+			INC_PROGRESS;
 
 			// descriptor pool creation
 			uniformBuffer.initDescriptorPool(&descriptorPool);
 			uniformBuffer.initDescriptorPool(&descriptorPool2);
+			INC_PROGRESS;
 
 			// init descriptor set
 			DMKVulkanRendereCreateDescriptorSetsInfo descInitInfo;
@@ -192,6 +231,7 @@ namespace Dynamik {
 			descInitInfo.descriptorPool = descriptorPool;
 			descInitInfo.bindIndexes = { 0, 1 };
 			createDescriptorSets(descInitInfo);
+			INC_PROGRESS;
 
 			// second descriptor set
 			DMKVulkanRendereCreateDescriptorSetsInfo descInitInfo2;
@@ -203,6 +243,7 @@ namespace Dynamik {
 			descInitInfo2.descriptorPool = descriptorPool2;
 			descInitInfo2.bindIndexes = { 0, 1 };
 			createDescriptorSets(descInitInfo2);
+			INC_PROGRESS;
 
 			// command buffer initialization
 			DMKBindCommandBufferInfo commandInfo;
@@ -211,10 +252,12 @@ namespace Dynamik {
 			commandInfo.indexBuffer = indexBuffer;
 			commandInfo.descriptorSets = { &descriptorSets, &descriptorSets2 };
 			myCommandBufferManager.bindCommands(commandInfo);
+			INC_PROGRESS;
 
 			// initialize sync objects
 			initSyncObjects(myDevice.getDeviceCpy(), &imageAvailableSemaphore,
 				&renderFinishedSemaphore, &inFlightFence);
+			INC_PROGRESS;
 		}
 
 		void vulkanRenderer::shutdown() {
@@ -281,7 +324,11 @@ namespace Dynamik {
 		}
 
 		void vulkanRenderer::drawFrame() {
-			myFPSCal.getFPS();
+#ifdef DMK_DEBUG
+			//myFPSCal.getFPS();	// FPS calculator
+
+ // ----------
+#endif
 
 			vkWaitForFences(myDevice.getDeviceCpy(), 1, &inFlightFence[currentFrame],
 				VK_TRUE, std::numeric_limits<uint64_t>::max());
@@ -295,11 +342,11 @@ namespace Dynamik {
 				return;
 			}
 			else if (result != VK_SUCCESS && result != VK_SUBOPTIMAL_KHR)
-				std::runtime_error("failed to acquire swap chain image!");
+				DMK_CORE_FATAL("failed to acquire swap chain image!");
 
 			// draw call
-
 			myEvent = myWindow.getKeyEvent();
+			myCEvent = myWindow.getCursorEvent();
 
 			DMKUniformBufferUpdateInfo updateInfo;
 			updateInfo.bufferMemory = uniformBufferMemories;
@@ -308,8 +355,9 @@ namespace Dynamik {
 			updateInfo.move = { myEvent.moveEventU , myEvent.moveEventD };
 			updateInfo.upDown = { myEvent.rotEventD , myEvent.rotEventU };
 			updateInfo.rotation = { myEvent.rotEventL , myEvent.rotEventR };
+			updateInfo.cPos = { myCEvent.x, myCEvent.y };
 
-			uniformBuffer.updateBuffer(updateInfo);
+			uniformBuffer.updateBuffer3D(updateInfo);
 
 			//second
 			DMKUniformBufferUpdateInfo updateInfo2;
@@ -319,8 +367,12 @@ namespace Dynamik {
 			updateInfo2.move = { myEvent.moveEventU , myEvent.moveEventD };
 			updateInfo2.upDown = { myEvent.rotEventD , myEvent.rotEventU };
 			updateInfo2.rotation = { myEvent.rotEventL , myEvent.rotEventR };
+			updateInfo2.cPos = { myCEvent.x, myCEvent.y };
 
-			uniformBuffer.updateBuffer(updateInfo2);
+			uniformBuffer.updateBuffer3D(updateInfo2);
+
+			//DMK_INFO(std::to_string(myCEvent.x));
+			//DMK_INFO(std::to_string(myCEvent.y));
 
 			// others
 			VkSubmitInfo submitInfo = {};
@@ -341,7 +393,7 @@ namespace Dynamik {
 			vkResetFences(myDevice.getDeviceCpy(), 1, &inFlightFence[currentFrame]);
 
 			if (vkQueueSubmit(*myDevice.getGraphicsQueue(), 1, &submitInfo, inFlightFence[currentFrame]) != VK_SUCCESS)
-				std::runtime_error("failed to submit draw command buffer!");
+				DMK_CORE_FATAL("failed to submit draw command buffer!");
 
 			VkPresentInfoKHR presentInfo = {};
 			presentInfo.sType = VK_STRUCTURE_TYPE_PRESENT_INFO_KHR;
@@ -361,7 +413,7 @@ namespace Dynamik {
 				recreateSwapChain();
 			}
 			else if (result != VK_SUCCESS)
-				std::runtime_error("failed to present swap chain image!");
+				DMK_CORE_FATAL("failed to present swap chain image!");
 
 			currentFrame = (currentFrame + 1) % MAX_FRAMES_IN_FLIGHT;
 		}
@@ -418,9 +470,13 @@ namespace Dynamik {
 
 			uniformBuffer.createUniformBuffers(unibuffinfo2);
 
+			// init descriptor pool
 			uniformBuffer.initDescriptorPool(&descriptorPool);
+
+			// init second descriptor pool
 			uniformBuffer.initDescriptorPool(&descriptorPool2);
 
+			// init descriptor set
 			DMKDescriptorSetsInitInfo descripInfo;
 			descripInfo.uniformBuffers = &uniformBuffers;
 			descripInfo.textureImageView = textureImageView;
@@ -443,8 +499,6 @@ namespace Dynamik {
 			descripInfo2.bindIndex = { 0, 1 };
 
 			uniformBuffer.initDescriptorSets(descripInfo2);
-
-			// command buffer initialization
 
 			// command buffer initialization
 			DMKBindCommandBufferInfo commandInfo;
@@ -533,6 +587,16 @@ namespace Dynamik {
 			modelInfo.vertexOffset = info.offsets;
 
 			myModelManager.loadModel(modelInfo);
+		}
+
+		void vulkanRenderer::setModelPaths(std::vector<std::string>& object, std::vector<std::string>& texture) {
+			modelPaths = object;
+			texturePaths = texture;
+		}
+
+		void vulkanRenderer::setShaderPaths(std::vector<std::string>& vertex, std::vector<std::string>& fragment) {
+			vertexShaderPaths = vertex;
+			fragmentShaderPaths = fragment;
 		}
 
 		void vulkanRenderer::createVertexBuffer(DMKVulkanRendererCreateVertexBufferInfo info) {

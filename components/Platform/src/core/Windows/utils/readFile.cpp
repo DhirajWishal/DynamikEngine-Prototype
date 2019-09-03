@@ -10,8 +10,6 @@
 #include "dmkafx.h"
 #include "readFile.h"
 
-
-
 namespace Dynamik {
 	namespace ADGR {
 		namespace utils {

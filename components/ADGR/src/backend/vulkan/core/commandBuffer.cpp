@@ -20,7 +20,7 @@ namespace Dynamik {
 				poolInfo.flags = 0;
 
 				if (vkCreateCommandPool(*m_device, &poolInfo, nullptr, m_commandPool) != VK_SUCCESS)
-					std::runtime_error("failed to create command pool!");
+					DMK_CORE_FATAL("failed to create command pool!");
 			}
 
 			void commandBufferManager::bindCommands(DMKBindCommandBufferInfo info) {
@@ -30,10 +30,10 @@ namespace Dynamik {
 				allocInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO;
 				allocInfo.commandPool = commandPool;
 				allocInfo.level = VK_COMMAND_BUFFER_LEVEL_PRIMARY;
-				allocInfo.commandBufferCount = frameBuffers.size();
+				allocInfo.commandBufferCount = static_cast<uint32_t>(frameBuffers.size());
 
 				if (vkAllocateCommandBuffers(*m_device, &allocInfo, commandBuffers.data()) != VK_SUCCESS)
-					std::runtime_error("failed to allocate command buffers!");
+					DMK_CORE_FATAL("failed to allocate command buffers!");
 
 				for (size_t i = 0; i < frameBuffers.size(); i++) {
 					VkCommandBufferBeginInfo beginInfo = {};
@@ -41,7 +41,7 @@ namespace Dynamik {
 					beginInfo.flags = VK_COMMAND_BUFFER_USAGE_SIMULTANEOUS_USE_BIT;
 
 					if (vkBeginCommandBuffer(commandBuffers[i], &beginInfo) != VK_SUCCESS)
-						std::runtime_error("failed to begin recording command buffer!");
+						DMK_CORE_FATAL("failed to begin recording command buffer!");
 
 					VkRenderPassBeginInfo renderPassInfo = {};
 					renderPassInfo.sType = VK_STRUCTURE_TYPE_RENDER_PASS_BEGIN_INFO;
@@ -63,9 +63,17 @@ namespace Dynamik {
 					renderPassInfo.pClearValues = clearValues.data();
 
 					/* BEGIN VULKAN COMMANDS */
-
+					VkDeviceSize offsets[] = { 0 };
 					// begin render pass
 					vkCmdBeginRenderPass(commandBuffers[i], &renderPassInfo, VK_SUBPASS_CONTENTS_INLINE);
+
+					/* INITIALIZE SKYBOX */
+					//vkCmdBindDescriptorSets(commandBuffers[i], VK_PIPELINE_BIND_POINT_GRAPHICS, pipelineLayout,
+					//	0, 1, &info.skybox.descriptorSet, 0, NULL);
+					//vkCmdBindVertexBuffers(commandBuffers[i], 0, 1, &info.skybox.vertexBuffer, offsets);
+					//vkCmdBindIndexBuffer(commandBuffers[i], info.skybox.indexBuffer, 0, VK_INDEX_TYPE_UINT32);
+					//vkCmdBindPipeline(commandBuffers[i], VK_PIPELINE_BIND_POINT_GRAPHICS, info.skybox.pipeline);
+					//vkCmdDrawIndexed(commandBuffers[i], info.skybox.indexes.size(), 1, 0, 0, 0);
 
 					/* TODO: pushConstants */
 					// pushConstants[0] = ...
@@ -76,7 +84,6 @@ namespace Dynamik {
 					vkCmdBindPipeline(commandBuffers[i], VK_PIPELINE_BIND_POINT_GRAPHICS, graphicsPipeline);
 
 					// vertex buffer bind
-					VkDeviceSize offsets[] = { 0 };
 					for (int count = 0; count < info.vertexBuffers.size(); count++)
 						vkCmdBindVertexBuffers(commandBuffers[i], count, 1,
 							&info.vertexBuffers[count], offsets);
@@ -98,7 +105,7 @@ namespace Dynamik {
 					/* END VULKAN COMMANDS */
 
 					if (vkEndCommandBuffer(commandBuffers[i]) != VK_SUCCESS)
-						std::runtime_error("failed to record command buffer!");
+						DMK_CORE_FATAL("failed to record command buffer!");
 
 					/*
 					 Vulkan command (draw) order:

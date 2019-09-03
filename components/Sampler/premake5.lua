@@ -29,6 +29,7 @@ project "Sampler"
 		"$(solutionDir)components/Events/src",
 		"$(solutionDir)components/Platform/src",
 		"$(solutionDir)components/Managers/src",
+		"$(SolutionDir)components/Debugger/src",
 		"$(SolutionDir)libs/glm/**.hpp",
 		"$(SolutionDir)libs/glm/**.inl",
 		"%{IncludeDir.GLFW}",
@@ -48,7 +49,8 @@ project "Sampler"
 		"Platform",
 		"glfw3dll",
 		"opengl32",
-		"vulkan-1"
+		"vulkan-1",
+		"Debugger"
 	}
 
 	filter "system:windows"

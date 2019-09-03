@@ -15,6 +15,7 @@
 #include "modelManager.h"
 #include "vertexBuffer.h"
 #include "indexBuffer.h"
+#include "skybox.h"
 
 #include "data structures/vertex.h"
 

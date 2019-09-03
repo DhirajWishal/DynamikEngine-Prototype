@@ -80,7 +80,7 @@ namespace Dynamik {
 
 				VkShaderModule shaderModule;
 				if (vkCreateShaderModule(device, &createInfo, nullptr, &shaderModule) != VK_SUCCESS)
-					std::runtime_error("Failed to create Shader module!");
+					DMK_CORE_FATAL("Failed to create Shader module!");
 
 				return shaderModule;
 			}

@@ -32,6 +32,7 @@ project "Audio"
 		"$(SolutionDir)components/ADGR",
 		"$(SolutionDir)components/ADGR/src",
 		"$(SolutionDir)components/Events/src",
+		"$(SolutionDir)components/Debugger/src",
 		"%{IncludeDir.stb}",
 		"%{IncludeDir.tol}",
 		"%{IncludeDir.irrKlang}"
@@ -43,7 +44,8 @@ project "Audio"
 
 	links { 
 		"Events",
-		"irrKlang"
+		"irrKlang",
+		"Debugger"
 	}
 
 	filter "system:windows"

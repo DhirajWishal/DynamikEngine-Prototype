@@ -14,7 +14,7 @@ namespace Dynamik {
 				VkSampleCountFlagBits msaaSamples;
 			};
 
-			class ADGR_API depthBufferManager : public Buffer {
+			class depthBufferManager : public Buffer {
 			public:
 				depthBufferManager() {}
 				~depthBufferManager() {}

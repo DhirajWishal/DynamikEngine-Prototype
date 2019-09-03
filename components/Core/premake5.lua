@@ -28,6 +28,7 @@ project "Core"
 		"$(solutionDir)components/Core",
 		"$(solutionDir)components/Core/src",
 		"$(solutionDir)components/Events/src",
+		"$(SolutionDir)components/Debugger/src",
 		--"$(SolutionDir)libs/glm/**.hpp",
 		--"$(SolutionDir)libs/glm/**.inl",
 		--"%{IncludeDir.GLFW}",
@@ -48,6 +49,9 @@ project "Core"
 	--	"vulkan-1",
 	--	"Events"
 	--}
+	links{
+		"Debugger"
+	}
 
 	filter "system:windows"
 		systemversion "latest"

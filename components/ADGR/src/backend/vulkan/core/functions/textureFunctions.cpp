@@ -3,6 +3,8 @@
 
 #include "bufferFunctions.h"
 
+#include "backend/defines.h"
+
 namespace Dynamik {
 	namespace ADGR {
 		namespace core {
@@ -16,15 +18,18 @@ namespace Dynamik {
 					imageInfo.extent.height = info.height;
 					imageInfo.extent.depth = 1;
 					imageInfo.mipLevels = info.mipLevels;
-					imageInfo.arrayLayers = 2;
+					imageInfo.arrayLayers = info.arrayLayers;
 					imageInfo.format = info.format;
 					imageInfo.initialLayout = VK_IMAGE_LAYOUT_UNDEFINED;
 					imageInfo.usage = info.usage;
 					imageInfo.samples = info.numSamples;
 					imageInfo.sharingMode = VK_SHARING_MODE_EXCLUSIVE;
 
+					if (info.flags != NULL)
+						imageInfo.flags = info.flags;
+
 					if (vkCreateImage(info.device, &imageInfo, nullptr, info.image) != VK_SUCCESS)
-						std::runtime_error("failed to create image!");
+						DMK_CORE_FATAL("failed to create image!");
 
 					VkMemoryRequirements memRequirements;
 					vkGetImageMemoryRequirements(info.device, *info.image, &memRequirements);
@@ -36,7 +41,7 @@ namespace Dynamik {
 						VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT, info.physicalDevice);
 
 					if (vkAllocateMemory(info.device, &allocInfo, nullptr, info.imageMemory) != VK_SUCCESS)
-						std::runtime_error("failed to allocate image memory!");
+						DMK_CORE_FATAL("failed to allocate image memory!");
 
 					vkBindImageMemory(info.device, *info.image, *info.imageMemory, 0);
 				}
@@ -55,7 +60,7 @@ namespace Dynamik {
 
 					VkImageView imageView;
 					if (vkCreateImageView(info.device, &viewInfo, nullptr, &imageView) != VK_SUCCESS)
-						std::runtime_error("failed to create texture image view!");
+						DMK_CORE_FATAL("failed to create texture image view!");
 
 					return imageView;
 				}
@@ -86,7 +91,7 @@ namespace Dynamik {
 					barrier.subresourceRange.baseMipLevel = 0;
 					barrier.subresourceRange.levelCount = info.mipLevels;
 					barrier.subresourceRange.baseArrayLayer = 0;
-					barrier.subresourceRange.layerCount = 1;
+					barrier.subresourceRange.layerCount = info.layerCount;
 					barrier.srcAccessMask = 0; // TODO
 					barrier.dstAccessMask = 0; // TODO
 
@@ -121,7 +126,7 @@ namespace Dynamik {
 						destinationStage = VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT;
 					}
 					else {
-						std::runtime_error("unsupported layout transition!");
+						DMK_CORE_FATAL("unsupported layout transition!");
 					}
 
 					vkCmdPipelineBarrier(

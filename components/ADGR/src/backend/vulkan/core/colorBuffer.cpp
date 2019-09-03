@@ -29,6 +29,7 @@ namespace Dynamik {
 				info.imageMemory = m_colorImageMemory;
 				info.mipLevels = 1;
 				info.numSamples = msaaSamples;
+				info.flags = NULL;
 
 				createImage(info);
 
@@ -50,6 +51,7 @@ namespace Dynamik {
 				transitionInfo.graphicsQueue = graphicsQueue;
 				transitionInfo.mipLevels = 1;
 				transitionInfo.newLayout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
+				transitionInfo.layerCount = 1;
 
 				transitionImageLayout(transitionInfo);
 			}

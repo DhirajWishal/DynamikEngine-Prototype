@@ -3,22 +3,22 @@
 
 #include "functions/bufferFunctions.h"
 
-#include "Platform/Windows/resource/imageLoader.h"
+#include "debugger.h"
 
 namespace Dynamik {
 	namespace ADGR {
 		namespace core {
 			using namespace functions;
 
-			void textureManager::loadTexture(std::string path) {
+			void textureManager::loadTexture(std::string path, resource::TextureType type) {
 				resource::TextureData texData;
-				unsigned char* pixels = texData.loadTexture(path);
+				unsigned char* pixels = texData.loadTexture(path, type);
 
 				VkDeviceSize imageSize = texData.size;
 				*m_mipLevels = static_cast<uint32_t>(std::floor(std::log2(std::max(texData.texWidth, texData.texHeight)))) + 1;
 
 				if (!pixels)
-					std::runtime_error("failed to load texture image!");
+					DMK_CORE_FATAL("failed to load texture image!");
 
 				VkBuffer stagingBuffer;
 				VkDeviceMemory stagingBufferMemory;
@@ -97,7 +97,7 @@ namespace Dynamik {
 				vkGetPhysicalDeviceFormatProperties(physicalDevice, info.imageFormat, &formatProperties);
 
 				if (!(formatProperties.optimalTilingFeatures & VK_FORMAT_FEATURE_SAMPLED_IMAGE_FILTER_LINEAR_BIT))
-					std::runtime_error("texture image format does not support linear blitting!");
+					DMK_CORE_FATAL("texture image format does not support linear blitting!");
 
 				VkCommandBuffer commandBuff = beginSingleTimeCommands(*m_device, commandPool);
 
@@ -174,14 +174,23 @@ namespace Dynamik {
 				endSingleTimeCommands(*m_device, commandPool, commandBuff, graphicsQueue);
 			}
 
+			/* TODO: RGB texture loader and SRGB texture loader */
 			void textureManager::initTexture(DMKInitTextureInfo initInfo) {
 				resource::TextureData texData;
-				unsigned char* pixels = texData.loadTexture(initInfo.path);
+
+				unsigned char* pixels = nullptr;
+
+				if (initInfo.textureImageFormat == VK_FORMAT_R8G8B8A8_UNORM)
+					pixels = texData.loadTexture(initInfo.path, resource::TEXTURE_TYPE_RGBA);
+				else if (initInfo.textureImageFormat == VK_FORMAT_R8G8B8_UNORM)
+					pixels = texData.loadTexture(initInfo.path, resource::TEXTURE_TYPE_RGB);
+				else
+					DMK_CORE_FATAL("Invalid texture format!");
 
 				VkDeviceSize imageSize = texData.size;
 
 				if (!pixels)
-					std::runtime_error("failed to load texture image!");
+					DMK_CORE_FATAL("failed to load texture image!");
 
 				VkBuffer stagingBuffer;
 				VkDeviceMemory stagingBufferMemory;
@@ -198,7 +207,8 @@ namespace Dynamik {
 				createBuffer(bufferInfo);
 
 				void* data;
-				vkMapMemory(*m_device, stagingBufferMemory, 0, imageSize, 0, &data);
+				if(vkMapMemory(*m_device, stagingBufferMemory, 0, imageSize, 0, &data) != VK_SUCCESS)
+					DMK_CORE_FATAL("Failed to map memory!")
 				memcpy(data, pixels, static_cast<size_t>(imageSize));
 				vkUnmapMemory(*m_device, stagingBufferMemory);
 
@@ -220,8 +230,7 @@ namespace Dynamik {
 				info.imageMemory = initInfo.textureImageMemory;
 				info.mipLevels = initInfo.mipLevels;
 				info.numSamples = VK_SAMPLE_COUNT_1_BIT;
-
-				//initInfo.mipLevels = mipLevels;
+				info.flags = NULL;
 
 				createImage(info);
 
@@ -234,6 +243,7 @@ namespace Dynamik {
 				transitionInfo.newLayout = VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL;
 				transitionInfo.graphicsQueue = graphicsQueue;
 				transitionInfo.mipLevels = initInfo.mipLevels;
+				transitionInfo.layerCount = 1;
 
 				transitionImageLayout(transitionInfo);
 
@@ -292,7 +302,7 @@ namespace Dynamik {
 				samplerInfo.mipLodBias = 0; // Optional
 
 				if (vkCreateSampler(*m_device, &samplerInfo, nullptr, m_textureSampler) != VK_SUCCESS)
-					std::runtime_error("failed to create texture sampler!");
+					DMK_CORE_FATAL("failed to create texture sampler!");
 			}
 
 			void textureManager::initTextureSampler(DMKInitTextureSamplerInfo info) {
@@ -315,7 +325,7 @@ namespace Dynamik {
 				samplerInfo.mipLodBias = 0; // Optional
 
 				if (vkCreateSampler(*m_device, &samplerInfo, nullptr, info.textureSampler) != VK_SUCCESS)
-					std::runtime_error("failed to create texture sampler!");
+					DMK_CORE_FATAL("failed to create texture sampler!");
 			}
 
 			void textureManager::deleteTexture(DMKTextureDeleteInfo info) {

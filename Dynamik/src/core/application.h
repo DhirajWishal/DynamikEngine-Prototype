@@ -20,7 +20,9 @@ namespace Dynamik {
 		void pushLayer(ADGR::Layer* layer);
 		void pushOverlay(ADGR::Layer* layer);
 
-		void onEvent(keyEventData ked);
+		void onEvent(int ked);
+
+		static void showProgress();
 
 	private:
 		ADGR::Renderer myRenderingEngine;

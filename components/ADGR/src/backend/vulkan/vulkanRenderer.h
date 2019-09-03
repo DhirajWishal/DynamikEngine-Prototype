@@ -12,6 +12,8 @@
 #include "core/backend.h"
 #include "core/data structures/DMK_ADGR_DataStructures.h"
 
+#define INC_PROGRESS	(*myProgress += 1)
+
 namespace Dynamik {
 	namespace ADGR {
 		using namespace core;
@@ -20,6 +22,10 @@ namespace Dynamik {
 		public:
 			vulkanRenderer();
 			~vulkanRenderer();
+
+			inline void setProgress(uint32_t* progress) {
+				myProgress = progress;
+			}
 
 			void init();
 			void drawFrame();
@@ -34,7 +40,10 @@ namespace Dynamik {
 			}
 			bool closeEvent() { return myWindow.closeEvent(); }
 
-			std::tuple<keyEventData*, mouseEventData*> getEvent() { return myWindow.getEvent(); }
+			void setModelPaths(std::vector<std::string>& object, std::vector<std::string>& texture);
+			void setShaderPaths(std::vector<std::string>& vertex, std::vector<std::string>& fragment);
+
+			std::tuple<int, mouseEventData*> getEvent() { return myWindow.getEvent(); }
 
 			VkDevice getDevice() { return myDevice.getDeviceCpy(); }
 
@@ -45,135 +54,85 @@ namespace Dynamik {
 			void createDescriptorSets(DMKVulkanRendereCreateDescriptorSetsInfo info);
 
 		private:
-			core::window myWindow;
+			core::window myWindow{};
 
-			core::instanceManager myInstance;
-			core::device myDevice;
-			core::swapChain mySwapChain;
-			core::pipeline myPipeline;
-			core::uniformBufferManager uniformBuffer;
-			core::commandBufferManager myCommandBufferManager;
-			core::colorBufferManager myColorBufferManager;
-			core::depthBufferManager myDepthBufferManager;
-			core::frameBufferManager myFrameBufferManager;
-			core::textureManager myTextureManager;
-			core::modelManager myModelManager;
-			core::vertexBufferManager myVertexBufferManager;
-			core::indexBufferManager myIndexBufferManager;
+			core::instanceManager myInstance{};
+			core::device myDevice{};
+			core::swapChain mySwapChain{};
+			core::pipeline myPipeline{};
+			core::uniformBufferManager uniformBuffer{};
+			core::commandBufferManager myCommandBufferManager{};
+			core::colorBufferManager myColorBufferManager{};
+			core::depthBufferManager myDepthBufferManager{};
+			core::frameBufferManager myFrameBufferManager{};
+			core::textureManager myTextureManager{};
+			core::modelManager myModelManager{};
+			core::vertexBufferManager myVertexBufferManager{};
+			core::indexBufferManager myIndexBufferManager{};
+			core::skybox mySkyboxManager{};
 
-			core::shaderManager myShaderManager;
+			core::shaderManager myShaderManager{};
 
 			core::debugger myDebugger{ myInstance.getInstanceAddr(), myInstance.getdebugMessengerAddr() };
 
-			std::vector<core::Vertex> terrainVBO;
-			std::vector<core::Vertex> vbo2;
-			std::vector<uint32_t> ibo;
-			std::vector<VkDescriptorSet> descriptorSets;
-			std::vector<VkDescriptorSet> descriptorSets2;
+			// terrain data
+			std::vector<core::Vertex> terrainVBO = {};
+			VkBuffer terrainVertexBuffer = VK_NULL_HANDLE;
+			VkDeviceMemory terrainVertexBufferMemory = VK_NULL_HANDLE;
 
-			std::vector<VkSemaphore> imageAvailableSemaphore;
-			std::vector<VkSemaphore> renderFinishedSemaphore;
-			std::vector<VkFence> inFlightFence;
+			// cube map data
+			VkImage cubeMap;
+			VkImageView cubeMapImageView;
+			VkDeviceMemory cubeMapMemory;
 
-			VkImage texImage;
-			VkDeviceMemory texImageMemory;
+			std::vector<core::Vertex> vbo2 = {};
+			std::vector<uint32_t> ibo = {};
+			std::vector<VkDescriptorSet> descriptorSets = {};
+			std::vector<VkDescriptorSet> descriptorSets2 = {};
 
-			VkBuffer terrainVertexBuffer;
-			VkBuffer vertexBuffer2;
-			VkDeviceMemory terrainVertexBufferMemory;
-			VkDeviceMemory vertexBufferMemory2;
-			VkBuffer indexBuffer;
-			VkDeviceMemory indexBufferMemory;
+			std::vector<VkSemaphore> imageAvailableSemaphore = {};
+			std::vector<VkSemaphore> renderFinishedSemaphore = {};
+			std::vector<VkFence> inFlightFence = {};
+
+			VkImage texImage = VK_NULL_HANDLE;
+			VkDeviceMemory texImageMemory = VK_NULL_HANDLE;
+
+			VkBuffer vertexBuffer2 = VK_NULL_HANDLE;
+			VkDeviceMemory vertexBufferMemory2 = VK_NULL_HANDLE;
+			VkBuffer indexBuffer = VK_NULL_HANDLE;
+			VkDeviceMemory indexBufferMemory = VK_NULL_HANDLE;
 			std::vector<VkBuffer> uniformBuffers;
 			std::vector<VkBuffer> uniformBuffers2;
 			std::vector<VkDeviceMemory> uniformBufferMemories;
 			std::vector<VkDeviceMemory> uniformBufferMemories2;
 
-			VkDescriptorPool descriptorPool;
-			VkDescriptorSetLayout layout;
-			VkDescriptorPool descriptorPool2;
-			VkDescriptorSetLayout layout2;
+			VkDescriptorPool descriptorPool = VK_NULL_HANDLE;
+			VkDescriptorSetLayout layout = VK_NULL_HANDLE;
+			VkDescriptorPool descriptorPool2 = VK_NULL_HANDLE;
+			VkDescriptorSetLayout layout2 = VK_NULL_HANDLE;
 
-			VkSampler textureSampler;
-			VkImageView textureImageView;
+			VkSampler textureSampler = VK_NULL_HANDLE;
+			VkImageView textureImageView = VK_NULL_HANDLE;
 
-			std::vector<core::Vertex> vertices;
+			//VkImage skyBox;
+
+			DMKVulkanSkyboxContainer mySkybox;
+
+			std::vector<core::Vertex> vertices = {};
 
 			uint32_t currentFrame = 0;
 			uint32_t myMipLevel = 1;
 
-			core::keyEvent myEvent;
+			core::keyEvent myEvent{};
+			core::cursorEvent myCEvent{};
 
+			uint32_t* myProgress = 0;
+
+			// dynamic paths
+			std::vector<std::string> modelPaths;
+			std::vector<std::string> texturePaths;
+			std::vector<std::string> vertexShaderPaths;
+			std::vector<std::string> fragmentShaderPaths;
 		};
 	}
 }
-
-
-class Benchmark {
-public:
-	Benchmark() {
-		startTimePoint = std::chrono::high_resolution_clock::now();
-	}
-
-	~Benchmark() {
-		auto endTimePoint = std::chrono::high_resolution_clock::now();
-
-		auto start = std::chrono::time_point_cast<std::chrono::microseconds>
-			(startTimePoint).time_since_epoch().count();
-		auto stop = std::chrono::time_point_cast<std::chrono::microseconds>
-			(endTimePoint).time_since_epoch().count();
-
-		auto duration = stop - start;
-		double microSeconds = duration * .001;
-
-		printf("Timer ended. Results: %lld us ( %f ms)\n", duration, microSeconds);
-	}
-
-private:
-	std::chrono::time_point<std::chrono::high_resolution_clock> startTimePoint;
-
-	std::chrono::time_point<std::chrono::high_resolution_clock> time;
-	std::chrono::time_point<std::chrono::high_resolution_clock> oldTime;
-};
-
-class FPS {
-public:
-	FPS() {
-		printf("\t-----Benchmark tool: FPS Calculator initiated!-----\n");
-	}
-
-	void getFPS() {
-		if (!refresh) {
-			//system("CLS");
-			//std::cout << std::flush;
-			refresh = true;
-		}
-
-		time = std::chrono::high_resolution_clock::now();
-
-		auto start = std::chrono::time_point_cast<std::chrono::microseconds>
-			(time).time_since_epoch().count();
-		auto old = std::chrono::time_point_cast<std::chrono::microseconds>
-			(oldTime).time_since_epoch().count();
-
-		current = (uint64_t)(1000 / ((start - old) * .001));
-
-		if (current < minimum) minimum = current;
-		if (current > maximum) maximum = current;
-
-		printf("FPS: %I64d\n", current);
-
-		oldTime = time;
-	}
-
-private:
-	std::chrono::time_point<std::chrono::high_resolution_clock> time;
-	std::chrono::time_point<std::chrono::high_resolution_clock> oldTime;
-
-	uint64_t current;
-	uint64_t minimum = 10e100;
-	uint64_t maximum = 0;
-
-	bool refresh = false;
-};
-

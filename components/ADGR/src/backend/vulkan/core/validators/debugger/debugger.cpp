@@ -11,6 +11,8 @@
 #include "debugger.h"
 #include "backend/vulkan/core/validators/validators.h"
 
+#include "backend/defines.h"
+
 namespace Dynamik {
 	namespace ADGR {
 		namespace core {
@@ -86,7 +88,7 @@ namespace Dynamik {
 				populateDebugMessegerCreateInfo(createInfo);
 
 				if (createDebugUtilsMessengerEXT(&createInfo, nullptr, myDebugMessenger) != VK_SUCCESS)
-					std::runtime_error("Failed to set up debug messenger!");
+					DMK_CORE_FATAL("Failed to set up debug messenger!");
 			}
 
 			void debugger::deleteDebugger() {

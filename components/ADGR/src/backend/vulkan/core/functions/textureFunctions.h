@@ -22,6 +22,13 @@ namespace Dynamik {
 					VkSampleCountFlagBits numSamples;
 
 					uint32_t mipLevels;
+
+					uint32_t arrayLayers = 2;
+
+					VkImageCreateFlags flags;
+
+					DMKCreateImageInfo(uint32_t count = 2) :
+						arrayLayers(count) {}
 				};
 
 				struct DMKTransitionImageLayoutInfo {
@@ -36,6 +43,7 @@ namespace Dynamik {
 					VkQueue graphicsQueue;
 
 					uint32_t mipLevels;
+					uint32_t layerCount;
 				};
 
 				struct DMKCreateImageViewInfo {

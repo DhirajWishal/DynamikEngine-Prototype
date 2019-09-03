@@ -33,19 +33,19 @@ namespace Dynamik {
 
 			std::vector<VkFramebuffer> Core::frameBuffers;
 
-			//std::vector<float> Core::clearScreenValues = {
-			//	(float)(135 / 256),	// Red
-			//	(float)(206 / 256),	// Green
-			//	(float)(235 / 256),	// Blue
-			//	(float)(1.0f)		// Alpha
-			//};
-
 			std::vector<float> Core::clearScreenValues = {	// sky blue
-				(float)(0.0f),	// Red
-				(float)(0.0f),	// Green
-				(float)(0.0f),	// Blue
-				(float)(1.0f)	// Alpha
+				(39.0f / 256.0f),		// Red
+				(158.0f / 256.0f),		// Green
+				(201.0f / 256.0f),		// Blue
+				(1.0f)					// Alpha
 			};
+
+			//std::vector<float> Core::clearScreenValues = {	// sky blue
+			//	(float)(0.0f),	// Red
+			//	(float)(0.0f),	// Green
+			//	(float)(0.0f),	// Blue
+			//	(float)(1.0f)	// Alpha
+			//};
 
 			VkPipeline Core::graphicsPipeline = VK_NULL_HANDLE;
 			VkPipelineLayout Core::pipelineLayout = VK_NULL_HANDLE;

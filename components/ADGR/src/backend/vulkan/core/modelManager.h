@@ -6,7 +6,7 @@ namespace Dynamik {
 	namespace ADGR {
 		namespace core {
 
-			class ADGR_API modelManager : public Model {
+			class modelManager : public Model {
 			public:
 				modelManager() {}
 				~modelManager() {}

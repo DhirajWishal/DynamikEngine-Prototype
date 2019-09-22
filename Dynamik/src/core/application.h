@@ -5,6 +5,8 @@
 #include "src/Layers/layer.h"
 #include "src/Layers/layerStack.h"
 
+#include "inputHandler.h"
+
 #include "Audio.h"
 
 #include "object mechanics/loadGameObjects.h"
@@ -27,11 +29,13 @@ namespace Dynamik {
 	private:
 		ADGR::Renderer myRenderingEngine;
 
-		//Event* myEvent;
+		//Event& myEvent;
 
 		ADGR::layerStack layerStack;
 
 		InputLoader myLoader;
+
+		//inputHandler myInputHandler{ myEvent };
 
 		Audio::AudioEngine myEngine;
 	};

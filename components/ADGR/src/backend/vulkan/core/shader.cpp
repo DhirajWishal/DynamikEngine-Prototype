@@ -44,12 +44,12 @@ namespace Dynamik {
 
 				// initialize the fragment shader module
 				fragShaderStageInfo->sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
-				fragShaderStageInfo->stage = VK_SHADER_STAGE_FRAGMENT_BIT; 
+				fragShaderStageInfo->stage = VK_SHADER_STAGE_FRAGMENT_BIT;
 				fragShaderStageInfo->module = *m_fragmentShaderModule;
 				fragShaderStageInfo->pName = "main";
 
 #ifdef USE_SHADER_TESSELLATION
-				*m_tessShaderModule = createShaderModule(*m_tessallationShaderCode);
+				* m_tessShaderModule = createShaderModule(*m_tessallationShaderCode);
 
 				tessShaderStageInfo->sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
 				tessShaderStageInfo->stage = VK_SHADER_STAGE_TESSELLATION_CONTROL_BIT;
@@ -58,7 +58,7 @@ namespace Dynamik {
 #endif
 
 #ifdef USE_SHADER_GEOMETRY
-				*m_geoShaderModule = createShaderModule(*m_geometryShaderCode);
+				* m_geoShaderModule = createShaderModule(*m_geometryShaderCode);
 
 				geoShaderStageInfo->sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
 				geoShaderStageInfo->stage = VK_SHADER_STAGE_GEOMETRY_BIT;
@@ -94,6 +94,36 @@ namespace Dynamik {
 #ifdef USE_SHADER_GEOMETRY
 				vkDestroyShaderModule(*m_device, *m_geometryShaderModule, nullptr);
 #endif
+			}
+
+			void shaderManager::compileShaders(std::string path, bool activate) {
+				if (activate) {
+					bool check = path.find(".conf") != std::string::npos
+						|| path.find(".vert") != std::string::npos
+						|| path.find(".tesc") != std::string::npos
+						|| path.find(".tese") != std::string::npos
+						|| path.find(".geom") != std::string::npos
+						|| path.find(".frag") != std::string::npos
+						|| path.find(".comp") != std::string::npos
+						|| path.find(".mesh") != std::string::npos
+						|| path.find(".task") != std::string::npos
+						|| path.find(".rgen") != std::string::npos
+						|| path.find(".rint") != std::string::npos
+						|| path.find(".rahit") != std::string::npos
+						|| path.find(".rchit") != std::string::npos
+						|| path.find(".rmiss") != std::string::npos
+						|| path.find(".rcall") != std::string::npos
+						|| path.find(".glsl") != std::string::npos
+						|| path.find(".hlsl") != std::string::npos;
+
+					if (check) {
+						command = shaderCompilerPath + " -V \"" + path + "\"";
+						system(command.c_str());
+					}
+					else {
+						DMK_CORE_ERROR("Invalid shader type!");
+					}
+				}
 			}
 		}
 	}

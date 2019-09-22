@@ -22,6 +22,8 @@ namespace Dynamik {
 				virtual VkShaderModule createShaderModule(DMK_ShaderCode& code) { return nullptr; }
 				virtual void deleteShaders() {}
 
+				virtual void compileShaders(std::string path, bool activate) {}
+
 			private:
 				std::string vertShaderPath;
 				std::string fragShaderPath;

@@ -37,11 +37,12 @@ void main() {
 //				* (uboA.model) 
 //				* vec4(inPositionA, mapSize));
 
-    gl_Position = terrainUbo.proj * terrainUbo.view * terrainUbo.model * vec4(inPositionTerrain, mapSize);
+    //gl_Position = terrainUbo.proj * terrainUbo.view * terrainUbo.model * vec4(inPositionTerrain, mapSize);
 
-    //gl_Position = uboA.proj * uboA.view * uboA.model * vec4(inPositionA, mapSize);
+    gl_Position = uboA.proj * uboA.view * uboA.model * vec4(inPositionA, mapSize);
 
     fragColor = inColorTerrain;
     fragTexCoord = inTexCoordTerrain;
 }
+
 

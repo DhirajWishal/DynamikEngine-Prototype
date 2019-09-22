@@ -11,6 +11,8 @@
  DMK_DataTypes.h file.
 */
 
+#include <any>
+
 namespace Dynamik {
 	typedef unsigned int		uint32;
 	typedef int					int32;
@@ -23,8 +25,10 @@ namespace Dynamik {
 		typedef unsigned short		uint16;
 		typedef unsigned long long	uint64;
 
-		typedef const char* ccp;
+		typedef const char*			ccp;
 
-		typedef uintptr_t			pointer;
+		typedef void*				pointer;
+
+		typedef std::any			var;
 	}
 }

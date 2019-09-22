@@ -26,6 +26,8 @@ namespace Dynamik {
 				bool rotEventR = false;
 				bool rotEventU = false;
 				bool rotEventD = false;
+
+				bool reCompileShaders = false;
 			};
 
 			struct cursorEvent {
@@ -96,10 +98,10 @@ namespace Dynamik {
 
 				eventCallbackFunction myEventCallbackFunction;
 
-				eventData myData;
+				eventData myData = {};
 
-				keyEvent kE;
-				cursorEvent cE;
+				keyEvent kE = {};
+				cursorEvent cE = {};
 
 				//codes
 				mouseEventData* med;

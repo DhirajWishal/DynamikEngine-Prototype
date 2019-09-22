@@ -131,6 +131,7 @@
     <ClInclude Include="src\applicationEvent.h" />
     <ClInclude Include="src\event.h" />
     <ClInclude Include="src\input.h" />
+    <ClInclude Include="src\inputHandler.h" />
     <ClInclude Include="src\keyCodes.h" />
     <ClInclude Include="src\keyEvent.h" />
     <ClInclude Include="src\mouseEvent.h" />
@@ -138,6 +139,7 @@
   <ItemGroup>
     <ClCompile Include="src\applicationEvent.cpp" />
     <ClCompile Include="src\event.cpp" />
+    <ClCompile Include="src\inputHandler.cpp" />
     <ClCompile Include="src\keyEvent.cpp" />
     <ClCompile Include="src\mouseEvent.cpp" />
   </ItemGroup>

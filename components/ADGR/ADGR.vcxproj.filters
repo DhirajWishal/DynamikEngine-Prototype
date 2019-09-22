@@ -186,6 +186,9 @@
     <ClInclude Include="src\backend\vulkan\core\shader.h">
       <Filter>src\backend\vulkan\core</Filter>
     </ClInclude>
+    <ClInclude Include="src\backend\vulkan\core\skybox.h">
+      <Filter>src\backend\vulkan\core</Filter>
+    </ClInclude>
     <ClInclude Include="src\backend\vulkan\core\swapChain.h">
       <Filter>src\backend\vulkan\core</Filter>
     </ClInclude>
@@ -210,7 +213,8 @@
     <ClInclude Include="src\backend\vulkan\vulkanRenderer.h">
       <Filter>src\backend\vulkan</Filter>
     </ClInclude>
-    <ClInclude Include="src\backend\vulkan\core\skybox.h" />
+    <ClInclude Include="src\backend\vulkan\vulkanRenderer2D.h" />
+    <ClInclude Include="src\backend\Renderer\Renderer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -286,6 +290,9 @@
     <ClCompile Include="src\backend\vulkan\core\shader.cpp">
       <Filter>src\backend\vulkan\core</Filter>
     </ClCompile>
+    <ClCompile Include="src\backend\vulkan\core\skybox.cpp">
+      <Filter>src\backend\vulkan\core</Filter>
+    </ClCompile>
     <ClCompile Include="src\backend\vulkan\core\swapChain.cpp">
       <Filter>src\backend\vulkan\core</Filter>
     </ClCompile>
@@ -310,9 +317,11 @@
     <ClCompile Include="src\backend\vulkan\vulkanRenderer.cpp">
       <Filter>src\backend\vulkan</Filter>
     </ClCompile>
-    <ClCompile Include="src\backend\vulkan\core\skybox.cpp" />
+    <ClCompile Include="src\backend\vulkan\vulkanRenderer2D.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="premake5.lua" />
+    <None Include="src\backend\shaders\shader.2D.vert" />
+    <None Include="src\backend\shaders\shader.2D.frag" />
   </ItemGroup>
 </Project>

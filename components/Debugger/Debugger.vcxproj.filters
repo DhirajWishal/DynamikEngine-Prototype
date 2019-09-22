@@ -7,23 +7,34 @@
     <Filter Include="src\core">
       <UniqueIdentifier>{C55F2ECF-B12C-89DA-DA45-7782C671BE68}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\core\benchmark">
+      <UniqueIdentifier>{DFB4E1B5-CB98-A20B-34F9-9C5E20FC8C8D}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\core\benchmark\benchmark.h">
+      <Filter>src\core\benchmark</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\benchmark\fps.h">
+      <Filter>src\core\benchmark</Filter>
+    </ClInclude>
     <ClInclude Include="src\core\log.h">
       <Filter>src\core</Filter>
     </ClInclude>
     <ClInclude Include="src\debugger.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="src\core\benchmark\benchmark.h" />
-    <ClInclude Include="src\core\benchmark\fps.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\core\benchmark\benchmark.cpp">
+      <Filter>src\core\benchmark</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\benchmark\fps.cpp">
+      <Filter>src\core\benchmark</Filter>
+    </ClCompile>
     <ClCompile Include="src\core\log.cpp">
       <Filter>src\core</Filter>
     </ClCompile>
-    <ClCompile Include="src\core\benchmark\benchmark.cpp" />
-    <ClCompile Include="src\core\benchmark\fps.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="premake5.lua" />

@@ -43,7 +43,7 @@ project "ADGR"
 
 	libdirs {
 		"$(SolutionDir)libs/GLFW/lib-vc2019",
-		"E:/Programming/Codes/Game Development/Libraries/VulkanSDK/1.1.108.0/Lib"
+		"E:/Programming/SDKs/Vulkan/1.1.121.0/Lib"
 	}
 
 	links { 

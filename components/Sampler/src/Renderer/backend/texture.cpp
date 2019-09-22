@@ -12,11 +12,11 @@ namespace Dynamik {
 
 			void textureManager::loadTexture(std::string path) {
 				resource::TextureData texData;
-				unsigned char* pixels = texData.loadTexture(path);
+				unsigned char* pixels = texData.loadTexture(path, resource::TEXTURE_TYPE_RGBA);
 
 				VkDeviceSize imageSize = texData.size;
 				*m_mipLevels = static_cast<uint32_t>(std::floor(std::log2(std::max(texData.texWidth, texData.texHeight)))) + 1;
-
+				
 				if (!pixels)
 					std::runtime_error("failed to load texture image!");
 
@@ -176,7 +176,7 @@ namespace Dynamik {
 
 			void textureManager::initTexture(DMKInitTextureInfo initInfo) {
 				resource::TextureData texData;
-				unsigned char* pixels = texData.loadTexture(initInfo.path);
+				unsigned char* pixels = texData.loadTexture(initInfo.path, resource::TEXTURE_TYPE_RGBA);
 
 				VkDeviceSize imageSize = texData.size;
 

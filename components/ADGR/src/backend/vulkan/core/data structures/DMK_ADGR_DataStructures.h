@@ -7,6 +7,9 @@ namespace Dynamik {
 			/* FUNCTION DESCRIPTOR STRUCTS */
 			// naming convention -> (DMK + <class name> + <function name> + <type>)
 
+			/* COMMON VULKAN DATA STRUCTURES */
+			// naming convention -> (DMK + <API> + <structure>)
+
 			enum DMKVulkanRendererCreateBufferType {
 				VERTEX_BUFFER,
 				INDEX_BUFFER
@@ -50,10 +53,6 @@ namespace Dynamik {
 				std::vector<uint8_t> bindIndexes = { 0, 1 };
 			};
 
-
-			/* COMMON VULKAN DATA STRUCTURES */
-			// naming convention -> (DMK + <API> + <structure>)
-
 			struct DMKVulkanBuffer {
 				VkBuffer buffer = VK_NULL_HANDLE;
 				VkDeviceMemory bufferMemory = VK_NULL_HANDLE;
@@ -90,22 +89,18 @@ namespace Dynamik {
 			struct DMKVulkanSkyboxContainer {
 				std::string path = "";
 
-				VkImage skyboxImage;
-				VkImageLayout skyboxLayout;
-				VkSampler skyboxSampler;
+				VkImage skyboxImage = VK_NULL_HANDLE;
+				VkImageLayout skyboxLayout = VK_IMAGE_LAYOUT_UNDEFINED;
+				VkSampler skyboxSampler = VK_NULL_HANDLE;
 
-				VkFormat skyboxFormat;
-				VkDeviceMemory skyboxMemory;
+				VkFormat skyboxFormat = VK_FORMAT_UNDEFINED;
+				VkDeviceMemory skyboxMemory = VK_NULL_HANDLE;
 
-				uint32_t mipLevels;
+				uint32_t mipLevels = NULL;
 
-				VkBuffer vertexBuffer;
-				VkBuffer indexBuffer;
-				std::vector<uint32_t> indexes;
+				DMKVulkanSkyboxCommandBufferBindData commandBufferBindData = {};
 
-				VkDescriptorSet descriptorSet;
-				VkDescriptorPool descriptorPool;
-				VkPipeline pipeline;
+				VkPipeline pipeline = VK_NULL_HANDLE;
 			};
 		}
 	}

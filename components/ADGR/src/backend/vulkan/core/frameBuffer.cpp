@@ -51,6 +51,10 @@ namespace Dynamik {
 						DMK_CORE_FATAL("failed to create framebuffer!");
 				}
 			}
+
+			void frameBufferManager::clear() {
+				m_frameBuffers->clear();
+			}
 		}
 	}
 }

@@ -1,65 +1,44 @@
 #pragma once
 
 /*
- Core objects and functions of the Advanced Dynamic Graphics Renderer
+ Core objects and functions of the Advanced Dynamic Graphics Renderer (2D)
 
  Author:	Dhiraj Wishal
  Project:	Dynamik Engine
- Date:		30/07/2019
+ Date:		22/09/2019
  IDE:		MS Visual Studio Community 2019
 */
 
-#ifndef _DYNAMIK_VULKAN_RENDERER_
-#define _DYNAMIK_VULKAN_RENDERER_
+#ifndef _DYNAMIK_VULKAN_RENDERER_2D_
+#define _DYNAMIK_VULKAN_RENDERER_2D_
+
+#include "backend/Renderer/Renderer.h"
 
 #include "core/backend.h"
 #include "core/data structures/DMK_ADGR_DataStructures.h"
 
-#define INC_PROGRESS	(*myProgress += 1)
+//#define INC_PROGRESS	(*myProgress += 1)
+#define INC_PROGRESS	
 
 namespace Dynamik {
 	namespace ADGR {
 		using namespace core;
 
-		class vulkanRenderer {
+		class vulkanRenderer2D : c_Renderer {
 		public:
-			vulkanRenderer();
-			~vulkanRenderer();
+			vulkanRenderer2D();
+			~vulkanRenderer2D();
 
-			inline void setProgress(uint32_t* progress) {
-				myProgress = progress;
-			}
+			void init() override;
+			void drawFrame() override;
+			void shutDown() override;
 
-			inline void setCommandOutput(std::string* commandString) {
-				commandOutput = commandString;
-			}
-
-			void init();
-			void drawFrame();
-			void shutdown();
-
-			void recreateSwapChain();
-
-			void loadObjectData();
 			void loadObject(DMKVulkanRendererLoadObjectInfo info);
-			void events() {
-				myWindow.pollEvents();
-			}
-			bool closeEvent() { return myWindow.closeEvent(); }
-
-			void setModelPaths(std::vector<std::string>& object, std::vector<std::string>& texture);
-			void setShaderPaths(std::vector<std::string>& vertex, std::vector<std::string>& fragment);
-
-			std::tuple<int, mouseEventData*> getEvent() { return myWindow.getEvent(); }
-
-			VkDevice getDevice() { return myDevice.getDeviceCpy(); }
 
 			void createVertexBuffer(DMKVulkanRendererCreateVertexBufferInfo info);
 			void createIndexBuffer(DMKVulkanRendererCreateIndexBufferInfo info);
 			void createUniformBuffer(DMKVulkanRendererCreateUniformBufferInfo info);
 			void createDescriptorSets(DMKVulkanRendereCreateDescriptorSetsInfo info);
-
-			void includeShader();
 
 		private:
 			core::window myWindow{};
@@ -71,7 +50,7 @@ namespace Dynamik {
 			core::uniformBufferManager uniformBuffer{};
 			core::commandBufferManager myCommandBufferManager{};
 			core::colorBufferManager myColorBufferManager{};
-			core::depthBufferManager myDepthBufferManager{};
+			//core::depthBufferManager myDepthBufferManager{};
 			core::frameBufferManager myFrameBufferManager{};
 			core::textureManager myTextureManager{};
 			core::modelManager myModelManager{};
@@ -137,30 +116,12 @@ namespace Dynamik {
 			uint32_t* myProgress = 0;
 
 			// dynamic paths
-			std::vector<std::string> modelPaths = {};
-			std::vector<std::string> texturePaths = {};
-			std::vector<std::string> vertexShaderPaths = {
-				"E:/Projects/Dynamik Engine/Dynamik/Application/vert.spv",
-				"E:/Projects/Dynamik Engine/Dynamik/components/Shaders/vert.spv"
-			};
-			std::vector<std::string> fragmentShaderPaths = {
-				"E:/Projects/Dynamik Engine/Dynamik/Application/frag.spv",
-				"E:/Projects/Dynamik Engine/Dynamik/components/Shaders/frag.spv"
-			};
-			std::vector<std::string> vertexShaderSourcePaths = {
-				"E:/Projects/Dynamik Engine/Dynamik/components/Shaders/shader.vert",
-				"E:/Projects/Dynamik Engine/Dynamik/components/ADGR/src/backend/shaders/shader.2D.vert"
-			};
-			std::vector<std::string> fragmentShaderSourcePaths = {
-				"E:/Projects/Dynamik Engine/Dynamik/components/Shaders/shader.frag",
-				"E:/Projects/Dynamik Engine/Dynamik/components/ADGR/src/backend/shaders/shader.2D.frag"
-			};
+			std::vector<std::string> modelPaths;
+			std::vector<std::string> texturePaths;
+			std::vector<std::string> vertexShaderPaths;
+			std::vector<std::string> fragmentShaderPaths;
 
-			bool compileShaders = true;
-
-			std::string* commandOutput = nullptr;
-
-			int shaderCodeIndex = 0;
+			//uint32_t* myProgress = 0;
 		};
 	}
 }

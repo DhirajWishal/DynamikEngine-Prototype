@@ -73,7 +73,7 @@ namespace Dynamik {
 				float trn = 0.0f;
 				float mve = 0.0f;
 				float up = 0.0f;
-				float rotation = 270.0f;
+				float rotation = 0.0f;
 				//float rotation			= 0.0f;
 			};
 		}

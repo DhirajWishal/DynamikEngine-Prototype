@@ -124,19 +124,21 @@ namespace Dynamik {
 
 				else;
 
-				if (info.rotation[1])
+				if (info.rotation[0])
 					rotation += rotationBias;
 
-				else if (info.rotation[0])
+				else if (info.rotation[1])
 					rotation -= rotationBias;
 
-				else;
+				else;	
 
 				UniformBufferObject ubo = {};
 				ubo.model = glm::rotate(glm::translate(glm::mat4(1.0f), glm::vec3(mve, trn, up)),
-					/*time */ glm::radians(rotation), glm::vec3(0.0f, 0.0f, 1.0f))
-					* glm::rotate(glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.005f, 0.0f)),
-						/*time */ glm::radians(rotation), glm::vec3(0.0f, 1.0f, 0.0f));
+						glm::radians(info.cPos[0]), glm::vec3(0.0f, 0.0f, 1.0f))
+					* glm::rotate(glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, 0.0f)),
+						glm::radians(info.cPos[1]), glm::vec3(0.0f, 1.0f, 0.0f))
+					* glm::rotate(glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, 0.0f)),
+						glm::radians(rotation), glm::vec3(1.0f, 0.0f, 0.0f));
 
 				//ubo.model = glm::mat4(glm::mat4(1.0f),
 				//	glm::rotate(glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.005f, 0.0f)), glm::radians(rotation), glm::vec3(0.0f, 1.0f, 0.0f)),

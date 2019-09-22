@@ -40,6 +40,8 @@ namespace Dynamik {
 				glfwSetScrollCallback(m_window, onMouseScrolledEvent);
 				glfwSetCursorPosCallback(m_window, onCursorPosEvent);
 
+				glfwSetInputMode(m_window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
+
 				const GLubyte* vendor = glGetString(GL_VENDOR);		// Returns the vendor
 				const GLubyte* renderer = glGetString(GL_RENDERER); // Returns a hint to the model
 
@@ -77,6 +79,7 @@ namespace Dynamik {
 					data->kE.rotEventR = false;		// temp
 					data->kE.rotEventU = false;		// temp
 					data->kE.rotEventD = false;		// temp
+					data->kE.reCompileShaders = false;		// temp
 					data->keyCodeOne = NULL;
 
 					break;
@@ -198,6 +201,7 @@ namespace Dynamik {
 				case DMK_KEY_K:
 					break;
 				case DMK_KEY_L:
+					kE.reCompileShaders = true;
 					break;
 				case DMK_KEY_M:
 					break;

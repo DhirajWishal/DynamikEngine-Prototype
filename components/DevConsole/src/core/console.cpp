@@ -48,23 +48,30 @@ namespace Dynamik {
 			}
 			else if (myCommand[COMMAND] == commands[PRINT]) {
 
-				if (myCommand[SUB_COMMAND] == subCommands[ENG_PRINT][0])
+				if (myCommand[SUB_COMMAND] == subCommands[ENG_PRINT][0]) {
 					DMK_INFO(myCommand[ATTRIBUTES].c_str());
 
-				else if (myCommand[SUB_COMMAND] == subCommands[ENG_PRINT][1])
+				}
+				else if (myCommand[SUB_COMMAND] == subCommands[ENG_PRINT][1]) {
 					DMK_WARN(myCommand[ATTRIBUTES].c_str());
 
-				else if (myCommand[SUB_COMMAND] == subCommands[ENG_PRINT][2])
+				}
+				else if (myCommand[SUB_COMMAND] == subCommands[ENG_PRINT][2]) {
 					DMK_ERROR(myCommand[ATTRIBUTES].c_str());
 
-				else if (myCommand[SUB_COMMAND] == subCommands[ENG_PRINT][3])
+				}
+				else if (myCommand[SUB_COMMAND] == subCommands[ENG_PRINT][3]) {
 					DMK_FATAL(myCommand[ATTRIBUTES].c_str());
 
-				else if (myCommand[SUB_COMMAND] == subCommands[CORE_PRINT][0])
+				}
+				else if (myCommand[SUB_COMMAND] == subCommands[CORE_PRINT][0]) {
 					DMK_CORE_MSG(myCommand[ATTRIBUTES].c_str());
 
-				else
-					std::runtime_error("Invalid print command");
+				}
+				else {
+					DMK_CORE_FATAL("Invalid print command");
+
+				}
 			}
 			else if (myCommand[COMMAND] == commands[CLEAR])
 				system("CLS");

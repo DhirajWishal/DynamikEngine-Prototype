@@ -19,13 +19,13 @@ namespace Dynamik {
 			};
 
 			struct DMKSkyboxSampelrInitInfo {
-				uint32_t mipLevels;
+				uint32_t mipLevels = 0;
 
-				VkImage skybox;
-				VkFormat format;
+				VkImage skybox = VK_NULL_HANDLE;
+				VkFormat format = VK_FORMAT_UNDEFINED;
 
-				VkSampler* sampler;
-				VkImageView* imageView;
+				VkSampler* sampler = nullptr;
+				VkImageView* imageView = nullptr;
 			};
 
 			class skybox : Texture {

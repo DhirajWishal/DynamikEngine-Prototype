@@ -4,6 +4,7 @@
 namespace Dynamik {
 	namespace ADGR {
 		namespace core {
+
 			GLFWwindow* Core::windowsWindow = nullptr;
 
 			VkInstance Core::instance = VK_NULL_HANDLE;
@@ -12,40 +13,33 @@ namespace Dynamik {
 			VkSurfaceKHR Core::surface = VK_NULL_HANDLE;
 			VkDebugUtilsMessengerEXT Core::debugMessenger = VK_NULL_HANDLE;
 			VkSwapchainKHR Core::swapchain = VK_NULL_HANDLE;
-			VkSurfaceCapabilitiesKHR Core::surfaceCapabilities;
+			VkSurfaceCapabilitiesKHR Core::surfaceCapabilities = {};
 			VkRenderPass Core::renderPass = VK_NULL_HANDLE;
 
 			VkDescriptorSetLayout Core::descriptorSetLayout = VK_NULL_HANDLE;
 			VkDescriptorPool Core::descriptorPool = VK_NULL_HANDLE;
-			std::vector<VkDescriptorSet> Core::descriptorSets;
+			std::vector<VkDescriptorSet> Core::descriptorSets = {};
 
 			VkCommandPool Core::commandPool = VK_NULL_HANDLE;
-			std::vector<VkCommandBuffer> Core::commandBuffers;
+			std::vector<VkCommandBuffer> Core::commandBuffers = {};
 
-			std::vector<VkSemaphore> Core::imageAvailableSemaphore;
-			std::vector<VkSemaphore> Core::renderFinishedSemaphore;
-			std::vector<VkFence> Core::inFlightFence;
+			std::vector<VkSemaphore> Core::imageAvailableSemaphore = {};
+			std::vector<VkSemaphore> Core::renderFinishedSemaphore = {};
+			std::vector<VkFence> Core::inFlightFence = {};
 
-			VkExtent2D Core::swapChainExtent;
+			VkExtent2D Core::swapChainExtent = {};
 			VkFormat Core::swapChainImageFormat = VK_FORMAT_UNDEFINED;
-			std::vector<VkImage> Core::swapChainImages;
-			std::vector<VkImageView> Core::swapChainImageViews;
+			std::vector<VkImage> Core::swapChainImages = {};
+			std::vector<VkImageView> Core::swapChainImageViews = {};
 
-			std::vector<VkFramebuffer> Core::frameBuffers;
+			std::vector<VkFramebuffer> Core::frameBuffers = {};
 
-			std::vector<float> Core::clearScreenValues = {	// sky blue
-				(39.0f / 256.0f),		// Red
-				(158.0f / 256.0f),		// Green
-				(201.0f / 256.0f),		// Blue
-				(1.0f)					// Alpha
+			std::vector<float> Core::clearScreenValues = {	// Dynwamik color code: rgba(2, 8, 32, 1)
+				(2.0f	/ 256.0f),		// Red		
+				(8.0f	/ 256.0f),		// Green	
+				(32.0f	/ 256.0f),		// Blue		
+				(1.00000000f)			// Alpha	
 			};
-
-			//std::vector<float> Core::clearScreenValues = {	// sky blue
-			//	(float)(0.0f),	// Red
-			//	(float)(0.0f),	// Green
-			//	(float)(0.0f),	// Blue
-			//	(float)(1.0f)	// Alpha
-			//};
 
 			VkPipeline Core::graphicsPipeline = VK_NULL_HANDLE;
 			VkPipelineLayout Core::pipelineLayout = VK_NULL_HANDLE;
@@ -74,11 +68,11 @@ namespace Dynamik {
 			unsigned int Core::WIDTH = 1280;
 			unsigned int Core::HEIGHT = 720;
 
-			float Core::minMipLevel;
-			float Core::maxMipLevel;
+			float Core::minMipLevel = 0.0f;
+			float Core::maxMipLevel = 0.0f;
 
-			DMK_ShaderCode Core::vertexShaderCode;
-			VkShaderModule Core::vertexShaderModule;
+			DMK_ShaderCode Core::vertexShaderCode = {};
+			VkShaderModule Core::vertexShaderModule = {};
 			VkPipelineShaderStageCreateInfo Core::vertexShaderStageInfo = {};
 
 #ifdef USE_SHADER_TESSELLATION
@@ -92,8 +86,8 @@ namespace Dynamik {
 			VkShaderModule Core::geometryShaderModule;
 			VkPipelineShaderStageCreateInfo Core::geometryShaderStageInfo = {};
 #endif
-			DMK_ShaderCode Core::fragmentShaderCode;
-			VkShaderModule Core::fragmentShaderModule;
+			DMK_ShaderCode Core::fragmentShaderCode = {};
+			VkShaderModule Core::fragmentShaderModule = {};
 			VkPipelineShaderStageCreateInfo Core::fragmentShaderStageInfo = {};
 		}
 	}

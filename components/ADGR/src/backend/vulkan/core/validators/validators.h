@@ -19,11 +19,11 @@ namespace Dynamik {
 
 			const std::vector<const char*> validationLayer = {
 				"VK_LAYER_LUNARG_standard_validation",
-				//"VK_LAYER_LUNARG_core_validation",
-				//"VK_LAYER_KHRONOS_validation"
+				"VK_LAYER_LUNARG_core_validation",
+				"VK_LAYER_KHRONOS_validation"
 			};
 
-#ifdef DMK_DEBUG
+#if defined(DMK_DEBUG)
 			const bool enableValidationLayers = true;
 
 			// ----------

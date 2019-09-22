@@ -79,7 +79,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>DMK_PLATFORM_WINDOWS;GLFW_INCLUDE_VULKAN;DMK_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)libs;$(SolutionDir)Dynamik\src;$(SolutionDir)Dynamik\GameLibraries;$(SolutionDir)lib\libs;$(solutionDir)components\ADGR;$(solutionDir)components\ADGR\src;$(solutionDir)components\Audio\src;$(solutionDir)components\Events\src;$(solutionDir)components\Platform\src;$(solutionDir)components\DevConsole\src;$(SolutionDir)components\Debugger\src;$(SolutionDir)libs\GLFW\include;$(SolutionDir)libs\Glad\include;$(SolutionDir)libs\glm;$(SolutionDir)libs\stb-master;$(SolutionDir)libs\tinyobjloader-master;$(SolutionDir)\libs\irrKlang\include;$(SolutionDir)\libs\assimp;E:\Programming\Codes\Game Development\Libraries\VulkanSDK\1.1.108.0\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)libs;$(SolutionDir)Dynamik\src;$(SolutionDir)Dynamik\GameLibraries;$(SolutionDir)lib\libs;$(solutionDir)components\ADGR;$(solutionDir)components\ADGR\src;$(solutionDir)components\Audio\src;$(solutionDir)components\Events\src;$(solutionDir)components\Platform\src;$(solutionDir)components\DevConsole\src;$(SolutionDir)components\Debugger\src;$(SolutionDir)libs\GLFW\include;$(SolutionDir)libs\Glad\include;$(SolutionDir)libs\glm;$(SolutionDir)libs\stb-master;$(SolutionDir)libs\tinyobjloader-master;$(SolutionDir)\libs\irrKlang\include;$(SolutionDir)\libs\assimp;E:\Programming\SDKs\Vulkan\1.1.121.0\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
@@ -89,7 +89,7 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>glfw3dll.lib;opengl32.lib;vulkan-1.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)libs\GLFW\lib-vc2019;E:\Programming\Codes\Game Development\Libraries\VulkanSDK\1.1.108.0\Lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)libs\GLFW\lib-vc2019;E:\Programming\SDKs\Vulkan\1.1.121.0\Lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
       <Command>IF EXIST $(SolutionDir)bin\$(Configuration)-$(Platform)\Dynamik\Dynamik.dll\ (xcopy /Q /E /Y /I $(SolutionDir)bin\$(Configuration)-$(Platform)\Dynamik\Dynamik.dll $(SolutionDir)bin\$(Configuration)-$(Platform)\Application &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)bin\$(Configuration)-$(Platform)\Dynamik\Dynamik.dll $(SolutionDir)bin\$(Configuration)-$(Platform)\Application &gt; nul)</Command>
@@ -100,7 +100,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>DMK_PLATFORM_WINDOWS;GLFW_INCLUDE_VULKAN;DMK_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)libs;$(SolutionDir)Dynamik\src;$(SolutionDir)Dynamik\GameLibraries;$(SolutionDir)lib\libs;$(solutionDir)components\ADGR;$(solutionDir)components\ADGR\src;$(solutionDir)components\Audio\src;$(solutionDir)components\Events\src;$(solutionDir)components\Platform\src;$(solutionDir)components\DevConsole\src;$(SolutionDir)components\Debugger\src;$(SolutionDir)libs\GLFW\include;$(SolutionDir)libs\Glad\include;$(SolutionDir)libs\glm;$(SolutionDir)libs\stb-master;$(SolutionDir)libs\tinyobjloader-master;$(SolutionDir)\libs\irrKlang\include;$(SolutionDir)\libs\assimp;E:\Programming\Codes\Game Development\Libraries\VulkanSDK\1.1.108.0\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)libs;$(SolutionDir)Dynamik\src;$(SolutionDir)Dynamik\GameLibraries;$(SolutionDir)lib\libs;$(solutionDir)components\ADGR;$(solutionDir)components\ADGR\src;$(solutionDir)components\Audio\src;$(solutionDir)components\Events\src;$(solutionDir)components\Platform\src;$(solutionDir)components\DevConsole\src;$(SolutionDir)components\Debugger\src;$(SolutionDir)libs\GLFW\include;$(SolutionDir)libs\Glad\include;$(SolutionDir)libs\glm;$(SolutionDir)libs\stb-master;$(SolutionDir)libs\tinyobjloader-master;$(SolutionDir)\libs\irrKlang\include;$(SolutionDir)\libs\assimp;E:\Programming\SDKs\Vulkan\1.1.121.0\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -114,7 +114,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalDependencies>glfw3dll.lib;opengl32.lib;vulkan-1.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)libs\GLFW\lib-vc2019;E:\Programming\Codes\Game Development\Libraries\VulkanSDK\1.1.108.0\Lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)libs\GLFW\lib-vc2019;E:\Programming\SDKs\Vulkan\1.1.121.0\Lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
       <Command>IF EXIST $(SolutionDir)bin\$(Configuration)-$(Platform)\Dynamik\Dynamik.dll\ (xcopy /Q /E /Y /I $(SolutionDir)bin\$(Configuration)-$(Platform)\Dynamik\Dynamik.dll $(SolutionDir)bin\$(Configuration)-$(Platform)\Application &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)bin\$(Configuration)-$(Platform)\Dynamik\Dynamik.dll $(SolutionDir)bin\$(Configuration)-$(Platform)\Application &gt; nul)</Command>
@@ -125,7 +125,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>DMK_PLATFORM_WINDOWS;GLFW_INCLUDE_VULKAN;DMK_DISTRIBUTION;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)libs;$(SolutionDir)Dynamik\src;$(SolutionDir)Dynamik\GameLibraries;$(SolutionDir)lib\libs;$(solutionDir)components\ADGR;$(solutionDir)components\ADGR\src;$(solutionDir)components\Audio\src;$(solutionDir)components\Events\src;$(solutionDir)components\Platform\src;$(solutionDir)components\DevConsole\src;$(SolutionDir)components\Debugger\src;$(SolutionDir)libs\GLFW\include;$(SolutionDir)libs\Glad\include;$(SolutionDir)libs\glm;$(SolutionDir)libs\stb-master;$(SolutionDir)libs\tinyobjloader-master;$(SolutionDir)\libs\irrKlang\include;$(SolutionDir)\libs\assimp;E:\Programming\Codes\Game Development\Libraries\VulkanSDK\1.1.108.0\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)libs;$(SolutionDir)Dynamik\src;$(SolutionDir)Dynamik\GameLibraries;$(SolutionDir)lib\libs;$(solutionDir)components\ADGR;$(solutionDir)components\ADGR\src;$(solutionDir)components\Audio\src;$(solutionDir)components\Events\src;$(solutionDir)components\Platform\src;$(solutionDir)components\DevConsole\src;$(SolutionDir)components\Debugger\src;$(SolutionDir)libs\GLFW\include;$(SolutionDir)libs\Glad\include;$(SolutionDir)libs\glm;$(SolutionDir)libs\stb-master;$(SolutionDir)libs\tinyobjloader-master;$(SolutionDir)\libs\irrKlang\include;$(SolutionDir)\libs\assimp;E:\Programming\SDKs\Vulkan\1.1.121.0\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -139,7 +139,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalDependencies>glfw3dll.lib;opengl32.lib;vulkan-1.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)libs\GLFW\lib-vc2019;E:\Programming\Codes\Game Development\Libraries\VulkanSDK\1.1.108.0\Lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)libs\GLFW\lib-vc2019;E:\Programming\SDKs\Vulkan\1.1.121.0\Lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
       <Command>IF EXIST $(SolutionDir)bin\$(Configuration)-$(Platform)\Dynamik\Dynamik.dll\ (xcopy /Q /E /Y /I $(SolutionDir)bin\$(Configuration)-$(Platform)\Dynamik\Dynamik.dll $(SolutionDir)bin\$(Configuration)-$(Platform)\Application &gt; nul) ELSE (xcopy /Q /Y /I $(SolutionDir)bin\$(Configuration)-$(Platform)\Dynamik\Dynamik.dll $(SolutionDir)bin\$(Configuration)-$(Platform)\Application &gt; nul)</Command>

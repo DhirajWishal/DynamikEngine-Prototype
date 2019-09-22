@@ -12,11 +12,12 @@ namespace Dynamik {
 				if (enableValidationLayers && !checkValidationLayerSupport())
 					DMK_CORE_FATAL("validation layers requested, but not available!");
 
+				// instance info
 				VkApplicationInfo appInfo = {};
 				appInfo.sType = VK_STRUCTURE_TYPE_APPLICATION_INFO;
-				appInfo.pApplicationName = "Dynamik";
+				appInfo.pApplicationName = "Dynamik Engine";
 				appInfo.applicationVersion = VK_MAKE_VERSION(1, 0, 0);
-				appInfo.pEngineName = "Dynamik Engine";
+				appInfo.pEngineName = "Dynamik";
 				appInfo.engineVersion = VK_MAKE_VERSION(1, 0, 0);
 				appInfo.apiVersion = VK_API_VERSION_1_1;
 

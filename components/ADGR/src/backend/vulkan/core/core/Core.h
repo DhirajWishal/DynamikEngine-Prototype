@@ -1,12 +1,13 @@
 #pragma once
 
+#ifndef _DYNAMIK_VULKAN_RENDERER_CORE_
+#define _DYNAMIK_VULKAN_RENDERER_CORE_
+
 #include "backend/vulkan/core/controlHeader.h"
 #include "backend/vulkan/core/data types/typenames.h"
 #include "data structures/vertex.h"
 
 #include "backend/vulkan/core/functions/textureFunctions.h"
-
-//#include "debugger.h"
 
 #include "Event.h"
 
@@ -102,12 +103,12 @@ namespace Dynamik {
 #ifdef USE_SHADER_TESSELLATION
 				static DMK_ShaderCode tessellationShaderCode;
 				static VkShaderModule tessellationShaderModule;
-				static VkPipelineShaderStageCreateInfo tessellationShaderStageInfo = {};
+				static VkPipelineShaderStageCreateInfo tessellationShaderStageInfo;
 #endif				
 #ifdef USE_SHADER_GEOMETRY
 				static DMK_ShaderCode geometryShaderCode;
 				static VkShaderModule geometryShaderModule;
-				static VkPipelineShaderStageCreateInfo geometryShaderStageInfo = {};
+				static VkPipelineShaderStageCreateInfo geometryShaderStageInfo;
 #endif
 
 				static DMK_ShaderCode fragmentShaderCode;
@@ -117,3 +118,5 @@ namespace Dynamik {
 		}
 	}
 }
+
+#endif

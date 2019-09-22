@@ -17,6 +17,8 @@ namespace Dynamik {
 				VkShaderModule createShaderModule(DMK_ShaderCode& code) override;
 				void deleteShaders() override;
 
+				void compileShaders(std::string path, bool activate) override;
+
 			private:
 				VkDevice* m_device = &device;
 
@@ -39,6 +41,9 @@ namespace Dynamik {
 				VkShaderModule* m_geometryShaderModule = &geometryShaderModule;
 				VkPipelineShaderStageCreateInfo* geoShaderStageInfo = &geometryShaderStageInfo;
 #endif
+
+				std::string command = "";
+				std::string shaderCompilerPath = "E:/Programming/SDKs/Vulkan/1.1.121.0/Bin/glslangValidator.exe";
 			};
 		}
 	}

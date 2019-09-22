@@ -61,15 +61,15 @@ namespace Dynamik {
 		};
 
 		// Exporting/ Importing minHeap class
-		DMK_API minHeap<int>;
-		DMK_API minHeap<uint32>;
-		DMK_API minHeap<float>;
-		DMK_API minHeap<double>;
+		minHeap<int>;
+		minHeap<uint32>;
+		minHeap<float>;
+		minHeap<double>;
 
 		// Exporting/ Importing maxHeap class
-		DMK_API maxHeap<int>;
-		DMK_API maxHeap<uint32>;
-		DMK_API maxHeap<float>;
-		DMK_API maxHeap<double>;
+		maxHeap<int>;
+		maxHeap<uint32>;
+		maxHeap<float>;
+		maxHeap<double>;
 	}
 }

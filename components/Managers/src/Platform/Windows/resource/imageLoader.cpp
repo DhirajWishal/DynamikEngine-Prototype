@@ -22,6 +22,9 @@ namespace Dynamik {
 
 			size = uint64_t(texWidth) * uint64_t(texHeight) * 4;
 
+			if (!myTexture)
+				return nullptr;
+
 			return myTexture;
 		}
 

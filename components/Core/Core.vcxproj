@@ -148,10 +148,6 @@
       <Project>{2ACD0289-169A-5D94-3FB3-4B3C2BDF9222}</Project>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Text Include="model.txt" />
-    <Text Include="paths.txt" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

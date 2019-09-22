@@ -21,6 +21,8 @@ namespace Dynamik {
 				void init() override;
 				void createFrameBuffers(DMKFrameBuffersCreateInfo info);
 
+				void clear();
+
 			private:
 				VkDevice* m_device = &device;
 

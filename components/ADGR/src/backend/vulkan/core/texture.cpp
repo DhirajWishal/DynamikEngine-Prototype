@@ -192,6 +192,9 @@ namespace Dynamik {
 				if (!pixels)
 					DMK_CORE_FATAL("failed to load texture image!");
 
+				if (!pixels)
+					printf("NoData!");
+
 				VkBuffer stagingBuffer;
 				VkDeviceMemory stagingBufferMemory;
 

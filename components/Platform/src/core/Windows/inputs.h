@@ -8,7 +8,7 @@ namespace Dynamik {
 
 			class windowsInput : public Input {
 			protected:
-				virtual bool isKeyPressedImpl(int keyCode) override;
+				//virtual bool isKeyPressedImpl(int keyCode) override;
 			};
 		}
 	}

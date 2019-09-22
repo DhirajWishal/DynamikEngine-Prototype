@@ -134,7 +134,8 @@ namespace Dynamik {
 		static std::string progressBar = "";
 		static char prog = '-';
 
-		while (percentage <= 100.0f) {
+		//while (percentage <= 100.0f) {
+		while (!shouldClose) {
 			switch (((int)percentage / 10) * 10) {
 			case 0:
 				progressBar = "|";
@@ -171,8 +172,7 @@ namespace Dynamik {
 				break;
 			}
 
-
-			percentage = ((float)progress / 33.0) * 100.0;
+			percentage = ((float)progress / 34.0) * 100.0;
 			printf("\rProgress: %f%%\t%s\t%s", percentage, symbols[count].c_str(),
 				progressBar.c_str());
 			count++;

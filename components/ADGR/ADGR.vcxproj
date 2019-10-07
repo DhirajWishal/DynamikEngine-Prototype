@@ -144,6 +144,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="src\backend\Renderer\Renderer.h" />
+    <ClInclude Include="src\backend\vulkan\core\core\Manager.h" />
+    <ClInclude Include="src\backend\vulkan\core\manager.h" />
     <ClInclude Include="src\backend\vulkan\vulkanRenderer2D.h" />
     <ClInclude Include="src\Data Structures\index.h" />
     <ClInclude Include="src\Data Structures\vertex.h" />
@@ -202,6 +204,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="src\backend\vulkan\core\manager.cpp" />
     <ClCompile Include="src\backend\vulkan\vulkanRenderer2D.cpp" />
     <ClCompile Include="src\Layers\layer.cpp" />
     <ClCompile Include="src\Layers\layerStack.cpp" />

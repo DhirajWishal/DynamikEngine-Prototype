@@ -145,6 +145,7 @@
   <ItemGroup>
     <ClInclude Include="GameLibraries\GameObject\GameObject.h" />
     <ClInclude Include="GameLibraries\Key Bindings\KeyBingings.h" />
+    <ClInclude Include="src\core\utils\DMK_Descriptors.h" />
     <ClInclude Include="src\Dynamik.h" />
     <ClInclude Include="src\core\application.h" />
     <ClInclude Include="src\core\core.h" />

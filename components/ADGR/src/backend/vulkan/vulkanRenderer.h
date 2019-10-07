@@ -9,8 +9,8 @@
  IDE:		MS Visual Studio Community 2019
 */
 
-#ifndef _DYNAMIK_VULKAN_RENDERER_
-#define _DYNAMIK_VULKAN_RENDERER_
+#ifndef _DYNAMIK_VULKAN_RENDERER_H
+#define _DYNAMIK_VULKAN_RENDERER_H
 
 #include "core/backend.h"
 #include "core/data structures/DMK_ADGR_DataStructures.h"
@@ -20,6 +20,10 @@
 namespace Dynamik {
 	namespace ADGR {
 		using namespace core;
+
+		struct DMK_ADGR_CreatePipelineInfo {
+			DMKPipelineInitInfo pipelineInitInfo;
+		};
 
 		class vulkanRenderer {
 		public:
@@ -53,6 +57,8 @@ namespace Dynamik {
 			std::tuple<int, mouseEventData*> getEvent() { return myWindow.getEvent(); }
 
 			VkDevice getDevice() { return myDevice.getDeviceCpy(); }
+
+			void initPipeline(DMK_ADGR_CreatePipelineInfo info);
 
 			void createVertexBuffer(DMKVulkanRendererCreateVertexBufferInfo info);
 			void createIndexBuffer(DMKVulkanRendererCreateIndexBufferInfo info);
@@ -165,4 +171,4 @@ namespace Dynamik {
 	}
 }
 
-#endif
+#endif	//

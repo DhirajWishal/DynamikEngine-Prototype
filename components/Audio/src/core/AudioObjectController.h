@@ -13,6 +13,7 @@ namespace Dynamik {
 			bool isLooped = false;
 			bool is2D = false;
 			bool startPaused = true;
+			bool resetPlayer = false;
 			irrklang::vec3df position = { 0,0,0 };
 		};
 	}

@@ -5,25 +5,24 @@
 #include "mouseEvent.h"
 #include "applicationEvent.h"
 #include "keyCodes.h"
-// 34
-namespace Dynamik {
-	void worker() {
-	}
 
+#include "utils/DMK_Descriptors.h"
+
+// 35
+namespace Dynamik {
 	uint32_t progress = 0;
 	static bool shouldClose = false;
 
 	Application::Application() {
 		myLoader.run();
 
-		myRenderingEngine.setAssetPaths(myLoader.getTexturePaths(), myLoader.getModelPaths());
 
-		myRenderingEngine.setMipLevel(1.0f);
-
-		myRenderingEngine.setProgress(&progress);
 		std::thread myThread(Application::showProgress);
 
-		myRenderingEngine.initRenderer();
+		std::vector<std::string>& texture = myLoader.getTexturePaths();
+		std::vector<std::string>& model = myLoader.getModelPaths();
+
+		myRenderingEngine.initRenderer({ "", 1.0f,  texture, model, &progress});
 		shouldClose = true;
 
 		myThread.join();
@@ -36,13 +35,11 @@ namespace Dynamik {
 	DMK_API void Application::run() {
 		while (!myRenderingEngine.getWindowCloseEvent()) {
 			myRenderingEngine.draw();
-			//myEvent = &myRenderingEngine.pollEvents();
 			myEngine.update();
 			//my shitty code
 
 			auto [keyEvent, mouseEvent] = myRenderingEngine.pollEvents();
 
-			//if (keyEvent != nullptr)
 			onEvent(keyEvent);
 
 			for (auto layer : layerStack)
@@ -65,18 +62,17 @@ namespace Dynamik {
 		//KeyReleasedEvent keyReleased = ked.keyReleasedEvent;
 		//KeyPressedEvent keyRepeat = ked.keyRepeatEvent;
 
-		static Audio::BasicAudioController audController
-			("E:/Projects/Dynamik Engine/Dynamik/components/Audio/media/explosion.wav");
-
 		switch (ked) {
 		case DMK_KEY_F: {
-			audController.isPaused = false;
-			myEngine.addAudioController(audController);
-			//Sleep(1000);
+			Audio::BasicAudioController* audController = new Audio::BasicAudioController("E:/Projects/Dynamik Engine/Dynamik/components/Audio/media/explosion.wav");
+			audController->isPaused = false;
+			audController->isLooped = false;
+
+			//Audio code
+			myEngine.addAudioController(*audController);
 			break;
 		}
 		case DMK_KEY_SPACE:
-			audController.isPaused = true;
 			break;
 		default:
 			break;
@@ -131,62 +127,18 @@ namespace Dynamik {
 			"\\"
 		};
 
-		static std::string progressBar = "";
-		static char prog = '-';
-
-		//while (percentage <= 100.0f) {
 		while (!shouldClose) {
-			switch (((int)percentage / 10) * 10) {
-			case 0:
-				progressBar = "|";
-				break;
-			case 10:
-				progressBar = "|--                  |";
-				break;
-			case 20:
-				progressBar = "|----                |";
-				break;
-			case 30:
-				progressBar = "|------              |";
-				break;
-			case 40:
-				progressBar = "|--------            |";
-				break;
-			case 50:
-				progressBar = "|----------          |";
-				break;
-			case 60:
-				progressBar = "|------------        |";
-				break;
-			case 70:
-				progressBar = "|--------------      |";
-				break;
-			case 80:
-				progressBar = "|----------------    |";
-				break;
-			case 90:
-				progressBar = "|------------------  |";
-				break;
-			case 100:
-				progressBar = "|--------------------|";
-				break;
-			}
-
 			percentage = ((float)progress / 34.0) * 100.0;
-			printf("\rProgress: %f%%\t%s\t%s", percentage, symbols[count].c_str(),
-				progressBar.c_str());
+			printf("\rProgress: %f%%\t%s", percentage, symbols[count].c_str());
 			count++;
 
-			//if (old != progress && progress != 0)
-			//	progressBar += prog;
-			if (count > 3)count = 0;
+			if (count > 3)	count = 0;
 
 			old = progress;
 			Sleep(100);
 		}
-		printf("\rProgress: %f%%\t%s\t%s\n", 100.0f, symbols[count].c_str(), "|--------------------|");
+		printf("\rProgress: %f%%\t%s\t\n", 100.0f, symbols[count].c_str());
 
 		printf("ADGR Initiated! Let the rendering begin!\n");
-		//Sleep(2000);
 	}
 }

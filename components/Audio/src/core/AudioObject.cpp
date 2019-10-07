@@ -14,12 +14,32 @@ namespace Dynamik {
 				sound = audioEngine->play2D(controller->filepath.c_str(), true, controller->isPaused, true);
 			}
 		}
+
+		bool AudioObject::isFinished() {
+			if (sound->isFinished()) {
+				delete controller;
+				delete this;
+				return true;
+			}
+
+			return false;
+		}
 		
 		void AudioObject::play() {
+			if (isFinished()) return;
+
+
+			if (controller->resetPlayer) {
+				controller->resetPlayer = false;
+				sound->setPlayPosition(0);
+			}
+
 			sound->setPosition(controller->position);
 			sound->setIsLooped(controller->isLooped);
 			sound->setIsPaused(false);
 		}
+
+
 
 		void AudioObject::pause() {
 			sound->setIsPaused(true);

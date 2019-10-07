@@ -215,6 +215,8 @@
     </ClInclude>
     <ClInclude Include="src\backend\vulkan\vulkanRenderer2D.h" />
     <ClInclude Include="src\backend\Renderer\Renderer.h" />
+    <ClInclude Include="src\backend\vulkan\core\core\Manager.h" />
+    <ClInclude Include="src\backend\vulkan\core\manager.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -318,6 +320,7 @@
       <Filter>src\backend\vulkan</Filter>
     </ClCompile>
     <ClCompile Include="src\backend\vulkan\vulkanRenderer2D.cpp" />
+    <ClCompile Include="src\backend\vulkan\core\manager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="premake5.lua" />

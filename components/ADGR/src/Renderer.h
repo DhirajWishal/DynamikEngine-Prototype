@@ -17,15 +17,19 @@
 #include "keyEvent.h"
 #include "mouseEvent.h"
 
+#include "core/utils/DMK_Descriptors.h"
+
 namespace Dynamik {
 	namespace ADGR {
+
+		
 
 		class ADGR_API Renderer {
 		public:
 			Renderer();
 			~Renderer();
 
-			void initRenderer();
+			void initRenderer(initInfo::ADGR info);
 			void draw();
 
 			void run();
@@ -39,10 +43,6 @@ namespace Dynamik {
 			bool getWindowCloseEvent();
 			std::tuple<int, mouseEventData*> pollEvents();
 			void idleCall();
-
-			void setMipLevel(float);
-			void setAssetPaths(std::vector<std::string>& texture, std::vector<std::string>& model);
-			inline void setProgress(uint32_t* progress);
 		};
 	}
 }

@@ -75,6 +75,7 @@
     <ClInclude Include="src\dmkafx.h">
       <Filter>src</Filter>
     </ClInclude>
+    <ClInclude Include="src\core\utils\DMK_Descriptors.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\core\application.cpp">

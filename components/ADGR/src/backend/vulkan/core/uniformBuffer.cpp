@@ -76,13 +76,20 @@ namespace Dynamik {
 				//ubo.model = glm::rotate(glm::translate(glm::mat4(1.0f), glm::vec3(mve, trn, up)),
 				//	/*time */ glm::radians(rotation), glm::vec3(0.0f, 0.0f, 1.0f));
 
-				ubo.model = glm::ortho(mve, trn, rotation, up, 1.0f,10.0f);
+				//ubo.model = glm::ortho(mve, trn, rotation, up, 1.0f,10.0f);
 				//ubo.model = glm::frustum(mve, trn, rotation, up, 0.1f, 10.0f);
+
+				ubo.model = glm::rotate(glm::translate(glm::mat4(1.0f), glm::vec3(mve, trn, up)),
+					glm::radians(info.cPos[0]), glm::vec3(0.0f, 0.0f, 1.0f))
+					* glm::rotate(glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, 0.0f)),
+						glm::radians(info.cPos[1]), glm::vec3(0.0f, 1.0f, 0.0f))
+					* glm::rotate(glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, 0.0f)),
+						glm::radians(rotation), glm::vec3(1.0f, 0.0f, 0.0f));
 
 				ubo.view = glm::lookAt(glm::vec3(0.5f, 3.0f, 0.5f), glm::vec3(0.0f, 0.0f, 0.0f),
 					glm::vec3(0.0f, 0.0f, 1.0f));
 				//ubo.proj = glm::perspective(glm::radians(45.0f), swapChainExtent.width / (float)swapChainExtent.height, 0.001f, 10.0f);
-				ubo.proj = glm::ortho(-10.0f, 10.0f, -10.0f, 10.0f, 0.0f, 100.0f);
+				ubo.proj = glm::ortho(-10.0f, 800.0f, 600.0f, 10.0f, 0.0f, 100.0f);
 				ubo.proj[1][1] *= -1;
 
 				void* data;

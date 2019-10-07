@@ -16,6 +16,7 @@ namespace Dynamik {
 		private :
 			void play();
 			void pause();
+			bool isFinished();
 		};
 
 

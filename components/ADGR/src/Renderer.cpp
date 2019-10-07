@@ -33,7 +33,10 @@ namespace Dynamik {
 
 		}
 
-		void Renderer::initRenderer() {
+		void Renderer::initRenderer(initInfo::ADGR info) {
+			rendererCore.setModelPaths(info.modelPaths, info.texturePaths);
+			rendererCore.setProgress(info.progress);
+
 			rendererCore.init();
 		}
 
@@ -47,9 +50,6 @@ namespace Dynamik {
 
 		void Renderer::end() {
 			rendererCore.shutdown();
-		}
-
-		void Renderer::setMipLevel(float value) {
 		}
 
 		bool Renderer::getWindowCloseEvent() {
@@ -74,14 +74,6 @@ namespace Dynamik {
 
 		void Renderer::bindKeys() {
 
-		}
-
-		void Renderer::setAssetPaths(std::vector<std::string>& texture, std::vector<std::string>& model) {
-			rendererCore.setModelPaths(model, texture);
-		}
-
-		void Renderer::setProgress(uint32_t* progress) {
-			rendererCore.setProgress(progress);
 		}
 	}
 }

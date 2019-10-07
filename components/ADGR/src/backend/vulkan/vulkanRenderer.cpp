@@ -45,7 +45,7 @@ namespace Dynamik {
 			myInstance.init();
 			INC_PROGRESS;
 
-#if defined(DMK_DEBUG)
+#if defined(DMK_RELEASE)
 			// init debugger
 			myDebugger.setupDebugMessenger();
 			INC_PROGRESS;
@@ -105,6 +105,8 @@ namespace Dynamik {
 			// init pipeline
 			DMKPipelineInitInfo initInfo;
 			initInfo.layouts = { layout, layout2 };
+			initInfo.pipelineLayout = myPipeline.getPipelineLayout();
+			initInfo.pipeline = myPipeline.getPipeline();
 			myPipeline.init(initInfo);
 			INC_PROGRESS;
 
@@ -172,7 +174,7 @@ namespace Dynamik {
 			loadModelInfo.path = modelPaths[0];
 			loadModelInfo.vertexBufferObject = &terrainVBO;
 			loadModelInfo.indexBufferObject = &ibo;
-			loadModelInfo.offsets = { 0.0f, 0.0f, 0.0f };
+			loadModelInfo.offsets = { 0.0f, 1.0f, 0.0f };
 			loadObject(loadModelInfo);
 			INC_PROGRESS;
 
@@ -181,7 +183,7 @@ namespace Dynamik {
 			loadModelInfo2.path = modelPaths[1];
 			loadModelInfo2.vertexBufferObject = &terrainVBO;
 			loadModelInfo2.indexBufferObject = &ibo;
-			loadModelInfo2.offsets = { 0.0f, -2.0f, 0.0f };
+			loadModelInfo2.offsets = { 0.0f, -1.0f, 0.0f };
 			loadObject(loadModelInfo2);
 			INC_PROGRESS;
 
@@ -645,6 +647,33 @@ namespace Dynamik {
 		void vulkanRenderer::setShaderPaths(std::vector<std::string>& vertex, std::vector<std::string>& fragment) {
 			vertexShaderPaths = vertex;
 			fragmentShaderPaths = fragment;
+		}
+
+		void vulkanRenderer::initPipeline(DMK_ADGR_CreatePipelineInfo info) {
+			// compile shaders
+			myShaderManager.compileShaders(vertexShaderSourcePaths[shaderCodeIndex], compileShaders);
+			myShaderManager.compileShaders(fragmentShaderSourcePaths[shaderCodeIndex], compileShaders);
+			INC_PROGRESS;
+
+			// load shaders
+			myShaderManager.loadShader(utils::readFile(vertexShaderPaths[shaderCodeIndex]),
+				VERTEX_SHADER);
+			myShaderManager.loadShader(utils::readFile(fragmentShaderPaths[shaderCodeIndex]),
+				FRAGMENT_SHADER);
+			myShaderManager.init();
+			INC_PROGRESS;
+
+			// init pipeline
+			//DMKPipelineInitInfo initInfo = info.pipelineInitInfo;
+			//initInfo.layouts = { layout, layout2 };
+			//initInfo.pipelineLayout = myPipeline.getPipelineLayout();
+			//initInfo.pipeline = myPipeline.getPipeline();
+			myPipeline.init(info.pipelineInitInfo);
+			INC_PROGRESS;
+
+			// delete shaders
+			myShaderManager.deleteShaders();
+			INC_PROGRESS;
 		}
 
 		// create vertex buffer

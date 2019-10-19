@@ -56,14 +56,14 @@ namespace Dynamik {
 				transitionImageLayout(transitionInfo);
 			}
 
-			void colorBufferManager::createResources(DMKColorImageCreateInfo Cinfo) {
+			void colorBufferManager::createResources(DMKColorImageCreateInfo Cinfo, ADGRVulkanDataContainer* container) {
 				VkFormat colorFormat = swapChainImageFormat;
 
 				DMKCreateImageInfo info;
-				info.device = *m_device;
-				info.physicalDevice = physicalDevice;
-				info.width = swapChainExtent.width;
-				info.height = swapChainExtent.height;
+				info.device = container->device;
+				info.physicalDevice = container->physicalDevice;
+				info.width = container->swapchainContainer->swapChainExtent.width;
+				info.height = container->swapchainContainer->swapChainExtent.height;
 				info.format = Cinfo.colorFormat;
 				info.tiling = VK_IMAGE_TILING_OPTIMAL;
 				info.usage = VK_IMAGE_USAGE_TRANSIENT_ATTACHMENT_BIT | VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT;
@@ -76,31 +76,31 @@ namespace Dynamik {
 				createImage(info);
 
 				DMKCreateImageViewInfo viewInfo;
-				viewInfo.device = device;
+				viewInfo.device = container->device;
 				viewInfo.image = Cinfo.image;
 				viewInfo.format = Cinfo.colorFormat;
 				viewInfo.aspectFlags = VK_IMAGE_ASPECT_COLOR_BIT;
 				viewInfo.mipLevels = 1;
 
-				*m_colorImageView = createImageView(viewInfo);
+				container->colorBufferContainer->imageView = createImageView(viewInfo);
 
 				DMKTransitionImageLayoutInfo transitionInfo;
-				transitionInfo.device = *m_device;
-				transitionInfo.commandPool = commandPool;
+				transitionInfo.device = container->device;
+				transitionInfo.commandPool = container->commandBufferContainer->commandPool;
 				transitionInfo.image = Cinfo.image;
 				transitionInfo.format = Cinfo.colorFormat;
 				transitionInfo.oldLayout = VK_IMAGE_LAYOUT_UNDEFINED;
-				transitionInfo.graphicsQueue = graphicsQueue;
+				transitionInfo.graphicsQueue = container->graphicsQueue;
 				transitionInfo.mipLevels = 1;
 				transitionInfo.newLayout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
 
 				transitionImageLayout(transitionInfo);
 			}
 
-			void colorBufferManager::clear() {
-				vkDestroyImageView(*m_device, *m_colorImageView, nullptr);
-				vkDestroyImage(*m_device, *m_colorImage, nullptr);
-				vkFreeMemory(*m_device, *m_colorImageMemory, nullptr);
+			void colorBufferManager::clear(ADGRVulkanDataContainer* container) {
+				vkDestroyImageView(container->device, container->colorBufferContainer->imageView, nullptr);
+				vkDestroyImage(container->device, container->colorBufferContainer->image, nullptr);
+				vkFreeMemory(container->device, container->colorBufferContainer->imageMemory, nullptr);
 			}
 		}
 	}

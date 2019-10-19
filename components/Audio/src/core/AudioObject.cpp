@@ -17,8 +17,8 @@ namespace Dynamik {
 
 		bool AudioObject::isFinished() {
 			if (sound->isFinished()) {
-				delete controller;
-				delete this;
+				//delete controller;
+				//delete this;
 				return true;
 			}
 

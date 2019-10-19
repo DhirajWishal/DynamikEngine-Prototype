@@ -11,9 +11,9 @@ namespace Dynamik {
 				instanceManager() {}
 				~instanceManager() {}
 
-				void init() override;
+				void init(ADGRVulkanDataContainer* container) override;
 
-				void clear() override;
+				void clear(ADGRVulkanDataContainer* container) override;
 
 				VkInstance* getInstanceAddr() { return m_instance; }
 				VkSurfaceKHR getSurface() { return surface; }

@@ -10,7 +10,7 @@ namespace Dynamik {
 	namespace ADGR {
 		namespace core {
 
-			void window::init() {
+			void window::init(ADGRVulkanDataContainer* container) {
 				glfwInit();
 
 				glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
@@ -26,21 +26,21 @@ namespace Dynamik {
 				glfwWindowHint(GLFW_BLUE_BITS, mode->blueBits);
 				glfwWindowHint(GLFW_REFRESH_RATE, mode->refreshRate);
 
-				m_window = glfwCreateWindow(mode->width, mode->height, "Dynamik Engine", monitor, NULL);
+				container->window = glfwCreateWindow(mode->width, mode->height, "Dynamik Engine", monitor, NULL);
 
 #endif
-				glfwMakeContextCurrent(m_window);
+				glfwMakeContextCurrent(container->window);
 
 				//setEventCallback(BIND_EVENT_FUNCTION(onEvent));
 
-				glfwSetWindowUserPointer(m_window, this);
-				glfwSetFramebufferSizeCallback(m_window, framebufferResizeCallback);
-				glfwSetKeyCallback(m_window, onKeyEvent);
-				glfwSetMouseButtonCallback(m_window, onMouseButtonEvent);
-				glfwSetScrollCallback(m_window, onMouseScrolledEvent);
-				glfwSetCursorPosCallback(m_window, onCursorPosEvent);
+				glfwSetWindowUserPointer(container->window, this);
+				glfwSetFramebufferSizeCallback(container->window, framebufferResizeCallback);
+				glfwSetKeyCallback(container->window, onKeyEvent);
+				glfwSetMouseButtonCallback(container->window, onMouseButtonEvent);
+				glfwSetScrollCallback(container->window, onMouseScrolledEvent);
+				glfwSetCursorPosCallback(container->window, onCursorPosEvent);
 
-				glfwSetInputMode(m_window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
+				glfwSetInputMode(container->window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
 
 				const GLubyte* vendor = glGetString(GL_VENDOR);		// Returns the vendor
 				const GLubyte* renderer = glGetString(GL_RENDERER); // Returns a hint to the model
@@ -139,8 +139,8 @@ namespace Dynamik {
 				return true;
 			}
 
-			void window::clear() {
-				glfwDestroyWindow(m_window);
+			void window::clear(ADGRVulkanDataContainer* container) {
+				glfwDestroyWindow(container->window);
 				glfwTerminate();
 			}
 

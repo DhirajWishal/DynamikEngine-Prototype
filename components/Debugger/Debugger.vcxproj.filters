@@ -24,6 +24,7 @@
     <ClInclude Include="src\debugger.h">
       <Filter>src</Filter>
     </ClInclude>
+    <ClInclude Include="src\core\dump.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\core\benchmark\benchmark.cpp">
@@ -35,6 +36,7 @@
     <ClCompile Include="src\core\log.cpp">
       <Filter>src\core</Filter>
     </ClCompile>
+    <ClCompile Include="src\core\dump.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="premake5.lua" />

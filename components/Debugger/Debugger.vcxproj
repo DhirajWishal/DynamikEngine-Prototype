@@ -130,12 +130,14 @@
   <ItemGroup>
     <ClInclude Include="src\core\benchmark\benchmark.h" />
     <ClInclude Include="src\core\benchmark\fps.h" />
+    <ClInclude Include="src\core\dump.h" />
     <ClInclude Include="src\core\log.h" />
     <ClInclude Include="src\debugger.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\core\benchmark\benchmark.cpp" />
     <ClCompile Include="src\core\benchmark\fps.cpp" />
+    <ClCompile Include="src\core\dump.cpp" />
     <ClCompile Include="src\core\log.cpp" />
   </ItemGroup>
   <ItemGroup>

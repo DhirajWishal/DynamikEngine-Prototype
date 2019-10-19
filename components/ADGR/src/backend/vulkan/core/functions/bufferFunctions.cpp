@@ -27,7 +27,7 @@ namespace Dynamik {
 					allocInfo.memoryTypeIndex = findMemoryType(memRequirements.memoryTypeBits, info.bufferMemoryPropertyflags,
 						info.physicalDevice);
 
-					if (vkAllocateMemory(info.device, &allocInfo, nullptr, info.bufferMemory) != VK_SUCCESS) 
+					if (vkAllocateMemory(info.device, &allocInfo, nullptr, info.bufferMemory) != VK_SUCCESS)
 						DMK_CORE_FATAL("failed to allocate buffer memory!");
 
 					vkBindBufferMemory(info.device, *info.buffer, *info.bufferMemory, 0);
@@ -102,12 +102,12 @@ namespace Dynamik {
 
 						vkGetPhysicalDeviceFormatProperties(physicalDevice, format, &props);
 
-						if (tiling == VK_IMAGE_TILING_LINEAR && (props.linearTilingFeatures & features) == features) {
+						if (tiling == VK_IMAGE_TILING_LINEAR && (props.linearTilingFeatures & features) == features)
 							return format;
-						}
-						else if (tiling == VK_IMAGE_TILING_OPTIMAL && (props.optimalTilingFeatures & features) == features) {
+
+						else if (tiling == VK_IMAGE_TILING_OPTIMAL && (props.optimalTilingFeatures & features) == features)
 							return format;
-						}
+
 					}
 
 					DMK_CORE_FATAL("failed to find supported format!");
@@ -133,12 +133,12 @@ namespace Dynamik {
 
 					VkSampleCountFlags counts = std::min(physicalDeviceProperties.limits.framebufferColorSampleCounts,
 						physicalDeviceProperties.limits.framebufferDepthSampleCounts);
-					if (counts & VK_SAMPLE_COUNT_64_BIT) { return VK_SAMPLE_COUNT_64_BIT; }
-					if (counts & VK_SAMPLE_COUNT_32_BIT) { return VK_SAMPLE_COUNT_32_BIT; }
-					if (counts & VK_SAMPLE_COUNT_16_BIT) { return VK_SAMPLE_COUNT_16_BIT; }
-					if (counts & VK_SAMPLE_COUNT_8_BIT) { return VK_SAMPLE_COUNT_8_BIT; }
-					if (counts & VK_SAMPLE_COUNT_4_BIT) { return VK_SAMPLE_COUNT_4_BIT; }
-					if (counts & VK_SAMPLE_COUNT_2_BIT) { return VK_SAMPLE_COUNT_2_BIT; }
+					if (counts & VK_SAMPLE_COUNT_64_BIT)  return VK_SAMPLE_COUNT_64_BIT;
+					if (counts & VK_SAMPLE_COUNT_32_BIT)  return VK_SAMPLE_COUNT_32_BIT;
+					if (counts & VK_SAMPLE_COUNT_16_BIT)  return VK_SAMPLE_COUNT_16_BIT;
+					if (counts & VK_SAMPLE_COUNT_8_BIT)  return VK_SAMPLE_COUNT_8_BIT;
+					if (counts & VK_SAMPLE_COUNT_4_BIT)  return VK_SAMPLE_COUNT_4_BIT;
+					if (counts & VK_SAMPLE_COUNT_2_BIT)  return VK_SAMPLE_COUNT_2_BIT;
 
 					return VK_SAMPLE_COUNT_1_BIT;
 				}

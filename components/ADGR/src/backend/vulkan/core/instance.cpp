@@ -8,7 +8,7 @@ namespace Dynamik {
 	namespace ADGR {
 		namespace core {
 
-			void instanceManager::init() {
+			void instanceManager::init(ADGRVulkanDataContainer* container) {
 				if (enableValidationLayers && !checkValidationLayerSupport())
 					DMK_CORE_FATAL("validation layers requested, but not available!");
 
@@ -43,14 +43,14 @@ namespace Dynamik {
 					createInfo.pNext = nullptr;
 				}
 
-				if (vkCreateInstance(&createInfo, nullptr, m_instance) != VK_SUCCESS)
+				if (vkCreateInstance(&createInfo, nullptr, &container->instance) != VK_SUCCESS)
 					DMK_CORE_FATAL("Failed to create instance!");
 
-				instance = *m_instance;
+				//instance = *m_instance;
 			}
 
-			void instanceManager::clear() {
-				vkDestroyInstance(*m_instance, nullptr);
+			void instanceManager::clear(ADGRVulkanDataContainer* container) {
+				vkDestroyInstance(container->instance, nullptr);
 			}
 		}
 	}

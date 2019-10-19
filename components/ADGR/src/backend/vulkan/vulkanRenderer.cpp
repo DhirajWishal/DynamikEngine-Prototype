@@ -38,11 +38,11 @@ namespace Dynamik {
 
 		void vulkanRenderer::init() {
 			// initialize window
-			myWindow.init();
+			myWindow.init(&myVulkanDataContainer);
 			INC_PROGRESS;
 
 			// create Vulkan instance
-			myInstance.init();
+			myInstance.init(&myVulkanDataContainer);
 			INC_PROGRESS;
 
 #if defined(DMK_RELEASE)
@@ -58,7 +58,7 @@ namespace Dynamik {
 			INC_PROGRESS;
 
 			// init Vulkan device
-			myDevice.init();
+			myDevice.init(&myVulkanDataContainer);
 			INC_PROGRESS;
 
 			// init swapchain
@@ -129,6 +129,10 @@ namespace Dynamik {
 			// TODO: manually initialization
 			myFrameBufferManager.init();
 			INC_PROGRESS;
+
+			///////////////////////////////////////////
+			//std::thread myThread(thread_basket_1_);//
+			///////////////////////////////////////////
 
 			// texture creation - init
 			DMKInitTextureInfo textureInfo;
@@ -283,7 +287,7 @@ namespace Dynamik {
 			vkDeviceWaitIdle(myDevice.getDeviceCpy());
 
 			// clear color buffer
-			myColorBufferManager.clear();
+			myColorBufferManager.clear(&myVulkanDataContainer);
 
 			// clear depth buffer
 			myDepthBufferManager.clear();
@@ -332,10 +336,10 @@ namespace Dynamik {
 			vkDestroySurfaceKHR(myInstance.getInstance(), myInstance.getSurface(), nullptr);
 
 			// clear instance
-			myInstance.clear();
+			myInstance.clear(&myVulkanDataContainer);
 
 			// final
-			myWindow.clear();
+			myWindow.clear(&myVulkanDataContainer);
 		}
 
 		void vulkanRenderer::drawFrame() {
@@ -495,6 +499,8 @@ namespace Dynamik {
 			// init pipeline
 			DMKPipelineInitInfo initInfo;
 			initInfo.layouts = { layout, layout2 };
+			initInfo.pipelineLayout = myPipeline.getPipelineLayout();
+			initInfo.pipeline = myPipeline.getPipeline();
 			myPipeline.init(initInfo);
 
 			// delete shaders
@@ -731,6 +737,80 @@ namespace Dynamik {
 
 			// delete shaders
 			myShaderManager.deleteShaders();
+		}
+
+		void vulkanRenderer::thread_second() {
+			// texture creation - init
+			DMKInitTextureInfo textureInfo;
+			textureInfo.path = texturePaths[0];
+			textureInfo.textureImage = &texImage;
+			textureInfo.textureImageMemory = &texImageMemory;
+			textureInfo.textureImageFormat = VK_FORMAT_R8G8B8A8_UNORM;
+			textureInfo.mipLevels = myMipLevel;
+			myTextureManager.initTexture(textureInfo);
+			INC_PROGRESS;
+
+			// texture - imageViews
+			DMKInitTextureImageViewsInfo viewInfo;
+			viewInfo.textureImage = texImage;
+			viewInfo.textureImageFormat = VK_FORMAT_R8G8B8A8_UNORM;
+			viewInfo.mipLevels = myMipLevel;
+			INC_PROGRESS;
+
+			DMKCreateImageViewInfo cImgVewinfo;
+			cImgVewinfo.device = myDevice.getDeviceCpy();
+			cImgVewinfo.format = VK_FORMAT_R8G8B8A8_UNORM;
+			cImgVewinfo.image = texImage;
+			cImgVewinfo.mipLevels = myMipLevel;
+			cImgVewinfo.aspectFlags = VK_IMAGE_ASPECT_COLOR_BIT;
+			cImgVewinfo.textureImageView = &textureImageView;
+			myTextureManager.initTextureImageViews(viewInfo, cImgVewinfo);
+			INC_PROGRESS;
+
+			// texture - sampler
+			DMKInitTextureSamplerInfo samplerInfo;
+			samplerInfo.textureSampler = &textureSampler;
+			samplerInfo.modeU = VK_SAMPLER_ADDRESS_MODE_REPEAT;
+			samplerInfo.modeV = VK_SAMPLER_ADDRESS_MODE_REPEAT;
+			samplerInfo.modeW = VK_SAMPLER_ADDRESS_MODE_REPEAT;
+			samplerInfo.magFilter = VK_FILTER_LINEAR;
+			samplerInfo.minFilter = VK_FILTER_LINEAR;
+			samplerInfo.mipLevel = myMipLevel;
+			myTextureManager.initTextureSampler(samplerInfo);
+			INC_PROGRESS;
+		}
+
+		void vulkanRenderer::thread_third() {
+			// load Model
+			DMKVulkanRendererLoadObjectInfo loadModelInfo;
+			loadModelInfo.path = modelPaths[0];
+			loadModelInfo.vertexBufferObject = &terrainVBO;
+			loadModelInfo.indexBufferObject = &ibo;
+			loadModelInfo.offsets = { 0.0f, 1.0f, 0.0f };
+			loadObject(loadModelInfo);
+			INC_PROGRESS;
+
+			// load second Model
+			DMKVulkanRendererLoadObjectInfo loadModelInfo2;
+			loadModelInfo2.path = modelPaths[1];
+			loadModelInfo2.vertexBufferObject = &terrainVBO;
+			loadModelInfo2.indexBufferObject = &ibo;
+			loadModelInfo2.offsets = { 0.0f, -1.0f, 0.0f };
+			loadObject(loadModelInfo2);
+			INC_PROGRESS;
+
+			// load third Model
+			DMKVulkanRendererLoadObjectInfo loadModelInfo3;
+			loadModelInfo3.path = modelPaths[0];
+			loadModelInfo3.vertexBufferObject = &vbo2;
+			loadModelInfo3.indexBufferObject = &ibo;
+			loadModelInfo3.offsets = { 0.0f, 0.0f, 0.0f };
+			loadObject(loadModelInfo3);
+			INC_PROGRESS;
+		}
+
+		void vulkanRenderer::thread_basket_1_() {
+			
 		}
 	}
 }

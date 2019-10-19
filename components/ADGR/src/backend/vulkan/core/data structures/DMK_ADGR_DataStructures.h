@@ -1,5 +1,8 @@
 #pragma once
 
+#ifndef DMK_ADGR_VULKAN_DATA_STRUCTURES_H
+#define DMK_ADGR_VULKAN_DATA_STRUCTURES_H
+
 namespace Dynamik {
 	namespace ADGR {
 		namespace core {
@@ -60,7 +63,11 @@ namespace Dynamik {
 
 			struct DMKVulkanTexture {
 				VkImage texture = VK_NULL_HANDLE;
-				VkDeviceMemory textureImageMemory = VK_NULL_HANDLE;
+				VkDeviceMemory imageMemory = VK_NULL_HANDLE;
+				VkImageView imageView = VK_NULL_HANDLE;
+				VkSampler sampler = VK_NULL_HANDLE;
+
+				uint32_t mipLevels = 1;
 			};
 
 			struct DMKVulkanVertexBuffer {
@@ -105,3 +112,5 @@ namespace Dynamik {
 		}
 	}
 }
+
+#endif

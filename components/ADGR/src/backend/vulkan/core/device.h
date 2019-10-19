@@ -11,7 +11,7 @@ namespace Dynamik {
 				device() {}
 				~device() {}
 
-				void init() override;
+				void init(ADGRVulkanDataContainer* container) override;
 
 				VkDevice getDeviceCpy() { return *m_device; }
 				VkDevice* getDeviceRef() { return m_device; }
@@ -20,11 +20,11 @@ namespace Dynamik {
 				VkQueue* getGraphicsQueue() { return m_graphicsQueue; }
 
 			private:
-				void initPhysicalDevice() override;
-				void initLogicalDevice() override;
+				void initPhysicalDevice(ADGRVulkanDataContainer* container) override;
+				void initLogicalDevice(ADGRVulkanDataContainer* container) override;
 
 				bool checkDeviceExtensionSupport(VkPhysicalDevice device);
-				bool isDeviceSuitable(VkPhysicalDevice device);
+				bool isDeviceSuitable(VkPhysicalDevice device, VkSurfaceKHR* surface);
 
 				VkInstance* m_instance = myInstance;
 				VkDevice* m_device = myDevice;

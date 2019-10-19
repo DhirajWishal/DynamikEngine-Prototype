@@ -40,8 +40,8 @@ namespace Dynamik {
 				window() {}
 				~window() {}
 
-				void init() override;
-				void clear() override;
+				void init(ADGRVulkanDataContainer* container) override;
+				void clear(ADGRVulkanDataContainer* container) override;
 
 				bool createWindowSurface();
 

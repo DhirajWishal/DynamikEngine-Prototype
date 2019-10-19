@@ -30,14 +30,14 @@ namespace Dynamik {
 				return requiredExtensions.empty();
 			}
 
-			bool device::isDeviceSuitable(VkPhysicalDevice device) {
-				queueFamilyindices indices = findQueueFamilies(device, *m_surface);
+			bool device::isDeviceSuitable(VkPhysicalDevice device, VkSurfaceKHR* surface) {
+				queueFamilyindices indices = findQueueFamilies(device, *surface);
 
 				bool extensionsSupported = checkDeviceExtensionSupport(device);
 
 				bool swapChainAdequate = false;
 				if (extensionsSupported) {
-					swapChainSupportDetails swapChainSupport = querySwapChainSupport(&device, m_surface);
+					swapChainSupportDetails swapChainSupport = querySwapChainSupport(&device, surface);
 					swapChainAdequate = !swapChainSupport.formats.empty()
 						&& !swapChainSupport.presentModes.empty();
 				}
@@ -51,13 +51,13 @@ namespace Dynamik {
 					&& supportedFeatures.samplerAnisotropy;
 			}
 
-			void device::init() {
-				initPhysicalDevice();
-				initLogicalDevice();
+			void device::init(ADGRVulkanDataContainer* container) {
+				initPhysicalDevice(container);
+				initLogicalDevice(container);
 			}
 
-			void device::initLogicalDevice() {
-				queueFamilyindices indices = findQueueFamilies(physicalDevice, surface);
+			void device::initLogicalDevice(ADGRVulkanDataContainer* container) {
+				queueFamilyindices indices = findQueueFamilies(container->physicalDevice, container->surface);
 
 				std::vector<VkDeviceQueueCreateInfo> queueCreateInfos;
 				std::set<uint32> uniqueQueueFamilies = {
@@ -95,48 +95,48 @@ namespace Dynamik {
 					createInfo.enabledLayerCount = 0;
 				}
 
-				if (vkCreateDevice(physicalDevice, &createInfo, nullptr, m_device) != VK_SUCCESS)
+				if (vkCreateDevice(container->physicalDevice, &createInfo, nullptr, &container->device) != VK_SUCCESS)
 					DMK_CORE_FATAL("failed to create logical device!");
 
-				vkGetDeviceQueue(*m_device, indices.graphicsFamily.value(), 0, &graphicsQueue);
-				vkGetDeviceQueue(*m_device, indices.presentFamily.value(), 0, &presentQueue);
+				vkGetDeviceQueue(container->device, indices.graphicsFamily.value(), 0, &container->graphicsQueue);
+				vkGetDeviceQueue(container->device, indices.presentFamily.value(), 0, &container->presentQueue);
 			}
 
-			void device::initPhysicalDevice() {
+			void device::initPhysicalDevice(ADGRVulkanDataContainer* container) {
 				uint32 deviceCount = 0;
-				vkEnumeratePhysicalDevices(*m_instance, &deviceCount, nullptr);
+				vkEnumeratePhysicalDevices(container->instance, &deviceCount, nullptr);
 
 				if (deviceCount == 0)
 					DMK_CORE_FATAL("Failed to find GPUs with Vulkan support!");
 
 				std::vector<VkPhysicalDevice> devices(deviceCount);
-				vkEnumeratePhysicalDevices(instance, &deviceCount, devices.data());
+				vkEnumeratePhysicalDevices(container->instance, &deviceCount, devices.data());
 
 				//std::multimap<int, VkPhysicalDevice> candidates;
 
 				for (const auto& device : devices) {
-					if (isDeviceSuitable(device)) {
+					if (isDeviceSuitable(device, &container->surface)) {
 
 						auto props = VkPhysicalDeviceProperties{};
 						vkGetPhysicalDeviceProperties(device, &props);
 
 						if (props.deviceType == VkPhysicalDeviceType::VK_PHYSICAL_DEVICE_TYPE_DISCRETE_GPU)
-							* myPhysicalDevice = device;
+							container->physicalDevice = device;
 						else if (props.deviceType == VkPhysicalDeviceType::VK_PHYSICAL_DEVICE_TYPE_INTEGRATED_GPU)
-							* myPhysicalDevice = device;
+							container->physicalDevice = device;
 						else
-							*myPhysicalDevice = device;
+							container->physicalDevice = device;
 
-						*m_msaaSamples = getMaxUsableSampleCount(*m_physicalDevice);
+						container->msaaSamples = getMaxUsableSampleCount(container->physicalDevice);
 						break;
 					}
 				}
 
-				if (*m_physicalDevice == VK_NULL_HANDLE)
+				if (container->physicalDevice == VK_NULL_HANDLE)
 					DMK_CORE_FATAL("Failed to find a suitable GPU!");
 
 				auto props = VkPhysicalDeviceProperties{};
-				vkGetPhysicalDeviceProperties(*m_physicalDevice, &props);
+				vkGetPhysicalDeviceProperties(container->physicalDevice, &props);
 
 #if defined(DMK_DEBUG) || defined(DMK_RELEASE)
 				printf("\n\t---------- VULKAN PHYSICAL DEVICE INFO ----------\n");

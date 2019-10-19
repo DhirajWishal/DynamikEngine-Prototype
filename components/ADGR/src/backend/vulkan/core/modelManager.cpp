@@ -37,7 +37,6 @@ namespace Dynamik {
 
 				for (const auto& shape : shapes) {
 					for (const auto& index : shape.mesh.indices) {
-
 						Vertex vertices;
 
 						vertices.Position = {

@@ -22,9 +22,9 @@ namespace Dynamik {
 				void createBuffer(VkBuffer* buffer, size_t size,
 					VkBufferUsageFlags flags, VkBufferUsageFlagBits memoryFlags);
 				void initResources();
-				void createResources(DMKColorImageCreateInfo info);
+				void createResources(DMKColorImageCreateInfo info, ADGRVulkanDataContainer* container);
 
-				void clear() override;
+				void clear(ADGRVulkanDataContainer* container) override;
 
 			private:
 				VkDevice* m_device = &device;

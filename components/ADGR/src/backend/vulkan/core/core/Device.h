@@ -11,8 +11,8 @@ namespace Dynamik {
 				Device() {}
 				virtual ~Device() {}
 
-				virtual void initPhysicalDevice() {}
-				virtual void initLogicalDevice() {}
+				virtual void initPhysicalDevice(ADGRVulkanDataContainer* container) {}
+				virtual void initLogicalDevice(ADGRVulkanDataContainer* container) {}
 
 			protected:
 				VkInstance* myInstance = &instance;

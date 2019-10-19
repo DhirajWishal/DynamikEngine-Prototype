@@ -67,7 +67,15 @@ namespace Dynamik {
 
 			void includeShader();
 
+			// threads
+			void thread_second();	// textures
+			void thread_third();	// models
+
+			static void thread_basket_1_();
+
 		private:
+			ADGRVulkanDataContainer myVulkanDataContainer;
+
 			core::window myWindow{};
 
 			core::instanceManager myInstance{};

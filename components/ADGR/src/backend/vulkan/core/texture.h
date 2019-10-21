@@ -64,28 +64,12 @@ namespace Dynamik {
 				textureManager() {}
 				~textureManager() {}
 
-				void loadTexture(std::string path, resource::TextureType type) override;
-				void initTextureImageView();
-				void initTextureSampler();
+				void initTexture(ADGRVulkanDataContainer* container, DMKInitTextureInfo info);
+				void generateMipMaps(ADGRVulkanDataContainer* container, DMKGenerateMipMapInfo info) override;
+				void initTextureImageViews(ADGRVulkanDataContainer* container, DMKInitTextureImageViewsInfo texInfo, DMKCreateImageViewInfo info);
+				void initTextureSampler(ADGRVulkanDataContainer* container, DMKInitTextureSamplerInfo info);
 
-				void initTexture(DMKInitTextureInfo info);
-				void generateMipMaps(DMKGenerateMipMapInfo info) override;
-				void initTextureImageViews(DMKInitTextureImageViewsInfo texInfo, DMKCreateImageViewInfo info);
-				void initTextureSampler(DMKInitTextureSamplerInfo info);
-
-				void deleteTexture(DMKTextureDeleteInfo info);
-
-			private:
-				VkDevice* m_device = &device;
-				VkImage* m_textureImage = &textureImage;
-				VkDeviceMemory* m_textureImageMemory = &textureImageMemory;
-				VkImageView* m_textureImageView = &textureImageView;
-				VkSampler* m_textureSampler = &textureSampler;
-
-				uint32_t* m_mipLevels = &mipLevels;
-
-				float* minMip = &minMipLevel;
-				float* maxMip = &maxMipLevel;
+				void deleteTexture(ADGRVulkanDataContainer* container, DMKTextureDeleteInfo info);
 			};
 		}
 	}

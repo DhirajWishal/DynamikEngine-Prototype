@@ -8,15 +8,15 @@ namespace Dynamik {
 		namespace core {
 			using namespace functions;
 
-			void vertexBufferManager::createVertexBuffer(DMKVertexBufferCreateInfo info) {
+			void vertexBufferManager::createVertexBuffer(ADGRVulkanDataContainer* container, DMKVertexBufferCreateInfo info) {
 				VkDeviceSize bufferSize = sizeof(info.vertices[0]) * info.vertices.size();
 
 				VkBuffer stagingBuffer;
 				VkDeviceMemory stagingBufferMemory;
 
 				DMKCreateBufferInfo bufferInfo;
-				bufferInfo.device = device;
-				bufferInfo.physicalDevice = physicalDevice;
+				bufferInfo.device = container->device;
+				bufferInfo.physicalDevice = container->physicalDevice;
 				bufferInfo.bufferSize = bufferSize;
 				bufferInfo.usage = VK_BUFFER_USAGE_TRANSFER_SRC_BIT;
 				bufferInfo.bufferMemoryPropertyflags = VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT;
@@ -26,13 +26,13 @@ namespace Dynamik {
 				functions::createBuffer(bufferInfo);
 				
 				void* data;
-				vkMapMemory(device, stagingBufferMemory, 0, bufferSize, 0, &data);
+				vkMapMemory(container->device, stagingBufferMemory, 0, bufferSize, 0, &data);
 				memcpy(data, info.vertices.data(), (size_t)bufferSize);
-				vkUnmapMemory(device, stagingBufferMemory);
+				vkUnmapMemory(container->device, stagingBufferMemory);
 
 				DMKCreateBufferInfo vertBufferInfo;
-				vertBufferInfo.device = device;
-				vertBufferInfo.physicalDevice = physicalDevice;
+				vertBufferInfo.device = container->device;
+				vertBufferInfo.physicalDevice = container->physicalDevice;
 				vertBufferInfo.bufferSize = bufferSize;
 				vertBufferInfo.usage = (VkBufferUsageFlagBits)(VK_BUFFER_USAGE_TRANSFER_DST_BIT | VK_BUFFER_USAGE_VERTEX_BUFFER_BIT);
 				vertBufferInfo.bufferMemoryPropertyflags = VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT;
@@ -41,15 +41,15 @@ namespace Dynamik {
 
 				functions::createBuffer(vertBufferInfo);
 
-				copyBuffer(device, stagingBuffer, *info.buffer, bufferSize, commandPool, graphicsQueue);
+				copyBuffer(container->device, stagingBuffer, *info.buffer, bufferSize, container->commandBufferContainer.commandPool, container->graphicsQueue);
 
-				vkDestroyBuffer(device, stagingBuffer, nullptr);
-				vkFreeMemory(device, stagingBufferMemory, nullptr);
+				vkDestroyBuffer(container->device, stagingBuffer, nullptr);
+				vkFreeMemory(container->device, stagingBufferMemory, nullptr);
 			}
 
-			void vertexBufferManager::deleteBuffer(DMKVertexBufferDeleteInfo info) {
-				vkDestroyBuffer(device, info.buffer, nullptr);
-				vkFreeMemory(device, info.bufferMemory, nullptr);
+			void vertexBufferManager::deleteBuffer(ADGRVulkanDataContainer* container, DMKVertexBufferDeleteInfo info) {
+				vkDestroyBuffer(container->device, info.buffer, nullptr);
+				vkFreeMemory(container->device, info.bufferMemory, nullptr);
 			}
 		}
 	}

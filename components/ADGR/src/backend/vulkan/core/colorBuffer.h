@@ -21,17 +21,10 @@ namespace Dynamik {
 
 				void createBuffer(VkBuffer* buffer, size_t size,
 					VkBufferUsageFlags flags, VkBufferUsageFlagBits memoryFlags);
-				void initResources();
-				void createResources(DMKColorImageCreateInfo info, ADGRVulkanDataContainer* container);
+				void initResources(ADGRVulkanDataContainer* container);
+				void createResources(ADGRVulkanDataContainer* container, DMKColorImageCreateInfo info);
 
 				void clear(ADGRVulkanDataContainer* container) override;
-
-			private:
-				VkDevice* m_device = &device;
-
-				VkImage* m_colorImage = &colorImage;
-				VkDeviceMemory* m_colorImageMemory = &colorImageMemory;
-				VkImageView* m_colorImageView = &colorImageView;
 			};
 		}
 	}

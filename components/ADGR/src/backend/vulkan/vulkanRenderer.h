@@ -49,14 +49,14 @@ namespace Dynamik {
 			void events() {
 				myWindow.pollEvents();
 			}
-			bool closeEvent() { return myWindow.closeEvent(); }
+			bool closeEvent() { return myWindow.closeEvent(&myVulkanDataContainer); }
 
 			void setModelPaths(std::vector<std::string>& object, std::vector<std::string>& texture);
 			void setShaderPaths(std::vector<std::string>& vertex, std::vector<std::string>& fragment);
 
 			std::tuple<int, mouseEventData*> getEvent() { return myWindow.getEvent(); }
 
-			VkDevice getDevice() { return myDevice.getDeviceCpy(); }
+			VkDevice getDevice() { return myVulkanDataContainer.device; }
 
 			void initPipeline(DMK_ADGR_CreatePipelineInfo info);
 
@@ -95,7 +95,7 @@ namespace Dynamik {
 
 			core::shaderManager myShaderManager{};
 
-			core::debugger myDebugger{ myInstance.getInstanceAddr(), myInstance.getdebugMessengerAddr() };
+			core::debugger myDebugger{ &myVulkanDataContainer.instance, &myVulkanDataContainer.debugMessenger };
 
 			// terrain data
 			std::vector<core::Vertex> terrainVBO = {};

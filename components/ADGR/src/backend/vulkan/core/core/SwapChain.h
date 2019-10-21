@@ -17,7 +17,7 @@ namespace Dynamik {
 				SwapChain() {}
 				virtual ~SwapChain() {}
 
-				virtual void initImageViews() {}
+				virtual void initImageViews(ADGRVulkanDataContainer* container) {}
 
 			protected:
 

@@ -11,37 +11,15 @@ namespace Dynamik {
 				shaderManager() {}
 				~shaderManager() {}
 
-				void init() override;
+				void init(ADGRVulkanDataContainer* container, ADGRVulkanShaderDataContainer* shaderDataContainer);
 
 				void loadShader(DMK_ShaderCode shaderCode, ShaderType type) override;
-				VkShaderModule createShaderModule(DMK_ShaderCode& code) override;
-				void deleteShaders() override;
+				VkShaderModule createShaderModule(VkDevice device, DMK_ShaderCode& code) override;
+				void deleteShaders(ADGRVulkanDataContainer& container, ADGRVulkanPipelineDataContainer& pipelineContainer) override;
 
 				void compileShaders(std::string path, bool activate) override;
 
 			private:
-				VkDevice* m_device = &device;
-
-				DMK_ShaderCode* m_vertexShaderCode = &vertexShaderCode;
-				VkShaderModule* m_vertexShaderModule = &vertexShaderModule;
-				VkPipelineShaderStageCreateInfo* vertShaderStageInfo = &vertexShaderStageInfo;
-
-				DMK_ShaderCode* m_fragmentShaderCode = &fragmentShaderCode;
-				VkShaderModule* m_fragmentShaderModule = &fragmentShaderModule;
-				VkPipelineShaderStageCreateInfo* fragShaderStageInfo = &fragmentShaderStageInfo;
-
-#ifdef USE_SHADER_TESSELLATION
-				DMK_ShaderCode* m_tessellationShaderCode = &tessellationShaderCode;
-				VkShaderModule* m_tessellationShaderModule = &tessellationShaderModule;
-				VkPipelineShaderStageCreateInfo* tessShaderStageInfo = &tessellationShaderStageInfo;
-#endif
-
-#ifdef USE_SHADER_GEOMETRY
-				DMK_ShaderCode* m_geometryShaderCode = &geometryShaderCode;
-				VkShaderModule* m_geometryShaderModule = &geometryShaderModule;
-				VkPipelineShaderStageCreateInfo* geoShaderStageInfo = &geometryShaderStageInfo;
-#endif
-
 				std::string command = "";
 				std::string shaderCompilerPath = "E:/Programming/SDKs/Vulkan/1.1.121.0/Bin/glslangValidator.exe";
 			};

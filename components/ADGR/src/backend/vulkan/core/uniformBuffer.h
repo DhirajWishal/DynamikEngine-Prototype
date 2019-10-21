@@ -45,26 +45,18 @@ namespace Dynamik {
 				uniformBufferManager() {}
 				~uniformBufferManager() {}
 
-				void createDescriptorSetLayout(DMKUniformBufferCreateDescriptorSetLayoutInfo info);
-				void initDescriptorPool(VkDescriptorPool* descriptorPool);
-				void initDescriptorSets(DMKDescriptorSetsInitInfo info);
+				void createDescriptorSetLayout(ADGRVulkanDataContainer* container, DMKUniformBufferCreateDescriptorSetLayoutInfo info);
+				void initDescriptorPool(ADGRVulkanDataContainer* container, VkDescriptorPool* descriptorPool);
+				void initDescriptorSets(ADGRVulkanDataContainer* container, DMKDescriptorSetsInitInfo info);
 
-				void createUniformBuffers(DMKUniformBufferCreateInfo info);
+				void createUniformBuffers(ADGRVulkanDataContainer* container, DMKUniformBufferCreateInfo info);
 
-				void updateBuffer2D(DMKUniformBufferUpdateInfo info);
-				void updateBuffer3D(DMKUniformBufferUpdateInfo info);
+				void updateBuffer2D(ADGRVulkanDataContainer* container, DMKUniformBufferUpdateInfo info);
+				void updateBuffer3D(ADGRVulkanDataContainer* container, DMKUniformBufferUpdateInfo info);
 
-				void deleteBuffer(VkBuffer* buffer) override;
+				void deleteBuffer(ADGRVulkanDataContainer* container, VkBuffer* buffer) override;
 
 			private:
-				VkDevice* m_device = &device;
-				VkDescriptorSetLayout* m_descriptorSetLayout = &descriptorSetLayout;
-				VkDescriptorPool* m_descriptorPool = &descriptorPool;
-				VkCommandPool* m_commandPool = &commandPool;
-
-				std::vector<VkDescriptorSet>* m_descriptorSets = &descriptorSets;
-
-
 				const float movementBias = 0.005f;
 				const float upDownBias = 0.005f;
 				const float rotationBias = 2.5f;

@@ -3,6 +3,8 @@
 #ifndef DMK_ADGR_VULKAN_DATA_STRUCTURES_H
 #define DMK_ADGR_VULKAN_DATA_STRUCTURES_H
 
+#include "backend/vulkan/core/data structures/vertex.h"
+
 namespace Dynamik {
 	namespace ADGR {
 		namespace core {

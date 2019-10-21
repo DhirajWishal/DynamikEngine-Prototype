@@ -27,16 +27,9 @@ namespace Dynamik {
 
 				void createBuffer(VkBuffer* buffer, size_t size,
 					VkBufferUsageFlags flags, VkBufferUsageFlagBits memoryFlags) override;
-				void initCommandPool();
+				void initCommandPool(ADGRVulkanDataContainer* container);
 
-				void bindCommands(DMKBindCommandBufferInfo info);
-
-				VkCommandBuffer* getBuffer(int index) { return &commandBuffers[index]; }
-				VkCommandPool getCommandPool() { return *m_commandPool; }
-
-			private:
-				VkDevice* m_device = &device;
-				VkCommandPool* m_commandPool = &commandPool;
+				void bindCommands(ADGRVulkanDataContainer* container, DMKBindCommandBufferInfo info);
 			};
 		}
 	}

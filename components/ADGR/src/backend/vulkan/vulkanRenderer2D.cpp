@@ -32,7 +32,7 @@ namespace Dynamik {
 
 		}
 
-		void vulkanRenderer2D::init() {
+		void vulkanRenderer2D::init() {/*
 			// initialize window
 			myWindow.init();
 			INC_PROGRESS;
@@ -263,7 +263,7 @@ namespace Dynamik {
 			// initialize sync objects
 			initSyncObjects(myDevice.getDeviceCpy(), &imageAvailableSemaphore,
 				&renderFinishedSemaphore, &inFlightFence);
-			INC_PROGRESS;
+			INC_PROGRESS;*/
 		}
 
 		void vulkanRenderer2D::drawFrame() {
@@ -285,33 +285,33 @@ namespace Dynamik {
 		}
 
 		// create vertex buffer
-		void vulkanRenderer2D::createVertexBuffer(DMKVulkanRendererCreateVertexBufferInfo info) {
+		void vulkanRenderer2D::createVertexBuffer(DMKVulkanRendererCreateVertexBufferInfo info) {/*
 			DMKVertexBufferCreateInfo vertexBufferInfo;
 			vertexBufferInfo.buffer = info.buffer;
 			vertexBufferInfo.buffereMemory = info.bufferMemory;
 			vertexBufferInfo.vertices = info.vertexBufferObject;
-			myVertexBufferManager.createVertexBuffer(vertexBufferInfo);
+			myVertexBufferManager.createVertexBuffer(vertexBufferInfo);*/
 		}
 
 		// create index buffer
-		void vulkanRenderer2D::createIndexBuffer(DMKVulkanRendererCreateIndexBufferInfo info) {
+		void vulkanRenderer2D::createIndexBuffer(DMKVulkanRendererCreateIndexBufferInfo info) {/*
 			DMKIndexBufferCreateInfo indexBufferInfo;
 			indexBufferInfo.buffer = info.buffer;
 			indexBufferInfo.buffereMemory = info.bufferMemory;
 			indexBufferInfo.indices = info.indexBufferObject;
-			myIndexBufferManager.createIndexBuffer(indexBufferInfo);
+			myIndexBufferManager.createIndexBuffer(indexBufferInfo);*/
 		}
 
 		// create uniform buffer
-		void vulkanRenderer2D::createUniformBuffer(DMKVulkanRendererCreateUniformBufferInfo info) {
+		void vulkanRenderer2D::createUniformBuffer(DMKVulkanRendererCreateUniformBufferInfo info) {/*
 			DMKUniformBufferCreateInfo unibuffinfo;
 			unibuffinfo.buffers = info.buffer;
 			unibuffinfo.bufferMemories = info.bufferMemory;
-			uniformBuffer.createUniformBuffers(unibuffinfo);
+			uniformBuffer.createUniformBuffers(unibuffinfo);*/
 		}
 
 		// init descriptor sets
-		void vulkanRenderer2D::createDescriptorSets(DMKVulkanRendereCreateDescriptorSetsInfo info) {
+		void vulkanRenderer2D::createDescriptorSets(DMKVulkanRendereCreateDescriptorSetsInfo info) {/*
 			DMKDescriptorSetsInitInfo descripInfo;
 			descripInfo.uniformBuffers = info.uniformBuffers;
 			descripInfo.textureImageView = info.textureImageView;
@@ -320,7 +320,7 @@ namespace Dynamik {
 			descripInfo.layout = info.layout;
 			descripInfo.descriptorPool = info.descriptorPool;
 			descripInfo.bindIndex = { (int)info.bindIndexes[0], (int)info.bindIndexes[1] };
-			uniformBuffer.initDescriptorSets(descripInfo);
+			uniformBuffer.initDescriptorSets(descripInfo);*/
 		}
 	}
 }

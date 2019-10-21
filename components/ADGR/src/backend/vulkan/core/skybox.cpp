@@ -9,7 +9,7 @@ namespace Dynamik {
 		namespace core {
 			using namespace functions;
 
-			void skybox::initSkybox(DMKSkyboxInitInfo info) {
+			void skybox::initSkybox(ADGRVulkanDataContainer* container, DMKSkyboxInitInfo info) {/*
 				DMKInitCubemapInfo cinfo;
 				cinfo.path = info.path;
 				cinfo.imageLayout = info.imageLayout;
@@ -19,14 +19,14 @@ namespace Dynamik {
 				cinfo.textureImageFormat = info.imageFormat;
 				cinfo.textureImageMemory = info.imageMemory;
 
-				loadCubemap(cinfo);
+				loadCubemap(cinfo);*/
 			}
 
-			void skybox::deleteSkybox() {
+			void skybox::deleteSkybox(ADGRVulkanDataContainer* container) {
 
 			}
 
-			void skybox::loadCubemap(DMKInitCubemapInfo initInfo) {
+			void skybox::loadCubemap(ADGRVulkanDataContainer* container, DMKInitCubemapInfo initInfo) {/*
 				resource::TextureData texData;
 
 				unsigned char* cubemap = nullptr;
@@ -126,10 +126,10 @@ namespace Dynamik {
 				generateMipMaps(mipmapInfo);
 
 				vkFreeMemory(device, stagingBufferMemory, nullptr);
-				vkDestroyBuffer(device, stagingBuffer, nullptr);
+				vkDestroyBuffer(device, stagingBuffer, nullptr);*/
 			}
 
-			void skybox::generateMipMaps(DMKGenerateMipMapInfo info) {
+			void skybox::generateMipMaps(ADGRVulkanDataContainer* container, DMKGenerateMipMapInfo info) {/*
 				VkCommandBuffer commandBuff = beginSingleTimeCommands(device, commandPool);
 
 				std::vector<VkBufferImageCopy> bufferCopyRegions;
@@ -200,10 +200,10 @@ namespace Dynamik {
 
 				initSampler(initInfo);
 
-				endSingleTimeCommands(device, commandPool, commandBuff, graphicsQueue);
+				endSingleTimeCommands(device, commandPool, commandBuff, graphicsQueue);*/
 			}
 
-			void skybox::initSampler(DMKSkyboxSampelrInitInfo info) {
+			void skybox::initSampler(ADGRVulkanDataContainer* container, DMKSkyboxSampelrInitInfo info) {/*
 				// Create sampler
 				VkSamplerCreateInfo sampler = {};
 				sampler.sType = VK_STRUCTURE_TYPE_SAMPLER_CREATE_INFO;
@@ -239,7 +239,7 @@ namespace Dynamik {
 				view.subresourceRange.levelCount = info.mipLevels;
 				view.image = info.skybox;
 				DMK_CORE_ASSERT((vkCreateImageView(device, &view, nullptr, info.imageView) == VK_SUCCESS),
-					"Failed to create Skybox image views!");
+					"Failed to create Skybox image views!");*/
 			}
 		}
 	}

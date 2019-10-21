@@ -42,12 +42,12 @@ namespace Dynamik {
 				Texture() {}
 				virtual ~Texture() {}
 
-				virtual void loadTexture(std::string path, resource::TextureType type) {}
+				virtual void loadTexture(ADGRVulkanDataContainer* container, std::string path, resource::TextureType type) {}
 				virtual void loadTexture(std::string path) {}
-				virtual void generateMipMaps(DMKGenerateMipMapInfo info) {}
+				virtual void generateMipMaps(ADGRVulkanDataContainer* container, DMKGenerateMipMapInfo info) {}
 
-				virtual void initSkybox(DMKSkyboxInitInfo info) {}
-				virtual void deleteSkybox() {}
+				virtual void initSkybox(ADGRVulkanDataContainer* container, DMKSkyboxInitInfo info) {}
+				virtual void deleteSkybox(ADGRVulkanDataContainer* container) {}
 
 			};
 		}

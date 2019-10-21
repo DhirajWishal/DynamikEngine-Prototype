@@ -33,15 +33,15 @@ namespace Dynamik {
 				skybox() {}
 				~skybox() {}
 
-				void initSkybox(DMKSkyboxInitInfo) override;
-				void deleteSkybox() override;
+				void initSkybox(ADGRVulkanDataContainer* container, DMKSkyboxInitInfo) override;
+				void deleteSkybox(ADGRVulkanDataContainer* container) override;
 
-				void loadCubemap(DMKInitCubemapInfo initInfo);
+				void loadCubemap(ADGRVulkanDataContainer* container, DMKInitCubemapInfo initInfo);
 
-				void initSampler(DMKSkyboxSampelrInitInfo info);
+				void initSampler(ADGRVulkanDataContainer* container, DMKSkyboxSampelrInitInfo info);
 
 			private:
-				void generateMipMaps(DMKGenerateMipMapInfo info);
+				void generateMipMaps(ADGRVulkanDataContainer* container, DMKGenerateMipMapInfo info);
 
 				VkImage cubeMap = VK_NULL_HANDLE;
 				VkDeviceMemory cubeMapMemory = VK_NULL_HANDLE;

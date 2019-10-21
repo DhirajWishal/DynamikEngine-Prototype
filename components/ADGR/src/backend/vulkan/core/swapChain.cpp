@@ -11,19 +11,19 @@ namespace Dynamik {
 		namespace core {
 			using namespace functions;
 
-			void swapChain::init() {
-				swapChainSupportDetails swapChainSupport = querySwapChainSupport(&physicalDevice, &surface);
+			void swapChain::init(ADGRVulkanDataContainer* container) {
+				swapChainSupportDetails swapChainSupport = querySwapChainSupport(&container->physicalDevice, &container->surface);
 
 				VkSurfaceFormatKHR surfaceFormat = chooseSwapSurfaceFormat(swapChainSupport.formats);
 				VkPresentModeKHR presentMode = chooseSwapPresentMode(swapChainSupport.presentModes);
-				VkExtent2D extent = chooseSwapExtent(*windowsWindow, swapChainSupport.capabilities);
-
+				VkExtent2D extent = chooseSwapExtent(*container->window, swapChainSupport.capabilities);
+				
 				VkCompositeAlphaFlagBitsKHR surfaceComposite =
-					(m_surfaceCaps->supportedCompositeAlpha & VK_COMPOSITE_ALPHA_OPAQUE_BIT_KHR)
+					(container->surfaceCapabilities.supportedCompositeAlpha & VK_COMPOSITE_ALPHA_OPAQUE_BIT_KHR)
 					? VK_COMPOSITE_ALPHA_OPAQUE_BIT_KHR
-					: (m_surfaceCaps->supportedCompositeAlpha & VK_COMPOSITE_ALPHA_PRE_MULTIPLIED_BIT_KHR)
+					: (container->surfaceCapabilities.supportedCompositeAlpha & VK_COMPOSITE_ALPHA_PRE_MULTIPLIED_BIT_KHR)
 					? VK_COMPOSITE_ALPHA_PRE_MULTIPLIED_BIT_KHR
-					: (m_surfaceCaps->supportedCompositeAlpha & VK_COMPOSITE_ALPHA_POST_MULTIPLIED_BIT_KHR)
+					: (container->surfaceCapabilities.supportedCompositeAlpha & VK_COMPOSITE_ALPHA_POST_MULTIPLIED_BIT_KHR)
 					? VK_COMPOSITE_ALPHA_POST_MULTIPLIED_BIT_KHR
 					: VK_COMPOSITE_ALPHA_INHERIT_BIT_KHR;
 
@@ -34,7 +34,7 @@ namespace Dynamik {
 
 				VkSwapchainCreateInfoKHR createInfo = {};
 				createInfo.sType = VK_STRUCTURE_TYPE_SWAPCHAIN_CREATE_INFO_KHR;
-				createInfo.surface = surface;
+				createInfo.surface = container->surface;
 				createInfo.minImageCount = imageCount;
 				createInfo.imageFormat = surfaceFormat.format;
 				createInfo.imageColorSpace = surfaceFormat.colorSpace;
@@ -43,7 +43,7 @@ namespace Dynamik {
 				createInfo.imageUsage = VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT;
 				//createInfo.imageUsage = VK_IMAGE_USAGE_TRANSFER_DST_BIT;
 
-				queueFamilyindices indices = Dynamik::ADGR::core::findQueueFamilies(physicalDevice, surface);
+				queueFamilyindices indices = Dynamik::ADGR::core::findQueueFamilies(container->physicalDevice, container->surface);
 				uint32_t queueFamilyindices[] = {
 					indices.graphicsFamily.value(),
 					indices.presentFamily.value()
@@ -66,15 +66,15 @@ namespace Dynamik {
 				createInfo.clipped = VK_TRUE;
 				createInfo.oldSwapchain = VK_NULL_HANDLE;
 
-				if (vkCreateSwapchainKHR(*m_device, &createInfo, nullptr, m_swapChain))
+				if (vkCreateSwapchainKHR(container->device, &createInfo, nullptr, &container->swapchainContainer.swapchain))
 					DMK_CORE_FATAL("Failed to create Swap Chain!");
 
-				vkGetSwapchainImagesKHR(*m_device, *m_swapChain, &imageCount, nullptr);
-				m_swapChainImages->resize(imageCount);
-				vkGetSwapchainImagesKHR(*m_device, *m_swapChain, &imageCount, m_swapChainImages->data());
+				vkGetSwapchainImagesKHR(container->device, container->swapchainContainer.swapchain, &imageCount, nullptr);
+				container->swapchainContainer.swapChainImages.resize(imageCount);
+				vkGetSwapchainImagesKHR(container->device, container->swapchainContainer.swapchain, &imageCount, container->swapchainContainer.swapChainImages.data());
 
-				*m_swapChainImageFormat = surfaceFormat.format;
-				*m_swapChainExtent = extent;
+				container->swapchainContainer.swapchainImageFormat = surfaceFormat.format;
+				container->swapchainContainer.swapchainExtent = extent;
 			}
 
 			swapChainSupportDetails querySwapChainSupport(VkPhysicalDevice device, VkSurfaceKHR surface) {
@@ -148,13 +148,13 @@ namespace Dynamik {
 				return bestMode;
 			}
 
-			VkExtent2D swapChain::chooseSwapExtent(const VkSurfaceCapabilitiesKHR& capabilities) {
+			VkExtent2D swapChain::chooseSwapExtent(ADGRVulkanDataContainer* container, const VkSurfaceCapabilitiesKHR& capabilities) {
 				if (capabilities.currentExtent.width != std::numeric_limits<uint32_t>::max())
 					return capabilities.currentExtent;
 				else {
 					VkExtent2D actualExtent = {
-						WIDTH,
-						HEIGHT
+						container->WIDTH,
+						container->HEIGHT
 					};
 
 					actualExtent.width = std::max(capabilities.minImageExtent.width,
@@ -211,46 +211,47 @@ namespace Dynamik {
 				return details;
 			}
 
-			void swapChain::clear() {
-				vkDestroySwapchainKHR(*m_device, *m_swapChain, nullptr);
+			void swapChain::clear(ADGRVulkanDataContainer* container) {
+				vkDestroySwapchainKHR(container->device, container->swapchainContainer.swapchain, nullptr);
 			}
 
-			void swapChain::cleanUp(DMKSwapChainCleanUpInfo info) {
-				for (size_t i = 0; i < frameBuffers.size(); i++)
-					vkDestroyFramebuffer(device, frameBuffers[i], nullptr);
+			void swapChain::cleanUp(ADGRVulkanDataContainer* container, DMKSwapChainCleanUpInfo& info) {
+				for (size_t i = 0; i < container->frameBufferContainer.buffers.size(); i++)
+					vkDestroyFramebuffer(container->device, container->frameBufferContainer.buffers[i], nullptr);
 
-				vkFreeCommandBuffers(device, commandPool, static_cast<uint32>(commandBuffers.size()),
-					commandBuffers.data());
+				vkFreeCommandBuffers(container->device, container->commandBufferContainer.commandPool,
+					static_cast<uint32>(container->commandBufferContainer.buffers.size()),
+					container->commandBufferContainer.buffers.data());
 
-				vkDestroyPipeline(device, graphicsPipeline, nullptr);
-				vkDestroyPipelineLayout(device, pipelineLayout, nullptr);
-				vkDestroyRenderPass(device, renderPass, nullptr);
+				vkDestroyPipeline(container->device, container->pipelineContainers[0].pipeline, nullptr);
+				vkDestroyPipelineLayout(container->device, container->pipelineContainers[0].pipelineLayout, nullptr);
+				vkDestroyRenderPass(container->device, container->pipelineContainers[0].renderPass, nullptr);
 
-				for (size_t i = 0; i < swapChainImageViews.size(); i++)
-					vkDestroyImageView(device, swapChainImageViews[i], nullptr);
+				for (size_t i = 0; i < container->swapchainContainer.swapchainImageViews.size(); i++)
+					vkDestroyImageView(container->device, container->swapchainContainer.swapchainImageViews[i], nullptr);
 
-				vkDestroySwapchainKHR(device, *m_swapChain, nullptr);
+				vkDestroySwapchainKHR(container->device, container->swapchainContainer.swapchain, nullptr);
 
-				for (size_t i = 0; i < swapChainImages.size(); i++) {
-					vkDestroyBuffer(device, info.uniformBuffers[i], nullptr);
-					vkFreeMemory(device, info.uniformBufferMemories[i], nullptr);
+				for (size_t i = 0; i < container->swapchainContainer.swapChainImages.size(); i++) {
+					vkDestroyBuffer(container->device, info.uniformBuffers[i], nullptr);
+					vkFreeMemory(container->device, info.uniformBufferMemories[i], nullptr);
 				}
 
-				vkDestroyDescriptorPool(device, descriptorPool, nullptr);
+				vkDestroyDescriptorPool(container->device, info.descriptorPool, nullptr);
 			}
 
-			void swapChain::initImageViews() {
-				m_swapChainImageViews->resize(swapChainImages.size());
+			void swapChain::initImageViews(ADGRVulkanDataContainer* container) {
+				container->swapchainContainer.swapchainImageViews.resize(container->swapchainContainer.swapChainImages.size());
 
-				for (uint32_t i = 0; i < swapChainImages.size(); i++) {
+				for (uint32_t i = 0; i < container->swapchainContainer.swapChainImages.size(); i++) {
 					DMKCreateImageViewInfo info;
-					info.device = *m_device;
-					info.image = swapChainImages[i];
-					info.format = swapChainImageFormat;
+					info.device = container->device;
+					info.image = container->swapchainContainer.swapChainImages[i];
+					info.format = container->swapchainContainer.swapchainImageFormat;
 					info.aspectFlags = VK_IMAGE_ASPECT_COLOR_BIT;
 					info.mipLevels = 1;
 
-					m_swapChainImageViews->at(i) = createImageView(info);
+					container->swapchainContainer.swapchainImageViews.at(i) = createImageView(info);
 				}
 			}
 		}

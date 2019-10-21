@@ -16,7 +16,7 @@ namespace Dynamik {
 				virtual void bindBuffer(VkBuffer* srcBuffer, VkBuffer* dstBuffer, size_t size, VkDeviceMemory bufferMemory,
 					VkCommandPool myCommandPool) {}
 				virtual void unbindBuffer(VkBuffer* buffer) {}
-				virtual void deleteBuffer(VkBuffer* buffer) {}
+				virtual void deleteBuffer(ADGRVulkanDataContainer* container, VkBuffer* buffer) {}
 
 			protected:
 				virtual void createDescriptorSetLayout(VkDescriptorSetLayout* layout) {}

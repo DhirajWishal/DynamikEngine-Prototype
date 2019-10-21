@@ -15,7 +15,7 @@ namespace Dynamik {
 
 				glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
 #ifdef DMK_DEBUG
-				m_window = glfwCreateWindow(WIDTH, HEIGHT, "Dynamik Engine", nullptr, nullptr);
+				container->window = glfwCreateWindow(WIDTH, HEIGHT, "Dynamik Engine", nullptr, nullptr);
 
 #else
 				GLFWmonitor* monitor = glfwGetPrimaryMonitor();
@@ -42,11 +42,7 @@ namespace Dynamik {
 
 				glfwSetInputMode(container->window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
 
-				const GLubyte* vendor = glGetString(GL_VENDOR);		// Returns the vendor
-				const GLubyte* renderer = glGetString(GL_RENDERER); // Returns a hint to the model
-
-				printf("%s\n", vendor);
-				printf("%s\n", renderer);
+				m_window = container->window;
 			}
 
 			void window::eventCallbackFunc(KeyPressedEvent& event) {
@@ -130,8 +126,8 @@ namespace Dynamik {
 				MouseMovedEvent event((float)xPos, (float)yPos);
 			}
 
-			bool window::createWindowSurface() {
-				if (glfwCreateWindowSurface(*m_instance, m_window, nullptr, m_surface) != VK_SUCCESS) {
+			bool window::createWindowSurface(ADGRVulkanDataContainer* container) {
+				if (glfwCreateWindowSurface(container->instance, container->window, nullptr, &container->surface) != VK_SUCCESS) {
 					DMK_CORE_FATAL("Failed to create window surface!");
 					return false;
 				}
@@ -152,8 +148,8 @@ namespace Dynamik {
 				pollEvents();
 			}
 
-			bool window::closeEvent() {
-				return glfwWindowShouldClose(m_window);
+			bool window::closeEvent(ADGRVulkanDataContainer* container) {
+				return glfwWindowShouldClose(container->window);
 			}
 
 			void window::onWindowResizeEvent() {

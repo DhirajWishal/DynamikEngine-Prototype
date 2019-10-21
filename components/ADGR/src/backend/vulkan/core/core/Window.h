@@ -13,7 +13,7 @@ namespace Dynamik {
 
 				virtual void pollEvents() {}
 				virtual void onUpdate() {}
-				virtual bool closeEvent() { return nullptr; }
+				virtual bool closeEvent(ADGRVulkanDataContainer* container) { return false; }
 
 			};
 		}

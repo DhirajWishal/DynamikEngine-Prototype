@@ -19,8 +19,8 @@ namespace Dynamik {
 				virtual ~Shader() {}
 
 				virtual void loadShader(DMK_ShaderCode shaderCode, ShaderType type) {}
-				virtual VkShaderModule createShaderModule(DMK_ShaderCode& code) { return nullptr; }
-				virtual void deleteShaders() {}
+				virtual VkShaderModule createShaderModule(VkDevice device, DMK_ShaderCode& code) { return nullptr; }
+				virtual void deleteShaders(ADGRVulkanDataContainer& container, ADGRVulkanPipelineDataContainer& pipelineContainer) {}
 
 				virtual void compileShaders(std::string path, bool activate) {}
 

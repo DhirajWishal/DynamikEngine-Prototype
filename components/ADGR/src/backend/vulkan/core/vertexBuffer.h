@@ -23,9 +23,9 @@ namespace Dynamik {
 				vertexBufferManager() {}
 				~vertexBufferManager() {}
 
-				void createVertexBuffer(DMKVertexBufferCreateInfo info);
+				void createVertexBuffer(ADGRVulkanDataContainer* container, DMKVertexBufferCreateInfo info);
 
-				void deleteBuffer(DMKVertexBufferDeleteInfo info);
+				void deleteBuffer(ADGRVulkanDataContainer* container, DMKVertexBufferDeleteInfo info);
 			};
 		}
 	}

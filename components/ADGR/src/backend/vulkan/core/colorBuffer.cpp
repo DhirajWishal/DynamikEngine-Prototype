@@ -13,42 +13,42 @@ namespace Dynamik {
 				VkBufferUsageFlags flags, VkBufferUsageFlagBits memoryFlags) {
 			}
 
-			void colorBufferManager::initResources() {
-				VkFormat colorFormat = swapChainImageFormat;
+			void colorBufferManager::initResources(ADGRVulkanDataContainer* container) {
+				VkFormat colorFormat = container->swapchainContainer.swapchainImageFormat;;
 
 				DMKCreateImageInfo info;
-				info.device = *m_device;
-				info.physicalDevice = physicalDevice;
-				info.width = swapChainExtent.width;
-				info.height = swapChainExtent.height;
+				info.device = container->device;
+				info.physicalDevice = container->physicalDevice;
+				info.width = container->swapchainContainer.swapchainExtent.width;
+				info.height = container->swapchainContainer.swapchainExtent.height;
 				info.format = colorFormat;
 				info.tiling = VK_IMAGE_TILING_OPTIMAL;
 				info.usage = VK_IMAGE_USAGE_TRANSIENT_ATTACHMENT_BIT | VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT;
 				info.properties = VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT;
-				info.image = m_colorImage;
-				info.imageMemory = m_colorImageMemory;
+				info.image = &container->colorBufferContainer.image;
+				info.imageMemory = &container->colorBufferContainer.imageMemory;
 				info.mipLevels = 1;
-				info.numSamples = msaaSamples;
+				info.numSamples = container->msaaSamples;
 				info.flags = NULL;
 
 				createImage(info);
 
 				DMKCreateImageViewInfo viewInfo;
-				viewInfo.device = device;
-				viewInfo.image = *m_colorImage;
+				viewInfo.device = container->device;
+				viewInfo.image = container->colorBufferContainer.image;
 				viewInfo.format = colorFormat;
 				viewInfo.aspectFlags = VK_IMAGE_ASPECT_COLOR_BIT;
 				viewInfo.mipLevels = 1;
 
-				*m_colorImageView = createImageView(viewInfo);
+				container->colorBufferContainer.imageView = createImageView(viewInfo);
 
 				DMKTransitionImageLayoutInfo transitionInfo;
-				transitionInfo.device = *m_device;
-				transitionInfo.commandPool = commandPool;
-				transitionInfo.image = *m_colorImage;
+				transitionInfo.device = container->device;
+				transitionInfo.commandPool = container->commandBufferContainer.commandPool;
+				transitionInfo.image = container->colorBufferContainer.image;
 				transitionInfo.format = colorFormat;
 				transitionInfo.oldLayout = VK_IMAGE_LAYOUT_UNDEFINED;
-				transitionInfo.graphicsQueue = graphicsQueue;
+				transitionInfo.graphicsQueue = container->graphicsQueue;
 				transitionInfo.mipLevels = 1;
 				transitionInfo.newLayout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
 				transitionInfo.layerCount = 1;
@@ -56,14 +56,14 @@ namespace Dynamik {
 				transitionImageLayout(transitionInfo);
 			}
 
-			void colorBufferManager::createResources(DMKColorImageCreateInfo Cinfo, ADGRVulkanDataContainer* container) {
-				VkFormat colorFormat = swapChainImageFormat;
+			void colorBufferManager::createResources(ADGRVulkanDataContainer* container, DMKColorImageCreateInfo Cinfo) {
+				VkFormat colorFormat = container->swapchainContainer.swapchainImageFormat;
 
 				DMKCreateImageInfo info;
 				info.device = container->device;
 				info.physicalDevice = container->physicalDevice;
-				info.width = container->swapchainContainer->swapChainExtent.width;
-				info.height = container->swapchainContainer->swapChainExtent.height;
+				info.width = container->swapchainContainer.swapchainExtent.width;
+				info.height = container->swapchainContainer.swapchainExtent.height;
 				info.format = Cinfo.colorFormat;
 				info.tiling = VK_IMAGE_TILING_OPTIMAL;
 				info.usage = VK_IMAGE_USAGE_TRANSIENT_ATTACHMENT_BIT | VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT;
@@ -82,11 +82,11 @@ namespace Dynamik {
 				viewInfo.aspectFlags = VK_IMAGE_ASPECT_COLOR_BIT;
 				viewInfo.mipLevels = 1;
 
-				container->colorBufferContainer->imageView = createImageView(viewInfo);
+				container->colorBufferContainer.imageView = createImageView(viewInfo);
 
 				DMKTransitionImageLayoutInfo transitionInfo;
 				transitionInfo.device = container->device;
-				transitionInfo.commandPool = container->commandBufferContainer->commandPool;
+				transitionInfo.commandPool = container->commandBufferContainer.commandPool;
 				transitionInfo.image = Cinfo.image;
 				transitionInfo.format = Cinfo.colorFormat;
 				transitionInfo.oldLayout = VK_IMAGE_LAYOUT_UNDEFINED;
@@ -98,9 +98,9 @@ namespace Dynamik {
 			}
 
 			void colorBufferManager::clear(ADGRVulkanDataContainer* container) {
-				vkDestroyImageView(container->device, container->colorBufferContainer->imageView, nullptr);
-				vkDestroyImage(container->device, container->colorBufferContainer->image, nullptr);
-				vkFreeMemory(container->device, container->colorBufferContainer->imageMemory, nullptr);
+				vkDestroyImageView(container->device, container->colorBufferContainer.imageView, nullptr);
+				vkDestroyImage(container->device, container->colorBufferContainer.image, nullptr);
+				vkFreeMemory(container->device, container->colorBufferContainer.imageMemory, nullptr);
 			}
 		}
 	}

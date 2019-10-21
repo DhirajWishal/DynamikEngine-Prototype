@@ -11,7 +11,7 @@ namespace Dynamik {
 				Pipeline() {}
 				virtual ~Pipeline() {}
 
-				virtual void initRenderPass() {}
+				virtual void initRenderPass(ADGRVulkanDataContainer* container) {}
 			};
 		}
 	}

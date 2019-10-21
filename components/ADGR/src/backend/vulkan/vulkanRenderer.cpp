@@ -54,7 +54,7 @@ namespace Dynamik {
 #endif
 
 			// create window surface
-			myWindow.createWindowSurface();
+			myWindow.createWindowSurface(&myVulkanDataContainer);
 			INC_PROGRESS;
 
 			// init Vulkan device
@@ -62,31 +62,31 @@ namespace Dynamik {
 			INC_PROGRESS;
 
 			// init swapchain
-			mySwapChain.init();
-			mySwapChain.initImageViews();
+			mySwapChain.init(&myVulkanDataContainer);
+			mySwapChain.initImageViews(&myVulkanDataContainer);
 			INC_PROGRESS;
 
 			// init render pass
-			myPipeline.initRenderPass();
-			INC_PROGRESS;
+			//myPipeline.initRenderPass(&myVulkanDataContainer);
+			//INC_PROGRESS;
 
 			// first layout
 			DMKUniformBufferCreateDescriptorSetLayoutInfo layoutInfo;
 			layoutInfo.layout = &layout;
 			layoutInfo.bindIndex = { 0, 1 };
-			uniformBuffer.createDescriptorSetLayout(layoutInfo);
+			uniformBuffer.createDescriptorSetLayout(&myVulkanDataContainer, layoutInfo);
 			INC_PROGRESS;
 
 			// second layout
 			DMKUniformBufferCreateDescriptorSetLayoutInfo layoutInfo2;
 			layoutInfo2.layout = &layout2;
 			layoutInfo2.bindIndex = { 0, 1 };
-			uniformBuffer.createDescriptorSetLayout(layoutInfo2);
+			uniformBuffer.createDescriptorSetLayout(&myVulkanDataContainer, layoutInfo2);
 			INC_PROGRESS;
 
 			// init descriptor pool
-			uniformBuffer.initDescriptorPool(&descriptorPool);
-			uniformBuffer.initDescriptorPool(&descriptorPool2);
+			uniformBuffer.initDescriptorPool(&myVulkanDataContainer, &descriptorPool);
+			uniformBuffer.initDescriptorPool(&myVulkanDataContainer, &descriptorPool2);
 			INC_PROGRESS;
 
 			// compile shaders
@@ -95,39 +95,37 @@ namespace Dynamik {
 			INC_PROGRESS;
 
 			// load shaders
-			myShaderManager.loadShader(utils::readFile(vertexShaderPaths[shaderCodeIndex]),
-				VERTEX_SHADER);
-			myShaderManager.loadShader(utils::readFile(fragmentShaderPaths[shaderCodeIndex]),
-				FRAGMENT_SHADER);
-			myShaderManager.init();
+			ADGRVulkanShaderDataContainer shaderContainer = {};
+			shaderContainer.shaderCodes = { utils::readFile(vertexShaderPaths[shaderCodeIndex]) ,
+											{}, {}, utils::readFile(fragmentShaderPaths[shaderCodeIndex]) };
+			myShaderManager.init(&myVulkanDataContainer, &shaderContainer);
 			INC_PROGRESS;
 
 			// init pipeline
 			DMKPipelineInitInfo initInfo;
 			initInfo.layouts = { layout, layout2 };
-			initInfo.pipelineLayout = myPipeline.getPipelineLayout();
-			initInfo.pipeline = myPipeline.getPipeline();
-			myPipeline.init(initInfo);
+			initInfo.shaderDataContainer = shaderContainer;
+			myPipeline.init(&myVulkanDataContainer, initInfo);
 			INC_PROGRESS;
 
 			// delete shaders
-			myShaderManager.deleteShaders();
+			myShaderManager.deleteShaders(myVulkanDataContainer, myVulkanDataContainer.pipelineContainers[0]);
 			INC_PROGRESS;
 
 			// init command pool
-			myCommandBufferManager.initCommandPool();
+			myCommandBufferManager.initCommandPool(&myVulkanDataContainer);
 			INC_PROGRESS;
 
 			// TODO: manually initialization
-			myColorBufferManager.initResources();
+			myColorBufferManager.initResources(&myVulkanDataContainer);
 			INC_PROGRESS;
 
 			// TODO: manually initialization
-			myDepthBufferManager.init();
+			myDepthBufferManager.init(&myVulkanDataContainer);
 			INC_PROGRESS;
 
 			// TODO: manually initialization
-			myFrameBufferManager.init();
+			myFrameBufferManager.init(&myVulkanDataContainer);
 			INC_PROGRESS;
 
 			///////////////////////////////////////////
@@ -141,7 +139,7 @@ namespace Dynamik {
 			textureInfo.textureImageMemory = &texImageMemory;
 			textureInfo.textureImageFormat = VK_FORMAT_R8G8B8A8_UNORM;
 			textureInfo.mipLevels = myMipLevel;
-			myTextureManager.initTexture(textureInfo);
+			myTextureManager.initTexture(&myVulkanDataContainer, textureInfo);
 			INC_PROGRESS;
 
 			// texture - imageViews
@@ -152,13 +150,13 @@ namespace Dynamik {
 			INC_PROGRESS;
 
 			DMKCreateImageViewInfo cImgVewinfo;
-			cImgVewinfo.device = myDevice.getDeviceCpy();
+			cImgVewinfo.device = myVulkanDataContainer.device;
 			cImgVewinfo.format = VK_FORMAT_R8G8B8A8_UNORM;
 			cImgVewinfo.image = texImage;
 			cImgVewinfo.mipLevels = myMipLevel;
 			cImgVewinfo.aspectFlags = VK_IMAGE_ASPECT_COLOR_BIT;
 			cImgVewinfo.textureImageView = &textureImageView;
-			myTextureManager.initTextureImageViews(viewInfo, cImgVewinfo);
+			myTextureManager.initTextureImageViews(&myVulkanDataContainer, viewInfo, cImgVewinfo);
 			INC_PROGRESS;
 
 			// texture - sampler
@@ -170,7 +168,7 @@ namespace Dynamik {
 			samplerInfo.magFilter = VK_FILTER_LINEAR;
 			samplerInfo.minFilter = VK_FILTER_LINEAR;
 			samplerInfo.mipLevel = myMipLevel;
-			myTextureManager.initTextureSampler(samplerInfo);
+			myTextureManager.initTextureSampler(&myVulkanDataContainer, samplerInfo);
 			INC_PROGRESS;
 
 			// load Model
@@ -239,8 +237,8 @@ namespace Dynamik {
 			INC_PROGRESS;
 
 			// descriptor pool creation
-			uniformBuffer.initDescriptorPool(&descriptorPool);
-			uniformBuffer.initDescriptorPool(&descriptorPool2);
+			uniformBuffer.initDescriptorPool(&myVulkanDataContainer, &descriptorPool);
+			uniformBuffer.initDescriptorPool(&myVulkanDataContainer, &descriptorPool2);
 			INC_PROGRESS;
 
 			// init descriptor set
@@ -273,30 +271,31 @@ namespace Dynamik {
 			commandInfo.vertexBuffers = { terrainVertexBuffer, vertexBuffer2 };
 			commandInfo.indexBuffer = indexBuffer;
 			commandInfo.descriptorSets = { &descriptorSets, &descriptorSets2 };
-			myCommandBufferManager.bindCommands(commandInfo);
+			myCommandBufferManager.bindCommands(&myVulkanDataContainer, commandInfo);
 			INC_PROGRESS;
 
 			// initialize sync objects
-			initSyncObjects(myDevice.getDeviceCpy(), &imageAvailableSemaphore,
+			initSyncObjects(myVulkanDataContainer.device, &imageAvailableSemaphore,
 				&renderFinishedSemaphore, &inFlightFence);
 			INC_PROGRESS;
 		}
 
 		void vulkanRenderer::shutdown() {
 			// idle
-			vkDeviceWaitIdle(myDevice.getDeviceCpy());
+			vkDeviceWaitIdle(myVulkanDataContainer.device);
 
 			// clear color buffer
 			myColorBufferManager.clear(&myVulkanDataContainer);
 
 			// clear depth buffer
-			myDepthBufferManager.clear();
+			myDepthBufferManager.clear(&myVulkanDataContainer);
 
 			// clear swapChain
 			DMKSwapChainCleanUpInfo cleanInfo;
 			cleanInfo.uniformBuffers = uniformBuffers;
 			cleanInfo.uniformBufferMemories = uniformBufferMemories;
-			mySwapChain.cleanUp(cleanInfo);
+			cleanInfo.descriptorPool = descriptorPool;
+			mySwapChain.cleanUp(&myVulkanDataContainer, cleanInfo);
 
 			// clear textures
 			DMKTextureDeleteInfo deleteTexInfo;
@@ -304,36 +303,36 @@ namespace Dynamik {
 			deleteTexInfo.texture = texImage;
 			deleteTexInfo.imageView = textureImageView;
 			deleteTexInfo.textureImageMemory = texImageMemory;
-			myTextureManager.deleteTexture(deleteTexInfo);
+			myTextureManager.deleteTexture(&myVulkanDataContainer, deleteTexInfo);
 
 			// clear buffers
 			// clear index buffer
 			DMKindexBufferDeleteInfo deleteIndInfo;
 			deleteIndInfo.buffer = indexBuffer;
 			deleteIndInfo.bufferMemory = indexBufferMemory;
-			myIndexBufferManager.deleteBuffer(deleteIndInfo);
+			myIndexBufferManager.deleteBuffer(&myVulkanDataContainer, deleteIndInfo);
 
 			// clear vertex buffer
 			DMKVertexBufferDeleteInfo deleteVertInfo;
 			deleteVertInfo.buffer = terrainVertexBuffer;
 			deleteVertInfo.bufferMemory = terrainVertexBufferMemory;
-			myVertexBufferManager.deleteBuffer(deleteVertInfo);
+			myVertexBufferManager.deleteBuffer(&myVulkanDataContainer, deleteVertInfo);
 
 			// delete frames in flight
 			for (size_t i = 0; i < MAX_FRAMES_IN_FLIGHT; i++) {
-				vkDestroySemaphore(myDevice.getDeviceCpy(), renderFinishedSemaphore[i], nullptr);
-				vkDestroySemaphore(myDevice.getDeviceCpy(), imageAvailableSemaphore[i], nullptr);
+				vkDestroySemaphore(myVulkanDataContainer.device, renderFinishedSemaphore[i], nullptr);
+				vkDestroySemaphore(myVulkanDataContainer.device, imageAvailableSemaphore[i], nullptr);
 			}
 
 			// stop the debugger
 			myDebugger.deleteDebugger();
 
 			// delete the command pool
-			vkDestroyCommandPool(myDevice.getDeviceCpy(), myCommandBufferManager.getCommandPool(), nullptr);
+			vkDestroyCommandPool(myVulkanDataContainer.device, myVulkanDataContainer.commandBufferContainer.commandPool, nullptr);
 
 			// delete device and surface
-			vkDestroyDevice(myDevice.getDeviceCpy(), nullptr);
-			vkDestroySurfaceKHR(myInstance.getInstance(), myInstance.getSurface(), nullptr);
+			vkDestroyDevice(myVulkanDataContainer.device, nullptr);
+			vkDestroySurfaceKHR(myInstance.getInstance(), myVulkanDataContainer.surface, nullptr);
 
 			// clear instance
 			myInstance.clear(&myVulkanDataContainer);
@@ -350,12 +349,12 @@ namespace Dynamik {
 #endif
 
 			// wait for fences
-			vkWaitForFences(myDevice.getDeviceCpy(), 1, &inFlightFence[currentFrame],
+			vkWaitForFences(myVulkanDataContainer.device, 1, &inFlightFence[currentFrame],
 				VK_TRUE, std::numeric_limits<uint64_t>::max());
 
 			// get image index
 			uint32_t imageIndex;
-			VkResult result = vkAcquireNextImageKHR(myDevice.getDeviceCpy(), mySwapChain.getSwapChainCpy(), std::numeric_limits<uint64_t>::max(),
+			VkResult result = vkAcquireNextImageKHR(myVulkanDataContainer.device, myVulkanDataContainer.swapchainContainer.swapchain, std::numeric_limits<uint64_t>::max(),
 				imageAvailableSemaphore[currentFrame], VK_NULL_HANDLE, &imageIndex);
 
 			// recreate swachain if needed
@@ -386,7 +385,7 @@ namespace Dynamik {
 			updateInfo.upDown = { myEvent.rotEventD , myEvent.rotEventU };
 			updateInfo.rotation = { myEvent.rotEventL , myEvent.rotEventR };
 			updateInfo.cPos = { myCEvent.x, myCEvent.y };
-			uniformBuffer.updateBuffer3D(updateInfo);
+			uniformBuffer.updateBuffer3D(&myVulkanDataContainer, updateInfo);
 
 			//second
 			DMKUniformBufferUpdateInfo updateInfo2;
@@ -397,7 +396,7 @@ namespace Dynamik {
 			updateInfo2.upDown = { myEvent.rotEventD , myEvent.rotEventU };
 			updateInfo2.rotation = { myEvent.rotEventL , myEvent.rotEventR };
 			updateInfo2.cPos = { myCEvent.x, myCEvent.y };
-			uniformBuffer.updateBuffer3D(updateInfo2);
+			uniformBuffer.updateBuffer3D(&myVulkanDataContainer, updateInfo2);
 
 			// submit info
 			VkSubmitInfo submitInfo = {};
@@ -410,7 +409,7 @@ namespace Dynamik {
 			submitInfo.pWaitSemaphores = waitSemaphores;
 			submitInfo.pWaitDstStageMask = waitStages;
 			submitInfo.commandBufferCount = 1;
-			submitInfo.pCommandBuffers = myCommandBufferManager.getBuffer(imageIndex);
+			submitInfo.pCommandBuffers = &myVulkanDataContainer.commandBufferContainer.buffers[imageIndex];
 
 			// signal semaphores
 			VkSemaphore signalSemaphores[] = { renderFinishedSemaphore[currentFrame] };
@@ -418,10 +417,10 @@ namespace Dynamik {
 			submitInfo.pSignalSemaphores = signalSemaphores;
 
 			// reset fences
-			vkResetFences(myDevice.getDeviceCpy(), 1, &inFlightFence[currentFrame]);
+			vkResetFences(myVulkanDataContainer.device, 1, &inFlightFence[currentFrame]);
 
 			// submit command queue
-			if (vkQueueSubmit(*myDevice.getGraphicsQueue(), 1, &submitInfo, inFlightFence[currentFrame]) != VK_SUCCESS)
+			if (vkQueueSubmit(myVulkanDataContainer.graphicsQueue, 1, &submitInfo, inFlightFence[currentFrame]) != VK_SUCCESS)
 				DMK_CORE_FATAL("failed to submit draw command buffer!");
 
 			// present queue info
@@ -431,13 +430,13 @@ namespace Dynamik {
 			presentInfo.pWaitSemaphores = signalSemaphores;
 
 			// swapchain info
-			VkSwapchainKHR swapChains[] = { mySwapChain.getSwapChainCpy() };
+			VkSwapchainKHR swapChains[] = { myVulkanDataContainer.swapchainContainer.swapchain };
 			presentInfo.swapchainCount = 1;
 			presentInfo.pSwapchains = swapChains;
 			presentInfo.pImageIndices = &imageIndex;
 
 			// submit queue
-			result = vkQueuePresentKHR(*myDevice.getPresentQueue(), &presentInfo);
+			result = vkQueuePresentKHR(myVulkanDataContainer.presentQueue, &presentInfo);
 
 			// frame buffer resize event
 			if (result == VK_ERROR_OUT_OF_DATE_KHR || result == VK_SUBOPTIMAL_KHR || myWindow.isFrameBufferResized() || myEvent.reCompileShaders) {
@@ -456,15 +455,16 @@ namespace Dynamik {
 			myWindow.onWindowResizeEvent();
 
 			// idle
-			vkDeviceWaitIdle(myDevice.getDeviceCpy());
+			vkDeviceWaitIdle(myVulkanDataContainer.device);
 
 			// clean swapchain
 			DMKSwapChainCleanUpInfo cleanInfo;
 			cleanInfo.uniformBuffers = uniformBuffers;
 			cleanInfo.uniformBufferMemories = uniformBufferMemories;
-			mySwapChain.cleanUp(cleanInfo);
+			cleanInfo.descriptorPool = descriptorPool;
+			mySwapChain.cleanUp(&myVulkanDataContainer, cleanInfo);
 
-			myFrameBufferManager.clear();
+			myFrameBufferManager.clear(&myVulkanDataContainer);
 
 			// clean swapchain 2
 			//DMKSwapChainCleanUpInfo cleanInfo2;
@@ -481,57 +481,58 @@ namespace Dynamik {
 			uniformBufferMemories2.clear();
 
 			// init swapchain
-			mySwapChain.init();
+			mySwapChain.init(&myVulkanDataContainer);
 
 			// init swapchain image views
-			mySwapChain.initImageViews();
+			mySwapChain.initImageViews(&myVulkanDataContainer);
 
 			// init pipeline render pass
-			myPipeline.initRenderPass();
+			myPipeline.initRenderPass(&myVulkanDataContainer);
 
 			// load shaders
-			myShaderManager.loadShader(utils::readFile(vertexShaderPaths[shaderCodeIndex]),
-				VERTEX_SHADER);
-			myShaderManager.loadShader(utils::readFile(fragmentShaderPaths[shaderCodeIndex]),
-				FRAGMENT_SHADER);
-			myShaderManager.init();
+			ADGRVulkanShaderDataContainer shaderContainer = {};
+			shaderContainer.shaderCodes = { utils::readFile(vertexShaderPaths[shaderCodeIndex]) ,
+											{}, {}, utils::readFile(fragmentShaderPaths[shaderCodeIndex]) };
+			myShaderManager.init(&myVulkanDataContainer, &shaderContainer);
+			INC_PROGRESS;
 
 			// init pipeline
 			DMKPipelineInitInfo initInfo;
 			initInfo.layouts = { layout, layout2 };
-			initInfo.pipelineLayout = myPipeline.getPipelineLayout();
-			initInfo.pipeline = myPipeline.getPipeline();
-			myPipeline.init(initInfo);
+			initInfo.shaderDataContainer = shaderContainer;
+			myPipeline.init(&myVulkanDataContainer, initInfo);
+			INC_PROGRESS;
 
 			// delete shaders
-			myShaderManager.deleteShaders();
+			myShaderManager.deleteShaders(myVulkanDataContainer, myVulkanDataContainer.pipelineContainers[0]);
+			INC_PROGRESS;
 
 			// TODO: manually initialization
-			myColorBufferManager.initResources();
+			myColorBufferManager.initResources(&myVulkanDataContainer);
 
 			// TODO: manually initialization
-			myDepthBufferManager.init();
+			myDepthBufferManager.init(&myVulkanDataContainer);
 
 			// TODO: manually initialization
-			myFrameBufferManager.init();
+			myFrameBufferManager.init(&myVulkanDataContainer);
 
 			// uniform buffer creation
 			DMKUniformBufferCreateInfo unibuffinfo;
 			unibuffinfo.buffers = &uniformBuffers;
 			unibuffinfo.bufferMemories = &uniformBufferMemories;
-			uniformBuffer.createUniformBuffers(unibuffinfo);
+			uniformBuffer.createUniformBuffers(&myVulkanDataContainer, unibuffinfo);
 
 			// second uniform buffer
 			DMKUniformBufferCreateInfo unibuffinfo2;
 			unibuffinfo2.buffers = &uniformBuffers2;
 			unibuffinfo2.bufferMemories = &uniformBufferMemories2;
-			uniformBuffer.createUniformBuffers(unibuffinfo2);
+			uniformBuffer.createUniformBuffers(&myVulkanDataContainer, unibuffinfo2);
 
 			// init descriptor pool
-			uniformBuffer.initDescriptorPool(&descriptorPool);
+			uniformBuffer.initDescriptorPool(&myVulkanDataContainer, &descriptorPool);
 
 			// init second descriptor pool
-			uniformBuffer.initDescriptorPool(&descriptorPool2);
+			uniformBuffer.initDescriptorPool(&myVulkanDataContainer, &descriptorPool2);
 
 			// descriptor sets clear
 			descriptorSets.clear();
@@ -546,7 +547,7 @@ namespace Dynamik {
 			descripInfo.layout = &layout;
 			descripInfo.descriptorPool = descriptorPool;
 			descripInfo.bindIndex = { 0, 1 };
-			uniformBuffer.initDescriptorSets(descripInfo);
+			uniformBuffer.initDescriptorSets(&myVulkanDataContainer, descripInfo);
 
 			// second descriptor set
 			DMKDescriptorSetsInitInfo descripInfo2;
@@ -557,7 +558,7 @@ namespace Dynamik {
 			descripInfo2.layout = &layout2;
 			descripInfo2.descriptorPool = descriptorPool2;
 			descripInfo2.bindIndex = { 0, 1 };
-			uniformBuffer.initDescriptorSets(descripInfo2);
+			uniformBuffer.initDescriptorSets(&myVulkanDataContainer, descripInfo2);
 
 			// command buffer initialization
 			DMKBindCommandBufferInfo commandInfo;
@@ -565,7 +566,7 @@ namespace Dynamik {
 			commandInfo.vertexBuffers = { terrainVertexBuffer, vertexBuffer2 };
 			commandInfo.indexBuffer = indexBuffer;
 			commandInfo.descriptorSets = { &descriptorSets, &descriptorSets2 };
-			myCommandBufferManager.bindCommands(commandInfo);
+			myCommandBufferManager.bindCommands(&myVulkanDataContainer, commandInfo);
 		}
 
 		// load object 
@@ -576,7 +577,7 @@ namespace Dynamik {
 			textureInfo.textureImage = &texImage;
 			textureInfo.textureImageMemory = &texImageMemory;
 			textureInfo.textureImageFormat = VK_FORMAT_R8G8B8A8_UNORM;
-			myTextureManager.initTexture(textureInfo);
+			myTextureManager.initTexture(&myVulkanDataContainer, textureInfo);
 
 			// init texture image views
 			DMKInitTextureImageViewsInfo viewInfo;
@@ -585,13 +586,24 @@ namespace Dynamik {
 			viewInfo.mipLevels = 1;
 
 			DMKCreateImageViewInfo cImgVewinfo;
-			cImgVewinfo.device = myDevice.getDeviceCpy();
+			cImgVewinfo.device = myVulkanDataContainer.device;
 			cImgVewinfo.format = VK_FORMAT_R8G8B8A8_UNORM;
 			cImgVewinfo.image = texImage;
 			cImgVewinfo.mipLevels = 1;
 			cImgVewinfo.aspectFlags = VK_IMAGE_ASPECT_COLOR_BIT;
-			myTextureManager.initTextureImageViews(viewInfo, cImgVewinfo);
-			myTextureManager.initTextureSampler();
+			myTextureManager.initTextureImageViews(&myVulkanDataContainer, viewInfo, cImgVewinfo);
+
+			// texture - sampler
+			DMKInitTextureSamplerInfo samplerInfo;
+			samplerInfo.textureSampler = &textureSampler;
+			samplerInfo.modeU = VK_SAMPLER_ADDRESS_MODE_REPEAT;
+			samplerInfo.modeV = VK_SAMPLER_ADDRESS_MODE_REPEAT;
+			samplerInfo.modeW = VK_SAMPLER_ADDRESS_MODE_REPEAT;
+			samplerInfo.magFilter = VK_FILTER_LINEAR;
+			samplerInfo.minFilter = VK_FILTER_LINEAR;
+			samplerInfo.mipLevel = myMipLevel;
+			myTextureManager.initTextureSampler(&myVulkanDataContainer, samplerInfo);
+			INC_PROGRESS;
 
 			// model creation
 			DMKModelLoadInfo modelInfo;
@@ -605,24 +617,24 @@ namespace Dynamik {
 			vertexBufferInfo.buffer = &terrainVertexBuffer;
 			vertexBufferInfo.buffereMemory = &terrainVertexBufferMemory;
 			vertexBufferInfo.vertices = terrainVBO;
-			myVertexBufferManager.createVertexBuffer(vertexBufferInfo);
+			myVertexBufferManager.createVertexBuffer(&myVulkanDataContainer, vertexBufferInfo);
 
 			// index buff creation
 			DMKIndexBufferCreateInfo indexBufferInfo;
 			indexBufferInfo.buffer = &indexBuffer;
 			indexBufferInfo.buffereMemory = &indexBufferMemory;
 			indexBufferInfo.indices = ibo;
-			myIndexBufferManager.createIndexBuffer(indexBufferInfo);
+			myIndexBufferManager.createIndexBuffer(&myVulkanDataContainer, indexBufferInfo);
 
 			// uniform buffer creation
 			DMKUniformBufferCreateInfo unibuffinfo;
 			unibuffinfo.buffers = &uniformBuffers;
 			unibuffinfo.bufferMemories = &uniformBufferMemories;
-			uniformBuffer.createUniformBuffers(unibuffinfo);
+			uniformBuffer.createUniformBuffers(&myVulkanDataContainer, unibuffinfo);
 
 			// init descriptor pool
-			uniformBuffer.initDescriptorPool(&descriptorPool);
-			uniformBuffer.initDescriptorPool(&descriptorPool2);
+			uniformBuffer.initDescriptorPool(&myVulkanDataContainer, &descriptorPool);
+			uniformBuffer.initDescriptorPool(&myVulkanDataContainer, &descriptorPool2);
 
 			// init descriptor set
 			DMKDescriptorSetsInitInfo descripInfo;
@@ -630,7 +642,7 @@ namespace Dynamik {
 			descripInfo.textureImageView = textureImageView;
 			descripInfo.textureSampler = textureSampler;
 			descripInfo.descriptorSets = &descriptorSets;
-			uniformBuffer.initDescriptorSets(descripInfo);
+			uniformBuffer.initDescriptorSets(&myVulkanDataContainer, descripInfo);
 		}
 
 		// load an object
@@ -662,23 +674,21 @@ namespace Dynamik {
 			INC_PROGRESS;
 
 			// load shaders
-			myShaderManager.loadShader(utils::readFile(vertexShaderPaths[shaderCodeIndex]),
-				VERTEX_SHADER);
-			myShaderManager.loadShader(utils::readFile(fragmentShaderPaths[shaderCodeIndex]),
-				FRAGMENT_SHADER);
-			myShaderManager.init();
+			ADGRVulkanShaderDataContainer shaderContainer = {};
+			shaderContainer.shaderCodes = { utils::readFile(vertexShaderPaths[shaderCodeIndex]) ,
+											{}, {}, utils::readFile(fragmentShaderPaths[shaderCodeIndex]) };
+			myShaderManager.init(&myVulkanDataContainer, &shaderContainer);
 			INC_PROGRESS;
 
 			// init pipeline
-			//DMKPipelineInitInfo initInfo = info.pipelineInitInfo;
-			//initInfo.layouts = { layout, layout2 };
-			//initInfo.pipelineLayout = myPipeline.getPipelineLayout();
-			//initInfo.pipeline = myPipeline.getPipeline();
-			myPipeline.init(info.pipelineInitInfo);
+			DMKPipelineInitInfo initInfo;
+			initInfo.layouts = { layout, layout2 };
+			initInfo.shaderDataContainer = shaderContainer;
+			myPipeline.init(&myVulkanDataContainer, initInfo);
 			INC_PROGRESS;
 
 			// delete shaders
-			myShaderManager.deleteShaders();
+			myShaderManager.deleteShaders(myVulkanDataContainer, myVulkanDataContainer.pipelineContainers[0]);
 			INC_PROGRESS;
 		}
 
@@ -688,7 +698,7 @@ namespace Dynamik {
 			vertexBufferInfo.buffer = info.buffer;
 			vertexBufferInfo.buffereMemory = info.bufferMemory;
 			vertexBufferInfo.vertices = info.vertexBufferObject;
-			myVertexBufferManager.createVertexBuffer(vertexBufferInfo);
+			myVertexBufferManager.createVertexBuffer(&myVulkanDataContainer, vertexBufferInfo);
 		}
 
 		// create index buffer
@@ -697,7 +707,7 @@ namespace Dynamik {
 			indexBufferInfo.buffer = info.buffer;
 			indexBufferInfo.buffereMemory = info.bufferMemory;
 			indexBufferInfo.indices = info.indexBufferObject;
-			myIndexBufferManager.createIndexBuffer(indexBufferInfo);
+			myIndexBufferManager.createIndexBuffer(&myVulkanDataContainer, indexBufferInfo);
 		}
 
 		// create uniform buffer
@@ -705,7 +715,7 @@ namespace Dynamik {
 			DMKUniformBufferCreateInfo unibuffinfo;
 			unibuffinfo.buffers = info.buffer;
 			unibuffinfo.bufferMemories = info.bufferMemory;
-			uniformBuffer.createUniformBuffers(unibuffinfo);
+			uniformBuffer.createUniformBuffers(&myVulkanDataContainer, unibuffinfo);
 		}
 
 		// init descriptor sets
@@ -718,25 +728,28 @@ namespace Dynamik {
 			descripInfo.layout = info.layout;
 			descripInfo.descriptorPool = info.descriptorPool;
 			descripInfo.bindIndex = { (int)info.bindIndexes[0], (int)info.bindIndexes[1] };
-			uniformBuffer.initDescriptorSets(descripInfo); 
+			uniformBuffer.initDescriptorSets(&myVulkanDataContainer, descripInfo);
 		}
 
 		// load another shader
 		void vulkanRenderer::includeShader() {
 			// load shaders
-			myShaderManager.loadShader(utils::readFile(vertexShaderPaths[shaderCodeIndex]),
-				VERTEX_SHADER);
-			myShaderManager.loadShader(utils::readFile(fragmentShaderPaths[shaderCodeIndex]),
-				FRAGMENT_SHADER);
-			myShaderManager.init();
+			ADGRVulkanShaderDataContainer shaderContainer = {};
+			shaderContainer.shaderCodes = { utils::readFile(vertexShaderPaths[shaderCodeIndex]) ,
+											{}, {}, utils::readFile(fragmentShaderPaths[shaderCodeIndex]) };
+			myShaderManager.init(&myVulkanDataContainer, &shaderContainer);
+			INC_PROGRESS;
 
 			// init pipeline
 			DMKPipelineInitInfo initInfo;
 			initInfo.layouts = { layout, layout2 };
-			myPipeline.init(initInfo);
+			initInfo.shaderDataContainer = shaderContainer;
+			myPipeline.init(&myVulkanDataContainer, initInfo);
+			INC_PROGRESS;
 
 			// delete shaders
-			myShaderManager.deleteShaders();
+			myShaderManager.deleteShaders(myVulkanDataContainer, myVulkanDataContainer.pipelineContainers[0]);
+			INC_PROGRESS;
 		}
 
 		void vulkanRenderer::thread_second() {
@@ -747,7 +760,7 @@ namespace Dynamik {
 			textureInfo.textureImageMemory = &texImageMemory;
 			textureInfo.textureImageFormat = VK_FORMAT_R8G8B8A8_UNORM;
 			textureInfo.mipLevels = myMipLevel;
-			myTextureManager.initTexture(textureInfo);
+			myTextureManager.initTexture(&myVulkanDataContainer, textureInfo);
 			INC_PROGRESS;
 
 			// texture - imageViews
@@ -758,13 +771,13 @@ namespace Dynamik {
 			INC_PROGRESS;
 
 			DMKCreateImageViewInfo cImgVewinfo;
-			cImgVewinfo.device = myDevice.getDeviceCpy();
+			cImgVewinfo.device = myVulkanDataContainer.device;
 			cImgVewinfo.format = VK_FORMAT_R8G8B8A8_UNORM;
 			cImgVewinfo.image = texImage;
 			cImgVewinfo.mipLevels = myMipLevel;
 			cImgVewinfo.aspectFlags = VK_IMAGE_ASPECT_COLOR_BIT;
 			cImgVewinfo.textureImageView = &textureImageView;
-			myTextureManager.initTextureImageViews(viewInfo, cImgVewinfo);
+			myTextureManager.initTextureImageViews(&myVulkanDataContainer, viewInfo, cImgVewinfo);
 			INC_PROGRESS;
 
 			// texture - sampler
@@ -776,7 +789,7 @@ namespace Dynamik {
 			samplerInfo.magFilter = VK_FILTER_LINEAR;
 			samplerInfo.minFilter = VK_FILTER_LINEAR;
 			samplerInfo.mipLevel = myMipLevel;
-			myTextureManager.initTextureSampler(samplerInfo);
+			myTextureManager.initTextureSampler(&myVulkanDataContainer, samplerInfo);
 			INC_PROGRESS;
 		}
 
@@ -810,7 +823,7 @@ namespace Dynamik {
 		}
 
 		void vulkanRenderer::thread_basket_1_() {
-			
+
 		}
 	}
 }

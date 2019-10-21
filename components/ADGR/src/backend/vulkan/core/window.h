@@ -43,11 +43,11 @@ namespace Dynamik {
 				void init(ADGRVulkanDataContainer* container) override;
 				void clear(ADGRVulkanDataContainer* container) override;
 
-				bool createWindowSurface();
+				bool createWindowSurface(ADGRVulkanDataContainer* container);
 
 				void pollEvents() override;
 				void onUpdate() override;
-				bool closeEvent() override;
+				bool closeEvent(ADGRVulkanDataContainer* container) override;
 
 				void onWindowResizeEvent();
 
@@ -63,14 +63,11 @@ namespace Dynamik {
 				}
 
 			private:
+				GLFWwindow* m_window = nullptr;
+
 				void keyEventHandler(int keycode);
 
 				using eventCallbackFunction = std::function<void(Event&, int)>;
-
-				GLFWwindow* m_window = windowsWindow;
-
-				VkInstance* m_instance = &instance;
-				VkSurfaceKHR* m_surface = &surface;
 
 				const unsigned int HEIGHT = 720;
 				const unsigned int WIDTH = 1280;

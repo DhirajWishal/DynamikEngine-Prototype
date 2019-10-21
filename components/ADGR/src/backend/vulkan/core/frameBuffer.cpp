@@ -4,31 +4,31 @@
 namespace Dynamik {
 	namespace ADGR {
 		namespace core {
-			void frameBufferManager::init() {
-				mySize = static_cast<uint32_t>(swapChainImageViews.size());
-				m_frameBuffers->resize(mySize);
+			void frameBufferManager::init(ADGRVulkanDataContainer* container) {
+				mySize = static_cast<uint32_t>(container->swapchainContainer.swapchainImageViews.size());
+				container->frameBufferContainer.buffers.resize(mySize);
 
 				for (size_t i = 0; i < mySize; i++) {
 					std::array<VkImageView, 3> attachments = {
-							colorImageView,
-							depthImageView,
-							swapChainImageViews[i]
+							container->colorBufferContainer.imageView,
+							container->depthBufferContainer.imageView,
+							container->swapchainContainer.swapchainImageViews[i]
 					};
 
 					VkFramebufferCreateInfo framebufferInfo = {};
 					framebufferInfo.sType = VK_STRUCTURE_TYPE_FRAMEBUFFER_CREATE_INFO;
-					framebufferInfo.renderPass = renderPass;
+					framebufferInfo.renderPass = container->pipelineContainers[0].renderPass;
 					framebufferInfo.attachmentCount = static_cast<uint32_t>(attachments.size());
 					framebufferInfo.pAttachments = attachments.data();
-					framebufferInfo.width = swapChainExtent.width;
-					framebufferInfo.height = swapChainExtent.height;
+					framebufferInfo.width = container->swapchainContainer.swapchainExtent.width;
+					framebufferInfo.height = container->swapchainContainer.swapchainExtent.height;
 					framebufferInfo.layers = 1;
 
-					if (vkCreateFramebuffer(*m_device, &framebufferInfo, nullptr, &m_frameBuffers->at(i)) != VK_SUCCESS)
+					if (vkCreateFramebuffer(container->device, &framebufferInfo, nullptr, &container->frameBufferContainer.buffers[i]) != VK_SUCCESS)
 						DMK_CORE_FATAL("failed to create framebuffer!");
 				}
 			}
-			void frameBufferManager::createFrameBuffers(DMKFrameBuffersCreateInfo info) {
+			void frameBufferManager::createFrameBuffers(ADGRVulkanDataContainer* container, DMKFrameBuffersCreateInfo info) {
 				info.frameBuffers->resize(info.swapChainImageViews.size());
 
 				for (size_t i = 0; i < info.swapChainImageViews.size(); i++) {
@@ -40,20 +40,20 @@ namespace Dynamik {
 
 					VkFramebufferCreateInfo framebufferInfo = {};
 					framebufferInfo.sType = VK_STRUCTURE_TYPE_FRAMEBUFFER_CREATE_INFO;
-					framebufferInfo.renderPass = renderPass;
+					framebufferInfo.renderPass = container->pipelineContainers[0].renderPass;
 					framebufferInfo.attachmentCount = static_cast<uint32_t>(attachments.size());
 					framebufferInfo.pAttachments = attachments.data();
-					framebufferInfo.width = swapChainExtent.width;
-					framebufferInfo.height = swapChainExtent.height;
+					framebufferInfo.width = container->swapchainContainer.swapchainExtent.width;
+					framebufferInfo.height = container->swapchainContainer.swapchainExtent.height;
 					framebufferInfo.layers = 1;
 
-					if (vkCreateFramebuffer(*m_device, &framebufferInfo, nullptr, &info.frameBuffers->at(i)) != VK_SUCCESS)
+					if (vkCreateFramebuffer(container->device, &framebufferInfo, nullptr, &info.frameBuffers->at(i)) != VK_SUCCESS)
 						DMK_CORE_FATAL("failed to create framebuffer!");
 				}
 			}
 
-			void frameBufferManager::clear() {
-				m_frameBuffers->clear();
+			void frameBufferManager::clear(ADGRVulkanDataContainer* container) {
+				container->frameBufferContainer.buffers.clear();
 			}
 		}
 	}

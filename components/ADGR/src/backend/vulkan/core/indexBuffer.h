@@ -23,9 +23,9 @@ namespace Dynamik {
 				indexBufferManager() {}
 				~indexBufferManager() {}
 
-				void createIndexBuffer(DMKIndexBufferCreateInfo info);
+				void createIndexBuffer(ADGRVulkanDataContainer* container, DMKIndexBufferCreateInfo info);
 
-				void deleteBuffer(DMKindexBufferDeleteInfo info);
+				void deleteBuffer(ADGRVulkanDataContainer* container, DMKindexBufferDeleteInfo info);
 			};
 		}
 	}

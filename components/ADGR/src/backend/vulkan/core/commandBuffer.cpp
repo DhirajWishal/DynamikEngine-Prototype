@@ -11,51 +11,51 @@ namespace Dynamik {
 				VkBufferUsageFlags flags, VkBufferUsageFlagBits memoryFlags) {
 			}
 
-			void commandBufferManager::initCommandPool() {
-				queueFamilyindices queueFamilyIndices = findQueueFamilies(physicalDevice, surface);
+			void commandBufferManager::initCommandPool(ADGRVulkanDataContainer* container) {
+				queueFamilyindices queueFamilyIndices = findQueueFamilies(container->physicalDevice, container->surface);
 
 				VkCommandPoolCreateInfo poolInfo = {};
 				poolInfo.sType = VK_STRUCTURE_TYPE_COMMAND_POOL_CREATE_INFO;
 				poolInfo.queueFamilyIndex = queueFamilyIndices.graphicsFamily.value();
 				poolInfo.flags = 0;
 
-				if (vkCreateCommandPool(*m_device, &poolInfo, nullptr, m_commandPool) != VK_SUCCESS)
+				if (vkCreateCommandPool(container->device, &poolInfo, nullptr, &container->commandBufferContainer.commandPool) != VK_SUCCESS)
 					DMK_CORE_FATAL("failed to create command pool!");
 			}
 
-			void commandBufferManager::bindCommands(DMKBindCommandBufferInfo info) {
-				commandBuffers.resize(frameBuffers.size());
+			void commandBufferManager::bindCommands(ADGRVulkanDataContainer* container, DMKBindCommandBufferInfo info) {
+				container->commandBufferContainer.buffers.resize(container->frameBufferContainer.buffers.size());
 
 				VkCommandBufferAllocateInfo allocInfo = {};
 				allocInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO;
-				allocInfo.commandPool = commandPool;
+				allocInfo.commandPool = container->commandBufferContainer.commandPool;
 				allocInfo.level = VK_COMMAND_BUFFER_LEVEL_PRIMARY;
-				allocInfo.commandBufferCount = static_cast<uint32_t>(frameBuffers.size());
+				allocInfo.commandBufferCount = static_cast<uint32_t>(container->frameBufferContainer.buffers.size());
 
-				if (vkAllocateCommandBuffers(*m_device, &allocInfo, commandBuffers.data()) != VK_SUCCESS)
+				if (vkAllocateCommandBuffers(container->device, &allocInfo, container->commandBufferContainer.buffers.data()) != VK_SUCCESS)
 					DMK_CORE_FATAL("failed to allocate command buffers!");
 
-				for (size_t i = 0; i < frameBuffers.size(); i++) {
+				for (size_t i = 0; i < container->frameBufferContainer.buffers.size(); i++) {
 					VkCommandBufferBeginInfo beginInfo = {};
 					beginInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO;
 					beginInfo.flags = VK_COMMAND_BUFFER_USAGE_SIMULTANEOUS_USE_BIT;
 
-					if (vkBeginCommandBuffer(commandBuffers[i], &beginInfo) != VK_SUCCESS)
+					if (vkBeginCommandBuffer(container->commandBufferContainer.buffers[i], &beginInfo) != VK_SUCCESS)
 						DMK_CORE_FATAL("failed to begin recording command buffer!");
 
 					VkRenderPassBeginInfo renderPassInfo = {};
 					renderPassInfo.sType = VK_STRUCTURE_TYPE_RENDER_PASS_BEGIN_INFO;
-					renderPassInfo.renderPass = renderPass;
-					renderPassInfo.framebuffer = frameBuffers[i];
+					renderPassInfo.renderPass = container->pipelineContainers[0].renderPass;
+					renderPassInfo.framebuffer = container->frameBufferContainer.buffers[i];
 					renderPassInfo.renderArea.offset = { 0, 0 };
-					renderPassInfo.renderArea.extent = swapChainExtent;
+					renderPassInfo.renderArea.extent = container->swapchainContainer.swapchainExtent;
 
 					std::array<VkClearValue, 2> clearValues = {};
 					clearValues[0].color = {
-						clearScreenValues[0],	// Red
-						clearScreenValues[1],	// Green
-						clearScreenValues[2],	// Blue
-						clearScreenValues[3]	// Alpha
+						container->clearScreenValues[0],	// Red
+						container->clearScreenValues[1],	// Green
+						container->clearScreenValues[2],	// Blue
+						container->clearScreenValues[3]		// Alpha
 					};
 					clearValues[1].depthStencil = { 1.0f, 0 };
 
@@ -65,7 +65,7 @@ namespace Dynamik {
 					/* BEGIN VULKAN COMMANDS */
 					VkDeviceSize offsets[] = { 0 };
 					// begin render pass
-					vkCmdBeginRenderPass(commandBuffers[i], &renderPassInfo, VK_SUBPASS_CONTENTS_INLINE);
+					vkCmdBeginRenderPass(container->commandBufferContainer.buffers[i], &renderPassInfo, VK_SUBPASS_CONTENTS_INLINE);
 
 					/* INITIALIZE SKYBOX */
 					//vkCmdBindDescriptorSets(commandBuffers[i], VK_PIPELINE_BIND_POINT_GRAPHICS, pipelineLayout,
@@ -81,30 +81,30 @@ namespace Dynamik {
 					//		0, pushConstants.size(), pushConstants.data());
 
 					// bind pipeline
-					vkCmdBindPipeline(commandBuffers[i], VK_PIPELINE_BIND_POINT_GRAPHICS, graphicsPipeline);
+					vkCmdBindPipeline(container->commandBufferContainer.buffers[i], VK_PIPELINE_BIND_POINT_GRAPHICS, container->pipelineContainers[0].pipeline);
 
 					// vertex buffer bind
 					for (int count = 0; count < info.vertexBuffers.size(); count++)
-						vkCmdBindVertexBuffers(commandBuffers[i], count, 1,
+						vkCmdBindVertexBuffers(container->commandBufferContainer.buffers[i], count, 1,
 							&info.vertexBuffers[count], offsets);
 
 					// index buffer bind
-					vkCmdBindIndexBuffer(commandBuffers[i], info.indexBuffer, 0, VK_INDEX_TYPE_UINT32);
+					vkCmdBindIndexBuffer(container->commandBufferContainer.buffers[i], info.indexBuffer, 0, VK_INDEX_TYPE_UINT32);
 
 					// binding descriptor set(s)
 					for (int x = 0; x < info.descriptorSets.size(); x++) 
-						vkCmdBindDescriptorSets(commandBuffers[i], VK_PIPELINE_BIND_POINT_GRAPHICS,
-							pipelineLayout, x, 1, &info.descriptorSets[x]->at(i), 0, nullptr);
+						vkCmdBindDescriptorSets(container->commandBufferContainer.buffers[i], VK_PIPELINE_BIND_POINT_GRAPHICS,
+							container->pipelineContainers[0].pipelineLayout, x, 1, &info.descriptorSets[x]->at(i), 0, nullptr);
 
 					// draw command
-					vkCmdDrawIndexed(commandBuffers[i], static_cast<uint32>(info.indices.size()), 1, 0, 0, 0);
+					vkCmdDrawIndexed(container->commandBufferContainer.buffers[i], static_cast<uint32>(info.indices.size()), 1, 0, 0, 0);
 
 					// end renderPass
-					vkCmdEndRenderPass(commandBuffers[i]);
+					vkCmdEndRenderPass(container->commandBufferContainer.buffers[i]);
 
 					/* END VULKAN COMMANDS */
 
-					if (vkEndCommandBuffer(commandBuffers[i]) != VK_SUCCESS)
+					if (vkEndCommandBuffer(container->commandBufferContainer.buffers[i]) != VK_SUCCESS)
 						DMK_CORE_FATAL("failed to record command buffer!");
 
 					/*

@@ -18,16 +18,13 @@ namespace Dynamik {
 				frameBufferManager() {}
 				~frameBufferManager() {}
 
-				void init() override;
-				void createFrameBuffers(DMKFrameBuffersCreateInfo info);
+				void init(ADGRVulkanDataContainer* container) override;
+				void createFrameBuffers(ADGRVulkanDataContainer* container, DMKFrameBuffersCreateInfo info);
 
-				void clear();
+				void clear(ADGRVulkanDataContainer* container);
 
 			private:
-				VkDevice* m_device = &device;
-
-				std::vector<VkFramebuffer>* m_frameBuffers = &frameBuffers;
-				uint32_t mySize = 0;
+				int mySize = 0;
 			};
 		}
 	}

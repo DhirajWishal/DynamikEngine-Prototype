@@ -15,9 +15,6 @@ namespace Dynamik {
 				virtual void initLogicalDevice(ADGRVulkanDataContainer* container) {}
 
 			protected:
-				VkInstance* myInstance = &instance;
-				VkDevice* myDevice = &device;
-				VkPhysicalDevice* myPhysicalDevice = &physicalDevice;
 			};
 		}
 	}

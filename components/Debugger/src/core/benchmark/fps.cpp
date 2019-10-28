@@ -32,7 +32,7 @@ namespace Dynamik {
 				if (current < minimum) minimum = current;
 				if (current > maximum) maximum = current;
 
-				printf("FPS: %I64d\n", current);
+				printf("FPS: %I64d\r", current);
 
 				oldTime = time;
 			}

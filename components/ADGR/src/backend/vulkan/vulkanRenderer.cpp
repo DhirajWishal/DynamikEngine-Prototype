@@ -66,10 +66,6 @@ namespace Dynamik {
 			mySwapChain.initImageViews(&myVulkanDataContainer);
 			INC_PROGRESS;
 
-			// init render pass
-			//myPipeline.initRenderPass(&myVulkanDataContainer);
-			//INC_PROGRESS;
-
 			// first layout
 			DMKUniformBufferCreateDescriptorSetLayoutInfo layoutInfo;
 			layoutInfo.layout = &layout;
@@ -78,11 +74,11 @@ namespace Dynamik {
 			INC_PROGRESS;
 
 			// second layout
-			DMKUniformBufferCreateDescriptorSetLayoutInfo layoutInfo2;
-			layoutInfo2.layout = &layout2;
-			layoutInfo2.bindIndex = { 0, 1 };
-			uniformBuffer.createDescriptorSetLayout(&myVulkanDataContainer, layoutInfo2);
-			INC_PROGRESS;
+			//DMKUniformBufferCreateDescriptorSetLayoutInfo layoutInfo2;
+			//layoutInfo2.layout = &layout2;
+			//layoutInfo2.bindIndex = { 0, 1 };
+			//uniformBuffer.createDescriptorSetLayout(&myVulkanDataContainer, layoutInfo2);
+			//INC_PROGRESS;
 
 			// init descriptor pool
 			uniformBuffer.initDescriptorPool(&myVulkanDataContainer, &descriptorPool);
@@ -90,8 +86,8 @@ namespace Dynamik {
 			INC_PROGRESS;
 
 			// compile shaders
-			myShaderManager.compileShaders(vertexShaderSourcePaths[shaderCodeIndex], compileShaders);
-			myShaderManager.compileShaders(fragmentShaderSourcePaths[shaderCodeIndex], compileShaders);
+			myShaderManager.compileShaders(vertexShaderSourcePaths[0], compileShaders);
+			myShaderManager.compileShaders(fragmentShaderSourcePaths[0], compileShaders);
 			INC_PROGRESS;
 
 			// load shaders
@@ -103,7 +99,7 @@ namespace Dynamik {
 
 			// init pipeline
 			DMKPipelineInitInfo initInfo;
-			initInfo.layouts = { layout, layout2 };
+			initInfo.layouts = { layout/*, layout2*/ };
 			initInfo.shaderDataContainer = shaderContainer;
 			myPipeline.init(&myVulkanDataContainer, initInfo);
 			INC_PROGRESS;
@@ -127,10 +123,6 @@ namespace Dynamik {
 			// TODO: manually initialization
 			myFrameBufferManager.init(&myVulkanDataContainer);
 			INC_PROGRESS;
-
-			///////////////////////////////////////////
-			//std::thread myThread(thread_basket_1_);//
-			///////////////////////////////////////////
 
 			// texture creation - init
 			DMKInitTextureInfo textureInfo;
@@ -171,56 +163,82 @@ namespace Dynamik {
 			myTextureManager.initTextureSampler(&myVulkanDataContainer, samplerInfo);
 			INC_PROGRESS;
 
-			// load Model
-			DMKVulkanRendererLoadObjectInfo loadModelInfo;
-			loadModelInfo.path = modelPaths[0];
-			loadModelInfo.vertexBufferObject = &terrainVBO;
-			loadModelInfo.indexBufferObject = &ibo;
-			loadModelInfo.offsets = { 0.0f, 1.0f, 0.0f };
-			loadObject(loadModelInfo);
-			INC_PROGRESS;
+			// texture creation - init 2
+			//textureInfo.path = texturePaths[0];
+			//textureInfo.textureImage = &texImage2;
+			//textureInfo.textureImageMemory = &texImageMemory2;
+			//textureInfo.textureImageFormat = VK_FORMAT_R8G8B8A8_UNORM;
+			//textureInfo.mipLevels = myMipLevel;
+			//myTextureManager.initTexture(&myVulkanDataContainer, textureInfo);
+			//INC_PROGRESS;
+			//
+			// texture - imageViews
+			//viewInfo.textureImage = texImage2;
+			//viewInfo.textureImageFormat = VK_FORMAT_R8G8B8A8_UNORM;
+			//viewInfo.mipLevels = myMipLevel;
+			//INC_PROGRESS;
+			//
+			//cImgVewinfo.device = myVulkanDataContainer.device;
+			//cImgVewinfo.format = VK_FORMAT_R8G8B8A8_UNORM;
+			//cImgVewinfo.image = texImage2;
+			//cImgVewinfo.mipLevels = myMipLevel;
+			//cImgVewinfo.aspectFlags = VK_IMAGE_ASPECT_COLOR_BIT;
+			//cImgVewinfo.textureImageView = &textureImageView2;
+			//myTextureManager.initTextureImageViews(&myVulkanDataContainer, viewInfo, cImgVewinfo);
+			//INC_PROGRESS;
+			//
+			//// texture - sampler
+			//samplerInfo.textureSampler = &textureSampler2;
+			//samplerInfo.modeU = VK_SAMPLER_ADDRESS_MODE_REPEAT;
+			//samplerInfo.modeV = VK_SAMPLER_ADDRESS_MODE_REPEAT;
+			//samplerInfo.modeW = VK_SAMPLER_ADDRESS_MODE_REPEAT;
+			//samplerInfo.magFilter = VK_FILTER_LINEAR;
+			//samplerInfo.minFilter = VK_FILTER_LINEAR;
+			//samplerInfo.mipLevel = myMipLevel;
+			//myTextureManager.initTextureSampler(&myVulkanDataContainer, samplerInfo);
+			//INC_PROGRESS;
 
-			// load second Model
-			DMKVulkanRendererLoadObjectInfo loadModelInfo2;
-			loadModelInfo2.path = modelPaths[1];
-			loadModelInfo2.vertexBufferObject = &terrainVBO;
-			loadModelInfo2.indexBufferObject = &ibo;
-			loadModelInfo2.offsets = { 0.0f, -1.0f, 0.0f };
-			loadObject(loadModelInfo2);
-			INC_PROGRESS;
+			std::vector<std::vector<float>> offsets = {
+				{0.0f, 0.0f, 0.0f},
+				{0.0f, 1.0f, 0.0f},
+				{0.0f, -1.0f, 0.0f}
+			};
 
-			// load third Model
-			DMKVulkanRendererLoadObjectInfo loadModelInfo3;
-			loadModelInfo3.path = modelPaths[0];
-			loadModelInfo3.vertexBufferObject = &vbo2;
-			loadModelInfo3.indexBufferObject = &ibo;
-			loadModelInfo3.offsets = { 0.0f, 0.0f, 0.0f };
-			loadObject(loadModelInfo3);
-			INC_PROGRESS;
+			DMKObjectData data1 = {};
+			data1.path = modelPaths[0];
+			data1.vertexBufferObject = &terrainVBO;
+			data1.vertexBuffer = &terrainVertexBuffer;
+			data1.vertexBufferMemory = &terrainVertexBufferMemory;
+			data1.indexBufferObject = &terrainIBO;
+			data1.indexBuffer = &terrainIndexBuffer;
+			data1.indexBufferMemory = &terrainIndexMemory;
+			data1.offsets = offsets[0];
 
-			// init vertexBuffer
-			DMKVulkanRendererCreateVertexBufferInfo vertBuffInfo;
-			vertBuffInfo.buffer = &terrainVertexBuffer;
-			vertBuffInfo.bufferMemory = &terrainVertexBufferMemory;
-			vertBuffInfo.vertexBufferObject = terrainVBO;
-			createVertexBuffer(vertBuffInfo);
-			INC_PROGRESS;
+			DMKObjectData data2 = {};
+			data2.path = modelPaths[0];
+			data2.vertexBufferObject = &vbo;
+			data2.vertexBuffer = &vertexBuffer;
+			data2.vertexBufferMemory = &vertexBufferMemory;
+			data2.indexBufferObject = &ibo;
+			data2.indexBuffer = &indexBuffer;
+			data2.indexBufferMemory = &indexBufferMemory;
+			data2.offsets = offsets[1];
 
-			// init secons vertexBuffer
-			DMKVulkanRendererCreateVertexBufferInfo vertBuffInfo2;
-			vertBuffInfo2.buffer = &vertexBuffer2;
-			vertBuffInfo2.bufferMemory = &vertexBufferMemory2;
-			vertBuffInfo2.vertexBufferObject = vbo2;
-			createVertexBuffer(vertBuffInfo2);
-			INC_PROGRESS;
+			DMKObjectData data3 = {};
+			data3.path = modelPaths[0];
+			data3.vertexBufferObject = &vbo2;
+			data3.vertexBuffer = &vertexBuffer2;
+			data3.vertexBufferMemory = &vertexBufferMemory2;
+			data3.indexBufferObject = &ibo2;
+			data3.indexBuffer = &indexBuffer2;
+			data3.indexBufferMemory = &indexBufferMemory2;
+			data3.offsets = offsets[2];
 
-			// init indexBuffer
-			DMKVulkanRendererCreateIndexBufferInfo idxBuffInfo;
-			idxBuffInfo.buffer = &indexBuffer;
-			idxBuffInfo.bufferMemory = &indexBufferMemory;
-			idxBuffInfo.indexBufferObject = ibo;
-			createIndexBuffer(idxBuffInfo);
-			INC_PROGRESS;
+			std::vector<DMKObjectData> objDataVector = {
+				data1, data2, data3
+			};
+
+			initModels(objDataVector);
 
 			// uniform buffer creation
 			DMKVulkanRendererCreateUniformBufferInfo uBuffInfo;
@@ -230,15 +248,15 @@ namespace Dynamik {
 			INC_PROGRESS;
 
 			// second uniform buffer
-			DMKVulkanRendererCreateUniformBufferInfo uBuffInfo2;
-			uBuffInfo2.buffer = &uniformBuffers2;
-			uBuffInfo2.bufferMemory = &uniformBufferMemories2;
-			createUniformBuffer(uBuffInfo2);
-			INC_PROGRESS;
+			//DMKVulkanRendererCreateUniformBufferInfo uBuffInfo2;
+			//uBuffInfo2.buffer = &uniformBuffers2;
+			//uBuffInfo2.bufferMemory = &uniformBufferMemories2;
+			//createUniformBuffer(uBuffInfo2);
+			//INC_PROGRESS;
 
 			// descriptor pool creation
 			uniformBuffer.initDescriptorPool(&myVulkanDataContainer, &descriptorPool);
-			uniformBuffer.initDescriptorPool(&myVulkanDataContainer, &descriptorPool2);
+			//uniformBuffer.initDescriptorPool(&myVulkanDataContainer, &descriptorPool2);
 			INC_PROGRESS;
 
 			// init descriptor set
@@ -254,23 +272,23 @@ namespace Dynamik {
 			INC_PROGRESS;
 
 			// second descriptor set
-			DMKVulkanRendereCreateDescriptorSetsInfo descInitInfo2;
-			descInitInfo2.uniformBuffers = &uniformBuffers;
-			descInitInfo2.textureImageView = textureImageView;
-			descInitInfo2.textureSampler = textureSampler;
-			descInitInfo2.descriptorSets = &descriptorSets2;
-			descInitInfo2.layout = &layout2;
-			descInitInfo2.descriptorPool = descriptorPool2;
-			descInitInfo2.bindIndexes = { 0, 1 };
-			createDescriptorSets(descInitInfo2);
-			INC_PROGRESS;
+			//DMKVulkanRendereCreateDescriptorSetsInfo descInitInfo2;
+			//descInitInfo2.uniformBuffers = &uniformBuffers2;
+			//descInitInfo2.textureImageView = textureImageView2;
+			//descInitInfo2.textureSampler = textureSampler2;
+			//descInitInfo2.descriptorSets = &descriptorSets2;
+			//descInitInfo2.layout = &layout;
+			//descInitInfo2.descriptorPool = descriptorPool2;
+			//descInitInfo2.bindIndexes = { 0, 1 };
+			//createDescriptorSets(descInitInfo2);
+			//INC_PROGRESS;
 
 			// command buffer initialization
 			DMKBindCommandBufferInfo commandInfo;
-			commandInfo.indices = ibo;
-			commandInfo.vertexBuffers = { terrainVertexBuffer, vertexBuffer2 };
-			commandInfo.indexBuffer = indexBuffer;
-			commandInfo.descriptorSets = { &descriptorSets, &descriptorSets2 };
+			commandInfo.vertexBuffers = { terrainVertexBuffer };
+			commandInfo.indexBuffers = { terrainIndexBuffer };
+			commandInfo.descriptorSets = { &descriptorSets };
+			commandInfo.indices = { terrainIBO };
 			myCommandBufferManager.bindCommands(&myVulkanDataContainer, commandInfo);
 			INC_PROGRESS;
 
@@ -343,7 +361,7 @@ namespace Dynamik {
 
 		void vulkanRenderer::drawFrame() {
 #ifdef DMK_DEBUG
-			//myFPSCal.getFPS();	// FPS calculator
+			myFPSCal.getFPS();	// FPS calculator
 
  // ----------
 #endif
@@ -388,15 +406,15 @@ namespace Dynamik {
 			uniformBuffer.updateBuffer3D(&myVulkanDataContainer, updateInfo);
 
 			//second
-			DMKUniformBufferUpdateInfo updateInfo2;
-			updateInfo2.bufferMemory = uniformBufferMemories2;
-			updateInfo2.currentImage = imageIndex;
-			updateInfo2.turn = { myEvent.turnEventL , myEvent.turnEventR };
-			updateInfo2.move = { myEvent.moveEventU , myEvent.moveEventD };
-			updateInfo2.upDown = { myEvent.rotEventD , myEvent.rotEventU };
-			updateInfo2.rotation = { myEvent.rotEventL , myEvent.rotEventR };
-			updateInfo2.cPos = { myCEvent.x, myCEvent.y };
-			uniformBuffer.updateBuffer3D(&myVulkanDataContainer, updateInfo2);
+			//DMKUniformBufferUpdateInfo updateInfo2;
+			//updateInfo2.bufferMemory = uniformBufferMemories2;
+			//updateInfo2.currentImage = imageIndex;
+			//updateInfo2.turn = { myEvent.turnEventL , myEvent.turnEventR };
+			//updateInfo2.move = { myEvent.moveEventU , myEvent.moveEventD };
+			//updateInfo2.upDown = { myEvent.rotEventD , myEvent.rotEventU };
+			//updateInfo2.rotation = { myEvent.rotEventL , myEvent.rotEventR };
+			//updateInfo2.cPos = { myCEvent.x, myCEvent.y };
+			//uniformBuffer.updateBuffer3D(&myVulkanDataContainer, updateInfo2);
 
 			// submit info
 			VkSubmitInfo submitInfo = {};
@@ -560,13 +578,17 @@ namespace Dynamik {
 			descripInfo2.bindIndex = { 0, 1 };
 			uniformBuffer.initDescriptorSets(&myVulkanDataContainer, descripInfo2);
 
+			terrainVBO = vertexBuffers[0];
+			ibo = indexBuffers[0];
+
 			// command buffer initialization
 			DMKBindCommandBufferInfo commandInfo;
-			commandInfo.indices = ibo;
-			commandInfo.vertexBuffers = { terrainVertexBuffer, vertexBuffer2 };
-			commandInfo.indexBuffer = indexBuffer;
+			commandInfo.vertexBuffers = { terrainVertexBuffer };
+			commandInfo.indices = { ibo };
+			commandInfo.indexBuffers = { indexBuffer };
 			commandInfo.descriptorSets = { &descriptorSets, &descriptorSets2 };
 			myCommandBufferManager.bindCommands(&myVulkanDataContainer, commandInfo);
+			//INC_PROGRESS;
 		}
 
 		// load object 
@@ -648,10 +670,10 @@ namespace Dynamik {
 		// load an object
 		void vulkanRenderer::loadObject(DMKVulkanRendererLoadObjectInfo info) {
 			DMKModelLoadInfo modelInfo;
-			modelInfo.path = info.path;
-			modelInfo.vertices = info.vertexBufferObject;
-			modelInfo.indices = info.indexBufferObject;
-			modelInfo.vertexOffset = info.offsets;
+			modelInfo.path = info.objectDataContainer.path;
+			modelInfo.vertices = info.objectDataContainer.vertexBufferObject;
+			modelInfo.indices = info.objectDataContainer.indexBufferObject;
+			modelInfo.vertexOffset = info.objectDataContainer.offsets;
 			myModelManager.loadModel(modelInfo);
 		}
 
@@ -752,8 +774,8 @@ namespace Dynamik {
 			INC_PROGRESS;
 		}
 
+		// texture creation - init
 		void vulkanRenderer::thread_second() {
-			// texture creation - init
 			DMKInitTextureInfo textureInfo;
 			textureInfo.path = texturePaths[0];
 			textureInfo.textureImage = &texImage;
@@ -762,14 +784,12 @@ namespace Dynamik {
 			textureInfo.mipLevels = myMipLevel;
 			myTextureManager.initTexture(&myVulkanDataContainer, textureInfo);
 			INC_PROGRESS;
-
 			// texture - imageViews
 			DMKInitTextureImageViewsInfo viewInfo;
 			viewInfo.textureImage = texImage;
 			viewInfo.textureImageFormat = VK_FORMAT_R8G8B8A8_UNORM;
 			viewInfo.mipLevels = myMipLevel;
 			INC_PROGRESS;
-
 			DMKCreateImageViewInfo cImgVewinfo;
 			cImgVewinfo.device = myVulkanDataContainer.device;
 			cImgVewinfo.format = VK_FORMAT_R8G8B8A8_UNORM;
@@ -779,7 +799,6 @@ namespace Dynamik {
 			cImgVewinfo.textureImageView = &textureImageView;
 			myTextureManager.initTextureImageViews(&myVulkanDataContainer, viewInfo, cImgVewinfo);
 			INC_PROGRESS;
-
 			// texture - sampler
 			DMKInitTextureSamplerInfo samplerInfo;
 			samplerInfo.textureSampler = &textureSampler;
@@ -793,37 +812,56 @@ namespace Dynamik {
 			INC_PROGRESS;
 		}
 
-		void vulkanRenderer::thread_third() {
-			// load Model
-			DMKVulkanRendererLoadObjectInfo loadModelInfo;
-			loadModelInfo.path = modelPaths[0];
-			loadModelInfo.vertexBufferObject = &terrainVBO;
-			loadModelInfo.indexBufferObject = &ibo;
-			loadModelInfo.offsets = { 0.0f, 1.0f, 0.0f };
-			loadObject(loadModelInfo);
-			INC_PROGRESS;
+		void vulkanRenderer::thread_third(DMKVulkanRendererLoadObjectInfo createInfo) {
+			DMKModelLoadInfo info;
+			info.path = createInfo.objectDataContainer.path;
+			info.vertices = createInfo.objectDataContainer.vertexBufferObject;
+			info.indices = createInfo.objectDataContainer.indexBufferObject;
+			info.vertexOffset = createInfo.objectDataContainer.offsets;
 
-			// load second Model
-			DMKVulkanRendererLoadObjectInfo loadModelInfo2;
-			loadModelInfo2.path = modelPaths[1];
-			loadModelInfo2.vertexBufferObject = &terrainVBO;
-			loadModelInfo2.indexBufferObject = &ibo;
-			loadModelInfo2.offsets = { 0.0f, -1.0f, 0.0f };
-			loadObject(loadModelInfo2);
-			INC_PROGRESS;
-
-			// load third Model
-			DMKVulkanRendererLoadObjectInfo loadModelInfo3;
-			loadModelInfo3.path = modelPaths[0];
-			loadModelInfo3.vertexBufferObject = &vbo2;
-			loadModelInfo3.indexBufferObject = &ibo;
-			loadModelInfo3.offsets = { 0.0f, 0.0f, 0.0f };
-			loadObject(loadModelInfo3);
-			INC_PROGRESS;
+			loadModel(info);
 		}
 
 		void vulkanRenderer::thread_basket_1_() {
 
+		}
+
+		void vulkanRenderer::initModels(std::vector<DMKObjectData> data) {
+			{
+				std::vector<std::future<void>> futures;
+
+				for (int i = 0; i < data.size(); i++) {
+					DMKVulkanRendererLoadObjectInfo loadModelInfo;
+					loadModelInfo.objectDataContainer = data.at(i);
+
+					futures.push_back(std::async(std::launch::async, thread_third, loadModelInfo));
+				}
+			}
+
+			for (auto i = 1; i < data.size(); i++) {
+				data[0].vertexBufferObject->insert(data[0].vertexBufferObject->end(),
+					data[i].vertexBufferObject->begin(), data[i].vertexBufferObject->end());
+
+				data[0].indexBufferObject->insert(data[0].indexBufferObject->end(),
+					data[i].indexBufferObject->begin(), data[i].indexBufferObject->end());
+			}
+
+			//for (int i = 0; i < data.size(); i++) {
+				// create vertexBuffer
+			DMKVulkanRendererCreateVertexBufferInfo vertBuffInfo;
+			vertBuffInfo.vertexBufferObject = *data[0].vertexBufferObject;
+			vertBuffInfo.buffer = data[0].vertexBuffer;
+			vertBuffInfo.bufferMemory = data[0].vertexBufferMemory;
+			createVertexBuffer(vertBuffInfo);
+
+			// create indexBuffer
+			DMKVulkanRendererCreateIndexBufferInfo idxBuffInfo;
+			idxBuffInfo.indexBufferObject = *data[0].indexBufferObject;
+			idxBuffInfo.buffer = data[0].indexBuffer;
+			idxBuffInfo.bufferMemory = data[0].indexBufferMemory;
+			createIndexBuffer(idxBuffInfo);
+			INC_PROGRESS;
+			//}
 		}
 	}
 }

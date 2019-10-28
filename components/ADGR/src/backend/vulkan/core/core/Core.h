@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef _DYNAMIK_VULKAN_RENDERER_CORE_
-#define _DYNAMIK_VULKAN_RENDERER_CORE_
+#ifndef DMK_ADGR_VULKAN_RENDERER_CORE_
+#define DMK_ADGR_VULKAN_RENDERER_CORE_
 
 #include "backend/vulkan/core/data structures/vulkan.h"
 

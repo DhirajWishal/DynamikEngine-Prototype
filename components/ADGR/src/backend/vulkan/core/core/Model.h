@@ -1,5 +1,8 @@
 #pragma once
 
+#ifndef DMK_ADGR_MODEL_H
+#define DMK_ADGR_MODEL_H
+
 #include "Core.h"
 
 namespace Dynamik {
@@ -25,3 +28,5 @@ namespace Dynamik {
 		}
 	}
 }
+
+#endif

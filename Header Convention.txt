@@ -1,0 +1,10 @@
+Dynamik Engine: Header Convention
+Author: Dhiraj Wishal
+
+Include Guards:
+	#ifndef _DYNAMIK_<Project name>_<Sub type>_<Class name>_H
+	#define _DYNAMIK_<Project name>_<Sub type>_<Class name>_H
+
+	// file definition
+
+	#endif	// end of _DYNAMIK_<Project name>_<Sub type>_<Class name>_H

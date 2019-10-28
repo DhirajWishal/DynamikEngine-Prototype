@@ -9,8 +9,8 @@
  IDE:		MS Visual Studio Community 2019
 */
 
-#ifndef _DYNAMIK_VULKAN_RENDERER_H
-#define _DYNAMIK_VULKAN_RENDERER_H
+#ifndef _DMK_ADGR_VULKAN_RENDERER_H
+#define _DMK_ADGR_VULKAN_RENDERER_H
 
 #include "core/backend.h"
 #include "core/data structures/DMK_ADGR_DataStructures.h"
@@ -46,17 +46,17 @@ namespace Dynamik {
 
 			void loadObjectData();
 			void loadObject(DMKVulkanRendererLoadObjectInfo info);
-			void events() {
+			inline void events() {
 				myWindow.pollEvents();
 			}
-			bool closeEvent() { return myWindow.closeEvent(&myVulkanDataContainer); }
+			inline bool closeEvent() { return myWindow.closeEvent(&myVulkanDataContainer); }
 
 			void setModelPaths(std::vector<std::string>& object, std::vector<std::string>& texture);
 			void setShaderPaths(std::vector<std::string>& vertex, std::vector<std::string>& fragment);
 
-			std::tuple<int, mouseEventData*> getEvent() { return myWindow.getEvent(); }
+			inline std::tuple<int, mouseEventData*> getEvent() { return myWindow.getEvent(); }
 
-			VkDevice getDevice() { return myVulkanDataContainer.device; }
+			inline VkDevice getDevice() { return myVulkanDataContainer.device; }
 
 			void initPipeline(DMK_ADGR_CreatePipelineInfo info);
 
@@ -67,13 +67,15 @@ namespace Dynamik {
 
 			void includeShader();
 
+			void initModels(std::vector<DMKObjectData> data);
+
+		private:
 			// threads
 			void thread_second();	// textures
-			void thread_third();	// models
+			static void thread_third(DMKVulkanRendererLoadObjectInfo createInfo);	// models
 
 			static void thread_basket_1_();
 
-		private:
 			ADGRVulkanDataContainer myVulkanDataContainer;
 
 			core::window myWindow{};
@@ -102,13 +104,18 @@ namespace Dynamik {
 			VkBuffer terrainVertexBuffer = VK_NULL_HANDLE;
 			VkDeviceMemory terrainVertexBufferMemory = VK_NULL_HANDLE;
 
+			std::vector<uint32_t> terrainIBO = {};
+			VkBuffer terrainIndexBuffer = VK_NULL_HANDLE;
+			VkDeviceMemory terrainIndexMemory = VK_NULL_HANDLE;
+
+			std::vector<std::vector<core::Vertex>> vertexBuffers = {};
+			std::vector<std::vector<uint32_t>> indexBuffers = {};
+
 			// cube map data
 			VkImage cubeMap;
 			VkImageView cubeMapImageView;
 			VkDeviceMemory cubeMapMemory;
 
-			std::vector<core::Vertex> vbo2 = {};
-			std::vector<uint32_t> ibo = {};
 			std::vector<VkDescriptorSet> descriptorSets = {};
 			std::vector<VkDescriptorSet> descriptorSets2 = {};
 
@@ -116,13 +123,20 @@ namespace Dynamik {
 			std::vector<VkSemaphore> renderFinishedSemaphore = {};
 			std::vector<VkFence> inFlightFence = {};
 
-			VkImage texImage = VK_NULL_HANDLE;
-			VkDeviceMemory texImageMemory = VK_NULL_HANDLE;
+			std::vector<core::Vertex> vbo = {};
+			VkBuffer vertexBuffer = VK_NULL_HANDLE;
+			VkDeviceMemory vertexBufferMemory = VK_NULL_HANDLE;
 
+			std::vector<core::Vertex> vbo2 = {};
 			VkBuffer vertexBuffer2 = VK_NULL_HANDLE;
 			VkDeviceMemory vertexBufferMemory2 = VK_NULL_HANDLE;
+			std::vector<uint32_t> ibo = {};
 			VkBuffer indexBuffer = VK_NULL_HANDLE;
 			VkDeviceMemory indexBufferMemory = VK_NULL_HANDLE;
+			std::vector<uint32_t> ibo2 = {};
+			VkBuffer indexBuffer2 = VK_NULL_HANDLE;
+			VkDeviceMemory indexBufferMemory2 = VK_NULL_HANDLE;
+
 			std::vector<VkBuffer> uniformBuffers;
 			std::vector<VkBuffer> uniformBuffers2;
 			std::vector<VkDeviceMemory> uniformBufferMemories;
@@ -133,8 +147,15 @@ namespace Dynamik {
 			VkDescriptorPool descriptorPool2 = VK_NULL_HANDLE;
 			VkDescriptorSetLayout layout2 = VK_NULL_HANDLE;
 
+			VkImage texImage = VK_NULL_HANDLE;
+			VkDeviceMemory texImageMemory = VK_NULL_HANDLE;
 			VkSampler textureSampler = VK_NULL_HANDLE;
 			VkImageView textureImageView = VK_NULL_HANDLE;
+
+			VkImage texImage2 = VK_NULL_HANDLE;
+			VkDeviceMemory texImageMemory2 = VK_NULL_HANDLE;
+			VkSampler textureSampler2 = VK_NULL_HANDLE;
+			VkImageView textureImageView2 = VK_NULL_HANDLE;
 
 			//VkImage skyBox;
 
@@ -175,8 +196,11 @@ namespace Dynamik {
 			std::string* commandOutput = nullptr;
 
 			int shaderCodeIndex = 0;
+
+			//std::vector<std::future<void>> futures;
+			std::vector<std::thread> threads;
 		};
 	}
 }
 
-#endif	//
+#endif	//	_DMK_ADGR_VULKAN_RENDERER_H

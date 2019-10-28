@@ -40,6 +40,8 @@
 #include <memory>
 #include <tuple>
 #include <thread>
+#include <future>
+#include <mutex>
 
 #include "core/log.h"
 #include "core/utils/DMK_DataTypes.h"

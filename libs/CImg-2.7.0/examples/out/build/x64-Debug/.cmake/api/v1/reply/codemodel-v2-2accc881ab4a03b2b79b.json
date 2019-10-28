@@ -1,0 +1,320 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "2.6"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						4,
+						5,
+						6,
+						7,
+						8,
+						9,
+						10,
+						11,
+						12,
+						13,
+						14,
+						15,
+						16,
+						17,
+						18,
+						19,
+						20,
+						21,
+						22,
+						23,
+						24,
+						25,
+						26,
+						27,
+						28,
+						29
+					]
+				}
+			],
+			"name" : "Debug",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "Examples-CIMG",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						4,
+						5,
+						6,
+						7,
+						8,
+						9,
+						10,
+						11,
+						12,
+						13,
+						14,
+						15,
+						16,
+						17,
+						18,
+						19,
+						20,
+						21,
+						22,
+						23,
+						24,
+						25,
+						26,
+						27,
+						28,
+						29
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "CImg_demo::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-CImg_demo-Debug-9e42b87f5c86aeca3bb8.json",
+					"name" : "CImg_demo",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "captcha::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-captcha-Debug-80d1627bf0078cf9936a.json",
+					"name" : "captcha",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "curve_editor2d::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-curve_editor2d-Debug-58f0679abdc990617e6f.json",
+					"name" : "curve_editor2d",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "dtmri_view3d::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-dtmri_view3d-Debug-ad7c886c09a568763a75.json",
+					"name" : "dtmri_view3d",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "edge_explorer2d::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-edge_explorer2d-Debug-5680be45be06894a5446.json",
+					"name" : "edge_explorer2d",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "fade_images::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-fade_images-Debug-b2868749e7893aaa8a2e.json",
+					"name" : "fade_images",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "gaussian_fit1d::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-gaussian_fit1d-Debug-e36279da4210d8c14183.json",
+					"name" : "gaussian_fit1d",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "generate_loop_macros::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-generate_loop_macros-Debug-eebf33e628946d4397a4.json",
+					"name" : "generate_loop_macros",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "hough_transform2d::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-hough_transform2d-Debug-dff5dd4ed0632db15b26.json",
+					"name" : "hough_transform2d",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "image2ascii::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-image2ascii-Debug-86d4260a647415d812da.json",
+					"name" : "image2ascii",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "image_registration2d::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-image_registration2d-Debug-5335e273cb6a41e70a92.json",
+					"name" : "image_registration2d",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "image_surface3d::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-image_surface3d-Debug-4b478e676396c187b314.json",
+					"name" : "image_surface3d",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "jawbreaker::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-jawbreaker-Debug-d97ce995add3accfa6ad.json",
+					"name" : "jawbreaker",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "mcf_levelsets2d::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-mcf_levelsets2d-Debug-d7bf72692f9c5040f6fc.json",
+					"name" : "mcf_levelsets2d",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "mcf_levelsets3d::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-mcf_levelsets3d-Debug-7daa305c52173672c323.json",
+					"name" : "mcf_levelsets3d",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "odykill::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-odykill-Debug-60ae1c871f8707317e92.json",
+					"name" : "odykill",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "pde_TschumperleDeriche2d::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-pde_TschumperleDeriche2d-Debug-cdc5502b26012ab92d9b.json",
+					"name" : "pde_TschumperleDeriche2d",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "pde_heatflow2d::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-pde_heatflow2d-Debug-ac46fdc6430a420242e3.json",
+					"name" : "pde_heatflow2d",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "plotter1d::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-plotter1d-Debug-c17a7910a5e421a03f45.json",
+					"name" : "plotter1d",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "radon_transform2d::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-radon_transform2d-Debug-43011b660934c196daac.json",
+					"name" : "radon_transform2d",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "scene3d::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-scene3d-Debug-b2d468b6524da7d1a551.json",
+					"name" : "scene3d",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "spherical_function3d::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-spherical_function3d-Debug-ba5b44ef44b798bfe715.json",
+					"name" : "spherical_function3d",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "tetris::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-tetris-Debug-f34da1cfedb635d597fe.json",
+					"name" : "tetris",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "tron::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-tron-Debug-8f920f69b948ffc3e9dc.json",
+					"name" : "tron",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "tutorial::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-tutorial-Debug-41ec998d92b6ed9377ec.json",
+					"name" : "tutorial",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "use_RGBclass::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-use_RGBclass-Debug-074d528f9f78d3dabf41.json",
+					"name" : "use_RGBclass",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "use_draw_gradient::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-use_draw_gradient-Debug-a5693426cc10f372afa3.json",
+					"name" : "use_draw_gradient",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "use_nlmeans::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-use_nlmeans-Debug-e0678126b3be786fd9e8.json",
+					"name" : "use_nlmeans",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "use_skeleton::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-use_skeleton-Debug-66a6cc0fb4dfe9402881.json",
+					"name" : "use_skeleton",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "wavelet_atrous::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-wavelet_atrous-Debug-fa0e37c8d2e474b8ffd9.json",
+					"name" : "wavelet_atrous",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "E:/Projects/Dynamik Engine/Dynamik/libs/CImg-2.7.0/examples/out/build/x64-Debug",
+		"source" : "E:/Projects/Dynamik Engine/Dynamik/libs/CImg-2.7.0/examples"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 0
+	}
+}

@@ -12,10 +12,10 @@ namespace Dynamik {
 				std::vector<VkFramebuffer> frameBuffers = {};
 				std::vector<std::vector<VkDescriptorSet>*> descriptorSets = {};
 
-				VkBuffer indexBuffer = VK_NULL_HANDLE;
+				std::vector<VkBuffer> indexBuffers = {};
 
 				std::vector<VkBuffer> vertexBuffers = {};
-				std::vector<uint32_t> indices = {};
+				std::vector<std::vector<uint32_t>> indices = {};
 
 				DMKVulkanSkyboxCommandBufferBindData skybox;
 			};

@@ -130,10 +130,10 @@ namespace Dynamik {
 				VkLogicOp colorBlendingLogicOp = VK_LOGIC_OP_COPY;					// Vulkan color blend blending logical op
 				int colorBlendingColorBlendCount = 1;								// Vulkan color blend blending count
 				std::vector<float> colorBlendingBlendConstants = {					// Vulkan color blend constants
-					0.0f,
-					0.0f,
-					0.0f,
-					0.0f
+					0.0f,	// Red
+					0.0f,	// Green
+					0.0f,	// Blue
+					0.0f	// Alpha
 				};
 
 				// push constants info

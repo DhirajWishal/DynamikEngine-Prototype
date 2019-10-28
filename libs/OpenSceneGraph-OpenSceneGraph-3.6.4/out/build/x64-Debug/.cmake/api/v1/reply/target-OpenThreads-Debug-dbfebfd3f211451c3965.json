@@ -1,0 +1,390 @@
+{
+	"artifacts" : 
+	[
+		{
+			"path" : "src/OpenThreads/win32/ot21-OpenThreadsd.dll"
+		},
+		{
+			"path" : "src/OpenThreads/win32/OpenThreadsd.lib"
+		},
+		{
+			"path" : "src/OpenThreads/win32/ot21-OpenThreadsd.pdb"
+		}
+	],
+	"backtrace" : 1,
+	"backtraceGraph" : 
+	{
+		"commands" : 
+		[
+			"ADD_LIBRARY",
+			"INSTALL",
+			"INCLUDE_DIRECTORIES",
+			"ADD_DEFINITIONS"
+		],
+		"files" : 
+		[
+			"src/OpenThreads/win32/CMakeLists.txt",
+			"CMakeLists.txt"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 13,
+				"parent" : 0
+			},
+			{
+				"command" : 1,
+				"file" : 0,
+				"line" : 46,
+				"parent" : 0
+			},
+			{
+				"file" : 1
+			},
+			{
+				"command" : 2,
+				"file" : 1,
+				"line" : 304,
+				"parent" : 3
+			},
+			{
+				"command" : 2,
+				"file" : 1,
+				"line" : 307,
+				"parent" : 3
+			},
+			{
+				"command" : 3,
+				"file" : 0,
+				"line" : 6,
+				"parent" : 0
+			}
+		]
+	},
+	"compileGroups" : 
+	[
+		{
+			"compileCommandFragments" : 
+			[
+				{
+					"fragment" : "/DWIN32 /D_WINDOWS /W3 /GR /EHsc /W4 /wd4589 /wd4706 /wd4127 /wd4100 /MDd /Zi /Ob0 /Od /RTC1  "
+				}
+			],
+			"defines" : 
+			[
+				{
+					"define" : "OPENTHREADS_EXPORTS"
+				},
+				{
+					"define" : "OpenThreads_EXPORTS"
+				},
+				{
+					"backtrace" : 6,
+					"define" : "WIN32_LEAN_AND_MEAN"
+				},
+				{
+					"define" : "_CRT_SECURE_NO_DEPRECATE"
+				},
+				{
+					"define" : "_SCL_SECURE_NO_WARNINGS"
+				},
+				{
+					"define" : "_WIN32_WINNT=0x0A00"
+				}
+			],
+			"includes" : 
+			[
+				{
+					"backtrace" : 4,
+					"path" : "E:/Projects/Dynamik Engine/Dynamik/libs/OpenSceneGraph-OpenSceneGraph-3.6.4/out/build/x64-Debug/include"
+				},
+				{
+					"backtrace" : 5,
+					"path" : "E:/Projects/Dynamik Engine/Dynamik/libs/OpenSceneGraph-OpenSceneGraph-3.6.4/include"
+				}
+			],
+			"language" : "CXX",
+			"sourceIndexes" : 
+			[
+				15,
+				17,
+				19,
+				20,
+				22,
+				23
+			]
+		},
+		{
+			"compileCommandFragments" : 
+			[
+				{
+					"fragment" : "-DWIN32 -D_DEBUG  "
+				}
+			],
+			"defines" : 
+			[
+				{
+					"define" : "OPENTHREADS_EXPORTS"
+				},
+				{
+					"define" : "OpenThreads_EXPORTS"
+				},
+				{
+					"backtrace" : 6,
+					"define" : "WIN32_LEAN_AND_MEAN"
+				},
+				{
+					"define" : "_CRT_SECURE_NO_DEPRECATE"
+				},
+				{
+					"define" : "_SCL_SECURE_NO_WARNINGS"
+				},
+				{
+					"define" : "_WIN32_WINNT=0x0A00"
+				}
+			],
+			"includes" : 
+			[
+				{
+					"backtrace" : 4,
+					"path" : "E:/Projects/Dynamik Engine/Dynamik/libs/OpenSceneGraph-OpenSceneGraph-3.6.4/out/build/x64-Debug/include"
+				},
+				{
+					"backtrace" : 5,
+					"path" : "E:/Projects/Dynamik Engine/Dynamik/libs/OpenSceneGraph-OpenSceneGraph-3.6.4/include"
+				}
+			],
+			"language" : "RC",
+			"sourceIndexes" : 
+			[
+				24
+			]
+		}
+	],
+	"folder" : 
+	{
+		"name" : "OSG Core"
+	},
+	"id" : "OpenThreads::@dac12d0619a846a6325a",
+	"install" : 
+	{
+		"destinations" : 
+		[
+			{
+				"backtrace" : 2,
+				"path" : "lib"
+			},
+			{
+				"backtrace" : 2,
+				"path" : "bin"
+			}
+		],
+		"prefix" : 
+		{
+			"path" : "E:/Projects/Dynamik Engine/Dynamik/libs/OpenSceneGraph-OpenSceneGraph-3.6.4/out/install/x64-Debug"
+		}
+	},
+	"link" : 
+	{
+		"commandFragments" : 
+		[
+			{
+				"fragment" : "/machine:x64 /debug /INCREMENTAL",
+				"role" : "flags"
+			},
+			{
+				"fragment" : "kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib",
+				"role" : "libraries"
+			}
+		],
+		"language" : "CXX"
+	},
+	"name" : "OpenThreads",
+	"nameOnDisk" : "ot21-OpenThreadsd.dll",
+	"paths" : 
+	{
+		"build" : "src/OpenThreads/win32",
+		"source" : "src/OpenThreads/win32"
+	},
+	"sourceGroups" : 
+	[
+		{
+			"name" : "Header Files",
+			"sourceIndexes" : 
+			[
+				0,
+				1,
+				2,
+				3,
+				4,
+				5,
+				6,
+				7,
+				8,
+				9,
+				10,
+				11,
+				12,
+				13,
+				14,
+				16,
+				18,
+				21
+			]
+		},
+		{
+			"name" : "Source Files",
+			"sourceIndexes" : 
+			[
+				15,
+				17,
+				19,
+				20,
+				22,
+				23,
+				24
+			]
+		}
+	],
+	"sources" : 
+	[
+		{
+			"backtrace" : 1,
+			"path" : "include/OpenThreads/Atomic",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"path" : "include/OpenThreads/Affinity",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"path" : "include/OpenThreads/Barrier",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"path" : "include/OpenThreads/Block",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"path" : "include/OpenThreads/Condition",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"path" : "include/OpenThreads/Exports",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"path" : "include/OpenThreads/Mutex",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"path" : "include/OpenThreads/ReadWriteMutex",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"path" : "include/OpenThreads/ReentrantMutex",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"path" : "include/OpenThreads/ScopedLock",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"path" : "include/OpenThreads/Thread",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"path" : "out/build/x64-Debug/include/OpenThreads/Version",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"path" : "out/build/x64-Debug/include/OpenThreads/Config",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"path" : "src/OpenThreads/win32/HandleHolder.h",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"path" : "src/OpenThreads/win32/Win32BarrierPrivateData.h",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "src/OpenThreads/win32/WIN32Condition.cpp",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"path" : "src/OpenThreads/win32/Win32ConditionPrivateData.h",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "src/OpenThreads/win32/Win32Mutex.cpp",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"path" : "src/OpenThreads/win32/Win32MutexPrivateData.h",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "src/OpenThreads/win32/Win32Thread.cpp",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "src/OpenThreads/win32/Win32ThreadBarrier.cpp",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"path" : "src/OpenThreads/win32/Win32ThreadPrivateData.h",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "src/OpenThreads/common/Version.cpp",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "src/OpenThreads/common/Atomic.cpp",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 1,
+			"path" : "out/build/x64-Debug/PlatformSpecifics/Windows/OpenThreadsVersionInfo.rc",
+			"sourceGroupIndex" : 1
+		}
+	],
+	"type" : "SHARED_LIBRARY"
+}

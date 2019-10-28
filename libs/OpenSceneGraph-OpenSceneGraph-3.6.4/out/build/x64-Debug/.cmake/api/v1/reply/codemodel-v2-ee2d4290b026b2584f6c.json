@@ -1,0 +1,2765 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"childIndexes" : 
+					[
+						1,
+						102
+					],
+					"hasInstallRule" : true,
+					"minimumCMakeVersion" : 
+					{
+						"string" : "2.8.0"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						7,
+						103
+					]
+				},
+				{
+					"build" : "src",
+					"childIndexes" : 
+					[
+						2,
+						4,
+						5,
+						6,
+						7,
+						8,
+						9,
+						10,
+						11,
+						12,
+						13,
+						14,
+						15,
+						16,
+						17,
+						18,
+						19,
+						20,
+						21,
+						36,
+						90
+					],
+					"hasInstallRule" : true,
+					"minimumCMakeVersion" : 
+					{
+						"string" : "2.8.0"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 0,
+					"source" : "src"
+				},
+				{
+					"build" : "src/OpenThreads",
+					"childIndexes" : 
+					[
+						3
+					],
+					"hasInstallRule" : true,
+					"minimumCMakeVersion" : 
+					{
+						"string" : "2.8.0"
+					},
+					"parentIndex" : 1,
+					"projectIndex" : 0,
+					"source" : "src/OpenThreads"
+				},
+				{
+					"build" : "src/OpenThreads/win32",
+					"hasInstallRule" : true,
+					"minimumCMakeVersion" : 
+					{
+						"string" : "2.8.0"
+					},
+					"parentIndex" : 2,
+					"projectIndex" : 0,
+					"source" : "src/OpenThreads/win32",
+					"targetIndexes" : 
+					[
+						0
+					]
+				},
+				{
+					"build" : "src/osg",
+					"hasInstallRule" : true,
+					"minimumCMakeVersion" : 
+					{
+						"string" : "2.8.0"
+					},
+					"parentIndex" : 1,
+					"projectIndex" : 0,
+					"source" : "src/osg",
+					"targetIndexes" : 
+					[
+						8
+					]
+				},
+				{
+					"build" : "src/osgDB",
+					"hasInstallRule" : true,
+					"minimumCMakeVersion" : 
+					{
+						"string" : "2.8.0"
+					},
+					"parentIndex" : 1,
+					"projectIndex" : 0,
+					"source" : "src/osgDB",
+					"targetIndexes" : 
+					[
+						10
+					]
+				},
+				{
+					"build" : "src/osgUtil",
+					"hasInstallRule" : true,
+					"minimumCMakeVersion" : 
+					{
+						"string" : "2.8.0"
+					},
+					"parentIndex" : 1,
+					"projectIndex" : 0,
+					"source" : "src/osgUtil",
+					"targetIndexes" : 
+					[
+						21
+					]
+				},
+				{
+					"build" : "src/osgGA",
+					"hasInstallRule" : true,
+					"minimumCMakeVersion" : 
+					{
+						"string" : "2.8.0"
+					},
+					"parentIndex" : 1,
+					"projectIndex" : 0,
+					"source" : "src/osgGA",
+					"targetIndexes" : 
+					[
+						12
+					]
+				},
+				{
+					"build" : "src/osgText",
+					"hasInstallRule" : true,
+					"minimumCMakeVersion" : 
+					{
+						"string" : "2.8.0"
+					},
+					"parentIndex" : 1,
+					"projectIndex" : 0,
+					"source" : "src/osgText",
+					"targetIndexes" : 
+					[
+						19
+					]
+				},
+				{
+					"build" : "src/osgViewer",
+					"hasInstallRule" : true,
+					"minimumCMakeVersion" : 
+					{
+						"string" : "2.8.0"
+					},
+					"parentIndex" : 1,
+					"projectIndex" : 0,
+					"source" : "src/osgViewer",
+					"targetIndexes" : 
+					[
+						22
+					]
+				},
+				{
+					"build" : "src/osgAnimation",
+					"hasInstallRule" : true,
+					"minimumCMakeVersion" : 
+					{
+						"string" : "2.8.0"
+					},
+					"parentIndex" : 1,
+					"projectIndex" : 0,
+					"source" : "src/osgAnimation",
+					"targetIndexes" : 
+					[
+						9
+					]
+				},
+				{
+					"build" : "src/osgFX",
+					"hasInstallRule" : true,
+					"minimumCMakeVersion" : 
+					{
+						"string" : "2.8.0"
+					},
+					"parentIndex" : 1,
+					"projectIndex" : 0,
+					"source" : "src/osgFX",
+					"targetIndexes" : 
+					[
+						11
+					]
+				},
+				{
+					"build" : "src/osgManipulator",
+					"hasInstallRule" : true,
+					"minimumCMakeVersion" : 
+					{
+						"string" : "2.8.0"
+					},
+					"parentIndex" : 1,
+					"projectIndex" : 0,
+					"source" : "src/osgManipulator",
+					"targetIndexes" : 
+					[
+						13
+					]
+				},
+				{
+					"build" : "src/osgParticle",
+					"hasInstallRule" : true,
+					"minimumCMakeVersion" : 
+					{
+						"string" : "2.8.0"
+					},
+					"parentIndex" : 1,
+					"projectIndex" : 0,
+					"source" : "src/osgParticle",
+					"targetIndexes" : 
+					[
+						14
+					]
+				},
+				{
+					"build" : "src/osgUI",
+					"hasInstallRule" : true,
+					"minimumCMakeVersion" : 
+					{
+						"string" : "2.8.0"
+					},
+					"parentIndex" : 1,
+					"projectIndex" : 0,
+					"source" : "src/osgUI",
+					"targetIndexes" : 
+					[
+						20
+					]
+				},
+				{
+					"build" : "src/osgVolume",
+					"hasInstallRule" : true,
+					"minimumCMakeVersion" : 
+					{
+						"string" : "2.8.0"
+					},
+					"parentIndex" : 1,
+					"projectIndex" : 0,
+					"source" : "src/osgVolume",
+					"targetIndexes" : 
+					[
+						23
+					]
+				},
+				{
+					"build" : "src/osgShadow",
+					"hasInstallRule" : true,
+					"minimumCMakeVersion" : 
+					{
+						"string" : "2.8.0"
+					},
+					"parentIndex" : 1,
+					"projectIndex" : 0,
+					"source" : "src/osgShadow",
+					"targetIndexes" : 
+					[
+						16
+					]
+				},
+				{
+					"build" : "src/osgSim",
+					"hasInstallRule" : true,
+					"minimumCMakeVersion" : 
+					{
+						"string" : "2.8.0"
+					},
+					"parentIndex" : 1,
+					"projectIndex" : 0,
+					"source" : "src/osgSim",
+					"targetIndexes" : 
+					[
+						17
+					]
+				},
+				{
+					"build" : "src/osgTerrain",
+					"hasInstallRule" : true,
+					"minimumCMakeVersion" : 
+					{
+						"string" : "2.8.0"
+					},
+					"parentIndex" : 1,
+					"projectIndex" : 0,
+					"source" : "src/osgTerrain",
+					"targetIndexes" : 
+					[
+						18
+					]
+				},
+				{
+					"build" : "src/osgWidget",
+					"hasInstallRule" : true,
+					"minimumCMakeVersion" : 
+					{
+						"string" : "2.8.0"
+					},
+					"parentIndex" : 1,
+					"projectIndex" : 0,
+					"source" : "src/osgWidget",
+					"targetIndexes" : 
+					[
+						24
+					]
+				},
+				{
+					"build" : "src/osgPresentation",
+					"hasInstallRule" : true,
+					"minimumCMakeVersion" : 
+					{
+						"string" : "2.8.0"
+					},
+					"parentIndex" : 1,
+					"projectIndex" : 0,
+					"source" : "src/osgPresentation",
+					"targetIndexes" : 
+					[
+						15
+					]
+				},
+				{
+					"build" : "src/osgWrappers/serializers",
+					"childIndexes" : 
+					[
+						22,
+						23,
+						24,
+						25,
+						26,
+						27,
+						28,
+						29,
+						30,
+						31,
+						32,
+						33,
+						34,
+						35
+					],
+					"hasInstallRule" : true,
+					"minimumCMakeVersion" : 
+					{
+						"string" : "2.8.0"
+					},
+					"parentIndex" : 1,
+					"projectIndex" : 1,
+					"source" : "src/osgWrappers/serializers"
+				},
+				{
+					"build" : "src/osgWrappers/serializers/osg",
+					"hasInstallRule" : true,
+					"minimumCMakeVersion" : 
+					{
+						"string" : "2.8.0"
+					},
+					"parentIndex" : 21,
+					"projectIndex" : 1,
+					"source" : "src/osgWrappers/serializers/osg",
+					"targetIndexes" : 
+					[
+						78
+					]
+				},
+				{
+					"build" : "src/osgWrappers/serializers/osgUtil",
+					"hasInstallRule" : true,
+					"minimumCMakeVersion" : 
+					{
+						"string" : "2.8.0"
+					},
+					"parentIndex" : 21,
+					"projectIndex" : 1,
+					"source" : "src/osgWrappers/serializers/osgUtil",
+					"targetIndexes" : 
+					[
+						89
+					]
+				},
+				{
+					"build" : "src/osgWrappers/serializers/osgAnimation",
+					"hasInstallRule" : true,
+					"minimumCMakeVersion" : 
+					{
+						"string" : "2.8.0"
+					},
+					"parentIndex" : 21,
+					"projectIndex" : 1,
+					"source" : "src/osgWrappers/serializers/osgAnimation",
+					"targetIndexes" : 
+					[
+						79
+					]
+				},
+				{
+					"build" : "src/osgWrappers/serializers/osgFX",
+					"hasInstallRule" : true,
+					"minimumCMakeVersion" : 
+					{
+						"string" : "2.8.0"
+					},
+					"parentIndex" : 21,
+					"projectIndex" : 1,
+					"source" : "src/osgWrappers/serializers/osgFX",
+					"targetIndexes" : 
+					[
+						80
+					]
+				},
+				{
+					"build" : "src/osgWrappers/serializers/osgManipulator",
+					"hasInstallRule" : true,
+					"minimumCMakeVersion" : 
+					{
+						"string" : "2.8.0"
+					},
+					"parentIndex" : 21,
+					"projectIndex" : 1,
+					"source" : "src/osgWrappers/serializers/osgManipulator",
+					"targetIndexes" : 
+					[
+						82
+					]
+				},
+				{
+					"build" : "src/osgWrappers/serializers/osgParticle",
+					"hasInstallRule" : true,
+					"minimumCMakeVersion" : 
+					{
+						"string" : "2.8.0"
+					},
+					"parentIndex" : 21,
+					"projectIndex" : 1,
+					"source" : "src/osgWrappers/serializers/osgParticle",
+					"targetIndexes" : 
+					[
+						83
+					]
+				},
+				{
+					"build" : "src/osgWrappers/serializers/osgSim",
+					"hasInstallRule" : true,
+					"minimumCMakeVersion" : 
+					{
+						"string" : "2.8.0"
+					},
+					"parentIndex" : 21,
+					"projectIndex" : 1,
+					"source" : "src/osgWrappers/serializers/osgSim",
+					"targetIndexes" : 
+					[
+						85
+					]
+				},
+				{
+					"build" : "src/osgWrappers/serializers/osgShadow",
+					"hasInstallRule" : true,
+					"minimumCMakeVersion" : 
+					{
+						"string" : "2.8.0"
+					},
+					"parentIndex" : 21,
+					"projectIndex" : 1,
+					"source" : "src/osgWrappers/serializers/osgShadow",
+					"targetIndexes" : 
+					[
+						84
+					]
+				},
+				{
+					"build" : "src/osgWrappers/serializers/osgGA",
+					"hasInstallRule" : true,
+					"minimumCMakeVersion" : 
+					{
+						"string" : "2.8.0"
+					},
+					"parentIndex" : 21,
+					"projectIndex" : 1,
+					"source" : "src/osgWrappers/serializers/osgGA",
+					"targetIndexes" : 
+					[
+						81
+					]
+				},
+				{
+					"build" : "src/osgWrappers/serializers/osgTerrain",
+					"hasInstallRule" : true,
+					"minimumCMakeVersion" : 
+					{
+						"string" : "2.8.0"
+					},
+					"parentIndex" : 21,
+					"projectIndex" : 1,
+					"source" : "src/osgWrappers/serializers/osgTerrain",
+					"targetIndexes" : 
+					[
+						86
+					]
+				},
+				{
+					"build" : "src/osgWrappers/serializers/osgText",
+					"hasInstallRule" : true,
+					"minimumCMakeVersion" : 
+					{
+						"string" : "2.8.0"
+					},
+					"parentIndex" : 21,
+					"projectIndex" : 1,
+					"source" : "src/osgWrappers/serializers/osgText",
+					"targetIndexes" : 
+					[
+						87
+					]
+				},
+				{
+					"build" : "src/osgWrappers/serializers/osgVolume",
+					"hasInstallRule" : true,
+					"minimumCMakeVersion" : 
+					{
+						"string" : "2.8.0"
+					},
+					"parentIndex" : 21,
+					"projectIndex" : 1,
+					"source" : "src/osgWrappers/serializers/osgVolume",
+					"targetIndexes" : 
+					[
+						91
+					]
+				},
+				{
+					"build" : "src/osgWrappers/serializers/osgViewer",
+					"hasInstallRule" : true,
+					"minimumCMakeVersion" : 
+					{
+						"string" : "2.8.0"
+					},
+					"parentIndex" : 21,
+					"projectIndex" : 1,
+					"source" : "src/osgWrappers/serializers/osgViewer",
+					"targetIndexes" : 
+					[
+						90
+					]
+				},
+				{
+					"build" : "src/osgWrappers/serializers/osgUI",
+					"hasInstallRule" : true,
+					"minimumCMakeVersion" : 
+					{
+						"string" : "2.8.0"
+					},
+					"parentIndex" : 21,
+					"projectIndex" : 1,
+					"source" : "src/osgWrappers/serializers/osgUI",
+					"targetIndexes" : 
+					[
+						88
+					]
+				},
+				{
+					"build" : "src/osgPlugins",
+					"childIndexes" : 
+					[
+						37,
+						38,
+						39,
+						40,
+						41,
+						42,
+						43,
+						44,
+						45,
+						46,
+						47,
+						48,
+						49,
+						50,
+						51,
+						52,
+						53,
+						54,
+						55,
+						56,
+						57,
+						58,
+						59,
+						60,
+						61,
+						62,
+						63,
+						64,
+						65,
+						66,
+						67,
+						68,
+						69,
+						70,
+						71,
+						72,
+						73,
+						74,
+						75,
+						76,
+						77,
+						78,
+						79,
+						80,
+						81,
+						82,
+						83,
+						84,
+						85,
+						86,
+						87,
+						88,
+						89
+					],
+					"hasInstallRule" : true,
+					"minimumCMakeVersion" : 
+					{
+						"string" : "2.8.0"
+					},
+					"parentIndex" : 1,
+					"projectIndex" : 2,
+					"source" : "src/osgPlugins"
+				},
+				{
+					"build" : "src/osgPlugins/osga",
+					"hasInstallRule" : true,
+					"minimumCMakeVersion" : 
+					{
+						"string" : "2.8.0"
+					},
+					"parentIndex" : 36,
+					"projectIndex" : 2,
+					"source" : "src/osgPlugins/osga",
+					"targetIndexes" : 
+					[
+						62
+					]
+				},
+				{
+					"build" : "src/osgPlugins/rot",
+					"hasInstallRule" : true,
+					"minimumCMakeVersion" : 
+					{
+						"string" : "2.8.0"
+					},
+					"parentIndex" : 36,
+					"projectIndex" : 2,
+					"source" : "src/osgPlugins/rot",
+					"targetIndexes" : 
+					[
+						76
+					]
+				},
+				{
+					"build" : "src/osgPlugins/scale",
+					"hasInstallRule" : true,
+					"minimumCMakeVersion" : 
+					{
+						"string" : "2.8.0"
+					},
+					"parentIndex" : 36,
+					"projectIndex" : 2,
+					"source" : "src/osgPlugins/scale",
+					"targetIndexes" : 
+					[
+						77
+					]
+				},
+				{
+					"build" : "src/osgPlugins/trans",
+					"hasInstallRule" : true,
+					"minimumCMakeVersion" : 
+					{
+						"string" : "2.8.0"
+					},
+					"parentIndex" : 36,
+					"projectIndex" : 2,
+					"source" : "src/osgPlugins/trans",
+					"targetIndexes" : 
+					[
+						97
+					]
+				},
+				{
+					"build" : "src/osgPlugins/normals",
+					"hasInstallRule" : true,
+					"minimumCMakeVersion" : 
+					{
+						"string" : "2.8.0"
+					},
+					"parentIndex" : 36,
+					"projectIndex" : 2,
+					"source" : "src/osgPlugins/normals",
+					"targetIndexes" : 
+					[
+						57
+					]
+				},
+				{
+					"build" : "src/osgPlugins/revisions",
+					"hasInstallRule" : true,
+					"minimumCMakeVersion" : 
+					{
+						"string" : "2.8.0"
+					},
+					"parentIndex" : 36,
+					"projectIndex" : 2,
+					"source" : "src/osgPlugins/revisions",
+					"targetIndexes" : 
+					[
+						74
+					]
+				},
+				{
+					"build" : "src/osgPlugins/view",
+					"hasInstallRule" : true,
+					"minimumCMakeVersion" : 
+					{
+						"string" : "2.8.0"
+					},
+					"parentIndex" : 36,
+					"projectIndex" : 2,
+					"source" : "src/osgPlugins/view",
+					"targetIndexes" : 
+					[
+						67
+					]
+				},
+				{
+					"build" : "src/osgPlugins/shadow",
+					"hasInstallRule" : true,
+					"minimumCMakeVersion" : 
+					{
+						"string" : "2.8.0"
+					},
+					"parentIndex" : 36,
+					"projectIndex" : 2,
+					"source" : "src/osgPlugins/shadow",
+					"targetIndexes" : 
+					[
+						64
+					]
+				},
+				{
+					"build" : "src/osgPlugins/terrain",
+					"hasInstallRule" : true,
+					"minimumCMakeVersion" : 
+					{
+						"string" : "2.8.0"
+					},
+					"parentIndex" : 36,
+					"projectIndex" : 2,
+					"source" : "src/osgPlugins/terrain",
+					"targetIndexes" : 
+					[
+						65
+					]
+				},
+				{
+					"build" : "src/osgPlugins/osg",
+					"hasInstallRule" : true,
+					"minimumCMakeVersion" : 
+					{
+						"string" : "2.8.0"
+					},
+					"parentIndex" : 36,
+					"projectIndex" : 2,
+					"source" : "src/osgPlugins/osg",
+					"targetIndexes" : 
+					[
+						61
+					]
+				},
+				{
+					"build" : "src/osgPlugins/ive",
+					"hasInstallRule" : true,
+					"minimumCMakeVersion" : 
+					{
+						"string" : "2.8.0"
+					},
+					"parentIndex" : 36,
+					"projectIndex" : 2,
+					"source" : "src/osgPlugins/ive",
+					"targetIndexes" : 
+					[
+						49
+					]
+				},
+				{
+					"build" : "src/osgPlugins/cfg",
+					"hasInstallRule" : true,
+					"minimumCMakeVersion" : 
+					{
+						"string" : "2.8.0"
+					},
+					"parentIndex" : 36,
+					"projectIndex" : 2,
+					"source" : "src/osgPlugins/cfg",
+					"targetIndexes" : 
+					[
+						31
+					]
+				},
+				{
+					"build" : "src/osgPlugins/glsl",
+					"hasInstallRule" : true,
+					"minimumCMakeVersion" : 
+					{
+						"string" : "2.8.0"
+					},
+					"parentIndex" : 36,
+					"projectIndex" : 2,
+					"source" : "src/osgPlugins/glsl",
+					"targetIndexes" : 
+					[
+						47
+					]
+				},
+				{
+					"build" : "src/osgPlugins/rgb",
+					"hasInstallRule" : true,
+					"minimumCMakeVersion" : 
+					{
+						"string" : "2.8.0"
+					},
+					"parentIndex" : 36,
+					"projectIndex" : 2,
+					"source" : "src/osgPlugins/rgb",
+					"targetIndexes" : 
+					[
+						75
+					]
+				},
+				{
+					"build" : "src/osgPlugins/bmp",
+					"hasInstallRule" : true,
+					"minimumCMakeVersion" : 
+					{
+						"string" : "2.8.0"
+					},
+					"parentIndex" : 36,
+					"projectIndex" : 2,
+					"source" : "src/osgPlugins/bmp",
+					"targetIndexes" : 
+					[
+						28
+					]
+				},
+				{
+					"build" : "src/osgPlugins/pnm",
+					"hasInstallRule" : true,
+					"minimumCMakeVersion" : 
+					{
+						"string" : "2.8.0"
+					},
+					"parentIndex" : 36,
+					"projectIndex" : 2,
+					"source" : "src/osgPlugins/pnm",
+					"targetIndexes" : 
+					[
+						71
+					]
+				},
+				{
+					"build" : "src/osgPlugins/dds",
+					"hasInstallRule" : true,
+					"minimumCMakeVersion" : 
+					{
+						"string" : "2.8.0"
+					},
+					"parentIndex" : 36,
+					"projectIndex" : 2,
+					"source" : "src/osgPlugins/dds",
+					"targetIndexes" : 
+					[
+						32
+					]
+				},
+				{
+					"build" : "src/osgPlugins/tga",
+					"hasInstallRule" : true,
+					"minimumCMakeVersion" : 
+					{
+						"string" : "2.8.0"
+					},
+					"parentIndex" : 36,
+					"projectIndex" : 2,
+					"source" : "src/osgPlugins/tga",
+					"targetIndexes" : 
+					[
+						95
+					]
+				},
+				{
+					"build" : "src/osgPlugins/hdr",
+					"hasInstallRule" : true,
+					"minimumCMakeVersion" : 
+					{
+						"string" : "2.8.0"
+					},
+					"parentIndex" : 36,
+					"projectIndex" : 2,
+					"source" : "src/osgPlugins/hdr",
+					"targetIndexes" : 
+					[
+						48
+					]
+				},
+				{
+					"build" : "src/osgPlugins/dot",
+					"hasInstallRule" : true,
+					"minimumCMakeVersion" : 
+					{
+						"string" : "2.8.0"
+					},
+					"parentIndex" : 36,
+					"projectIndex" : 2,
+					"source" : "src/osgPlugins/dot",
+					"targetIndexes" : 
+					[
+						44
+					]
+				},
+				{
+					"build" : "src/osgPlugins/vtf",
+					"hasInstallRule" : true,
+					"minimumCMakeVersion" : 
+					{
+						"string" : "2.8.0"
+					},
+					"parentIndex" : 36,
+					"projectIndex" : 2,
+					"source" : "src/osgPlugins/vtf",
+					"targetIndexes" : 
+					[
+						101
+					]
+				},
+				{
+					"build" : "src/osgPlugins/ktx",
+					"hasInstallRule" : true,
+					"minimumCMakeVersion" : 
+					{
+						"string" : "2.8.0"
+					},
+					"parentIndex" : 36,
+					"projectIndex" : 2,
+					"source" : "src/osgPlugins/ktx",
+					"targetIndexes" : 
+					[
+						50
+					]
+				},
+				{
+					"build" : "src/osgPlugins/3dc",
+					"hasInstallRule" : true,
+					"minimumCMakeVersion" : 
+					{
+						"string" : "2.8.0"
+					},
+					"parentIndex" : 36,
+					"projectIndex" : 2,
+					"source" : "src/osgPlugins/3dc",
+					"targetIndexes" : 
+					[
+						25
+					]
+				},
+				{
+					"build" : "src/osgPlugins/p3d",
+					"hasInstallRule" : true,
+					"minimumCMakeVersion" : 
+					{
+						"string" : "2.8.0"
+					},
+					"parentIndex" : 36,
+					"projectIndex" : 2,
+					"source" : "src/osgPlugins/p3d",
+					"targetIndexes" : 
+					[
+						68
+					]
+				},
+				{
+					"build" : "src/osgPlugins/bvh",
+					"hasInstallRule" : true,
+					"minimumCMakeVersion" : 
+					{
+						"string" : "2.8.0"
+					},
+					"parentIndex" : 36,
+					"projectIndex" : 2,
+					"source" : "src/osgPlugins/bvh",
+					"targetIndexes" : 
+					[
+						30
+					]
+				},
+				{
+					"build" : "src/osgPlugins/x",
+					"hasInstallRule" : true,
+					"minimumCMakeVersion" : 
+					{
+						"string" : "2.8.0"
+					},
+					"parentIndex" : 36,
+					"projectIndex" : 2,
+					"source" : "src/osgPlugins/x",
+					"targetIndexes" : 
+					[
+						102
+					]
+				},
+				{
+					"build" : "src/osgPlugins/dxf",
+					"hasInstallRule" : true,
+					"minimumCMakeVersion" : 
+					{
+						"string" : "2.8.0"
+					},
+					"parentIndex" : 36,
+					"projectIndex" : 2,
+					"source" : "src/osgPlugins/dxf",
+					"targetIndexes" : 
+					[
+						45
+					]
+				},
+				{
+					"build" : "src/osgPlugins/OpenFlight",
+					"hasInstallRule" : true,
+					"minimumCMakeVersion" : 
+					{
+						"string" : "2.8.0"
+					},
+					"parentIndex" : 36,
+					"projectIndex" : 2,
+					"source" : "src/osgPlugins/OpenFlight",
+					"targetIndexes" : 
+					[
+						59
+					]
+				},
+				{
+					"build" : "src/osgPlugins/obj",
+					"hasInstallRule" : true,
+					"minimumCMakeVersion" : 
+					{
+						"string" : "2.8.0"
+					},
+					"parentIndex" : 36,
+					"projectIndex" : 2,
+					"source" : "src/osgPlugins/obj",
+					"targetIndexes" : 
+					[
+						58
+					]
+				},
+				{
+					"build" : "src/osgPlugins/pic",
+					"hasInstallRule" : true,
+					"minimumCMakeVersion" : 
+					{
+						"string" : "2.8.0"
+					},
+					"parentIndex" : 36,
+					"projectIndex" : 2,
+					"source" : "src/osgPlugins/pic",
+					"targetIndexes" : 
+					[
+						69
+					]
+				},
+				{
+					"build" : "src/osgPlugins/stl",
+					"hasInstallRule" : true,
+					"minimumCMakeVersion" : 
+					{
+						"string" : "2.8.0"
+					},
+					"parentIndex" : 36,
+					"projectIndex" : 2,
+					"source" : "src/osgPlugins/stl",
+					"targetIndexes" : 
+					[
+						93
+					]
+				},
+				{
+					"build" : "src/osgPlugins/3ds",
+					"hasInstallRule" : true,
+					"minimumCMakeVersion" : 
+					{
+						"string" : "2.8.0"
+					},
+					"parentIndex" : 36,
+					"projectIndex" : 2,
+					"source" : "src/osgPlugins/3ds",
+					"targetIndexes" : 
+					[
+						26
+					]
+				},
+				{
+					"build" : "src/osgPlugins/ac",
+					"hasInstallRule" : true,
+					"minimumCMakeVersion" : 
+					{
+						"string" : "2.8.0"
+					},
+					"parentIndex" : 36,
+					"projectIndex" : 2,
+					"source" : "src/osgPlugins/ac",
+					"targetIndexes" : 
+					[
+						27
+					]
+				},
+				{
+					"build" : "src/osgPlugins/pov",
+					"hasInstallRule" : true,
+					"minimumCMakeVersion" : 
+					{
+						"string" : "2.8.0"
+					},
+					"parentIndex" : 36,
+					"projectIndex" : 2,
+					"source" : "src/osgPlugins/pov",
+					"targetIndexes" : 
+					[
+						72
+					]
+				},
+				{
+					"build" : "src/osgPlugins/logo",
+					"hasInstallRule" : true,
+					"minimumCMakeVersion" : 
+					{
+						"string" : "2.8.0"
+					},
+					"parentIndex" : 36,
+					"projectIndex" : 2,
+					"source" : "src/osgPlugins/logo",
+					"targetIndexes" : 
+					[
+						51
+					]
+				},
+				{
+					"build" : "src/osgPlugins/lws",
+					"hasInstallRule" : true,
+					"minimumCMakeVersion" : 
+					{
+						"string" : "2.8.0"
+					},
+					"parentIndex" : 36,
+					"projectIndex" : 2,
+					"source" : "src/osgPlugins/lws",
+					"targetIndexes" : 
+					[
+						54
+					]
+				},
+				{
+					"build" : "src/osgPlugins/md2",
+					"hasInstallRule" : true,
+					"minimumCMakeVersion" : 
+					{
+						"string" : "2.8.0"
+					},
+					"parentIndex" : 36,
+					"projectIndex" : 2,
+					"source" : "src/osgPlugins/md2",
+					"targetIndexes" : 
+					[
+						55
+					]
+				},
+				{
+					"build" : "src/osgPlugins/osgtgz",
+					"hasInstallRule" : true,
+					"minimumCMakeVersion" : 
+					{
+						"string" : "2.8.0"
+					},
+					"parentIndex" : 36,
+					"projectIndex" : 2,
+					"source" : "src/osgPlugins/osgtgz",
+					"targetIndexes" : 
+					[
+						66
+					]
+				},
+				{
+					"build" : "src/osgPlugins/tgz",
+					"hasInstallRule" : true,
+					"minimumCMakeVersion" : 
+					{
+						"string" : "2.8.0"
+					},
+					"parentIndex" : 36,
+					"projectIndex" : 2,
+					"source" : "src/osgPlugins/tgz",
+					"targetIndexes" : 
+					[
+						96
+					]
+				},
+				{
+					"build" : "src/osgPlugins/shp",
+					"hasInstallRule" : true,
+					"minimumCMakeVersion" : 
+					{
+						"string" : "2.8.0"
+					},
+					"parentIndex" : 36,
+					"projectIndex" : 2,
+					"source" : "src/osgPlugins/shp",
+					"targetIndexes" : 
+					[
+						92
+					]
+				},
+				{
+					"build" : "src/osgPlugins/txf",
+					"hasInstallRule" : true,
+					"minimumCMakeVersion" : 
+					{
+						"string" : "2.8.0"
+					},
+					"parentIndex" : 36,
+					"projectIndex" : 2,
+					"source" : "src/osgPlugins/txf",
+					"targetIndexes" : 
+					[
+						99
+					]
+				},
+				{
+					"build" : "src/osgPlugins/bsp",
+					"hasInstallRule" : true,
+					"minimumCMakeVersion" : 
+					{
+						"string" : "2.8.0"
+					},
+					"parentIndex" : 36,
+					"projectIndex" : 2,
+					"source" : "src/osgPlugins/bsp",
+					"targetIndexes" : 
+					[
+						29
+					]
+				},
+				{
+					"build" : "src/osgPlugins/mdl",
+					"hasInstallRule" : true,
+					"minimumCMakeVersion" : 
+					{
+						"string" : "2.8.0"
+					},
+					"parentIndex" : 36,
+					"projectIndex" : 2,
+					"source" : "src/osgPlugins/mdl",
+					"targetIndexes" : 
+					[
+						56
+					]
+				},
+				{
+					"build" : "src/osgPlugins/gles",
+					"hasInstallRule" : true,
+					"minimumCMakeVersion" : 
+					{
+						"string" : "2.8.0"
+					},
+					"parentIndex" : 36,
+					"projectIndex" : 2,
+					"source" : "src/osgPlugins/gles",
+					"targetIndexes" : 
+					[
+						46
+					]
+				},
+				{
+					"build" : "src/osgPlugins/osgjs",
+					"hasInstallRule" : true,
+					"minimumCMakeVersion" : 
+					{
+						"string" : "2.8.0"
+					},
+					"parentIndex" : 36,
+					"projectIndex" : 2,
+					"source" : "src/osgPlugins/osgjs",
+					"targetIndexes" : 
+					[
+						63
+					]
+				},
+				{
+					"build" : "src/osgPlugins/lwo",
+					"hasInstallRule" : true,
+					"minimumCMakeVersion" : 
+					{
+						"string" : "2.8.0"
+					},
+					"parentIndex" : 36,
+					"projectIndex" : 2,
+					"source" : "src/osgPlugins/lwo",
+					"targetIndexes" : 
+					[
+						53
+					]
+				},
+				{
+					"build" : "src/osgPlugins/ply",
+					"hasInstallRule" : true,
+					"minimumCMakeVersion" : 
+					{
+						"string" : "2.8.0"
+					},
+					"parentIndex" : 36,
+					"projectIndex" : 2,
+					"source" : "src/osgPlugins/ply",
+					"targetIndexes" : 
+					[
+						70
+					]
+				},
+				{
+					"build" : "src/osgPlugins/txp",
+					"hasInstallRule" : true,
+					"minimumCMakeVersion" : 
+					{
+						"string" : "2.8.0"
+					},
+					"parentIndex" : 36,
+					"projectIndex" : 2,
+					"source" : "src/osgPlugins/txp",
+					"targetIndexes" : 
+					[
+						100
+					]
+				},
+				{
+					"build" : "src/osgPlugins/pvr",
+					"hasInstallRule" : true,
+					"minimumCMakeVersion" : 
+					{
+						"string" : "2.8.0"
+					},
+					"parentIndex" : 36,
+					"projectIndex" : 2,
+					"source" : "src/osgPlugins/pvr",
+					"targetIndexes" : 
+					[
+						73
+					]
+				},
+				{
+					"build" : "src/osgPlugins/osc",
+					"hasInstallRule" : true,
+					"minimumCMakeVersion" : 
+					{
+						"string" : "2.8.0"
+					},
+					"parentIndex" : 36,
+					"projectIndex" : 2,
+					"source" : "src/osgPlugins/osc",
+					"targetIndexes" : 
+					[
+						60
+					]
+				},
+				{
+					"build" : "src/osgPlugins/trk",
+					"hasInstallRule" : true,
+					"minimumCMakeVersion" : 
+					{
+						"string" : "2.8.0"
+					},
+					"parentIndex" : 36,
+					"projectIndex" : 2,
+					"source" : "src/osgPlugins/trk",
+					"targetIndexes" : 
+					[
+						98
+					]
+				},
+				{
+					"build" : "src/osgPlugins/tf",
+					"hasInstallRule" : true,
+					"minimumCMakeVersion" : 
+					{
+						"string" : "2.8.0"
+					},
+					"parentIndex" : 36,
+					"projectIndex" : 2,
+					"source" : "src/osgPlugins/tf",
+					"targetIndexes" : 
+					[
+						94
+					]
+				},
+				{
+					"build" : "src/osgPlugins/lua",
+					"hasInstallRule" : true,
+					"minimumCMakeVersion" : 
+					{
+						"string" : "2.8.0"
+					},
+					"parentIndex" : 36,
+					"projectIndex" : 2,
+					"source" : "src/osgPlugins/lua",
+					"targetIndexes" : 
+					[
+						52
+					]
+				},
+				{
+					"build" : "src/osgWrappers/deprecated-dotosg",
+					"childIndexes" : 
+					[
+						91,
+						92,
+						93,
+						94,
+						95,
+						96,
+						97,
+						98,
+						99,
+						100,
+						101
+					],
+					"hasInstallRule" : true,
+					"minimumCMakeVersion" : 
+					{
+						"string" : "2.8.0"
+					},
+					"parentIndex" : 1,
+					"projectIndex" : 3,
+					"source" : "src/osgWrappers/deprecated-dotosg"
+				},
+				{
+					"build" : "src/osgWrappers/deprecated-dotosg/osg",
+					"hasInstallRule" : true,
+					"minimumCMakeVersion" : 
+					{
+						"string" : "2.8.0"
+					},
+					"parentIndex" : 90,
+					"projectIndex" : 3,
+					"source" : "src/osgWrappers/deprecated-dotosg/osg",
+					"targetIndexes" : 
+					[
+						33
+					]
+				},
+				{
+					"build" : "src/osgWrappers/deprecated-dotosg/osgParticle",
+					"hasInstallRule" : true,
+					"minimumCMakeVersion" : 
+					{
+						"string" : "2.8.0"
+					},
+					"parentIndex" : 90,
+					"projectIndex" : 3,
+					"source" : "src/osgWrappers/deprecated-dotosg/osgParticle",
+					"targetIndexes" : 
+					[
+						36
+					]
+				},
+				{
+					"build" : "src/osgWrappers/deprecated-dotosg/osgAnimation",
+					"hasInstallRule" : true,
+					"minimumCMakeVersion" : 
+					{
+						"string" : "2.8.0"
+					},
+					"parentIndex" : 90,
+					"projectIndex" : 3,
+					"source" : "src/osgWrappers/deprecated-dotosg/osgAnimation",
+					"targetIndexes" : 
+					[
+						34
+					]
+				},
+				{
+					"build" : "src/osgWrappers/deprecated-dotosg/osgFX",
+					"hasInstallRule" : true,
+					"minimumCMakeVersion" : 
+					{
+						"string" : "2.8.0"
+					},
+					"parentIndex" : 90,
+					"projectIndex" : 3,
+					"source" : "src/osgWrappers/deprecated-dotosg/osgFX",
+					"targetIndexes" : 
+					[
+						35
+					]
+				},
+				{
+					"build" : "src/osgWrappers/deprecated-dotosg/osgSim",
+					"hasInstallRule" : true,
+					"minimumCMakeVersion" : 
+					{
+						"string" : "2.8.0"
+					},
+					"parentIndex" : 90,
+					"projectIndex" : 3,
+					"source" : "src/osgWrappers/deprecated-dotosg/osgSim",
+					"targetIndexes" : 
+					[
+						38
+					]
+				},
+				{
+					"build" : "src/osgWrappers/deprecated-dotosg/osgText",
+					"hasInstallRule" : true,
+					"minimumCMakeVersion" : 
+					{
+						"string" : "2.8.0"
+					},
+					"parentIndex" : 90,
+					"projectIndex" : 3,
+					"source" : "src/osgWrappers/deprecated-dotosg/osgText",
+					"targetIndexes" : 
+					[
+						40
+					]
+				},
+				{
+					"build" : "src/osgWrappers/deprecated-dotosg/osgViewer",
+					"hasInstallRule" : true,
+					"minimumCMakeVersion" : 
+					{
+						"string" : "2.8.0"
+					},
+					"parentIndex" : 90,
+					"projectIndex" : 3,
+					"source" : "src/osgWrappers/deprecated-dotosg/osgViewer",
+					"targetIndexes" : 
+					[
+						41
+					]
+				},
+				{
+					"build" : "src/osgWrappers/deprecated-dotosg/osgShadow",
+					"hasInstallRule" : true,
+					"minimumCMakeVersion" : 
+					{
+						"string" : "2.8.0"
+					},
+					"parentIndex" : 90,
+					"projectIndex" : 3,
+					"source" : "src/osgWrappers/deprecated-dotosg/osgShadow",
+					"targetIndexes" : 
+					[
+						37
+					]
+				},
+				{
+					"build" : "src/osgWrappers/deprecated-dotosg/osgTerrain",
+					"hasInstallRule" : true,
+					"minimumCMakeVersion" : 
+					{
+						"string" : "2.8.0"
+					},
+					"parentIndex" : 90,
+					"projectIndex" : 3,
+					"source" : "src/osgWrappers/deprecated-dotosg/osgTerrain",
+					"targetIndexes" : 
+					[
+						39
+					]
+				},
+				{
+					"build" : "src/osgWrappers/deprecated-dotosg/osgVolume",
+					"hasInstallRule" : true,
+					"minimumCMakeVersion" : 
+					{
+						"string" : "2.8.0"
+					},
+					"parentIndex" : 90,
+					"projectIndex" : 3,
+					"source" : "src/osgWrappers/deprecated-dotosg/osgVolume",
+					"targetIndexes" : 
+					[
+						42
+					]
+				},
+				{
+					"build" : "src/osgWrappers/deprecated-dotosg/osgWidget",
+					"hasInstallRule" : true,
+					"minimumCMakeVersion" : 
+					{
+						"string" : "2.8.0"
+					},
+					"parentIndex" : 90,
+					"projectIndex" : 3,
+					"source" : "src/osgWrappers/deprecated-dotosg/osgWidget",
+					"targetIndexes" : 
+					[
+						43
+					]
+				},
+				{
+					"build" : "applications",
+					"childIndexes" : 
+					[
+						103,
+						104,
+						105,
+						106,
+						107,
+						108
+					],
+					"hasInstallRule" : true,
+					"minimumCMakeVersion" : 
+					{
+						"string" : "2.8.0"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 4,
+					"source" : "applications"
+				},
+				{
+					"build" : "applications/osgviewer",
+					"hasInstallRule" : true,
+					"minimumCMakeVersion" : 
+					{
+						"string" : "2.8.0"
+					},
+					"parentIndex" : 102,
+					"projectIndex" : 4,
+					"source" : "applications/osgviewer",
+					"targetIndexes" : 
+					[
+						5
+					]
+				},
+				{
+					"build" : "applications/osgarchive",
+					"hasInstallRule" : true,
+					"minimumCMakeVersion" : 
+					{
+						"string" : "2.8.0"
+					},
+					"parentIndex" : 102,
+					"projectIndex" : 4,
+					"source" : "applications/osgarchive",
+					"targetIndexes" : 
+					[
+						1
+					]
+				},
+				{
+					"build" : "applications/osgconv",
+					"hasInstallRule" : true,
+					"minimumCMakeVersion" : 
+					{
+						"string" : "2.8.0"
+					},
+					"parentIndex" : 102,
+					"projectIndex" : 4,
+					"source" : "applications/osgconv",
+					"targetIndexes" : 
+					[
+						2
+					]
+				},
+				{
+					"build" : "applications/osgfilecache",
+					"hasInstallRule" : true,
+					"minimumCMakeVersion" : 
+					{
+						"string" : "2.8.0"
+					},
+					"parentIndex" : 102,
+					"projectIndex" : 4,
+					"source" : "applications/osgfilecache",
+					"targetIndexes" : 
+					[
+						3
+					]
+				},
+				{
+					"build" : "applications/osgversion",
+					"hasInstallRule" : true,
+					"minimumCMakeVersion" : 
+					{
+						"string" : "2.8.0"
+					},
+					"parentIndex" : 102,
+					"projectIndex" : 4,
+					"source" : "applications/osgversion",
+					"targetIndexes" : 
+					[
+						4
+					]
+				},
+				{
+					"build" : "applications/present3D",
+					"hasInstallRule" : true,
+					"minimumCMakeVersion" : 
+					{
+						"string" : "2.8.0"
+					},
+					"parentIndex" : 102,
+					"projectIndex" : 4,
+					"source" : "applications/present3D",
+					"targetIndexes" : 
+					[
+						6
+					]
+				}
+			],
+			"name" : "Debug",
+			"projects" : 
+			[
+				{
+					"childIndexes" : 
+					[
+						1,
+						2,
+						3,
+						4
+					],
+					"directoryIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						4,
+						5,
+						6,
+						7,
+						8,
+						9,
+						10,
+						11,
+						12,
+						13,
+						14,
+						15,
+						16,
+						17,
+						18,
+						19,
+						20
+					],
+					"name" : "OpenSceneGraph",
+					"targetIndexes" : 
+					[
+						0,
+						7,
+						8,
+						9,
+						10,
+						11,
+						12,
+						13,
+						14,
+						15,
+						16,
+						17,
+						18,
+						19,
+						20,
+						21,
+						22,
+						23,
+						24,
+						103
+					]
+				},
+				{
+					"directoryIndexes" : 
+					[
+						21,
+						22,
+						23,
+						24,
+						25,
+						26,
+						27,
+						28,
+						29,
+						30,
+						31,
+						32,
+						33,
+						34,
+						35
+					],
+					"name" : "OSG_PLUGINS_MASTER",
+					"parentIndex" : 0,
+					"targetIndexes" : 
+					[
+						78,
+						79,
+						80,
+						81,
+						82,
+						83,
+						84,
+						85,
+						86,
+						87,
+						88,
+						89,
+						90,
+						91
+					]
+				},
+				{
+					"directoryIndexes" : 
+					[
+						36,
+						37,
+						38,
+						39,
+						40,
+						41,
+						42,
+						43,
+						44,
+						45,
+						46,
+						47,
+						48,
+						49,
+						50,
+						51,
+						52,
+						53,
+						54,
+						55,
+						56,
+						57,
+						58,
+						59,
+						60,
+						61,
+						62,
+						63,
+						64,
+						65,
+						66,
+						67,
+						68,
+						69,
+						70,
+						71,
+						72,
+						73,
+						74,
+						75,
+						76,
+						77,
+						78,
+						79,
+						80,
+						81,
+						82,
+						83,
+						84,
+						85,
+						86,
+						87,
+						88,
+						89
+					],
+					"name" : "OSG_PLUGINS_MASTER",
+					"parentIndex" : 0,
+					"targetIndexes" : 
+					[
+						25,
+						26,
+						27,
+						28,
+						29,
+						30,
+						31,
+						32,
+						44,
+						45,
+						46,
+						47,
+						48,
+						49,
+						50,
+						51,
+						52,
+						53,
+						54,
+						55,
+						56,
+						57,
+						58,
+						59,
+						60,
+						61,
+						62,
+						63,
+						64,
+						65,
+						66,
+						67,
+						68,
+						69,
+						70,
+						71,
+						72,
+						73,
+						74,
+						75,
+						76,
+						77,
+						92,
+						93,
+						94,
+						95,
+						96,
+						97,
+						98,
+						99,
+						100,
+						101,
+						102
+					]
+				},
+				{
+					"directoryIndexes" : 
+					[
+						90,
+						91,
+						92,
+						93,
+						94,
+						95,
+						96,
+						97,
+						98,
+						99,
+						100,
+						101
+					],
+					"name" : "OSG_PLUGINS_MASTER",
+					"parentIndex" : 0,
+					"targetIndexes" : 
+					[
+						33,
+						34,
+						35,
+						36,
+						37,
+						38,
+						39,
+						40,
+						41,
+						42,
+						43
+					]
+				},
+				{
+					"directoryIndexes" : 
+					[
+						102,
+						103,
+						104,
+						105,
+						106,
+						107,
+						108
+					],
+					"name" : "OSG_APPLICATIONS",
+					"parentIndex" : 0,
+					"targetIndexes" : 
+					[
+						1,
+						2,
+						3,
+						4,
+						5,
+						6
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 3,
+					"id" : "OpenThreads::@dac12d0619a846a6325a",
+					"jsonFile" : "target-OpenThreads-Debug-dbfebfd3f211451c3965.json",
+					"name" : "OpenThreads",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 104,
+					"id" : "application_osgarchive::@cece60fac4acd0584408",
+					"jsonFile" : "target-application_osgarchive-Debug-0100aacc4871d3ada35c.json",
+					"name" : "application_osgarchive",
+					"projectIndex" : 4
+				},
+				{
+					"directoryIndex" : 105,
+					"id" : "application_osgconv::@c751b5323736589d75c1",
+					"jsonFile" : "target-application_osgconv-Debug-69c6e97958e85452f3a5.json",
+					"name" : "application_osgconv",
+					"projectIndex" : 4
+				},
+				{
+					"directoryIndex" : 106,
+					"id" : "application_osgfilecache::@1a45d8f384eb0af78791",
+					"jsonFile" : "target-application_osgfilecache-Debug-3cbb881cdc9d44be5a15.json",
+					"name" : "application_osgfilecache",
+					"projectIndex" : 4
+				},
+				{
+					"directoryIndex" : 107,
+					"id" : "application_osgversion::@86cd6524b37b67bd4fd3",
+					"jsonFile" : "target-application_osgversion-Debug-ff6392ff34b98705beac.json",
+					"name" : "application_osgversion",
+					"projectIndex" : 4
+				},
+				{
+					"directoryIndex" : 103,
+					"id" : "application_osgviewer::@ca229fae8140c5a721ef",
+					"jsonFile" : "target-application_osgviewer-Debug-8cd34a2a0b5685f1e624.json",
+					"name" : "application_osgviewer",
+					"projectIndex" : 4
+				},
+				{
+					"directoryIndex" : 108,
+					"id" : "application_present3D::@5d385e3ad3d69b236c55",
+					"jsonFile" : "target-application_present3D-Debug-1e5dedffc2c92fcdf86b.json",
+					"name" : "application_present3D",
+					"projectIndex" : 4
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "clobber::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-clobber-Debug-365d769074efab97a9d9.json",
+					"name" : "clobber",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 4,
+					"id" : "osg::@df9faed0b2b115623d4e",
+					"jsonFile" : "target-osg-Debug-d20ea6afba2470dc5561.json",
+					"name" : "osg",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 10,
+					"id" : "osgAnimation::@d5551e554d6a6b5636a2",
+					"jsonFile" : "target-osgAnimation-Debug-55f27d092a67e48855c8.json",
+					"name" : "osgAnimation",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 5,
+					"id" : "osgDB::@d58dd7a1d38fc0c734e6",
+					"jsonFile" : "target-osgDB-Debug-cb62b41a6aecd8499556.json",
+					"name" : "osgDB",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 11,
+					"id" : "osgFX::@de4da4f89d9f4e515ad5",
+					"jsonFile" : "target-osgFX-Debug-f80f2c2936a900fcc003.json",
+					"name" : "osgFX",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 7,
+					"id" : "osgGA::@95c3e4387aed87065cb4",
+					"jsonFile" : "target-osgGA-Debug-e84f5bffd15eac9e541b.json",
+					"name" : "osgGA",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 12,
+					"id" : "osgManipulator::@7eb83f61e7824a590a56",
+					"jsonFile" : "target-osgManipulator-Debug-a256a51ca64057929a6e.json",
+					"name" : "osgManipulator",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 13,
+					"id" : "osgParticle::@930acff3aa85174594b6",
+					"jsonFile" : "target-osgParticle-Debug-8290b57f9c63d329af2c.json",
+					"name" : "osgParticle",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 20,
+					"id" : "osgPresentation::@f88ca74a535ebb7e6d60",
+					"jsonFile" : "target-osgPresentation-Debug-b28857582535b5178b2c.json",
+					"name" : "osgPresentation",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 16,
+					"id" : "osgShadow::@45465b29c7a148960d4b",
+					"jsonFile" : "target-osgShadow-Debug-0a41df4e1213ee2461a8.json",
+					"name" : "osgShadow",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 17,
+					"id" : "osgSim::@96235b916fcb2dd6bee9",
+					"jsonFile" : "target-osgSim-Debug-dc932079ba36bb662e29.json",
+					"name" : "osgSim",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 18,
+					"id" : "osgTerrain::@6e754dddb2b3cb851297",
+					"jsonFile" : "target-osgTerrain-Debug-06ae44fbe02d5bc8182f.json",
+					"name" : "osgTerrain",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 8,
+					"id" : "osgText::@e54226242c104e5868c3",
+					"jsonFile" : "target-osgText-Debug-c4eed8e3b82596da5527.json",
+					"name" : "osgText",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 14,
+					"id" : "osgUI::@102bf038f13eec44d96f",
+					"jsonFile" : "target-osgUI-Debug-c70fabb8dac93296bb01.json",
+					"name" : "osgUI",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 6,
+					"id" : "osgUtil::@8a7cd080b8239a026cfa",
+					"jsonFile" : "target-osgUtil-Debug-25a60e36688d0dd34ab9.json",
+					"name" : "osgUtil",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 9,
+					"id" : "osgViewer::@7805197b6e112df857ee",
+					"jsonFile" : "target-osgViewer-Debug-c450d0d26e216460a7e7.json",
+					"name" : "osgViewer",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 15,
+					"id" : "osgVolume::@01cab6523b6b7f421e69",
+					"jsonFile" : "target-osgVolume-Debug-18fb841551b01f7e5077.json",
+					"name" : "osgVolume",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 19,
+					"id" : "osgWidget::@e90ae5d24b1fc0ddf1ff",
+					"jsonFile" : "target-osgWidget-Debug-6e22e83546303b3e59cf.json",
+					"name" : "osgWidget",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 59,
+					"id" : "osgdb_3dc::@45001a5cefe79c061cf8",
+					"jsonFile" : "target-osgdb_3dc-Debug-e0436db95348c6583be5.json",
+					"name" : "osgdb_3dc",
+					"projectIndex" : 2
+				},
+				{
+					"directoryIndex" : 68,
+					"id" : "osgdb_3ds::@f55bf8b747976438e782",
+					"jsonFile" : "target-osgdb_3ds-Debug-b7cb71aa5822ffd420a4.json",
+					"name" : "osgdb_3ds",
+					"projectIndex" : 2
+				},
+				{
+					"directoryIndex" : 69,
+					"id" : "osgdb_ac::@2ac4442f13c150a94e5f",
+					"jsonFile" : "target-osgdb_ac-Debug-0ef4cde252a645dcf712.json",
+					"name" : "osgdb_ac",
+					"projectIndex" : 2
+				},
+				{
+					"directoryIndex" : 51,
+					"id" : "osgdb_bmp::@d7a2cd1861488c8feb13",
+					"jsonFile" : "target-osgdb_bmp-Debug-92f5ec37e70c9ca5a69d.json",
+					"name" : "osgdb_bmp",
+					"projectIndex" : 2
+				},
+				{
+					"directoryIndex" : 78,
+					"id" : "osgdb_bsp::@f148cbfafea1e09353d1",
+					"jsonFile" : "target-osgdb_bsp-Debug-d56ff3dde44a29122ccf.json",
+					"name" : "osgdb_bsp",
+					"projectIndex" : 2
+				},
+				{
+					"directoryIndex" : 61,
+					"id" : "osgdb_bvh::@858a8c446bb170c79d12",
+					"jsonFile" : "target-osgdb_bvh-Debug-11f80238b5a753bd2a0c.json",
+					"name" : "osgdb_bvh",
+					"projectIndex" : 2
+				},
+				{
+					"directoryIndex" : 48,
+					"id" : "osgdb_cfg::@a726ff571eb5708fce1a",
+					"jsonFile" : "target-osgdb_cfg-Debug-d3a08a9dfe78cb614753.json",
+					"name" : "osgdb_cfg",
+					"projectIndex" : 2
+				},
+				{
+					"directoryIndex" : 53,
+					"id" : "osgdb_dds::@acf5fd046150cc0103ab",
+					"jsonFile" : "target-osgdb_dds-Debug-1d4f0bbe0b9c81df502b.json",
+					"name" : "osgdb_dds",
+					"projectIndex" : 2
+				},
+				{
+					"directoryIndex" : 91,
+					"id" : "osgdb_deprecated_osg::@b835a7b76bb57e7d862b",
+					"jsonFile" : "target-osgdb_deprecated_osg-Debug-bee062a3b1b153ea9f51.json",
+					"name" : "osgdb_deprecated_osg",
+					"projectIndex" : 3
+				},
+				{
+					"directoryIndex" : 93,
+					"id" : "osgdb_deprecated_osganimation::@69348eb4fd5c1b4f5e17",
+					"jsonFile" : "target-osgdb_deprecated_osganimation-Debug-b7a233c5949bd9ee38f0.json",
+					"name" : "osgdb_deprecated_osganimation",
+					"projectIndex" : 3
+				},
+				{
+					"directoryIndex" : 94,
+					"id" : "osgdb_deprecated_osgfx::@e0b6ce69c2221b672e26",
+					"jsonFile" : "target-osgdb_deprecated_osgfx-Debug-06239a3911ed7707f409.json",
+					"name" : "osgdb_deprecated_osgfx",
+					"projectIndex" : 3
+				},
+				{
+					"directoryIndex" : 92,
+					"id" : "osgdb_deprecated_osgparticle::@5308ca4c035dc6e3f069",
+					"jsonFile" : "target-osgdb_deprecated_osgparticle-Debug-bb11d51742ae789fe570.json",
+					"name" : "osgdb_deprecated_osgparticle",
+					"projectIndex" : 3
+				},
+				{
+					"directoryIndex" : 98,
+					"id" : "osgdb_deprecated_osgshadow::@e4648295e1b5dc9ef82a",
+					"jsonFile" : "target-osgdb_deprecated_osgshadow-Debug-fd524faa75dcc45c815c.json",
+					"name" : "osgdb_deprecated_osgshadow",
+					"projectIndex" : 3
+				},
+				{
+					"directoryIndex" : 95,
+					"id" : "osgdb_deprecated_osgsim::@b892c6d19a1d25186ac1",
+					"jsonFile" : "target-osgdb_deprecated_osgsim-Debug-02f7140383334a5b128b.json",
+					"name" : "osgdb_deprecated_osgsim",
+					"projectIndex" : 3
+				},
+				{
+					"directoryIndex" : 99,
+					"id" : "osgdb_deprecated_osgterrain::@e9f876bd487006fab14a",
+					"jsonFile" : "target-osgdb_deprecated_osgterrain-Debug-a961d69362e7f6c3add0.json",
+					"name" : "osgdb_deprecated_osgterrain",
+					"projectIndex" : 3
+				},
+				{
+					"directoryIndex" : 96,
+					"id" : "osgdb_deprecated_osgtext::@f1c8edf8e2fbb4b49a5b",
+					"jsonFile" : "target-osgdb_deprecated_osgtext-Debug-23b7831257adbcf92719.json",
+					"name" : "osgdb_deprecated_osgtext",
+					"projectIndex" : 3
+				},
+				{
+					"directoryIndex" : 97,
+					"id" : "osgdb_deprecated_osgviewer::@e7037b14f8d6e6b0122e",
+					"jsonFile" : "target-osgdb_deprecated_osgviewer-Debug-2427f3889e81e52eea76.json",
+					"name" : "osgdb_deprecated_osgviewer",
+					"projectIndex" : 3
+				},
+				{
+					"directoryIndex" : 100,
+					"id" : "osgdb_deprecated_osgvolume::@ef985cb164f1df3bad9e",
+					"jsonFile" : "target-osgdb_deprecated_osgvolume-Debug-717ca6d2981e650a83fc.json",
+					"name" : "osgdb_deprecated_osgvolume",
+					"projectIndex" : 3
+				},
+				{
+					"directoryIndex" : 101,
+					"id" : "osgdb_deprecated_osgwidget::@d20636a2ec36b3cf2332",
+					"jsonFile" : "target-osgdb_deprecated_osgwidget-Debug-aae4d6b8cd4f0ee5a2a4.json",
+					"name" : "osgdb_deprecated_osgwidget",
+					"projectIndex" : 3
+				},
+				{
+					"directoryIndex" : 56,
+					"id" : "osgdb_dot::@7bc0e251bea926ba5725",
+					"jsonFile" : "target-osgdb_dot-Debug-16131c6374a523bb3528.json",
+					"name" : "osgdb_dot",
+					"projectIndex" : 2
+				},
+				{
+					"directoryIndex" : 63,
+					"id" : "osgdb_dxf::@b5fc8d08f7c8ae060182",
+					"jsonFile" : "target-osgdb_dxf-Debug-e6c6f4ba61453553e1df.json",
+					"name" : "osgdb_dxf",
+					"projectIndex" : 2
+				},
+				{
+					"directoryIndex" : 80,
+					"id" : "osgdb_gles::@c1d0ae64e98e8406131e",
+					"jsonFile" : "target-osgdb_gles-Debug-63fa5205320891b1328d.json",
+					"name" : "osgdb_gles",
+					"projectIndex" : 2
+				},
+				{
+					"directoryIndex" : 49,
+					"id" : "osgdb_glsl::@dbe6ac73d2e273a56a13",
+					"jsonFile" : "target-osgdb_glsl-Debug-d1824def3b2ad3f8d18c.json",
+					"name" : "osgdb_glsl",
+					"projectIndex" : 2
+				},
+				{
+					"directoryIndex" : 55,
+					"id" : "osgdb_hdr::@d1e81addc8d4fe6d5e31",
+					"jsonFile" : "target-osgdb_hdr-Debug-a3189ae0a76d004cf67a.json",
+					"name" : "osgdb_hdr",
+					"projectIndex" : 2
+				},
+				{
+					"directoryIndex" : 47,
+					"id" : "osgdb_ive::@47c5f647b762c668ac53",
+					"jsonFile" : "target-osgdb_ive-Debug-b3e37d53fcfe378e8d7e.json",
+					"name" : "osgdb_ive",
+					"projectIndex" : 2
+				},
+				{
+					"directoryIndex" : 58,
+					"id" : "osgdb_ktx::@a7116be5e7869b312adb",
+					"jsonFile" : "target-osgdb_ktx-Debug-d192c3ba4fd34f545622.json",
+					"name" : "osgdb_ktx",
+					"projectIndex" : 2
+				},
+				{
+					"directoryIndex" : 71,
+					"id" : "osgdb_logo::@305783cf6a5212883285",
+					"jsonFile" : "target-osgdb_logo-Debug-4cb5abe82531ed81bb27.json",
+					"name" : "osgdb_logo",
+					"projectIndex" : 2
+				},
+				{
+					"directoryIndex" : 89,
+					"id" : "osgdb_lua::@0c70d79537888d909198",
+					"jsonFile" : "target-osgdb_lua-Debug-6690cefb3c5277939c5a.json",
+					"name" : "osgdb_lua",
+					"projectIndex" : 2
+				},
+				{
+					"directoryIndex" : 82,
+					"id" : "osgdb_lwo::@9aec878ba0631a26d5d6",
+					"jsonFile" : "target-osgdb_lwo-Debug-a5573462fcf2d1a4851e.json",
+					"name" : "osgdb_lwo",
+					"projectIndex" : 2
+				},
+				{
+					"directoryIndex" : 72,
+					"id" : "osgdb_lws::@5d87331d23cb8a4455e5",
+					"jsonFile" : "target-osgdb_lws-Debug-e3998faa6c70c4f4dcb5.json",
+					"name" : "osgdb_lws",
+					"projectIndex" : 2
+				},
+				{
+					"directoryIndex" : 73,
+					"id" : "osgdb_md2::@7c8741e26c88ab48eed8",
+					"jsonFile" : "target-osgdb_md2-Debug-cac4508ea76945c5c286.json",
+					"name" : "osgdb_md2",
+					"projectIndex" : 2
+				},
+				{
+					"directoryIndex" : 79,
+					"id" : "osgdb_mdl::@92f823addf4e512cd0df",
+					"jsonFile" : "target-osgdb_mdl-Debug-393bea05eb07bd9862a9.json",
+					"name" : "osgdb_mdl",
+					"projectIndex" : 2
+				},
+				{
+					"directoryIndex" : 41,
+					"id" : "osgdb_normals::@cc450371378d96280acb",
+					"jsonFile" : "target-osgdb_normals-Debug-1c882dfc8f65bd983bb2.json",
+					"name" : "osgdb_normals",
+					"projectIndex" : 2
+				},
+				{
+					"directoryIndex" : 65,
+					"id" : "osgdb_obj::@342fc548d2dd08ad497e",
+					"jsonFile" : "target-osgdb_obj-Debug-76e70ba32d201508f7c2.json",
+					"name" : "osgdb_obj",
+					"projectIndex" : 2
+				},
+				{
+					"directoryIndex" : 64,
+					"id" : "osgdb_openflight::@b1bd7045b28e169a06d3",
+					"jsonFile" : "target-osgdb_openflight-Debug-8f2b948825aa811c268c.json",
+					"name" : "osgdb_openflight",
+					"projectIndex" : 2
+				},
+				{
+					"directoryIndex" : 86,
+					"id" : "osgdb_osc::@084f860412a2ff721815",
+					"jsonFile" : "target-osgdb_osc-Debug-c2f502933147d77431de.json",
+					"name" : "osgdb_osc",
+					"projectIndex" : 2
+				},
+				{
+					"directoryIndex" : 46,
+					"id" : "osgdb_osg::@c1580c85a8a4adc24d3f",
+					"jsonFile" : "target-osgdb_osg-Debug-f557bfca474f90214284.json",
+					"name" : "osgdb_osg",
+					"projectIndex" : 2
+				},
+				{
+					"directoryIndex" : 37,
+					"id" : "osgdb_osga::@8d8fb4eefc0e3da83f1a",
+					"jsonFile" : "target-osgdb_osga-Debug-44f7b27f36389db935d9.json",
+					"name" : "osgdb_osga",
+					"projectIndex" : 2
+				},
+				{
+					"directoryIndex" : 81,
+					"id" : "osgdb_osgjs::@349126cba9d933387960",
+					"jsonFile" : "target-osgdb_osgjs-Debug-39bbd9058fd2b53a4365.json",
+					"name" : "osgdb_osgjs",
+					"projectIndex" : 2
+				},
+				{
+					"directoryIndex" : 44,
+					"id" : "osgdb_osgshadow::@fd024ee2441df10b313e",
+					"jsonFile" : "target-osgdb_osgshadow-Debug-8a593f8ab9d8ae4e2465.json",
+					"name" : "osgdb_osgshadow",
+					"projectIndex" : 2
+				},
+				{
+					"directoryIndex" : 45,
+					"id" : "osgdb_osgterrain::@647dab60454c0147c3e2",
+					"jsonFile" : "target-osgdb_osgterrain-Debug-35309f8537665261399f.json",
+					"name" : "osgdb_osgterrain",
+					"projectIndex" : 2
+				},
+				{
+					"directoryIndex" : 74,
+					"id" : "osgdb_osgtgz::@f4c2090e6d3a7610fe7d",
+					"jsonFile" : "target-osgdb_osgtgz-Debug-8c9037336c4e7d6de275.json",
+					"name" : "osgdb_osgtgz",
+					"projectIndex" : 2
+				},
+				{
+					"directoryIndex" : 43,
+					"id" : "osgdb_osgviewer::@4fa50f7f35940e145720",
+					"jsonFile" : "target-osgdb_osgviewer-Debug-aba1edd2835319c95911.json",
+					"name" : "osgdb_osgviewer",
+					"projectIndex" : 2
+				},
+				{
+					"directoryIndex" : 60,
+					"id" : "osgdb_p3d::@cd3f7794414eabd5fce2",
+					"jsonFile" : "target-osgdb_p3d-Debug-a75988f095749a9335a4.json",
+					"name" : "osgdb_p3d",
+					"projectIndex" : 2
+				},
+				{
+					"directoryIndex" : 66,
+					"id" : "osgdb_pic::@76c4d114e7081f425f34",
+					"jsonFile" : "target-osgdb_pic-Debug-5b21fcc6f2433e8dd7b2.json",
+					"name" : "osgdb_pic",
+					"projectIndex" : 2
+				},
+				{
+					"directoryIndex" : 83,
+					"id" : "osgdb_ply::@a6471262f2a8d7a362c1",
+					"jsonFile" : "target-osgdb_ply-Debug-93a7942fdb3cc68c4bf2.json",
+					"name" : "osgdb_ply",
+					"projectIndex" : 2
+				},
+				{
+					"directoryIndex" : 52,
+					"id" : "osgdb_pnm::@3dab38ae78130fef064a",
+					"jsonFile" : "target-osgdb_pnm-Debug-4ea138f065e353686c76.json",
+					"name" : "osgdb_pnm",
+					"projectIndex" : 2
+				},
+				{
+					"directoryIndex" : 70,
+					"id" : "osgdb_pov::@f4571092aee53a644ca9",
+					"jsonFile" : "target-osgdb_pov-Debug-2d09a7308c5da8b1bfef.json",
+					"name" : "osgdb_pov",
+					"projectIndex" : 2
+				},
+				{
+					"directoryIndex" : 85,
+					"id" : "osgdb_pvr::@326dd2044e27b48c79ce",
+					"jsonFile" : "target-osgdb_pvr-Debug-07d05fa0a9345b57160e.json",
+					"name" : "osgdb_pvr",
+					"projectIndex" : 2
+				},
+				{
+					"directoryIndex" : 42,
+					"id" : "osgdb_revisions::@ba8e48cd6d42cbe47c09",
+					"jsonFile" : "target-osgdb_revisions-Debug-315ddcb04d251a875b4c.json",
+					"name" : "osgdb_revisions",
+					"projectIndex" : 2
+				},
+				{
+					"directoryIndex" : 50,
+					"id" : "osgdb_rgb::@f19ec424317cd7935bb1",
+					"jsonFile" : "target-osgdb_rgb-Debug-6c5c4a834c7f4fe1585c.json",
+					"name" : "osgdb_rgb",
+					"projectIndex" : 2
+				},
+				{
+					"directoryIndex" : 38,
+					"id" : "osgdb_rot::@4856cb3d7e7b0fde9528",
+					"jsonFile" : "target-osgdb_rot-Debug-40f48250055faf5b7ca6.json",
+					"name" : "osgdb_rot",
+					"projectIndex" : 2
+				},
+				{
+					"directoryIndex" : 39,
+					"id" : "osgdb_scale::@b3f81d509a01e67a9ff8",
+					"jsonFile" : "target-osgdb_scale-Debug-956bb0c192cb12240402.json",
+					"name" : "osgdb_scale",
+					"projectIndex" : 2
+				},
+				{
+					"directoryIndex" : 22,
+					"id" : "osgdb_serializers_osg::@2c49228cc7588172cd49",
+					"jsonFile" : "target-osgdb_serializers_osg-Debug-746337d7757b14576003.json",
+					"name" : "osgdb_serializers_osg",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 24,
+					"id" : "osgdb_serializers_osganimation::@885d0007b6dcbb16d080",
+					"jsonFile" : "target-osgdb_serializers_osganimation-Debug-eb9e0479391adfd9b838.json",
+					"name" : "osgdb_serializers_osganimation",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 25,
+					"id" : "osgdb_serializers_osgfx::@656d5482bd7c91d38873",
+					"jsonFile" : "target-osgdb_serializers_osgfx-Debug-6df177b45285b9fcf061.json",
+					"name" : "osgdb_serializers_osgfx",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 30,
+					"id" : "osgdb_serializers_osgga::@205decbeab1959f588ac",
+					"jsonFile" : "target-osgdb_serializers_osgga-Debug-0ec900364aeddb0d6b58.json",
+					"name" : "osgdb_serializers_osgga",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 26,
+					"id" : "osgdb_serializers_osgmanipulator::@92cf6f7f7b589fd38399",
+					"jsonFile" : "target-osgdb_serializers_osgmanipulator-Debug-f6a27bf5f55cc267efd0.json",
+					"name" : "osgdb_serializers_osgmanipulator",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 27,
+					"id" : "osgdb_serializers_osgparticle::@04865e8f5cc3396c0c8f",
+					"jsonFile" : "target-osgdb_serializers_osgparticle-Debug-e19b6c502ccc250e3b46.json",
+					"name" : "osgdb_serializers_osgparticle",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 29,
+					"id" : "osgdb_serializers_osgshadow::@23706a15ea41a0fd6d6c",
+					"jsonFile" : "target-osgdb_serializers_osgshadow-Debug-cf91b299cf0288e24452.json",
+					"name" : "osgdb_serializers_osgshadow",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 28,
+					"id" : "osgdb_serializers_osgsim::@3f4b58fba135ca82c202",
+					"jsonFile" : "target-osgdb_serializers_osgsim-Debug-06f029ff42c92aa527e7.json",
+					"name" : "osgdb_serializers_osgsim",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 31,
+					"id" : "osgdb_serializers_osgterrain::@fb30ca5779135dad3b3d",
+					"jsonFile" : "target-osgdb_serializers_osgterrain-Debug-2d680a381e29d0aeec9d.json",
+					"name" : "osgdb_serializers_osgterrain",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 32,
+					"id" : "osgdb_serializers_osgtext::@c4de2d7d207c7003eef2",
+					"jsonFile" : "target-osgdb_serializers_osgtext-Debug-e8b1ce53f463ac9ab582.json",
+					"name" : "osgdb_serializers_osgtext",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 35,
+					"id" : "osgdb_serializers_osgui::@ac1680ad940a94a75d7d",
+					"jsonFile" : "target-osgdb_serializers_osgui-Debug-ccc995b248cb6dc2365a.json",
+					"name" : "osgdb_serializers_osgui",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 23,
+					"id" : "osgdb_serializers_osgutil::@0947faa1c260837354de",
+					"jsonFile" : "target-osgdb_serializers_osgutil-Debug-f90a1d8bb69310c45fd3.json",
+					"name" : "osgdb_serializers_osgutil",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 34,
+					"id" : "osgdb_serializers_osgviewer::@b345ec07154508fdfd75",
+					"jsonFile" : "target-osgdb_serializers_osgviewer-Debug-bef1b3b6db3c7d5c25d5.json",
+					"name" : "osgdb_serializers_osgviewer",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 33,
+					"id" : "osgdb_serializers_osgvolume::@1b7cdb4154d7763deab9",
+					"jsonFile" : "target-osgdb_serializers_osgvolume-Debug-8c7c9c6df2458cf0b05f.json",
+					"name" : "osgdb_serializers_osgvolume",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 76,
+					"id" : "osgdb_shp::@d8986829e7686782c877",
+					"jsonFile" : "target-osgdb_shp-Debug-cdc0b3ce5b7ac33bca2f.json",
+					"name" : "osgdb_shp",
+					"projectIndex" : 2
+				},
+				{
+					"directoryIndex" : 67,
+					"id" : "osgdb_stl::@bc3b8239091f94acd893",
+					"jsonFile" : "target-osgdb_stl-Debug-41d062d235ed87417db2.json",
+					"name" : "osgdb_stl",
+					"projectIndex" : 2
+				},
+				{
+					"directoryIndex" : 88,
+					"id" : "osgdb_tf::@c24e8a19decbdb831260",
+					"jsonFile" : "target-osgdb_tf-Debug-015c36e7544db58cb823.json",
+					"name" : "osgdb_tf",
+					"projectIndex" : 2
+				},
+				{
+					"directoryIndex" : 54,
+					"id" : "osgdb_tga::@0fc32828e4fb2a64c32f",
+					"jsonFile" : "target-osgdb_tga-Debug-d75894fdbf0f44da96d3.json",
+					"name" : "osgdb_tga",
+					"projectIndex" : 2
+				},
+				{
+					"directoryIndex" : 75,
+					"id" : "osgdb_tgz::@af03cca1d2e6ba47e78b",
+					"jsonFile" : "target-osgdb_tgz-Debug-f1664b75932b480c7dfa.json",
+					"name" : "osgdb_tgz",
+					"projectIndex" : 2
+				},
+				{
+					"directoryIndex" : 40,
+					"id" : "osgdb_trans::@f938cd669130c6c065ae",
+					"jsonFile" : "target-osgdb_trans-Debug-a518959315bc1dfd8997.json",
+					"name" : "osgdb_trans",
+					"projectIndex" : 2
+				},
+				{
+					"directoryIndex" : 87,
+					"id" : "osgdb_trk::@4204b50356785561ee84",
+					"jsonFile" : "target-osgdb_trk-Debug-eea643d4fe5a7a0b3970.json",
+					"name" : "osgdb_trk",
+					"projectIndex" : 2
+				},
+				{
+					"directoryIndex" : 77,
+					"id" : "osgdb_txf::@51f7b179980f7b5568f9",
+					"jsonFile" : "target-osgdb_txf-Debug-585d1133d47d0c71e12f.json",
+					"name" : "osgdb_txf",
+					"projectIndex" : 2
+				},
+				{
+					"directoryIndex" : 84,
+					"id" : "osgdb_txp::@a01c5ccbcbb086e9f914",
+					"jsonFile" : "target-osgdb_txp-Debug-ac991ea7f3081e1800a1.json",
+					"name" : "osgdb_txp",
+					"projectIndex" : 2
+				},
+				{
+					"directoryIndex" : 57,
+					"id" : "osgdb_vtf::@3a3370393d396dabd8ba",
+					"jsonFile" : "target-osgdb_vtf-Debug-9864dfd9e7d905c38101.json",
+					"name" : "osgdb_vtf",
+					"projectIndex" : 2
+				},
+				{
+					"directoryIndex" : 62,
+					"id" : "osgdb_x::@32acbd97cff4d4bb0d63",
+					"jsonFile" : "target-osgdb_x-Debug-f48173cff7080ae422a1.json",
+					"name" : "osgdb_x",
+					"projectIndex" : 2
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "uninstall::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-uninstall-Debug-6fbae9846d1f0ee3057f.json",
+					"name" : "uninstall",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "E:/Projects/Dynamik Engine/Dynamik/libs/OpenSceneGraph-OpenSceneGraph-3.6.4/out/build/x64-Debug",
+		"source" : "E:/Projects/Dynamik Engine/Dynamik/libs/OpenSceneGraph-OpenSceneGraph-3.6.4"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 0
+	}
+}

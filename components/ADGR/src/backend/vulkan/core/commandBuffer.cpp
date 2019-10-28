@@ -84,26 +84,26 @@ namespace Dynamik {
 					vkCmdBindPipeline(container->commandBufferContainer.buffers[i], VK_PIPELINE_BIND_POINT_GRAPHICS, container->pipelineContainers[0].pipeline);
 
 					// vertex buffer bind
-					for (int count = 0; count < info.vertexBuffers.size(); count++)
-						vkCmdBindVertexBuffers(container->commandBufferContainer.buffers[i], count, 1,
-							&info.vertexBuffers[count], offsets);
+					//for (int count = 0; count < info.vertexBuffers.size(); count++) {
+					vkCmdBindVertexBuffers(container->commandBufferContainer.buffers[i], 0, info.vertexBuffers.size(), info.vertexBuffers.data(), offsets);
 
 					// index buffer bind
-					vkCmdBindIndexBuffer(container->commandBufferContainer.buffers[i], info.indexBuffer, 0, VK_INDEX_TYPE_UINT32);
+					vkCmdBindIndexBuffer(container->commandBufferContainer.buffers[i], info.indexBuffers[0], 0, VK_INDEX_TYPE_UINT32);
 
+					//}
 					// binding descriptor set(s)
-					for (int x = 0; x < info.descriptorSets.size(); x++) 
+					for (int x = 0; x < info.descriptorSets.size(); x++) {
 						vkCmdBindDescriptorSets(container->commandBufferContainer.buffers[i], VK_PIPELINE_BIND_POINT_GRAPHICS,
 							container->pipelineContainers[0].pipelineLayout, x, 1, &info.descriptorSets[x]->at(i), 0, nullptr);
+					}
 
 					// draw command
-					vkCmdDrawIndexed(container->commandBufferContainer.buffers[i], static_cast<uint32>(info.indices.size()), 1, 0, 0, 0);
-
+					vkCmdDrawIndexed(container->commandBufferContainer.buffers[i], static_cast<uint32>(info.indices[0].size()), 3, 0, 0, 0);
+					
 					// end renderPass
 					vkCmdEndRenderPass(container->commandBufferContainer.buffers[i]);
 
 					/* END VULKAN COMMANDS */
-
 					if (vkEndCommandBuffer(container->commandBufferContainer.buffers[i]) != VK_SUCCESS)
 						DMK_CORE_FATAL("failed to record command buffer!");
 

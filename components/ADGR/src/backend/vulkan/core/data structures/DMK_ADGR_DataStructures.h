@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef DMK_ADGR_VULKAN_DATA_STRUCTURES_H
-#define DMK_ADGR_VULKAN_DATA_STRUCTURES_H
+#ifndef _DMK_ADGR_VULKAN_DATA_STRUCTURES_H
+#define _DMK_ADGR_VULKAN_DATA_STRUCTURES_H
 
 #include "backend/vulkan/core/data structures/vertex.h"
 
@@ -20,12 +20,21 @@ namespace Dynamik {
 				INDEX_BUFFER
 			};
 
-			struct DMKVulkanRendererLoadObjectInfo {
+			struct DMKObjectData {
 				std::string path = "";
 				std::vector<float> offsets = { 0.0f, 0.0f, 0.0f };
 
 				std::vector<core::Vertex>* vertexBufferObject = {};
+				VkBuffer* vertexBuffer = VK_NULL_HANDLE;
+				VkDeviceMemory* vertexBufferMemory = VK_NULL_HANDLE;
+
 				std::vector<uint32_t>* indexBufferObject = {};
+				VkBuffer* indexBuffer = VK_NULL_HANDLE;
+				VkDeviceMemory* indexBufferMemory = VK_NULL_HANDLE;
+			};
+
+			struct DMKVulkanRendererLoadObjectInfo {
+				DMKObjectData objectDataContainer = {};
 			};
 
 			struct DMKVulkanRendererCreateVertexBufferInfo {

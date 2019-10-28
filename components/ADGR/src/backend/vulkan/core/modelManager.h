@@ -1,5 +1,8 @@
 #pragma once
 
+#ifndef _DMK_ADGR_VULKAN_MODEL_MANAGER_H
+#define _DMK_ADGR_VULKAN_MODEL_MANAGER_H
+
 #include "core/Model.h"
 
 namespace Dynamik {
@@ -13,6 +16,10 @@ namespace Dynamik {
 
 				void loadModel(DMKModelLoadInfo info) override;
 			};
+
+			void loadModel(DMKModelLoadInfo info);
 		}
 	}
 }
+
+#endif

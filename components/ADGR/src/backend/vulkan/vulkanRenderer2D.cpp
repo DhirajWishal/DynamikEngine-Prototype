@@ -277,10 +277,10 @@ namespace Dynamik {
 		// load an object
 		void vulkanRenderer2D::loadObject(DMKVulkanRendererLoadObjectInfo info) {
 			DMKModelLoadInfo modelInfo;
-			modelInfo.path = info.path;
-			modelInfo.vertices = info.vertexBufferObject;
-			modelInfo.indices = info.indexBufferObject;
-			modelInfo.vertexOffset = info.offsets;
+			modelInfo.path = info.objectDataContainer.path;
+			modelInfo.vertices = info.objectDataContainer.vertexBufferObject;
+			modelInfo.indices = info.objectDataContainer.indexBufferObject;
+			modelInfo.vertexOffset = info.objectDataContainer.offsets;
 			myModelManager.loadModel(modelInfo);
 		}
 

@@ -14,7 +14,7 @@
 /* MAIN INCLUDES */
 #include "core/core.h"
 #include "core/utils/DMK_Error.h"
-#include "core/utils/DMK_DataTypes.h"
+#include "CentralDataHub.h"
 
 #include "core/log.h"
 
@@ -108,11 +108,9 @@ namespace Dynamik {
 	};
 
 	struct LightingProperties {
-
 	};
 
 	struct Flare_Layer {
-
 	};
 
 	struct AudioProperties {

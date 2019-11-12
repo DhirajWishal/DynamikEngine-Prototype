@@ -7,7 +7,6 @@
 namespace Dynamik {
 	namespace ADGR {
 		namespace core {
-
 			struct DMKVertexBufferCreateInfo {
 				std::vector<Vertex> vertices;
 

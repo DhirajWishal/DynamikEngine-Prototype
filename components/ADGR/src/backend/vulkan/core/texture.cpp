@@ -105,6 +105,8 @@ namespace Dynamik {
 				else
 					DMK_CORE_FATAL("Invalid texture format!");
 
+				//pixels = texData.loadTexture(initInfo.path, resource::TEXTURE_TYPE_RGBA);
+
 				VkDeviceSize imageSize = texData.size;
 
 				if (!pixels)
@@ -128,8 +130,9 @@ namespace Dynamik {
 				createBuffer(bufferInfo);
 
 				void* data;
-				if(vkMapMemory(container->device, stagingBufferMemory, 0, imageSize, 0, &data) != VK_SUCCESS)
-					DMK_CORE_FATAL("Failed to map memory!")
+				if (vkMapMemory(container->device, stagingBufferMemory, 0, static_cast<size_t>(imageSize), 0, &data) != VK_SUCCESS)
+					DMK_CORE_FATAL("Failed to map memory!");
+
 				memcpy(data, pixels, static_cast<size_t>(imageSize));
 				vkUnmapMemory(container->device, stagingBufferMemory);
 

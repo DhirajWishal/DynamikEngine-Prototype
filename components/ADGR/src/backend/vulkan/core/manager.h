@@ -18,7 +18,6 @@ namespace Dynamik {
 				void* getResource() override;
 
 			private:
-
 			};*/
 		}
 	}

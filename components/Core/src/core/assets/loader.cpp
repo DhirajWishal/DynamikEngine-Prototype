@@ -9,7 +9,6 @@
 class charlet : public Dynamik::GameObject {
 public:
 	charlet(Dynamik::GameObjectProperties props) : GameObject(props), myProps(props) {
-
 	}
 	~charlet() {}
 
@@ -33,7 +32,7 @@ std::vector<char> readFile(const std::string& filePath) {
 	return buffer;
 }
 
-std::vector<std::string> getTexturePath(std::vector<char>& file){
+std::vector<std::string> getTexturePath(std::vector<char>& file) {
 	std::vector<std::string> paths;
 	std::string path;
 
@@ -42,7 +41,6 @@ std::vector<std::string> getTexturePath(std::vector<char>& file){
 
 	std::istringstream iss;
 	iss.str(path);
-
 
 	for (std::string i; std::getline(iss, i);) {
 		std::replace(i.begin(), i.end(), '\r', ' ');
@@ -58,12 +56,10 @@ std::vector<std::string> getTexturePath(std::vector<char>& file){
 }
 
 void loadPaths() {
-	
 }
 
 // final
 Dynamik::InputContainer Dynamik::submit() {
-
 	auto tex = getTexturePath(readFile("E:/Projects/Dynamik Engine/Dynamik/components/Core/paths.txt"));
 	auto mod = getTexturePath(readFile("E:/Projects/Dynamik Engine/Dynamik/components/Core/model.txt"));
 

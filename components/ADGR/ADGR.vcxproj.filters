@@ -16,6 +16,9 @@
     <Filter Include="src\backend">
       <UniqueIdentifier>{0427456E-70DC-BD63-F9D0-B73A6585B467}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\backend\Renderer">
+      <UniqueIdentifier>{2A8FB66E-161E-4038-BF3C-5433ABAA50DE}</UniqueIdentifier>
+    </Filter>
     <Filter Include="src\backend\vulkan">
       <UniqueIdentifier>{24BCCE04-10A0-8F5A-7900-8AAD65037ADC}</UniqueIdentifier>
     </Filter>
@@ -75,6 +78,9 @@
     <ClInclude Include="src\adgrafx.h">
       <Filter>src</Filter>
     </ClInclude>
+    <ClInclude Include="src\backend\Renderer\Renderer.h">
+      <Filter>src\backend\Renderer</Filter>
+    </ClInclude>
     <ClInclude Include="src\backend\defines.h">
       <Filter>src\backend</Filter>
     </ClInclude>
@@ -106,6 +112,9 @@
       <Filter>src\backend\vulkan\core\core</Filter>
     </ClInclude>
     <ClInclude Include="src\backend\vulkan\core\core\Instance.h">
+      <Filter>src\backend\vulkan\core\core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\backend\vulkan\core\core\Manager.h">
       <Filter>src\backend\vulkan\core\core</Filter>
     </ClInclude>
     <ClInclude Include="src\backend\vulkan\core\core\Model.h">
@@ -168,6 +177,9 @@
     <ClInclude Include="src\backend\vulkan\core\instance.h">
       <Filter>src\backend\vulkan\core</Filter>
     </ClInclude>
+    <ClInclude Include="src\backend\vulkan\core\manager.h">
+      <Filter>src\backend\vulkan\core</Filter>
+    </ClInclude>
     <ClInclude Include="src\backend\vulkan\core\modelManager.h">
       <Filter>src\backend\vulkan\core</Filter>
     </ClInclude>
@@ -213,10 +225,9 @@
     <ClInclude Include="src\backend\vulkan\vulkanRenderer.h">
       <Filter>src\backend\vulkan</Filter>
     </ClInclude>
-    <ClInclude Include="src\backend\vulkan\vulkanRenderer2D.h" />
-    <ClInclude Include="src\backend\Renderer\Renderer.h" />
-    <ClInclude Include="src\backend\vulkan\core\core\Manager.h" />
-    <ClInclude Include="src\backend\vulkan\core\manager.h" />
+    <ClInclude Include="src\backend\vulkan\vulkanRenderer2D.h">
+      <Filter>src\backend\vulkan</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -274,6 +285,9 @@
     <ClCompile Include="src\backend\vulkan\core\instance.cpp">
       <Filter>src\backend\vulkan\core</Filter>
     </ClCompile>
+    <ClCompile Include="src\backend\vulkan\core\manager.cpp">
+      <Filter>src\backend\vulkan\core</Filter>
+    </ClCompile>
     <ClCompile Include="src\backend\vulkan\core\modelManager.cpp">
       <Filter>src\backend\vulkan\core</Filter>
     </ClCompile>
@@ -319,12 +333,11 @@
     <ClCompile Include="src\backend\vulkan\vulkanRenderer.cpp">
       <Filter>src\backend\vulkan</Filter>
     </ClCompile>
-    <ClCompile Include="src\backend\vulkan\vulkanRenderer2D.cpp" />
-    <ClCompile Include="src\backend\vulkan\core\manager.cpp" />
+    <ClCompile Include="src\backend\vulkan\vulkanRenderer2D.cpp">
+      <Filter>src\backend\vulkan</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="premake5.lua" />
-    <None Include="src\backend\shaders\shader.2D.vert" />
-    <None Include="src\backend\shaders\shader.2D.frag" />
   </ItemGroup>
 </Project>

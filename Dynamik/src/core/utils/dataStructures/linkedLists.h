@@ -15,7 +15,6 @@
 
 namespace Dynamik {
 	namespace utils {
-
 		/* Singly Linked List */
 		template<class T>
 		class DMK_API sLnkLst {

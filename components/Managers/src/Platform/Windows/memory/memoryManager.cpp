@@ -3,7 +3,6 @@
 
 namespace Dynamik {
 	namespace manager {
-
 		allocator::allocator(uint32 size) : totalSize(size) {
 			stackPool = malloc(size);
 		}

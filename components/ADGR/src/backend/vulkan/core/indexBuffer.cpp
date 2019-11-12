@@ -7,7 +7,7 @@ namespace Dynamik {
 	namespace ADGR {
 		namespace core {
 			using namespace functions;
-			
+
 			void indexBufferManager::createIndexBuffer(ADGRVulkanDataContainer* container, DMKIndexBufferCreateInfo info) {
 				VkDeviceSize bufferSize = sizeof(info.indices[0]) * info.indices.size();
 

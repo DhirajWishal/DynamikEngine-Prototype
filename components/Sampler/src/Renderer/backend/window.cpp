@@ -9,7 +9,6 @@
 namespace Dynamik {
 	namespace ADGR {
 		namespace core {
-
 			void window::init() {
 				glfwInit();
 				glfwInit();
@@ -164,7 +163,6 @@ namespace Dynamik {
 			}
 
 			void window::keyEventHandler(int keycode) {
-
 				switch (keycode) {
 				case DMK_KEY_A:
 					kE.moveEventD = true;

@@ -5,7 +5,6 @@
 namespace Dynamik {
 	namespace ADGR {
 		namespace core {
-
 			struct swapChainSupportDetails {
 				VkSurfaceCapabilitiesKHR capabilities;
 				std::vector<VkSurfaceFormatKHR> formats;
@@ -20,7 +19,6 @@ namespace Dynamik {
 				virtual void initImageViews() {}
 
 			protected:
-
 			};
 		}
 	}

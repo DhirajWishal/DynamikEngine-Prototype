@@ -5,7 +5,6 @@
 namespace Dynamik {
 	namespace ADGR {
 		namespace core {
-
 			struct DMKSwapChainCleanUpInfo {
 				std::vector<VkBuffer> uniformBuffers;
 				std::vector<VkDeviceMemory> uniformBufferMemories;

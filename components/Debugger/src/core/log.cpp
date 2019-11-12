@@ -9,7 +9,6 @@
 #if defined(DMK_PLATFORM_WINDOWS)
 
 namespace Dynamik {
-
 	const char blue[8] = { 0x1b, '[', '1', ';', '3', '4', 'm', 0 };		// core info
 	const char green[8] = { 0x1b, '[', '1', ';', '9', '2', 'm', 0 };	// info
 	const char yellow[8] = { 0x1b, '[', '1', ';', '9', '3', 'm', 0 };	// warning

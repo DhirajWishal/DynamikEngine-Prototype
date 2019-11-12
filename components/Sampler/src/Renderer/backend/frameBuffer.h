@@ -5,7 +5,6 @@
 namespace Dynamik {
 	namespace ADGR {
 		namespace core {
-
 			struct DMKFrameBuffersCreateInfo {
 				std::vector<VkFramebuffer>* frameBuffers;
 				std::vector<VkImageView> swapChainImageViews;

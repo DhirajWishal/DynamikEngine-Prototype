@@ -2,7 +2,6 @@
 
 namespace Dynamik {
 	namespace ADGR {
-
 		class c_Renderer {
 		public:
 			c_Renderer() {}

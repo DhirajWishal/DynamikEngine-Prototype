@@ -4,7 +4,6 @@
 
 namespace Dynamik {
 	//namespace Input {
-
 	bool inputHandler::isKeyPressed() {
 		return event.getEventType() == EVENT_TYPE::keyPressed;
 	}

@@ -16,7 +16,6 @@
 namespace Dynamik {
 	namespace ADGR {
 		namespace windows {
-
 			struct windowProperties {
 				std::string title = {};
 				unsigned int width = 0;

@@ -10,7 +10,6 @@
 namespace Dynamik {
 	namespace ADGR {
 		namespace core {
-
 			class Manager : Core {
 				Manager() {}
 				virtual ~Manager() {}
@@ -79,7 +78,7 @@ namespace Dynamik {
 				virtual void addSwapchain(int index, VkSwapchainKHR* swapchain) {}
 				virtual VkSwapchainKHR* getSwapchain(int index) { return nullptr; }
 
-				//// pipeline 
+				//// pipeline
 				//virtual void addPipeline(MANAGER_PIPELINE type, int index, VkPipeline* pipeline) {}
 				//virtual VkPipeline* getPipeline(MANAGER_PIPELINE type, int index) { return nullptr; }
 				//

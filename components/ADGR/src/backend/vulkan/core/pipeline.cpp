@@ -264,8 +264,8 @@ namespace Dynamik {
 				pipelineContainer.pipelineLayout = pipelineLayout;
 				pipelineContainer.pipeline = pipeline;
 
-				if (container->pipelineContainers.size() > 0)
-					container->pipelineContainers.clear();
+				//if (container->pipelineContainers.size() > 0)
+				//	container->pipelineContainers.clear();
 
 				container->pipelineContainers.push_back(pipelineContainer);
 			}

@@ -10,13 +10,12 @@
 */
 
 #include "debugger/debugger.h"
-#include "core/utils/DMK_DataTypes.h"
+#include "CentralDataHub.h"
 #include "backend/Interface.h"
 
 namespace Dynamik {
 	namespace ADGR {
 		namespace core {
-
 			const std::vector<const char*> validationLayer = {
 				"VK_LAYER_LUNARG_standard_validation",
 				//"VK_LAYER_LUNARG_core_validation",

@@ -1,3 +1,3 @@
-"E:/Projects/Dynamik Engine/Dynamik/core assets/models/chalet.obj"
-"E:/Projects/Dynamik Engine/Dynamik/core assets/models/chalet.obj"
+"E:/Projects/Dynamik Engine/Dynamik/core assets/models/GLOCK18.obj"
+"E:/Projects/Dynamik Engine/Dynamik/core assets/models/H&K USP 45 Game.obj"
 "E:/Projects/Dynamik Engine/Dynamik/core assets/models/chalet.obj"

@@ -5,7 +5,6 @@
 namespace Dynamik {
 	namespace ADGR {
 		namespace core {
-
 			struct VulkanData {
 				VkInstance instance;
 				VkDevice device;

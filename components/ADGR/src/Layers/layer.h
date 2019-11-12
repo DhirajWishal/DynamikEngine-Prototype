@@ -5,7 +5,6 @@
 
 namespace Dynamik {
 	namespace ADGR {
-
 		class ADGR_API Layer {
 		public:
 			Layer(const std::string& name = "Layer 1");

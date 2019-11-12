@@ -5,7 +5,6 @@
 namespace Dynamik {
 	namespace ADGR {
 		namespace core {
-
 			enum ShaderType {
 				VERTEX_SHADER,
 				TESSELLATION_SHADER,

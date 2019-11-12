@@ -9,8 +9,8 @@
  IDE:		MS Visual Studio Community 2019
 */
 
-#ifndef _DMK_ADGR_VULKAN_RENDERER_H
-#define _DMK_ADGR_VULKAN_RENDERER_H
+#ifndef _DYNAMIK_ADGR_VULKAN_RENDERER_H
+#define _DYNAMIK_ADGR_VULKAN_RENDERER_H
 
 #include "core/backend.h"
 #include "core/data structures/DMK_ADGR_DataStructures.h"
@@ -22,7 +22,7 @@ namespace Dynamik {
 		using namespace core;
 
 		struct DMK_ADGR_CreatePipelineInfo {
-			DMKPipelineInitInfo pipelineInitInfo;
+			DMKPipelineInitInfo pipelineInitInfo = {};
 		};
 
 		class vulkanRenderer {
@@ -74,7 +74,7 @@ namespace Dynamik {
 			void thread_second();	// textures
 			static void thread_third(DMKVulkanRendererLoadObjectInfo createInfo);	// models
 
-			static void thread_basket_1_();
+			void setDataToSimulation();
 
 			ADGRVulkanDataContainer myVulkanDataContainer;
 
@@ -108,8 +108,20 @@ namespace Dynamik {
 			VkBuffer terrainIndexBuffer = VK_NULL_HANDLE;
 			VkDeviceMemory terrainIndexMemory = VK_NULL_HANDLE;
 
-			std::vector<std::vector<core::Vertex>> vertexBuffers = {};
-			std::vector<std::vector<uint32_t>> indexBuffers = {};
+			std::vector<core::Vertex> terrainVBO2 = {};
+			VkBuffer terrainVertexBuffer2 = VK_NULL_HANDLE;
+			VkDeviceMemory terrainVertexBufferMemory2 = VK_NULL_HANDLE;
+
+			std::vector<uint32_t> terrainIBO2 = {};
+			VkBuffer terrainIndexBuffer2 = VK_NULL_HANDLE;
+			VkDeviceMemory terrainIndexMemory2 = VK_NULL_HANDLE;
+
+			//std::vector<std::vector<core::Vertex>> vertexBuffers = {};
+			//std::vector<std::vector<uint32_t>> indexBuffers = {};
+
+			std::vector<core::PointVertex> simulationVBO = {};
+			VkBuffer simulationVertexBuffer = VK_NULL_HANDLE;
+			VkDeviceMemory simulationVertexBufferMemory = VK_NULL_HANDLE;
 
 			// cube map data
 			VkImage cubeMap;
@@ -142,6 +154,13 @@ namespace Dynamik {
 			std::vector<VkDeviceMemory> uniformBufferMemories;
 			std::vector<VkDeviceMemory> uniformBufferMemories2;
 
+
+			std::vector<std::vector<VkBuffer>> uniformBuffersContainer;
+			std::vector<std::vector<VkDeviceMemory>> uniformBufferMemoriesContainer;
+			std::vector<VkDescriptorPool> descriptorPools;
+			std::vector<std::vector<VkDescriptorSet>> descriptorSetsContainer;
+
+
 			VkDescriptorPool descriptorPool = VK_NULL_HANDLE;
 			VkDescriptorSetLayout layout = VK_NULL_HANDLE;
 			VkDescriptorPool descriptorPool2 = VK_NULL_HANDLE;
@@ -157,11 +176,24 @@ namespace Dynamik {
 			VkSampler textureSampler2 = VK_NULL_HANDLE;
 			VkImageView textureImageView2 = VK_NULL_HANDLE;
 
-			//VkImage skyBox;
-
 			DMKVulkanSkyboxContainer mySkybox;
 
 			std::vector<core::Vertex> vertices = {};
+
+
+			std::vector<std::vector<Vertex>> vertexBufferObjects;
+			std::vector<VkBuffer> vertexBuffers;
+			std::vector<VkDeviceMemory> vertexBufferMemories;
+
+			std::vector<std::vector<uint32_t>> indexBufferObjects;
+			std::vector<VkBuffer> indexBuffers;
+			std::vector<VkDeviceMemory> indexBufferMemories;
+
+			std::vector<VkImage> textureImages;
+			std::vector<VkDeviceMemory> textureImageMemories;
+			std::vector<VkSampler> textureSamplers;
+			std::vector<VkImageView> textureImageViews;
+
 
 			uint32_t currentFrame = 0;
 			uint32_t myMipLevel = 1;
@@ -195,10 +227,38 @@ namespace Dynamik {
 
 			std::string* commandOutput = nullptr;
 
+			std::vector<std::string> textureSetPaths = {
+				//"E:/Projects/Dynamik Engine/Dynamik/core assets/textures/Wolf_Eyes_1.jpg",
+				//"E:/Projects/Dynamik Engine/Dynamik/core assets/textures/Wolf_Eyes_2.jpg",
+				"E:/Projects/Dynamik Engine/Dynamik/core assets/textures/Material__47_-_Default_Texture.png",
+				//"E:/Projects/Dynamik Engine/Dynamik/core assets/textures/Wolf_Body.jpg",
+				//"E:/Projects/Dynamik Engine/Dynamik/core assets/textures/tree/bark_tree.jpg",
+				//"E:/Projects/Dynamik Engine/Dynamik/core assets/textures/tree/bark_tree_nor.jpg",
+				//"E:/Projects/Dynamik Engine/Dynamik/core assets/textures/tree/blade_sample.jpg",
+				//"E:/Projects/Dynamik Engine/Dynamik/core assets/textures/tree/human.jpg",
+				//"E:/Projects/Dynamik Engine/Dynamik/core assets/textures/tree/leaves_01.jpg",
+				//"E:/Projects/Dynamik Engine/Dynamik/core assets/textures/tree/leaves_02.jpg",
+				//"E:/Projects/Dynamik Engine/Dynamik/core assets/textures/tree/leaves_03.jpg",
+				//"E:/Projects/Dynamik Engine/Dynamik/core assets/textures/tree/leaves_alpha.jpg",
+				//"E:/Projects/Dynamik Engine/Dynamik/core assets/textures/tree/leaves_alpha_inverted.jpg",
+				//"E:/Projects/Dynamik Engine/Dynamik/core assets/textures/tree/ground.jpg",
+				//"E:/Projects/Dynamik Engine/Dynamik/core assets/textures/tree/concrete.png"
+			};
+
 			int shaderCodeIndex = 0;
 
-			//std::vector<std::future<void>> futures;
+			uint32_t vertexCount = 0;
+			uint32_t indexCount = 0;
+
+			uint32_t vertexCount2 = 0;
+			uint32_t indexCount2 = 0;
+
+			std::vector<uint32_t> vertexCounts = {};
+			std::vector<uint32_t> indexCounts = {};
+
 			std::vector<std::thread> threads;
+
+			int count = 1;
 		};
 	}
 }

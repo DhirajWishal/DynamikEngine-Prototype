@@ -23,7 +23,6 @@ namespace Dynamik {
 			}
 
 			void skybox::deleteSkybox(ADGRVulkanDataContainer* container) {
-
 			}
 
 			void skybox::loadCubemap(ADGRVulkanDataContainer* container, DMKInitCubemapInfo initInfo) {/*

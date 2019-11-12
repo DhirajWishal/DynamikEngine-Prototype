@@ -7,7 +7,6 @@
 namespace Dynamik {
 	namespace ADGR {
 		namespace core {
-
 			void instanceManager::init(ADGRVulkanDataContainer* container) {
 				if (enableValidationLayers && !checkValidationLayerSupport())
 					DMK_CORE_FATAL("validation layers requested, but not available!");
@@ -35,7 +34,7 @@ namespace Dynamik {
 					createInfo.ppEnabledLayerNames = validationLayer.data();
 
 					populateDebugMessegerCreateInfo(debugCreateInfo);
-					createInfo.pNext = (VkDebugUtilsMessengerCreateInfoEXT*)& debugCreateInfo;
+					createInfo.pNext = (VkDebugUtilsMessengerCreateInfoEXT*)&debugCreateInfo;
 				}
 				else {
 					createInfo.enabledLayerCount = 0;

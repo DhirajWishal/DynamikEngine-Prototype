@@ -2,7 +2,6 @@
 
 namespace Dynamik {
 	namespace utils {
-
 #ifdef DMK_PLATFORM_WINDOWS
 #define TRIGGER_ERROR_BREAKPOINT	__debugbreak()
 

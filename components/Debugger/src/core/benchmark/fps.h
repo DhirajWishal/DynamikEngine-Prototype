@@ -3,7 +3,6 @@
 namespace Dynamik {
 	namespace Debugger {
 		namespace benchmark {
-
 			class FPS {
 			public:
 				FPS();

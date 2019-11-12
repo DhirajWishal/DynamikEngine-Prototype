@@ -8,7 +8,7 @@ namespace Dynamik {
 			public AudioObjectController {
 		public:
 
-		public :
+		public:
 			BasicAudioController::BasicAudioController(std::string filePath);
 			virtual bool BasicAudioController::shouldPlay();
 		};

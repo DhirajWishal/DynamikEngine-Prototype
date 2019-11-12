@@ -4,17 +4,13 @@
 
 namespace Dynamik {
 	namespace console {
-
 		Console::Console() {
-
 		}
 
 		Console::~Console() {
-
 		}
 
 		void Console::write(std::string command) {
-
 			if (command == "help") {
 				std::string out = "Help menu.\n\
 					help,\n\
@@ -44,33 +40,25 @@ namespace Dynamik {
 			}
 
 			if (myCommand[COMMAND] == commands[SET]) {
-
 			}
 			else if (myCommand[COMMAND] == commands[PRINT]) {
-
 				if (myCommand[SUB_COMMAND] == subCommands[ENG_PRINT][0]) {
 					DMK_INFO(myCommand[ATTRIBUTES].c_str());
-
 				}
 				else if (myCommand[SUB_COMMAND] == subCommands[ENG_PRINT][1]) {
 					DMK_WARN(myCommand[ATTRIBUTES].c_str());
-
 				}
 				else if (myCommand[SUB_COMMAND] == subCommands[ENG_PRINT][2]) {
 					DMK_ERROR(myCommand[ATTRIBUTES].c_str());
-
 				}
 				else if (myCommand[SUB_COMMAND] == subCommands[ENG_PRINT][3]) {
 					DMK_FATAL(myCommand[ATTRIBUTES].c_str());
-
 				}
 				else if (myCommand[SUB_COMMAND] == subCommands[CORE_PRINT][0]) {
 					DMK_CORE_MSG(myCommand[ATTRIBUTES].c_str());
-
 				}
 				else {
 					DMK_CORE_FATAL("Invalid print command");
-
 				}
 			}
 			else if (myCommand[COMMAND] == commands[CLEAR])
@@ -80,18 +68,14 @@ namespace Dynamik {
 				system(("\"" + myCommand[SUB_COMMAND] + " " + myCommand[ATTRIBUTES] + "\"").c_str());
 
 			else if (myCommand[COMMAND] == commands[SET]) {
-
 			}
 			else if (myCommand[COMMAND] == commands[GET]) {
-
 			}
 			else if (myCommand[COMMAND] == commands[BACK]) {
-
 			}
 		}
 
 		void Console::print() {
-
 		}
 	}
 }

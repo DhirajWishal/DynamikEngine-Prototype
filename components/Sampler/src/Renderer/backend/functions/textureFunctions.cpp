@@ -7,7 +7,6 @@ namespace Dynamik {
 	namespace ADGR {
 		namespace core {
 			namespace functions {
-
 				void createImage(DMKCreateImageInfo info) {
 					VkImageCreateInfo imageInfo = {};
 					imageInfo.sType = VK_STRUCTURE_TYPE_IMAGE_CREATE_INFO;

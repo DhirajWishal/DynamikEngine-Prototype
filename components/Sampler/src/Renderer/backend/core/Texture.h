@@ -5,7 +5,6 @@
 namespace Dynamik {
 	namespace ADGR {
 		namespace core {
-
 			struct DMKGenerateMipMapInfo {
 				VkFormat imageFormat;
 				VkImage textureImage;
@@ -23,7 +22,6 @@ namespace Dynamik {
 
 				virtual void loadTexture(std::string path) {}
 				virtual void generateMipMaps(DMKGenerateMipMapInfo info) {}
-
 			};
 		}
 	}

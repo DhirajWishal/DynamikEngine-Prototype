@@ -4,7 +4,6 @@ namespace Dynamik {
 	namespace ADGR {
 		namespace core {
 			namespace functions {
-
 				struct DMKCreateBufferInfo {
 					VkDevice device;
 					VkPhysicalDevice physicalDevice;
@@ -29,7 +28,6 @@ namespace Dynamik {
 
 				void endSingleTimeCommands(VkDevice device, VkCommandPool& commandPool, VkCommandBuffer commandBuffer,
 					VkQueue graphicsQueue);
-
 
 				VkSampleCountFlagBits getMaxUsableSampleCount(VkPhysicalDevice physicalDevice);
 

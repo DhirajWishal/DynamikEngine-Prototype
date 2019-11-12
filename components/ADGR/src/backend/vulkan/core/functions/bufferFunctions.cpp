@@ -7,7 +7,6 @@ namespace Dynamik {
 	namespace ADGR {
 		namespace core {
 			namespace functions {
-
 				void createBuffer(DMKCreateBufferInfo info) {
 					VkBufferCreateInfo bufferInfo = {};
 					bufferInfo.sType = VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO;
@@ -58,7 +57,6 @@ namespace Dynamik {
 				}
 
 				void copyData() {
-
 				}
 
 				VkCommandBuffer beginSingleTimeCommands(VkDevice device, VkCommandPool commandPool) {
@@ -107,7 +105,6 @@ namespace Dynamik {
 
 						else if (tiling == VK_IMAGE_TILING_OPTIMAL && (props.optimalTilingFeatures & features) == features)
 							return format;
-
 					}
 
 					DMK_CORE_FATAL("failed to find supported format!");

@@ -5,7 +5,6 @@ namespace Dynamik {
 	namespace ADGR {
 		namespace core {
 			namespace functions {
-
 				void createBuffer(DMKCreateBufferInfo info) {
 					VkBufferCreateInfo bufferInfo = {};
 					bufferInfo.sType = VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO;
@@ -57,7 +56,6 @@ namespace Dynamik {
 				}
 
 				void copyData() {
-
 				}
 
 				VkCommandBuffer beginSingleTimeCommands(VkDevice device, VkCommandPool commandPool) {

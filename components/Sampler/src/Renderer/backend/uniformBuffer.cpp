@@ -47,7 +47,6 @@ namespace Dynamik {
 				else;
 				//trn = 0.0f;
 
-
 				if (info.move[0])
 					mve += movementBias;
 

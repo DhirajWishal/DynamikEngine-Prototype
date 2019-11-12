@@ -3,7 +3,6 @@
 
 namespace Dynamik {
 	namespace ADGR {
-
 		layerStack::layerStack() {
 			layerInsert = layers.begin();
 		}

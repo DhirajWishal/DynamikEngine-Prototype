@@ -5,7 +5,6 @@
 namespace Dynamik {
 	namespace ADGR {
 		namespace core {
-
 			struct DMKUniformBufferCreateInfo {
 				std::vector<VkBuffer>* buffers;
 				std::vector<VkDeviceMemory>* bufferMemories;
@@ -24,8 +23,8 @@ namespace Dynamik {
 
 				int currentImage;
 
-				std::vector<bool> move = {false, false};
-				std::vector<bool> turn = {false, false};
+				std::vector<bool> move = { false, false };
+				std::vector<bool> turn = { false, false };
 			};
 
 			class uniformBufferManager : public Buffer {
@@ -50,7 +49,6 @@ namespace Dynamik {
 				VkCommandPool* m_commandPool = &commandPool;
 
 				std::vector<VkDescriptorSet>* m_descriptorSets = &descriptorSets;
-
 
 				const float movementBias = 0.05f;
 

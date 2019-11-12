@@ -1,7 +1,6 @@
 #include "mouseEvent.h"
 
 namespace Dynamik {
-
 	std::string MouseMovedEvent::toString() const {
 		std::stringstream ss;
 		ss << "MouseMovedEvent: " << m_MouseX << ", " << m_MouseY;

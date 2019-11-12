@@ -8,8 +8,6 @@
 
 namespace Dynamik {
 	namespace resources {
-
-
 		//bool ObjectData::loadObject(std::string path) {
 		//	return tinyobj::LoadObj(&attributes, &shapes, &materials, &warnings, &errors, path.c_str());
 		//}
@@ -20,7 +18,7 @@ namespace Dynamik {
 			std::vector<tinyobj::shape_t> shapes;
 			std::vector<tinyobj::material_t> materials;
 			std::string warn, err;
-			
+
 			if (!tinyobj::LoadObj(&attrib, &shapes, &materials, &warn, &err, path.c_str()))
 				DMK_CORE_FATAL(warn + err);
 

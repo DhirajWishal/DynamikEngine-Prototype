@@ -17,7 +17,7 @@ namespace Dynamik {
 				VkSurfaceFormatKHR surfaceFormat = chooseSwapSurfaceFormat(swapChainSupport.formats);
 				VkPresentModeKHR presentMode = chooseSwapPresentMode(swapChainSupport.presentModes);
 				VkExtent2D extent = chooseSwapExtent(*container->window, swapChainSupport.capabilities);
-				
+
 				VkCompositeAlphaFlagBitsKHR surfaceComposite =
 					(container->surfaceCapabilities.supportedCompositeAlpha & VK_COMPOSITE_ALPHA_OPAQUE_BIT_KHR)
 					? VK_COMPOSITE_ALPHA_OPAQUE_BIT_KHR

@@ -5,7 +5,6 @@
 namespace Dynamik {
 	namespace ADGR {
 		namespace core {
-
 			struct Vertex {
 				glm::vec3 Position;
 				glm::vec3 Color;
@@ -22,7 +21,6 @@ namespace Dynamik {
 	}
 }
 
-
 namespace std {
 	using Dynamik::ADGR::core::Vertex;
 	using glm::vec2;
@@ -31,7 +29,6 @@ namespace std {
 	template<>
 	struct hash<Vertex> {
 		size_t operator()(Vertex const& vertexes) const {
-
 			return ((hash<vec3>()(vertexes.Position) ^
 				(hash<vec3>()(vertexes.Color) << 1)) >> 1) ^
 				(hash<vec2>()(vertexes.TexCoordinates) << 1);

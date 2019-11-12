@@ -31,6 +31,7 @@ project "ADGR"
 		"$(SolutionDir)components/Managers/src",
 		"$(SolutionDir)components/Platform/src",
 		"$(SolutionDir)components/Debugger/src",
+		"$(SolutionDir)components/CentralDataHub/src",
 		"$(SolutionDir)libs/glm/**.hpp",
 		"$(SolutionDir)libs/glm/**.inl",
 		"%{IncludeDir.GLFW}",
@@ -53,6 +54,7 @@ project "ADGR"
 		"Events",
 		"Platform",
 		"Managers",
+		"CentralDataHub",
 		"Debugger"
 	}
 

@@ -5,7 +5,6 @@
 namespace Dynamik {
 	namespace ADGR {
 		namespace core {
-
 			struct DMKIndexBufferCreateInfo {
 				std::vector<uint32_t> indices;
 

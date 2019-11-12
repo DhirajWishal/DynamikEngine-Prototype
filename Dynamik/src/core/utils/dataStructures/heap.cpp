@@ -15,7 +15,6 @@
 
 namespace Dynamik {
 	namespace utils {
-
 		/* ---------- ########## ////////// MIN HEAP \\\\\\\\\\ ########## ---------- */
 		template<class Alloc>
 		minHeap<Alloc>::minHeap(uint32 size) {

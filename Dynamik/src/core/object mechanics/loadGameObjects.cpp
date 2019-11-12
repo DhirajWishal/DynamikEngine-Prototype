@@ -2,7 +2,6 @@
 #include "loadGameObjects.h"
 
 namespace Dynamik {
-
 	//InputContainer myContainerTmp;
 
 	//void submit(InputContainer(*Function)()) {

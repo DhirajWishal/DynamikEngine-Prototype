@@ -4,7 +4,6 @@
 namespace Dynamik {
 	namespace ADGR {
 		namespace core {
-
 			VkVertexInputBindingDescription Vertex::getBindingDescription() {
 				VkVertexInputBindingDescription bindingDescription = {};
 				bindingDescription.binding = 0;

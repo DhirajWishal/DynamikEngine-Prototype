@@ -47,7 +47,6 @@ namespace Dynamik {
 				else;
 				//trn = 0.0f;
 
-
 				if (info.move[0])
 					mve += movementBias;
 
@@ -114,7 +113,6 @@ namespace Dynamik {
 				else;
 				//trn = 0.0f;
 
-
 				if (info.move[0])
 					mve += movementBias;
 
@@ -137,11 +135,11 @@ namespace Dynamik {
 				else if (info.rotation[1])
 					rotation -= rotationBias;
 
-				else;	
+				else;
 
 				UniformBufferObject ubo = {};
 				ubo.model = glm::rotate(glm::translate(glm::mat4(1.0f), glm::vec3(mve, trn, up)),
-						glm::radians(info.cPos[0]), glm::vec3(0.0f, 0.0f, 1.0f))
+					glm::radians(info.cPos[0]), glm::vec3(0.0f, 0.0f, 1.0f))
 					* glm::rotate(glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, 0.0f)),
 						glm::radians(info.cPos[1]), glm::vec3(0.0f, 1.0f, 0.0f))
 					* glm::rotate(glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, 0.0f)),
@@ -156,7 +154,7 @@ namespace Dynamik {
 				//	/*time */ glm::radians(270.0f), glm::vec3(0.0f, 0.0f, 1.0f));
 
 				//ubo.model = glm::ortho(mve, trn, rotation, up, 1.0f,10.0f);
-			    //ubo.model = glm::frustum(1.0f, 1.0f, 5.0f, 5.0f, 0.1f, 10.0f);
+				//ubo.model = glm::frustum(1.0f, 1.0f, 5.0f, 5.0f, 0.1f, 10.0f);
 				// left, right, bottom, top
 
 				ubo.view = glm::lookAt(glm::vec3(0.5f, 3.0f, 0.5f), glm::vec3(0.0f, 0.0f, 0.0f),

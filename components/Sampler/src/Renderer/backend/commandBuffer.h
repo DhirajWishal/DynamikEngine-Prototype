@@ -5,7 +5,6 @@
 namespace Dynamik {
 	namespace ADGR {
 		namespace core {
-
 			struct DMKBindCommandBufferInfo {
 				std::vector<VkFramebuffer> frameBuffers;
 				std::vector<std::vector<VkDescriptorSet>*> descriptorSets;

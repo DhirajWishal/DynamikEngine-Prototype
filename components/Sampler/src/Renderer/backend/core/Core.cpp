@@ -71,7 +71,7 @@ namespace Dynamik {
 			DMK_ShaderCode Core::tessellationShaderCode;
 			VkShaderModule Core::tessellationShaderModule;
 			VkPipelineShaderStageCreateInfo Core::tessellationShaderStageInfo = {};
-#endif			
+#endif
 
 #ifdef USE_SHADER_GEOMETRY
 			DMK_ShaderCode Core::geometryShaderCode;

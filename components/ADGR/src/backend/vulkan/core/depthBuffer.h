@@ -5,7 +5,6 @@
 namespace Dynamik {
 	namespace ADGR {
 		namespace core {
-
 			struct DMKDepthBufferCreateInfo {
 				VkImage* image;
 				VkDeviceMemory* imageMemory;

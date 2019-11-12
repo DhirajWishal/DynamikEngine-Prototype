@@ -1,7 +1,6 @@
 #pragma once
 
 namespace Dynamik {
-
 	class Input {
 	public:
 		virtual bool isKeyPressed() = 0;
@@ -17,7 +16,5 @@ namespace Dynamik {
 
 	private:
 		//static Input* myInput;
-
 	};
 }
-

@@ -9,7 +9,6 @@
 
 #include "functions/bufferFunctions.h"
 
-
 namespace Dynamik {
 	namespace ADGR {
 		namespace core {

@@ -80,7 +80,7 @@
       <PrecompiledHeaderFile>adgrafx.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>DMK_PLATFORM_WINDOWS;DMK_BUILD_DLL;GLFW_INCLUDE_VULKAN;DMK_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)libs;$(SolutionDir)Dynamik\src;$(SolutionDir)Dynamik\GameLibraries;$(SolutionDir)lib\libs;$(SolutionDir)components\ADGR;$(SolutionDir)components\ADGR\src;$(SolutionDir)components\Events\src;$(SolutionDir)components\Managers\src;$(SolutionDir)components\Platform\src;$(SolutionDir)components\Debugger\src;$(SolutionDir)libs\GLFW\include;$(SolutionDir)libs\glm;$(SolutionDir)libs\stb-master;$(SolutionDir)libs\tinyobjloader-master;$(SolutionDir)\libs\assimp;E:\Programming\SDKs\Vulkan\1.1.121.0\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)libs;$(SolutionDir)Dynamik\src;$(SolutionDir)Dynamik\GameLibraries;$(SolutionDir)lib\libs;$(SolutionDir)components\ADGR;$(SolutionDir)components\ADGR\src;$(SolutionDir)components\Events\src;$(SolutionDir)components\Managers\src;$(SolutionDir)components\Platform\src;$(SolutionDir)components\Debugger\src;$(SolutionDir)components\CentralDataHub\src;$(SolutionDir)libs\GLFW\include;$(SolutionDir)libs\glm;$(SolutionDir)libs\stb-master;$(SolutionDir)libs\tinyobjloader-master;$(SolutionDir)\libs\assimp;E:\Programming\SDKs\Vulkan\1.1.121.0\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
@@ -100,7 +100,7 @@
       <PrecompiledHeaderFile>adgrafx.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>DMK_PLATFORM_WINDOWS;DMK_BUILD_DLL;GLFW_INCLUDE_VULKAN;DMK_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)libs;$(SolutionDir)Dynamik\src;$(SolutionDir)Dynamik\GameLibraries;$(SolutionDir)lib\libs;$(SolutionDir)components\ADGR;$(SolutionDir)components\ADGR\src;$(SolutionDir)components\Events\src;$(SolutionDir)components\Managers\src;$(SolutionDir)components\Platform\src;$(SolutionDir)components\Debugger\src;$(SolutionDir)libs\GLFW\include;$(SolutionDir)libs\glm;$(SolutionDir)libs\stb-master;$(SolutionDir)libs\tinyobjloader-master;$(SolutionDir)\libs\assimp;E:\Programming\SDKs\Vulkan\1.1.121.0\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)libs;$(SolutionDir)Dynamik\src;$(SolutionDir)Dynamik\GameLibraries;$(SolutionDir)lib\libs;$(SolutionDir)components\ADGR;$(SolutionDir)components\ADGR\src;$(SolutionDir)components\Events\src;$(SolutionDir)components\Managers\src;$(SolutionDir)components\Platform\src;$(SolutionDir)components\Debugger\src;$(SolutionDir)components\CentralDataHub\src;$(SolutionDir)libs\GLFW\include;$(SolutionDir)libs\glm;$(SolutionDir)libs\stb-master;$(SolutionDir)libs\tinyobjloader-master;$(SolutionDir)\libs\assimp;E:\Programming\SDKs\Vulkan\1.1.121.0\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -124,7 +124,7 @@
       <PrecompiledHeaderFile>adgrafx.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>DMK_PLATFORM_WINDOWS;DMK_BUILD_DLL;GLFW_INCLUDE_VULKAN;DMK_DISTRIBUTION;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)libs;$(SolutionDir)Dynamik\src;$(SolutionDir)Dynamik\GameLibraries;$(SolutionDir)lib\libs;$(SolutionDir)components\ADGR;$(SolutionDir)components\ADGR\src;$(SolutionDir)components\Events\src;$(SolutionDir)components\Managers\src;$(SolutionDir)components\Platform\src;$(SolutionDir)components\Debugger\src;$(SolutionDir)libs\GLFW\include;$(SolutionDir)libs\glm;$(SolutionDir)libs\stb-master;$(SolutionDir)libs\tinyobjloader-master;$(SolutionDir)\libs\assimp;E:\Programming\SDKs\Vulkan\1.1.121.0\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)libs;$(SolutionDir)Dynamik\src;$(SolutionDir)Dynamik\GameLibraries;$(SolutionDir)lib\libs;$(SolutionDir)components\ADGR;$(SolutionDir)components\ADGR\src;$(SolutionDir)components\Events\src;$(SolutionDir)components\Managers\src;$(SolutionDir)components\Platform\src;$(SolutionDir)components\Debugger\src;$(SolutionDir)components\CentralDataHub\src;$(SolutionDir)libs\GLFW\include;$(SolutionDir)libs\glm;$(SolutionDir)libs\stb-master;$(SolutionDir)libs\tinyobjloader-master;$(SolutionDir)\libs\assimp;E:\Programming\SDKs\Vulkan\1.1.121.0\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -143,10 +143,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="src\backend\Renderer\Renderer.h" />
-    <ClInclude Include="src\backend\vulkan\core\core\Manager.h" />
-    <ClInclude Include="src\backend\vulkan\core\manager.h" />
-    <ClInclude Include="src\backend\vulkan\vulkanRenderer2D.h" />
     <ClInclude Include="src\Data Structures\index.h" />
     <ClInclude Include="src\Data Structures\vertex.h" />
     <ClInclude Include="src\Layers\layer.h" />
@@ -155,6 +151,7 @@
     <ClInclude Include="src\Wrapper\dll_wrapper.h" />
     <ClInclude Include="src\Wrapper\internal_wrapper.h" />
     <ClInclude Include="src\adgrafx.h" />
+    <ClInclude Include="src\backend\Renderer\Renderer.h" />
     <ClInclude Include="src\backend\defines.h" />
     <ClInclude Include="src\backend\interface.h" />
     <ClInclude Include="src\backend\vulkan\ADGR_Vulkan_API.h" />
@@ -166,6 +163,7 @@
     <ClInclude Include="src\backend\vulkan\core\core\Core.h" />
     <ClInclude Include="src\backend\vulkan\core\core\Device.h" />
     <ClInclude Include="src\backend\vulkan\core\core\Instance.h" />
+    <ClInclude Include="src\backend\vulkan\core\core\Manager.h" />
     <ClInclude Include="src\backend\vulkan\core\core\Model.h" />
     <ClInclude Include="src\backend\vulkan\core\core\Pipeline.h" />
     <ClInclude Include="src\backend\vulkan\core\core\Shader.h" />
@@ -186,6 +184,7 @@
     <ClInclude Include="src\backend\vulkan\core\functions\textureFunctions.h" />
     <ClInclude Include="src\backend\vulkan\core\indexBuffer.h" />
     <ClInclude Include="src\backend\vulkan\core\instance.h" />
+    <ClInclude Include="src\backend\vulkan\core\manager.h" />
     <ClInclude Include="src\backend\vulkan\core\modelManager.h" />
     <ClInclude Include="src\backend\vulkan\core\others\semaphores.h" />
     <ClInclude Include="src\backend\vulkan\core\others\syncObjects.h" />
@@ -201,11 +200,10 @@
     <ClInclude Include="src\backend\vulkan\core\vertexBuffer.h" />
     <ClInclude Include="src\backend\vulkan\core\window.h" />
     <ClInclude Include="src\backend\vulkan\vulkanRenderer.h" />
+    <ClInclude Include="src\backend\vulkan\vulkanRenderer2D.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="src\backend\vulkan\core\manager.cpp" />
-    <ClCompile Include="src\backend\vulkan\vulkanRenderer2D.cpp" />
     <ClCompile Include="src\Layers\layer.cpp" />
     <ClCompile Include="src\Layers\layerStack.cpp" />
     <ClCompile Include="src\Renderer.cpp" />
@@ -226,6 +224,7 @@
     <ClCompile Include="src\backend\vulkan\core\functions\textureFunctions.cpp" />
     <ClCompile Include="src\backend\vulkan\core\indexBuffer.cpp" />
     <ClCompile Include="src\backend\vulkan\core\instance.cpp" />
+    <ClCompile Include="src\backend\vulkan\core\manager.cpp" />
     <ClCompile Include="src\backend\vulkan\core\modelManager.cpp" />
     <ClCompile Include="src\backend\vulkan\core\others\semaphores.cpp" />
     <ClCompile Include="src\backend\vulkan\core\others\syncObjects.cpp" />
@@ -241,11 +240,10 @@
     <ClCompile Include="src\backend\vulkan\core\vertexBuffer.cpp" />
     <ClCompile Include="src\backend\vulkan\core\window.cpp" />
     <ClCompile Include="src\backend\vulkan\vulkanRenderer.cpp" />
+    <ClCompile Include="src\backend\vulkan\vulkanRenderer2D.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="premake5.lua" />
-    <None Include="src\backend\shaders\shader.2D.frag" />
-    <None Include="src\backend\shaders\shader.2D.vert" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Events\Events.vcxproj">
@@ -256,6 +254,9 @@
     </ProjectReference>
     <ProjectReference Include="..\Managers\Managers.vcxproj">
       <Project>{B34CFEBD-9F19-59C9-C832-4771B45E8E57}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\CentralDataHub\CentralDataHub.vcxproj">
+      <Project>{27660F4E-1334-0354-FCC7-737AE834DFB8}</Project>
     </ProjectReference>
     <ProjectReference Include="..\Debugger\Debugger.vcxproj">
       <Project>{2ACD0289-169A-5D94-3FB3-4B3C2BDF9222}</Project>

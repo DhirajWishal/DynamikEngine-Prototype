@@ -24,7 +24,7 @@ namespace Dynamik {
 				bufferInfo.bufferMemory = &stagingBufferMemory;
 
 				functions::createBuffer(bufferInfo);
-				
+
 				void* data;
 				vkMapMemory(device, stagingBufferMemory, 0, bufferSize, 0, &data);
 				memcpy(data, info.vertices.data(), (size_t)bufferSize);

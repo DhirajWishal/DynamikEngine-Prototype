@@ -13,7 +13,6 @@
 namespace Dynamik {
 	namespace ADGR {
 		namespace core {
-
 			queueFamilyindices findQueueFamilies(VkPhysicalDevice device, VkSurfaceKHR surface) {
 				queueFamilyindices indices;
 

@@ -9,12 +9,11 @@
  IDE:		MS Visual Studio Community 2019
 */
 
-#include "core/utils/DMK_DataTypes.h"
+#include "CentralDataHub.h"
 
 namespace Dynamik {
 	namespace ADGR {
 		namespace core {
-
 			struct queueFamilyindices {
 				std::optional<uint32> graphicsFamily;
 				std::optional<uint32> presentFamily;

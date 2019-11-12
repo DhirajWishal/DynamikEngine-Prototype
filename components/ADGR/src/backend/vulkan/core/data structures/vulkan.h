@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef DMK_ADGR_VULKAN_H
-#define DMK_ADGR_VULKAN_H
+#ifndef _DYNAMIK_ADGR_VULKAN_H
+#define _DYNAMIK_ADGR_VULKAN_H
 
 #include <vulkan/vulkan.h>
 #include <vector>
@@ -12,7 +12,6 @@
 namespace Dynamik {
 	namespace ADGR {
 		namespace core {
-
 			enum DMK_ADGR_VULKAN_SHADER_STAGE_INFO {
 				DMK_ADGR_VULKAN_SHADER_STAGE_VERTEX = 0,		// vertex shader
 				DMK_ADGR_VULKAN_SHADER_STAGE_TESSELLATION = 1,	// tessellation shader
@@ -22,7 +21,7 @@ namespace Dynamik {
 
 			/* SWAPCHAIN DATA CONTAINER */
 			struct ADGRVulkanSwapchainDataContainer {
-				VkFormat swapchainImageFormat = VK_FORMAT_UNDEFINED;				// Vulkan swapchain image format
+				VkFormat swapchainImageFormat = VkFormat::VK_FORMAT_UNDEFINED;		// Vulkan swapchain image format
 				VkExtent2D swapchainExtent = {										// Vulkan swapchain extent 2D
 					VK_NULL_HANDLE,	// width
 					VK_NULL_HANDLE	// height
@@ -86,7 +85,9 @@ namespace Dynamik {
 				std::vector<VkDescriptorSetLayout_T*> layouts;						// Vulkan descriptor set layouts
 
 				// primitive assembly info
-				VkPrimitiveTopology inputAssemblyTopology = VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST;	// Vulkan input assembler topologies
+				//VkPrimitiveTopology inputAssemblyTopology = VkPrimitiveTopology::VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST;	// Vulkan input assembler topologies
+				//VkPrimitiveTopology inputAssemblyTopology = VkPrimitiveTopology::VK_PRIMITIVE_TOPOLOGY_POINT_LIST;	// Vulkan input assembler topologies
+				VkPrimitiveTopology inputAssemblyTopology = VkPrimitiveTopology::VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST;	// Vulkan input assembler topologies
 				VkBool32 inputAssemblyPrimitiveRestartEnable = VK_FALSE;			// Vulkan primitive assembly restart enable
 
 				// viewport info
@@ -99,10 +100,10 @@ namespace Dynamik {
 				// rasterizer info
 				VkBool32 rasterizerDepthClampEnable = VK_FALSE;						// Vulkan rasterizer depth clamp enable
 				VkBool32 rasterizerDiscardEnable = VK_FALSE;						// Vulkan rasterizer discard enable
-				VkPolygonMode rasterizerPolygonMode = VK_POLYGON_MODE_FILL;			// Vulkan rasterizer polygon mode
+				VkPolygonMode rasterizerPolygonMode = VkPolygonMode::VK_POLYGON_MODE_FILL;			// Vulkan rasterizer polygon mode
 				float rasterizerLineWidth = 1.0f;									// Vulkan rasterizer line width
-				VkCullModeFlagBits rasterizerCullMode = VK_CULL_MODE_BACK_BIT;		// Vulkan rasterizer cull mode
-				VkFrontFace rasterizerFrontFace = VK_FRONT_FACE_COUNTER_CLOCKWISE;	// Vulkan rasterizer front face
+				VkCullModeFlagBits rasterizerCullMode = VkCullModeFlagBits::VK_CULL_MODE_BACK_BIT;		// Vulkan rasterizer cull mode
+				VkFrontFace rasterizerFrontFace = VkFrontFace::VK_FRONT_FACE_COUNTER_CLOCKWISE;	// Vulkan rasterizer front face
 				VkBool32 rasterizerDepthBiasEnable = VK_FALSE;						// Vulkan rasterizer depth bias enable
 
 				// multisampling info
@@ -113,7 +114,7 @@ namespace Dynamik {
 				// depth stencil info
 				VkBool32 depthStencilEnable = VK_TRUE;								// Vulkan depth stencil enable
 				VkBool32 depthStencilWriteEnable = VK_TRUE;							// Vulkan depth stencil write enable
-				VkCompareOp depthStencilCompareOp = VK_COMPARE_OP_LESS;				// Vulkan depth stencil compare op
+				VkCompareOp depthStencilCompareOp = VkCompareOp::VK_COMPARE_OP_LESS;				// Vulkan depth stencil compare op
 				VkBool32 depthStencilBoundsTestEnable = VK_FALSE;					// Vulkan depth stencil bounds test enable
 				VkBool32 depthStencilTestEnable = VK_FALSE;							// Vulkan depth stencil test enable
 
@@ -127,7 +128,7 @@ namespace Dynamik {
 				std::vector<VkBool32> colorBlenderBlendEnables = { VK_FALSE };		// Vulkan color blend blend enables
 
 				VkBool32 colorBlendingLogicOpEnable = VK_FALSE;						// Vulkan color blend blending logical op enable
-				VkLogicOp colorBlendingLogicOp = VK_LOGIC_OP_COPY;					// Vulkan color blend blending logical op
+				VkLogicOp colorBlendingLogicOp = VkLogicOp::VK_LOGIC_OP_COPY;		// Vulkan color blend blending logical op
 				int colorBlendingColorBlendCount = 1;								// Vulkan color blend blending count
 				std::vector<float> colorBlendingBlendConstants = {					// Vulkan color blend constants
 					0.0f,	// Red
@@ -209,7 +210,7 @@ namespace Dynamik {
 				std::vector<ADGRVulkanPipelineDataContainer> pipelineContainers = {};	// ADGR pipeline containers
 
 				/* COMMAND BUFFER */
-				ADGRVulkanCommandBufferDataContainer commandBufferContainer = {};	// ADGR command buffer container		
+				ADGRVulkanCommandBufferDataContainer commandBufferContainer = {};	// ADGR command buffer container
 
 				/* COLOR BUFFER */
 				ADGRVulkanColorBufferDataContainer colorBufferContainer = {};		// ADGR color buffer container
@@ -228,10 +229,10 @@ namespace Dynamik {
 
 				/* BLANK SCREEN BACKGROUND COLOR */
 				std::vector<float> clearScreenValues = {								// Vulkan clear screen values
-					(2.0f / 256.0f),		// Red		
-					(8.0f / 256.0f),		// Green	
-					(32.0f / 256.0f),		// Blue		
-					(1.00000000f)			// Alpha	
+					(2.0f / 256.0f),		// Red
+					(8.0f / 256.0f),		// Green
+					(32.0f / 256.0f),		// Blue
+					(1.00000000f)			// Alpha
 				};	// Dynwamik color code: rgba(2, 8, 32, 1)
 
 				/* QUEUES */
@@ -239,7 +240,7 @@ namespace Dynamik {
 				VkQueue presentQueue = VK_NULL_HANDLE;									// Vulkan present queue
 
 				/* MSAA BITS */
-				VkSampleCountFlagBits msaaSamples = VK_SAMPLE_COUNT_1_BIT;				// Vulkan msaa sample bits
+				VkSampleCountFlagBits msaaSamples = VkSampleCountFlagBits::VK_SAMPLE_COUNT_1_BIT;	// Vulkan msaa sample bits
 
 				/* CORE EVENTS */
 				bool frameBufferResizedEvent = false;									// Vulkan GLFW frame buffer resized event

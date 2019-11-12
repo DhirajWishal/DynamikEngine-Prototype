@@ -14,7 +14,6 @@
 namespace Dynamik {
 	namespace ADGR {
 		namespace core {
-
 			struct queueFamilyindices {
 				std::optional<uint32> graphicsFamily;
 				std::optional<uint32> presentFamily;

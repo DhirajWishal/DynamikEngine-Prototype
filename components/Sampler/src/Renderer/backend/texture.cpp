@@ -16,7 +16,7 @@ namespace Dynamik {
 
 				VkDeviceSize imageSize = texData.size;
 				*m_mipLevels = static_cast<uint32_t>(std::floor(std::log2(std::max(texData.texWidth, texData.texHeight)))) + 1;
-				
+
 				if (!pixels)
 					std::runtime_error("failed to load texture image!");
 

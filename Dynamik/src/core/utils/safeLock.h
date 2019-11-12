@@ -11,6 +11,5 @@ namespace Dynamik {
 			safeLock();
 			~safeLock();
 		};
-
 	}
 }

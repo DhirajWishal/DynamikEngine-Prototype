@@ -2,6 +2,5 @@
 
 namespace Dynamik {
 	namespace ADGR {
-
 	}
 }

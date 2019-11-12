@@ -6,7 +6,6 @@
 namespace Dynamik {
 	namespace ADGR {
 		namespace core {
-
 			struct DMKGenerateMipMapInfo {
 				VkFormat imageFormat;
 				VkImage textureImage;
@@ -32,7 +31,7 @@ namespace Dynamik {
 				VkSampler imageSampler;
 
 				VkFormat imageFormat;
-				VkDeviceMemory *imageMemory;
+				VkDeviceMemory* imageMemory;
 
 				uint32_t mipLevels;
 			};
@@ -48,7 +47,6 @@ namespace Dynamik {
 
 				virtual void initSkybox(ADGRVulkanDataContainer* container, DMKSkyboxInitInfo info) {}
 				virtual void deleteSkybox(ADGRVulkanDataContainer* container) {}
-
 			};
 		}
 	}

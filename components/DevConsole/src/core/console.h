@@ -2,7 +2,6 @@
 
 namespace Dynamik {
 	namespace console {
-
 		class Console {
 		public:
 			Console();

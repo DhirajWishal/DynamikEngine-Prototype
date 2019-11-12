@@ -9,7 +9,6 @@
 
 #include "functions/bufferFunctions.h"
 
-
 namespace Dynamik {
 	namespace ADGR {
 		namespace core {
@@ -116,7 +115,6 @@ namespace Dynamik {
 
 				for (const auto& device : devices) {
 					if (isDeviceSuitable(device, &container->surface)) {
-
 						auto props = VkPhysicalDeviceProperties{};
 						vkGetPhysicalDeviceProperties(device, &props);
 
@@ -155,7 +153,7 @@ namespace Dynamik {
 				printf("Device Name: %s\n", props.deviceName);
 				printf("\t-------------------------------------------------\n\n");
 
- // ----------
+				// ----------
 #endif
 			}
 		}

@@ -5,7 +5,6 @@
 
 namespace Dynamik {
 	//namespace Input {
-
 	class inputHandler : Input {
 	public:
 		inputHandler(Event& event) : event(event) {}
@@ -14,7 +13,7 @@ namespace Dynamik {
 		bool isKeyPressed() override;
 		bool isKeyReleased() override;
 		bool isKeyRepeated() override;
-		
+
 		int getPressedKeycode() override;
 		int getReleasedKeycode() override;
 

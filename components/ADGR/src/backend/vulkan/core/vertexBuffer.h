@@ -1,13 +1,16 @@
 #pragma once
 
+#ifndef _DYNAMIK_ADGR_VULKAN_VERTEX_BUFFER_H
+#define _DYNAMIK_ADGR_VULKAN_VERTEX_BUFFER_H
+
 #include "core/Buffer.h"
 
 namespace Dynamik {
 	namespace ADGR {
 		namespace core {
-
 			struct DMKVertexBufferCreateInfo {
 				std::vector<Vertex> vertices = {};
+				//std::vector<PointVertex> pointVertices = {};
 
 				VkBuffer* buffer = VK_NULL_HANDLE;
 				VkDeviceMemory* buffereMemory = VK_NULL_HANDLE;
@@ -30,3 +33,5 @@ namespace Dynamik {
 		}
 	}
 }
+
+#endif

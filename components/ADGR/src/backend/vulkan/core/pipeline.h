@@ -8,7 +8,6 @@
 namespace Dynamik {
 	namespace ADGR {
 		namespace core {
-
 			// TODO: Pipeline cashe
 
 			class pipeline : public Pipeline {

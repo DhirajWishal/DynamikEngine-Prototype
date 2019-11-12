@@ -1,11 +1,12 @@
 #pragma once
 #include "../AudioObjectController.h"
 
+
 namespace Dynamik {
 	namespace Audio {
 		class BackgroundAudioController :
 			public AudioObjectController {
-		public:
+		public :
 
 			BackgroundAudioController(std::string filepath);
 			bool shouldPlay();

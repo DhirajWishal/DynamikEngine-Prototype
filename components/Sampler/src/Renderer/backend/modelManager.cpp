@@ -6,6 +6,7 @@
 namespace Dynamik {
 	namespace ADGR {
 		namespace core {
+
 			void modelManager::loadModel(DMKModelLoadInfo info) {
 				tinyobj::attrib_t attributes;
 				std::vector<tinyobj::shape_t> shapes;
@@ -19,6 +20,7 @@ namespace Dynamik {
 
 				for (const auto& shape : shapes) {
 					for (const auto& index : shape.mesh.indices) {
+
 						Vertex vertices;
 
 						vertices.Position = {
@@ -46,3 +48,4 @@ namespace Dynamik {
 		}
 	}
 }
+

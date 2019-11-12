@@ -3,6 +3,7 @@
 #include "event.h"
 
 namespace Dynamik {
+
 	// Key Event (Base class)
 	class  KeyEvent : public Event {
 	public:
@@ -19,7 +20,7 @@ namespace Dynamik {
 
 	class  KeyPressedEvent : public KeyEvent {
 	public:
-		KeyPressedEvent(int keyCode, int repCount) :
+		KeyPressedEvent(int keyCode, int repCount) : 
 			KeyEvent(keyCode), k_KeyCount(repCount) {}
 
 		inline int getRepCount() const { return k_KeyCount; }

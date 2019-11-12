@@ -148,18 +148,5 @@ namespace Dynamik {
 			second = temp;
 		}
 
-		/* ---------- FACTORIAL FUNCTIONS ---------- */
-		// var = utils::factorial(value);
-		long double factorial(long double value) 
-		{
-			if (value == 0 || value == 1) return 1;
-			if (value == 2) return value;
-
-			long double _result = 1;
-			for (long double _counter = 1; _counter <= value; _counter++)
-				_result *= _counter;
-
-			return _result;
-		}
 	}
 }

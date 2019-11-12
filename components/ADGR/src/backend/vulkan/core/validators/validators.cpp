@@ -13,6 +13,7 @@
 namespace Dynamik {
 	namespace ADGR {
 		namespace core {
+
 			bool checkValidationLayerSupport() {
 				uint32 layerCount;
 				vkEnumerateInstanceLayerProperties(&layerCount, nullptr);

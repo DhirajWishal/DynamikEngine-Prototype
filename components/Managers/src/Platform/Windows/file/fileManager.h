@@ -1,9 +1,10 @@
 #pragma once
 
-#include "CentralDataHub.h"
+#include "core/utils/DMK_DataTypes.h"
 
 namespace Dynamik {
 	namespace manager {
+
 		class file {
 		public:
 			enum mode {
@@ -28,7 +29,8 @@ namespace Dynamik {
 			std::fstream* backup = nullptr;
 
 			std::string myPath = "";
-			uint8 myMode = 0;
+			utils::uint8 myMode = 0;
+
 		};
 	}
 }

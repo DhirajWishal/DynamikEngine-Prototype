@@ -4,6 +4,7 @@
 #if defined(DMK_PLATFORM_WINDOWS)
 
 namespace Dynamik {
+
 	enum Calls {
 		INFO_L,
 		WARN_L,
@@ -32,7 +33,7 @@ namespace Dynamik {
 							__debugbreak();											\
 						}
 
-#define DMK_LOGGER(...)
+#define DMK_LOGGER(...) 
 
 /* CORE LOG MACROS */
 #define DMK_CORE_INFO(...) ::Dynamik::INFO_LOG(#__VA_ARGS__)
@@ -54,21 +55,21 @@ namespace Dynamik {
 									}
 
 #else
-#define DMK_INFO(...)
-#define DMK_WARN(...)
-#define DMK_ERROR(...)
-#define DMK_FATAL(...)
+#define DMK_INFO(...) 
+#define DMK_WARN(...) 
+#define DMK_ERROR(...) 
+#define DMK_FATAL(...) 
 
-#define DMK_LOGGER(...)
+#define DMK_LOGGER(...) 
 
 /* CORE LOG MACROS */
-#define DMK_CORE_INFO(...)
-#define DMK_CORE_WARN(...)
-#define DMK_CORE_ERROR(...)
-#define DMK_CORE_FATAL(...)
-#define DMK_CORE_MSG(...)
+#define DMK_CORE_INFO(...) 
+#define DMK_CORE_WARN(...) 
+#define DMK_CORE_ERROR(...) 
+#define DMK_CORE_FATAL(...) 
+#define DMK_CORE_MSG(...) 
 
-#define DMK_CORE_ASSERT(x, ...)
+#define DMK_CORE_ASSERT(x, ...)	
 
 // ----------
 #endif

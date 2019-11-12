@@ -18,6 +18,7 @@
 namespace Dynamik {
 	namespace ADGR {
 		namespace windows {
+
 			static bool isGLFWInitialized = false;
 
 			static void GLFWErrorCallback(int error, const char* description) {
@@ -91,7 +92,7 @@ namespace Dynamik {
 				//
 				//glfwSetScrollCallback(myWindow, [](GLFWwindow* window, double xOffset, double yOffset) {
 				//	events& data = *(events*)glfwGetWindowUserPointer(window);
-				//
+				//	
 				//	MouseScrolledEvent event((float)xOffset, (float)yOffset);
 				//	data.myEventCallbackFunction(event);
 				//});

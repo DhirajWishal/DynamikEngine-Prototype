@@ -11,7 +11,7 @@ namespace Dynamik {
 
 			struct DMKInitTextureInfo {
 				std::string path;
-
+				
 				VkFormat textureImageFormat;
 				VkImage* textureImage;
 				VkDeviceMemory* textureImageMemory;
@@ -78,10 +78,10 @@ namespace Dynamik {
 
 			private:
 				VkDevice* m_device = &device;
-				VkImage* m_textureImage = &textureImage;
-				VkDeviceMemory* m_textureImageMemory = &textureImageMemory;
-				VkImageView* m_textureImageView = &textureImageView;
-				VkSampler* m_textureSampler = &textureSampler;
+				VkImage *m_textureImage = &textureImage;
+				VkDeviceMemory *m_textureImageMemory = &textureImageMemory;
+				VkImageView *m_textureImageView = &textureImageView;
+				VkSampler *m_textureSampler = &textureSampler;
 
 				uint32_t* m_mipLevels = &mipLevels;
 

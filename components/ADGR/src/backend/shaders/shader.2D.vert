@@ -42,7 +42,7 @@ void main() {
     gl_Position = uboA.proj * uboA.view * uboA.model * vec4(inPositionA, mapSize);
 
     fragColor = inColorTerrain;
-    //fragTexCoord = inTexCoordTerrain;
+    fragTexCoord = inTexCoordTerrain;
 }
 
 

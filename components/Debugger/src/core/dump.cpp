@@ -6,6 +6,7 @@
 #include "dump.h"
 
 namespace Dynamik {
+
 	void dumpData(std::string msg) {
 		std::fstream file("debug_dump.txt", std::ios::app);
 

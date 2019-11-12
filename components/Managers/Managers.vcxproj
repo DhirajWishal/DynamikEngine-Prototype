@@ -77,7 +77,7 @@
       <PrecompiledHeaderFile>mngafx.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>DMK_PLATFORM_WINDOWS;DMK_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)Dynamik\src;$(solutionDir)components\Managers\src;$(SolutionDir)components\Debugger\src;$(SolutionDir)components\CentralDataHub\src;$(SolutionDir)libs\GLFW\include;$(SolutionDir)libs\glm;$(SolutionDir)libs\stb-master;$(SolutionDir)libs\tinyobjloader-master;E:\Programming\SDKs\Vulkan\1.1.121.0\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Dynamik\src;$(solutionDir)components\Managers\src;$(SolutionDir)components\Debugger\src;$(SolutionDir)libs\GLFW\include;$(SolutionDir)libs\glm;$(SolutionDir)libs\stb-master;$(SolutionDir)libs\tinyobjloader-master;E:\Programming\SDKs\Vulkan\1.1.121.0\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
@@ -94,7 +94,7 @@
       <PrecompiledHeaderFile>mngafx.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>DMK_PLATFORM_WINDOWS;DMK_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)Dynamik\src;$(solutionDir)components\Managers\src;$(SolutionDir)components\Debugger\src;$(SolutionDir)components\CentralDataHub\src;$(SolutionDir)libs\GLFW\include;$(SolutionDir)libs\glm;$(SolutionDir)libs\stb-master;$(SolutionDir)libs\tinyobjloader-master;E:\Programming\SDKs\Vulkan\1.1.121.0\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Dynamik\src;$(solutionDir)components\Managers\src;$(SolutionDir)components\Debugger\src;$(SolutionDir)libs\GLFW\include;$(SolutionDir)libs\glm;$(SolutionDir)libs\stb-master;$(SolutionDir)libs\tinyobjloader-master;E:\Programming\SDKs\Vulkan\1.1.121.0\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -115,7 +115,7 @@
       <PrecompiledHeaderFile>mngafx.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>DMK_PLATFORM_WINDOWS;DMK_DISTRIBUTION;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)Dynamik\src;$(solutionDir)components\Managers\src;$(SolutionDir)components\Debugger\src;$(SolutionDir)components\CentralDataHub\src;$(SolutionDir)libs\GLFW\include;$(SolutionDir)libs\glm;$(SolutionDir)libs\stb-master;$(SolutionDir)libs\tinyobjloader-master;E:\Programming\SDKs\Vulkan\1.1.121.0\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Dynamik\src;$(solutionDir)components\Managers\src;$(SolutionDir)components\Debugger\src;$(SolutionDir)libs\GLFW\include;$(SolutionDir)libs\glm;$(SolutionDir)libs\stb-master;$(SolutionDir)libs\tinyobjloader-master;E:\Programming\SDKs\Vulkan\1.1.121.0\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -154,9 +154,6 @@
   <ItemGroup>
     <ProjectReference Include="..\Debugger\Debugger.vcxproj">
       <Project>{2ACD0289-169A-5D94-3FB3-4B3C2BDF9222}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\CentralDataHub\CentralDataHub.vcxproj">
-      <Project>{27660F4E-1334-0354-FCC7-737AE834DFB8}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

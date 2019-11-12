@@ -5,6 +5,7 @@
 namespace Dynamik {
 	namespace ADGR {
 		namespace core {
+
 			struct DMKColorImageCreateInfo {
 				VkImage image;
 				VkDeviceMemory imageMemory;

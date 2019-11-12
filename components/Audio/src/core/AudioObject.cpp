@@ -4,8 +4,8 @@
 
 namespace Dynamik {
 	namespace Audio {
-		AudioObject::AudioObject(irrklang::ISoundEngine* audioEngine, AudioObjectController& _controller) :
-			audioEngine(audioEngine), controller(&_controller) {
+		AudioObject::AudioObject(irrklang::ISoundEngine* audioEngine, AudioObjectController& _controller):
+		audioEngine(audioEngine), controller(&_controller){
 			if (!controller->is2D) {
 				sound = audioEngine->play3D(controller->filepath.c_str(), controller->position, true, controller->startPaused, true);
 				sound->setMaxDistance(1000000000.0f);
@@ -24,9 +24,10 @@ namespace Dynamik {
 
 			return false;
 		}
-
+		
 		void AudioObject::play() {
 			if (isFinished()) return;
+
 
 			if (controller->resetPlayer) {
 				controller->resetPlayer = false;
@@ -37,6 +38,8 @@ namespace Dynamik {
 			sound->setIsLooped(controller->isLooped);
 			sound->setIsPaused(false);
 		}
+
+
 
 		void AudioObject::pause() {
 			sound->setIsPaused(true);

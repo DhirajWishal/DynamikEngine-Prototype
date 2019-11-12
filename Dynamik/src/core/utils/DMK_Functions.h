@@ -11,11 +11,8 @@
  DMK_Functions.cpp file.
 */
 
-#ifndef _DYNAMIK_UTILS_DMK_FUNCTIONS_H
-#define _DYNAMIK_UTILS_DMK_FUNCTIONS_H
-
 #include "core/core.h"
-#include "CentralDataHub.h"
+#include "DMK_DataTypes.h"
 
 namespace Dynamik {
 	namespace utils {
@@ -42,10 +39,5 @@ namespace Dynamik {
 		DMK_API void swap(char* first, char* second);
 		DMK_API void swap(ccp* first, ccp* second);
 		DMK_API void swap(std::string* first, std::string* second);
-
-		// var = utils::factorial(value);
-		DMK_API long double factorial(long double value);
 	}
 }
-
-#endif

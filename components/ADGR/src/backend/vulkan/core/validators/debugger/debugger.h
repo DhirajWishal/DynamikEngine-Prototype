@@ -12,8 +12,9 @@
 namespace Dynamik {
 	namespace ADGR {
 		namespace core {
+
 #define log(x) std::cout << x << std::endl
-			void populateDebugMessegerCreateInfo(VkDebugUtilsMessengerCreateInfoEXT& createInfo);
+			void populateDebugMessegerCreateInfo(VkDebugUtilsMessengerCreateInfoEXT & createInfo);
 
 			class debugger {
 			public:
@@ -46,6 +47,7 @@ namespace Dynamik {
 			private:
 				VkInstance* myInstance;
 				VkDebugUtilsMessengerEXT* myDebugMessenger;
+
 			};
 		}
 	}

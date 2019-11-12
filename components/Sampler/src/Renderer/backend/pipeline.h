@@ -5,6 +5,7 @@
 namespace Dynamik {
 	namespace ADGR {
 		namespace core {
+
 			class pipeline : public Pipeline {
 			public:
 				pipeline() {}

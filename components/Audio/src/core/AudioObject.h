@@ -13,10 +13,12 @@ namespace Dynamik {
 		public:
 			AudioObject(irrklang::ISoundEngine* audioEngine, AudioObjectController& _controller);
 			void update();
-		private:
+		private :
 			void play();
 			void pause();
 			bool isFinished();
 		};
+
+
 	}
 }

@@ -4,6 +4,7 @@ namespace Dynamik {
 	namespace ADGR {
 		namespace core {
 			namespace functions {
+
 				struct DMKCreateImageInfo {
 					VkDevice device;
 					VkPhysicalDevice physicalDevice;

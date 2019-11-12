@@ -4,57 +4,59 @@
 #include "core/core.h"
 
 namespace Dynamik {
+
 	/* KEY BINDINGS FOR THE DYNAMIK ENGINE */
 	struct KeyBindings {
+
 		/* WEAPON BINDINGS */
-		unsigned int fireWeapon = DMK_KEY_UNKNOWN;
-		unsigned int aimWeapon = DMK_KEY_UNKNOWN;
-		unsigned int changeWeapon_1 = DMK_KEY_UNKNOWN;
-		unsigned int changeWeapon_2 = DMK_KEY_UNKNOWN;
-		unsigned int changeWeapon_3 = DMK_KEY_UNKNOWN;
-		unsigned int changeToMlee = DMK_KEY_UNKNOWN;
-		unsigned int changeMlee_1 = DMK_KEY_UNKNOWN;
-		unsigned int changeMlee_2 = DMK_KEY_UNKNOWN;
-		unsigned int changeMlee_3 = DMK_KEY_UNKNOWN;
-		unsigned int mleeAttack = DMK_KEY_UNKNOWN;
-		unsigned int reloadWeapon = DMK_KEY_UNKNOWN;
-		unsigned int pickWeapon = DMK_KEY_UNKNOWN;
-		unsigned int upgreadWeapon = DMK_KEY_UNKNOWN;
-		unsigned int throwWeapon = DMK_KEY_UNKNOWN;
+		unsigned int fireWeapon			=	DMK_KEY_UNKNOWN;
+		unsigned int aimWeapon			=	DMK_KEY_UNKNOWN;
+		unsigned int changeWeapon_1		=	DMK_KEY_UNKNOWN;
+		unsigned int changeWeapon_2		=	DMK_KEY_UNKNOWN;
+		unsigned int changeWeapon_3		=	DMK_KEY_UNKNOWN;
+		unsigned int changeToMlee		=	DMK_KEY_UNKNOWN;
+		unsigned int changeMlee_1		=	DMK_KEY_UNKNOWN;
+		unsigned int changeMlee_2		=	DMK_KEY_UNKNOWN;
+		unsigned int changeMlee_3		=	DMK_KEY_UNKNOWN;
+		unsigned int mleeAttack			=	DMK_KEY_UNKNOWN;
+		unsigned int reloadWeapon		=	DMK_KEY_UNKNOWN;
+		unsigned int pickWeapon			=	DMK_KEY_UNKNOWN;
+		unsigned int upgreadWeapon		=	DMK_KEY_UNKNOWN;
+		unsigned int throwWeapon		=	DMK_KEY_UNKNOWN;
 
 		/* CHARACTER CONSTOL BINDINGS */
-		unsigned int walkForward = DMK_KEY_UNKNOWN;
-		unsigned int walkBackward = DMK_KEY_UNKNOWN;
-		unsigned int walkLeft = DMK_KEY_UNKNOWN;
-		unsigned int walkRight = DMK_KEY_UNKNOWN;
-		unsigned int sprintKey = DMK_KEY_UNKNOWN;
-		unsigned int crouch = DMK_KEY_UNKNOWN;
-		unsigned int prone = DMK_KEY_UNKNOWN;
-		unsigned int leanLeft = DMK_KEY_UNKNOWN;
-		unsigned int leanRight = DMK_KEY_UNKNOWN;
-		unsigned int jump = DMK_KEY_UNKNOWN;
-		unsigned int holdBreath = DMK_KEY_UNKNOWN;
+		unsigned int walkForward		=	DMK_KEY_UNKNOWN;
+		unsigned int walkBackward		=	DMK_KEY_UNKNOWN;
+		unsigned int walkLeft			=	DMK_KEY_UNKNOWN;
+		unsigned int walkRight			=	DMK_KEY_UNKNOWN;
+		unsigned int sprintKey			=	DMK_KEY_UNKNOWN;
+		unsigned int crouch				=	DMK_KEY_UNKNOWN;
+		unsigned int prone				=	DMK_KEY_UNKNOWN;
+		unsigned int leanLeft			=	DMK_KEY_UNKNOWN;
+		unsigned int leanRight			=	DMK_KEY_UNKNOWN;
+		unsigned int jump				=	DMK_KEY_UNKNOWN;
+		unsigned int holdBreath			=	DMK_KEY_UNKNOWN;
 
 		/* VEHICLE CONTROL BINDINGS */
-		unsigned int driveForward = DMK_KEY_UNKNOWN;
-		unsigned int driveBackward = DMK_KEY_UNKNOWN;
-		unsigned int driveLeft = DMK_KEY_UNKNOWN;
-		unsigned int driveRight = DMK_KEY_UNKNOWN;
-		unsigned int brake = DMK_KEY_UNKNOWN;
-		unsigned int getInVehicle = DMK_KEY_UNKNOWN;
-		unsigned int getOutVehicle = DMK_KEY_UNKNOWN;
-		unsigned int horn = DMK_KEY_UNKNOWN;
-		unsigned int radio = DMK_KEY_UNKNOWN;
-		unsigned int boost = DMK_KEY_UNKNOWN;
+		unsigned int driveForward		=	DMK_KEY_UNKNOWN;
+		unsigned int driveBackward		=	DMK_KEY_UNKNOWN;
+		unsigned int driveLeft			=	DMK_KEY_UNKNOWN;
+		unsigned int driveRight			=	DMK_KEY_UNKNOWN;
+		unsigned int brake				=	DMK_KEY_UNKNOWN;
+		unsigned int getInVehicle		=	DMK_KEY_UNKNOWN;
+		unsigned int getOutVehicle		=	DMK_KEY_UNKNOWN;
+		unsigned int horn				=	DMK_KEY_UNKNOWN;
+		unsigned int radio				=	DMK_KEY_UNKNOWN;
+		unsigned int boost				=	DMK_KEY_UNKNOWN;
 
 		/* OTHER CONTROL BINDINGS */
-		unsigned int useHeal = DMK_KEY_UNKNOWN;
-		unsigned int drink = DMK_KEY_UNKNOWN;
+		unsigned int useHeal			=	DMK_KEY_UNKNOWN;
+		unsigned int drink				=	DMK_KEY_UNKNOWN;
 
 		/* CORE BINDINGS */
-		unsigned int openChat = DMK_KEY_UNKNOWN;
-		unsigned int openDevCon = DMK_KEY_UNKNOWN;
-		unsigned int sendMessage = DMK_KEY_UNKNOWN;
+		unsigned int openChat			=	DMK_KEY_UNKNOWN;
+		unsigned int openDevCon			=	DMK_KEY_UNKNOWN;
+		unsigned int sendMessage		=	DMK_KEY_UNKNOWN;
 
 		/* DEFAULT CONSTRUCTOR */
 		KeyBindings(
@@ -102,7 +104,7 @@ namespace Dynamik {
 			unsigned int chat = DMK_KEY_L,
 			unsigned int console = DMK_KEY_GRAVE_ACCENT,
 			unsigned int send = DMK_KEY_ENTER
-		) : fireWeapon(fireWeapon), aimWeapon(aimWeapon), changeWeapon_1(changeWeapon1),
+			) : fireWeapon(fireWeapon), aimWeapon(aimWeapon), changeWeapon_1(changeWeapon1),
 			changeWeapon_2(changeWeapon2), changeWeapon_3(changeWeapon3), changeToMlee(changeToMlee),
 			changeMlee_1(changeMlee1), changeMlee_2(changeMlee2), changeMlee_3(changeMlee3),
 			mleeAttack(mleeAttack), reloadWeapon(reloadWeapon), pickWeapon(pickWeapon),

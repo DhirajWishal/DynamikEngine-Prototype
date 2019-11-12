@@ -8,6 +8,7 @@
 namespace Dynamik {
 	namespace ADGR {
 		namespace core {
+
 			class Core {
 			public:
 				Core() {}
@@ -30,7 +31,7 @@ namespace Dynamik {
 			protected:
 
 				static GLFWwindow* windowsWindow;
-
+				
 				static VkInstance instance;
 				static VkDevice device;
 				static VkPhysicalDevice physicalDevice;
@@ -39,69 +40,69 @@ namespace Dynamik {
 				static VkSwapchainKHR swapchain;
 				static VkSurfaceCapabilitiesKHR surfaceCapabilities;
 				static VkRenderPass renderPass;
-
+				
 				static VkDescriptorSetLayout descriptorSetLayout;
 				static VkDescriptorPool descriptorPool;
 				static std::vector<VkDescriptorSet> descriptorSets;
-
+				
 				static VkCommandPool commandPool;
 				static std::vector<VkCommandBuffer> commandBuffers;
-
+				
 				static std::vector<VkSemaphore> imageAvailableSemaphore;
 				static std::vector<VkSemaphore> renderFinishedSemaphore;
 				static std::vector<VkFence> inFlightFence;
-
+				
 				static VkExtent2D swapChainExtent;
 				static VkFormat swapChainImageFormat;
 				static std::vector<VkImage> swapChainImages;
 				static std::vector<VkImageView> swapChainImageViews;
-
+				
 				static std::vector<VkFramebuffer> frameBuffers;
-
+				
 				static VkPipeline graphicsPipeline;
 				static VkPipelineLayout pipelineLayout;
-
+				
 				static VkQueue graphicsQueue;
 				static VkQueue presentQueue;
-
+				
 				static VkSampleCountFlagBits msaaSamples;
-
+				
 				static VkImage colorImage;
 				static VkDeviceMemory colorImageMemory;
 				static VkImageView colorImageView;
-
+				
 				static VkImage depthImage;
 				static VkDeviceMemory depthImageMemory;
 				static VkImageView depthImageView;
-
+				
 				static VkImage textureImage;
 				static VkDeviceMemory textureImageMemory;
 				static VkImageView textureImageView;
 				static VkSampler textureSampler;
-
+				
 				static uint32_t mipLevels;
-
+				
 				static bool frameBufferResizedEvent;
 				static unsigned int WIDTH;
 				static unsigned int HEIGHT;
-
+				
 				static float minMipLevel;
 				static float maxMipLevel;
-
+				
 				static DMK_ShaderCode vertexShaderCode;
 				static VkShaderModule vertexShaderModule;
 				static VkPipelineShaderStageCreateInfo vertexShaderStageInfo;
-
+				
 				static DMK_ShaderCode fragmentShaderCode;
 				static VkShaderModule fragmentShaderModule;
 				static VkPipelineShaderStageCreateInfo fragmentShaderStageInfo;
-
+				
 #ifdef USE_SHADER_TESSELLATION
 				static DMK_ShaderCode tessellationShaderCode;
 				static VkShaderModule tessellationShaderModule;
 				static VkPipelineShaderStageCreateInfo tessellationShaderStageInfo = {};
-#endif
-
+#endif			
+				
 #ifdef USE_SHADER_GEOMETRY
 				static DMK_ShaderCode geometryShaderCode;
 				static VkShaderModule geometryShaderModule;

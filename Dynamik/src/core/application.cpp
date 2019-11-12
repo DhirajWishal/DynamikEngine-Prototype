@@ -16,12 +16,13 @@ namespace Dynamik {
 	Application::Application() {
 		myLoader.run();
 
+
 		std::thread myThread(Application::showProgress);
 
 		std::vector<std::string>& texture = myLoader.getTexturePaths();
 		std::vector<std::string>& model = myLoader.getModelPaths();
 
-		myRenderingEngine.initRenderer({ "", 1.0f,  texture, model, &progress });
+		myRenderingEngine.initRenderer({ "", 1.0f,  texture, model, &progress});
 		shouldClose = true;
 
 		myThread.join();

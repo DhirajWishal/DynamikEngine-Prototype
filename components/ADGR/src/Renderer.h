@@ -21,6 +21,9 @@
 
 namespace Dynamik {
 	namespace ADGR {
+
+		
+
 		class ADGR_API Renderer {
 		public:
 			Renderer();

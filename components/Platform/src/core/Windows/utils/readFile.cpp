@@ -13,6 +13,7 @@
 namespace Dynamik {
 	namespace ADGR {
 		namespace utils {
+
 			std::vector<char> readFile(const std::string& filePath) {
 				std::ifstream file(filePath, std::ios::ate | std::ios::binary);
 

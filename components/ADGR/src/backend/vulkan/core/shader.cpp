@@ -6,6 +6,7 @@
 namespace Dynamik {
 	namespace ADGR {
 		namespace core {
+
 			void shaderManager::loadShader(DMK_ShaderCode shaderCode, ShaderType type) {
 			}
 

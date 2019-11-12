@@ -35,7 +35,6 @@ include "components/DevConsole"
 include "components/Audio"
 include "components/Platform"
 include "components/Debugger"
-include "components/CentralDataHub"
 
 include "components/Sampler"
 
@@ -79,7 +78,6 @@ project "Dynamik"
 		"$(SolutionDir)components/Platform/src",
 		"$(SolutionDir)components/DevConsole/src",
 		"$(SolutionDir)components/Debugger/src",
-		"$(SolutionDir)components/CentralDataHub/src",
 		"%{IncludeDir.GLFW}",
 		"%{IncludeDir.Glad}",
 		"%{IncludeDir.glm}",
@@ -104,8 +102,7 @@ project "Dynamik"
 		"glfw3dll",
 		"opengl32",
 		"vulkan-1",
-		"Debugger",
-		"CentralDataHub"
+		"Debugger"
 	}
 
 	filter "system:windows"
@@ -164,7 +161,6 @@ project "Application"
 		"$(solutionDir)components/Platform/src",
 		"$(solutionDir)components/DevConsole/src",
 		"$(SolutionDir)components/Debugger/src",
-		"$(SolutionDir)components/CentralDataHub/src",
 		"%{IncludeDir.GLFW}",
 		"%{IncludeDir.Glad}",
 		"%{IncludeDir.glm}",
@@ -190,8 +186,7 @@ project "Application"
 		"glfw3dll",
 		"opengl32",
 		"vulkan-1",
-		"Debugger",
-		"CentralDataHub"
+		"Debugger"
 	}
 
 	postbuildcommands {
@@ -253,7 +248,6 @@ project "Managers"
 		--"$(solutionDir)components/Sampler/src",
 		"$(solutionDir)components/Managers/src",
 		"$(SolutionDir)components/Debugger/src",
-		"$(SolutionDir)components/CentralDataHub/src",
 		"$(SolutionDir)libs/glm/**.hpp",
 		"$(SolutionDir)libs/glm/**.inl",
 		"%{IncludeDir.GLFW}",
@@ -272,8 +266,7 @@ project "Managers"
 		--"glfw3dll",
 		--"opengl32",
 		--"vulkan-1",
-		"Debugger",
-		"CentralDataHub"
+		"Debugger"
 	}
 
 	filter "system:windows"

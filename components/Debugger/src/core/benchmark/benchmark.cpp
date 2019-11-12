@@ -8,6 +8,7 @@
 namespace Dynamik {
 	namespace Debugger {
 		namespace benchmark {
+
 			Benchmark::Benchmark() {
 				startTimePoint = std::chrono::high_resolution_clock::now();
 			}

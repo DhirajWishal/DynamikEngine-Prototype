@@ -18,6 +18,7 @@
 #define BIT(x) (1 << x)
 
 namespace Dynamik {
+
 	enum class EVENT_TYPE {
 		none,
 		windowClose, windowResize, windowFocus, windowLostFocus, windowMoved,
@@ -56,7 +57,9 @@ namespace Dynamik {
 		}
 
 	private:
+
 	};
+
 
 	// Event Dispatcher class
 	class EventDispatcher {

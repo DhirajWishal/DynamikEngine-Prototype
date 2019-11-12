@@ -3,6 +3,7 @@
 
 namespace Dynamik {
 	namespace ADGR {
+
 		Layer::Layer(const std::string& name) : debugName(name) {
 		}
 

@@ -6,6 +6,7 @@
 namespace Dynamik {
 	namespace ADGR {
 		namespace core {
+
 			void commandBufferManager::createBuffer(VkBuffer* buffer, size_t size,
 				VkBufferUsageFlags flags, VkBufferUsageFlagBits memoryFlags) {
 			}

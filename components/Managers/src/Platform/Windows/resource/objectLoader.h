@@ -2,6 +2,7 @@
 
 namespace Dynamik {
 	namespace resources {
+
 		//struct ObjectData {
 		//	tinyobj::attrib_t attributes;
 		//	std::vector<tinyobj::shape_t> shapes;

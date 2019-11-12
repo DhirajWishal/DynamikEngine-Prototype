@@ -8,6 +8,7 @@
 namespace Dynamik {
 	namespace ADGR {
 		namespace core {
+
 			/* FUNCTION DESCRIPTOR STRUCTS */
 			// naming convention -> (DMK + <class name> + <function name> + <type>)
 

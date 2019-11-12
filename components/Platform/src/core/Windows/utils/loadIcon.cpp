@@ -1,8 +1,11 @@
 #include "dmkafx.h"
 #include "loadIcon.h"
 
+
+
 namespace Dynamik {
 	namespace ADGR {
+
 		std::fstream load_icon(std::string path) {
 			std::fstream icon;
 			icon.open(path, std::ios::in);

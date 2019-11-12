@@ -7,6 +7,7 @@
 namespace Dynamik {
 	namespace ADGR {
 		namespace core {
+
 			void instanceManager::init() {
 				if (enableValidationLayers && !checkValidationLayerSupport())
 					std::runtime_error("validation layers requested, but not available!");
@@ -33,7 +34,7 @@ namespace Dynamik {
 					createInfo.ppEnabledLayerNames = validationLayer.data();
 
 					populateDebugMessegerCreateInfo(debugCreateInfo);
-					createInfo.pNext = (VkDebugUtilsMessengerCreateInfoEXT*)&debugCreateInfo;
+					createInfo.pNext = (VkDebugUtilsMessengerCreateInfoEXT*)& debugCreateInfo;
 				}
 				else {
 					createInfo.enabledLayerCount = 0;

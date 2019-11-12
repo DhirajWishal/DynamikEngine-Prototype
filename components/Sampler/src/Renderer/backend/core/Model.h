@@ -7,6 +7,7 @@
 namespace Dynamik {
 	namespace ADGR {
 		namespace core {
+
 			struct DMKModelLoadInfo {
 				std::string path;
 

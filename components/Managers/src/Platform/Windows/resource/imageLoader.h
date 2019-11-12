@@ -2,7 +2,9 @@
 
 namespace Dynamik {
 	namespace resource {
+
 		//typedef stbi_uc image;
+
 
 		enum TextureType {
 			TEXTURE_TYPE_RGB,

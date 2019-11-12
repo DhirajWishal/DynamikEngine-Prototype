@@ -42,4 +42,5 @@ namespace Dynamik {
 
 	// Defined by the Client
 	Application* createApplication();
+
 }

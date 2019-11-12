@@ -25,9 +25,11 @@ namespace Dynamik {
 		using namespace functions;
 
 		vulkanRenderer2D::vulkanRenderer2D() {
+
 		}
 
 		vulkanRenderer2D::~vulkanRenderer2D() {
+
 		}
 
 		void vulkanRenderer2D::init() {/*
@@ -265,9 +267,11 @@ namespace Dynamik {
 		}
 
 		void vulkanRenderer2D::drawFrame() {
+
 		}
 
 		void vulkanRenderer2D::shutDown() {
+
 		}
 
 		// load an object

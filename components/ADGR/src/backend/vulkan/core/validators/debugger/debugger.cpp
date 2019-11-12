@@ -16,6 +16,7 @@
 namespace Dynamik {
 	namespace ADGR {
 		namespace core {
+
 			void populateDebugMessegerCreateInfo(VkDebugUtilsMessengerCreateInfoEXT& createInfo) {
 				createInfo = {};
 				createInfo.sType = VK_STRUCTURE_TYPE_DEBUG_UTILS_MESSENGER_CREATE_INFO_EXT;

@@ -51,7 +51,7 @@
     <ClInclude Include="src\core\object mechanics\submitAsset.h">
       <Filter>src\core\object mechanics</Filter>
     </ClInclude>
-    <ClInclude Include="src\core\utils\DMK_Descriptors.h">
+    <ClInclude Include="src\core\utils\DMK_DataTypes.h">
       <Filter>src\core\utils</Filter>
     </ClInclude>
     <ClInclude Include="src\core\utils\DMK_Error.h">
@@ -75,6 +75,7 @@
     <ClInclude Include="src\dmkafx.h">
       <Filter>src</Filter>
     </ClInclude>
+    <ClInclude Include="src\core\utils\DMK_Descriptors.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\core\application.cpp">

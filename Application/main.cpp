@@ -11,7 +11,7 @@
 
 #include "Layers/layerStack.h"
 #include "core/application.h"
-#include "CentralDataHub.h"
+#include "core/utils/DMK_DataTypes.h"
 #include "core/utils/DMK_Functions.h"
 
 #include "debugger.h"
@@ -32,6 +32,7 @@ public:
 	}
 
 private:
+
 };
 
 class Engine : public Dynamik::Application {
@@ -41,12 +42,14 @@ public:
 	}
 
 	~Engine() {
+
 	}
 };
 
 Dynamik::Application* Dynamik::createApplication() {
 	return new Engine();
 }
+
 
 /* -----||||| MAIN LAUNCH SYSTEM |||||----- */
 
@@ -66,7 +69,7 @@ int main(int argc, char** argv) {
 
 		delete application;
 	}
-	catch (std::exception & e) {
+	catch (std::exception& e) {
 		std::cout << e.what();
 
 		return DMK_FAIL;

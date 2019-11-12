@@ -23,6 +23,7 @@ namespace std {
 namespace Dynamik {
 	namespace ADGR {
 		namespace core {
+
 			void modelManager::loadModel(DMKModelLoadInfo info) {
 				tinyobj::attrib_t attributes;
 				std::vector<tinyobj::shape_t> shapes;
@@ -61,8 +62,6 @@ namespace Dynamik {
 				}
 			}
 
-			std::mutex modelMutex;
-
 			void loadModel(DMKModelLoadInfo info) {
 				tinyobj::attrib_t attributes;
 				std::vector<tinyobj::shape_t> shapes;
@@ -87,12 +86,9 @@ namespace Dynamik {
 						vertices.TexCoordinates = {
 							attributes.texcoords[2 * index.texcoord_index + 0],
 							1.0f - attributes.texcoords[2 * index.texcoord_index + 1]
-							//1.0f, 1.0f
 						};
 
 						vertices.Color = { 1.0f, 1.0f, 1.0f };
-
-						std::lock_guard<std::mutex> modelLock(modelMutex);
 
 						if (uniqueVertices.count(vertices) == 0) {
 							uniqueVertices[vertices] = static_cast<uint32_t>(info.vertices->size());
@@ -106,3 +102,4 @@ namespace Dynamik {
 		}
 	}
 }
+

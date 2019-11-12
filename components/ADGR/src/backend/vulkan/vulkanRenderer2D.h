@@ -18,7 +18,7 @@
 #include "core/data structures/DMK_ADGR_DataStructures.h"
 
 //#define INC_PROGRESS	(*myProgress += 1)
-#define INC_PROGRESS
+#define INC_PROGRESS	
 
 namespace Dynamik {
 	namespace ADGR {
@@ -60,10 +60,7 @@ namespace Dynamik {
 
 			core::shaderManager myShaderManager{};
 
-			VkDebugUtilsMessengerEXT msg;
-			VkInstance ins;
-
-			core::debugger myDebugger{ &ins, &msg };
+			core::debugger myDebugger{ myInstance.getInstanceAddr(), myInstance.getdebugMessengerAddr() };
 
 			// terrain data
 			std::vector<core::Vertex> terrainVBO = {};

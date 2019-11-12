@@ -4,6 +4,7 @@
 namespace Dynamik {
 	namespace ADGR {
 		namespace core {
+
 			std::vector<VkVertexInputBindingDescription> Vertex::getBindingDescription(int bindCount) {
 				std::vector<VkVertexInputBindingDescription> bindingDescription(bindCount);
 
@@ -44,66 +45,28 @@ namespace Dynamik {
 			//}
 
 			std::vector<VkVertexInputAttributeDescription> Vertex::getAttributeDescriptions(int bindCount) {
-				std::vector<VkVertexInputAttributeDescription> attributeDescriptions(bindCount * 3);
-				int counter = 0;
+					std::vector<VkVertexInputAttributeDescription> attributeDescriptions(bindCount * 3);
+					int counter = 0;
 
-				for (int i = 0; i < bindCount * 3; i += 3) {
-					attributeDescriptions[i].binding = counter;
-					attributeDescriptions[i].location = i;
-					attributeDescriptions[i].format = VK_FORMAT_R32G32B32_SFLOAT;
-					attributeDescriptions[i].offset = offsetof(Vertex, Position);
+					for (int i = 0; i < bindCount * 3; i += 3) {
+						attributeDescriptions[i].binding = counter;
+						attributeDescriptions[i].location = i;
+						attributeDescriptions[i].format = VK_FORMAT_R32G32B32_SFLOAT;
+						attributeDescriptions[i].offset = offsetof(Vertex, Position);
 
-					attributeDescriptions[i + 1].binding = counter;
-					attributeDescriptions[i + 1].location = i + 1;
-					attributeDescriptions[i + 1].format = VK_FORMAT_R32G32B32_SFLOAT;
-					attributeDescriptions[i + 1].offset = offsetof(Vertex, Color);
+						attributeDescriptions[i + 1].binding = counter;
+						attributeDescriptions[i + 1].location = i + 1;
+						attributeDescriptions[i + 1].format = VK_FORMAT_R32G32B32_SFLOAT;
+						attributeDescriptions[i + 1].offset = offsetof(Vertex, Color);
 
-					attributeDescriptions[i + 2].binding = counter;
-					attributeDescriptions[i + 2].location = i + 2;
-					attributeDescriptions[i + 2].format = VK_FORMAT_R32G32_SFLOAT;
-					attributeDescriptions[i + 2].offset = offsetof(Vertex, TexCoordinates);
+						attributeDescriptions[i + 2].binding = counter;
+						attributeDescriptions[i + 2].location = i + 2;
+						attributeDescriptions[i + 2].format = VK_FORMAT_R32G32_SFLOAT;
+						attributeDescriptions[i + 2].offset = offsetof(Vertex, TexCoordinates);
 
-					counter++;
-				}
-
-				return attributeDescriptions;
-			}
-
-			std::vector<VkVertexInputBindingDescription> PointVertex::getBindingDescription(int bindCount) {
-				std::vector<VkVertexInputBindingDescription> bindingDescription(bindCount);
-
-				for (int i = 0; i < bindCount; i++) {
-					bindingDescription[i].binding = i;
-					bindingDescription[i].stride = sizeof(Vertex);
-					bindingDescription[i].inputRate = VK_VERTEX_INPUT_RATE_VERTEX;
-				}
-
-				return bindingDescription;
-			}
-
-			std::vector<VkVertexInputAttributeDescription> PointVertex::getAttributeDescriptions(int bindCount) {
-				std::vector<VkVertexInputAttributeDescription> attributeDescriptions(bindCount * 3);
-				int counter = 0;
-
-				for (int i = 0; i < bindCount * 3; i += 3) {
-					attributeDescriptions[i].binding = counter;
-					attributeDescriptions[i].location = i;
-					attributeDescriptions[i].format = VK_FORMAT_R32G32B32_SFLOAT;
-					attributeDescriptions[i].offset = offsetof(Vertex, Position);
-
-					attributeDescriptions[i + 1].binding = counter;
-					attributeDescriptions[i + 1].location = i + 1;
-					attributeDescriptions[i + 1].format = VK_FORMAT_R32G32B32_SFLOAT;
-					attributeDescriptions[i + 1].offset = offsetof(Vertex, Color);
-
-					attributeDescriptions[i + 2].binding = counter;
-					attributeDescriptions[i + 2].location = i + 2;
-					attributeDescriptions[i + 2].format = VK_FORMAT_R32G32_SFLOAT;
-					attributeDescriptions[i + 2].offset = offsetof(Vertex, TexCoordinates);
-
-					counter++;
-				}
-
+						counter++;
+					}
+			
 				return attributeDescriptions;
 			}
 		}

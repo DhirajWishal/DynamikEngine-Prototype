@@ -5,6 +5,7 @@
 #include "Key Bindings/KeyBingings.h"
 
 namespace Dynamik {
+
 	struct InputContainer {
 		std::vector<GameObject> assets;
 		KeyBindings keyBindings;

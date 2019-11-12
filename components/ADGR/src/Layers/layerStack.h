@@ -4,6 +4,7 @@
 
 namespace Dynamik {
 	namespace ADGR {
+
 		class ADGR_API layerStack {
 		public:
 			layerStack();

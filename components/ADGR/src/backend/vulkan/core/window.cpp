@@ -9,11 +9,12 @@
 namespace Dynamik {
 	namespace ADGR {
 		namespace core {
+
 			void window::init(ADGRVulkanDataContainer* container) {
 				glfwInit();
 
 				glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
-#if defined(DMK_DEBUG) || defined(DMK_RELEASE)
+#ifdef DMK_DEBUG
 				container->window = glfwCreateWindow(WIDTH, HEIGHT, "Dynamik Engine", nullptr, nullptr);
 
 #else
@@ -29,6 +30,8 @@ namespace Dynamik {
 
 #endif
 				glfwMakeContextCurrent(container->window);
+
+				//setEventCallback(BIND_EVENT_FUNCTION(onEvent));
 
 				glfwSetWindowUserPointer(container->window, this);
 				glfwSetFramebufferSizeCallback(container->window, framebufferResizeCallback);

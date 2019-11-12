@@ -8,6 +8,7 @@
 namespace Dynamik {
 	namespace ADGR {
 		namespace core {
+
 			struct windowProperties {
 				std::string title;
 				unsigned int width;
@@ -56,7 +57,7 @@ namespace Dynamik {
 				keyEvent getKeyEvent();
 				cursorEvent getCursorEvent();
 
-				std::tuple<int, mouseEventData*> getEvent() {
+				std::tuple<int, mouseEventData*> getEvent() { 
 					std::tuple<int, mouseEventData*> data = { keyCodeOne, med };
 					return data;
 				}

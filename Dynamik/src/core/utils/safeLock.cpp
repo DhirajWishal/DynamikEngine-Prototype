@@ -3,10 +3,13 @@
 
 namespace Dynamik {
 	namespace utils {
+
 		safeLock::safeLock() {
+
 		}
 
 		safeLock::~safeLock() {
+
 		}
 	}
 }

@@ -3,7 +3,8 @@
 #include "event.h"
 
 namespace Dynamik {
-	// Moused Moved Event
+
+	// Moused Moved Event 
 	class  MouseMovedEvent : public Event {
 	public:
 		MouseMovedEvent(float x, float y) :
@@ -14,7 +15,7 @@ namespace Dynamik {
 
 		std::string toString() const override;
 
-		EVENT_CLASS_TYPE(mouseMoved) EVENT_CLASS_CATEGORY(eventCategoryMouse | eventCategoryInput)
+	EVENT_CLASS_TYPE(mouseMoved) EVENT_CLASS_CATEGORY(eventCategoryMouse | eventCategoryInput)
 
 	private:
 		float m_MouseX, m_MouseY;
@@ -81,5 +82,6 @@ namespace Dynamik {
 		MouseMovedEvent mouseMovedEvent;
 
 		MouseScrolledEvent mouseScrolledEvent;
+
 	};
 }

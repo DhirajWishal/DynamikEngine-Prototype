@@ -9,11 +9,12 @@
  IDE:		MS Visual Studio Community 2019
 */
 
-#include "CentralDataHub.h"
+#include "core/utils/DMK_DataTypes.h"
 
 namespace Dynamik {
 	namespace ADGR {
 		namespace core {
+
 			std::vector<const char*> getRequiredExtentions(bool);
 		}
 	}

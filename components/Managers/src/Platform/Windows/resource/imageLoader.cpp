@@ -8,7 +8,9 @@
 
 namespace Dynamik {
 	namespace resource {
+
 		unsigned char* TextureData::loadTexture(std::string path, TextureType type) {
+
 			unsigned char* myTexture = nullptr;
 
 			if (type == TEXTURE_TYPE_RGB)

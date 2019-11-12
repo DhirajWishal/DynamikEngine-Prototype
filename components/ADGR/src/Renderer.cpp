@@ -22,12 +22,15 @@
 
 namespace Dynamik {
 	namespace ADGR {
+
 		vulkanRenderer rendererCore;
 
 		Renderer::Renderer() {
+
 		}
 
 		Renderer::~Renderer() {
+
 		}
 
 		void Renderer::initRenderer(initInfo::ADGR info) {
@@ -59,7 +62,7 @@ namespace Dynamik {
 			int prop = NULL;
 
 			auto [ked, med] = rendererCore.getEvent();
-
+			
 			if (ked != prop)
 				return rendererCore.getEvent();
 			return { NULL, nullptr };
@@ -70,6 +73,7 @@ namespace Dynamik {
 		}
 
 		void Renderer::bindKeys() {
+
 		}
 	}
 }

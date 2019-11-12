@@ -29,7 +29,7 @@ namespace Dynamik {
 			LOG("Audio Engine update loop started");
 			for (auto itr = audioObjectList.begin(); itr != audioObjectList.end(); itr++) {
 				if (&(*itr) == nullptr) {
-					audioObjectList.erase(itr);
+					audioObjectList.erase(itr);		
 					continue;
 				}
 

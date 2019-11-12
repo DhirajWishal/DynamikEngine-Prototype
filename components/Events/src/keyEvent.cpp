@@ -1,6 +1,7 @@
 #include "keyEvent.h"
 
 namespace Dynamik {
+
 	std::string KeyPressedEvent::toString() const {
 		std::stringstream ss;
 		ss << "KeyPressedEvent: " << k_KeyCode <<

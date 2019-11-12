@@ -14,6 +14,7 @@ namespace Dynamik {
 			}
 
 			manager::~manager() {
+
 			}
 
 			void manager::setResource(ADGRManagerGetResourceInfo info) {
@@ -24,21 +25,27 @@ namespace Dynamik {
 					break;
 				}
 				case DMK_ADGR_PIPELINE_3D: {
+
 					break;
 				}
 				case DMK_ADGR_PIPELINE_SKYBOX: {
+
 					break;
 				}
 				case DMK_ADGR_SHADER_VERTEX: {
+
 					break;
 				}
 				case DMK_ADGR_SHADER_TESSELLATION: {
+
 					break;
 				}
 				case DMK_ADGR_SHADER_GEOMETRY: {
+
 					break;
 				}
 				case DMK_ADGR_SHADER_FRAGMENT: {
+
 					break;
 				}
 				default:
@@ -50,5 +57,5 @@ namespace Dynamik {
 				return nullptr;
 			}*/
 		}
-	}
+	 }
 }

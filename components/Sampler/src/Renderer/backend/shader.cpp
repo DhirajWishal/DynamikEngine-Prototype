@@ -6,6 +6,7 @@
 namespace Dynamik {
 	namespace ADGR {
 		namespace core {
+
 			void shaderManager::loadShader(DMK_ShaderCode shaderCode, ShaderType type) {
 				switch (type) {
 				case Dynamik::ADGR::core::VERTEX_SHADER:
@@ -43,12 +44,12 @@ namespace Dynamik {
 
 				// initialize the fragment shader module
 				fragShaderStageInfo->sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
-				fragShaderStageInfo->stage = VK_SHADER_STAGE_FRAGMENT_BIT;
+				fragShaderStageInfo->stage = VK_SHADER_STAGE_FRAGMENT_BIT; 
 				fragShaderStageInfo->module = *m_fragmentShaderModule;
 				fragShaderStageInfo->pName = "main";
 
 #ifdef USE_SHADER_TESSELLATION
-				* m_tessShaderModule = createShaderModule(*m_tessallationShaderCode);
+				*m_tessShaderModule = createShaderModule(*m_tessallationShaderCode);
 
 				tessShaderStageInfo->sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
 				tessShaderStageInfo->stage = VK_SHADER_STAGE_TESSELLATION_CONTROL_BIT;
@@ -57,7 +58,7 @@ namespace Dynamik {
 #endif
 
 #ifdef USE_SHADER_GEOMETRY
-				* m_geoShaderModule = createShaderModule(*m_geometryShaderCode);
+				*m_geoShaderModule = createShaderModule(*m_geometryShaderCode);
 
 				geoShaderStageInfo->sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
 				geoShaderStageInfo->stage = VK_SHADER_STAGE_GEOMETRY_BIT;

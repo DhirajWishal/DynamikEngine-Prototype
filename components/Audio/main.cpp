@@ -2,6 +2,7 @@
 #include <src/core/log.h>
 #include <windows.h>
 
+
 void fakeupdate() {
 	using namespace Dynamik::Audio;
 	AudioEngine engine = AudioEngine();
@@ -10,6 +11,7 @@ void fakeupdate() {
 
 	BasicAudioController contro2("media/explosion.wav");
 	contro2.isLooped = true;
+
 
 	while (true) {
 		engine.update();
@@ -20,18 +22,19 @@ void fakeupdate() {
 		}
 		else if (x == 'g') {
 			engine.addAudioController(contro2);
-		}
+		}		
 	}
-}
+ }
 
 class AA {
-public:
+	public :
 	int b = 0;
 	static AA& getInstance() {
 		static AA a;
 		a.b++;
 		return a;
 	}
+
 };
 
 int main() {
@@ -39,3 +42,4 @@ int main() {
 	fakeupdate();
 	return 0;
 }
+

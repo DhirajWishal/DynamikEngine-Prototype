@@ -5,9 +5,9 @@
 namespace Dynamik {
 	namespace Audio {
 		class AudioObjectController {
-		public:
+		public :
 			AudioObjectController(std::string filePath);
-			std::string filepath;
+			std::string filepath;			
 			virtual bool shouldPlay() = 0;
 			bool isPaused = false;
 			bool isLooped = false;

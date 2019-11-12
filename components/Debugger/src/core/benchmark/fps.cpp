@@ -8,6 +8,7 @@
 namespace Dynamik {
 	namespace Debugger {
 		namespace benchmark {
+
 			FPS::FPS() {
 				printf("\t-----Benchmark tool: FPS Calculator initiated!-----\n");
 			}

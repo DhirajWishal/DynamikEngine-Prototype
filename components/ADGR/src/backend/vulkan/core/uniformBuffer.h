@@ -1,13 +1,11 @@
 #pragma once
 
-#ifndef _DYNAMIK_ADGR_VULKAN_UNIFORM_BUFFER_H
-#define _DYNAMIK_ADGR_VULKAN_UNIFORM_BUFFER_H
-
 #include "core/Buffer.h"
 
 namespace Dynamik {
 	namespace ADGR {
 		namespace core {
+
 			struct DMKUniformBufferCreateInfo {
 				std::vector<VkBuffer>* buffers = {};
 				std::vector<VkDeviceMemory>* bufferMemories = {};
@@ -59,8 +57,8 @@ namespace Dynamik {
 				void deleteBuffer(ADGRVulkanDataContainer* container, VkBuffer* buffer) override;
 
 			private:
-				const float movementBias = 0.01f;
-				const float upDownBias = 0.01f;
+				const float movementBias = 0.005f;
+				const float upDownBias = 0.005f;
 				const float rotationBias = 2.5f;
 				//const float rotationBias	= 0.05f;
 
@@ -73,5 +71,3 @@ namespace Dynamik {
 		}
 	}
 }
-
-#endif

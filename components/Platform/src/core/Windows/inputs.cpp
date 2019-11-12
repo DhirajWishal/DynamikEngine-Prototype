@@ -4,6 +4,7 @@
 namespace Dynamik {
 	namespace ADGR {
 		namespace windows {
+
 			//bool windowsInput::isKeyPressedImpl(int keyCode) {
 			//	return true;
 			//}

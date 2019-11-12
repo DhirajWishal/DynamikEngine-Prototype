@@ -13,6 +13,7 @@
 
 namespace Dynamik {
 	namespace ADGR {
+
 		class Renderer {
 		public:
 			Renderer();
@@ -80,6 +81,7 @@ namespace Dynamik {
 			uint32_t currentFrame = 0;
 
 			core::keyEvent myEvent;
+
 		};
 	}
 }

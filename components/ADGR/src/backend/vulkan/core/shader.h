@@ -1,5 +1,8 @@
 #pragma once
 
+#ifndef _DYNAMIK_ADGR_VULKAN_SHADER_H
+#define _DYNAMIK_ADGR_VULKAN_SHADER_H
+
 #include "core/Shader.h"
 
 namespace Dynamik {
@@ -25,3 +28,5 @@ namespace Dynamik {
 		}
 	}
 }
+
+#endif // !_DYNAMIK_ADGR_VULKAN_SHADER_H

@@ -1,5 +1,8 @@
 #pragma once
 
+#ifndef _DYNAMIK_MANAGERS_WINDOWS_MEMORY_MANAGER_H
+#define _DYNAMIK_MANAGERS_WINDOWS_MEMORY_MANAGER_H
+
 #include "CentralDataHub.h"
 
 namespace Dynamik {
@@ -22,3 +25,5 @@ namespace Dynamik {
 		};
 	}
 }
+
+#endif // !_DYNAMIK_MANAGERS_MEMORY_MANAGER_H

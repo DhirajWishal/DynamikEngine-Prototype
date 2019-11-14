@@ -1,7 +1,9 @@
 #pragma once
 
-/* KEY BINDINGS FROM DMK */
+#ifndef _DYNAMIK_EVENTS_KEY_CODES_H
+#define _DYNAMIK_EVENTS_KEY_CODES_H
 
+/* KEY BINDINGS FROM DMK */
 namespace Dynamik {
 #define DMK_RELEASE                0
 
@@ -248,3 +250,5 @@ namespace Dynamik {
 #define DMK_GAMEPAD_AXIS_RIGHT_TRIGGER 5
 #define DMK_GAMEPAD_AXIS_LAST          DMK_GAMEPAD_AXIS_RIGHT_TRIGGER
 }
+
+#endif // !_DYNAMIK_EVENTS_KEY_CODES_H

@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef _DMK_ADGR_MANAGER_H
-#define _DMK_ADGR_MANAGER_H
+#ifndef _DYNAMIK_ADGR_VULKAN_MANAGER_H
+#define _DYNAMIK_ADGR_VULKAN_MANAGER_H
 
 #include "core/Manager.h"
 
@@ -23,4 +23,4 @@ namespace Dynamik {
 	}
 }
 
-#endif
+#endif	// !_DYNAMIK_ADGR_VULKAN_MANAGER_H

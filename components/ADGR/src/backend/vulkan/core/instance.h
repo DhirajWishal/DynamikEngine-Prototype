@@ -1,5 +1,8 @@
 #pragma once
 
+#ifndef _DYNAMIK_ADGR_VULKAN_INSTANCE_H
+#define _DYNAMIK_ADGR_VULKAN_INSTANCE_H
+
 #include "core/Instance.h"
 
 namespace Dynamik {
@@ -17,3 +20,5 @@ namespace Dynamik {
 		}
 	}
 }
+
+#endif // !_DYNAMIK_ADGR_VULKAN_INSTANCE_H

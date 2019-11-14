@@ -9,6 +9,9 @@
  IDE:		MS Visual Studio Community 2019
 */
 
+#ifndef _DYNAMIK_ADGR_VULKAN_QUEUES_H
+#define _DYNAMIK_ADGR_VULKAN_QUEUES_H
+
 #include "CentralDataHub.h"
 
 namespace Dynamik {
@@ -27,3 +30,5 @@ namespace Dynamik {
 		}
 	}
 }
+
+#endif // !_DYNAMIK_ADGR_VULKAN_QUEUES_H

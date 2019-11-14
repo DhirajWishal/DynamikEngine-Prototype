@@ -1,5 +1,8 @@
 #pragma once
 
+#ifndef _DYNAMIK_EVENTS_MOUSE_EVENTS_H
+#define _DYNAMIK_EVENTS_MOUSE_EVENTS_H
+
 #include "event.h"
 
 namespace Dynamik {
@@ -83,3 +86,5 @@ namespace Dynamik {
 		MouseScrolledEvent mouseScrolledEvent;
 	};
 }
+
+#endif // !_DYNAMIK_EVENTS_MOUSE_EVENTS_H

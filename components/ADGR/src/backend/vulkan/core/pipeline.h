@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef _DMK_ADGR_VULKAN_PIPELINE_H
-#define _DMK_ADGR_VULKAN_PIPELINE_H
+#ifndef _DYNAMIK_ADGR_VULKAN_PIPELINE_H
+#define _DYNAMIK_ADGR_VULKAN_PIPELINE_H
 
 #include "core/Pipeline.h"
 
@@ -24,4 +24,4 @@ namespace Dynamik {
 	}
 }
 
-#endif
+#endif	// !_DYNAMIK_ADGR_VULKAN_PIPELINE_H

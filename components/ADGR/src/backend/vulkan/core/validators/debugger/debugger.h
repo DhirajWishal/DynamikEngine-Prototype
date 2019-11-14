@@ -9,6 +9,9 @@
  IDE:		MS Visual Studio Community 2019
 */
 
+#ifndef _DYNAMIK_ADGR_VULKAN_DEBUGGER_H
+#define _DYNAMIK_ADGR_VULKAN_DEBUGGER_H
+
 namespace Dynamik {
 	namespace ADGR {
 		namespace core {
@@ -50,3 +53,5 @@ namespace Dynamik {
 		}
 	}
 }
+
+#endif // !_DYNAMIK_ADGR_VULKAN_DEBUGGER_H

@@ -1,5 +1,8 @@
 #pragma once
 
+#ifndef _DYNAMIK_ADGR_VULKAN_TYPENAMES_H
+#define _DYNAMIK_ADGR_VULKAN_TYPENAMES_H
+
 #include <vector>
 
 namespace Dynamik {
@@ -9,3 +12,5 @@ namespace Dynamik {
 		}
 	}
 }
+
+#endif // !_DYNAMIK_ADGR_VULKAN_TYPENAMES_H

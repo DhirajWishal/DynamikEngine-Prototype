@@ -232,12 +232,15 @@ namespace Dynamik {
 
 				vkDestroySwapchainKHR(container->device, container->swapchainContainer.swapchain, nullptr);
 
-				for (size_t i = 0; i < container->swapchainContainer.swapChainImages.size(); i++) {
-					vkDestroyBuffer(container->device, info.uniformBuffers[i], nullptr);
-					vkFreeMemory(container->device, info.uniformBufferMemories[i], nullptr);
+				for (int x = 0; x < info.uniformBuffers.size(); x++) {
+					for (size_t i = 0; i < container->swapchainContainer.swapChainImages.size(); i++) {
+						vkDestroyBuffer(container->device, info.uniformBuffers[x][i], nullptr);
+						vkFreeMemory(container->device, info.uniformBufferMemories[x][i], nullptr);
+					}
 				}
 
-				vkDestroyDescriptorPool(container->device, info.descriptorPool, nullptr);
+				for(int i = 0; i < info.descriptorPool.size(); i++)
+				vkDestroyDescriptorPool(container->device, info.descriptorPool[i], nullptr);
 			}
 
 			void swapChain::initImageViews(ADGRVulkanDataContainer* container) {

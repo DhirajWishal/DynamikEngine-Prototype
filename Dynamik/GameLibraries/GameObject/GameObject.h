@@ -11,6 +11,9 @@
  GameObject.h file.
 */
 
+#ifndef _DYNAMIK_GAME_OBJECT_H
+#define _DYNAMIK_GAME_OBJECT_H
+
 /* MAIN INCLUDES */
 #include "core/core.h"
 #include "core/utils/DMK_Error.h"
@@ -215,3 +218,5 @@ namespace Dynamik {
 		GameObjectProperties myProperties;
 	};
 }
+
+#endif // !_DYNAMIK_GAME_OBJECT_H

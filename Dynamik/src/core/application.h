@@ -1,5 +1,8 @@
 #pragma once
 
+#ifndef _DYNAMIK_APPLICATION_H
+#define _DYNAMIK_APPLICATION_H
+
 #include "core.h"
 #include "src/Renderer.h"
 #include "src/Layers/layer.h"
@@ -43,3 +46,5 @@ namespace Dynamik {
 	// Defined by the Client
 	Application* createApplication();
 }
+
+#endif // !_DYNAMIK_APPLICATION_H

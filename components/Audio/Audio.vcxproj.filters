@@ -12,7 +12,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="main.h" />
     <ClInclude Include="src\Audio.h">
       <Filter>src</Filter>
     </ClInclude>

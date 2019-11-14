@@ -1,4 +1,6 @@
 #pragma once
+#ifndef _DYNAMIK_ADGR_VULKAN_UNIFORM_H
+#define _DYNAMIK_ADGR_VULKAN_UNIFORM_H
 
 namespace Dynamik {
 	namespace ADGR {
@@ -11,3 +13,5 @@ namespace Dynamik {
 		}
 	}
 }
+
+#endif // !_DYNAMIK_ADGR_VULKAN_UNIFORM_H

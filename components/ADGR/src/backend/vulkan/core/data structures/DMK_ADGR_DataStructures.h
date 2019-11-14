@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef _DMK_ADGR_VULKAN_DATA_STRUCTURES_H
-#define _DMK_ADGR_VULKAN_DATA_STRUCTURES_H
+#ifndef _DYNAMIK_ADGR_VULKAN_DATA_STRUCTURES_H
+#define _DYNAMIK_ADGR_VULKAN_DATA_STRUCTURES_H
 
 #include "backend/vulkan/core/data structures/vertex.h"
 
@@ -123,4 +123,4 @@ namespace Dynamik {
 	}
 }
 
-#endif
+#endif	// !_DYNAMIK_ADGR_VULKAN_DATA_STRUCTURES_H

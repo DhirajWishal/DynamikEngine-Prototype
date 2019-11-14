@@ -11,6 +11,9 @@
  linkedList.h file.
 */
 
+#ifndef _DYNAMIK_LINKED_LISTS_H
+#define _DYNAMIK_LINKED_LISTS_H
+
 #include "core/core.h"
 
 namespace Dynamik {
@@ -35,3 +38,4 @@ namespace Dynamik {
 		};
 	}
 }
+#endif // !_DYNAMIK_LINKED_LISTS_H

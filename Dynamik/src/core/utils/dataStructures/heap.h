@@ -11,6 +11,9 @@
  heap.h file.
 */
 
+#ifndef _DYNAMIK_HEAP_H
+#define _DYNAMIK_HEAP_H
+
 #include "core/core.h"
 #include "CentralDataHub.h"
 
@@ -72,3 +75,5 @@ namespace Dynamik {
 		maxHeap<double>;
 	}
 }
+
+#endif // !_DYNAMIK_HEAP_H

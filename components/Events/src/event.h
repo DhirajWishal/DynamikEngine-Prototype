@@ -11,6 +11,9 @@
  @Reference: The Cherno Project: Hazel Engine(Game engine series)
 */
 
+#ifndef _DYNAMIK_EVENTS_H
+#define _DYNAMIK_EVENTS_H
+
 #include <string>
 #include <sstream>
 #include <functional>
@@ -124,3 +127,5 @@ namespace Dynamik {
 		cursorPositionEventProperties mouseCursorPositionProps;
 	};
 }
+
+#endif // !_DYNAMIK_EVENTS_H

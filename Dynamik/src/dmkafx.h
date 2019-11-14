@@ -1,5 +1,8 @@
 #pragma once
 
+#ifndef _DYNAMIK_PCH
+#define _DYNAMIK_PCH
+
 #include <iostream>
 #include <stdio.h>
 #include <memory>
@@ -51,4 +54,6 @@
 #endif
 
 // ----------
-#endif
+#endif  
+
+#endif // !_DYNAMIK_PCH

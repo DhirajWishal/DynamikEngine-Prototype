@@ -1,5 +1,10 @@
 #pragma once
+
+#ifndef _DYNAMIK_AUDIO_LOG_H
+#define _DYNAMIK_AUDIO_LOG_H
+
 #include <iostream>
+
 #define ASSERT(x, ...)	{																						\
 							if(!(x)){																			\
 								std::cout << __VA_ARGS__ << " @ " <<  __FILE__ << ":" << __LINE__ << std::endl;	\
@@ -14,3 +19,5 @@
 #define LOG(...)
 
 #endif
+
+#endif // !_DYNAMIK_AUDIO_LOH_H

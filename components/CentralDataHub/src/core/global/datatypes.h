@@ -22,4 +22,4 @@ namespace Dynamik {
 	typedef std::any			var;
 }
 
-#endif
+#endif	// !_DYNAMIK_CENTRAL_DATA_HUB_DATATYPES_H

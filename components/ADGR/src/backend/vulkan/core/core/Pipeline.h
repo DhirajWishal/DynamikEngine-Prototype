@@ -1,5 +1,8 @@
 #pragma once
 
+#ifndef _DYNAMIK_ADGR_VULKAN_RENDERER_PIPELINE_H
+#define _DYNAMIK_ADGR_VULKAN_RENDERER_PIPELINE_H
+
 #include "Core.h"
 
 namespace Dynamik {
@@ -15,3 +18,5 @@ namespace Dynamik {
 		}
 	}
 }
+
+#endif // !_DYNAMIK_ADGR_VULKAN_RENDERER_PIPELINE_H

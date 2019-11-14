@@ -1,5 +1,8 @@
 #pragma once
 
+#ifndef _DYNAMIK_ADGR_LAYER_STACK_H
+#define _DYNAMIK_ADGR_LAYER_STACK_H
+
 #include "layer.h"
 
 namespace Dynamik {
@@ -23,3 +26,4 @@ namespace Dynamik {
 		};
 	}
 }
+#endif // !_DYNAMIK_ADGR_LAYER_STACK_H

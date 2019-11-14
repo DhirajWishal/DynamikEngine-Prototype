@@ -1,5 +1,8 @@
 #pragma once
 
+#ifndef _DYNAMIK_ADGR_VULKAN_RENDERER_TEXTURE_H
+#define _DYNAMIK_ADGR_VULKAN_RENDERER_TEXTURE_H
+
 #include "Core.h"
 #include "Platform/Windows/resource/imageLoader.h"
 
@@ -51,3 +54,5 @@ namespace Dynamik {
 		}
 	}
 }
+
+#endif // !_DYNAMIK_ADGR_VULKAN_RENDERER_TEXTURE_H

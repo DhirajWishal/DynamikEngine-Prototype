@@ -140,7 +140,6 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="main.h" />
     <ClInclude Include="src\Audio.h" />
     <ClInclude Include="src\core\AudioEngine.h" />
     <ClInclude Include="src\core\AudioObject.h" />

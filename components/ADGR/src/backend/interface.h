@@ -16,4 +16,4 @@
 
 #endif
 
-#endif	// _DYNAMIK_ADGR_INTERFACE_H
+#endif	// !_DYNAMIK_ADGR_INTERFACE_H

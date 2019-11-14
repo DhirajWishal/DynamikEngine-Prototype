@@ -11,8 +11,8 @@
  DMK_Functions.cpp file.
 */
 
-#ifndef _DYNAMIK_UTILS_DMK_FUNCTIONS_H
-#define _DYNAMIK_UTILS_DMK_FUNCTIONS_H
+#ifndef _DYNAMIK_FUNCTIONS_H
+#define _DYNAMIK_FUNCTIONS_H
 
 #include "core/core.h"
 #include "CentralDataHub.h"
@@ -48,4 +48,4 @@ namespace Dynamik {
 	}
 }
 
-#endif
+#endif	// !_DYNAMIK_FUNCTIONS_H

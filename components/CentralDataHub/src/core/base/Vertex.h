@@ -17,4 +17,4 @@ namespace Dynmik {
 	};
 }
 
-#endif
+#endif	// !_DYNAMIK_CENTRAL_DATA_HUB_VERTEX_H

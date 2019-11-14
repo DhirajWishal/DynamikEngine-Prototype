@@ -1,5 +1,8 @@
 #pragma once
 
+#ifndef _DYNAMIK_ADGR_VULKAN_SKYBOX_H
+#define _DYNAMIK_ADGR_VULKAN_SKYBOX_H
+
 #include "core/Texture.h"
 
 namespace Dynamik {
@@ -53,3 +56,5 @@ namespace Dynamik {
 		}
 	}
 }
+
+#endif // !_DYNAMIK_ADGR_VULKAN_SKYBOX_H

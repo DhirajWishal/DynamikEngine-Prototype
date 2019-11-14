@@ -1,5 +1,8 @@
 #pragma once
 
+#ifndef _DYNAMIK_EVENTS_INPUT_HANDLER_H
+#define _DYNAMIK_EVENTS_INPUT_HANDLER_H
+
 #include "input.h"
 #include "event.h"
 
@@ -23,3 +26,5 @@ namespace Dynamik {
 
 	//}
 }
+
+#endif // !_DYNAMIK_EVENTS_INPUT_HANDLER_H

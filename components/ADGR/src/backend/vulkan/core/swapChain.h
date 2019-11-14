@@ -1,14 +1,17 @@
 #pragma once
 
+#ifndef _DYNAMIK_ADGR_VULKAN_SWAPCHAIN_H
+#define _DYNAMIK_ADGR_VULKAN_SWAPCHAIN_H
+
 #include "core/SwapChain.h"
 
 namespace Dynamik {
 	namespace ADGR {
 		namespace core {
 			struct DMKSwapChainCleanUpInfo {
-				std::vector<VkBuffer> uniformBuffers;
-				std::vector<VkDeviceMemory> uniformBufferMemories;
-				VkDescriptorPool descriptorPool;
+				std::vector<std::vector<VkBuffer>> uniformBuffers;
+				std::vector<std::vector<VkDeviceMemory>> uniformBufferMemories;
+				std::vector<VkDescriptorPool> descriptorPool;
 			};
 
 			class swapChain : public SwapChain {
@@ -35,3 +38,5 @@ namespace Dynamik {
 		}
 	}
 }
+
+#endif	// !_DYNAMIK_ADGR_VULKAN_SWAPCHAIN_H

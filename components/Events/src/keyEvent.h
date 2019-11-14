@@ -1,5 +1,8 @@
 #pragma once
 
+#ifndef _DYNAMIK_EVENTS_KEY_EVENT_H
+#define _DYNAMIK_EVENTS_KEY_EVENT_H
+
 #include "event.h"
 
 namespace Dynamik {
@@ -58,3 +61,5 @@ namespace Dynamik {
 		KeyPressedEvent keyRepeatEvent;
 	};
 }
+
+#endif // !_DYNAMIK_EVENTS_KEY_EVENT_H

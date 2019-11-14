@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef _DYNAMIK_DESCRIPTORS_
-#define _DYNAMIK_DESCRIPTORS_
+#ifndef _DYNAMIK_DESCRIPTORS_H
+#define _DYNAMIK_DESCRIPTORS_H
 
 #include <string>
 #include <vector>
@@ -21,4 +21,4 @@ namespace Dynamik {
 	}
 }
 
-#endif
+#endif	// !_DYNAMIK_DESCRIPTORS_H

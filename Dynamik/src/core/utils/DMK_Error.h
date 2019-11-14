@@ -1,5 +1,8 @@
 #pragma once
 
+#ifndef _DYNAMIK_ERROR_H
+#define _DYNAMIK_ERROR_H
+
 namespace Dynamik {
 	namespace utils {
 #ifdef DMK_PLATFORM_WINDOWS
@@ -23,3 +26,5 @@ namespace Dynamik {
 #endif
 	}
 }
+
+#endif // !_DYNAMIK_ERROR_H

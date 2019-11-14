@@ -9,6 +9,9 @@
  IDE:		MS Visual Studio Community 2019
 */
 
+#ifndef _DYNAMIK_MANAGERS_WINDOWS_READ_FILE_H
+#define _DYNAMIK_MANAGERS_WINDOWS_READ_FILE_H
+
 namespace Dynamik {
 	namespace ADGR {
 		namespace utils {
@@ -16,3 +19,5 @@ namespace Dynamik {
 		}
 	}
 }
+
+#endif // !_DYNAMIK_MANAGERS_WINDOWS_READ_FILE_H

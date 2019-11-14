@@ -124,7 +124,6 @@ namespace Dynamik {
 			textureImageViews.resize(textureSetPaths.size());
 
 			for (int itr = 0; itr < textureSetPaths.size(); itr++) {
-				DMK_INFO(std::to_string(itr));
 				// texture creation - init
 				DMKInitTextureInfo textureInfo;
 				textureInfo.path = textureSetPaths[itr];
@@ -194,9 +193,7 @@ namespace Dynamik {
 				{0.0f,	-4.0f,	-4.0f}
 			};
 
-			std::vector<DMKObjectData> objDataVector = {};
-
-			DMK_INFO(std::to_string(std::thread::hardware_concurrency()));
+			DMK_INFO("Number of cores: " + std::to_string(std::thread::hardware_concurrency()));
 
 			vertexBufferObjects.resize(count);
 			vertexBuffers.resize(count);
@@ -259,7 +256,6 @@ namespace Dynamik {
 
 			// command buffer initialization
 			DMKBindCommandBufferInfo commandInfo;
-
 			for (int itr = 0; itr < 1; itr++) {
 				ADGRObjectRenderData objBindData = {};
 				objBindData.vertexBuffers = { vertexBuffers[itr] };
@@ -271,7 +267,6 @@ namespace Dynamik {
 
 				commandInfo.objectBindDatas.push_back(objBindData);
 			}
-
 			myCommandBufferManager.bindCommands(&myVulkanDataContainer, commandInfo);
 			INC_PROGRESS;
 
@@ -293,30 +288,36 @@ namespace Dynamik {
 
 			// clear swapChain
 			DMKSwapChainCleanUpInfo cleanInfo;
-			cleanInfo.uniformBuffers = uniformBuffers;
-			cleanInfo.uniformBufferMemories = uniformBufferMemories;
-			cleanInfo.descriptorPool = descriptorPool;
+			cleanInfo.uniformBuffers = uniformBuffersContainer;
+			cleanInfo.uniformBufferMemories = uniformBufferMemoriesContainer;
+			cleanInfo.descriptorPool = descriptorPools;
 			mySwapChain.cleanUp(&myVulkanDataContainer, cleanInfo);
 
 			// clear textures
-			DMKTextureDeleteInfo deleteTexInfo;
-			deleteTexInfo.sampler = textureSampler;
-			deleteTexInfo.texture = texImage;
-			deleteTexInfo.imageView = textureImageView;
-			deleteTexInfo.textureImageMemory = texImageMemory;
-			myTextureManager.deleteTexture(&myVulkanDataContainer, deleteTexInfo);
+			for (int i = 0; i < textureImages.size(); i++) {
+				DMKTextureDeleteInfo deleteTexInfo;
+				deleteTexInfo.sampler = textureSamplers[i];
+				deleteTexInfo.texture = textureImages[i];
+				deleteTexInfo.imageView = textureImageViews[i];
+				deleteTexInfo.textureImageMemory = textureImageMemories[i];
+				myTextureManager.deleteTexture(&myVulkanDataContainer, deleteTexInfo);
+			}
 
 			// clear index buffer
-			DMKindexBufferDeleteInfo deleteIndInfo;
-			deleteIndInfo.buffer = indexBuffer;
-			deleteIndInfo.bufferMemory = indexBufferMemory;
-			myIndexBufferManager.deleteBuffer(&myVulkanDataContainer, deleteIndInfo);
+			for (int i = 0; i < indexBuffers.size(); i++) {
+				DMKindexBufferDeleteInfo deleteIndInfo;
+				deleteIndInfo.buffer = indexBuffers[i];
+				deleteIndInfo.bufferMemory = indexBufferMemories[i];
+				myIndexBufferManager.deleteBuffer(&myVulkanDataContainer, deleteIndInfo);
+			}
 
 			// clear vertex buffer
-			DMKVertexBufferDeleteInfo deleteVertInfo;
-			deleteVertInfo.buffer = terrainVertexBuffer;
-			deleteVertInfo.bufferMemory = terrainVertexBufferMemory;
-			myVertexBufferManager.deleteBuffer(&myVulkanDataContainer, deleteVertInfo);
+			for (int i = 0; i < vertexBuffers.size(); i++) {
+				DMKVertexBufferDeleteInfo deleteVertInfo;
+				deleteVertInfo.buffer = vertexBuffers[i];
+				deleteVertInfo.bufferMemory = vertexBufferMemories[i];
+				myVertexBufferManager.deleteBuffer(&myVulkanDataContainer, deleteVertInfo);
+			}
 
 			// delete frames in flight
 			for (size_t i = 0; i < MAX_FRAMES_IN_FLIGHT; i++) {
@@ -451,9 +452,9 @@ namespace Dynamik {
 
 			// clean swapchain
 			DMKSwapChainCleanUpInfo cleanInfo;
-			cleanInfo.uniformBuffers = uniformBuffers;
-			cleanInfo.uniformBufferMemories = uniformBufferMemories;
-			cleanInfo.descriptorPool = descriptorPool;
+			cleanInfo.uniformBuffers = uniformBuffersContainer;
+			cleanInfo.uniformBufferMemories = uniformBufferMemoriesContainer;
+			cleanInfo.descriptorPool = descriptorPools;
 			mySwapChain.cleanUp(&myVulkanDataContainer, cleanInfo);
 
 			// clean frame buffer
@@ -534,7 +535,6 @@ namespace Dynamik {
 
 			// init command buffers
 			DMKBindCommandBufferInfo commandInfo;
-
 			for (int itr = 0; itr < 1; itr++) {
 				ADGRObjectRenderData objBindData = {};
 				objBindData.vertexBuffers = { vertexBuffers[itr] };
@@ -546,7 +546,6 @@ namespace Dynamik {
 
 				commandInfo.objectBindDatas.push_back(objBindData);
 			}
-
 			myCommandBufferManager.bindCommands(&myVulkanDataContainer, commandInfo);
 			INC_PROGRESS;
 		}

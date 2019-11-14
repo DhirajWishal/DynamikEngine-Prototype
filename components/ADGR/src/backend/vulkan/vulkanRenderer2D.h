@@ -9,8 +9,8 @@
  IDE:		MS Visual Studio Community 2019
 */
 
-#ifndef _DYNAMIK_VULKAN_RENDERER_2D_
-#define _DYNAMIK_VULKAN_RENDERER_2D_
+#ifndef _DYNAMIK_ADGR_VULKAN_RENDERER_2D_H
+#define _DYNAMIK_ADGR_VULKAN_RENDERER_2D_H
 
 #include "backend/Renderer/Renderer.h"
 
@@ -129,4 +129,4 @@ namespace Dynamik {
 	}
 }
 
-#endif
+#endif	// !_DYNAMIK_ADGR_VULKAN_RENDERER_2D_H

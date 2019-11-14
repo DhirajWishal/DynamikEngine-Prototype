@@ -1,5 +1,8 @@
 #pragma once
 
+#ifndef _DYNAMIK_SUBMIT_ASSETS_H
+#define _DYNAMIK_SUBMIT_ASSETS_H
+
 #include <vector>
 #include "GameObject/GameObject.h"
 #include "Key Bindings/KeyBingings.h"
@@ -16,3 +19,5 @@ namespace Dynamik {
 
 	InputContainer submit();
 }
+
+#endif // !_DYNAMIK_SUBMIT_ASSETS_H

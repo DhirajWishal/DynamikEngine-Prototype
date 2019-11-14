@@ -1,5 +1,8 @@
 #pragma once
 
+#ifndef _DYNAMIK_KEY_BINDINGS_H
+#define _DYNAMIK_KEY_BINDINGS_H
+
 #include "keyCodes.h"
 #include "core/core.h"
 
@@ -116,3 +119,5 @@ namespace Dynamik {
 		}
 	};
 }
+
+#endif // !_DYNAMIK_KEY_BINDINGS_H

@@ -9,6 +9,9 @@
  IDE:		MS Visual Studio Community 2019
 */
 
+#ifndef _DYNAMIK_ADGR_RENDERER_H
+#define _DYNAMIK_ADGR_RENDERER_H
+
 #include "backend/interface.h"
 #include "core/core.h"
 
@@ -43,3 +46,5 @@ namespace Dynamik {
 		};
 	}
 }
+
+#endif // !_DYNAMIK_ADGR_RENDERER_H

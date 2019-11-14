@@ -13,7 +13,7 @@ namespace Dynamik {
 				glfwInit();
 
 				glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
-#if defined(DMK_DEBUG) || defined(DMK_RELEASE)
+#if defined(DMK_DEBUG)
 				container->window = glfwCreateWindow(WIDTH, HEIGHT, "Dynamik Engine", nullptr, nullptr);
 
 #else

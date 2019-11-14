@@ -1,5 +1,8 @@
 #pragma once
 
+#ifndef _DYNAMIK_DEBUGGER_BENCHMARK_FPS_H
+#define _DYNAMIK_DEBUGGER_BENCHMARK_FPS_H
+
 namespace Dynamik {
 	namespace Debugger {
 		namespace benchmark {
@@ -22,3 +25,5 @@ namespace Dynamik {
 		}
 	}
 }
+
+#endif	// !_DYNAMIK_DEBUGGER_BENCHMARK_FPS_H

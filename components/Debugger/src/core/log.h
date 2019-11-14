@@ -1,4 +1,8 @@
 #pragma once
+
+#ifndef _DYNAMIK_DEBUGGER_LOG_H
+#define _DYNAMIK_DEBUGGER_LOG_H
+
 #pragma warning(disable:4996)
 
 #if defined(DMK_PLATFORM_WINDOWS)
@@ -74,4 +78,6 @@ namespace Dynamik {
 #endif
 
 // ----------
-#endif
+#endif 
+
+#endif // !_DYNAMIK_DEBUGGER_LOG_H

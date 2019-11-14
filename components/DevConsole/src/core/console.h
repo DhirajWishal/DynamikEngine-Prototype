@@ -1,5 +1,8 @@
 #pragma once
 
+#ifndef _DYNAMIK_DEVCON_CONSOLE_H
+#define _DYNAMIK_DEVCON_CONSOLE_H
+
 namespace Dynamik {
 	namespace console {
 		class Console {
@@ -45,3 +48,5 @@ namespace Dynamik {
 		};
 	}
 }
+
+#endif // !_DYNAMIK_DEVCON_CONSOLE_H

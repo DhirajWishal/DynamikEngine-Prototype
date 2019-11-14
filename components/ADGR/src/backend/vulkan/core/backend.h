@@ -1,5 +1,8 @@
 #pragma once
 
+#ifndef _DYNAMIK_ADGR_VULKAN_BACKEND_H
+#define _DYNAMIK_ADGR_VULKAN_BACKEND_H
+
 #include "window.h"
 #include "instance.h"
 #include "device.h"
@@ -25,3 +28,5 @@
 
 #include "keyEvent.h"
 #include "mouseEvent.h"
+
+#endif // !_DYNAMIK_ADGR_VULKAN_BACKEND_H

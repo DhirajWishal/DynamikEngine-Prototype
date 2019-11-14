@@ -9,6 +9,9 @@
  IDE:		MS Visual Studio Community 2019
 */
 
+#ifndef _DYNAMIK_ADGR_PCH
+#define _DYNAMIK_ADGR_PCH
+
 #ifdef DMK_PLATFORM_WINDOWS
 
 #include <GLFW/glfw3.h>
@@ -47,3 +50,5 @@
 #include "CentralDataHub.h"
 
 #endif
+
+#endif	// !_DYNAMIK_ADGR_PCH

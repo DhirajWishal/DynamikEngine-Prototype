@@ -74,4 +74,4 @@ namespace Dynamik {
 	}
 }
 
-#endif
+#endif	// !_DYNAMIK_ADGR_VULKAN_UNIFORM_BUFFER_H

@@ -1,5 +1,8 @@
 #pragma once
 
+#ifndef _DYNAMIK_MANAGERS_WINDOWS_IMAGE_LOADER_H
+#define _DYNAMIK_MANAGERS_WINDOWS_IMAGE_LOADER_H
+
 namespace Dynamik {
 	namespace resource {
 		//typedef stbi_uc image;
@@ -20,3 +23,5 @@ namespace Dynamik {
 		};
 	}
 }
+
+#endif // !_DYNAMIK_MANAGERS_IMAGE_LOADER_H

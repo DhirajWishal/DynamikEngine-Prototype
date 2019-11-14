@@ -13,6 +13,9 @@
 
 /* ---------- THIS HEADER FILE IS FOR CLIENT USE ---------- */
 
+#ifndef _DYNAMIK_H
+#define _DYNAMIK_H
+
 /* STD INCLUDES(PRE-COMPILED HEADER) */
 #include "core/object mechanics/submitAsset.h"
 
@@ -28,3 +31,5 @@
 
 #include "GameObject/GameObject.h"
 #include "Key Bindings/KeyBingings.h"
+
+#endif // !_DYNAMIK_H

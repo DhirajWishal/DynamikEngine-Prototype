@@ -34,4 +34,4 @@ namespace Dynamik {
 	}
 }
 
-#endif
+#endif	// !_DYNAMIK_ADGR_VULKAN_VERTEX_BUFFER_H

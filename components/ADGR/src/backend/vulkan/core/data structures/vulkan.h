@@ -3,6 +3,7 @@
 #ifndef _DYNAMIK_ADGR_VULKAN_H
 #define _DYNAMIK_ADGR_VULKAN_H
 
+#include <GLFW/glfw3.h>
 #include <vulkan/vulkan.h>
 #include <vector>
 
@@ -86,8 +87,8 @@ namespace Dynamik {
 
 				// primitive assembly info
 				//VkPrimitiveTopology inputAssemblyTopology = VkPrimitiveTopology::VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST;	// Vulkan input assembler topologies
-				//VkPrimitiveTopology inputAssemblyTopology = VkPrimitiveTopology::VK_PRIMITIVE_TOPOLOGY_POINT_LIST;	// Vulkan input assembler topologies
-				VkPrimitiveTopology inputAssemblyTopology = VkPrimitiveTopology::VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST;	// Vulkan input assembler topologies
+				VkPrimitiveTopology inputAssemblyTopology = VkPrimitiveTopology::VK_PRIMITIVE_TOPOLOGY_POINT_LIST;	// Vulkan input assembler topologies
+				//VkPrimitiveTopology inputAssemblyTopology = VkPrimitiveTopology::VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST;	// Vulkan input assembler topologies
 				VkBool32 inputAssemblyPrimitiveRestartEnable = VK_FALSE;			// Vulkan primitive assembly restart enable
 
 				// viewport info
@@ -255,4 +256,4 @@ namespace Dynamik {
 	}
 }
 
-#endif
+#endif	// !_DYNAMIK_ADGR_VULKAN_H

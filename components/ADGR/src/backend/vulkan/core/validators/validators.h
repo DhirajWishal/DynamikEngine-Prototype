@@ -9,6 +9,9 @@
  IDE:		MS Visual Studio Community 2019
 */
 
+#ifndef _DYNAMIK_ADGR_VULKAN_VALIDATORS_H
+#define _DYNAMIK_ADGR_VULKAN_VALIDATORS_H
+
 #include "debugger/debugger.h"
 #include "CentralDataHub.h"
 #include "backend/Interface.h"
@@ -18,8 +21,8 @@ namespace Dynamik {
 		namespace core {
 			const std::vector<const char*> validationLayer = {
 				"VK_LAYER_LUNARG_standard_validation",
-				//"VK_LAYER_LUNARG_core_validation",
-				//"VK_LAYER_KHRONOS_validation"
+				"VK_LAYER_LUNARG_core_validation",
+				"VK_LAYER_KHRONOS_validation"
 			};
 
 #if defined(DMK_DEBUG)
@@ -37,3 +40,5 @@ namespace Dynamik {
 		}
 	}
 }
+
+#endif	// !_DYNAMIK_ADGR_VULKAN_VALIDATORS_H

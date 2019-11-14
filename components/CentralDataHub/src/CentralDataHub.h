@@ -5,4 +5,4 @@
 
 #include "core/global/datatypes.h"
 
-#endif
+#endif	// !_DYNAMIK_CENTRAL_DATA_HUB_H

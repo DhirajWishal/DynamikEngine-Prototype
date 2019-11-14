@@ -230,15 +230,15 @@ namespace Dynamik {
 			std::vector<std::string> textureSetPaths = {
 				//"E:/Projects/Dynamik Engine/Dynamik/core assets/textures/Wolf_Eyes_1.jpg",
 				//"E:/Projects/Dynamik Engine/Dynamik/core assets/textures/Wolf_Eyes_2.jpg",
-				"E:/Projects/Dynamik Engine/Dynamik/core assets/textures/Material__47_-_Default_Texture.png",
+				//"E:/Projects/Dynamik Engine/Dynamik/core assets/textures/Material__47_-_Default_Texture.png",
 				//"E:/Projects/Dynamik Engine/Dynamik/core assets/textures/Wolf_Body.jpg",
-				//"E:/Projects/Dynamik Engine/Dynamik/core assets/textures/tree/bark_tree.jpg",
+				"E:/Projects/Dynamik Engine/Dynamik/core assets/textures/tree/bark_tree.jpg",
 				//"E:/Projects/Dynamik Engine/Dynamik/core assets/textures/tree/bark_tree_nor.jpg",
 				//"E:/Projects/Dynamik Engine/Dynamik/core assets/textures/tree/blade_sample.jpg",
-				//"E:/Projects/Dynamik Engine/Dynamik/core assets/textures/tree/human.jpg",
-				//"E:/Projects/Dynamik Engine/Dynamik/core assets/textures/tree/leaves_01.jpg",
-				//"E:/Projects/Dynamik Engine/Dynamik/core assets/textures/tree/leaves_02.jpg",
-				//"E:/Projects/Dynamik Engine/Dynamik/core assets/textures/tree/leaves_03.jpg",
+				"E:/Projects/Dynamik Engine/Dynamik/core assets/textures/tree/human.jpg",
+				"E:/Projects/Dynamik Engine/Dynamik/core assets/textures/tree/leaves_01.jpg",
+				"E:/Projects/Dynamik Engine/Dynamik/core assets/textures/tree/leaves_02.jpg",
+				"E:/Projects/Dynamik Engine/Dynamik/core assets/textures/tree/leaves_03.jpg",
 				//"E:/Projects/Dynamik Engine/Dynamik/core assets/textures/tree/leaves_alpha.jpg",
 				//"E:/Projects/Dynamik Engine/Dynamik/core assets/textures/tree/leaves_alpha_inverted.jpg",
 				//"E:/Projects/Dynamik Engine/Dynamik/core assets/textures/tree/ground.jpg",
@@ -259,6 +259,8 @@ namespace Dynamik {
 			std::vector<std::thread> threads;
 
 			int count = 1;
+
+			std::vector<DMKObjectData> objDataVector = {};
 		};
 	}
 }

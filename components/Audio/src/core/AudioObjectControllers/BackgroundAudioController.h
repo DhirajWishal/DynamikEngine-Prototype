@@ -1,4 +1,8 @@
 #pragma once
+
+#ifndef _DYNAMIK_AUDIO_BACKGROUND_AUDIO_CONTROLLER_H
+#define _DYNAMIK_AUDIO_BACKGROUND_AUDIO_CONTROLLER_H
+
 #include "../AudioObjectController.h"
 
 namespace Dynamik {
@@ -14,3 +18,5 @@ namespace Dynamik {
 		};
 	}
 }
+
+#endif // !_DYNAMIK_AUDIO_BACKGROUND_AUDIO_CONTROLLER_H

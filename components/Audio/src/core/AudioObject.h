@@ -1,5 +1,8 @@
 #pragma once
 
+#ifndef _DYNAMIK_AUDIO_OBJECT_H
+#define _DYNAMIK_AUDIO_OBJECT_H
+
 #include <irrKlang.h>
 #include "AudioObjectController.h"
 
@@ -20,3 +23,5 @@ namespace Dynamik {
 		};
 	}
 }
+
+#endif // !_DYNAMIK_AUDIO_OBJECT_H

@@ -1,5 +1,8 @@
 #pragma once
 
+#ifndef _DYNAMIK_EVENTS_APPLICATION_EVENTS_H
+#define _DYNAMIK_EVENTS_APPLICATION_EVENTS_H
+
 #include "event.h"
 
 namespace Dynamik {
@@ -52,3 +55,5 @@ namespace Dynamik {
 		EVENT_CLASS_TYPE(appRender) EVENT_CLASS_CATEGORY(eventCategoryApplication)
 	};
 }
+
+#endif // !_DYNAMIK_EVENTS_APPLICATION_EVENTS_H

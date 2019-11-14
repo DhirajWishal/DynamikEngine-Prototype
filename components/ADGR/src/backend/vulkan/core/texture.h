@@ -1,5 +1,8 @@
 #pragma once
 
+#ifndef _DYNAMIK_ADGR_VULKAN_TEXTURE_H
+#define _DYNAMIK_ADGR_VULKAN_TEXTURE_H
+
 #include "core/Texture.h"
 
 namespace Dynamik {
@@ -74,3 +77,5 @@ namespace Dynamik {
 		}
 	}
 }
+
+#endif // !_DYNAMIK_ADGR_VULKAN_TEXTURE_H

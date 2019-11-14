@@ -1,5 +1,8 @@
 #pragma once
 
+#ifndef _DYNAMIK_ADGR_VULKAN_DEPTH_BUFFER_H
+#define _DYNAMIK_ADGR_VULKAN_DEPTH_BUFFER_H
+
 #include "core/Buffer.h"
 
 namespace Dynamik {
@@ -26,3 +29,5 @@ namespace Dynamik {
 		}
 	}
 }
+
+#endif // !_DYNAMIK_ADGR_VULKAN_DEPTH_BUFFER_H

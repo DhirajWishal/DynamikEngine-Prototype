@@ -1,5 +1,8 @@
 #pragma once
 
+#ifndef _DYNAMIK_PLATFORM_H
+#define _DYNAMIK_PLATFORM_H
+
 #if defined DMK_PLATFORM_WINDOWS
 #include "core/Windows.h"
 
@@ -14,3 +17,5 @@
 #error Unsupported Platform!
 // ----------
 #endif
+
+#endif // !_DYNAMIK_PLATFORM_H

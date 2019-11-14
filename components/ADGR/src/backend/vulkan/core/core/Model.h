@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef DMK_ADGR_MODEL_H
-#define DMK_ADGR_MODEL_H
+#ifndef _DYNAMIK_ADGR_VULKAN_RENDERER_MODEL_H
+#define _DYNAMIK_ADGR_VULKAN_RENDERER_MODEL_H
 
 #include "Core.h"
 
@@ -28,4 +28,4 @@ namespace Dynamik {
 	}
 }
 
-#endif
+#endif	// !_DYNAMIK_ADGR_VULKAN_RENDERER_MODEL_H

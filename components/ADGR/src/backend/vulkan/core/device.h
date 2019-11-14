@@ -1,5 +1,8 @@
 #pragma once
 
+#ifndef _DYNAMIK_ADGR_VULKAN_DEVICE_H
+#define _DYNAMIK_ADGR_VULKAN_DEVICE_H
+
 #include "core/Device.h"
 
 namespace Dynamik {
@@ -26,3 +29,5 @@ namespace Dynamik {
 		}
 	}
 }
+
+#endif // !_DYNAMIK_ADGR_VULKAN_DEVICE_H

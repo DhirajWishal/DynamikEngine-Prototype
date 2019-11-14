@@ -1,5 +1,8 @@
 #pragma once
 
+#ifndef _DYNAMIK_MANAGERS_WINDOWS_OBJECT_LOADER_H
+#define _DYNAMIK_MANAGERS_WINDOWS_OBJECT_LOADER_H
+
 namespace Dynamik {
 	namespace resources {
 		//struct ObjectData {
@@ -15,3 +18,5 @@ namespace Dynamik {
 		void loadObject(std::string& path, std::vector<Alloc>* vertices, std::vector<uint32_t>* indices);
 	}
 }
+
+#endif // !_DYNAMIK_MANAGERS_OBJECT_LOADER_H

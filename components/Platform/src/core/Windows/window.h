@@ -9,6 +9,9 @@
  IDE:		MS Visual Studio Community 2019
 */
 
+#ifndef _DYNAMIK_PLATFORM_WINDOWS_WINDOW_H
+#define _DYNAMIK_PLATFORM_WINDOWS_WINDOW_H
+
 #include "event.h"
 
 #include <GLFW/glfw3.h>
@@ -72,3 +75,5 @@ namespace Dynamik {
 		}
 	}
 }
+
+#endif // !_DYNAMIK_PLATFORM_WINDOWS_WINDOW_H

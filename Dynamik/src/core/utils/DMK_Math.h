@@ -11,6 +11,9 @@
  DMK_Math.h file.
 */
 
+#ifndef _DYNAMIK_MATH_H
+#define _DYNAMIK_MATH_H
+
 #include "CentralDataHub.h"
 
 namespace Dynamik {
@@ -19,3 +22,5 @@ namespace Dynamik {
 		int64 pow(int32 base, int16 exp);
 	}
 }
+
+#endif // !_DYNAMIK_MATH_H

@@ -1,5 +1,8 @@
 #pragma once
 
+#ifndef _DYNAMIK_ADGR_VULKAN_TEXTURE_FUNCTIONS_H
+#define _DYNAMIK_ADGR_VULKAN_TEXTURE_FUNCTIONS_H
+
 namespace Dynamik {
 	namespace ADGR {
 		namespace core {
@@ -79,3 +82,4 @@ namespace Dynamik {
 		}
 	}
 }
+#endif // !_DYNAMIK_ADGR_VULKAN_TEXTURE_FUNCTIONS_H

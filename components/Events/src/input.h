@@ -1,5 +1,8 @@
 #pragma once
 
+#ifndef _DYNAMIK_EVENTS_INPUTS_H
+#define _DYNAMIK_EVENTS_INPUTS_H
+
 namespace Dynamik {
 	class Input {
 	public:
@@ -18,3 +21,5 @@ namespace Dynamik {
 		//static Input* myInput;
 	};
 }
+
+#endif // !_DYNAMIK_EVENTS_INPUTS_H

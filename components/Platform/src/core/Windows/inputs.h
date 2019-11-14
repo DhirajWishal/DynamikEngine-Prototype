@@ -1,5 +1,8 @@
 #pragma once
 
+#ifndef _DYNAMIK_PLATFORM_WINDOWS_INPUTS_H
+#define _DYNAMIK_PLATFORM_WINDOWS_INPUTS_H
+
 #include "input.h"
 
 namespace Dynamik {
@@ -12,3 +15,5 @@ namespace Dynamik {
 		}
 	}
 }
+
+#endif // !_DYNAMIK_PLATFORM_WINDOWS_INPUTS_H

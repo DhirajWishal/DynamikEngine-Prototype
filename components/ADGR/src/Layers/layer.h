@@ -1,5 +1,8 @@
 #pragma once
 
+#ifndef _DYNAMIK_ADGR_LAYER_H
+#define _DYNAMIK_ADGR_LAYER_H
+
 #include "event.h"
 #include "backend/interface.h"
 
@@ -22,3 +25,5 @@ namespace Dynamik {
 		};
 	}
 }
+
+#endif // !_DYNAMIK_ADGR_LAYER_H

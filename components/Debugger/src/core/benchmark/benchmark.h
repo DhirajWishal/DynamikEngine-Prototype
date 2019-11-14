@@ -1,5 +1,8 @@
 #pragma once
 
+#ifndef _DYNAMIK_DEBUGGER_BENCHMARK_H
+#define _DYNAMIK_DEBUGGER_BENCHMARK_H
+
 namespace Dynamik {
 	namespace Debugger {
 		namespace benchmark {
@@ -18,3 +21,5 @@ namespace Dynamik {
 		}
 	}
 }
+
+#endif // !_DYNAMIK_DEBUGGER_BENCHMARK_H

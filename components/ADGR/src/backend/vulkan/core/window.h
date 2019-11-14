@@ -1,5 +1,8 @@
 #pragma once
 
+#ifndef _DYNAMIK_ADGR_VULKAN_WINDOW_H
+#define _DYNAMIK_ADGR_VULKAN_WINDOW_H
+
 #include "core/Window.h"
 
 #include "keyEvent.h"
@@ -108,3 +111,5 @@ namespace Dynamik {
 		}
 	}
 }
+
+#endif // !_DYNAMIK_ADGR_VULKAN_WINDOW_H

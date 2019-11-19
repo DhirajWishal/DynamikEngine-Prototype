@@ -1,36 +1,32 @@
 #pragma once
 
-#include "Core.h"
+#ifndef _DYNAMIK_ADGR_VULKAN_SHADER_H
+#define _DYNAMIK_ADGR_VULKAN_SHADER_H
+
+#include "core/Shader.h"
 
 namespace Dynamik {
 	namespace ADGR {
 		namespace core {
-			enum ShaderType {
-				VERTEX_SHADER,
-				TESSELLATION_SHADER,
-				GEOMETRY_SHADER,
-				FRAGMENT_SHADER
-			};
-
-			class Shader : public Core {
+			class shaderManager : public Shader {
 			public:
-				Shader() {}
-				virtual ~Shader() {}
+				shaderManager() {}
+				~shaderManager() {}
 
-				virtual void loadShader(DMK_ShaderCode shaderCode, ShaderType type) {}
-				virtual VkShaderModule createShaderModule(DMK_ShaderCode& code) { return nullptr; }
-				virtual void deleteShaders() {}
+				void init(ADGRVulkanDataContainer* container, ADGRVulkanShaderDataContainer* shaderDataContainer);
+
+				void loadShader(DMK_ShaderCode shaderCode, ShaderType type) override;
+				VkShaderModule createShaderModule(VkDevice device, DMK_ShaderCode& code) override;
+				void deleteShaders(ADGRVulkanDataContainer& container, ADGRVulkanPipelineDataContainer& pipelineContainer) override;
+
+				void compileShaders(std::string path, bool activate) override;
 
 			private:
-				std::string vertShaderPath;
-				std::string fragShaderPath;
-#ifdef USE_SHADER_TESSELLATION
-				std::string tessShaderPath;
-#endif
-#ifdef USE_SHADER_GEOMETRY
-				std::string geoShaderPath;
-#endif
+				std::string command = "";
+				std::string shaderCompilerPath = "E:/Programming/SDKs/Vulkan/1.1.121.0/Bin/glslangValidator.exe";
 			};
 		}
 	}
 }
+
+#endif // !_DYNAMIK_ADGR_VULKAN_SHADER_H

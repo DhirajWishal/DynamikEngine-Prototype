@@ -1,23 +1,33 @@
 #pragma once
 
-#include "Core.h"
+#ifndef _DYNAMIK_ADGR_VULKAN_DEVICE_H
+#define _DYNAMIK_ADGR_VULKAN_DEVICE_H
+
+#include "core/Device.h"
 
 namespace Dynamik {
 	namespace ADGR {
 		namespace core {
-			class Device : public Core {
+			class device : public Device {
 			public:
-				Device() {}
-				virtual ~Device() {}
+				device() {}
+				~device() {}
 
-				virtual void initPhysicalDevice() {}
-				virtual void initLogicalDevice() {}
+				void init(ADGRVulkanDataContainer* container) override;
 
-			protected:
-				VkInstance* myInstance = &instance;
-				VkDevice* myDevice = &device;
-				VkPhysicalDevice* myPhysicalDevice = &physicalDevice;
+			private:
+				void initPhysicalDevice(ADGRVulkanDataContainer* container) override;
+				void initLogicalDevice(ADGRVulkanDataContainer* container) override;
+
+				bool checkDeviceExtensionSupport(VkPhysicalDevice device);
+				bool isDeviceSuitable(VkPhysicalDevice device, VkSurfaceKHR* surface);
+
+				const std::vector<const char*> deviceExtensions = {
+					VK_KHR_SWAPCHAIN_EXTENSION_NAME
+				};
 			};
 		}
 	}
 }
+
+#endif // !_DYNAMIK_ADGR_VULKAN_DEVICE_H

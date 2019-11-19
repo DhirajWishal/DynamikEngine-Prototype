@@ -30,7 +30,11 @@ namespace Dynamik {
 		static void showProgress();
 
 	private:
+		void getObjectPaths();
+
 		ADGR::Renderer myRenderingEngine;
+
+		std::vector<GameObject> gameObjects = {};
 
 		//Event& myEvent;
 

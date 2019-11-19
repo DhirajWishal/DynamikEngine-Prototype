@@ -59,7 +59,7 @@ int main(int argc, char** argv) {
 	try {
 		printf("\t\t----------|| Welcome to the Dynamik Engine! ||----------\n");
 
-		DMK_CORE_INFO(12);
+		DMK_CORE_INFO(std::to_string(12));
 
 		auto application = Dynamik::createApplication();
 		application->run();

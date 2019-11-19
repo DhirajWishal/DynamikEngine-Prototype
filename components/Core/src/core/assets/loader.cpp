@@ -45,7 +45,7 @@ std::vector<std::string> getTexturePath(std::vector<char>& file) {
 	for (std::string i; std::getline(iss, i);) {
 		std::replace(i.begin(), i.end(), '\r', ' ');
 		std::replace(i.begin(), i.end(), (char)'\"', ' ');
-
+		
 		if (i[0] == ' ') i.replace(0, 1, "");
 		if (i[i.size() - 1] == ' ') i.replace(i.size() - 1, 1, "");
 
@@ -55,44 +55,57 @@ std::vector<std::string> getTexturePath(std::vector<char>& file) {
 	return paths;
 }
 
-void loadPaths() {
-}
-
 // final
 Dynamik::InputContainer Dynamik::submit() {
-	auto tex = getTexturePath(readFile("E:/Projects/Dynamik Engine/Dynamik/components/Core/paths.txt"));
-	auto mod = getTexturePath(readFile("E:/Projects/Dynamik Engine/Dynamik/components/Core/model.txt"));
+	std::vector<std::string> (*function)(std::vector<char>&) = getTexturePath;
+
+	auto paths = getTexturePath(readFile("E:/Projects/Dynamik Engine/Dynamik/components/Core/paths.txt"));
 
 	Dynamik::KeyBindings myBindings;
 
 	Dynamik::InputContainer myContainer;
 
-	Dynamik::GameObjectProperties props;
-	props.name = "Charlet";
-	props.ID = "0001";
-	props.type = Dynamik::MODEL;
-	props.objPath = mod[0];
-	props.texPath = tex[0];
-	props.audioProperties.clipPath = "NONE";
-	props.behaviourProperties.type = Dynamik::PHYSICAL_BODY;
+	std::vector<std::vector<float>> locations = {
+		{0.0f,	0.0f,	0.0f},
+		{0.0f,	5.0f,	0.0f},
+		{0.0f,	-5.0f,	0.0f},
+		{0.0f,	10.0f,	0.0f},
+		{0.0f,	-10.0f,	0.0f},
 
-	charlet myCharlet(props);
+		{5.0f,	0.0f,	0.0f},
+		{5.0f,	5.0f,	0.0f},
+		{5.0f,	-5.0f,	0.0f},
+		{5.0f,	10.0f,	0.0f},
+		{5.0f,	-10.0f,	0.0f},
 
-	//Dynamik::GameObjectProperties props2;
-	//props.name = "HandGun";
-	//props.ID = "0002";
-	//props.type = Dynamik::MODEL;
-	//props.objPath = "E:/Projects/Dynamik Engine/Dynamik/core assets/blend/Handgun_Packed.blend";
-	//props.texPath = "E:/Projects/Dynamik Engine/Dynamik/core assets/blend/textures/handgun_C.jpg";
-	//props.audioProperties.clipPath = "NONE";
-	//props.behaviourProperties.type = Dynamik::PHYSICAL_BODY;
+		{-5.0f,	0.0f,	0.0f},
+		{-5.0f,	5.0f,	0.0f},
+		{-5.0f,	-5.0f,	0.0f},
+		{-5.0f,	10.0f,	0.0f},
+		{-5.0f,	-10.0f,	0.0f},
 
-	charlet myCharlet2(props);
+		{10.0f,	0.0f,	0.0f},
+		{10.0f,	5.0f,	0.0f},
+		{10.0f,	-5.0f,	0.0f},
+		{10.0f,	10.0f,	0.0f},
+		{10.0f,	-10.0f,	0.0f},
 
-	myContainer.addToAssetsQueue(myCharlet);
-	myContainer.addToAssetsQueue(myCharlet2);
+		{-10.0f,	0.0f,	0.0f},
+		{-10.0f,	5.0f,	0.0f},
+		{-10.0f,	-5.0f,	0.0f},
+		{-10.0f,	10.0f,	0.0f},
+		{-10.0f,	-10.0f,	0.0f},
+	};
 
-	//Dynamik::submit(submit);
+	for (int i = 0; i < paths.size(); i++) {
+		Dynamik::GameObjectProperties props;
+		props.name = "Charlet";
+		props.ID = std::to_string(i);
+		props.location = paths[i];
+		props.transformProperties.location = locations[i];
+
+		myContainer.assets.push_back(charlet(props));
+	}
 
 	return myContainer;
 }

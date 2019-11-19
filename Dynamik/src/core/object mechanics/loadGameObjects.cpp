@@ -8,14 +8,14 @@ namespace Dynamik {
 	//	myContainerTmp = (*Function)();
 	//}
 
-	void InputLoader::run() {
-		myContainer = submit();
+	std::vector<GameObject> InputLoader::run() {
+		return submit().assets;
 	}
 
-	std::vector<std::string> InputLoader::getTexturePaths() {
-		std::vector<std::string> path;
+	std::vector<std::vector<std::string>> InputLoader::getTexturePaths() {
+		std::vector<std::vector<std::string>> path;
 		for (auto i : myContainer.assets) {
-			path.push_back(i.getProperties().texPath);
+			path.push_back(i.getProperties().texturePaths);
 		}
 
 		return path;
@@ -24,7 +24,7 @@ namespace Dynamik {
 	std::vector<std::string> InputLoader::getModelPaths() {
 		std::vector<std::string> path;
 		for (auto i : myContainer.assets) {
-			path.push_back(i.getProperties().objPath);
+			//path.push_back(i.getProperties().objectPath);
 		}
 
 		return path;

@@ -3,6 +3,8 @@
 #ifndef _DYNAMIK_DEBUGGER_BENCHMARK_H
 #define _DYNAMIK_DEBUGGER_BENCHMARK_H
 
+#include <chrono>
+
 namespace Dynamik {
 	namespace Debugger {
 		namespace benchmark {

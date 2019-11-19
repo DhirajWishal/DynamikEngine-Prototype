@@ -66,7 +66,7 @@ namespace Dynamik {
 			core::debugger myDebugger{ &ins, &msg };
 
 			// terrain data
-			std::vector<core::Vertex> terrainVBO = {};
+			std::vector<Vertex> terrainVBO = {};
 			VkBuffer terrainVertexBuffer = VK_NULL_HANDLE;
 			VkDeviceMemory terrainVertexBufferMemory = VK_NULL_HANDLE;
 
@@ -75,7 +75,7 @@ namespace Dynamik {
 			VkImageView cubeMapImageView;
 			VkDeviceMemory cubeMapMemory;
 
-			std::vector<core::Vertex> vbo2 = {};
+			std::vector<Vertex> vbo2 = {};
 			std::vector<uint32_t> ibo = {};
 			std::vector<VkDescriptorSet> descriptorSets = {};
 			std::vector<VkDescriptorSet> descriptorSets2 = {};
@@ -108,7 +108,7 @@ namespace Dynamik {
 
 			DMKVulkanSkyboxContainer mySkybox;
 
-			std::vector<core::Vertex> vertices = {};
+			std::vector<Vertex> vertices = {};
 
 			uint32_t currentFrame = 0;
 			uint32_t myMipLevel = 1;

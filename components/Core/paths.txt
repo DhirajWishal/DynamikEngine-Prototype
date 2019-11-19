@@ -1,3 +1,1 @@
-"E:/Projects/Dynamik Engine/Dynamik/core assets/textures/chalet.jpg"
-"E:/Projects/Dynamik Engine/Dynamik/core assets/textures/chalet.jpg"
-"E:/Projects/Dynamik Engine/Dynamik/core assets/textures/chalet.jpg"
+E:/Projects/Dynamik Engine/Dynamik/core assets/assets/tree

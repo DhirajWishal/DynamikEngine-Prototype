@@ -216,22 +216,32 @@ namespace Dynamik {
 			}
 
 			void swapChain::cleanUp(ADGRVulkanDataContainer* container, DMKSwapChainCleanUpInfo& info) {
+				// destroy frame buffers
 				for (size_t i = 0; i < container->frameBufferContainer.buffers.size(); i++)
 					vkDestroyFramebuffer(container->device, container->frameBufferContainer.buffers[i], nullptr);
 
+				// free command buffer
 				vkFreeCommandBuffers(container->device, container->commandBufferContainer.commandPool,
 					static_cast<uint32>(container->commandBufferContainer.buffers.size()),
 					container->commandBufferContainer.buffers.data());
 
-				vkDestroyPipeline(container->device, container->pipelineContainers[0].pipeline, nullptr);
-				vkDestroyPipelineLayout(container->device, container->pipelineContainers[0].pipelineLayout, nullptr);
-				vkDestroyRenderPass(container->device, container->pipelineContainers[0].renderPass, nullptr);
+				// destroy pipeline and pipeline layout
+				for (int i = 0; i < info.pipelines.size(); i++) {
+					vkDestroyPipeline(container->device, info.pipelines[i], nullptr);
+					vkDestroyPipelineLayout(container->device, info.pipelineLayouts[i], nullptr);
+				}
 
+				// destroy render pass
+				vkDestroyRenderPass(container->device, container->renderPass, nullptr);
+
+				// destroy swapchain image views
 				for (size_t i = 0; i < container->swapchainContainer.swapchainImageViews.size(); i++)
 					vkDestroyImageView(container->device, container->swapchainContainer.swapchainImageViews[i], nullptr);
 
+				// destroy swapchain
 				vkDestroySwapchainKHR(container->device, container->swapchainContainer.swapchain, nullptr);
 
+				// destroy uniformNuffers and uniformBufferMemories
 				for (int x = 0; x < info.uniformBuffers.size(); x++) {
 					for (size_t i = 0; i < container->swapchainContainer.swapChainImages.size(); i++) {
 						vkDestroyBuffer(container->device, info.uniformBuffers[x][i], nullptr);
@@ -239,8 +249,9 @@ namespace Dynamik {
 					}
 				}
 
-				for(int i = 0; i < info.descriptorPool.size(); i++)
-				vkDestroyDescriptorPool(container->device, info.descriptorPool[i], nullptr);
+				// destroy descriptor pools
+				for (int i = 0; i < info.descriptorPools.size(); i++)
+					vkDestroyDescriptorPool(container->device, info.descriptorPools[i], nullptr);
 			}
 
 			void swapChain::initImageViews(ADGRVulkanDataContainer* container) {

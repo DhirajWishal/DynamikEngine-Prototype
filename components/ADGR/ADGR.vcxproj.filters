@@ -31,9 +31,6 @@
     <Filter Include="src\backend\vulkan\core\data structures">
       <UniqueIdentifier>{493FB445-B5CE-7530-BECA-56482AD9B03C}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\backend\vulkan\core\data types">
-      <UniqueIdentifier>{3AB00904-26EC-0C6E-8FFE-24657B59B588}</UniqueIdentifier>
-    </Filter>
     <Filter Include="src\backend\vulkan\core\extensions">
       <UniqueIdentifier>{DBDA0269-C716-06D3-3029-1ECA1C84AEED}</UniqueIdentifier>
     </Filter>
@@ -144,14 +141,8 @@
     <ClInclude Include="src\backend\vulkan\core\data structures\mesh.h">
       <Filter>src\backend\vulkan\core\data structures</Filter>
     </ClInclude>
-    <ClInclude Include="src\backend\vulkan\core\data structures\vertex.h">
-      <Filter>src\backend\vulkan\core\data structures</Filter>
-    </ClInclude>
     <ClInclude Include="src\backend\vulkan\core\data structures\vulkan.h">
       <Filter>src\backend\vulkan\core\data structures</Filter>
-    </ClInclude>
-    <ClInclude Include="src\backend\vulkan\core\data types\typenames.h">
-      <Filter>src\backend\vulkan\core\data types</Filter>
     </ClInclude>
     <ClInclude Include="src\backend\vulkan\core\depthBuffer.h">
       <Filter>src\backend\vulkan\core</Filter>
@@ -257,9 +248,6 @@
     </ClCompile>
     <ClCompile Include="src\backend\vulkan\core\core\Core.cpp">
       <Filter>src\backend\vulkan\core\core</Filter>
-    </ClCompile>
-    <ClCompile Include="src\backend\vulkan\core\data structures\vertex.cpp">
-      <Filter>src\backend\vulkan\core\data structures</Filter>
     </ClCompile>
     <ClCompile Include="src\backend\vulkan\core\depthBuffer.cpp">
       <Filter>src\backend\vulkan\core</Filter>

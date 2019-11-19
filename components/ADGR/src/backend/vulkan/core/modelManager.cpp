@@ -4,12 +4,12 @@
 #include <tiny_obj_loader.h>
 
 namespace std {
-	using Dynamik::ADGR::core::Vertex;
+	using Dynamik::Vertex;
 
 	template<>
-	struct hash<Dynamik::ADGR::core::Vertex> {
+	struct hash<Dynamik::Vertex> {
 		size_t operator()(Vertex const& vertexs) const {
-			using Dynamik::ADGR::core::Vertex;
+			using Dynamik::Vertex;
 			using glm::vec2;
 			using glm::vec3;
 
@@ -61,8 +61,6 @@ namespace Dynamik {
 				}
 			}
 
-			std::mutex modelMutex;
-
 			void loadModel(DMKModelLoadInfo info) {
 				tinyobj::attrib_t attributes;
 				std::vector<tinyobj::shape_t> shapes;
@@ -87,12 +85,14 @@ namespace Dynamik {
 						vertices.TexCoordinates = {
 							attributes.texcoords[2 * index.texcoord_index + 0],
 							1.0f - attributes.texcoords[2 * index.texcoord_index + 1]
-							//1.0f, 1.0f
+							//0.5f, 0.5f
 						};
 
-						vertices.Color = { 1.0f, 1.0f, 1.0f };
-
-						std::lock_guard<std::mutex> modelLock(modelMutex);
+						vertices.Color = {
+							attributes.colors[0],
+							attributes.colors[1],
+							attributes.colors[2]
+						};
 
 						if (uniqueVertices.count(vertices) == 0) {
 							uniqueVertices[vertices] = static_cast<uint32_t>(info.vertices->size());

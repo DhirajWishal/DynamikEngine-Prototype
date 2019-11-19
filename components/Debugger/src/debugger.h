@@ -7,5 +7,6 @@
 
 #include "core/benchmark/benchmark.h"
 #include "core/benchmark/fps.h"
+#include "core/benchmark/profiler.h"
 
 #endif // !_DYNAMIK_DEBUGGER_H

@@ -1,17 +1,27 @@
 #pragma once
 
-#include "Core.h"
+#ifndef _DYNAMIK_ADGR_VULKAN_PIPELINE_H
+#define _DYNAMIK_ADGR_VULKAN_PIPELINE_H
+
+#include "core/Pipeline.h"
 
 namespace Dynamik {
 	namespace ADGR {
 		namespace core {
-			class Pipeline : public Core {
-			public:
-				Pipeline() {}
-				virtual ~Pipeline() {}
+			// TODO: Pipeline cashe
 
-				virtual void initRenderPass() {}
+			class pipeline : public Pipeline {
+			public:
+				pipeline() {}
+				~pipeline() {}
+
+				std::pair<VkPipeline, VkPipelineLayout> init(ADGRVulkanDataContainer* container, DMKPipelineInitInfo info);
+				void initRenderPass(ADGRVulkanDataContainer* container) override;
+
+			private:
 			};
 		}
 	}
 }
+
+#endif	// !_DYNAMIK_ADGR_VULKAN_PIPELINE_H

@@ -39,15 +39,15 @@ namespace Dynamik {
 #define DMK_LOGGER(...)
 
 /* CORE LOG MACROS */
-#define DMK_CORE_INFO(...) ::Dynamik::INFO_LOG(#__VA_ARGS__)
-#define DMK_CORE_WARN(...) ::Dynamik::WARN_LOG(#__VA_ARGS__)
-#define DMK_CORE_ERROR(...) ::Dynamik::ERROR_LOG(#__VA_ARGS__)
+#define DMK_CORE_INFO(...) ::Dynamik::INFO_LOG(__VA_ARGS__)
+#define DMK_CORE_WARN(...) ::Dynamik::WARN_LOG(__VA_ARGS__)
+#define DMK_CORE_ERROR(...) ::Dynamik::ERROR_LOG(__VA_ARGS__)
 #define DMK_CORE_FATAL(...) {															\
-								::Dynamik::FATAL_LOG(#__VA_ARGS__, __FILE__, __LINE__); \
+								::Dynamik::FATAL_LOG(__VA_ARGS__, __FILE__, __LINE__); \
 								__debugbreak();											\
 							}
 
-#define DMK_CORE_MSG(...) ::Dynamik::CORE_LOG(#__VA_ARGS__)
+#define DMK_CORE_MSG(...) ::Dynamik::CORE_LOG(__VA_ARGS__)
 
 // assertions
 #define DMK_CORE_ASSERT(x, ...)		{										\
@@ -78,6 +78,6 @@ namespace Dynamik {
 #endif
 
 // ----------
-#endif 
+#endif
 
 #endif // !_DYNAMIK_DEBUGGER_LOG_H

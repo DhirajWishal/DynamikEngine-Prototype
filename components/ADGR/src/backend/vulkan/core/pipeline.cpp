@@ -8,89 +8,95 @@ namespace Dynamik {
 		namespace core {
 			using namespace functions;
 
-			void pipeline::init(ADGRVulkanDataContainer* container, DMKPipelineInitInfo info) {
+			std::pair<VkPipeline, VkPipelineLayout> pipeline::init(ADGRVulkanDataContainer* container, DMKPipelineInitInfo info) {
 				/* INIT RENDER PASS */
-				// attachment descriptions
-				VkAttachmentDescription colorAttachment = {};
-				colorAttachment.format = container->swapchainContainer.swapchainImageFormat;
-				colorAttachment.samples = container->msaaSamples;
-				colorAttachment.loadOp = VK_ATTACHMENT_LOAD_OP_CLEAR;
-				colorAttachment.storeOp = VK_ATTACHMENT_STORE_OP_STORE;
-				colorAttachment.stencilLoadOp = VK_ATTACHMENT_LOAD_OP_DONT_CARE;
-				colorAttachment.stencilStoreOp = VK_ATTACHMENT_STORE_OP_DONT_CARE;
-				colorAttachment.initialLayout = VK_IMAGE_LAYOUT_UNDEFINED;
-				colorAttachment.finalLayout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
-
-				VkAttachmentDescription depthAttachment = {};
-				depthAttachment.format = findDepthFormat(container->physicalDevice);
-				depthAttachment.samples = container->msaaSamples;
-				depthAttachment.loadOp = VK_ATTACHMENT_LOAD_OP_CLEAR;
-				depthAttachment.storeOp = VK_ATTACHMENT_STORE_OP_DONT_CARE;
-				depthAttachment.stencilLoadOp = VK_ATTACHMENT_LOAD_OP_DONT_CARE;
-				depthAttachment.stencilStoreOp = VK_ATTACHMENT_STORE_OP_DONT_CARE;
-				depthAttachment.initialLayout = VK_IMAGE_LAYOUT_UNDEFINED;
-				depthAttachment.finalLayout = VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL;
-
-				VkAttachmentDescription colorAttachmentResolve = {};
-				colorAttachmentResolve.format = container->swapchainContainer.swapchainImageFormat;
-				colorAttachmentResolve.samples = VK_SAMPLE_COUNT_1_BIT;
-				colorAttachmentResolve.loadOp = VK_ATTACHMENT_LOAD_OP_DONT_CARE;
-				colorAttachmentResolve.storeOp = VK_ATTACHMENT_STORE_OP_STORE;
-				colorAttachmentResolve.stencilLoadOp = VK_ATTACHMENT_LOAD_OP_DONT_CARE;
-				colorAttachmentResolve.stencilStoreOp = VK_ATTACHMENT_STORE_OP_DONT_CARE;
-				colorAttachmentResolve.initialLayout = VK_IMAGE_LAYOUT_UNDEFINED;
-				colorAttachmentResolve.finalLayout = VK_IMAGE_LAYOUT_PRESENT_SRC_KHR;
-
-				// attachment references
-				VkAttachmentReference colorAttachmentRef = {};
-				colorAttachmentRef.attachment = 0;
-				colorAttachmentRef.layout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
-
-				VkAttachmentReference depthAttachmentRef = {};
-				depthAttachmentRef.attachment = 1;
-				depthAttachmentRef.layout = VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL;
-
-				VkAttachmentReference colorAttachmentResolveRef = {};
-				colorAttachmentResolveRef.attachment = 2;
-				colorAttachmentResolveRef.layout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
-
-				// sub passes
-				VkSubpassDescription subpass = {};
-				subpass.pipelineBindPoint = VK_PIPELINE_BIND_POINT_GRAPHICS;
-				subpass.colorAttachmentCount = 1;
-				subpass.pColorAttachments = &colorAttachmentRef;
-				subpass.pDepthStencilAttachment = &depthAttachmentRef;
-				subpass.pResolveAttachments = &colorAttachmentResolveRef;
-
-				VkSubpassDependency dependency = {};
-				dependency.srcSubpass = VK_SUBPASS_EXTERNAL;
-				dependency.dstSubpass = 0;
-				dependency.srcStageMask = VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT;
-				dependency.srcAccessMask = 0;
-				dependency.dstStageMask = VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT;
-				dependency.dstAccessMask = VK_ACCESS_COLOR_ATTACHMENT_READ_BIT | VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT;
-
-				// render pass info
-				std::array<VkAttachmentDescription, 3> attachments = { colorAttachment, depthAttachment, colorAttachmentResolve };
-				VkRenderPassCreateInfo renderPassInfo = {};
-				renderPassInfo.sType = VK_STRUCTURE_TYPE_RENDER_PASS_CREATE_INFO;
-				renderPassInfo.attachmentCount = static_cast<uint32_t>(attachments.size());
-				renderPassInfo.pAttachments = attachments.data();
-				renderPassInfo.subpassCount = 1;
-				renderPassInfo.pSubpasses = &subpass;
-				renderPassInfo.dependencyCount = 1;
-				renderPassInfo.pDependencies = &dependency;
-
-				// create the render pass
 				VkRenderPass renderPass = VK_NULL_HANDLE;
-				if (vkCreateRenderPass(container->device, &renderPassInfo, nullptr, &renderPass) != VK_SUCCESS)
-					DMK_CORE_FATAL("failed to create render pass!");
+				if (container->renderPass == VK_NULL_HANDLE) {
+					// attachment descriptions
+					VkAttachmentDescription colorAttachment = {};
+					colorAttachment.format = container->swapchainContainer.swapchainImageFormat;
+					colorAttachment.samples = container->msaaSamples;
+					colorAttachment.loadOp = VK_ATTACHMENT_LOAD_OP_CLEAR;
+					colorAttachment.storeOp = VK_ATTACHMENT_STORE_OP_STORE;
+					colorAttachment.stencilLoadOp = VK_ATTACHMENT_LOAD_OP_DONT_CARE;
+					colorAttachment.stencilStoreOp = VK_ATTACHMENT_STORE_OP_DONT_CARE;
+					colorAttachment.initialLayout = VK_IMAGE_LAYOUT_UNDEFINED;
+					colorAttachment.finalLayout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
+
+					VkAttachmentDescription depthAttachment = {};
+					depthAttachment.format = findDepthFormat(container->physicalDevice);
+					depthAttachment.samples = container->msaaSamples;
+					depthAttachment.loadOp = VK_ATTACHMENT_LOAD_OP_CLEAR;
+					depthAttachment.storeOp = VK_ATTACHMENT_STORE_OP_DONT_CARE;
+					depthAttachment.stencilLoadOp = VK_ATTACHMENT_LOAD_OP_DONT_CARE;
+					depthAttachment.stencilStoreOp = VK_ATTACHMENT_STORE_OP_DONT_CARE;
+					depthAttachment.initialLayout = VK_IMAGE_LAYOUT_UNDEFINED;
+					depthAttachment.finalLayout = VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL;
+
+					VkAttachmentDescription colorAttachmentResolve = {};
+					colorAttachmentResolve.format = container->swapchainContainer.swapchainImageFormat;
+					colorAttachmentResolve.samples = VK_SAMPLE_COUNT_1_BIT;
+					colorAttachmentResolve.loadOp = VK_ATTACHMENT_LOAD_OP_DONT_CARE;
+					colorAttachmentResolve.storeOp = VK_ATTACHMENT_STORE_OP_STORE;
+					colorAttachmentResolve.stencilLoadOp = VK_ATTACHMENT_LOAD_OP_DONT_CARE;
+					colorAttachmentResolve.stencilStoreOp = VK_ATTACHMENT_STORE_OP_DONT_CARE;
+					colorAttachmentResolve.initialLayout = VK_IMAGE_LAYOUT_UNDEFINED;
+					colorAttachmentResolve.finalLayout = VK_IMAGE_LAYOUT_PRESENT_SRC_KHR;
+
+					// attachment references
+					VkAttachmentReference colorAttachmentRef = {};
+					colorAttachmentRef.attachment = 0;
+					colorAttachmentRef.layout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
+
+					VkAttachmentReference depthAttachmentRef = {};
+					depthAttachmentRef.attachment = 1;
+					depthAttachmentRef.layout = VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL;
+
+					VkAttachmentReference colorAttachmentResolveRef = {};
+					colorAttachmentResolveRef.attachment = 2;
+					colorAttachmentResolveRef.layout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
+
+					// sub passes
+					VkSubpassDescription subpass = {};
+					subpass.pipelineBindPoint = VK_PIPELINE_BIND_POINT_GRAPHICS;
+					subpass.colorAttachmentCount = 1;
+					subpass.pColorAttachments = &colorAttachmentRef;
+					subpass.pDepthStencilAttachment = &depthAttachmentRef;
+					subpass.pResolveAttachments = &colorAttachmentResolveRef;
+
+					VkSubpassDependency dependency = {};
+					dependency.srcSubpass = VK_SUBPASS_EXTERNAL;
+					dependency.dstSubpass = 0;
+					dependency.srcStageMask = VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT;
+					dependency.srcAccessMask = 0;
+					dependency.dstStageMask = VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT;
+					dependency.dstAccessMask = VK_ACCESS_COLOR_ATTACHMENT_READ_BIT | VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT;
+
+					// render pass info
+					std::array<VkAttachmentDescription, 3> attachments = { colorAttachment, depthAttachment, colorAttachmentResolve };
+					VkRenderPassCreateInfo renderPassInfo = {};
+					renderPassInfo.sType = VK_STRUCTURE_TYPE_RENDER_PASS_CREATE_INFO;
+					renderPassInfo.attachmentCount = static_cast<uint32_t>(attachments.size());
+					renderPassInfo.pAttachments = attachments.data();
+					renderPassInfo.subpassCount = 1;
+					renderPassInfo.pSubpasses = &subpass;
+					renderPassInfo.dependencyCount = 1;
+					renderPassInfo.pDependencies = &dependency;
+
+					// create the render pass
+					if (vkCreateRenderPass(container->device, &renderPassInfo, nullptr, &renderPass) != VK_SUCCESS)
+						DMK_CORE_FATAL("failed to create render pass!");
+					container->renderPass = renderPass;
+				}
+				else {
+					renderPass = container->renderPass;
+				}
 
 				/* INIT PIPELINE */
 				VkPipelineVertexInputStateCreateInfo vertexInputInfo = {};
 				vertexInputInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO;
 
-				auto bindingDescription = Vertex::getBindingDescription(2);
+				auto bindingDescription = Vertex::getBindingDescription(1);
 				auto attributeDescriptions = Vertex::getAttributeDescriptions(2);
 
 				vertexInputInfo.vertexBindingDescriptionCount = static_cast<uint32_t>(bindingDescription.size());
@@ -152,7 +158,7 @@ namespace Dynamik {
 				// initialize multisampling
 				VkPipelineMultisampleStateCreateInfo multisampling = {};
 				multisampling.sType = VK_STRUCTURE_TYPE_PIPELINE_MULTISAMPLE_STATE_CREATE_INFO;
-				multisampling.rasterizationSamples = info.multisamplerMsaaSamples;
+				multisampling.rasterizationSamples = container->msaaSamples;
 				multisampling.sampleShadingEnable = info.multisamplerSampleShadingEnable; // enable sample shading in the pipeline
 				multisampling.minSampleShading = info.multisamplerMinSampleShading; // min fraction for sample shading; closer to one is smoother
 
@@ -260,14 +266,12 @@ namespace Dynamik {
 					DMK_CORE_FATAL("failed to create graphics pipeline!");
 
 				ADGRVulkanPipelineDataContainer pipelineContainer = {};
-				pipelineContainer.renderPass = renderPass;
 				pipelineContainer.pipelineLayout = pipelineLayout;
 				pipelineContainer.pipeline = pipeline;
 
-				//if (container->pipelineContainers.size() > 0)
-				//	container->pipelineContainers.clear();
-
 				container->pipelineContainers.push_back(pipelineContainer);
+
+				return { pipelineContainer.pipeline, pipelineContainer.pipelineLayout };
 			}
 
 			void pipeline::initRenderPass(ADGRVulkanDataContainer* container) {
@@ -343,7 +347,7 @@ namespace Dynamik {
 				renderPassInfo.pDependencies = &dependency;
 
 				// create the render pass
-				if (vkCreateRenderPass(container->device, &renderPassInfo, nullptr, &container->pipelineContainers[0].renderPass) != VK_SUCCESS)
+				if (vkCreateRenderPass(container->device, &renderPassInfo, nullptr, &container->renderPass) != VK_SUCCESS)
 					DMK_CORE_FATAL("failed to create render pass!");
 			}
 		}

@@ -13,7 +13,7 @@
 #include "Platform/Windows.h"
 #include "keyCodes.h"
 
-#include "core/data structures/vertex.h"
+#include "CentralDataHub.h"
 #include "core/functions/textureFunctions.h"
 #include "core/controlHeader.h"
 

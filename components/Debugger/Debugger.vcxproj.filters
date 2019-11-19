@@ -18,6 +18,9 @@
     <ClInclude Include="src\core\benchmark\fps.h">
       <Filter>src\core\benchmark</Filter>
     </ClInclude>
+    <ClInclude Include="src\core\benchmark\profiler.h">
+      <Filter>src\core\benchmark</Filter>
+    </ClInclude>
     <ClInclude Include="src\core\dump.h">
       <Filter>src\core</Filter>
     </ClInclude>
@@ -33,6 +36,9 @@
       <Filter>src\core\benchmark</Filter>
     </ClCompile>
     <ClCompile Include="src\core\benchmark\fps.cpp">
+      <Filter>src\core\benchmark</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\benchmark\profiler.cpp">
       <Filter>src\core\benchmark</Filter>
     </ClCompile>
     <ClCompile Include="src\core\dump.cpp">

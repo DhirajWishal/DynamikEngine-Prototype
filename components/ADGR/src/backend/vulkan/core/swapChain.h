@@ -11,7 +11,9 @@ namespace Dynamik {
 			struct DMKSwapChainCleanUpInfo {
 				std::vector<std::vector<VkBuffer>> uniformBuffers;
 				std::vector<std::vector<VkDeviceMemory>> uniformBufferMemories;
-				std::vector<VkDescriptorPool> descriptorPool;
+				std::vector<VkDescriptorPool> descriptorPools;
+				std::vector<VkPipeline> pipelines;
+				std::vector<VkPipelineLayout> pipelineLayouts;
 			};
 
 			class swapChain : public SwapChain {

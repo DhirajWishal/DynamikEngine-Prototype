@@ -5,7 +5,7 @@
 
 /* KEY BINDINGS FROM DMK */
 namespace Dynamik {
-#define DMK_RELEASE                0
+#define DMK_BUTTON_RELEASE         0
 
 #define DMK_PRESS                  1
 

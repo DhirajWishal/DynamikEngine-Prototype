@@ -45,6 +45,12 @@ namespace Dynamik {
 
 		// var = utils::factorial(value);
 		DMK_API long double factorial(long double value);
+
+		// var = utils::power(value);
+		DMK_API long double power(double base, double power);
+
+		// var = utils::square(value);
+		DMK_API long double square(double base);
 	}
 }
 

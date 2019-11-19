@@ -54,6 +54,6 @@
 #endif
 
 // ----------
-#endif  
+#endif
 
 #endif // !_DYNAMIK_PCH

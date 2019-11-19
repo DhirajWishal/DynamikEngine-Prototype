@@ -9,8 +9,7 @@
  IDE:		MS Visual Studio Community 2019
 */
 
-#include "backend/backend.h"
-
+#include "backend/core/backend.h"
 namespace Dynamik {
 	namespace ADGR {
 		class Renderer {
@@ -28,7 +27,7 @@ namespace Dynamik {
 			void events() {
 				myWindow.pollEvents();
 			}
-			bool closeEvent() { return myWindow.closeEvent(); }
+			//bool closeEvent() { return myWindow.closeEvent(); }
 
 		private:
 			core::window myWindow;
@@ -52,7 +51,7 @@ namespace Dynamik {
 
 			core::shaderManager myShaderManager;
 
-			core::debugger myDebugger{ myInstance.getInstanceAddr(), myInstance.getdebugMessengerAddr() };
+			//core::debugger myDebugger{ myInstance.getInstanceAddr(), myInstance.getdebugMessengerAddr() };
 
 			std::vector<core::Vertex> vbo;
 			std::vector<uint32_t> ibo;

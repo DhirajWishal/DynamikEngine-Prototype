@@ -1,15 +1,24 @@
 #pragma once
 
-#include "Core.h"
+#ifndef _DYNAMIK_ADGR_VULKAN_INSTANCE_H
+#define _DYNAMIK_ADGR_VULKAN_INSTANCE_H
+
+#include "core/Instance.h"
 
 namespace Dynamik {
 	namespace ADGR {
 		namespace core {
-			class Instance : public Core {
+			class instanceManager : public Instance {
 			public:
-				Instance() {}
-				virtual ~Instance() {}
+				instanceManager() {}
+				~instanceManager() {}
+
+				void init(ADGRVulkanDataContainer* container) override;
+
+				void clear(ADGRVulkanDataContainer* container) override;
 			};
 		}
 	}
 }
+
+#endif // !_DYNAMIK_ADGR_VULKAN_INSTANCE_H

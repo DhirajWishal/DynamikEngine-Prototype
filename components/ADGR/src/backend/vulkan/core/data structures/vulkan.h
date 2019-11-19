@@ -8,7 +8,7 @@
 #include <vector>
 
 #include "backend/vulkan/core/data structures/DMK_ADGR_DataStructures.h"
-#include "backend/vulkan/core/data types/typenames.h"
+#include "CentralDataHub.h"
 
 namespace Dynamik {
 	namespace ADGR {
@@ -18,6 +18,13 @@ namespace Dynamik {
 				DMK_ADGR_VULKAN_SHADER_STAGE_TESSELLATION = 1,	// tessellation shader
 				DMK_ADGR_VULKAN_SHADER_STAGE_GEOMETRY = 2,		// geometry shader
 				DMK_ADGR_VULKAN_SHADER_STAGE_FRAGMENT = 3		// fragment shader
+			};
+
+			enum DMK_ADGR_RENDERING_TECHNOLOGY {
+				DMK_ADGR_VULKAN_RENDERER_VERTEX = 0,
+				DMK_ADGR_VULKAN_RENDERER_INDEXED = 1,
+				DMK_ADGR_VULKAN_RENDERER_INDIRECT = 2,
+				DMK_ADGR_VULKAN_RENDERER_INDEXED_INDIRECT = 3
 			};
 
 			/* SWAPCHAIN DATA CONTAINER */
@@ -34,7 +41,6 @@ namespace Dynamik {
 
 			/* PIPELINE DATA CONTAINER */
 			struct ADGRVulkanPipelineDataContainer {
-				VkRenderPass renderPass = VK_NULL_HANDLE;							// Vulkan render pass
 				std::vector<DMK_ShaderCode> shaderCodes = {							// Vulkan shader codes
 					{},	// vertex shader
 					{},	// tessellation shader
@@ -82,12 +88,13 @@ namespace Dynamik {
 			// Pipeline creation info
 			struct DMKPipelineInitInfo {
 				ADGRVulkanShaderDataContainer shaderDataContainer = {};				// Vulkan shader data container
+				VkRenderPass renderPass = VK_NULL_HANDLE;							// Vulkan render pass
 
 				std::vector<VkDescriptorSetLayout_T*> layouts;						// Vulkan descriptor set layouts
 
 				// primitive assembly info
-				//VkPrimitiveTopology inputAssemblyTopology = VkPrimitiveTopology::VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST;	// Vulkan input assembler topologies
-				VkPrimitiveTopology inputAssemblyTopology = VkPrimitiveTopology::VK_PRIMITIVE_TOPOLOGY_POINT_LIST;	// Vulkan input assembler topologies
+				VkPrimitiveTopology inputAssemblyTopology = VkPrimitiveTopology::VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST;	// Vulkan input assembler topologies
+				//VkPrimitiveTopology inputAssemblyTopology = VkPrimitiveTopology::VK_PRIMITIVE_TOPOLOGY_POINT_LIST;	// Vulkan input assembler topologies
 				//VkPrimitiveTopology inputAssemblyTopology = VkPrimitiveTopology::VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST;	// Vulkan input assembler topologies
 				VkBool32 inputAssemblyPrimitiveRestartEnable = VK_FALSE;			// Vulkan primitive assembly restart enable
 
@@ -108,7 +115,7 @@ namespace Dynamik {
 				VkBool32 rasterizerDepthBiasEnable = VK_FALSE;						// Vulkan rasterizer depth bias enable
 
 				// multisampling info
-				VkSampleCountFlagBits multisamplerMsaaSamples = VK_SAMPLE_COUNT_1_BIT;	// Vulkan multisampler MSAA samples
+				VkSampleCountFlagBits multisamplerMsaaSamples = VkSampleCountFlagBits::VK_SAMPLE_COUNT_1_BIT;	// Vulkan multisampler MSAA samples
 				VkBool32 multisamplerSampleShadingEnable = VK_TRUE;					// Vulkan multisampler sample shading enable
 				float multisamplerMinSampleShading = 0.2f;							// Vulkan multisampler sample shading
 
@@ -209,6 +216,7 @@ namespace Dynamik {
 
 				/* PIPELINE */
 				std::vector<ADGRVulkanPipelineDataContainer> pipelineContainers = {};	// ADGR pipeline containers
+				VkRenderPass renderPass = VK_NULL_HANDLE;							// Vulkan render pass
 
 				/* COMMAND BUFFER */
 				ADGRVulkanCommandBufferDataContainer commandBufferContainer = {};	// ADGR command buffer container

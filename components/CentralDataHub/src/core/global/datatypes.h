@@ -16,8 +16,8 @@ namespace Dynamik {
 	typedef unsigned short		uint16;
 	typedef unsigned long long	uint64;
 
-	typedef const char* ccp;
-	typedef void* pointer;
+	typedef const char*			ccp;
+	typedef void*				pointer;
 
 	typedef std::any			var;
 }

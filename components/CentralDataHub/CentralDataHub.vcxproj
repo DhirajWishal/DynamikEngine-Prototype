@@ -145,14 +145,20 @@
   <ItemGroup>
     <ClInclude Include="src\CentralDataHub.h" />
     <ClInclude Include="src\cdhafx.h" />
-    <ClInclude Include="src\core\base\Vertex.h" />
+    <ClInclude Include="src\core\global\constants.h" />
     <ClInclude Include="src\core\global\datatypes.h" />
+    <ClInclude Include="src\core\network\messageData.h" />
+    <ClInclude Include="src\core\network\messageType.h" />
+    <ClInclude Include="src\core\objectSpecifications.h" />
+    <ClInclude Include="src\core\renderer\typenames.h" />
+    <ClInclude Include="src\core\renderer\vertex.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\cdhafx.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="src\core\base\Vertex.cpp" />
+    <ClCompile Include="src\core\network\messageData.cpp" />
+    <ClCompile Include="src\core\renderer\vertex.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="premake5.lua" />

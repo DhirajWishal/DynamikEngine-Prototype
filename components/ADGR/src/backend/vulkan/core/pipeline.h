@@ -15,7 +15,7 @@ namespace Dynamik {
 				pipeline() {}
 				~pipeline() {}
 
-				void init(ADGRVulkanDataContainer* container, DMKPipelineInitInfo info);
+				std::pair<VkPipeline, VkPipelineLayout> init(ADGRVulkanDataContainer* container, DMKPipelineInitInfo info);
 				void initRenderPass(ADGRVulkanDataContainer* container) override;
 
 			private:

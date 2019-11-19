@@ -22,29 +22,32 @@
     <Filter Include="src\Renderer\backend\core">
       <UniqueIdentifier>{028249AD-6E44-7D37-B7F4-0BC423F65515}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\Renderer\backend\data structures">
-      <UniqueIdentifier>{776B7BFD-6352-3DF5-0CA3-A312F868B65B}</UniqueIdentifier>
+    <Filter Include="src\Renderer\backend\core\core">
+      <UniqueIdentifier>{BAC3BFA9-A6E9-8910-8F2F-0FDC7BF4AEDC}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\Renderer\backend\data types">
-      <UniqueIdentifier>{A807CB09-14EB-D949-1DEE-07868950A09A}</UniqueIdentifier>
+    <Filter Include="src\Renderer\backend\core\data structures">
+      <UniqueIdentifier>{2F2AD27D-9B44-351F-E466-45B350C05C26}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\Renderer\backend\extensions">
-      <UniqueIdentifier>{4932C46E-B515-D3AE-BE18-01EB2A7B99FF}</UniqueIdentifier>
+    <Filter Include="src\Renderer\backend\core\data types">
+      <UniqueIdentifier>{60B309E4-4C9A-CBDB-F5EA-31F9E1B04442}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\Renderer\backend\functions">
-      <UniqueIdentifier>{52B4105D-3EDA-DAC3-2720-608F13E5FF8F}</UniqueIdentifier>
+    <Filter Include="src\Renderer\backend\core\extensions">
+      <UniqueIdentifier>{01DE0249-EDC4-C440-9615-2B5E82DB3DA7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\Renderer\backend\others">
-      <UniqueIdentifier>{EEFF0442-5A0D-3328-E3F3-2E134F00FFDE}</UniqueIdentifier>
+    <Filter Include="src\Renderer\backend\core\functions">
+      <UniqueIdentifier>{0AC9CCDF-7682-378A-FFE1-51646B9AEDF9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\Renderer\backend\queues">
-      <UniqueIdentifier>{F106C046-5D14-EE2C-E6FA-E9175207BAE3}</UniqueIdentifier>
+    <Filter Include="src\Renderer\backend\core\others">
+      <UniqueIdentifier>{A68F1235-92E0-FD76-BB44-EC38A7F490E0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\Renderer\backend\validators">
-      <UniqueIdentifier>{B2B390F5-1E97-9F35-279A-CD7193FC6586}</UniqueIdentifier>
+    <Filter Include="src\Renderer\backend\core\queues">
+      <UniqueIdentifier>{A996CD39-95E7-B87B-BE4B-A73DAAFB4BE5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\Renderer\backend\validators\debugger">
-      <UniqueIdentifier>{66DAC562-5257-B9A5-7BD4-B9B967B05539}</UniqueIdentifier>
+    <Filter Include="src\Renderer\backend\core\validators">
+      <UniqueIdentifier>{6A5FCFCF-5646-91C7-FF96-F7E4EB5C0A2E}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Renderer\backend\core\validators\debugger">
+      <UniqueIdentifier>{1E354D99-8AA5-4F12-53C4-C99ABFF38713}</UniqueIdentifier>
     </Filter>
     <Filter Include="src\Wrapper">
       <UniqueIdentifier>{FDF70A47-69AD-833C-F2A1-7D135E567A40}</UniqueIdentifier>
@@ -66,125 +69,137 @@
     <ClInclude Include="src\Renderer\Renderer.h">
       <Filter>src\Renderer</Filter>
     </ClInclude>
-    <ClInclude Include="src\Renderer\backend\backend.h">
-      <Filter>src\Renderer\backend</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Renderer\backend\colorBuffer.h">
-      <Filter>src\Renderer\backend</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Renderer\backend\commandBuffer.h">
-      <Filter>src\Renderer\backend</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Renderer\backend\controlHeader.h">
-      <Filter>src\Renderer\backend</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Renderer\backend\core\Buffer.h">
+    <ClInclude Include="src\Renderer\backend\core\backend.h">
       <Filter>src\Renderer\backend\core</Filter>
     </ClInclude>
-    <ClInclude Include="src\Renderer\backend\core\Core.h">
+    <ClInclude Include="src\Renderer\backend\core\colorBuffer.h">
       <Filter>src\Renderer\backend\core</Filter>
     </ClInclude>
-    <ClInclude Include="src\Renderer\backend\core\Device.h">
+    <ClInclude Include="src\Renderer\backend\core\commandBuffer.h">
       <Filter>src\Renderer\backend\core</Filter>
     </ClInclude>
-    <ClInclude Include="src\Renderer\backend\core\Instance.h">
+    <ClInclude Include="src\Renderer\backend\core\controlHeader.h">
       <Filter>src\Renderer\backend\core</Filter>
     </ClInclude>
-    <ClInclude Include="src\Renderer\backend\core\Model.h">
+    <ClInclude Include="src\Renderer\backend\core\core\Buffer.h">
+      <Filter>src\Renderer\backend\core\core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Renderer\backend\core\core\Core.h">
+      <Filter>src\Renderer\backend\core\core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Renderer\backend\core\core\Device.h">
+      <Filter>src\Renderer\backend\core\core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Renderer\backend\core\core\Instance.h">
+      <Filter>src\Renderer\backend\core\core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Renderer\backend\core\core\Manager.h">
+      <Filter>src\Renderer\backend\core\core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Renderer\backend\core\core\Model.h">
+      <Filter>src\Renderer\backend\core\core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Renderer\backend\core\core\Pipeline.h">
+      <Filter>src\Renderer\backend\core\core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Renderer\backend\core\core\Shader.h">
+      <Filter>src\Renderer\backend\core\core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Renderer\backend\core\core\SwapChain.h">
+      <Filter>src\Renderer\backend\core\core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Renderer\backend\core\core\Texture.h">
+      <Filter>src\Renderer\backend\core\core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Renderer\backend\core\core\Window.h">
+      <Filter>src\Renderer\backend\core\core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Renderer\backend\core\data structures\DMK_ADGR_DataStructures.h">
+      <Filter>src\Renderer\backend\core\data structures</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Renderer\backend\core\data structures\Uniform.h">
+      <Filter>src\Renderer\backend\core\data structures</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Renderer\backend\core\data structures\mesh.h">
+      <Filter>src\Renderer\backend\core\data structures</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Renderer\backend\core\data structures\vertex.h">
+      <Filter>src\Renderer\backend\core\data structures</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Renderer\backend\core\data structures\vulkan.h">
+      <Filter>src\Renderer\backend\core\data structures</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Renderer\backend\core\data types\typenames.h">
+      <Filter>src\Renderer\backend\core\data types</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Renderer\backend\core\depthBuffer.h">
       <Filter>src\Renderer\backend\core</Filter>
     </ClInclude>
-    <ClInclude Include="src\Renderer\backend\core\Pipeline.h">
+    <ClInclude Include="src\Renderer\backend\core\device.h">
       <Filter>src\Renderer\backend\core</Filter>
     </ClInclude>
-    <ClInclude Include="src\Renderer\backend\core\Shader.h">
+    <ClInclude Include="src\Renderer\backend\core\extensions\extensions.h">
+      <Filter>src\Renderer\backend\core\extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Renderer\backend\core\frameBuffer.h">
       <Filter>src\Renderer\backend\core</Filter>
     </ClInclude>
-    <ClInclude Include="src\Renderer\backend\core\SwapChain.h">
+    <ClInclude Include="src\Renderer\backend\core\functions\bufferFunctions.h">
+      <Filter>src\Renderer\backend\core\functions</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Renderer\backend\core\functions\textureFunctions.h">
+      <Filter>src\Renderer\backend\core\functions</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Renderer\backend\core\indexBuffer.h">
       <Filter>src\Renderer\backend\core</Filter>
     </ClInclude>
-    <ClInclude Include="src\Renderer\backend\core\Texture.h">
+    <ClInclude Include="src\Renderer\backend\core\instance.h">
       <Filter>src\Renderer\backend\core</Filter>
     </ClInclude>
-    <ClInclude Include="src\Renderer\backend\core\Window.h">
+    <ClInclude Include="src\Renderer\backend\core\manager.h">
       <Filter>src\Renderer\backend\core</Filter>
     </ClInclude>
-    <ClInclude Include="src\Renderer\backend\data structures\Uniform.h">
-      <Filter>src\Renderer\backend\data structures</Filter>
+    <ClInclude Include="src\Renderer\backend\core\modelManager.h">
+      <Filter>src\Renderer\backend\core</Filter>
     </ClInclude>
-    <ClInclude Include="src\Renderer\backend\data structures\mesh.h">
-      <Filter>src\Renderer\backend\data structures</Filter>
+    <ClInclude Include="src\Renderer\backend\core\others\semaphores.h">
+      <Filter>src\Renderer\backend\core\others</Filter>
     </ClInclude>
-    <ClInclude Include="src\Renderer\backend\data structures\vertex.h">
-      <Filter>src\Renderer\backend\data structures</Filter>
+    <ClInclude Include="src\Renderer\backend\core\others\syncObjects.h">
+      <Filter>src\Renderer\backend\core\others</Filter>
     </ClInclude>
-    <ClInclude Include="src\Renderer\backend\data structures\vulkan.h">
-      <Filter>src\Renderer\backend\data structures</Filter>
+    <ClInclude Include="src\Renderer\backend\core\pipeline.h">
+      <Filter>src\Renderer\backend\core</Filter>
     </ClInclude>
-    <ClInclude Include="src\Renderer\backend\data types\typenames.h">
-      <Filter>src\Renderer\backend\data types</Filter>
+    <ClInclude Include="src\Renderer\backend\core\queues\queues.h">
+      <Filter>src\Renderer\backend\core\queues</Filter>
     </ClInclude>
-    <ClInclude Include="src\Renderer\backend\depthBuffer.h">
-      <Filter>src\Renderer\backend</Filter>
+    <ClInclude Include="src\Renderer\backend\core\shader.h">
+      <Filter>src\Renderer\backend\core</Filter>
     </ClInclude>
-    <ClInclude Include="src\Renderer\backend\device.h">
-      <Filter>src\Renderer\backend</Filter>
+    <ClInclude Include="src\Renderer\backend\core\skybox.h">
+      <Filter>src\Renderer\backend\core</Filter>
     </ClInclude>
-    <ClInclude Include="src\Renderer\backend\extensions\extensions.h">
-      <Filter>src\Renderer\backend\extensions</Filter>
+    <ClInclude Include="src\Renderer\backend\core\swapChain.h">
+      <Filter>src\Renderer\backend\core</Filter>
     </ClInclude>
-    <ClInclude Include="src\Renderer\backend\frameBuffer.h">
-      <Filter>src\Renderer\backend</Filter>
+    <ClInclude Include="src\Renderer\backend\core\texture.h">
+      <Filter>src\Renderer\backend\core</Filter>
     </ClInclude>
-    <ClInclude Include="src\Renderer\backend\functions\bufferFunctions.h">
-      <Filter>src\Renderer\backend\functions</Filter>
+    <ClInclude Include="src\Renderer\backend\core\uniformBuffer.h">
+      <Filter>src\Renderer\backend\core</Filter>
     </ClInclude>
-    <ClInclude Include="src\Renderer\backend\functions\textureFunctions.h">
-      <Filter>src\Renderer\backend\functions</Filter>
+    <ClInclude Include="src\Renderer\backend\core\validators\debugger\debugger.h">
+      <Filter>src\Renderer\backend\core\validators\debugger</Filter>
     </ClInclude>
-    <ClInclude Include="src\Renderer\backend\indexBuffer.h">
-      <Filter>src\Renderer\backend</Filter>
+    <ClInclude Include="src\Renderer\backend\core\validators\validators.h">
+      <Filter>src\Renderer\backend\core\validators</Filter>
     </ClInclude>
-    <ClInclude Include="src\Renderer\backend\instance.h">
-      <Filter>src\Renderer\backend</Filter>
+    <ClInclude Include="src\Renderer\backend\core\vertexBuffer.h">
+      <Filter>src\Renderer\backend\core</Filter>
     </ClInclude>
-    <ClInclude Include="src\Renderer\backend\modelManager.h">
-      <Filter>src\Renderer\backend</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Renderer\backend\others\semaphores.h">
-      <Filter>src\Renderer\backend\others</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Renderer\backend\others\syncObjects.h">
-      <Filter>src\Renderer\backend\others</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Renderer\backend\pipeline.h">
-      <Filter>src\Renderer\backend</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Renderer\backend\queues\queues.h">
-      <Filter>src\Renderer\backend\queues</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Renderer\backend\shader.h">
-      <Filter>src\Renderer\backend</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Renderer\backend\swapChain.h">
-      <Filter>src\Renderer\backend</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Renderer\backend\texture.h">
-      <Filter>src\Renderer\backend</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Renderer\backend\uniformBuffer.h">
-      <Filter>src\Renderer\backend</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Renderer\backend\validators\debugger\debugger.h">
-      <Filter>src\Renderer\backend\validators\debugger</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Renderer\backend\validators\validators.h">
-      <Filter>src\Renderer\backend\validators</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Renderer\backend\vertexBuffer.h">
-      <Filter>src\Renderer\backend</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Renderer\backend\window.h">
-      <Filter>src\Renderer\backend</Filter>
+    <ClInclude Include="src\Renderer\backend\core\window.h">
+      <Filter>src\Renderer\backend\core</Filter>
     </ClInclude>
     <ClInclude Include="src\Wrapper\dll_wrapper.h">
       <Filter>src\Wrapper</Filter>
@@ -210,80 +225,86 @@
     <ClCompile Include="src\Renderer\Renderer.cpp">
       <Filter>src\Renderer</Filter>
     </ClCompile>
-    <ClCompile Include="src\Renderer\backend\colorBuffer.cpp">
-      <Filter>src\Renderer\backend</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Renderer\backend\commandBuffer.cpp">
-      <Filter>src\Renderer\backend</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Renderer\backend\core\Core.cpp">
+    <ClCompile Include="src\Renderer\backend\core\colorBuffer.cpp">
       <Filter>src\Renderer\backend\core</Filter>
     </ClCompile>
-    <ClCompile Include="src\Renderer\backend\data structures\vertex.cpp">
-      <Filter>src\Renderer\backend\data structures</Filter>
+    <ClCompile Include="src\Renderer\backend\core\commandBuffer.cpp">
+      <Filter>src\Renderer\backend\core</Filter>
     </ClCompile>
-    <ClCompile Include="src\Renderer\backend\depthBuffer.cpp">
-      <Filter>src\Renderer\backend</Filter>
+    <ClCompile Include="src\Renderer\backend\core\core\Core.cpp">
+      <Filter>src\Renderer\backend\core\core</Filter>
     </ClCompile>
-    <ClCompile Include="src\Renderer\backend\device.cpp">
-      <Filter>src\Renderer\backend</Filter>
+    <ClCompile Include="src\Renderer\backend\core\data structures\vertex.cpp">
+      <Filter>src\Renderer\backend\core\data structures</Filter>
     </ClCompile>
-    <ClCompile Include="src\Renderer\backend\extensions\extensions.cpp">
-      <Filter>src\Renderer\backend\extensions</Filter>
+    <ClCompile Include="src\Renderer\backend\core\depthBuffer.cpp">
+      <Filter>src\Renderer\backend\core</Filter>
     </ClCompile>
-    <ClCompile Include="src\Renderer\backend\frameBuffer.cpp">
-      <Filter>src\Renderer\backend</Filter>
+    <ClCompile Include="src\Renderer\backend\core\device.cpp">
+      <Filter>src\Renderer\backend\core</Filter>
     </ClCompile>
-    <ClCompile Include="src\Renderer\backend\functions\bufferFunctions.cpp">
-      <Filter>src\Renderer\backend\functions</Filter>
+    <ClCompile Include="src\Renderer\backend\core\extensions\extensions.cpp">
+      <Filter>src\Renderer\backend\core\extensions</Filter>
     </ClCompile>
-    <ClCompile Include="src\Renderer\backend\functions\textureFunctions.cpp">
-      <Filter>src\Renderer\backend\functions</Filter>
+    <ClCompile Include="src\Renderer\backend\core\frameBuffer.cpp">
+      <Filter>src\Renderer\backend\core</Filter>
     </ClCompile>
-    <ClCompile Include="src\Renderer\backend\indexBuffer.cpp">
-      <Filter>src\Renderer\backend</Filter>
+    <ClCompile Include="src\Renderer\backend\core\functions\bufferFunctions.cpp">
+      <Filter>src\Renderer\backend\core\functions</Filter>
     </ClCompile>
-    <ClCompile Include="src\Renderer\backend\instance.cpp">
-      <Filter>src\Renderer\backend</Filter>
+    <ClCompile Include="src\Renderer\backend\core\functions\textureFunctions.cpp">
+      <Filter>src\Renderer\backend\core\functions</Filter>
     </ClCompile>
-    <ClCompile Include="src\Renderer\backend\modelManager.cpp">
-      <Filter>src\Renderer\backend</Filter>
+    <ClCompile Include="src\Renderer\backend\core\indexBuffer.cpp">
+      <Filter>src\Renderer\backend\core</Filter>
     </ClCompile>
-    <ClCompile Include="src\Renderer\backend\others\semaphores.cpp">
-      <Filter>src\Renderer\backend\others</Filter>
+    <ClCompile Include="src\Renderer\backend\core\instance.cpp">
+      <Filter>src\Renderer\backend\core</Filter>
     </ClCompile>
-    <ClCompile Include="src\Renderer\backend\others\syncObjects.cpp">
-      <Filter>src\Renderer\backend\others</Filter>
+    <ClCompile Include="src\Renderer\backend\core\manager.cpp">
+      <Filter>src\Renderer\backend\core</Filter>
     </ClCompile>
-    <ClCompile Include="src\Renderer\backend\pipeline.cpp">
-      <Filter>src\Renderer\backend</Filter>
+    <ClCompile Include="src\Renderer\backend\core\modelManager.cpp">
+      <Filter>src\Renderer\backend\core</Filter>
     </ClCompile>
-    <ClCompile Include="src\Renderer\backend\queues\queues.cpp">
-      <Filter>src\Renderer\backend\queues</Filter>
+    <ClCompile Include="src\Renderer\backend\core\others\semaphores.cpp">
+      <Filter>src\Renderer\backend\core\others</Filter>
     </ClCompile>
-    <ClCompile Include="src\Renderer\backend\shader.cpp">
-      <Filter>src\Renderer\backend</Filter>
+    <ClCompile Include="src\Renderer\backend\core\others\syncObjects.cpp">
+      <Filter>src\Renderer\backend\core\others</Filter>
     </ClCompile>
-    <ClCompile Include="src\Renderer\backend\swapChain.cpp">
-      <Filter>src\Renderer\backend</Filter>
+    <ClCompile Include="src\Renderer\backend\core\pipeline.cpp">
+      <Filter>src\Renderer\backend\core</Filter>
     </ClCompile>
-    <ClCompile Include="src\Renderer\backend\texture.cpp">
-      <Filter>src\Renderer\backend</Filter>
+    <ClCompile Include="src\Renderer\backend\core\queues\queues.cpp">
+      <Filter>src\Renderer\backend\core\queues</Filter>
     </ClCompile>
-    <ClCompile Include="src\Renderer\backend\uniformBuffer.cpp">
-      <Filter>src\Renderer\backend</Filter>
+    <ClCompile Include="src\Renderer\backend\core\shader.cpp">
+      <Filter>src\Renderer\backend\core</Filter>
     </ClCompile>
-    <ClCompile Include="src\Renderer\backend\validators\debugger\debugger.cpp">
-      <Filter>src\Renderer\backend\validators\debugger</Filter>
+    <ClCompile Include="src\Renderer\backend\core\skybox.cpp">
+      <Filter>src\Renderer\backend\core</Filter>
     </ClCompile>
-    <ClCompile Include="src\Renderer\backend\validators\validators.cpp">
-      <Filter>src\Renderer\backend\validators</Filter>
+    <ClCompile Include="src\Renderer\backend\core\swapChain.cpp">
+      <Filter>src\Renderer\backend\core</Filter>
     </ClCompile>
-    <ClCompile Include="src\Renderer\backend\vertexBuffer.cpp">
-      <Filter>src\Renderer\backend</Filter>
+    <ClCompile Include="src\Renderer\backend\core\texture.cpp">
+      <Filter>src\Renderer\backend\core</Filter>
     </ClCompile>
-    <ClCompile Include="src\Renderer\backend\window.cpp">
-      <Filter>src\Renderer\backend</Filter>
+    <ClCompile Include="src\Renderer\backend\core\uniformBuffer.cpp">
+      <Filter>src\Renderer\backend\core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Renderer\backend\core\validators\debugger\debugger.cpp">
+      <Filter>src\Renderer\backend\core\validators\debugger</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Renderer\backend\core\validators\validators.cpp">
+      <Filter>src\Renderer\backend\core\validators</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Renderer\backend\core\vertexBuffer.cpp">
+      <Filter>src\Renderer\backend\core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Renderer\backend\core\window.cpp">
+      <Filter>src\Renderer\backend\core</Filter>
     </ClCompile>
     <ClCompile Include="src\Wrapper\dll_wrapper.cpp">
       <Filter>src\Wrapper</Filter>

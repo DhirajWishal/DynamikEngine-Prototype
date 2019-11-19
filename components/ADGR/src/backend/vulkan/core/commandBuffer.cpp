@@ -40,7 +40,7 @@ namespace Dynamik {
 
 					VkRenderPassBeginInfo renderPassInfo = {};
 					renderPassInfo.sType = VK_STRUCTURE_TYPE_RENDER_PASS_BEGIN_INFO;
-					renderPassInfo.renderPass = container->pipelineContainers[0].renderPass;
+					renderPassInfo.renderPass = container->renderPass;
 					renderPassInfo.framebuffer = container->frameBufferContainer.buffers[i];
 					renderPassInfo.renderArea.offset = { 0, 0 };
 					renderPassInfo.renderArea.extent = container->swapchainContainer.swapchainExtent;
@@ -62,42 +62,48 @@ namespace Dynamik {
 					// begin render pass
 					vkCmdBeginRenderPass(container->commandBufferContainer.buffers[i], &renderPassInfo, VK_SUBPASS_CONTENTS_INLINE);
 
-					/* INITIALIZE SKYBOX */
-					//vkCmdBindDescriptorSets(commandBuffers[i], VK_PIPELINE_BIND_POINT_GRAPHICS, pipelineLayout,
-					//	0, 1, &info.skybox.descriptorSet, 0, NULL);
-					//vkCmdBindVertexBuffers(commandBuffers[i], 0, 1, &info.skybox.vertexBuffer, offsets);
-					//vkCmdBindIndexBuffer(commandBuffers[i], info.skybox.indexBuffer, 0, VK_INDEX_TYPE_UINT32);
-					//vkCmdBindPipeline(commandBuffers[i], VK_PIPELINE_BIND_POINT_GRAPHICS, info.skybox.pipeline);
-					//vkCmdDrawIndexed(commandBuffers[i], info.skybox.indexes.size(), 1, 0, 0, 0);
-
 					/* TODO: pushConstants */
 					// pushConstants[0] = ...
 					// vkCmdPushConstants(commandBuffers[i], &pipelineLayout, VK_SHADER_STAGE_VERTEX_BIT,
 					//		0, pushConstants.size(), pushConstants.data());
 
+					/* DRAW COMMANDS */
 					for (int _itr = 0; _itr < info.objectBindDatas.size(); _itr++) {
 						// bind pipeline
 						vkCmdBindPipeline(container->commandBufferContainer.buffers[i], VK_PIPELINE_BIND_POINT_GRAPHICS, info.objectBindDatas[_itr].pipeline);
 
 						// vertex buffer bind
-						vkCmdBindVertexBuffers(container->commandBufferContainer.buffers[i], 0, 
+						vkCmdBindVertexBuffers(container->commandBufferContainer.buffers[i], 0,
 							info.objectBindDatas[_itr].vertexBuffers.size(), info.objectBindDatas[_itr].vertexBuffers.data(), offsets);
-						//vkCmdBindVertexBuffers(container->commandBufferContainer.buffers[i], 0, info.vertexBuffers.size(), info.vertexBuffers.data(), offsets);
-
-						// index buffer bind
-						vkCmdBindIndexBuffer(container->commandBufferContainer.buffers[i], info.objectBindDatas[_itr].indexBuffer, 0, VK_INDEX_TYPE_UINT32);
 
 						// binding descriptor set(s)
-						//for(int x = 0; x < info.objectBindDatas[_itr].descriptorSets.size(); x++)
-						vkCmdBindDescriptorSets(container->commandBufferContainer.buffers[i], VK_PIPELINE_BIND_POINT_GRAPHICS,
-							info.objectBindDatas[_itr].pipelineLayout, _itr, info.objectBindDatas[_itr].descriptorSets.size(),
-							info.objectBindDatas[_itr].descriptorSets.data(), 0, nullptr);
+						//vkCmdBindDescriptorSets(container->commandBufferContainer.buffers[i], VK_PIPELINE_BIND_POINT_GRAPHICS,
+						//	info.objectBindDatas[_itr].pipelineLayout, _itr, info.objectBindDatas[_itr].descriptorSets.size(),
+						//	info.objectBindDatas[_itr].descriptorSets.data(), 0, nullptr);
+						if (info.objectBindDatas[_itr].descriptorSets.size() > 0)
+							vkCmdBindDescriptorSets(container->commandBufferContainer.buffers[i], VK_PIPELINE_BIND_POINT_GRAPHICS,
+								info.objectBindDatas[_itr].pipelineLayout, 0, 1, &info.objectBindDatas[_itr].descriptorSets[i], 0, nullptr);
 
-						//vkCmdBindVertexBuffers(container->commandBufferContainer.buffers[i], 0, 1, &info.vertexBuffers[1], offsets);
-						//vkCmdDraw(container->commandBufferContainer.buffers[i], info.vertexCount, 1, 0, 1);
+						// Render type selection
+						if (info.objectBindDatas[_itr].renderingType == DMK_ADGR_VULKAN_RENDERER_VERTEX) {		// Render as individual vertexes
+							// draw command
+							vkCmdDraw(container->commandBufferContainer.buffers[i], info.objectBindDatas[_itr].vertexCount, 1, 0, 1);
+						}
+						else if (info.objectBindDatas[_itr].renderingType == DMK_ADGR_VULKAN_RENDERER_INDEXED) {		// Render as individual indexes
+							// index buffer bind
+							vkCmdBindIndexBuffer(container->commandBufferContainer.buffers[i], info.objectBindDatas[_itr].indexBuffer, 0, VK_INDEX_TYPE_UINT32);
 
-						// draw command
-						vkCmdDrawIndexed(container->commandBufferContainer.buffers[i], info.objectBindDatas[_itr].indexCount, 1, 0, 0, 0);
+							// draw command
+							vkCmdDrawIndexed(container->commandBufferContainer.buffers[i], info.objectBindDatas[_itr].indexCount, 1, 0, 0, 0);
+						}
+						else if (info.objectBindDatas[_itr].renderingType == DMK_ADGR_VULKAN_RENDERER_INDIRECT) {
+
+						}
+						else if (info.objectBindDatas[_itr].renderingType == DMK_ADGR_VULKAN_RENDERER_INDEXED_INDIRECT) {
+
+						}
+						else
+							DMK_CORE_FATAL("Invalid rendering type!");
 					}
 
 					// end renderPass
@@ -110,11 +116,12 @@ namespace Dynamik {
 					/*
 					 Vulkan command (draw) order:
 						begin render pass
-						init pipeline
-						bind vertex buffers
-						bind index buffers
-						bind descriptor sets
-						draw indexed data
+						Per-object:
+							init pipeline
+							bind vertex buffers
+							bind index buffers
+							bind descriptor sets
+							draw indexed data
 						end render pass
 						end command buffer
 					*/

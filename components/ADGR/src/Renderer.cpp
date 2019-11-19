@@ -12,6 +12,7 @@
 #include "backend/defines.h"
 
 #include "backend/vulkan/ADGR_Vulkan_API.h"
+#include "debugger.h"
 
 #ifdef DMK_PLATFORM_WINDOWS
 #include "Platform/Windows.h"
@@ -35,6 +36,10 @@ namespace Dynamik {
 			rendererCore.setProgress(info.progress);
 
 			rendererCore.init();
+		}
+
+		void Renderer::getGameObjects(std::vector<GameObject>& gameObjects) {
+			rendererCore.setGameObjects(gameObjects);
 		}
 
 		void Renderer::draw() {

@@ -150,7 +150,7 @@ namespace Dynamik {
 
 		/* ---------- FACTORIAL FUNCTIONS ---------- */
 		// var = utils::factorial(value);
-		long double factorial(long double value) 
+		long double factorial(long double value)
 		{
 			if (value == 0 || value == 1) return 1;
 			if (value == 2) return value;
@@ -160,6 +160,26 @@ namespace Dynamik {
 				_result *= _counter;
 
 			return _result;
+		}
+
+		// var = utils::power(value);
+		long double power(double base, double power)
+		{
+			if (power == 0) return 1;
+			if (power == 1) return base;
+			if (power == 2) return base * base;
+
+			long double result = base;
+			for (long int itr = 1; itr < power; itr++)
+				result *= base;
+
+			return result;
+		}
+
+		// var = utils::square(value);
+		long double square(double base)
+		{
+			return power(base, 2);
 		}
 	}
 }

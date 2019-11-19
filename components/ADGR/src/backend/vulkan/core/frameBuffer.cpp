@@ -17,7 +17,7 @@ namespace Dynamik {
 
 					VkFramebufferCreateInfo framebufferInfo = {};
 					framebufferInfo.sType = VK_STRUCTURE_TYPE_FRAMEBUFFER_CREATE_INFO;
-					framebufferInfo.renderPass = container->pipelineContainers[0].renderPass;
+					framebufferInfo.renderPass = container->renderPass;
 					framebufferInfo.attachmentCount = static_cast<uint32_t>(attachments.size());
 					framebufferInfo.pAttachments = attachments.data();
 					framebufferInfo.width = container->swapchainContainer.swapchainExtent.width;
@@ -40,7 +40,7 @@ namespace Dynamik {
 
 					VkFramebufferCreateInfo framebufferInfo = {};
 					framebufferInfo.sType = VK_STRUCTURE_TYPE_FRAMEBUFFER_CREATE_INFO;
-					framebufferInfo.renderPass = container->pipelineContainers[0].renderPass;
+					framebufferInfo.renderPass = container->renderPass;
 					framebufferInfo.attachmentCount = static_cast<uint32_t>(attachments.size());
 					framebufferInfo.pAttachments = attachments.data();
 					framebufferInfo.width = container->swapchainContainer.swapchainExtent.width;

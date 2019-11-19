@@ -13,8 +13,8 @@ namespace Dynamik {
 
 			float baseMipLevel = 1.0f;
 
-			std::vector<std::string>& texturePaths;
 			std::vector<std::string>& modelPaths;
+			std::vector<std::vector<std::string>>& texturePaths;
 
 			uint32_t* progress = nullptr;
 		};

@@ -15,7 +15,7 @@
 #ifdef DMK_PLATFORM_WINDOWS
 #include "Windows/window.h"
 
-//#include "Platform.h"
+#include "Platform.h"
 
 #endif
 

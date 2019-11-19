@@ -8,30 +8,48 @@
 
 #include "utils/DMK_Descriptors.h"
 
+#include "debugger.h"
+
 // 35
 namespace Dynamik {
 	uint32_t progress = 0;
 	static bool shouldClose = false;
 
 	Application::Application() {
-		myLoader.run();
+		Debugger::benchmark::beginProfiler("Startup.json");
+		//DMK_DEBUGGER_PROFILER_BEGIN_PATH("Dynamik-Startup.json");
+		DMK_DEBUGGER_PROFILER_TIMER_START(timer);
+
+		gameObjects = myLoader.run();
+		getObjectPaths();
 
 		std::thread myThread(Application::showProgress);
 
-		std::vector<std::string>& texture = myLoader.getTexturePaths();
+		std::vector<std::vector<std::string>>& texture = myLoader.getTexturePaths();
 		std::vector<std::string>& model = myLoader.getModelPaths();
 
-		myRenderingEngine.initRenderer({ "", 1.0f,  texture, model, &progress });
+		myRenderingEngine.getGameObjects(gameObjects);
+		myRenderingEngine.initRenderer({ "", 1.0f,  model, texture,  &progress });
 		shouldClose = true;
 
 		myThread.join();
+
+		DMK_DEBUGGER_PROFILER_TIMER_STOP(timer);
+		//DMK_DEBUGGER_PROFILER_END;
+		Debugger::benchmark::endProfiler();
 	}
 
 	Application::~Application() {
+		//DMK_DEBUGGER_PROFILER_TIMER_START(timer);
+
 		myRenderingEngine.end();
+		//DMK_DEBUGGER_PROFILER_END;
+		//Debugger::benchmark::endProfiler();
 	}
 
 	DMK_API void Application::run() {
+		//DMK_DEBUGGER_PROFILER_TIMER_START(timer);
+
 		while (!myRenderingEngine.getWindowCloseEvent()) {
 			myRenderingEngine.draw();
 			myEngine.update();
@@ -139,5 +157,39 @@ namespace Dynamik {
 		printf("\rProgress: %f%%\t%s\t\n", 100.0f, symbols[count].c_str());
 
 		printf("ADGR Initiated! Let the rendering begin!\n");
+	}
+
+	void Application::getObjectPaths() {
+		DMK_DEBUGGER_PROFILER_TIMER_START(timer);
+		for (int itr = 0; itr < gameObjects.size(); itr++) {
+			GameObject* gameObject = &gameObjects[itr];
+
+			DMK_DEBUGGER_PROFILER_TIMER_START(Localtimer);
+			std::ifstream modelDataFile;
+			modelDataFile.open(
+				gameObject->myProperties.location + (
+				(gameObject->myProperties.location[gameObject->myProperties.location.size() - 1] == '/')
+					? "modelData.dai" : "/modelData.dai")
+			);
+
+			if (!modelDataFile.is_open())
+				DMK_CORE_FATAL("modelData.dai file not found --> " + gameObject->myProperties.location);
+
+			std::string line = "";
+			while (std::getline(modelDataFile, line, '\n')) {
+				if (line.find(':') != std::string::npos)
+					DMK_CORE_FATAL("Invalid object/ texture referance at file --> " + gameObject->myProperties.location);
+
+				if (line[0] == 'M' || line[0] == 'm')
+					gameObject->myProperties.objectPath.push_back(gameObject->myProperties.location +
+					((gameObject->myProperties.location[gameObject->myProperties.location.size() - 1] == '/')
+						? line.substr(2, line.size() - 2) : "/" + line.substr(2, line.size() - 2)));
+				else if (line[0] == 'T' || line[0] == 't')
+					gameObject->myProperties.texturePaths.push_back((
+						gameObject->myProperties.location +
+						((gameObject->myProperties.location[gameObject->myProperties.location.size() - 1] == '/')
+							? line.substr(2, line.size() - 2) : "/" + line.substr(2, line.size() - 2))));
+			}
+		}
 	}
 }

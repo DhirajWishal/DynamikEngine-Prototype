@@ -17,6 +17,7 @@
 
 #include "Platform.h"
 
+#include "GameObject/GameObject.h"
 #include "keyEvent.h"
 #include "mouseEvent.h"
 
@@ -30,6 +31,7 @@ namespace Dynamik {
 			~Renderer();
 
 			void initRenderer(initInfo::ADGR info);
+			void getGameObjects(std::vector<GameObject>& gameObjects);
 			void draw();
 
 			void run();

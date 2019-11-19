@@ -36,6 +36,7 @@ include "components/Audio"
 include "components/Platform"
 include "components/Debugger"
 include "components/CentralDataHub"
+include "components/Networking"
 
 include "components/Sampler"
 
@@ -80,6 +81,7 @@ project "Dynamik"
 		"$(SolutionDir)components/DevConsole/src",
 		"$(SolutionDir)components/Debugger/src",
 		"$(SolutionDir)components/CentralDataHub/src",
+		"$(SolutionDir)components/Networking/src",
 		"%{IncludeDir.GLFW}",
 		"%{IncludeDir.Glad}",
 		"%{IncludeDir.glm}",
@@ -105,7 +107,8 @@ project "Dynamik"
 		"opengl32",
 		"vulkan-1",
 		"Debugger",
-		"CentralDataHub"
+		"CentralDataHub",
+		"Networking"
 	}
 
 	filter "system:windows"
@@ -165,6 +168,7 @@ project "Application"
 		"$(solutionDir)components/DevConsole/src",
 		"$(SolutionDir)components/Debugger/src",
 		"$(SolutionDir)components/CentralDataHub/src",
+		"$(SolutionDir)components/Networking/src",
 		"%{IncludeDir.GLFW}",
 		"%{IncludeDir.Glad}",
 		"%{IncludeDir.glm}",
@@ -191,7 +195,8 @@ project "Application"
 		"opengl32",
 		"vulkan-1",
 		"Debugger",
-		"CentralDataHub"
+		"CentralDataHub",
+		"Networking"
 	}
 
 	postbuildcommands {
@@ -245,12 +250,7 @@ project "Managers"
 	}
 
 	includedirs {
-		--"$(SolutionDir)libs",
 		"$(SolutionDir)Dynamik/src",
-		--"$(SolutionDir)Dynamik/GameLibraries",
-		--"$(SolutionDir)lib/libs",
-		--"$(solutionDir)components/Sampler",
-		--"$(solutionDir)components/Sampler/src",
 		"$(solutionDir)components/Managers/src",
 		"$(SolutionDir)components/Debugger/src",
 		"$(SolutionDir)components/CentralDataHub/src",
@@ -263,15 +263,7 @@ project "Managers"
 		"%{IncludeDir.Vulkan}"
 	}
 
-	libdirs {
-		--"$(SolutionDir)libs/GLFW/lib-vc2019",
-		--"E:/Programming/Codes/Game Development/Libraries/VulkanSDK/1.1.108.0/Lib"
-	}
-
 	links { 
-		--"glfw3dll",
-		--"opengl32",
-		--"vulkan-1",
 		"Debugger",
 		"CentralDataHub"
 	}
@@ -281,7 +273,6 @@ project "Managers"
 
 		defines {
 			"DMK_PLATFORM_WINDOWS",
-			--"GLFW_INCLUDE_VULKAN"
 		}
 
 	filter "configurations:Debug"

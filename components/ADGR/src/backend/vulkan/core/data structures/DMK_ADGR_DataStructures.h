@@ -3,7 +3,7 @@
 #ifndef _DYNAMIK_ADGR_VULKAN_DATA_STRUCTURES_H
 #define _DYNAMIK_ADGR_VULKAN_DATA_STRUCTURES_H
 
-#include "backend/vulkan/core/data structures/vertex.h"
+#include "CentralDataHub.h"
 
 namespace Dynamik {
 	namespace ADGR {
@@ -14,22 +14,25 @@ namespace Dynamik {
 			/* COMMON VULKAN DATA STRUCTURES */
 			// naming convention -> (DMK + <API> + <structure>)
 
-			enum DMKVulkanRendererCreateBufferType {
-				VERTEX_BUFFER,
-				INDEX_BUFFER
-			};
-
 			struct DMKObjectData {
 				std::string path = "";
 				std::vector<float> offsets = { 0.0f, 0.0f, 0.0f };
 
-				std::vector<core::Vertex>* vertexBufferObject = {};
+				std::vector<Vertex>* vertexBufferObject = {};
 				VkBuffer* vertexBuffer = VK_NULL_HANDLE;
 				VkDeviceMemory* vertexBufferMemory = VK_NULL_HANDLE;
 
 				std::vector<uint32_t>* indexBufferObject = {};
 				VkBuffer* indexBuffer = VK_NULL_HANDLE;
 				VkDeviceMemory* indexBufferMemory = VK_NULL_HANDLE;
+
+				uint32_t* vertexCount = 0;
+				uint32_t* indexCount = 0;
+			};
+
+			enum DMKVulkanRendererCreateBufferType {
+				VERTEX_BUFFER,
+				INDEX_BUFFER
 			};
 
 			struct DMKVulkanRendererLoadObjectInfo {

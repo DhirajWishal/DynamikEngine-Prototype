@@ -6,7 +6,7 @@
 #include "backend/vulkan/core/data structures/vulkan.h"
 
 #include "backend/vulkan/core/controlHeader.h"
-#include "backend/vulkan/core/data types/typenames.h"
+#include "CentralDataHub.h"
 #include "data structures/vertex.h"
 
 #include "backend/vulkan/core/functions/textureFunctions.h"

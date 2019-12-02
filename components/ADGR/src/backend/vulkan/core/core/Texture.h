@@ -20,21 +20,21 @@ namespace Dynamik {
 
 				// for skybox and cubamap
 				uint32_t size;
-				VkBuffer* stagingBuffer;
+				VkBuffer* stagingBuffer = nullptr;
 				VkImageLayout imageLayout;
-				VkImageView* imageView;
-				VkSampler imageSampler;
+				VkImageView* imageView = nullptr;
+				VkSampler* imageSampler = nullptr;
 			};
 
 			struct DMKSkyboxInitInfo {
 				std::string path = "";
 
-				VkImage* skyboxImage;
+				VkImage* skyboxImage = nullptr;
 				VkImageLayout imageLayout;
 				VkSampler imageSampler;
 
 				VkFormat imageFormat;
-				VkDeviceMemory* imageMemory;
+				VkDeviceMemory* imageMemory = nullptr;
 
 				uint32_t mipLevels;
 			};

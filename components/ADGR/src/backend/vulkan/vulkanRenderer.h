@@ -20,7 +20,8 @@
 #include "GameObject/GameObject.h"
 #include "debugger.h"
 
-#define INC_PROGRESS	(*myProgress += 1)
+#define INC_PROGRESS					(*myProgress += 1)
+#define MULTIPLE_INC_PROGRESS(count)	for(int i_itr__ = 0; i_itr__ < count; i_itr__++) INC_PROGRESS
 
 namespace Dynamik {
 	namespace ADGR {
@@ -64,14 +65,11 @@ namespace Dynamik {
 
 			void recreateSwapChain();
 
-			static void loadObjectData(ADGRVulkanDataContainer* vulkanDataContainer,
-				DMKObjectDataCreateInfo& info, ADGRObjectRenderData* renderData);
-
 			void loadObject(DMKVulkanRendererLoadObjectInfo info);
 			inline void events() {
 				myWindow.pollEvents();
 			}
-			inline bool closeEvent() { return myWindow.closeEvent(&myVulkanDataContainer); }
+			inline bool closeEvent() { return myWindow.closeEvent(myManager.getResourceAddr<ADGRVulkanDataContainer>(DMK_CDH_MANAGER_RESOURCE_TYPE_VULKAN_DATA_CONTAINER, vulkanContainerIndex)); }
 
 			void setGameObjects(std::vector<GameObject>& gameObjects) {
 				gameObjectStore = gameObjects;
@@ -83,7 +81,7 @@ namespace Dynamik {
 
 			inline std::tuple<int, mouseEventData*> getEvent() { return myWindow.getEvent(); }
 
-			inline VkDevice getDevice() { return myVulkanDataContainer.device; }
+			inline VkDevice getDevice() { return myManager.getResourceAddr<ADGRVulkanDataContainer>(DMK_CDH_MANAGER_RESOURCE_TYPE_VULKAN_DATA_CONTAINER, vulkanContainerIndex)->device; }
 
 			void initPipeline(DMK_ADGR_CreatePipelineInfo info);
 
@@ -95,13 +93,10 @@ namespace Dynamik {
 			void includeShader();
 
 			void initModels(std::vector<DMKObjectData> data);
+			void initSkybox();
 
 		private:
-			// threads
-			void thread_second();	// textures
 			static void thread_third(DMKVulkanRendererLoadObjectInfo createInfo);	// models
-
-			ADGRVulkanDataContainer myVulkanDataContainer = {};
 
 			core::window myWindow{};
 			core::instanceManager myInstance{};
@@ -119,20 +114,14 @@ namespace Dynamik {
 			core::indexBufferManager myIndexBufferManager{};
 			core::skybox mySkyboxManager{};
 			core::shaderManager myShaderManager{};
-			core::debugger myDebugger{ &myVulkanDataContainer.instance, &myVulkanDataContainer.debugMessenger };
+			core::debugger myDebugger{};
 
-			std::vector<VkSemaphore> imageAvailableSemaphore = {};
-			std::vector<VkSemaphore> renderFinishedSemaphore = {};
-			std::vector<VkFence> inFlightFence = {};
+			core::manager myManager{};
 
 			std::vector<std::vector<VkBuffer>> uniformBuffersContainer = {};
 			std::vector<std::vector<VkDeviceMemory>> uniformBufferMemoriesContainer = {};
 			std::vector<VkDescriptorPool> descriptorPools = {};
-			std::vector<std::vector<VkDescriptorSet>> descriptorSetsContainer = {};
 
-			std::vector<ADGRObjectRenderData> objectDataStore = {};
-
-			VkDescriptorPool descriptorPool = VK_NULL_HANDLE;
 			VkDescriptorSetLayout layout = VK_NULL_HANDLE;
 
 			uint32_t currentFrame = 0;
@@ -165,10 +154,11 @@ namespace Dynamik {
 
 			bool compileShaders = false;
 
-			int shaderCodeIndex = 0;
+			int shaderCodeIndex = 1;
 
-			int objCount = 25;
+			//int objCount = 25;
 			int uniformCount = 1;
+			int vulkanContainerIndex = 0;
 
 			std::vector<DMKObjectData> objDataVector = {};
 			std::vector<GameObject> gameObjectStore = {};

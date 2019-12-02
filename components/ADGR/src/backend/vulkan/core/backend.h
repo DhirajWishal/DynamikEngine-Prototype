@@ -20,6 +20,8 @@
 #include "indexBuffer.h"
 #include "skybox.h"
 
+#include "manager.h"
+
 #include "data structures/vertex.h"
 
 #include "others/syncObjects.h"

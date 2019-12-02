@@ -26,12 +26,14 @@ namespace Dynamik {
 				uint32_t indexCount = 0;
 				uint32_t vertexCount = 0;
 
+				DMKObjectType objectType = DMK_OBJECT_TYPE_STATIC_OBJECT;
+
 				std::vector<std::string> texturePaths = {};
 				std::vector<VkImage> textureImages = {};
 				std::vector<VkDeviceMemory> textureImageMemories = {};
 				std::vector<VkSampler> textureSamplers = {};
 				std::vector<VkImageView> textureImageViews = {};
-				std::vector<VkDescriptorSet> descriptorSets = {};
+				std::vector<std::vector<VkDescriptorSet>> descriptorSets = {};
 				uint32_t mipLevel = 1;
 
 				VkPipeline pipeline = {};
@@ -41,7 +43,7 @@ namespace Dynamik {
 			struct DMKBindCommandBufferInfo {
 				std::vector<VkFramebuffer> frameBuffers = {};
 
-				std::vector<ADGRObjectRenderData> objectBindDatas = {};
+				std::vector<ADGRObjectRenderData>* objectBindDatas = {};
 
 				DMKVulkanSkyboxCommandBufferBindData skybox;
 			};

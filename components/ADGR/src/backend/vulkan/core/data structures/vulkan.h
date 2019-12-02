@@ -1,5 +1,16 @@
 #pragma once
 
+/*
+ Vulkan specific data containers and enums for the Dynamik Engine.
+
+ Author:	Dhiraj Wishal
+ Project:	Dynamik Engine
+ Date:		--/--/----
+ IDE:		MS Visual Studio Community 2019
+
+ vulkan.h file
+*/
+
 #ifndef _DYNAMIK_ADGR_VULKAN_H
 #define _DYNAMIK_ADGR_VULKAN_H
 
@@ -13,6 +24,7 @@
 namespace Dynamik {
 	namespace ADGR {
 		namespace core {
+			/* SHADER STAGE INFO ENUM */
 			enum DMK_ADGR_VULKAN_SHADER_STAGE_INFO {
 				DMK_ADGR_VULKAN_SHADER_STAGE_VERTEX = 0,		// vertex shader
 				DMK_ADGR_VULKAN_SHADER_STAGE_TESSELLATION = 1,	// tessellation shader
@@ -20,11 +32,17 @@ namespace Dynamik {
 				DMK_ADGR_VULKAN_SHADER_STAGE_FRAGMENT = 3		// fragment shader
 			};
 
+			/* RENDERING TECHNOLOGY ENUM */
 			enum DMK_ADGR_RENDERING_TECHNOLOGY {
-				DMK_ADGR_VULKAN_RENDERER_VERTEX = 0,
-				DMK_ADGR_VULKAN_RENDERER_INDEXED = 1,
-				DMK_ADGR_VULKAN_RENDERER_INDIRECT = 2,
-				DMK_ADGR_VULKAN_RENDERER_INDEXED_INDIRECT = 3
+				DMK_ADGR_VULKAN_RENDERER_VERTEX = 0,					// Render individual vertexes
+				DMK_ADGR_VULKAN_RENDERER_INDEXED = 1,					// Render indexed vertexes
+				DMK_ADGR_VULKAN_RENDERER_INDIRECT = 2,					// Render indirectly (only if supported)
+				DMK_ADGR_VULKAN_RENDERER_INDEXED_INDIRECT = 3,			// Render indexed vertexes indirectly (only if supported)
+
+				DMK_ADGR_VULKAN_RENDERER_SKYBOX_VERTEX = 4,				// Render skybox individual vertexes
+				DMK_ADGR_VULKAN_RENDERER_SKYBOX_INDEXED = 5,			// Render skybox indexed vertexes
+				DMK_ADGR_VULKAN_RENDERER_SKYBOX_INDIRECT = 6,			// Render skybox indirectly (only if supported)
+				DMK_ADGR_VULKAN_RENDERER_SKYBOX_INDEXED_INDIRECT = 7	// Render skybox indexed vertexes indirectly (only if supported)
 			};
 
 			/* SWAPCHAIN DATA CONTAINER */
@@ -94,8 +112,6 @@ namespace Dynamik {
 
 				// primitive assembly info
 				VkPrimitiveTopology inputAssemblyTopology = VkPrimitiveTopology::VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST;	// Vulkan input assembler topologies
-				//VkPrimitiveTopology inputAssemblyTopology = VkPrimitiveTopology::VK_PRIMITIVE_TOPOLOGY_POINT_LIST;	// Vulkan input assembler topologies
-				//VkPrimitiveTopology inputAssemblyTopology = VkPrimitiveTopology::VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST;	// Vulkan input assembler topologies
 				VkBool32 inputAssemblyPrimitiveRestartEnable = VK_FALSE;			// Vulkan primitive assembly restart enable
 
 				// viewport info

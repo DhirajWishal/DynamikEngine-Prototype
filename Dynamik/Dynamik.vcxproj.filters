@@ -108,6 +108,5 @@
     <None Include="src\core\media\license.txt">
       <Filter>src\core\media</Filter>
     </None>
-    <None Include="cpp.hint" />
   </ItemGroup>
 </Project>

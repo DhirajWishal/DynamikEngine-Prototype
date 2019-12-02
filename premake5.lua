@@ -77,6 +77,7 @@ project "Dynamik"
 		"$(SolutionDir)components/ADGR/src",
 		"$(SolutionDir)components/Audio/src",
 		"$(SolutionDir)components/Events/src",
+		"$(SolutionDir)components/Managers/src",
 		"$(SolutionDir)components/Platform/src",
 		"$(SolutionDir)components/DevConsole/src",
 		"$(SolutionDir)components/Debugger/src",

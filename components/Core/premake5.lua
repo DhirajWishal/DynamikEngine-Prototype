@@ -30,13 +30,14 @@ project "Core"
 		"$(solutionDir)components/Events/src",
 		"$(SolutionDir)components/Debugger/src",
 		"$(SolutionDir)components/CentralDataHub/src",
-		--"$(SolutionDir)libs/glm/**.hpp",
-		--"$(SolutionDir)libs/glm/**.inl",
-		--"%{IncludeDir.GLFW}",
-		--"%{IncludeDir.glm}
-		--"%{IncludeDir.stb}",
-		--"%{IncludeDir.tol}",
-		--"%{IncludeDir.Vulkan}"
+		"%{IncludeDir.GLFW}",
+		"%{IncludeDir.Glad}",
+		"%{IncludeDir.glm}",
+		"%{IncludeDir.stb}",
+		"%{IncludeDir.tol}",
+		"%{IncludeDir.irrKlang}",
+		"%{IncludeDir.assimp}",
+		"%{IncludeDir.Vulkan}"
 	}
 
 	--libdirs {

@@ -12,8 +12,6 @@
 #ifndef _DYNAMIK_ADGR_VULKAN_RENDERER_2D_H
 #define _DYNAMIK_ADGR_VULKAN_RENDERER_2D_H
 
-#include "backend/Renderer/Renderer.h"
-
 #include "core/backend.h"
 #include "core/data structures/DMK_ADGR_DataStructures.h"
 
@@ -24,14 +22,14 @@ namespace Dynamik {
 	namespace ADGR {
 		using namespace core;
 
-		class vulkanRenderer2D : c_Renderer {
+		class vulkanRenderer2D {
 		public:
 			vulkanRenderer2D();
 			~vulkanRenderer2D();
 
-			void init() override;
-			void drawFrame() override;
-			void shutDown() override;
+			void init();
+			void drawFrame();
+			void shutDown();
 
 			void loadObject(DMKVulkanRendererLoadObjectInfo info);
 

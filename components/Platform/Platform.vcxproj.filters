@@ -24,6 +24,9 @@
     <ClInclude Include="src\core\Windows\inputs.h">
       <Filter>src\core\Windows</Filter>
     </ClInclude>
+    <ClInclude Include="src\core\Windows\utils\daiFileManager.h">
+      <Filter>src\core\Windows\utils</Filter>
+    </ClInclude>
     <ClInclude Include="src\core\Windows\utils\loadIcon.h">
       <Filter>src\core\Windows\utils</Filter>
     </ClInclude>
@@ -37,6 +40,9 @@
   <ItemGroup>
     <ClCompile Include="src\core\Windows\inputs.cpp">
       <Filter>src\core\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\Windows\utils\daiFileManager.cpp">
+      <Filter>src\core\Windows\utils</Filter>
     </ClCompile>
     <ClCompile Include="src\core\Windows\utils\loadIcon.cpp">
       <Filter>src\core\Windows\utils</Filter>

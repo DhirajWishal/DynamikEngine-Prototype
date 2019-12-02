@@ -73,11 +73,11 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <PrecompiledHeader>Create</PrecompiledHeader>
+      <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>netafx.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>DMK_PLATFORM_WINDOWS;DMK_BUILD_DLL;DMK_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>E:\Programming\SDKs\Vulkan\1.1.121.0\Include;E:\Projects\Dynamik Engine\Dynamik\libs\glm;$(SolutionDir)libs;$(SolutionDir)Dynamik\src;$(SolutionDir)lib\libs;$(SolutionDir)components\Networking;$(SolutionDir)components\Networking\src;$(SolutionDir)components\Managers\src;$(SolutionDir)components\Platform\src;$(SolutionDir)components\Debugger\src;$(SolutionDir)components\CentralDataHub\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)libs;$(SolutionDir)Dynamik\src;$(SolutionDir)lib\libs;$(SolutionDir)components\Networking;$(SolutionDir)components\Networking\src;$(SolutionDir)components\Managers\src;$(SolutionDir)components\Platform\src;$(SolutionDir)components\Debugger\src;$(SolutionDir)components\CentralDataHub\src;$(SolutionDir)libs\GLFW\include;$(SolutionDir)libs\Glad\include;$(SolutionDir)libs\glm;$(SolutionDir)libs\stb-master;$(SolutionDir)libs\tinyobjloader-master;$(SolutionDir)\libs\irrKlang\include;$(SolutionDir)\libs\assimp;E:\Programming\SDKs\Vulkan\1.1.121.0\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
@@ -90,11 +90,11 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
-      <PrecompiledHeader>Create</PrecompiledHeader>
+      <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>netafx.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>DMK_PLATFORM_WINDOWS;DMK_BUILD_DLL;DMK_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>E:\Programming\SDKs\Vulkan\1.1.121.0\Include;E:\Projects\Dynamik Engine\Dynamik\libs\glm;$(SolutionDir)libs;$(SolutionDir)Dynamik\src;$(SolutionDir)lib\libs;$(SolutionDir)components\Networking;$(SolutionDir)components\Networking\src;$(SolutionDir)components\Managers\src;$(SolutionDir)components\Platform\src;$(SolutionDir)components\Debugger\src;$(SolutionDir)components\CentralDataHub\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)libs;$(SolutionDir)Dynamik\src;$(SolutionDir)lib\libs;$(SolutionDir)components\Networking;$(SolutionDir)components\Networking\src;$(SolutionDir)components\Managers\src;$(SolutionDir)components\Platform\src;$(SolutionDir)components\Debugger\src;$(SolutionDir)components\CentralDataHub\src;$(SolutionDir)libs\GLFW\include;$(SolutionDir)libs\Glad\include;$(SolutionDir)libs\glm;$(SolutionDir)libs\stb-master;$(SolutionDir)libs\tinyobjloader-master;$(SolutionDir)\libs\irrKlang\include;$(SolutionDir)\libs\assimp;E:\Programming\SDKs\Vulkan\1.1.121.0\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -111,11 +111,11 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Distribution|x64'">
     <ClCompile>
-      <PrecompiledHeader>Create</PrecompiledHeader>
+      <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>netafx.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>DMK_PLATFORM_WINDOWS;DMK_BUILD_DLL;DMK_DISTRIBUTION;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>E:\Programming\SDKs\Vulkan\1.1.121.0\Include;E:\Projects\Dynamik Engine\Dynamik\libs\glm;$(SolutionDir)libs;$(SolutionDir)Dynamik\src;$(SolutionDir)lib\libs;$(SolutionDir)components\Networking;$(SolutionDir)components\Networking\src;$(SolutionDir)components\Managers\src;$(SolutionDir)components\Platform\src;$(SolutionDir)components\Debugger\src;$(SolutionDir)components\CentralDataHub\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)libs;$(SolutionDir)Dynamik\src;$(SolutionDir)lib\libs;$(SolutionDir)components\Networking;$(SolutionDir)components\Networking\src;$(SolutionDir)components\Managers\src;$(SolutionDir)components\Platform\src;$(SolutionDir)components\Debugger\src;$(SolutionDir)components\CentralDataHub\src;$(SolutionDir)libs\GLFW\include;$(SolutionDir)libs\Glad\include;$(SolutionDir)libs\glm;$(SolutionDir)libs\stb-master;$(SolutionDir)libs\tinyobjloader-master;$(SolutionDir)\libs\irrKlang\include;$(SolutionDir)\libs\assimp;E:\Programming\SDKs\Vulkan\1.1.121.0\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>

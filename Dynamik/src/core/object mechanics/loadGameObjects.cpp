@@ -21,6 +21,15 @@ namespace Dynamik {
 		return path;
 	}
 
+	std::vector<GameObject> InputLoader::getRenderableGameObjects() {
+		for (auto object : myContainer.assets)
+			if (object.myProperties.type == DMK_OBJECT_TYPE_STATIC_OBJECT ||
+				object.myProperties.type == DMK_OBJECT_TYPE_INTERACTIVE_OBJECT)
+				renderObjects.push_back(object);
+
+		return renderObjects;
+	}
+
 	std::vector<std::string> InputLoader::getModelPaths() {
 		std::vector<std::string> path;
 		for (auto i : myContainer.assets) {

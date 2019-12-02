@@ -43,6 +43,8 @@ namespace Dynamik {
 
 					uint32_t mipLevels;
 					uint32_t layerCount;
+
+					uint32_t arrayLayers = 0;
 				};
 
 				struct DMKCreateImageViewInfo {
@@ -64,6 +66,9 @@ namespace Dynamik {
 
 					uint32_t width;
 					uint32_t height;
+
+					uint32_t baseArrayCount = 0;
+					uint32_t layerCount = 1;
 
 					VkQueue graphicsQueue;
 				};

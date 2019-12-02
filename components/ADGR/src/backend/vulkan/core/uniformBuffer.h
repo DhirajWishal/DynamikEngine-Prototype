@@ -59,10 +59,9 @@ namespace Dynamik {
 				void deleteBuffer(ADGRVulkanDataContainer* container, VkBuffer* buffer) override;
 
 			private:
-				const float movementBias = 0.01f;
-				const float upDownBias = 0.01f;
+				const float movementBias = 0.0075f;
+				const float upDownBias = 0.0075f;
 				const float rotationBias = 2.5f;
-				//const float rotationBias	= 0.05f;
 
 				float trn = 0.0f;
 				float mve = 0.0f;

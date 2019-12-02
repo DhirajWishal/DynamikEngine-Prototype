@@ -10,6 +10,13 @@
 
 #include "debugger.h"
 
+#include "core/Windows.h"
+
+/*
+	TODO:
+		Dynamik scripting support library
+*/
+
 // 35
 namespace Dynamik {
 	uint32_t progress = 0;
@@ -165,31 +172,31 @@ namespace Dynamik {
 			GameObject* gameObject = &gameObjects[itr];
 
 			DMK_DEBUGGER_PROFILER_TIMER_START(Localtimer);
-			std::ifstream modelDataFile;
-			modelDataFile.open(
-				gameObject->myProperties.location + (
-				(gameObject->myProperties.location[gameObject->myProperties.location.size() - 1] == '/')
-					? "modelData.dai" : "/modelData.dai")
-			);
 
-			if (!modelDataFile.is_open())
+			utils::daiManager fileManager;
+			fileManager.open(gameObject->myProperties.location + (
+				(gameObject->myProperties.location[gameObject->myProperties.location.size() - 1] == '/')
+				? "modelData.dai" : "/modelData.dai"));
+
+			if (!fileManager.isOpen())
 				DMK_CORE_FATAL("modelData.dai file not found --> " + gameObject->myProperties.location);
 
-			std::string line = "";
-			while (std::getline(modelDataFile, line, '\n')) {
-				if (line.find(':') != std::string::npos)
-					DMK_CORE_FATAL("Invalid object/ texture referance at file --> " + gameObject->myProperties.location);
-
-				if (line[0] == 'M' || line[0] == 'm')
-					gameObject->myProperties.objectPath.push_back(gameObject->myProperties.location +
+			for (auto modelPath : fileManager.getData(utils::DMK_DAI_FILE_DATA_TYPE_MODEL)) {
+				gameObject->myProperties.objectPath.push_back(gameObject->myProperties.location +
 					((gameObject->myProperties.location[gameObject->myProperties.location.size() - 1] == '/')
-						? line.substr(2, line.size() - 2) : "/" + line.substr(2, line.size() - 2)));
-				else if (line[0] == 'T' || line[0] == 't')
-					gameObject->myProperties.texturePaths.push_back((
-						gameObject->myProperties.location +
-						((gameObject->myProperties.location[gameObject->myProperties.location.size() - 1] == '/')
-							? line.substr(2, line.size() - 2) : "/" + line.substr(2, line.size() - 2))));
+						? modelPath : "/" + modelPath));
 			}
+
+			for (auto texturePath : fileManager.getData(utils::DMK_DAI_FILE_DATA_TYPE_TEXTURE)) {
+				gameObject->myProperties.texturePaths.push_back(gameObject->myProperties.location +
+					((gameObject->myProperties.location[gameObject->myProperties.location.size() - 1] == '/')
+						? texturePath : "/" + texturePath));
+			}
+
+			//std::string line = "";
+			//while (std::getline(modelDataFile, line, '\n')) {
+			//	if (line.find(':') != std::string::npos)
+			//		DMK_CORE_FATAL("Invalid object/ texture referance at file --> " + gameObject->myProperties.location);
 		}
 	}
 }

@@ -12,6 +12,8 @@
 #ifndef _DYNAMIK_ADGR_VULKAN_DEBUGGER_H
 #define _DYNAMIK_ADGR_VULKAN_DEBUGGER_H
 
+#include "backend/vulkan/core/data structures/vulkan.h"
+
 namespace Dynamik {
 	namespace ADGR {
 		namespace core {
@@ -20,8 +22,11 @@ namespace Dynamik {
 
 			class debugger {
 			public:
+				debugger() {}
 				debugger(VkInstance* instance, VkDebugUtilsMessengerEXT* debugMessenger);
 				~debugger() {}
+
+				void initDebugger(ADGRVulkanDataContainer* container);
 
 				void setupDebugMessenger();
 

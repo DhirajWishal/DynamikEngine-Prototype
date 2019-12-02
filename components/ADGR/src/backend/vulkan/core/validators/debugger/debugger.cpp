@@ -79,6 +79,11 @@ namespace Dynamik {
 				createInfo.pfnUserCallback = debugCallback;
 			}
 
+			void debugger::initDebugger(ADGRVulkanDataContainer* container) {
+				myInstance = &container->instance;
+				myDebugMessenger = &container->debugMessenger;
+			}
+
 			void debugger::setupDebugMessenger() {
 				if (!enableValidationLayers)
 					return;

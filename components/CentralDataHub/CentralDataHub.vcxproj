@@ -145,6 +145,7 @@
   <ItemGroup>
     <ClInclude Include="src\CentralDataHub.h" />
     <ClInclude Include="src\cdhafx.h" />
+    <ClInclude Include="src\core\base\Manager.h" />
     <ClInclude Include="src\core\global\constants.h" />
     <ClInclude Include="src\core\global\datatypes.h" />
     <ClInclude Include="src\core\network\messageData.h" />

@@ -16,9 +16,6 @@
     <Filter Include="src\backend">
       <UniqueIdentifier>{0427456E-70DC-BD63-F9D0-B73A6585B467}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\backend\Renderer">
-      <UniqueIdentifier>{2A8FB66E-161E-4038-BF3C-5433ABAA50DE}</UniqueIdentifier>
-    </Filter>
     <Filter Include="src\backend\vulkan">
       <UniqueIdentifier>{24BCCE04-10A0-8F5A-7900-8AAD65037ADC}</UniqueIdentifier>
     </Filter>
@@ -75,9 +72,6 @@
     <ClInclude Include="src\adgrafx.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="src\backend\Renderer\Renderer.h">
-      <Filter>src\backend\Renderer</Filter>
-    </ClInclude>
     <ClInclude Include="src\backend\defines.h">
       <Filter>src\backend</Filter>
     </ClInclude>
@@ -109,9 +103,6 @@
       <Filter>src\backend\vulkan\core\core</Filter>
     </ClInclude>
     <ClInclude Include="src\backend\vulkan\core\core\Instance.h">
-      <Filter>src\backend\vulkan\core\core</Filter>
-    </ClInclude>
-    <ClInclude Include="src\backend\vulkan\core\core\Manager.h">
       <Filter>src\backend\vulkan\core\core</Filter>
     </ClInclude>
     <ClInclude Include="src\backend\vulkan\core\core\Model.h">

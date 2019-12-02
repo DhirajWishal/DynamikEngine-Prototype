@@ -3,6 +3,8 @@
 #ifndef _DYNAMIK_CENTRAL_DATA_HUB_H
 #define _DYNAMIK_CENTRAL_DATA_HUB_H
 
+#include "core/base/Manager.h"
+
 #include "core/objectSpecifications.h"
 
 #include "core/global/datatypes.h"

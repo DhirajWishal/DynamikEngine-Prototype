@@ -89,7 +89,7 @@ namespace Dynamik {
 
 					barrier.subresourceRange.baseMipLevel = 0;
 					barrier.subresourceRange.levelCount = info.mipLevels;
-					barrier.subresourceRange.baseArrayLayer = 0;
+					barrier.subresourceRange.baseArrayLayer = info.arrayLayers;
 					barrier.subresourceRange.layerCount = info.layerCount;
 					barrier.srcAccessMask = 0; // TODO
 					barrier.dstAccessMask = 0; // TODO
@@ -150,8 +150,8 @@ namespace Dynamik {
 
 					region.imageSubresource.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
 					region.imageSubresource.mipLevel = 0;
-					region.imageSubresource.baseArrayLayer = 0;
-					region.imageSubresource.layerCount = 1;
+					region.imageSubresource.baseArrayLayer = info.baseArrayCount;
+					region.imageSubresource.layerCount = info.layerCount;
 
 					region.imageOffset = { 0, 0, 0 };
 					region.imageExtent = {

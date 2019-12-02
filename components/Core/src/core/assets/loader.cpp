@@ -97,12 +97,21 @@ Dynamik::InputContainer Dynamik::submit() {
 		{-10.0f,	-10.0f,	0.0f},
 	};
 
+	std::vector<DMKObjectType> objTypes = {
+		DMK_OBJECT_TYPE_INTERACTIVE_OBJECT,
+		DMK_OBJECT_TYPE_INTERACTIVE_OBJECT,
+		DMK_OBJECT_TYPE_STATIC_OBJECT,
+		DMK_OBJECT_TYPE_AI,
+		DMK_OBJECT_TYPE_STATIC_OBJECT,
+	};
+
 	for (int i = 0; i < paths.size(); i++) {
 		Dynamik::GameObjectProperties props;
 		props.name = "Charlet";
 		props.ID = std::to_string(i);
 		props.location = paths[i];
 		props.transformProperties.location = locations[i];
+		//props.type = objTypes[i];
 
 		myContainer.assets.push_back(charlet(props));
 	}

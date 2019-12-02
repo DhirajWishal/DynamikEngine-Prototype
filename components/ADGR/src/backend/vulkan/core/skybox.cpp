@@ -9,48 +9,48 @@ namespace Dynamik {
 		namespace core {
 			using namespace functions;
 
-			void skybox::initSkybox(ADGRVulkanDataContainer* container, DMKSkyboxInitInfo info) {/*
+			void skybox::initSkybox(ADGRVulkanDataContainer* container, DMKSkyboxInitInfo info) {
 				DMKInitCubemapInfo cinfo;
-				cinfo.path = info.path;
+				cinfo.path = { info.path };
 				cinfo.imageLayout = info.imageLayout;
-				cinfo.imageSampler = info.imageSampler;
+				cinfo.imageSampler = &info.imageSampler;
 				cinfo.mipLevels = info.mipLevels;
 				cinfo.textureImage = info.skyboxImage;
 				cinfo.textureImageFormat = info.imageFormat;
 				cinfo.textureImageMemory = info.imageMemory;
 
-				loadCubemap(cinfo);*/
+				loadCubemap(container, cinfo);
 			}
 
 			void skybox::deleteSkybox(ADGRVulkanDataContainer* container) {
 			}
 
-			void skybox::loadCubemap(ADGRVulkanDataContainer* container, DMKInitCubemapInfo initInfo) {/*
-				resource::TextureData texData;
+			void skybox::loadCubemap(ADGRVulkanDataContainer* container, DMKInitCubemapInfo initInfo) {
+				resource::TextureData texData = {};
 
-				unsigned char* cubemap = nullptr;
-
-				if (initInfo.textureImageFormat == VK_FORMAT_R8G8B8A8_UNORM)
-					cubemap = texData.loadTexture(initInfo.path, resource::TEXTURE_TYPE_RGBA);
-				else if (initInfo.textureImageFormat == VK_FORMAT_R8G8B8_UNORM)
-					cubemap = texData.loadTexture(initInfo.path, resource::TEXTURE_TYPE_RGB);
-				else
-					DMK_CORE_FATAL("Invalid texture format!");
-
-				VkDeviceSize imageSize = texData.size;
+				//std::string images = "";
+				//for (auto path : initInfo.path) {
+				//	unsigned char* cubemap = texData.loadTexture(path, resource::TEXTURE_TYPE_RGBA);
+				//
+				//	for (int i = 0; i < texData.size; i++)
+				//		images.push_back(cubemap[i]);
+				//
+				//	texData.freeData(cubemap);
+				//}
+				//
+				//VkDeviceSize imageSize = ((texData.texWidth * texData.texHeight) * 4) * 6;
+				unsigned char* cubemap = texData.loadTexture(initInfo.path[0], resource::TEXTURE_TYPE_RGBA);
+				VkDeviceSize imageSize = ((texData.texWidth * texData.texHeight) * 4);
 
 				width = texData.texWidth;
 				height = texData.texHeight;
 
-				if (!cubemap)
-					DMK_CORE_FATAL("failed to load texture image!");
-
-				VkBuffer stagingBuffer;
-				VkDeviceMemory stagingBufferMemory;
+				VkBuffer stagingBuffer = VK_NULL_HANDLE;
+				VkDeviceMemory stagingBufferMemory = VK_NULL_HANDLE;
 
 				DMKCreateBufferInfo bufferInfo;
-				bufferInfo.device = device;
-				bufferInfo.physicalDevice = physicalDevice;
+				bufferInfo.device = container->device;
+				bufferInfo.physicalDevice = container->physicalDevice;
 				bufferInfo.bufferSize = imageSize;
 				bufferInfo.usage = VK_BUFFER_USAGE_TRANSFER_SRC_BIT;
 				bufferInfo.bufferMemoryPropertyflags = VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT;
@@ -59,20 +59,18 @@ namespace Dynamik {
 
 				createBuffer(bufferInfo);
 
-				void* data;
-				if (vkMapMemory(device, stagingBufferMemory, 0, imageSize, 0, &data) != VK_SUCCESS)
+				void* data = nullptr;
+				if (vkMapMemory(container->device, stagingBufferMemory, 0, imageSize, 0, &data) != VK_SUCCESS)
 					DMK_CORE_FATAL("Failed to map memory!")
-					memcpy(data, cubemap, static_cast<size_t>(imageSize));
-				vkUnmapMemory(device, stagingBufferMemory);
+					//memcpy(data, images.data(), images.size());
+					memcpy(data, cubemap, imageSize);
+				vkUnmapMemory(container->device, stagingBufferMemory);
 
-				texData.freeData(cubemap);
-
-				mipLevels = static_cast<uint32_t>(std::floor(std::log2(std::max(texData.texWidth,
-					texData.texHeight)))) + 1;
+				//images.clear();
 
 				DMKCreateImageInfo info;
-				info.device = device;
-				info.physicalDevice = physicalDevice;
+				info.device = container->device;
+				info.physicalDevice = container->physicalDevice;
 				info.width = texData.texWidth;
 				info.height = texData.texHeight;
 				info.format = initInfo.textureImageFormat;
@@ -83,34 +81,10 @@ namespace Dynamik {
 				info.imageMemory = initInfo.textureImageMemory;
 				info.mipLevels = initInfo.mipLevels;
 				info.numSamples = VK_SAMPLE_COUNT_1_BIT;
+				info.flags = VK_IMAGE_CREATE_CUBE_COMPATIBLE_BIT;
+				info.arrayLayers = layerCount;
 
 				createImage(info);
-
-				DMKTransitionImageLayoutInfo transitionInfo;
-				transitionInfo.device = device;
-				transitionInfo.commandPool = commandPool;
-				transitionInfo.image = *initInfo.textureImage;
-				transitionInfo.format = initInfo.textureImageFormat;
-				transitionInfo.oldLayout = VK_IMAGE_LAYOUT_UNDEFINED;
-				transitionInfo.newLayout = VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL;
-				transitionInfo.graphicsQueue = graphicsQueue;
-				transitionInfo.mipLevels = initInfo.mipLevels;
-
-				transitionImageLayout(transitionInfo);
-
-				DMKCopyBufferToImageInfo cpyInfo;
-				cpyInfo.device = device;
-				cpyInfo.commandPool = commandPool;
-				cpyInfo.buffer = stagingBuffer;
-				cpyInfo.image = *initInfo.textureImage;
-				cpyInfo.width = static_cast<uint32_t>(texData.texWidth);
-				cpyInfo.height = static_cast<uint32_t>(texData.texHeight);
-				cpyInfo.graphicsQueue = graphicsQueue;
-
-				copyBufferToImage(cpyInfo);
-
-				vkDestroyBuffer(device, stagingBuffer, nullptr);
-				vkFreeMemory(device, stagingBufferMemory, nullptr);
 
 				DMKGenerateMipMapInfo mipmapInfo;
 				mipmapInfo.imageFormat = initInfo.textureImageFormat;
@@ -121,15 +95,17 @@ namespace Dynamik {
 				mipmapInfo.imageLayout = initInfo.imageLayout;
 				mipmapInfo.size = texData.size;
 				mipmapInfo.stagingBuffer = &stagingBuffer;
+				mipmapInfo.imageSampler = initInfo.imageSampler;
+				mipmapInfo.imageView = initInfo.imageView;
 
-				generateMipMaps(mipmapInfo);
+				generateMipMaps(container, mipmapInfo);
 
-				vkFreeMemory(device, stagingBufferMemory, nullptr);
-				vkDestroyBuffer(device, stagingBuffer, nullptr);*/
+				vkFreeMemory(container->device, stagingBufferMemory, nullptr);
+				vkDestroyBuffer(container->device, stagingBuffer, nullptr);
 			}
 
-			void skybox::generateMipMaps(ADGRVulkanDataContainer* container, DMKGenerateMipMapInfo info) {/*
-				VkCommandBuffer commandBuff = beginSingleTimeCommands(device, commandPool);
+			void skybox::generateMipMaps(ADGRVulkanDataContainer* container, DMKGenerateMipMapInfo info) {
+				VkCommandBuffer commandBuff = beginSingleTimeCommands(container->device, container->commandBufferContainer.commandPool);
 
 				std::vector<VkBufferImageCopy> bufferCopyRegions;
 				uint32_t offset = 0;
@@ -154,55 +130,58 @@ namespace Dynamik {
 				}
 
 				DMKTransitionImageLayoutInfo transitionInfo;
-				transitionInfo.device = device;
-				transitionInfo.commandPool = commandPool;
+				transitionInfo.device = container->device;
+				transitionInfo.commandPool = container->commandBufferContainer.commandPool;
 				transitionInfo.image = info.textureImage;
 				transitionInfo.format = info.imageFormat;
 				transitionInfo.oldLayout = VK_IMAGE_LAYOUT_UNDEFINED;
 				transitionInfo.newLayout = VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL;
-				transitionInfo.graphicsQueue = graphicsQueue;
+				transitionInfo.graphicsQueue = container->graphicsQueue;
 				transitionInfo.mipLevels = info.mipLevels;
-				transitionInfo.layerCount = 6;
+				transitionInfo.layerCount = layerCount;
 
 				transitionImageLayout(transitionInfo);
 
-				// Copy the cube map faces from the staging buffer to the optimal tiled image
-				vkCmdCopyBufferToImage(
-					commandBuff,
-					*info.stagingBuffer,
-					info.textureImage,
-					VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL,
-					static_cast<uint32_t>(bufferCopyRegions.size()),
-					bufferCopyRegions.data()
-				);
+				DMKCopyBufferToImageInfo cpyInfo;
+				cpyInfo.device = container->device;
+				cpyInfo.commandPool = container->commandBufferContainer.commandPool;
+				cpyInfo.buffer = *info.stagingBuffer;
+				cpyInfo.image = info.textureImage;
+				cpyInfo.width = static_cast<uint32_t>(width);
+				cpyInfo.height = static_cast<uint32_t>(height);
+				cpyInfo.graphicsQueue = container->graphicsQueue;
+
+				copyBufferToImage(cpyInfo);
 
 				// Change texture image layout to shader read after all faces have been copied
 				info.imageLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
 
-				DMKCreateImageViewInfo cinfo;
-				cinfo.device = device;
-				cinfo.image = info.textureImage;
-				cinfo.format = info.imageFormat;
-				cinfo.mipLevels = info.mipLevels;
-				cinfo.aspectFlags = VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL;
+				transitionInfo.device = container->device;
+				transitionInfo.commandPool = container->commandBufferContainer.commandPool;
+				transitionInfo.image = info.textureImage;
+				transitionInfo.format = info.imageFormat;
+				transitionInfo.oldLayout = VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL;
+				transitionInfo.newLayout = info.imageLayout;
+				transitionInfo.graphicsQueue = container->graphicsQueue;
+				transitionInfo.mipLevels = info.mipLevels;
+				transitionInfo.layerCount = layerCount;
 
-				*info.imageView = createImageView(cinfo);
+				transitionImageLayout(transitionInfo);
 
-				info.textureImage;
-
+				// sampler and image view
 				DMKSkyboxSampelrInitInfo initInfo = {};
 				initInfo.format = info.imageFormat;
 				initInfo.imageView = info.imageView;
 				initInfo.mipLevels = info.mipLevels;
-				initInfo.sampler = &info.imageSampler;
+				initInfo.sampler = info.imageSampler;
 				initInfo.skybox = info.textureImage;
 
-				initSampler(initInfo);
+				initSampler(container, initInfo);
 
-				endSingleTimeCommands(device, commandPool, commandBuff, graphicsQueue);*/
+				endSingleTimeCommands(container->device, container->commandBufferContainer.commandPool, commandBuff, container->graphicsQueue);
 			}
 
-			void skybox::initSampler(ADGRVulkanDataContainer* container, DMKSkyboxSampelrInitInfo info) {/*
+			void skybox::initSampler(ADGRVulkanDataContainer* container, DMKSkyboxSampelrInitInfo info) {
 				// Create sampler
 				VkSamplerCreateInfo sampler = {};
 				sampler.sType = VK_STRUCTURE_TYPE_SAMPLER_CREATE_INFO;
@@ -221,8 +200,8 @@ namespace Dynamik {
 				sampler.anisotropyEnable = VK_TRUE;
 				sampler.maxAnisotropy = 16;
 
-				if (vkCreateSampler(device, &sampler, nullptr, info.sampler) != VK_SUCCESS)
-					DMK_CORE_FATAL("Failed to create Skyboc sampler!");
+				if (vkCreateSampler(container->device, &sampler, nullptr, info.sampler) != VK_SUCCESS)
+					DMK_CORE_FATAL("Failed to create Skybox sampler!");
 
 				// Create image view
 				VkImageViewCreateInfo view = {};
@@ -233,12 +212,12 @@ namespace Dynamik {
 				view.components = { VK_COMPONENT_SWIZZLE_R, VK_COMPONENT_SWIZZLE_G, VK_COMPONENT_SWIZZLE_B, VK_COMPONENT_SWIZZLE_A };
 				view.subresourceRange = { VK_IMAGE_ASPECT_COLOR_BIT, 0, 1, 0, 1 };
 				// 6 array layers (faces)
-				view.subresourceRange.layerCount = 6;
+				view.subresourceRange.layerCount = layerCount;
 				// Set number of mip levels
 				view.subresourceRange.levelCount = info.mipLevels;
 				view.image = info.skybox;
-				DMK_CORE_ASSERT((vkCreateImageView(device, &view, nullptr, info.imageView) == VK_SUCCESS),
-					"Failed to create Skybox image views!");*/
+				DMK_CORE_ASSERT((vkCreateImageView(container->device, &view, nullptr, info.imageView) == VK_SUCCESS),
+					"Failed to create Skybox image views!");
 			}
 		}
 	}

@@ -20,6 +20,7 @@
 #include <fstream>
 #include <cstdint>
 #include <chrono>
+#include <ios>
 
 #include <string>
 #include <vector>

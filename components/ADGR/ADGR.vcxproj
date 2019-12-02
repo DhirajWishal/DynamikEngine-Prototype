@@ -151,7 +151,6 @@
     <ClInclude Include="src\Wrapper\dll_wrapper.h" />
     <ClInclude Include="src\Wrapper\internal_wrapper.h" />
     <ClInclude Include="src\adgrafx.h" />
-    <ClInclude Include="src\backend\Renderer\Renderer.h" />
     <ClInclude Include="src\backend\defines.h" />
     <ClInclude Include="src\backend\interface.h" />
     <ClInclude Include="src\backend\vulkan\ADGR_Vulkan_API.h" />
@@ -163,7 +162,6 @@
     <ClInclude Include="src\backend\vulkan\core\core\Core.h" />
     <ClInclude Include="src\backend\vulkan\core\core\Device.h" />
     <ClInclude Include="src\backend\vulkan\core\core\Instance.h" />
-    <ClInclude Include="src\backend\vulkan\core\core\Manager.h" />
     <ClInclude Include="src\backend\vulkan\core\core\Model.h" />
     <ClInclude Include="src\backend\vulkan\core\core\Pipeline.h" />
     <ClInclude Include="src\backend\vulkan\core\core\Shader.h" />

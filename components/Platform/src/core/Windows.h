@@ -18,6 +18,7 @@
 
 #include "Windows/utils/readFile.h"
 #include "Windows/utils/loadIcon.h"
+#include "Windows/utils/daiFileManager.h"
 
 #endif
 

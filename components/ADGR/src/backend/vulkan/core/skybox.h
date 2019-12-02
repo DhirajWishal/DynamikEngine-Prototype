@@ -9,13 +9,14 @@ namespace Dynamik {
 	namespace ADGR {
 		namespace core {
 			struct DMKInitCubemapInfo {
-				std::string path = "";
+				std::vector<std::string> path = {};
 
 				VkFormat textureImageFormat = VK_FORMAT_UNDEFINED;
-				VkImage* textureImage = VK_NULL_HANDLE;
+				VkImage* textureImage = nullptr;
 				VkDeviceMemory* textureImageMemory = VK_NULL_HANDLE;
 				VkImageLayout imageLayout;
-				VkSampler imageSampler;
+				VkSampler* imageSampler = nullptr;
+				VkImageView* imageView = nullptr;
 
 				uint32_t mipLevels = 1;
 			};
@@ -52,6 +53,8 @@ namespace Dynamik {
 
 				uint32_t width = NULL;
 				uint32_t height = NULL;
+
+				uint8_t layerCount = 1;
 			};
 		}
 	}

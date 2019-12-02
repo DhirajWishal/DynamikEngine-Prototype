@@ -94,7 +94,7 @@ namespace Dynamik {
 				// Set a resource to the manager
 				template<typename _Type>
 				void setResource(_Type& data, DMKManagerResourceType type = DMK_CDH_MANAGER_RESOURCE_TYPE_UNKNOWN) {
-					*((std::vector<_Type>*)_resource(type)) = data;
+					*((_Type*)_resource(type)) = data;
 				}
 
 				// Clear resource store from the manager
@@ -318,7 +318,6 @@ namespace Dynamik {
 				}
 
 				std::string _typeNames(DMKManagerResourceType type) {
-
 				}
 
 				/* DATA STORE */
@@ -361,8 +360,8 @@ namespace Dynamik {
 				_SET_2D_VECTOR(VkDeviceMemory) indexBufferMemories = {};
 				_SET_2D_VECTOR(VkBuffer) uniformBuffers = {};
 				_SET_2D_VECTOR(VkDeviceMemory) uniformBufferMemories = {};
-				_SET_2D_VECTOR(VkDescriptorSetLayout) descriptorSetLayouts = {};
-				_SET_2D_VECTOR(VkDescriptorPool) descriptorPools = {};
+				_SET_VECTOR(VkDescriptorSetLayout) descriptorSetLayouts = {};
+				_SET_VECTOR(VkDescriptorPool) descriptorPools = {};
 				_SET_2D_VECTOR(VkDescriptorSet) descriptorSets = {};
 				_SET_2D_VECTOR(VkCommandPool) commandPools = {};
 				_SET_2D_VECTOR(VkCommandBuffer) commandBuffers = {};

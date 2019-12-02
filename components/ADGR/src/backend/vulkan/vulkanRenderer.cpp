@@ -43,6 +43,9 @@ namespace Dynamik {
 			DMK_DEBUGGER_PROFILER_TIMER_START(timer);
 
 			myManager.allocate<ADGRVulkanDataContainer>(DMK_CDH_MANAGER_RESOURCE_TYPE_VULKAN_DATA_CONTAINER, 1);
+			myManager.allocate<std::vector<VkBuffer>>(DMK_CDH_MANAGER_RESOURCE_TYPE_VULKAN_UNIFORM_BUFFER, uniformCount);
+			myManager.allocate<std::vector<VkDeviceMemory>>(DMK_CDH_MANAGER_RESOURCE_TYPE_VULKAN_UNIFORM_BUFFER_MEMORIES, uniformCount);
+			myManager.allocate<VkDescriptorSetLayout>(DMK_CDH_MANAGER_RESOURCE_TYPE_VULKAN_DESCRIPTOR_SET_LAYOUT, 1);
 
 			// init GameObjects
 			initGameObjects();
@@ -79,7 +82,7 @@ namespace Dynamik {
 
 			// first layout
 			DMKUniformBufferCreateDescriptorSetLayoutInfo layoutInfo;
-			layoutInfo.layout = &layout;
+			layoutInfo.layout = myManager.getResourceAddr<VkDescriptorSetLayout>(DMK_CDH_MANAGER_RESOURCE_TYPE_VULKAN_DESCRIPTOR_SET_LAYOUT, 0);
 			layoutInfo.bindIndex = { 0, 1 };
 			uniformBuffer.createDescriptorSetLayout(myManager.getResourceAddr<ADGRVulkanDataContainer>(DMK_CDH_MANAGER_RESOURCE_TYPE_VULKAN_DATA_CONTAINER, vulkanContainerIndex), layoutInfo);
 			INC_PROGRESS;
@@ -99,7 +102,7 @@ namespace Dynamik {
 
 				// init pipeline
 				DMKPipelineInitInfo initInfo;
-				initInfo.layouts = { layout };
+				initInfo.layouts = { myManager.getResource<VkDescriptorSetLayout>(DMK_CDH_MANAGER_RESOURCE_TYPE_VULKAN_DESCRIPTOR_SET_LAYOUT, 0) };
 				initInfo.shaderDataContainer = shaderContainer;
 				auto [l_pipeline, l_pipelineLayout] = myPipeline.init(myManager.getResourceAddr<ADGRVulkanDataContainer>(DMK_CDH_MANAGER_RESOURCE_TYPE_VULKAN_DATA_CONTAINER, vulkanContainerIndex), initInfo);
 
@@ -216,41 +219,40 @@ namespace Dynamik {
 				data.indexCount = &myManager.getResourceAddr<ADGRObjectRenderData>(DMK_CDH_MANAGER_RESOURCE_TYPE_RENDER_DATA_CONTAINER, i)->indexCount;
 				data.offsets = myManager.getResourceAddr<ADGRObjectRenderData>(DMK_CDH_MANAGER_RESOURCE_TYPE_RENDER_DATA_CONTAINER, i)->location;
 
-				objDataVector.push_back(data);
+				myManager.addResource<DMKObjectData>(data, DMK_CDH_MANAGER_RESOURCE_TYPE_OBJECT_DATA_CONTAINER);
 			}
 
-			initModels(objDataVector);
-
-			uniformBuffersContainer.resize(uniformCount);
-			uniformBufferMemoriesContainer.resize(uniformCount);
+			initModels(myManager.getFullResource<DMKObjectData>(DMK_CDH_MANAGER_RESOURCE_TYPE_OBJECT_DATA_CONTAINER));
 
 			// uniform buffer creation
 			for (int itr = 0; itr < uniformCount; itr++) {
 				DMKVulkanRendererCreateUniformBufferInfo uBuffInfo;
-				uBuffInfo.buffer = &uniformBuffersContainer[itr];
-				uBuffInfo.bufferMemory = &uniformBufferMemoriesContainer[itr];
+				uBuffInfo.buffer = myManager.getResourceAddr<std::vector<VkBuffer>>(DMK_CDH_MANAGER_RESOURCE_TYPE_VULKAN_UNIFORM_BUFFER, itr);
+				uBuffInfo.bufferMemory = myManager.getResourceAddr<std::vector<VkDeviceMemory>>(DMK_CDH_MANAGER_RESOURCE_TYPE_VULKAN_UNIFORM_BUFFER_MEMORIES, itr);
 				createUniformBuffer(uBuffInfo);
 			}
 			INC_PROGRESS;
 
 			// descriptor pool creation
 			for (int i = 0; i < myManager.getFullResourceAddr<ADGRObjectRenderData>(DMK_CDH_MANAGER_RESOURCE_TYPE_RENDER_DATA_CONTAINER)->size(); i++) {
-				descriptorPools.resize(myManager.getResourceAddr<ADGRObjectRenderData>(DMK_CDH_MANAGER_RESOURCE_TYPE_RENDER_DATA_CONTAINER, i)->textureImages.size());	// wrong method
+				myManager.allocate<VkDescriptorPool>(DMK_CDH_MANAGER_RESOURCE_TYPE_VULKAN_DESCRIPTOR_POOL,
+					myManager.getResourceAddr<ADGRObjectRenderData>(DMK_CDH_MANAGER_RESOURCE_TYPE_RENDER_DATA_CONTAINER, i)->textureImages.size());	// wrong method
 				myManager.getResourceAddr<ADGRObjectRenderData>(DMK_CDH_MANAGER_RESOURCE_TYPE_RENDER_DATA_CONTAINER, i)->descriptorSets.resize(
 					myManager.getResourceAddr<ADGRObjectRenderData>(DMK_CDH_MANAGER_RESOURCE_TYPE_RENDER_DATA_CONTAINER, i)->textureImages.size());	// wrong method
 
 				for (int itr = 0; itr < myManager.getResourceAddr<ADGRObjectRenderData>(DMK_CDH_MANAGER_RESOURCE_TYPE_RENDER_DATA_CONTAINER, i)->textureImages.size(); itr++) {
 					// init descriptor pool
-					uniformBuffer.initDescriptorPool(myManager.getResourceAddr<ADGRVulkanDataContainer>(DMK_CDH_MANAGER_RESOURCE_TYPE_VULKAN_DATA_CONTAINER, vulkanContainerIndex), &descriptorPools[itr]);
+					uniformBuffer.initDescriptorPool(myManager.getResourceAddr<ADGRVulkanDataContainer>(DMK_CDH_MANAGER_RESOURCE_TYPE_VULKAN_DATA_CONTAINER, vulkanContainerIndex),
+						myManager.getResourceAddr<VkDescriptorPool>(DMK_CDH_MANAGER_RESOURCE_TYPE_VULKAN_DESCRIPTOR_POOL, itr));
 
 					// init descriptor set
 					DMKVulkanRendereCreateDescriptorSetsInfo descInitInfo;
-					descInitInfo.uniformBuffers = &uniformBuffersContainer[0];
+					descInitInfo.uniformBuffers = myManager.getResourceAddr<std::vector<VkBuffer>>(DMK_CDH_MANAGER_RESOURCE_TYPE_VULKAN_UNIFORM_BUFFER, itr);
 					descInitInfo.textureImageView = myManager.getResourceAddr<ADGRObjectRenderData>(DMK_CDH_MANAGER_RESOURCE_TYPE_RENDER_DATA_CONTAINER, i)->textureImageViews[itr];
 					descInitInfo.textureSampler = myManager.getResourceAddr<ADGRObjectRenderData>(DMK_CDH_MANAGER_RESOURCE_TYPE_RENDER_DATA_CONTAINER, i)->textureSamplers[itr];
 					descInitInfo.descriptorSets = &myManager.getResourceAddr<ADGRObjectRenderData>(DMK_CDH_MANAGER_RESOURCE_TYPE_RENDER_DATA_CONTAINER, i)->descriptorSets[itr];
-					descInitInfo.layout = &layout;
-					descInitInfo.descriptorPool = descriptorPools[itr];
+					descInitInfo.layout = myManager.getResourceAddr<VkDescriptorSetLayout>(DMK_CDH_MANAGER_RESOURCE_TYPE_VULKAN_DESCRIPTOR_SET_LAYOUT, 0);
+					descInitInfo.descriptorPool = myManager.getResource<VkDescriptorPool>(DMK_CDH_MANAGER_RESOURCE_TYPE_VULKAN_DESCRIPTOR_POOL, itr);
 					descInitInfo.bindIndexes = { 0, 1 };
 					createDescriptorSets(descInitInfo);
 				}
@@ -289,9 +291,9 @@ namespace Dynamik {
 			std::vector<VkPipeline> pipeline;
 			std::vector<VkPipelineLayout> pipelineLayout;
 			DMKSwapChainCleanUpInfo cleanInfo;
-			cleanInfo.uniformBuffers = uniformBuffersContainer;
-			cleanInfo.uniformBufferMemories = uniformBufferMemoriesContainer;
-			cleanInfo.descriptorPools = descriptorPools;
+			cleanInfo.uniformBuffers = myManager.getFullResource<std::vector<VkBuffer>>(DMK_CDH_MANAGER_RESOURCE_TYPE_VULKAN_UNIFORM_BUFFER);
+			cleanInfo.uniformBufferMemories = myManager.getFullResource<std::vector<VkDeviceMemory>>(DMK_CDH_MANAGER_RESOURCE_TYPE_VULKAN_UNIFORM_BUFFER_MEMORIES);
+			cleanInfo.descriptorPools = myManager.getFullResource<VkDescriptorPool>(DMK_CDH_MANAGER_RESOURCE_TYPE_VULKAN_DESCRIPTOR_POOL);
 
 			for (auto object : *myManager.getFullResourceAddr<ADGRObjectRenderData>(DMK_CDH_MANAGER_RESOURCE_TYPE_RENDER_DATA_CONTAINER)) {
 				pipeline.push_back(object.pipeline);
@@ -329,20 +331,22 @@ namespace Dynamik {
 			}
 
 			// destroy descriptorSetLayout
-			vkDestroyDescriptorSetLayout(myManager.getResource<ADGRVulkanDataContainer>(DMK_CDH_MANAGER_RESOURCE_TYPE_VULKAN_DATA_CONTAINER, vulkanContainerIndex).device, layout, nullptr);
+			vkDestroyDescriptorSetLayout(myManager.getResource<ADGRVulkanDataContainer>(DMK_CDH_MANAGER_RESOURCE_TYPE_VULKAN_DATA_CONTAINER, vulkanContainerIndex).device,
+				myManager.getResource<VkDescriptorSetLayout>(DMK_CDH_MANAGER_RESOURCE_TYPE_VULKAN_DESCRIPTOR_SET_LAYOUT, 0), nullptr);
 
 			// delete frames in flight
 			for (size_t i = 0; i < MAX_FRAMES_IN_FLIGHT; i++) {
-				vkDestroySemaphore(myManager.getResource<ADGRVulkanDataContainer>(DMK_CDH_MANAGER_RESOURCE_TYPE_VULKAN_DATA_CONTAINER, vulkanContainerIndex).device, 
+				vkDestroySemaphore(myManager.getResource<ADGRVulkanDataContainer>(DMK_CDH_MANAGER_RESOURCE_TYPE_VULKAN_DATA_CONTAINER, vulkanContainerIndex).device,
 					myManager.getResource<VkSemaphore>(DMK_CDH_MANAGER_RESOURCE_TYPE_VULKAN_SEMAPHORE_IMAGE_AVAILABLE, i), nullptr);
-				vkDestroySemaphore(myManager.getResource<ADGRVulkanDataContainer>(DMK_CDH_MANAGER_RESOURCE_TYPE_VULKAN_DATA_CONTAINER, vulkanContainerIndex).device, 
+				vkDestroySemaphore(myManager.getResource<ADGRVulkanDataContainer>(DMK_CDH_MANAGER_RESOURCE_TYPE_VULKAN_DATA_CONTAINER, vulkanContainerIndex).device,
 					myManager.getResource<VkSemaphore>(DMK_CDH_MANAGER_RESOURCE_TYPE_VULKAN_SEMAPHORE_RENDER_FINISHED, i), nullptr);
-				vkDestroyFence(myManager.getResource<ADGRVulkanDataContainer>(DMK_CDH_MANAGER_RESOURCE_TYPE_VULKAN_DATA_CONTAINER, vulkanContainerIndex).device, 
+				vkDestroyFence(myManager.getResource<ADGRVulkanDataContainer>(DMK_CDH_MANAGER_RESOURCE_TYPE_VULKAN_DATA_CONTAINER, vulkanContainerIndex).device,
 					myManager.getResource<VkFence>(DMK_CDH_MANAGER_RESOURCE_TYPE_VULKAN_FENCE_IN_FLIGHT, i), nullptr);
 			}
 
 			// delete the command pool
-			vkDestroyCommandPool(myManager.getResource<ADGRVulkanDataContainer>(DMK_CDH_MANAGER_RESOURCE_TYPE_VULKAN_DATA_CONTAINER, vulkanContainerIndex).device, myManager.getResource<ADGRVulkanDataContainer>(DMK_CDH_MANAGER_RESOURCE_TYPE_VULKAN_DATA_CONTAINER, vulkanContainerIndex).commandBufferContainer.commandPool, nullptr);
+			vkDestroyCommandPool(myManager.getResource<ADGRVulkanDataContainer>(DMK_CDH_MANAGER_RESOURCE_TYPE_VULKAN_DATA_CONTAINER, vulkanContainerIndex).device,
+				myManager.getResource<ADGRVulkanDataContainer>(DMK_CDH_MANAGER_RESOURCE_TYPE_VULKAN_DATA_CONTAINER, vulkanContainerIndex).commandBufferContainer.commandPool, nullptr);
 
 			// delete device
 			vkDestroyDevice(myManager.getResource<ADGRVulkanDataContainer>(DMK_CDH_MANAGER_RESOURCE_TYPE_VULKAN_DATA_CONTAINER, vulkanContainerIndex).device, nullptr);
@@ -351,7 +355,8 @@ namespace Dynamik {
 			myDebugger.deleteDebugger();
 
 			// destroy surface
-			vkDestroySurfaceKHR(myManager.getResource<ADGRVulkanDataContainer>(DMK_CDH_MANAGER_RESOURCE_TYPE_VULKAN_DATA_CONTAINER, vulkanContainerIndex).instance, myManager.getResource<ADGRVulkanDataContainer>(DMK_CDH_MANAGER_RESOURCE_TYPE_VULKAN_DATA_CONTAINER, vulkanContainerIndex).surface, nullptr);
+			vkDestroySurfaceKHR(myManager.getResource<ADGRVulkanDataContainer>(DMK_CDH_MANAGER_RESOURCE_TYPE_VULKAN_DATA_CONTAINER, vulkanContainerIndex).instance,
+				myManager.getResource<ADGRVulkanDataContainer>(DMK_CDH_MANAGER_RESOURCE_TYPE_VULKAN_DATA_CONTAINER, vulkanContainerIndex).surface, nullptr);
 
 			// clear instance
 			myInstance.clear(myManager.getResourceAddr<ADGRVulkanDataContainer>(DMK_CDH_MANAGER_RESOURCE_TYPE_VULKAN_DATA_CONTAINER, vulkanContainerIndex));
@@ -372,7 +377,7 @@ namespace Dynamik {
 #endif
 
 			// wait for fences
-			vkWaitForFences(myManager.getResource<ADGRVulkanDataContainer>(DMK_CDH_MANAGER_RESOURCE_TYPE_VULKAN_DATA_CONTAINER, vulkanContainerIndex).device, 1, 
+			vkWaitForFences(myManager.getResource<ADGRVulkanDataContainer>(DMK_CDH_MANAGER_RESOURCE_TYPE_VULKAN_DATA_CONTAINER, vulkanContainerIndex).device, 1,
 				myManager.getResourceAddr<VkFence>(DMK_CDH_MANAGER_RESOURCE_TYPE_VULKAN_FENCE_IN_FLIGHT, currentFrame),
 				VK_TRUE, std::numeric_limits<uint64_t>::max());
 
@@ -404,7 +409,7 @@ namespace Dynamik {
 			// uniform buffer object update
 			for (int itr = 0; itr < uniformCount; itr++) {
 				DMKUniformBufferUpdateInfo updateInfo;
-				updateInfo.bufferMemory = uniformBufferMemoriesContainer[itr];
+				updateInfo.bufferMemory = myManager.getResource<std::vector<VkDeviceMemory>>(DMK_CDH_MANAGER_RESOURCE_TYPE_VULKAN_UNIFORM_BUFFER_MEMORIES, itr);
 				updateInfo.currentImage = imageIndex;
 				updateInfo.turn = { myEvent.turnEventL , myEvent.turnEventR };
 				updateInfo.move = { myEvent.moveEventU , myEvent.moveEventD };
@@ -433,11 +438,11 @@ namespace Dynamik {
 			submitInfo.pSignalSemaphores = signalSemaphores;
 
 			// reset fences
-			vkResetFences(myManager.getResource<ADGRVulkanDataContainer>(DMK_CDH_MANAGER_RESOURCE_TYPE_VULKAN_DATA_CONTAINER, vulkanContainerIndex).device, 1, 
+			vkResetFences(myManager.getResource<ADGRVulkanDataContainer>(DMK_CDH_MANAGER_RESOURCE_TYPE_VULKAN_DATA_CONTAINER, vulkanContainerIndex).device, 1,
 				myManager.getResourceAddr<VkFence>(DMK_CDH_MANAGER_RESOURCE_TYPE_VULKAN_FENCE_IN_FLIGHT, currentFrame));
 
 			// submit command queue
-			if (vkQueueSubmit(myManager.getResource<ADGRVulkanDataContainer>(DMK_CDH_MANAGER_RESOURCE_TYPE_VULKAN_DATA_CONTAINER, vulkanContainerIndex).graphicsQueue, 1, &submitInfo, 
+			if (vkQueueSubmit(myManager.getResource<ADGRVulkanDataContainer>(DMK_CDH_MANAGER_RESOURCE_TYPE_VULKAN_DATA_CONTAINER, vulkanContainerIndex).graphicsQueue, 1, &submitInfo,
 				myManager.getResource<VkFence>(DMK_CDH_MANAGER_RESOURCE_TYPE_VULKAN_FENCE_IN_FLIGHT, currentFrame)) != VK_SUCCESS)
 				DMK_CORE_FATAL("failed to submit draw command buffer!");
 
@@ -481,9 +486,9 @@ namespace Dynamik {
 			std::vector<VkPipeline> pipeline;
 			std::vector<VkPipelineLayout> pipelineLayout;
 			DMKSwapChainCleanUpInfo cleanInfo;
-			cleanInfo.uniformBuffers = uniformBuffersContainer;
-			cleanInfo.uniformBufferMemories = uniformBufferMemoriesContainer;
-			cleanInfo.descriptorPools = descriptorPools;
+			cleanInfo.uniformBuffers = myManager.getFullResource<std::vector<VkBuffer>>(DMK_CDH_MANAGER_RESOURCE_TYPE_VULKAN_UNIFORM_BUFFER);
+			cleanInfo.uniformBufferMemories = myManager.getFullResource<std::vector<VkDeviceMemory>>(DMK_CDH_MANAGER_RESOURCE_TYPE_VULKAN_UNIFORM_BUFFER_MEMORIES);
+			cleanInfo.descriptorPools = myManager.getFullResource<VkDescriptorPool>(DMK_CDH_MANAGER_RESOURCE_TYPE_VULKAN_DESCRIPTOR_POOL);
 
 			for (auto object : *myManager.getFullResourceAddr<ADGRObjectRenderData>(DMK_CDH_MANAGER_RESOURCE_TYPE_RENDER_DATA_CONTAINER)) {
 				pipeline.push_back(object.pipeline);
@@ -517,7 +522,7 @@ namespace Dynamik {
 
 				// init pipeline
 				DMKPipelineInitInfo initInfo;
-				initInfo.layouts = { layout };
+				initInfo.layouts = { myManager.getResource<VkDescriptorSetLayout>(DMK_CDH_MANAGER_RESOURCE_TYPE_VULKAN_DESCRIPTOR_SET_LAYOUT, 0) };
 				initInfo.shaderDataContainer = shaderContainer;
 				auto [l_pipeline, l_pipelineLayout] = myPipeline.init(myManager.getResourceAddr<ADGRVulkanDataContainer>(DMK_CDH_MANAGER_RESOURCE_TYPE_VULKAN_DATA_CONTAINER, vulkanContainerIndex), initInfo);
 
@@ -542,25 +547,26 @@ namespace Dynamik {
 			// uniform buffer creation
 			for (int itr = 0; itr < uniformCount; itr++) {
 				DMKVulkanRendererCreateUniformBufferInfo uBuffInfo;
-				uBuffInfo.buffer = &uniformBuffersContainer[itr];
-				uBuffInfo.bufferMemory = &uniformBufferMemoriesContainer[itr];
+				uBuffInfo.buffer = myManager.getResourceAddr<std::vector<VkBuffer>>(DMK_CDH_MANAGER_RESOURCE_TYPE_VULKAN_UNIFORM_BUFFER, itr);
+				uBuffInfo.bufferMemory = myManager.getResourceAddr<std::vector<VkDeviceMemory>>(DMK_CDH_MANAGER_RESOURCE_TYPE_VULKAN_UNIFORM_BUFFER_MEMORIES, itr);
 				createUniformBuffer(uBuffInfo);
 			}
 
 			// init descriptor pool
 			for (int itr = 0; itr < myManager.getFullResourceAddr<std::vector<ADGRObjectRenderData>>(DMK_CDH_MANAGER_RESOURCE_TYPE_RENDER_DATA_CONTAINER)->size(); itr++)
-				uniformBuffer.initDescriptorPool(myManager.getResourceAddr<ADGRVulkanDataContainer>(DMK_CDH_MANAGER_RESOURCE_TYPE_VULKAN_DATA_CONTAINER, vulkanContainerIndex), &descriptorPools[itr]);
+				uniformBuffer.initDescriptorPool(myManager.getResourceAddr<ADGRVulkanDataContainer>(DMK_CDH_MANAGER_RESOURCE_TYPE_VULKAN_DATA_CONTAINER, vulkanContainerIndex),
+					myManager.getResourceAddr<VkDescriptorPool>(DMK_CDH_MANAGER_RESOURCE_TYPE_VULKAN_DESCRIPTOR_POOL, itr));
 
 			// init descriptor set
 			for (int i = 0; i < myManager.getFullResourceAddr<ADGRObjectRenderData>(DMK_CDH_MANAGER_RESOURCE_TYPE_RENDER_DATA_CONTAINER)->size(); i++) {
 				for (int itr = 0; itr < myManager.getResourceAddr<ADGRObjectRenderData>(DMK_CDH_MANAGER_RESOURCE_TYPE_RENDER_DATA_CONTAINER, i)->texturePaths.size(); itr++) {
 					DMKVulkanRendereCreateDescriptorSetsInfo descInitInfo;
-					descInitInfo.uniformBuffers = &uniformBuffersContainer[0];
+					descInitInfo.uniformBuffers = myManager.getResourceAddr<std::vector<VkBuffer>>(DMK_CDH_MANAGER_RESOURCE_TYPE_VULKAN_UNIFORM_BUFFER, itr);
 					descInitInfo.textureImageView = myManager.getResourceAddr<ADGRObjectRenderData>(DMK_CDH_MANAGER_RESOURCE_TYPE_RENDER_DATA_CONTAINER, i)->textureImageViews[itr];
 					descInitInfo.textureSampler = myManager.getResourceAddr<ADGRObjectRenderData>(DMK_CDH_MANAGER_RESOURCE_TYPE_RENDER_DATA_CONTAINER, i)->textureSamplers[itr];
 					descInitInfo.descriptorSets = &myManager.getResourceAddr<ADGRObjectRenderData>(DMK_CDH_MANAGER_RESOURCE_TYPE_RENDER_DATA_CONTAINER, i)->descriptorSets[itr];
-					descInitInfo.layout = &layout;
-					descInitInfo.descriptorPool = descriptorPools[i];
+					descInitInfo.layout = myManager.getResourceAddr<VkDescriptorSetLayout>(DMK_CDH_MANAGER_RESOURCE_TYPE_VULKAN_DESCRIPTOR_SET_LAYOUT, 0);
+					descInitInfo.descriptorPool = myManager.getResource<VkDescriptorPool>(DMK_CDH_MANAGER_RESOURCE_TYPE_VULKAN_DESCRIPTOR_POOL, itr);
 					descInitInfo.bindIndexes = { 0, 1 };
 					createDescriptorSets(descInitInfo);
 				}
@@ -583,10 +589,15 @@ namespace Dynamik {
 			myModelManager.loadModel(modelInfo);
 		}
 
+		void vulkanRenderer::setGameObjects(std::vector<GameObject>& gameObjects) {
+			//gameObjectStore = gameObjects;
+			myManager.setResource<std::vector<GameObject>>(gameObjects, DMK_CDH_MANAGER_RESOURCE_TYPE_GAME_OBJECT);
+		}
+
 		// set model paths
 		void vulkanRenderer::setModelPaths(std::vector<std::string>& object, std::vector<std::vector<std::string>>& texture) {
-			modelPaths = object;
-			texturePaths = texture;
+			myManager.setResource<std::vector<std::string>>(object, DMK_CDH_MANAGER_RESOURCE_TYPE_PATH_MODEL);
+			myManager.setResource<std::vector<std::string>>(object, DMK_CDH_MANAGER_RESOURCE_TYPE_PATH_TEXTURE);
 		}
 
 		// set shader paths
@@ -596,12 +607,16 @@ namespace Dynamik {
 		}
 
 		void vulkanRenderer::initGameObjects() {
-			myManager.allocate<ADGRObjectRenderData>(DMK_CDH_MANAGER_RESOURCE_TYPE_RENDER_DATA_CONTAINER, gameObjectStore.size());
+			myManager.allocate<ADGRObjectRenderData>(DMK_CDH_MANAGER_RESOURCE_TYPE_RENDER_DATA_CONTAINER,
+				myManager.getFullResourceAddr<GameObject>(DMK_CDH_MANAGER_RESOURCE_TYPE_GAME_OBJECT)->size());
 
-			for (int i = 0; i < gameObjectStore.size(); i++) {
-				myManager.getResourceAddr<ADGRObjectRenderData>(DMK_CDH_MANAGER_RESOURCE_TYPE_RENDER_DATA_CONTAINER, i)->paths = gameObjectStore[i].myProperties.objectPath;
-				myManager.getResourceAddr<ADGRObjectRenderData>(DMK_CDH_MANAGER_RESOURCE_TYPE_RENDER_DATA_CONTAINER, i)->texturePaths = gameObjectStore[i].myProperties.texturePaths;
-				myManager.getResourceAddr<ADGRObjectRenderData>(DMK_CDH_MANAGER_RESOURCE_TYPE_RENDER_DATA_CONTAINER, i)->location = gameObjectStore[i].myProperties.transformProperties.location;
+			for (int i = 0; i < myManager.getFullResourceAddr<GameObject>(DMK_CDH_MANAGER_RESOURCE_TYPE_GAME_OBJECT)->size(); i++) {
+				myManager.getResourceAddr<ADGRObjectRenderData>(DMK_CDH_MANAGER_RESOURCE_TYPE_RENDER_DATA_CONTAINER, i)->paths =
+					myManager.getResourceAddr<GameObject>(DMK_CDH_MANAGER_RESOURCE_TYPE_GAME_OBJECT, i)->myProperties.objectPath;
+				myManager.getResourceAddr<ADGRObjectRenderData>(DMK_CDH_MANAGER_RESOURCE_TYPE_RENDER_DATA_CONTAINER, i)->texturePaths =
+					myManager.getResourceAddr<GameObject>(DMK_CDH_MANAGER_RESOURCE_TYPE_GAME_OBJECT, i)->myProperties.texturePaths;
+				myManager.getResourceAddr<ADGRObjectRenderData>(DMK_CDH_MANAGER_RESOURCE_TYPE_RENDER_DATA_CONTAINER, i)->location =
+					myManager.getResourceAddr<GameObject>(DMK_CDH_MANAGER_RESOURCE_TYPE_GAME_OBJECT, i)->myProperties.transformProperties.location;
 			}
 		}
 
@@ -618,12 +633,13 @@ namespace Dynamik {
 
 			// init pipeline
 			DMKPipelineInitInfo initInfo;
-			initInfo.layouts = { layout };
+			initInfo.layouts = { myManager.getResource<VkDescriptorSetLayout>(DMK_CDH_MANAGER_RESOURCE_TYPE_VULKAN_DESCRIPTOR_SET_LAYOUT, 0) };
 			initInfo.shaderDataContainer = shaderContainer;
 			auto [pipeline, pipelineLayout] = myPipeline.init(myManager.getResourceAddr<ADGRVulkanDataContainer>(DMK_CDH_MANAGER_RESOURCE_TYPE_VULKAN_DATA_CONTAINER, vulkanContainerIndex), initInfo);
 
 			// delete shaders
-			myShaderManager.deleteShaders(myManager.getResource<ADGRVulkanDataContainer>(DMK_CDH_MANAGER_RESOURCE_TYPE_VULKAN_DATA_CONTAINER, vulkanContainerIndex), myManager.getResource<ADGRVulkanDataContainer>(DMK_CDH_MANAGER_RESOURCE_TYPE_VULKAN_DATA_CONTAINER, vulkanContainerIndex).pipelineContainers[0]);
+			myShaderManager.deleteShaders(myManager.getResource<ADGRVulkanDataContainer>(DMK_CDH_MANAGER_RESOURCE_TYPE_VULKAN_DATA_CONTAINER, vulkanContainerIndex),
+				myManager.getResource<ADGRVulkanDataContainer>(DMK_CDH_MANAGER_RESOURCE_TYPE_VULKAN_DATA_CONTAINER, vulkanContainerIndex).pipelineContainers[0]);
 		}
 
 		// create vertex buffer
@@ -676,13 +692,14 @@ namespace Dynamik {
 
 			// init pipeline
 			DMKPipelineInitInfo initInfo;
-			initInfo.layouts = { layout };
+			initInfo.layouts = { myManager.getResource<VkDescriptorSetLayout>(DMK_CDH_MANAGER_RESOURCE_TYPE_VULKAN_DESCRIPTOR_SET_LAYOUT, 0) };
 			initInfo.shaderDataContainer = shaderContainer;
 			myPipeline.init(myManager.getResourceAddr<ADGRVulkanDataContainer>(DMK_CDH_MANAGER_RESOURCE_TYPE_VULKAN_DATA_CONTAINER, vulkanContainerIndex), initInfo);
 			INC_PROGRESS;
 
 			// delete shaders
-			myShaderManager.deleteShaders(myManager.getResource<ADGRVulkanDataContainer>(DMK_CDH_MANAGER_RESOURCE_TYPE_VULKAN_DATA_CONTAINER, vulkanContainerIndex), myManager.getResource<ADGRVulkanDataContainer>(DMK_CDH_MANAGER_RESOURCE_TYPE_VULKAN_DATA_CONTAINER, vulkanContainerIndex).pipelineContainers[0]);
+			myShaderManager.deleteShaders(myManager.getResource<ADGRVulkanDataContainer>(DMK_CDH_MANAGER_RESOURCE_TYPE_VULKAN_DATA_CONTAINER, vulkanContainerIndex),
+				myManager.getResource<ADGRVulkanDataContainer>(DMK_CDH_MANAGER_RESOURCE_TYPE_VULKAN_DATA_CONTAINER, vulkanContainerIndex).pipelineContainers[0]);
 			INC_PROGRESS;
 		}
 
@@ -721,7 +738,6 @@ namespace Dynamik {
 				createVertexBuffer(vertBuffInfo);
 
 				*data[i].vertexCount = (uint32_t)data[i].vertexBufferObject->size();
-				data[i].vertexBufferObject->clear();
 
 				// create indexBuffer
 				DMKVulkanRendererCreateIndexBufferInfo idxBuffInfo;
@@ -731,7 +747,11 @@ namespace Dynamik {
 				createIndexBuffer(idxBuffInfo);
 
 				*data[i].indexCount = (uint32_t)data[i].indexBufferObject->size();
-				data[i].indexBufferObject->clear();
+
+				if (enableClear) {
+					data[i].vertexBufferObject->clear();
+					data[i].indexBufferObject->clear();
+				}
 			}
 			INC_PROGRESS;
 		}

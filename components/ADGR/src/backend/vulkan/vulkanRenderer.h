@@ -71,9 +71,7 @@ namespace Dynamik {
 			}
 			inline bool closeEvent() { return myWindow.closeEvent(myManager.getResourceAddr<ADGRVulkanDataContainer>(DMK_CDH_MANAGER_RESOURCE_TYPE_VULKAN_DATA_CONTAINER, vulkanContainerIndex)); }
 
-			void setGameObjects(std::vector<GameObject>& gameObjects) {
-				gameObjectStore = gameObjects;
-			}
+			void setGameObjects(std::vector<GameObject>& gameObjects);
 			void setModelPaths(std::vector<std::string>& object, std::vector<std::vector<std::string>>& texture);
 			void setShaderPaths(std::vector<std::string>& vertex, std::vector<std::string>& fragment);
 
@@ -98,6 +96,7 @@ namespace Dynamik {
 		private:
 			static void thread_third(DMKVulkanRendererLoadObjectInfo createInfo);	// models
 
+			// renderer core classes
 			core::window myWindow{};
 			core::instanceManager myInstance{};
 			core::device myDevice{};
@@ -116,13 +115,8 @@ namespace Dynamik {
 			core::shaderManager myShaderManager{};
 			core::debugger myDebugger{};
 
+			// main data manager
 			core::manager myManager{};
-
-			std::vector<std::vector<VkBuffer>> uniformBuffersContainer = {};
-			std::vector<std::vector<VkDeviceMemory>> uniformBufferMemoriesContainer = {};
-			std::vector<VkDescriptorPool> descriptorPools = {};
-
-			VkDescriptorSetLayout layout = VK_NULL_HANDLE;
 
 			uint32_t currentFrame = 0;
 			uint32_t myMipLevel = 1;
@@ -133,8 +127,6 @@ namespace Dynamik {
 			uint32_t* myProgress = 0;
 
 			// dynamic paths
-			std::vector<std::string> modelPaths = {};
-			std::vector<std::vector<std::string>> texturePaths = {};
 			std::vector<std::string> vertexShaderPaths = {
 				"E:/Projects/Dynamik Engine/Dynamik/Application/vert.spv",
 				"E:/Projects/Dynamik Engine/Dynamik/components/Shaders/vert.spv"
@@ -153,15 +145,12 @@ namespace Dynamik {
 			};
 
 			bool compileShaders = false;
+			bool enableClear = true;
 
 			int shaderCodeIndex = 1;
 
-			//int objCount = 25;
 			int uniformCount = 1;
 			int vulkanContainerIndex = 0;
-
-			std::vector<DMKObjectData> objDataVector = {};
-			std::vector<GameObject> gameObjectStore = {};
 
 			Debugger::benchmark::Profiler localProfiler;
 		};

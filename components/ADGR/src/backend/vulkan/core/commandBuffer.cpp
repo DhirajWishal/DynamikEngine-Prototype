@@ -99,10 +99,8 @@ namespace Dynamik {
 							vkCmdDrawIndexed(container->commandBufferContainer.buffers[i], info.objectBindDatas->at(_itr).indexCount, 1, 0, 0, 0);
 						}
 						else if (info.objectBindDatas->at(_itr).renderingType == DMK_ADGR_VULKAN_RENDERER_INDIRECT) {
-
 						}
 						else if (info.objectBindDatas->at(_itr).renderingType == DMK_ADGR_VULKAN_RENDERER_INDEXED_INDIRECT) {
-
 						}
 						else
 							DMK_CORE_FATAL("Invalid rendering type!");

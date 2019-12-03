@@ -58,7 +58,7 @@ namespace Dynamik {
 		}
 
 		void daiManager::initDataStore() {
-			dataStore.resize(7);
+			dataStore.resize(DMK_DAI_FILE_DATA_TYPE_MAX_ENUM);
 
 			std::string _line = "";
 			while (getLine(&_line)) {
@@ -74,8 +74,12 @@ namespace Dynamik {
 					dataStore[DMK_DAI_FILE_DATA_TYPE_GEOMETRY].push_back((_line.substr(2, _line.size() - 2)));
 				else if (_line[0] == 'F' || _line[0] == 'f')
 					dataStore[DMK_DAI_FILE_DATA_TYPE_FRAGMENT].push_back((_line.substr(2, _line.size() - 2)));
+				else if (_line[0] == 'X' || _line[0] == 'x')
+					dataStore[DMK_DAI_FILE_DATA_TYPE_SHADER_SOURCE].push_back((_line.substr(2, _line.size() - 2)));
 				else if (_line[0] == 'S' || _line[0] == 's')
 					dataStore[DMK_DAI_FILE_DATA_TYPE_SCRIPT].push_back((_line.substr(2, _line.size() - 2)));
+				else if (_line[0] == 'C' || _line[0] == 'c')
+					dataStore[DMK_DAI_FILE_DATA_TYPE_CODE].push_back((_line.substr(2, _line.size() - 2)));
 			}
 
 			file.clear();

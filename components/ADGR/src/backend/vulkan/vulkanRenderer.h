@@ -73,7 +73,7 @@ namespace Dynamik {
 
 			void setGameObjects(std::vector<GameObject>& gameObjects);
 			void setModelPaths(std::vector<std::string>& object, std::vector<std::vector<std::string>>& texture);
-			void setShaderPaths(std::vector<std::string>& vertex, std::vector<std::string>& fragment);
+			void setShaderPaths(std::string& vertex, std::string& fragment);
 
 			void initGameObjects();
 
@@ -126,28 +126,8 @@ namespace Dynamik {
 
 			uint32_t* myProgress = 0;
 
-			// dynamic paths
-			std::vector<std::string> vertexShaderPaths = {
-				"E:/Projects/Dynamik Engine/Dynamik/Application/vert.spv",
-				"E:/Projects/Dynamik Engine/Dynamik/components/Shaders/vert.spv"
-			};
-			std::vector<std::string> fragmentShaderPaths = {
-				"E:/Projects/Dynamik Engine/Dynamik/Application/frag.spv",
-				"E:/Projects/Dynamik Engine/Dynamik/components/Shaders/frag.spv"
-			};
-			std::vector<std::string> vertexShaderSourcePaths = {
-				"E:/Projects/Dynamik Engine/Dynamik/components/Shaders/shader.vert",
-				"E:/Projects/Dynamik Engine/Dynamik/components/ADGR/src/backend/shaders/shader.2D.vert"
-			};
-			std::vector<std::string> fragmentShaderSourcePaths = {
-				"E:/Projects/Dynamik Engine/Dynamik/components/Shaders/shader.frag",
-				"E:/Projects/Dynamik Engine/Dynamik/components/ADGR/src/backend/shaders/shader.2D.frag"
-			};
-
 			bool compileShaders = false;
-			bool enableClear = true;
-
-			int shaderCodeIndex = 1;
+			bool enableVertexAndIndexClear = true;
 
 			int uniformCount = 1;
 			int vulkanContainerIndex = 0;

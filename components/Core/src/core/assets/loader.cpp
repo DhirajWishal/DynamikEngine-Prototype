@@ -1,11 +1,6 @@
 #include "tbafx.h"
 #include "loader.h"
 
-#define DMK_DEBUG
-
-#define DMK_PLATFORM_WINDOWS
-#include "Dynamik.h"
-
 class charlet : public Dynamik::GameObject {
 public:
 	charlet(Dynamik::GameObjectProperties props) : GameObject(props), myProps(props) {
@@ -59,7 +54,18 @@ std::vector<std::string> getTexturePath(std::vector<char>& file) {
 Dynamik::InputContainer Dynamik::submit() {
 	std::vector<std::string> (*function)(std::vector<char>&) = getTexturePath;
 
+	//auto paths = getTexturePath(readFile("paths.txt"));
+	//auto paths = getTexturePath(readFile("E:/Dynamik Engine/Engine/paths.txt"));
 	auto paths = getTexturePath(readFile("E:/Projects/Dynamik Engine/Dynamik/components/Core/paths.txt"));
+
+
+	/*
+		TODO:
+			Dynamic resource paths
+			Move the Manager definition to the CDH for centralized data distrubution
+				Render data abstraction
+	*/
+
 
 	Dynamik::KeyBindings myBindings;
 

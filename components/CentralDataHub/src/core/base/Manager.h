@@ -18,6 +18,8 @@
 #include <string>
 #include <vector>
 
+//#include "GameObject/GameObject.h"
+
 #define _SET_VECTOR(x)	std::vector<x>
 #define _SET_2D_VECTOR(x)	std::vector<std::vector<x>>
 
@@ -116,7 +118,8 @@ namespace Dynamik {
 			class Manager {
 			public:
 				Manager() {}
-				virtual ~Manager() {}
+				virtual ~Manager() {
+				}
 
 				// Global/ Public variable to store an address
 				const void* globalPointer = nullptr;

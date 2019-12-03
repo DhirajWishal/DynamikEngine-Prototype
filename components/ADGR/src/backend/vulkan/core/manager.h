@@ -3,7 +3,7 @@
 /*
  Manager for the Advanced Dynamik Graphics Renderer
 
-  Author:	Dhiraj Wishal
+ Author:	Dhiraj Wishal
  Project:	Dynamik Engine
  Date:		02/12/2019
  IDE:		MS Visual Studio Community 2019
@@ -22,6 +22,8 @@
 #include "GameObject/GameObject.h"
 #include "commandBuffer.h"
 
+#include "core/log.h"
+
 namespace Dynamik {
 	namespace ADGR {
 		namespace core {
@@ -36,8 +38,8 @@ namespace Dynamik {
 				}
 
 				// Default destructor
-				~manager() {
-				};
+				// Clear all locally stored variables
+				~manager() {}
 
 				// Add a resource to the manager
 				template<typename _Type>
@@ -319,7 +321,6 @@ namespace Dynamik {
 
 				std::string _typeNames(DMKManagerResourceType type) {
 				}
-
 				/* DATA STORE */
 				_SET_VECTOR(ADGRVulkanDataContainer) vulkanDataContainers = {};
 
@@ -334,7 +335,7 @@ namespace Dynamik {
 				_SET_VECTOR(VkFormat) swapchainImageFormats = {};
 				_SET_VECTOR(VkExtent2D) swapchainImageExtent = {};
 				_SET_VECTOR(VkImageView) swapchainImageViews = {};
-				_SET_2D_VECTOR(std::string) shaderPaths = { {}, {}, {}, {} };
+				_SET_VECTOR(std::string) shaderPaths = {};
 				_SET_2D_VECTOR(VkShaderModule) shaderModules = { {}, {}, {}, {} };
 				_SET_2D_VECTOR(VkPipeline) pipelines = {};
 				_SET_2D_VECTOR(VkRenderPass) pipelineRenderPasses = { };
@@ -365,9 +366,9 @@ namespace Dynamik {
 				_SET_2D_VECTOR(VkDescriptorSet) descriptorSets = {};
 				_SET_2D_VECTOR(VkCommandPool) commandPools = {};
 				_SET_2D_VECTOR(VkCommandBuffer) commandBuffers = {};
-				_SET_2D_VECTOR(VkSemaphore) imageAvailableSemaphores = {};
-				_SET_2D_VECTOR(VkSemaphore) renderFinishedSemaphores = {};
-				_SET_2D_VECTOR(VkFence) inFlightFences = {};
+				_SET_VECTOR(VkSemaphore) imageAvailableSemaphores = {};
+				_SET_VECTOR(VkSemaphore) renderFinishedSemaphores = {};
+				_SET_VECTOR(VkFence) inFlightFences = {};
 				_SET_2D_VECTOR(VkQueue) graphicsQueues = {};
 				_SET_2D_VECTOR(VkQueue) presentQueues = {};
 

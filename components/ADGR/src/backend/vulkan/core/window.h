@@ -82,6 +82,7 @@ namespace Dynamik {
 				static void onMouseButtonEvent(GLFWwindow* window, int button, int action, int mods);
 				static void onMouseScrolledEvent(GLFWwindow* window, double xOffset, double yOffset);
 				static void onCursorPosEvent(GLFWwindow* window, double xPos, double yPos);
+				static void onWindowCloseEvent(GLFWwindow* window);
 
 				void eventCallbackFunc(KeyPressedEvent& event);
 				void eventCallbackFunc(KeyReleasedEvent& event);

@@ -36,6 +36,7 @@ namespace Dynamik {
 				glfwSetMouseButtonCallback(container->window, onMouseButtonEvent);
 				glfwSetScrollCallback(container->window, onMouseScrolledEvent);
 				glfwSetCursorPosCallback(container->window, onCursorPosEvent);
+				glfwSetWindowCloseCallback(container->window, onWindowCloseEvent);
 
 				glfwSetInputMode(container->window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
 
@@ -59,6 +60,9 @@ namespace Dynamik {
 				case DMK_PRESS: {
 					KeyPressedEvent kp_event(keycode, 0);
 					data->keyEventHandler(keycode);
+
+					if (keycode == DMK_KEY_ESCAPE)
+						glfwSetWindowShouldClose(win, GL_TRUE);
 
 					break;
 				}
@@ -121,6 +125,9 @@ namespace Dynamik {
 				data->cE.y = (float)yPos;
 
 				MouseMovedEvent event((float)xPos, (float)yPos);
+			}
+
+			void window::onWindowCloseEvent(GLFWwindow* window) {
 			}
 
 			bool window::createWindowSurface(ADGRVulkanDataContainer* container) {

@@ -251,16 +251,26 @@ project "Managers"
 	}
 
 	includedirs {
+		"$(SolutionDir)libs",
 		"$(SolutionDir)Dynamik/src",
-		"$(solutionDir)components/Managers/src",
+		"$(SolutionDir)Dynamik/GameLibraries",
+		"$(SolutionDir)components/ADGR",
+		"$(SolutionDir)components/ADGR/src",
+		"$(SolutionDir)components/Audio/src",
+		"$(SolutionDir)components/Events/src",
+		"$(SolutionDir)components/Managers/src",
+		"$(SolutionDir)components/Platform/src",
+		"$(SolutionDir)components/DevConsole/src",
 		"$(SolutionDir)components/Debugger/src",
 		"$(SolutionDir)components/CentralDataHub/src",
-		"$(SolutionDir)libs/glm/**.hpp",
-		"$(SolutionDir)libs/glm/**.inl",
+		"$(SolutionDir)components/Networking/src",
 		"%{IncludeDir.GLFW}",
+		"%{IncludeDir.Glad}",
 		"%{IncludeDir.glm}",
 		"%{IncludeDir.stb}",
 		"%{IncludeDir.tol}",
+		"%{IncludeDir.irrKlang}",
+		"%{IncludeDir.assimp}",
 		"%{IncludeDir.Vulkan}"
 	}
 

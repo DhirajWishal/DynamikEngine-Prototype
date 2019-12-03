@@ -25,17 +25,27 @@ project "Audio"
 		"$(SolutionDir)libs",
 		"$(SolutionDir)Dynamik/src",
 		"$(SolutionDir)Dynamik/GameLibraries",
-		"$(SolutionDir)lib/libs",
-		"$(SolutionDir)components/Audio",
-		"$(SolutionDir)components/Audio/src",
-		"$(SolutionDir)libs/irrKlang/include",	
 		"$(SolutionDir)components/ADGR",
 		"$(SolutionDir)components/ADGR/src",
+		"$(SolutionDir)components/Audio/src",
 		"$(SolutionDir)components/Events/src",
+		"$(SolutionDir)components/Managers/src",
+		"$(SolutionDir)components/Platform/src",
+		"$(SolutionDir)components/DevConsole/src",
 		"$(SolutionDir)components/Debugger/src",
+		"$(SolutionDir)components/CentralDataHub/src",
+		"$(SolutionDir)components/Networking/src",
+		"$(SolutionDir)components/Core/src",
+		"%{IncludeDir.Glad}",
+		"%{IncludeDir.irrKlang}",
+		"$(SolutionDir)libs/glm/**.hpp",
+		"$(SolutionDir)libs/glm/**.inl",
+		"%{IncludeDir.GLFW}",
+		"%{IncludeDir.glm}",
 		"%{IncludeDir.stb}",
 		"%{IncludeDir.tol}",
-		"%{IncludeDir.irrKlang}"
+		"%{IncludeDir.assimp}",
+		"%{IncludeDir.Vulkan}"
 		}
 
 	libdirs{

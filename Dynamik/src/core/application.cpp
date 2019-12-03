@@ -23,10 +23,6 @@ namespace Dynamik {
 	static bool shouldClose = false;
 
 	Application::Application() {
-		Debugger::benchmark::beginProfiler("Startup.json");
-		//DMK_DEBUGGER_PROFILER_BEGIN_PATH("Dynamik-Startup.json");
-		DMK_DEBUGGER_PROFILER_TIMER_START(timer);
-
 		gameObjects = myLoader.run();
 		getObjectPaths();
 
@@ -40,23 +36,13 @@ namespace Dynamik {
 		shouldClose = true;
 
 		myThread.join();
-
-		DMK_DEBUGGER_PROFILER_TIMER_STOP(timer);
-		//DMK_DEBUGGER_PROFILER_END;
-		Debugger::benchmark::endProfiler();
 	}
 
 	Application::~Application() {
-		//DMK_DEBUGGER_PROFILER_TIMER_START(timer);
-
 		myRenderingEngine.end();
-		//DMK_DEBUGGER_PROFILER_END;
-		//Debugger::benchmark::endProfiler();
 	}
 
 	DMK_API void Application::run() {
-		//DMK_DEBUGGER_PROFILER_TIMER_START(timer);
-
 		while (!myRenderingEngine.getWindowCloseEvent()) {
 			myRenderingEngine.draw();
 			myEngine.update();
@@ -167,11 +153,8 @@ namespace Dynamik {
 	}
 
 	void Application::getObjectPaths() {
-		DMK_DEBUGGER_PROFILER_TIMER_START(timer);
 		for (int itr = 0; itr < gameObjects.size(); itr++) {
 			GameObject* gameObject = &gameObjects[itr];
-
-			DMK_DEBUGGER_PROFILER_TIMER_START(Localtimer);
 
 			utils::daiManager fileManager;
 			fileManager.open(gameObject->myProperties.location + (
@@ -181,22 +164,37 @@ namespace Dynamik {
 			if (!fileManager.isOpen())
 				DMK_CORE_FATAL("modelData.dai file not found --> " + gameObject->myProperties.location);
 
-			for (auto modelPath : fileManager.getData(utils::DMK_DAI_FILE_DATA_TYPE_MODEL)) {
-				gameObject->myProperties.objectPath.push_back(gameObject->myProperties.location +
-					((gameObject->myProperties.location[gameObject->myProperties.location.size() - 1] == '/')
-						? modelPath : "/" + modelPath));
-			}
+			std::string basePath = "";
+			if (gameObject->myProperties.location[gameObject->myProperties.location.size() - 1] == '/')
+				basePath = gameObject->myProperties.location;
+			else
+				basePath = gameObject->myProperties.location + '/';
 
-			for (auto texturePath : fileManager.getData(utils::DMK_DAI_FILE_DATA_TYPE_TEXTURE)) {
-				gameObject->myProperties.texturePaths.push_back(gameObject->myProperties.location +
-					((gameObject->myProperties.location[gameObject->myProperties.location.size() - 1] == '/')
-						? texturePath : "/" + texturePath));
-			}
+			// get model paths
+			for (auto modelPath : fileManager.getData(utils::DMK_DAI_FILE_DATA_TYPE_MODEL))
+				gameObject->myProperties.objectPath.push_back(basePath + modelPath);
 
-			//std::string line = "";
-			//while (std::getline(modelDataFile, line, '\n')) {
-			//	if (line.find(':') != std::string::npos)
-			//		DMK_CORE_FATAL("Invalid object/ texture referance at file --> " + gameObject->myProperties.location);
+			// get texture paths
+			for (auto texturePath : fileManager.getData(utils::DMK_DAI_FILE_DATA_TYPE_TEXTURE))
+				gameObject->myProperties.texturePaths.push_back(basePath + texturePath);
+
+			// get shader paths
+			gameObject->myProperties.renderableObjectProperties.vertexShaderPath = (
+				(fileManager.getData(utils::DMK_DAI_FILE_DATA_TYPE_VERTEX).size() > 0) ?
+				basePath + fileManager.getData(utils::DMK_DAI_FILE_DATA_TYPE_VERTEX)[0] : "NONE"
+				);	// vertex shader
+			gameObject->myProperties.renderableObjectProperties.tessellationShaderPath = (
+				(fileManager.getData(utils::DMK_DAI_FILE_DATA_TYPE_TESSELLATION).size() > 0) ?
+				basePath + fileManager.getData(utils::DMK_DAI_FILE_DATA_TYPE_TESSELLATION)[0] : "NONE"
+				);	// tessellation shader
+			gameObject->myProperties.renderableObjectProperties.geometryShaderPath = (
+				(fileManager.getData(utils::DMK_DAI_FILE_DATA_TYPE_GEOMETRY).size() > 0) ?
+				basePath + fileManager.getData(utils::DMK_DAI_FILE_DATA_TYPE_GEOMETRY)[0] : "NONE"
+				);	// geometry shader
+			gameObject->myProperties.renderableObjectProperties.fragmentShaderPath = (
+				(fileManager.getData(utils::DMK_DAI_FILE_DATA_TYPE_FRAGMENT).size() > 0) ?
+				basePath + fileManager.getData(utils::DMK_DAI_FILE_DATA_TYPE_FRAGMENT)[0] : "NONE"
+				);	// fragment shader
 		}
 	}
 }

@@ -73,11 +73,11 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <PrecompiledHeader>Create</PrecompiledHeader>
+      <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>tbafx.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>TB_PLATFORM_WINDOWS;TB_BUILD_DLL;TB_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)Dynamik\src;$(SolutionDir)Dynamik\GameLibraries;$(SolutionDir)lib\libs;$(solutionDir)components\Core;$(solutionDir)components\Core\src;$(solutionDir)components\Events\src;$(SolutionDir)components\Debugger\src;$(SolutionDir)components\CentralDataHub\src;$(SolutionDir)libs\GLFW\include;$(SolutionDir)libs\Glad\include;$(SolutionDir)libs\glm;$(SolutionDir)libs\stb-master;$(SolutionDir)libs\tinyobjloader-master;$(SolutionDir)\libs\irrKlang\include;$(SolutionDir)\libs\assimp;E:\Programming\SDKs\Vulkan\1.1.121.0\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)libs;$(SolutionDir)Dynamik\src;$(SolutionDir)Dynamik\GameLibraries;$(SolutionDir)components\ADGR;$(SolutionDir)components\ADGR\src;$(SolutionDir)components\Audio\src;$(SolutionDir)components\Events\src;$(SolutionDir)components\Managers\src;$(SolutionDir)components\Platform\src;$(SolutionDir)components\DevConsole\src;$(SolutionDir)components\Debugger\src;$(SolutionDir)components\CentralDataHub\src;$(SolutionDir)components\Networking\src;$(SolutionDir)components\Core\src;$(SolutionDir)libs\Glad\include;$(SolutionDir)\libs\irrKlang\include;$(SolutionDir)libs\GLFW\include;$(SolutionDir)libs\glm;$(SolutionDir)libs\stb-master;$(SolutionDir)libs\tinyobjloader-master;$(SolutionDir)\libs\assimp;E:\Programming\SDKs\Vulkan\1.1.121.0\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
@@ -90,11 +90,11 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
-      <PrecompiledHeader>Create</PrecompiledHeader>
+      <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>tbafx.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>TB_PLATFORM_WINDOWS;TB_BUILD_DLL;TB_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)Dynamik\src;$(SolutionDir)Dynamik\GameLibraries;$(SolutionDir)lib\libs;$(solutionDir)components\Core;$(solutionDir)components\Core\src;$(solutionDir)components\Events\src;$(SolutionDir)components\Debugger\src;$(SolutionDir)components\CentralDataHub\src;$(SolutionDir)libs\GLFW\include;$(SolutionDir)libs\Glad\include;$(SolutionDir)libs\glm;$(SolutionDir)libs\stb-master;$(SolutionDir)libs\tinyobjloader-master;$(SolutionDir)\libs\irrKlang\include;$(SolutionDir)\libs\assimp;E:\Programming\SDKs\Vulkan\1.1.121.0\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)libs;$(SolutionDir)Dynamik\src;$(SolutionDir)Dynamik\GameLibraries;$(SolutionDir)components\ADGR;$(SolutionDir)components\ADGR\src;$(SolutionDir)components\Audio\src;$(SolutionDir)components\Events\src;$(SolutionDir)components\Managers\src;$(SolutionDir)components\Platform\src;$(SolutionDir)components\DevConsole\src;$(SolutionDir)components\Debugger\src;$(SolutionDir)components\CentralDataHub\src;$(SolutionDir)components\Networking\src;$(SolutionDir)components\Core\src;$(SolutionDir)libs\Glad\include;$(SolutionDir)\libs\irrKlang\include;$(SolutionDir)libs\GLFW\include;$(SolutionDir)libs\glm;$(SolutionDir)libs\stb-master;$(SolutionDir)libs\tinyobjloader-master;$(SolutionDir)\libs\assimp;E:\Programming\SDKs\Vulkan\1.1.121.0\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -111,11 +111,11 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Distribution|x64'">
     <ClCompile>
-      <PrecompiledHeader>Create</PrecompiledHeader>
+      <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>tbafx.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>TB_PLATFORM_WINDOWS;TB_BUILD_DLL;TB_DISTRIBUTION;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)Dynamik\src;$(SolutionDir)Dynamik\GameLibraries;$(SolutionDir)lib\libs;$(solutionDir)components\Core;$(solutionDir)components\Core\src;$(solutionDir)components\Events\src;$(SolutionDir)components\Debugger\src;$(SolutionDir)components\CentralDataHub\src;$(SolutionDir)libs\GLFW\include;$(SolutionDir)libs\Glad\include;$(SolutionDir)libs\glm;$(SolutionDir)libs\stb-master;$(SolutionDir)libs\tinyobjloader-master;$(SolutionDir)\libs\irrKlang\include;$(SolutionDir)\libs\assimp;E:\Programming\SDKs\Vulkan\1.1.121.0\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)libs;$(SolutionDir)Dynamik\src;$(SolutionDir)Dynamik\GameLibraries;$(SolutionDir)components\ADGR;$(SolutionDir)components\ADGR\src;$(SolutionDir)components\Audio\src;$(SolutionDir)components\Events\src;$(SolutionDir)components\Managers\src;$(SolutionDir)components\Platform\src;$(SolutionDir)components\DevConsole\src;$(SolutionDir)components\Debugger\src;$(SolutionDir)components\CentralDataHub\src;$(SolutionDir)components\Networking\src;$(SolutionDir)components\Core\src;$(SolutionDir)libs\Glad\include;$(SolutionDir)\libs\irrKlang\include;$(SolutionDir)libs\GLFW\include;$(SolutionDir)libs\glm;$(SolutionDir)libs\stb-master;$(SolutionDir)libs\tinyobjloader-master;$(SolutionDir)\libs\assimp;E:\Programming\SDKs\Vulkan\1.1.121.0\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>

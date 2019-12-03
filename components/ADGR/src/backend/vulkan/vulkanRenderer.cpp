@@ -39,13 +39,14 @@ namespace Dynamik {
 		}
 
 		void vulkanRenderer::init() {
-			Debugger::benchmark::beginProfiler("TestFile.json");
-			DMK_DEBUGGER_PROFILER_TIMER_START(timer);
-
+			// Global manager allocations
 			myManager.allocate<ADGRVulkanDataContainer>(DMK_CDH_MANAGER_RESOURCE_TYPE_VULKAN_DATA_CONTAINER, 1);
 			myManager.allocate<std::vector<VkBuffer>>(DMK_CDH_MANAGER_RESOURCE_TYPE_VULKAN_UNIFORM_BUFFER, uniformCount);
 			myManager.allocate<std::vector<VkDeviceMemory>>(DMK_CDH_MANAGER_RESOURCE_TYPE_VULKAN_UNIFORM_BUFFER_MEMORIES, uniformCount);
 			myManager.allocate<VkDescriptorSetLayout>(DMK_CDH_MANAGER_RESOURCE_TYPE_VULKAN_DESCRIPTOR_SET_LAYOUT, 1);
+			myManager.allocate<VkSemaphore>(DMK_CDH_MANAGER_RESOURCE_TYPE_VULKAN_SEMAPHORE_IMAGE_AVAILABLE, MAX_FRAMES_IN_FLIGHT);
+			myManager.allocate<VkSemaphore>(DMK_CDH_MANAGER_RESOURCE_TYPE_VULKAN_SEMAPHORE_RENDER_FINISHED, MAX_FRAMES_IN_FLIGHT);
+			myManager.allocate<VkFence>(DMK_CDH_MANAGER_RESOURCE_TYPE_VULKAN_FENCE_IN_FLIGHT, MAX_FRAMES_IN_FLIGHT);
 
 			// init GameObjects
 			initGameObjects();
@@ -91,13 +92,36 @@ namespace Dynamik {
 			// init pipelines
 			for (int i = 0; i < myManager.getFullResourceAddr<ADGRObjectRenderData>(DMK_CDH_MANAGER_RESOURCE_TYPE_RENDER_DATA_CONTAINER)->size(); i++) {
 				// compile shaders
-				myShaderManager.compileShaders(vertexShaderSourcePaths[0], compileShaders);
-				myShaderManager.compileShaders(fragmentShaderSourcePaths[0], compileShaders);
+				if (compileShaders)
+					for (int itr = 0; itr < myManager.getFullResourceAddr<std::vector<std::string>>(DMK_CDH_MANAGER_RESOURCE_TYPE_VULKAN_SHADER_PATH)->size(); itr++)
+						myShaderManager.compileShaders(*myManager.getResourceAddr<std::string>(DMK_CDH_MANAGER_RESOURCE_TYPE_VULKAN_SHADER_PATH, itr), true);
 
 				// load shaders
 				ADGRVulkanShaderDataContainer shaderContainer = {};
-				shaderContainer.shaderCodes = { utils::readFile(vertexShaderPaths[shaderCodeIndex]) ,
-												{}, {}, utils::readFile(fragmentShaderPaths[shaderCodeIndex]) };
+				shaderContainer.shaderCodes.resize(4);
+
+				// vertex shader
+				if (myManager.getResourceAddr<GameObject>(DMK_CDH_MANAGER_RESOURCE_TYPE_GAME_OBJECT, i)->myProperties.renderableObjectProperties.vertexShaderPath != "NONE")
+					shaderContainer.shaderCodes[0] = utils::readFile(myManager.getResourceAddr<GameObject>(DMK_CDH_MANAGER_RESOURCE_TYPE_GAME_OBJECT, i)->myProperties.renderableObjectProperties.vertexShaderPath);
+				else
+					shaderContainer.shaderCodes[0] = {};
+				// tessellation shader
+				if (myManager.getResourceAddr<GameObject>(DMK_CDH_MANAGER_RESOURCE_TYPE_GAME_OBJECT, i)->myProperties.renderableObjectProperties.tessellationShaderPath != "NONE")
+					shaderContainer.shaderCodes[1] = utils::readFile(myManager.getResourceAddr<GameObject>(DMK_CDH_MANAGER_RESOURCE_TYPE_GAME_OBJECT, i)->myProperties.renderableObjectProperties.tessellationShaderPath);
+				else
+					shaderContainer.shaderCodes[1] = {};
+				// geometry shader
+				if (myManager.getResourceAddr<GameObject>(DMK_CDH_MANAGER_RESOURCE_TYPE_GAME_OBJECT, i)->myProperties.renderableObjectProperties.geometryShaderPath != "NONE")
+					shaderContainer.shaderCodes[2] = utils::readFile(myManager.getResourceAddr<GameObject>(DMK_CDH_MANAGER_RESOURCE_TYPE_GAME_OBJECT, i)->myProperties.renderableObjectProperties.geometryShaderPath);
+				else
+					shaderContainer.shaderCodes[2] = {};
+				// fragment shader
+				if (myManager.getResourceAddr<GameObject>(DMK_CDH_MANAGER_RESOURCE_TYPE_GAME_OBJECT, i)->myProperties.renderableObjectProperties.fragmentShaderPath != "NONE")
+					shaderContainer.shaderCodes[3] = utils::readFile(myManager.getResourceAddr<GameObject>(DMK_CDH_MANAGER_RESOURCE_TYPE_GAME_OBJECT, i)->myProperties.renderableObjectProperties.fragmentShaderPath);
+				else
+					shaderContainer.shaderCodes[3] = {};
+
+				// init shaders
 				myShaderManager.init(myManager.getResourceAddr<ADGRVulkanDataContainer>(DMK_CDH_MANAGER_RESOURCE_TYPE_VULKAN_DATA_CONTAINER, vulkanContainerIndex), &shaderContainer);
 
 				// init pipeline
@@ -202,10 +226,10 @@ namespace Dynamik {
 				INC_PROGRESS;
 
 			DMK_INFO("Number of cores: " + std::to_string(std::thread::hardware_concurrency()));
+			DMK_INFO("Manager size: " + std::to_string(sizeof(myManager)));
 
 			for (int i = 0; i < myManager.getFullResourceAddr<ADGRObjectRenderData>(DMK_CDH_MANAGER_RESOURCE_TYPE_RENDER_DATA_CONTAINER)->size(); i++) {
 				myManager.getResourceAddr<ADGRObjectRenderData>(DMK_CDH_MANAGER_RESOURCE_TYPE_RENDER_DATA_CONTAINER, i)->vertexBuffers.resize(1);
-				//myManager.getResourceAddr<ADGRObjectRenderData>(DMK_CDH_MANAGER_RESOURCE_TYPE_RENDER_DATA_CONTAINER, i)->renderingType = DMK_ADGR_VULKAN_RENDERER_VERTEX;
 
 				DMKObjectData data = {};
 				data.path = myManager.getResourceAddr<ADGRObjectRenderData>(DMK_CDH_MANAGER_RESOURCE_TYPE_RENDER_DATA_CONTAINER, i)->paths[0];
@@ -268,7 +292,6 @@ namespace Dynamik {
 
 			// initialize sync objects
 			initSyncObjects(myManager.getResource<ADGRVulkanDataContainer>(DMK_CDH_MANAGER_RESOURCE_TYPE_VULKAN_DATA_CONTAINER, vulkanContainerIndex).device,
-				//&imageAvailableSemaphore,
 				myManager.getFullResourceAddr<VkSemaphore>(DMK_CDH_MANAGER_RESOURCE_TYPE_VULKAN_SEMAPHORE_IMAGE_AVAILABLE),
 				myManager.getFullResourceAddr<VkSemaphore>(DMK_CDH_MANAGER_RESOURCE_TYPE_VULKAN_SEMAPHORE_RENDER_FINISHED),
 				myManager.getFullResourceAddr<VkFence>(DMK_CDH_MANAGER_RESOURCE_TYPE_VULKAN_FENCE_IN_FLIGHT));
@@ -276,8 +299,6 @@ namespace Dynamik {
 		}
 
 		void vulkanRenderer::shutdown() {
-			DMK_DEBUGGER_PROFILER_TIMER_START(timer);
-
 			// idle
 			vkDeviceWaitIdle(myManager.getResourceAddr<ADGRVulkanDataContainer>(DMK_CDH_MANAGER_RESOURCE_TYPE_VULKAN_DATA_CONTAINER, vulkanContainerIndex)->device);
 
@@ -368,8 +389,6 @@ namespace Dynamik {
 		}
 
 		void vulkanRenderer::drawFrame() {
-			DMK_DEBUGGER_PROFILER_TIMER_START(timer);
-
 #ifdef DMK_DEBUG
 			myFPSCal.getFPS();	// FPS calculator
 
@@ -398,13 +417,6 @@ namespace Dynamik {
 			// draw call
 			myEvent = myWindow.getKeyEvent();
 			myCEvent = myWindow.getCursorEvent();
-
-			// reload shaders event
-			if (myEvent.reCompileShaders && shaderCodeIndex == 0)
-				shaderCodeIndex = 1;
-
-			else if (myEvent.reCompileShaders && shaderCodeIndex == 1)
-				shaderCodeIndex = 0;
 
 			// uniform buffer object update
 			for (int itr = 0; itr < uniformCount; itr++) {
@@ -511,13 +523,36 @@ namespace Dynamik {
 			// init pipeline
 			for (int i = 0; i < myManager.getFullResourceAddr<std::vector<ADGRObjectRenderData>>(DMK_CDH_MANAGER_RESOURCE_TYPE_RENDER_DATA_CONTAINER)->size(); i++) {
 				// compile shaders
-				myShaderManager.compileShaders(vertexShaderSourcePaths[0], compileShaders);
-				myShaderManager.compileShaders(fragmentShaderSourcePaths[0], compileShaders);
+				if (compileShaders)
+					for (int itr = 0; itr < myManager.getFullResourceAddr<std::vector<std::string>>(DMK_CDH_MANAGER_RESOURCE_TYPE_VULKAN_SHADER_PATH)->size(); itr++)
+						myShaderManager.compileShaders(*myManager.getResourceAddr<std::string>(DMK_CDH_MANAGER_RESOURCE_TYPE_VULKAN_SHADER_PATH, itr), true);
 
 				// load shaders
 				ADGRVulkanShaderDataContainer shaderContainer = {};
-				shaderContainer.shaderCodes = { utils::readFile(vertexShaderPaths[shaderCodeIndex]) ,
-												{}, {}, utils::readFile(fragmentShaderPaths[shaderCodeIndex]) };
+				shaderContainer.shaderCodes.resize(4);
+
+				// vertex shader
+				if (myManager.getResourceAddr<GameObject>(DMK_CDH_MANAGER_RESOURCE_TYPE_GAME_OBJECT, i)->myProperties.renderableObjectProperties.vertexShaderPath != "NONE")
+					shaderContainer.shaderCodes[0] = utils::readFile(myManager.getResourceAddr<GameObject>(DMK_CDH_MANAGER_RESOURCE_TYPE_GAME_OBJECT, i)->myProperties.renderableObjectProperties.vertexShaderPath);
+				else
+					shaderContainer.shaderCodes[0] = {};
+				// tessellation shader
+				if (myManager.getResourceAddr<GameObject>(DMK_CDH_MANAGER_RESOURCE_TYPE_GAME_OBJECT, i)->myProperties.renderableObjectProperties.tessellationShaderPath != "NONE")
+					shaderContainer.shaderCodes[1] = utils::readFile(myManager.getResourceAddr<GameObject>(DMK_CDH_MANAGER_RESOURCE_TYPE_GAME_OBJECT, i)->myProperties.renderableObjectProperties.tessellationShaderPath);
+				else
+					shaderContainer.shaderCodes[1] = {};
+				// geometry shader
+				if (myManager.getResourceAddr<GameObject>(DMK_CDH_MANAGER_RESOURCE_TYPE_GAME_OBJECT, i)->myProperties.renderableObjectProperties.geometryShaderPath != "NONE")
+					shaderContainer.shaderCodes[2] = utils::readFile(myManager.getResourceAddr<GameObject>(DMK_CDH_MANAGER_RESOURCE_TYPE_GAME_OBJECT, i)->myProperties.renderableObjectProperties.geometryShaderPath);
+				else
+					shaderContainer.shaderCodes[2] = {};
+				// fragment shader
+				if (myManager.getResourceAddr<GameObject>(DMK_CDH_MANAGER_RESOURCE_TYPE_GAME_OBJECT, i)->myProperties.renderableObjectProperties.fragmentShaderPath != "NONE")
+					shaderContainer.shaderCodes[3] = utils::readFile(myManager.getResourceAddr<GameObject>(DMK_CDH_MANAGER_RESOURCE_TYPE_GAME_OBJECT, i)->myProperties.renderableObjectProperties.fragmentShaderPath);
+				else
+					shaderContainer.shaderCodes[3] = {};
+
+				// init shaders
 				myShaderManager.init(myManager.getResourceAddr<ADGRVulkanDataContainer>(DMK_CDH_MANAGER_RESOURCE_TYPE_VULKAN_DATA_CONTAINER, vulkanContainerIndex), &shaderContainer);
 
 				// init pipeline
@@ -590,7 +625,6 @@ namespace Dynamik {
 		}
 
 		void vulkanRenderer::setGameObjects(std::vector<GameObject>& gameObjects) {
-			//gameObjectStore = gameObjects;
 			myManager.setResource<std::vector<GameObject>>(gameObjects, DMK_CDH_MANAGER_RESOURCE_TYPE_GAME_OBJECT);
 		}
 
@@ -601,9 +635,14 @@ namespace Dynamik {
 		}
 
 		// set shader paths
-		void vulkanRenderer::setShaderPaths(std::vector<std::string>& vertex, std::vector<std::string>& fragment) {
-			vertexShaderPaths = vertex;
-			fragmentShaderPaths = fragment;
+		void vulkanRenderer::setShaderPaths(std::string& vertex, std::string& fragment) {
+			std::vector<std::string> _localPathContainer = {
+				vertex,
+				"",
+				"",
+				fragment
+			};
+			myManager.setResource<std::vector<std::string>>(_localPathContainer, DMK_CDH_MANAGER_RESOURCE_TYPE_VULKAN_SHADER_PATH);
 		}
 
 		void vulkanRenderer::initGameObjects() {
@@ -622,13 +661,36 @@ namespace Dynamik {
 
 		void vulkanRenderer::initPipeline(DMK_ADGR_CreatePipelineInfo info) {
 			// compile shaders
-			myShaderManager.compileShaders(vertexShaderSourcePaths[shaderCodeIndex], compileShaders);
-			myShaderManager.compileShaders(fragmentShaderSourcePaths[shaderCodeIndex], compileShaders);
+			if (compileShaders)
+				for (int itr = 0; itr < myManager.getFullResourceAddr<std::vector<std::string>>(DMK_CDH_MANAGER_RESOURCE_TYPE_VULKAN_SHADER_PATH)->size(); itr++)
+					myShaderManager.compileShaders(*myManager.getResourceAddr<std::string>(DMK_CDH_MANAGER_RESOURCE_TYPE_VULKAN_SHADER_PATH, itr), true);
 
 			// load shaders
 			ADGRVulkanShaderDataContainer shaderContainer = {};
-			shaderContainer.shaderCodes = { utils::readFile(vertexShaderPaths[shaderCodeIndex]) ,
-											{}, {}, utils::readFile(fragmentShaderPaths[shaderCodeIndex]) };
+			shaderContainer.shaderCodes.resize(4);
+
+			// vertex shader
+			if (myManager.getResourceAddr<GameObject>(DMK_CDH_MANAGER_RESOURCE_TYPE_GAME_OBJECT)->myProperties.renderableObjectProperties.vertexShaderPath != "NONE")
+				shaderContainer.shaderCodes[0] = utils::readFile(myManager.getResourceAddr<GameObject>(DMK_CDH_MANAGER_RESOURCE_TYPE_GAME_OBJECT)->myProperties.renderableObjectProperties.vertexShaderPath);
+			else
+				shaderContainer.shaderCodes[0] = {};
+			// tessellation shader
+			if (myManager.getResourceAddr<GameObject>(DMK_CDH_MANAGER_RESOURCE_TYPE_GAME_OBJECT)->myProperties.renderableObjectProperties.tessellationShaderPath != "NONE")
+				shaderContainer.shaderCodes[1] = utils::readFile(myManager.getResourceAddr<GameObject>(DMK_CDH_MANAGER_RESOURCE_TYPE_GAME_OBJECT)->myProperties.renderableObjectProperties.tessellationShaderPath);
+			else
+				shaderContainer.shaderCodes[1] = {};
+			// geometry shader
+			if (myManager.getResourceAddr<GameObject>(DMK_CDH_MANAGER_RESOURCE_TYPE_GAME_OBJECT)->myProperties.renderableObjectProperties.geometryShaderPath != "NONE")
+				shaderContainer.shaderCodes[2] = utils::readFile(myManager.getResourceAddr<GameObject>(DMK_CDH_MANAGER_RESOURCE_TYPE_GAME_OBJECT)->myProperties.renderableObjectProperties.geometryShaderPath);
+			else
+				shaderContainer.shaderCodes[2] = {};
+			// fragment shader
+			if (myManager.getResourceAddr<GameObject>(DMK_CDH_MANAGER_RESOURCE_TYPE_GAME_OBJECT)->myProperties.renderableObjectProperties.fragmentShaderPath != "NONE")
+				shaderContainer.shaderCodes[3] = utils::readFile(myManager.getResourceAddr<GameObject>(DMK_CDH_MANAGER_RESOURCE_TYPE_GAME_OBJECT)->myProperties.renderableObjectProperties.fragmentShaderPath);
+			else
+				shaderContainer.shaderCodes[3] = {};
+
+			// init shaders
 			myShaderManager.init(myManager.getResourceAddr<ADGRVulkanDataContainer>(DMK_CDH_MANAGER_RESOURCE_TYPE_VULKAN_DATA_CONTAINER, vulkanContainerIndex), &shaderContainer);
 
 			// init pipeline
@@ -685,8 +747,30 @@ namespace Dynamik {
 		void vulkanRenderer::includeShader() {
 			// load shaders
 			ADGRVulkanShaderDataContainer shaderContainer = {};
-			shaderContainer.shaderCodes = { utils::readFile(vertexShaderPaths[shaderCodeIndex]) ,
-											{}, {}, utils::readFile(fragmentShaderPaths[shaderCodeIndex]) };
+			shaderContainer.shaderCodes.resize(4);
+
+			// vertex shader
+			if (myManager.getResourceAddr<GameObject>(DMK_CDH_MANAGER_RESOURCE_TYPE_GAME_OBJECT)->myProperties.renderableObjectProperties.vertexShaderPath != "NONE")
+				shaderContainer.shaderCodes[0] = utils::readFile(myManager.getResourceAddr<GameObject>(DMK_CDH_MANAGER_RESOURCE_TYPE_GAME_OBJECT)->myProperties.renderableObjectProperties.vertexShaderPath);
+			else
+				shaderContainer.shaderCodes[0] = {};
+			// tessellation shader
+			if (myManager.getResourceAddr<GameObject>(DMK_CDH_MANAGER_RESOURCE_TYPE_GAME_OBJECT)->myProperties.renderableObjectProperties.tessellationShaderPath != "NONE")
+				shaderContainer.shaderCodes[1] = utils::readFile(myManager.getResourceAddr<GameObject>(DMK_CDH_MANAGER_RESOURCE_TYPE_GAME_OBJECT)->myProperties.renderableObjectProperties.tessellationShaderPath);
+			else
+				shaderContainer.shaderCodes[1] = {};
+			// geometry shader
+			if (myManager.getResourceAddr<GameObject>(DMK_CDH_MANAGER_RESOURCE_TYPE_GAME_OBJECT)->myProperties.renderableObjectProperties.geometryShaderPath != "NONE")
+				shaderContainer.shaderCodes[2] = utils::readFile(myManager.getResourceAddr<GameObject>(DMK_CDH_MANAGER_RESOURCE_TYPE_GAME_OBJECT)->myProperties.renderableObjectProperties.geometryShaderPath);
+			else
+				shaderContainer.shaderCodes[2] = {};
+			// fragment shader
+			if (myManager.getResourceAddr<GameObject>(DMK_CDH_MANAGER_RESOURCE_TYPE_GAME_OBJECT)->myProperties.renderableObjectProperties.fragmentShaderPath != "NONE")
+				shaderContainer.shaderCodes[3] = utils::readFile(myManager.getResourceAddr<GameObject>(DMK_CDH_MANAGER_RESOURCE_TYPE_GAME_OBJECT)->myProperties.renderableObjectProperties.fragmentShaderPath);
+			else
+				shaderContainer.shaderCodes[3] = {};
+
+			// init shaders
 			myShaderManager.init(myManager.getResourceAddr<ADGRVulkanDataContainer>(DMK_CDH_MANAGER_RESOURCE_TYPE_VULKAN_DATA_CONTAINER, vulkanContainerIndex), &shaderContainer);
 			INC_PROGRESS;
 
@@ -748,7 +832,7 @@ namespace Dynamik {
 
 				*data[i].indexCount = (uint32_t)data[i].indexBufferObject->size();
 
-				if (enableClear) {
+				if (enableVertexAndIndexClear) {
 					data[i].vertexBufferObject->clear();
 					data[i].indexBufferObject->clear();
 				}

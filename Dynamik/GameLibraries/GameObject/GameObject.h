@@ -41,6 +41,17 @@ namespace Dynamik {
 	 - In that file, models are stated as "M model.obj" and textures as "T texture.jpeg"
 	*/
 
+	// Renderable object properties
+	struct RenderableObjectProperties {
+		std::string vertexShaderPath = "NONE";
+		std::string tessellationShaderPath = "NONE";
+		std::string geometryShaderPath = "NONE";
+		std::string fragmentShaderPath = "NONE";
+
+		std::string scriptPath = "NONE";
+		std::string codePath = "NONE";
+	};
+
 	// Transform
 	struct TransformProperties {
 		std::vector<float> location = { 0.0f, 0.0f, 0.0f };
@@ -115,6 +126,8 @@ namespace Dynamik {
 		AudioProperties audioProperties = {};
 		CameraProperties cameraProperties = {};
 		LightingProperties ligitingProperties = {};
+
+		RenderableObjectProperties renderableObjectProperties = {};
 	};
 
 	class GameObject {

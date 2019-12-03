@@ -40,7 +40,7 @@ std::vector<std::string> getTexturePath(std::vector<char>& file) {
 	for (std::string i; std::getline(iss, i);) {
 		std::replace(i.begin(), i.end(), '\r', ' ');
 		std::replace(i.begin(), i.end(), (char)'\"', ' ');
-		
+
 		if (i[0] == ' ') i.replace(0, 1, "");
 		if (i[i.size() - 1] == ' ') i.replace(i.size() - 1, 1, "");
 
@@ -52,12 +52,11 @@ std::vector<std::string> getTexturePath(std::vector<char>& file) {
 
 // final
 Dynamik::InputContainer Dynamik::submit() {
-	std::vector<std::string> (*function)(std::vector<char>&) = getTexturePath;
+	std::vector<std::string>(*function)(std::vector<char>&) = getTexturePath;
 
 	//auto paths = getTexturePath(readFile("paths.txt"));
 	//auto paths = getTexturePath(readFile("E:/Dynamik Engine/Engine/paths.txt"));
 	auto paths = getTexturePath(readFile("E:/Projects/Dynamik Engine/Dynamik/components/Core/paths.txt"));
-
 
 	/*
 		TODO:
@@ -65,7 +64,6 @@ Dynamik::InputContainer Dynamik::submit() {
 			Move the Manager definition to the CDH for centralized data distrubution
 				Render data abstraction
 	*/
-
 
 	Dynamik::KeyBindings myBindings;
 

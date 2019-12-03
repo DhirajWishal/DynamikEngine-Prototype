@@ -76,6 +76,7 @@ namespace Dynamik {
 			void setShaderPaths(std::string& vertex, std::string& fragment);
 
 			void initGameObjects();
+			void initManagerFunctions();
 
 			inline std::tuple<int, mouseEventData*> getEvent() { return myWindow.getEvent(); }
 

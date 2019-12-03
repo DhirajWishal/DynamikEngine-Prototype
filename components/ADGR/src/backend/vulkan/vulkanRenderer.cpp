@@ -32,21 +32,18 @@ namespace Dynamik {
 		// ----------
 #endif
 
+		// default constructor
 		vulkanRenderer::vulkanRenderer() {
 		}
 
+		// default destructor
 		vulkanRenderer::~vulkanRenderer() {
 		}
 
+		// initialize the renderer
 		void vulkanRenderer::init() {
 			// Global manager allocations
-			myManager.allocate<ADGRVulkanDataContainer>(DMK_CDH_MANAGER_RESOURCE_TYPE_VULKAN_DATA_CONTAINER, 1);
-			myManager.allocate<std::vector<VkBuffer>>(DMK_CDH_MANAGER_RESOURCE_TYPE_VULKAN_UNIFORM_BUFFER, uniformCount);
-			myManager.allocate<std::vector<VkDeviceMemory>>(DMK_CDH_MANAGER_RESOURCE_TYPE_VULKAN_UNIFORM_BUFFER_MEMORIES, uniformCount);
-			myManager.allocate<VkDescriptorSetLayout>(DMK_CDH_MANAGER_RESOURCE_TYPE_VULKAN_DESCRIPTOR_SET_LAYOUT, 1);
-			myManager.allocate<VkSemaphore>(DMK_CDH_MANAGER_RESOURCE_TYPE_VULKAN_SEMAPHORE_IMAGE_AVAILABLE, MAX_FRAMES_IN_FLIGHT);
-			myManager.allocate<VkSemaphore>(DMK_CDH_MANAGER_RESOURCE_TYPE_VULKAN_SEMAPHORE_RENDER_FINISHED, MAX_FRAMES_IN_FLIGHT);
-			myManager.allocate<VkFence>(DMK_CDH_MANAGER_RESOURCE_TYPE_VULKAN_FENCE_IN_FLIGHT, MAX_FRAMES_IN_FLIGHT);
+			initManagerFunctions();
 
 			// init GameObjects
 			initGameObjects();
@@ -298,6 +295,7 @@ namespace Dynamik {
 			INC_PROGRESS;
 		}
 
+		// shutdown the renderer
 		void vulkanRenderer::shutdown() {
 			// idle
 			vkDeviceWaitIdle(myManager.getResourceAddr<ADGRVulkanDataContainer>(DMK_CDH_MANAGER_RESOURCE_TYPE_VULKAN_DATA_CONTAINER, vulkanContainerIndex)->device);
@@ -388,6 +386,7 @@ namespace Dynamik {
 			Debugger::benchmark::endProfiler();
 		}
 
+		// draw frame
 		void vulkanRenderer::drawFrame() {
 #ifdef DMK_DEBUG
 			myFPSCal.getFPS();	// FPS calculator
@@ -485,6 +484,7 @@ namespace Dynamik {
 				currentFrame = (currentFrame + 1) % MAX_FRAMES_IN_FLIGHT;
 		}
 
+		// recreate the swapchain
 		void vulkanRenderer::recreateSwapChain() {
 			DMK_DEBUGGER_PROFILER_TIMER_START(timer);
 
@@ -624,6 +624,7 @@ namespace Dynamik {
 			myModelManager.loadModel(modelInfo);
 		}
 
+		// set game objects locally
 		void vulkanRenderer::setGameObjects(std::vector<GameObject>& gameObjects) {
 			myManager.setResource<std::vector<GameObject>>(gameObjects, DMK_CDH_MANAGER_RESOURCE_TYPE_GAME_OBJECT);
 		}
@@ -645,6 +646,7 @@ namespace Dynamik {
 			myManager.setResource<std::vector<std::string>>(_localPathContainer, DMK_CDH_MANAGER_RESOURCE_TYPE_VULKAN_SHADER_PATH);
 		}
 
+		// initialize game objects locally
 		void vulkanRenderer::initGameObjects() {
 			myManager.allocate<ADGRObjectRenderData>(DMK_CDH_MANAGER_RESOURCE_TYPE_RENDER_DATA_CONTAINER,
 				myManager.getFullResourceAddr<GameObject>(DMK_CDH_MANAGER_RESOURCE_TYPE_GAME_OBJECT)->size());
@@ -659,6 +661,18 @@ namespace Dynamik {
 			}
 		}
 
+		// initialize the manager variables locally
+		void vulkanRenderer::initManagerFunctions() {
+			myManager.allocate<ADGRVulkanDataContainer>(DMK_CDH_MANAGER_RESOURCE_TYPE_VULKAN_DATA_CONTAINER, (vulkanContainerIndex + 1));
+			myManager.allocate<std::vector<VkBuffer>>(DMK_CDH_MANAGER_RESOURCE_TYPE_VULKAN_UNIFORM_BUFFER, uniformCount);
+			myManager.allocate<std::vector<VkDeviceMemory>>(DMK_CDH_MANAGER_RESOURCE_TYPE_VULKAN_UNIFORM_BUFFER_MEMORIES, uniformCount);
+			myManager.allocate<VkDescriptorSetLayout>(DMK_CDH_MANAGER_RESOURCE_TYPE_VULKAN_DESCRIPTOR_SET_LAYOUT, 1);
+			myManager.allocate<VkSemaphore>(DMK_CDH_MANAGER_RESOURCE_TYPE_VULKAN_SEMAPHORE_IMAGE_AVAILABLE, MAX_FRAMES_IN_FLIGHT);
+			myManager.allocate<VkSemaphore>(DMK_CDH_MANAGER_RESOURCE_TYPE_VULKAN_SEMAPHORE_RENDER_FINISHED, MAX_FRAMES_IN_FLIGHT);
+			myManager.allocate<VkFence>(DMK_CDH_MANAGER_RESOURCE_TYPE_VULKAN_FENCE_IN_FLIGHT, MAX_FRAMES_IN_FLIGHT);
+		}
+
+		// initialize the pipeline (abstraction)
 		void vulkanRenderer::initPipeline(DMK_ADGR_CreatePipelineInfo info) {
 			// compile shaders
 			if (compileShaders)
@@ -787,6 +801,7 @@ namespace Dynamik {
 			INC_PROGRESS;
 		}
 
+		// third thread
 		void vulkanRenderer::thread_third(DMKVulkanRendererLoadObjectInfo createInfo) {
 			DMK_DEBUGGER_PROFILER_TIMER_START(timer);
 
@@ -799,6 +814,7 @@ namespace Dynamik {
 			loadModel(info);
 		}
 
+		// initialize models
 		void vulkanRenderer::initModels(std::vector<DMKObjectData> data) {
 			DMK_DEBUGGER_PROFILER_TIMER_START(timer);
 			{
@@ -840,6 +856,7 @@ namespace Dynamik {
 			INC_PROGRESS;
 		}
 
+		// initialize the skybox
 		void vulkanRenderer::initSkybox() {
 			float S_SIZE = 2048.0f;
 

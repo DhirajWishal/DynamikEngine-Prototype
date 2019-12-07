@@ -10,7 +10,7 @@ namespace Dynamik {
 			inline bool pushDescriptorsSupported = false;
 			inline bool checkpointsSupported = false;
 
-			inline bool VSYNC = false;
+			inline bool VSYNC = true;
 
 			//#define USE_SHADER_TESSELLATION
 			//#define USE_SHADER_GEOMETRY

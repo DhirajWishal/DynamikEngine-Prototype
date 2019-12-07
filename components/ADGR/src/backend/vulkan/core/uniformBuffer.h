@@ -35,6 +35,20 @@ namespace Dynamik {
 				std::vector<bool> upDown = { false, false };
 				std::vector<bool> rotation = { false, false };
 				std::vector<float> cPos = { 0.0f, 0.0f };
+
+				float movementBias = 0.0075f;
+				float upDownBias = 0.015f;
+				float rotationBias = 2.5f;
+
+				float trn = 0.0f;
+				float mve = 0.0f;
+				float up = 0.0f;
+				float rot = 0.0f;
+
+				bool rotationLock = false;
+				bool verticalLock = false;
+				bool horizontalLock = false;
+				bool turnLock = false;
 			};
 
 			struct DMKUniformBufferCreateDescriptorSetLayoutInfo {
@@ -53,20 +67,13 @@ namespace Dynamik {
 
 				void createUniformBuffers(ADGRVulkanDataContainer* container, DMKUniformBufferCreateInfo info);
 
-				void updateBuffer2D(ADGRVulkanDataContainer* container, DMKUniformBufferUpdateInfo info);
-				void updateBuffer3D(ADGRVulkanDataContainer* container, DMKUniformBufferUpdateInfo info);
+				void updateBuffer2D(ADGRVulkanDataContainer* container, DMKUniformBufferUpdateInfo* info);
+				void updateBuffer3D(ADGRVulkanDataContainer* container, DMKUniformBufferUpdateInfo* info);
 
 				void deleteBuffer(ADGRVulkanDataContainer* container, VkBuffer* buffer) override;
 
 			private:
-				const float movementBias = 0.0075f;
-				const float upDownBias = 0.0075f;
-				const float rotationBias = 2.5f;
 
-				float trn = 0.0f;
-				float mve = 0.0f;
-				float up = 0.0f;
-				float rotation = 0.0f;
 			};
 		}
 	}

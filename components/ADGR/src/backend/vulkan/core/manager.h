@@ -373,7 +373,7 @@ namespace Dynamik {
 				_SET_2D_VECTOR(VkQueue) presentQueues = {};
 
 				_SET_VECTOR(DMKObjectData) objectDatas = {};
-				_SET_VECTOR(GameObject) gameObjects = {};
+				_SET_VECTOR(GameObject*) gameObjects = {};
 				_SET_VECTOR(ADGRObjectRenderData) renderDatas = {};
 
 				_SET_VECTOR(std::string) modelPaths = {};

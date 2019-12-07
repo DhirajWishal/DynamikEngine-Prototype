@@ -52,7 +52,7 @@ namespace Dynamik {
 
 	// Defined by the Client
 	//Application* createApplication();
-	Application* createApplication(std::vector<GameObject>& gameObjects);
+	Application* createApplication(std::vector<Dynamik::GameObject>& gameObjects);
 }
 
 #define DYNAMIK_ENGINE_MAIN()																				\

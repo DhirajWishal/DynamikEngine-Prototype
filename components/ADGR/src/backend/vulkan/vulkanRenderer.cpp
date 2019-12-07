@@ -42,6 +42,7 @@ namespace Dynamik {
 
 		// initialize the renderer
 		void vulkanRenderer::init() {
+			updateInfo.resize(uniformCount);
 			// Global manager allocations
 			initManagerFunctions();
 
@@ -252,17 +253,43 @@ namespace Dynamik {
 
 			// uniform buffer object update
 			for (int itr = 0; itr < uniformCount; itr++) {
-				DMKUniformBufferUpdateInfo updateInfo;
-				updateInfo.bufferMemory = myManager.getResource<std::vector<VkDeviceMemory>>(DMK_CDH_MANAGER_RESOURCE_TYPE_VULKAN_UNIFORM_BUFFER_MEMORIES, itr);
-				updateInfo.currentImage = imageIndex;
-				updateInfo.turn = { myEvent.turnEventL , myEvent.turnEventR };
-				updateInfo.move = { myEvent.moveEventU , myEvent.moveEventD };
-				updateInfo.upDown = { myEvent.rotEventD , myEvent.rotEventU };
-				updateInfo.rotation = { myEvent.rotEventL , myEvent.rotEventR };
-				updateInfo.cPos = { myCEvent.x + itr, myCEvent.y + itr };
-				uniformBuffer.updateBuffer3D(myManager.getResourceAddr<ADGRVulkanDataContainer>(DMK_CDH_MANAGER_RESOURCE_TYPE_VULKAN_DATA_CONTAINER, vulkanContainerIndex), updateInfo);
+				if (itr == 0) {
+					updateInfo[itr].bufferMemory = myManager.getResource<std::vector<VkDeviceMemory>>(DMK_CDH_MANAGER_RESOURCE_TYPE_VULKAN_UNIFORM_BUFFER_MEMORIES, itr);
+					updateInfo[itr].currentImage = imageIndex;
+					updateInfo[itr].turn = { myEvent.turnEventL , myEvent.turnEventR };
+					updateInfo[itr].move = { myEvent.moveEventU , myEvent.moveEventD };
+					updateInfo[itr].upDown = { myEvent.rotEventD , myEvent.rotEventU };
+					updateInfo[itr].rotation = { myEvent.rotEventL , myEvent.rotEventR };
+					updateInfo[itr].cPos = { myCEvent.x, myCEvent.y };
+					uniformBuffer.updateBuffer3D(myManager.getResourceAddr<ADGRVulkanDataContainer>(DMK_CDH_MANAGER_RESOURCE_TYPE_VULKAN_DATA_CONTAINER, vulkanContainerIndex), &updateInfo[itr]);
+				}
+				else if(itr == 1) {
+					updateInfo[itr].bufferMemory = myManager.getResource<std::vector<VkDeviceMemory>>(DMK_CDH_MANAGER_RESOURCE_TYPE_VULKAN_UNIFORM_BUFFER_MEMORIES, itr);
+					updateInfo[itr].currentImage = imageIndex;
+					updateInfo[itr].turn = { false , false };
+					updateInfo[itr].move = { true , false };
+					updateInfo[itr].upDown = { false , false };
+					updateInfo[itr].rotation = { false , false };
+					updateInfo[itr].cPos = { myCEvent.x, myCEvent.y };
+					updateInfo[itr].movementBias = 0.05;
+					updateInfo[itr].verticalLock = true;
+					updateInfo[itr].up = 0.75f;
+					uniformBuffer.updateBuffer3D(myManager.getResourceAddr<ADGRVulkanDataContainer>(DMK_CDH_MANAGER_RESOURCE_TYPE_VULKAN_DATA_CONTAINER, vulkanContainerIndex), &updateInfo[itr]);
+				}
+				else {
+					updateInfo[itr].bufferMemory = myManager.getResource<std::vector<VkDeviceMemory>>(DMK_CDH_MANAGER_RESOURCE_TYPE_VULKAN_UNIFORM_BUFFER_MEMORIES, itr);
+					updateInfo[itr].currentImage = imageIndex;
+					updateInfo[itr].turn = { false , false };
+					updateInfo[itr].move = { true , false };
+					updateInfo[itr].upDown = { true , false };
+					updateInfo[itr].rotation = { false , false };
+					updateInfo[itr].cPos = { myCEvent.x, myCEvent.y };
+					updateInfo[itr].verticalLock = true;
+					updateInfo[itr].movementBias = 0.0625;
+					updateInfo[itr].up = -1.25f;
+					uniformBuffer.updateBuffer3D(myManager.getResourceAddr<ADGRVulkanDataContainer>(DMK_CDH_MANAGER_RESOURCE_TYPE_VULKAN_DATA_CONTAINER, vulkanContainerIndex), &updateInfo[itr]);
+				}
 			}
-
 			// submit info
 			VkSubmitInfo submitInfo = {};
 			submitInfo.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO;
@@ -375,6 +402,7 @@ namespace Dynamik {
 				else
 					shaderContainer.shaderCodes[1] = {};
 				// geometry shader
+				//if (myManager.getResourceAddr<GameObject>(DMK_CDH_MANAGER_RESOURCE_TYPE_GAME_OBJECT, i).my != "NONE")
 				if (myManager.getResourceAddr<GameObject>(DMK_CDH_MANAGER_RESOURCE_TYPE_GAME_OBJECT, i)->myProperties.renderableObjectProperties.geometryShaderPath != "NONE")
 					shaderContainer.shaderCodes[2] = utils::readFile(myManager.getResourceAddr<GameObject>(DMK_CDH_MANAGER_RESOURCE_TYPE_GAME_OBJECT, i)->myProperties.renderableObjectProperties.geometryShaderPath);
 				else
@@ -1024,7 +1052,7 @@ namespace Dynamik {
 
 					// init descriptor set
 					DMKVulkanRendereCreateDescriptorSetsInfo descInitInfo;
-					descInitInfo.uniformBuffers = myManager.getResourceAddr<std::vector<VkBuffer>>(DMK_CDH_MANAGER_RESOURCE_TYPE_VULKAN_UNIFORM_BUFFER, 0);
+					descInitInfo.uniformBuffers = myManager.getResourceAddr<std::vector<VkBuffer>>(DMK_CDH_MANAGER_RESOURCE_TYPE_VULKAN_UNIFORM_BUFFER, i);
 					descInitInfo.textureImageView = myManager.getResourceAddr<ADGRObjectRenderData>(DMK_CDH_MANAGER_RESOURCE_TYPE_RENDER_DATA_CONTAINER, i)->textureImageViews[itr];
 					descInitInfo.textureSampler = myManager.getResourceAddr<ADGRObjectRenderData>(DMK_CDH_MANAGER_RESOURCE_TYPE_RENDER_DATA_CONTAINER, i)->textureSamplers[itr];
 					descInitInfo.descriptorSets = &myManager.getResourceAddr<ADGRObjectRenderData>(DMK_CDH_MANAGER_RESOURCE_TYPE_RENDER_DATA_CONTAINER, i)->descriptorSets[itr];

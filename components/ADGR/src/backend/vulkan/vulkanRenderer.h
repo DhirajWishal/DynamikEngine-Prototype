@@ -141,6 +141,8 @@ namespace Dynamik {
 			// main data manager
 			core::manager myManager{};
 
+			std::vector<DMKUniformBufferUpdateInfo> updateInfo = {};
+
 			uint32_t currentFrame = 0;
 			uint32_t myMipLevel = 1;
 
@@ -152,7 +154,7 @@ namespace Dynamik {
 			bool compileShaders = false;
 			bool enableVertexAndIndexClear = true;
 
-			int uniformCount = 1;
+			int uniformCount = 3;
 			int vulkanContainerIndex = 0;
 
 			Debugger::benchmark::Profiler localProfiler;

@@ -9,12 +9,9 @@ DMK_API float Dynamik::utils::max(float, float);
 
 class charlet : public Dynamik::GameObject {
 public:
-	charlet(Dynamik::GameObjectProperties props) : GameObject(props), myProps(props) {
+	charlet(Dynamik::GameObjectProperties props) : GameObject(props) {
 	}
 	~charlet() {}
-
-private:
-	Dynamik::GameObjectProperties myProps;
 };
 
 std::vector<char> readFile(const std::string& filePath) {

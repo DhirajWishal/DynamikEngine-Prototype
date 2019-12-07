@@ -9,9 +9,11 @@
     <ClInclude Include="src\imports.h">
       <Filter>src</Filter>
     </ClInclude>
+    <ClInclude Include="src\engineInstance.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="src\engineInstance.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="paths.txt" />

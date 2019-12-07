@@ -23,7 +23,7 @@ namespace Dynamik {
 	static bool shouldClose = false;
 
 	Application::Application() {
-		gameObjects = myLoader.run();
+		//gameObjectsWrapper = myLoader.run();
 
 		if (gameObjects.size() < 1) {
 			DMK_CORE_ERROR("No Game Objects found!");
@@ -51,6 +51,7 @@ namespace Dynamik {
 			DMK_CORE_ERROR("No Game Objects found!");
 			return;
 		}
+
 
 		getObjectPaths();
 

@@ -271,13 +271,16 @@ namespace Dynamik {
 					kE.rotEventU = true;
 					break;
 				case DMK_KEY_DOWN:
-					kE.rotEventD = true;
+					//kE.rotEventD = true;
 					break;
 				case DMK_KEY_LEFT:
 					kE.rotEventL = true;
 					break;
 				case DMK_KEY_RIGHT:
 					kE.rotEventR = true;
+					break;
+				case DMK_KEY_SPACE:
+					kE.rotEventD = true;
 					break;
 
 				default:

@@ -31,43 +31,37 @@ namespace Dynamik {
 				}
 			}
 
-			void uniformBufferManager::updateBuffer2D(ADGRVulkanDataContainer* container, DMKUniformBufferUpdateInfo info) {
-				// TODO: update
-				static auto startTime = std::chrono::high_resolution_clock::now();
+			void uniformBufferManager::updateBuffer2D(ADGRVulkanDataContainer* container, DMKUniformBufferUpdateInfo* info) {
+				if (info->turn[0])
+					info->trn += info->movementBias;
 
-				auto currentTime = std::chrono::high_resolution_clock::now();
-				float time = std::chrono::duration<float, std::chrono::seconds::period>(currentTime - startTime).count();
-
-				if (info.turn[0])
-					trn += movementBias;
-
-				else if (info.turn[1])
-					trn -= movementBias;
+				else if (info->turn[1])
+					info->trn -= info->movementBias;
 
 				else;
 				//trn = 0.0f;
 
-				if (info.move[0])
-					mve += movementBias;
+				if (info->move[0])
+					info->mve += info->movementBias;
 
-				else if (info.move[1])
-					mve -= movementBias;
-
-				else;
-
-				if (info.upDown[0])
-					up += upDownBias;
-
-				else if (info.upDown[1])
-					up -= upDownBias;
+				else if (info->move[1])
+					info->mve -= info->movementBias;
 
 				else;
 
-				if (info.rotation[1])
-					rotation += rotationBias;
+				if (info->upDown[0])
+					info->up += info->upDownBias;
 
-				else if (info.rotation[0])
-					rotation -= rotationBias;
+				else if (info->upDown[1])
+					info->up -= info->upDownBias;
+
+				else;
+
+				if (info->rotation[1])
+					info->rot += info->rotationBias;
+
+				else if (info->rotation[0])
+					info->rot -= info->rotationBias;
 
 				else;
 
@@ -78,12 +72,12 @@ namespace Dynamik {
 				//ubo.model = glm::ortho(mve, trn, rotation, up, 1.0f,10.0f);
 				//ubo.model = glm::frustum(mve, trn, rotation, up, 0.1f, 10.0f);
 
-				ubo.model = glm::rotate(glm::translate(glm::mat4(1.0f), glm::vec3(mve, trn, up)),
-					glm::radians(info.cPos[0]), glm::vec3(0.0f, 0.0f, 1.0f))
+				ubo.model = glm::rotate(glm::translate(glm::mat4(1.0f), glm::vec3(info->mve, info->trn, info->up)),
+					glm::radians(info->cPos[0]), glm::vec3(0.0f, 0.0f, 1.0f))
 					* glm::rotate(glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, 0.0f)),
-						glm::radians(info.cPos[1]), glm::vec3(0.0f, 1.0f, 0.0f))
+						glm::radians(info->cPos[1]), glm::vec3(0.0f, 1.0f, 0.0f))
 					* glm::rotate(glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, 0.0f)),
-						glm::radians(rotation), glm::vec3(1.0f, 0.0f, 0.0f));
+						glm::radians(info->rot), glm::vec3(1.0f, 0.0f, 0.0f));
 
 				ubo.view = glm::lookAt(glm::vec3(0.5f, 3.0f, 0.5f), glm::vec3(0.0f, 0.0f, 0.0f),
 					glm::vec3(0.0f, 0.0f, 1.0f));
@@ -92,70 +86,75 @@ namespace Dynamik {
 				ubo.proj[1][1] *= -1;
 
 				void* data;
-				vkMapMemory(container->device, info.bufferMemory[info.currentImage], 0, sizeof(ubo), 0, &data);
+				vkMapMemory(container->device, info->bufferMemory[info->currentImage], 0, sizeof(ubo), 0, &data);
 				memcpy(data, &ubo, sizeof(ubo));
-				vkUnmapMemory(container->device, info.bufferMemory[info.currentImage]);
+				vkUnmapMemory(container->device, info->bufferMemory[info->currentImage]);
 			}
 
-			void uniformBufferManager::updateBuffer3D(ADGRVulkanDataContainer* container, DMKUniformBufferUpdateInfo info) {
+			void uniformBufferManager::updateBuffer3D(ADGRVulkanDataContainer* container, DMKUniformBufferUpdateInfo* info) {
 				// TODO: update
-				static auto startTime = std::chrono::high_resolution_clock::now();
 
-				auto currentTime = std::chrono::high_resolution_clock::now();
-				float time = std::chrono::duration<float, std::chrono::seconds::period>(currentTime - startTime).count();
+				if (!info->turnLock) {
+					if (info->turn[0])
+						info->trn += info->movementBias;
 
-				if (info.turn[0])
-					trn += movementBias;
-
-				else if (info.turn[1])
-					trn -= movementBias;
-
-				else;
+					else if (info->turn[1])
+						info->trn -= info->movementBias;
+					else;
+				}
 				//trn = 0.0f;
 
-				if (info.move[0])
-					mve += movementBias;
+				//if (info->upDown[0])
+				//	up += upDownBias;
+				//else
+				//	up -= upDownBias;
+				//else if (info->upDown[1])
+				//	up -= upDownBias;
 
-				else if (info.move[1])
-					mve -= movementBias;
+				if (!info->verticalLock) {
+					if (info->upDown[0])
+						info->up += info->upDownBias;
+					else
+						info->up -= info->upDownBias;
+					//up -= 0.03f;
 
-				else;
+					if (info->up <= -1.0f)
+						info->up = -1.0f;
+					if (info->up >= 1.0f)
+						info->up = 1.0f;
+				}
+				if (!info->horizontalLock) {
+					if (info->move[0])
+						info->mve += info->movementBias;
 
-				if (info.upDown[0])
-					up += upDownBias;
+					else if (info->move[1])
+						info->mve -= info->movementBias;
 
-				else if (info.upDown[1])
-					up -= upDownBias;
+					else;
+					if (info->mve <= -3.0f)
+						info->mve = 3.0f;
+					if (info->mve >= 3.0f)
+						info->mve = -3.0f;
+				}
 
-				else;
+				//else;
 
-				if (info.rotation[0])
-					rotation += rotationBias;
+				if (!info->rotationLock) {
+					if (info->rotation[0])
+						info->rot += info->rotationBias;
 
-				else if (info.rotation[1])
-					rotation -= rotationBias;
-
-				else;
+					else if (info->rotation[1])
+						info->rot -= info->rotationBias;
+					else;
+				}
 
 				UniformBufferObject ubo = {};
-				ubo.model = glm::rotate(glm::translate(glm::mat4(1.0f), glm::vec3(mve, trn, up)),
-					glm::radians(info.cPos[0]), glm::vec3(0.0f, 0.0f, 1.0f))
+				ubo.model = glm::rotate(glm::translate(glm::mat4(1.0f), glm::vec3(info->mve, info->trn, info->up)),
+					glm::radians(info->cPos[0]), glm::vec3(0.0f, 0.0f, 1.0f))
 					* glm::rotate(glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, 0.0f)),
-						glm::radians(info.cPos[1]), glm::vec3(0.0f, 1.0f, 0.0f))
+						glm::radians(info->cPos[1]), glm::vec3(0.0f, 1.0f, 0.0f))
 					* glm::rotate(glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, 0.0f)),
-						glm::radians(rotation), glm::vec3(1.0f, 0.0f, 0.0f));
-
-				//ubo.model = glm::mat4(glm::mat4(1.0f),
-				//	glm::rotate(glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.005f, 0.0f)), glm::radians(rotation), glm::vec3(0.0f, 1.0f, 0.0f)),
-				//	glm::rotate(glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.005f, 0.0f)), glm::radians(rotation), glm::vec3(0.0f, 1.0f, 0.0f)),
-				//	glm::rotate(glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.005f, 0.0f)), glm::radians(rotation), glm::vec3(0.0f, 1.0f, 0.0f)));
-
-				//+ glm::rotate(glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.005f, 0.0f)),
-				//	/*time */ glm::radians(270.0f), glm::vec3(0.0f, 0.0f, 1.0f));
-
-				//ubo.model = glm::ortho(mve, trn, rotation, up, 1.0f,10.0f);
-				//ubo.model = glm::frustum(1.0f, 1.0f, 5.0f, 5.0f, 0.1f, 10.0f);
-				// left, right, bottom, top
+						glm::radians(info->rot), glm::vec3(1.0f, 0.0f, 0.0f));
 
 				ubo.view = glm::lookAt(glm::vec3(0.5f, 3.0f, 0.5f), glm::vec3(0.0f, 0.0f, 0.0f),
 					glm::vec3(0.0f, 0.0f, 1.0f));
@@ -163,9 +162,9 @@ namespace Dynamik {
 				ubo.proj[1][1] *= -1;
 
 				void* data;
-				vkMapMemory(container->device, info.bufferMemory[info.currentImage], 0, sizeof(ubo), 0, &data);
+				vkMapMemory(container->device, info->bufferMemory[info->currentImage], 0, sizeof(ubo), 0, &data);
 				memcpy(data, &ubo, sizeof(ubo));
-				vkUnmapMemory(container->device, info.bufferMemory[info.currentImage]);
+				vkUnmapMemory(container->device, info->bufferMemory[info->currentImage]);
 
 				/*
 				 vector<ubo> bufferData;

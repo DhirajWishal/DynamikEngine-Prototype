@@ -114,6 +114,21 @@ namespace Dynamik {
 		RenderableObjectProperties renderableObjectProperties = {};
 	};
 
+	// Destructor: Projectile
+	struct ProjectileProperties {
+		GameObjectProperties objectProps = {};
+
+		std::string name = "";
+		std::string playerID = "";
+
+		float initialVelocity = 0.0f;
+		float acceleration = 0.0f;
+		float deceleration = 0.0f;
+		float currentVelocity = 0.0f;
+		float weight = 0.0f;
+		float size = 1.0f;
+	};
+
 	/*
 		 GameObject definition.
 		 GameObject class can be used to send and get data from the Rendering API specifically designed
@@ -134,6 +149,7 @@ namespace Dynamik {
 	class GameObject {
 	public:
 		/* ---------- ########## \\\\\\\\\\ CONSTRUCTOR AND DESTRUCTOR ////////// ########## ---------- */
+		GameObject() {}
 		GameObject(GameObjectProperties& props) : myProperties(props) {}
 		virtual ~GameObject() {}
 
@@ -150,9 +166,37 @@ namespace Dynamik {
 
 		virtual void logic() {}
 
+		/* ---------- ########## \\\\\\\\\\ TRANSFORM ////////// ########## ---------- */
+		virtual void initTransform() {}
+		virtual void setTransform(TransformProperties& properties) {}
+		virtual void setTransformPosition(float* x, float* y, float* z) {}
+		virtual void setTransformRotation(float* x, float* y, float* z) {}
+		virtual void setTransformScale(float* x, float* y, float* z) {}
+
+		/* ---------- ########## \\\\\\\\\\ BIND THE TEXTURES ////////// ########## ---------- */
+		virtual void loadTexture() {}
+		virtual void deleteTexture() {}
+
 		/* ---------- ########## \\\\\\\\\\ BIND THE GAME OBJECT ////////// ########## ---------- */
 		virtual void loadGameObject() {}
 		virtual void deleteGameObject() {}
+
+		/* ---------- ########## \\\\\\\\\\ DESTRUCTION/ DESTRUCTOR ////////// ########## ---------- */
+		virtual void onLoad() {}
+		virtual void onActivation(std::string& playerID, GameObjectProperties& objectProps) {}
+		virtual void inAir() {}
+		virtual void onImpact(GameObjectProperties& objectProps) {}
+
+		/* ---------- ########## \\\\\\\\\\ CAMERA ////////// ########## ---------- */
+		virtual void initCamera() {}
+		virtual void initCamera(CameraProperties& props) {}
+
+		/* ---------- ########## \\\\\\\\\\ AUDIO ////////// ########## ---------- */
+		virtual void initAudio() {}
+		virtual void initAudio(AudioProperties& props) {}
+
+		/* ---------- ########## \\\\\\\\\\ VIDEO ////////// ########## ---------- */
+		virtual void initVideo() {}
 
 		/* ---------- ########## \\\\\\\\\\ CLEAR/ DEFAULT ////////// ########## ---------- */
 		virtual void clear() {}

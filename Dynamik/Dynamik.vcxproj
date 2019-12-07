@@ -143,16 +143,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="GameLibraries\GameObject\ArtificialIntelligenceObject.h" />
-    <ClInclude Include="GameLibraries\GameObject\AudioObject.h" />
-    <ClInclude Include="GameLibraries\GameObject\CameraObject.h" />
-    <ClInclude Include="GameLibraries\GameObject\DestructionObject.h" />
-    <ClInclude Include="GameLibraries\GameObject\DestructorObject.h" />
     <ClInclude Include="GameLibraries\GameObject\GameObject.h" />
-    <ClInclude Include="GameLibraries\GameObject\MeshObject.h" />
-    <ClInclude Include="GameLibraries\GameObject\ScriptObject.h" />
-    <ClInclude Include="GameLibraries\GameObject\TextureObject.h" />
-    <ClInclude Include="GameLibraries\GameObject\VideoObject.h" />
     <ClInclude Include="GameLibraries\Key Bindings\KeyBingings.h" />
     <ClInclude Include="src\Dynamik.h" />
     <ClInclude Include="src\core\application.h" />

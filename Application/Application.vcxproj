@@ -140,10 +140,12 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\engineInstance.h" />
     <ClInclude Include="src\imports.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="src\engineInstance.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Dynamik\Dynamik.vcxproj">

@@ -75,15 +75,6 @@
     <ClInclude Include="src\dmkafx.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="GameLibraries\GameObject\DestructionObject.h" />
-    <ClInclude Include="GameLibraries\GameObject\DestructorObject.h" />
-    <ClInclude Include="GameLibraries\GameObject\TextureObject.h" />
-    <ClInclude Include="GameLibraries\GameObject\MeshObject.h" />
-    <ClInclude Include="GameLibraries\GameObject\ScriptObject.h" />
-    <ClInclude Include="GameLibraries\GameObject\ArtificialIntelligenceObject.h" />
-    <ClInclude Include="GameLibraries\GameObject\AudioObject.h" />
-    <ClInclude Include="GameLibraries\GameObject\VideoObject.h" />
-    <ClInclude Include="GameLibraries\GameObject\CameraObject.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\core\application.cpp">

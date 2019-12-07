@@ -9,7 +9,7 @@ namespace Dynamik {
 	namespace ADGR {
 		namespace core {
 			struct DMKInitCubemapInfo {
-				std::vector<std::string> path = {};
+				std::string path = {};
 
 				VkFormat textureImageFormat = VK_FORMAT_UNDEFINED;
 				VkImage* textureImage = nullptr;
@@ -19,6 +19,8 @@ namespace Dynamik {
 				VkImageView* imageView = nullptr;
 
 				uint32_t mipLevels = 1;
+
+				bool flipImage = false;
 			};
 
 			struct DMKSkyboxSampelrInitInfo {

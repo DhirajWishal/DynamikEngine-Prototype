@@ -24,6 +24,12 @@ namespace Dynamik {
 
 	Application::Application() {
 		gameObjects = myLoader.run();
+
+		if (gameObjects.size() < 1) {
+			DMK_CORE_ERROR("No Game Objects found!");
+			return;
+		}
+
 		getObjectPaths();
 
 		std::thread myThread(Application::showProgress);
@@ -36,6 +42,30 @@ namespace Dynamik {
 		shouldClose = true;
 
 		myThread.join();
+
+		initSuccessful = true;
+	}
+
+	Application::Application(std::vector<GameObject>& _gameObjects) : gameObjects(_gameObjects){
+		if (gameObjects.size() < 1) {
+			DMK_CORE_ERROR("No Game Objects found!");
+			return;
+		}
+
+		getObjectPaths();
+
+		std::thread myThread(Application::showProgress);
+
+		std::vector<std::vector<std::string>>& texture = myLoader.getTexturePaths();
+		std::vector<std::string>& model = myLoader.getModelPaths();
+
+		myRenderingEngine.getGameObjects(gameObjects);
+		myRenderingEngine.initRenderer({ "", 1.0f,  model, texture,  &progress });
+		shouldClose = true;
+
+		myThread.join();
+
+		initSuccessful = true;
 	}
 
 	Application::~Application() {

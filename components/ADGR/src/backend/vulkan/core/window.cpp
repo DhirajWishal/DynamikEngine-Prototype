@@ -6,6 +6,8 @@
 #include "applicationEvent.h"
 #include "keyCodes.h"
 
+#include "Platform/Windows/resource/imageLoader.h"
+
 namespace Dynamik {
 	namespace ADGR {
 		namespace core {
@@ -162,6 +164,18 @@ namespace Dynamik {
 					glfwGetFramebufferSize(m_window, &width, &height);
 					glfwWaitEvents();
 				}
+			}
+
+			void window::setWindowIcon(std::string& path) {
+				resource::TextureData imageData = {};
+
+				auto pixels = imageData.loadTexture(path, resource::TEXTURE_TYPE_RGBA, true);
+
+				GLFWimage icon[1];
+				icon[0].pixels = pixels;
+				glfwSetWindowIcon(m_window, 1, icon);
+
+				imageData.freeData(pixels);
 			}
 
 			keyEvent window::getKeyEvent() {

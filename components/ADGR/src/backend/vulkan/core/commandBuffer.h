@@ -16,7 +16,7 @@ namespace Dynamik {
 				std::vector<std::string> paths = {};
 				std::vector<Vertex> vertexBufferObject = {};
 				std::vector<VkBuffer> vertexBuffers = {};
-				VkDeviceMemory vertexBufferMemory = {};
+				std::vector<VkDeviceMemory> vertexBufferMemories = {};
 
 				std::vector<uint32_t> indexBufferObject = {};
 				VkBuffer indexBuffer = {};
@@ -26,7 +26,7 @@ namespace Dynamik {
 				uint32_t indexCount = 0;
 				uint32_t vertexCount = 0;
 
-				DMKObjectType objectType = DMK_OBJECT_TYPE_STATIC_OBJECT;
+				DMKObjectType objectType = DMKObjectType::DMK_OBJECT_TYPE_STATIC_OBJECT;
 
 				std::vector<std::string> texturePaths = {};
 				std::vector<VkImage> textureImages = {};

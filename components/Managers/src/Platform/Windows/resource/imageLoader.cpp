@@ -8,8 +8,10 @@
 
 namespace Dynamik {
 	namespace resource {
-		unsigned char* TextureData::loadTexture(std::string path, TextureType type) {
+		unsigned char* TextureData::loadTexture(std::string path, TextureType type, bool flip) {
 			unsigned char* myTexture = nullptr;
+
+			stbi_set_flip_vertically_on_load(flip);
 
 			if (type == TEXTURE_TYPE_RGB)
 				myTexture = stbi_load(path.c_str(), &texWidth, &texHeight, &texChannels, STBI_rgb);

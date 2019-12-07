@@ -9,7 +9,7 @@ namespace Dynamik {
 	//}
 
 	std::vector<GameObject> InputLoader::run() {
-		return submit().assets;
+		return std::vector<GameObject>();
 	}
 
 	std::vector<std::vector<std::string>> InputLoader::getTexturePaths() {
@@ -23,8 +23,8 @@ namespace Dynamik {
 
 	std::vector<GameObject> InputLoader::getRenderableGameObjects() {
 		for (auto object : myContainer.assets)
-			if (object.myProperties.type == DMK_OBJECT_TYPE_STATIC_OBJECT ||
-				object.myProperties.type == DMK_OBJECT_TYPE_INTERACTIVE_OBJECT)
+			if (object.myProperties.type == DMKObjectType::DMK_OBJECT_TYPE_STATIC_OBJECT ||
+				object.myProperties.type == DMKObjectType::DMK_OBJECT_TYPE_INTERACTIVE_OBJECT)
 				renderObjects.push_back(object);
 
 		return renderObjects;

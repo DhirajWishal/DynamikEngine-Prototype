@@ -23,24 +23,6 @@
 
 // Dynamik namespace
 namespace Dynamik {
-	/*
-	 GameObject definition.
-	 GameObject class can be used to send and get data from the Rendering API specifically designed
-	 for the Dynamik Engine for fast and easy deployment.
-	 - Position Manipulation
-	 - Rotation Manipulation
-	 - Scale/ Size Manipulation
-	 - Camera Manipulation
-	 - Audio Control
-	 - Lighting
-	 - Upload and Retrieval of data
-	 - Drawing of the selected file/ object
-	 * HEAP ALLOCATION IS OPTIONAL YET RECOMMENDED *
-	 * PASS ALL VALUES BY REFERENCE (MEMORY AND CODE OPTIMIZATION) *
-	 - Asset files must be inside its own folder with a "modelData.dai" file stating the model and textures
-	 - In that file, models are stated as "M model.obj" and textures as "T texture.jpeg"
-	*/
-
 	// Renderable object properties
 	struct RenderableObjectProperties {
 		std::string vertexShaderPath = "NONE";
@@ -63,8 +45,8 @@ namespace Dynamik {
 
 	// Audio
 	struct AudioProperties {
-		DMKAudioOutputOptions outputOptions = DMK_AUDIO_OUTPUT_DEFAULT;
-		DMKAudioPriorityOptions priority = DMK_AUDIO_PRIORITY_DEFAULT;
+		DMKAudioOutputOptions outputOptions = DMKAudioOutputOptions::DMK_AUDIO_OUTPUT_DEFAULT;
+		DMKAudioPriorityOptions priority = DMKAudioPriorityOptions::DMK_AUDIO_PRIORITY_DEFAULT;
 		uint32_t volume = 100;
 		uint32_t pitch = 1;
 		int32_t stereoPan = 0;
@@ -81,7 +63,7 @@ namespace Dynamik {
 
 	// Camera
 	struct CameraProperties {
-		DMKCameraType type = DMK_CAMERA_TYPE_DEFAULT;
+		DMKCameraType type = DMKCameraType::DMK_CAMERA_TYPE_DEFAULT;
 		float background[4] = { 0.0f, 0.0f, 0.0f, 1.0f };	// r, g, b, a
 		uint32 FOV = 120;
 		float depth = 1.0f;
@@ -93,12 +75,13 @@ namespace Dynamik {
 
 	// Lighting
 	struct LightingProperties {
-		DMKLightingType type = DMK_LIGHTING_TYPE_SPECULAR;
+		DMKLightingType type = DMKLightingType::DMK_LIGHTING_TYPE_SPECULAR;
 		std::vector<float> color = { 0.0f, 0.0f, 0.0f, 1.0f };	// r, g, b, a
 	};
 
 	// Game Object Properties
-	struct GameObjectProperties {
+	class GameObjectProperties {
+	public:
 		GameObjectProperties() {}
 		~GameObjectProperties() {}
 
@@ -117,9 +100,10 @@ namespace Dynamik {
 #endif
 
 		// Object characteristics:
-		DMKObjectType type = DMK_OBJECT_TYPE_STATIC_OBJECT;
-		DMKObjectDestructionType destructionType = DMK_OBJECT_DESTRUCTION_SOLID;
-		DMKObjectBehaviour behaviourType = DMK_OBJECT_BEHAVIOUR_NONE;
+		DMKObjectType type = DMKObjectType::DMK_OBJECT_TYPE_STATIC_OBJECT;
+		DMKObjectDestructionType destructionType = DMKObjectDestructionType::DMK_OBJECT_DESTRUCTION_NONE;
+		DMKObjectDestructorType destructorType = DMKObjectDestructorType::DMK_OBJECT_DESTRUCTOR_NONE;
+		DMKObjectBehaviour behaviourType = DMKObjectBehaviour::DMK_OBJECT_BEHAVIOUR_NONE;
 
 		// Object data:
 		TransformProperties transformProperties = {};
@@ -130,19 +114,34 @@ namespace Dynamik {
 		RenderableObjectProperties renderableObjectProperties = {};
 	};
 
+	/*
+		 GameObject definition.
+		 GameObject class can be used to send and get data from the Rendering API specifically designed
+		 for the Dynamik Engine for fast and easy deployment.
+		 - Position Manipulation
+		 - Rotation Manipulation
+		 - Scale/ Size Manipulation
+		 - Camera Manipulation
+		 - Audio Control
+		 - Lighting
+		 - Upload and Retrieval of data
+		 - Drawing of the selected file/ object
+		 * HEAP ALLOCATION IS OPTIONAL YET RECOMMENDED *
+		 * PASS ALL VALUES BY REFERENCE (MEMORY AND CODE OPTIMIZATION) *
+		 - Asset files must be inside its own folder with a "modelData.dai" file stating the model and textures
+		 - In that file, models are stated as "M model.obj" and textures as "T texture.jpeg"
+	*/
 	class GameObject {
 	public:
 		/* ---------- ########## \\\\\\\\\\ CONSTRUCTOR AND DESTRUCTOR ////////// ########## ---------- */
-		GameObject(GameObjectProperties props) : myProperties(props) {}
+		GameObject(GameObjectProperties& props) : myProperties(props) {}
 		virtual ~GameObject() {}
 
 #ifdef DMK_CORE
-
 		GameObjectProperties getProperties() { return myProperties; }
 
 #endif
 
-	protected:
 		/* ---------- ########## \\\\\\\\\\ MAIN FUNCTIONS ////////// ########## ---------- */
 		virtual void init() {}
 		virtual void draw() {}
@@ -154,25 +153,6 @@ namespace Dynamik {
 		/* ---------- ########## \\\\\\\\\\ BIND THE GAME OBJECT ////////// ########## ---------- */
 		virtual void loadGameObject() {}
 		virtual void deleteGameObject() {}
-
-		/* ---------- ########## \\\\\\\\\\ BIND THE TEXTURES ////////// ########## ---------- */
-		virtual void loadTexture() {}
-		virtual void deleteTexture() {}
-
-		/* ---------- ########## \\\\\\\\\\ TRANSFORM ////////// ########## ---------- */
-		virtual void initTransform() {}
-		virtual void setTransform(TransformProperties& properties) {}
-		virtual void setTransformPosition(float* x, float* y, float* z) {}
-		virtual void setTransformRotation(float* x, float* y, float* z) {}
-		virtual void setTransformScale(float* x, float* y, float* z) {}
-
-		/* ---------- ########## \\\\\\\\\\ CAMERA ////////// ########## ---------- */
-		virtual void initCamera() {}
-		virtual void initCamera(CameraProperties props) {}
-
-		/* ---------- ########## \\\\\\\\\\ AUDIO ////////// ########## ---------- */
-		virtual void initAudio() {}
-		virtual void initAudio(AudioProperties props) {}
 
 		/* ---------- ########## \\\\\\\\\\ CLEAR/ DEFAULT ////////// ########## ---------- */
 		virtual void clear() {}

@@ -6,7 +6,7 @@
 namespace Dynamik {
 	/* OBJECT SPECIFICATIONS */
 	// Main object types:
-	enum DMKMainObjectTypes {
+	enum class DMKMainObjectTypes {
 		DMK_RENDERABLE_OBJECT = 0,
 		DMK_NONE_RENDERABLE_OBJECT = 1,
 		DMK_SCRIPT_FILE = 2,
@@ -14,7 +14,7 @@ namespace Dynamik {
 	};
 
 	// Object types:
-	enum DMKObjectType {
+	enum class DMKObjectType {
 		DMK_OBJECT_TYPE_STATIC_OBJECT = 0,
 		DMK_OBJECT_TYPE_INTERACTIVE_OBJECT = 1,
 		DMK_OBJECT_TYPE_PLAYER = 2,
@@ -31,7 +31,7 @@ namespace Dynamik {
 	};
 
 	// Destruction types:
-	enum DMKObjectDestructionType {
+	enum class DMKObjectDestructionType {
 		DMK_OBJECT_DESTRUCTION_NONE = 0,
 		DMK_OBJECT_DESTRUCTION_SOLID = 1,
 		DMK_OBJECT_DESTRUCTION_LIQUID = 2,
@@ -43,8 +43,17 @@ namespace Dynamik {
 		DMK_OBJECT_DESTRUCTION_CUSTOM = 8
 	};
 
+	// Destructor types:
+	enum class DMKObjectDestructorType {
+		DMK_OBJECT_DESTRUCTOR_NONE = 0,
+		DMK_OBJECT_DESTRUCTOR_DEFAULT = 1,
+		DMK_OBJECT_DESTRUCTOR_PROJECTILE = 2,
+		DMK_OBJECT_DESTRUCTOR_EXPLOSIVE = 3,
+		DMK_OBJECT_DESTRUCTOR_CUSTOM
+	};
+
 	// Object behaviours:
-	enum DMKObjectBehaviour {
+	enum class DMKObjectBehaviour {
 		DMK_OBJECT_BEHAVIOUR_NONE = 0,
 		DMK_OBJECT_BEHAVIOUR_DEFAULT = 1,
 		DMK_OBJECT_BEHAVIOUR_SCRIPT = 2,
@@ -53,7 +62,7 @@ namespace Dynamik {
 	};
 
 	// Texture types:
-	enum DMKObjectTextureType {
+	enum class DMKObjectTextureType {
 		DMK_OBJECT_TEXTURE_TYPE_NONE = 0,
 		DMK_OBJECT_TEXTURE_TYPE_2D_GREY = 1,
 		DMK_OBJECT_TEXTURE_TYPE_2D_RGB = 2,
@@ -65,7 +74,7 @@ namespace Dynamik {
 
 	/* AUDIO SPECIFICATIONS */
 	// Output options:
-	enum DMKAudioOutputOptions {
+	enum class DMKAudioOutputOptions {
 		DMK_AUDIO_OUTPUT_DEFAULT = 0,
 		DMK_AUDIO_OUTPUT_SPEAKERS_STERIO = 1,
 		DMK_AUDIO_OUTPUT_SPEAKERS_MONO = 2,
@@ -78,7 +87,7 @@ namespace Dynamik {
 	};
 
 	// Priority options:
-	enum DMKAudioPriorityOptions {
+	enum class DMKAudioPriorityOptions {
 		DMK_AUDIO_PRIORITY_DEFAULT = 0,
 		DMK_AUDIO_PRIORITY_LOW = 1,
 		DMK_AUDIO_PRIORITY_HIGH = 2
@@ -86,7 +95,7 @@ namespace Dynamik {
 
 	/* CAMERA SPECIFICATIONS */
 	// Camera types:
-	enum DMKCameraType {
+	enum class DMKCameraType {
 		DMK_CAMERA_TYPE_DEFAULT = 0,
 		DMK_CAMERA_TYPE_ORTHOGRSPHIC = 1,
 		DMK_CAMERA_TYPE_FRUSTUM = 2
@@ -94,7 +103,7 @@ namespace Dynamik {
 
 	/* LIGHTING SPECIFICATIONS */
 	// Lighting types:
-	enum DMKLightingType {
+	enum class DMKLightingType {
 		DMK_LIGHTING_TYPE_SPECULAR = 0,
 		DMK_LIGHTING_TYPE_DIRECTIONAL = 1,
 		DMK_LIGHTING_TYPE_EMISSIVE = 2

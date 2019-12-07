@@ -1,7 +1,9 @@
 M Mars 2K.obj
-T ashcanyon_dn.tga
-T ashcanyon_rt.tga
-T ashcanyon_lf.tga
-T ashcanyon_up.tga
-T ashcanyon_bk.tga
-T ashcanyon_ft.tga
+I ashcanyon_dn.tga
+I ashcanyon_rt.tga
+I ashcanyon_lf.tga
+I ashcanyon_up.tga
+I ashcanyon_bk.tga
+I ashcanyon_ft.tga
+V vert.spv
+F frag.spv

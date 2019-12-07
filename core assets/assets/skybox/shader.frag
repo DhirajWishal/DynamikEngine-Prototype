@@ -21,12 +21,10 @@ vec3 Uncharted2Tonemap(vec3 color) {
 }
 
 void main() {
-    //outColor = texture(texSampler, fragTexCoord);
-
 	vec3 color = texture(texSampler, inUVW).rgb;
 
 	// Tone mapping
-	color = Uncharted2Tonemap(color * 0.05f);
+	//color = Uncharted2Tonemap(color * 0.1f);
 	//color = color * (1.0f / Uncharted2Tonemap(vec3(11.2f)));	
 	// Gamma correction
 	//color = pow(color, vec3(1.0f / 0.05f));

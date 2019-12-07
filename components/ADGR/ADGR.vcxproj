@@ -143,6 +143,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\backend\vulkan\core\glTexture.h" />
     <ClInclude Include="src\Data Structures\index.h" />
     <ClInclude Include="src\Data Structures\vertex.h" />
     <ClInclude Include="src\Layers\layer.h" />
@@ -200,6 +201,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="src\backend\vulkan\core\glTexture.cpp" />
     <ClCompile Include="src\Layers\layer.cpp" />
     <ClCompile Include="src\Layers\layerStack.cpp" />
     <ClCompile Include="src\Renderer.cpp" />

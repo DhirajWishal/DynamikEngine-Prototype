@@ -23,6 +23,14 @@
 		- Raw shader file(s) (X/ x)
 	* Script(s) (S/ s)
 	* Code(s) (C/ c)
+	* Location data (in world space)
+		- X-axis (LX)
+		- Y-axis (LY)
+		- Z-axis (LZ)
+	* Rotational data (in world space)
+		- X-axis (RX)
+		- Y-axis (RY)
+		- Z-axis (RZ)
 */
 
 #ifndef _DYNAMIK_MANAGERS_DAI_FILE_MANAGER_H
@@ -43,6 +51,8 @@ namespace Dynamik {
 			DMK_DAI_FILE_DATA_TYPE_SHADER_SOURCE,
 			DMK_DAI_FILE_DATA_TYPE_SCRIPT,
 			DMK_DAI_FILE_DATA_TYPE_CODE,
+			DMK_DAI_FILE_DATA_TYPE_LOCATION,
+			DMK_DAI_FILE_DATA_TYPE_ROTATION,
 
 			DMK_DAI_FILE_DATA_TYPE_MAX_ENUM
 		};
@@ -65,6 +75,8 @@ namespace Dynamik {
 
 			std::vector<std::string> getData(DMKDaiFileDataType type);
 			std::vector<std::vector<std::string>> getAllData();
+			std::vector<float> getLocationData();
+			std::vector<float> getRotationData();
 
 		private:
 			void initDataStore();
@@ -73,6 +85,8 @@ namespace Dynamik {
 			std::fstream file;
 
 			std::vector<std::vector<std::string>> dataStore = {};
+			std::vector<float> locationData = {};
+			std::vector<float> rotationData = {};
 			bool isDataStoreInit = false;
 		};
 	}

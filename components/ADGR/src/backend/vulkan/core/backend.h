@@ -15,6 +15,7 @@
 #include "depthBuffer.h"
 #include "frameBuffer.h"
 #include "texture.h"
+#include "glTexture.h"
 #include "modelManager.h"
 #include "vertexBuffer.h"
 #include "indexBuffer.h"

@@ -55,7 +55,7 @@ Dynamik::InputContainer Dynamik::submit() {
 	std::vector<std::string>(*function)(std::vector<char>&) = getTexturePath;
 
 	//auto paths = getTexturePath(readFile("paths.txt"));
-	//auto paths = getTexturePath(readFile("E:/Dynamik Engine/Engine/paths.txt"));
+	//auto paths = getTexturePath(readFile("C:/Dynamik Engine/Engine/paths.txt"));
 	auto paths = getTexturePath(readFile("E:/Projects/Dynamik Engine/Dynamik/components/Core/paths.txt"));
 
 	/*

@@ -18,61 +18,43 @@
 
 #include "src/imports.h"
 
-class layer : public Dynamik::ADGR::Layer {
-public:
-	layer() : Layer("Example") {
-	}
-
-	void update() override {
-		//DMK_INFO("ExampleLayer::update");
-	}
-
-	void onEvent(Dynamik::Event& event) override {
-		DMK_WARN("EVENT");
-	}
-
-private:
-};
+//class layer : public Dynamik::ADGR::Layer {
+//public:
+//	layer() : Layer("Example") {
+//	}
+//
+//	void update() override {
+//		//DMK_INFO("ExampleLayer::update");
+//	}
+//
+//	void onEvent(Dynamik::Event& event) override {
+//		DMK_WARN("EVENT");
+//	}
+//
+//private:
+//};
 
 class Engine : public Dynamik::Application {
 public:
-	Engine() {
-		pushLayer(new layer);
+	Engine(std::vector<Dynamik::GameObject>& gameObjects) : Application(gameObjects) {
+		//pushLayer(new layer);
 	}
 
 	~Engine() {
 	}
 };
 
-Dynamik::Application* Dynamik::createApplication() {
-	return new Engine();
+Dynamik::Application* Dynamik::createApplication(std::vector<Dynamik::GameObject>& gameObjects) {
+	return new Engine(gameObjects);
 }
 
 /* -----||||| MAIN LAUNCH SYSTEM |||||----- */
 
 #ifdef DMK_PLATFORM_WINDOWS
 
-Dynamik::Application* Dynamik::createApplication();
+Dynamik::Application* Dynamik::createApplication(std::vector<Dynamik::GameObject>& gameObjects);
 
 /* ---------- ########## ////////// MAIN LOOP \\\\\\\\\\ ########## ---------- */
-int main(int argc, char** argv) {
-	try {
-		printf("\t\t----------|| Welcome to the Dynamik Engine! ||----------\n");
-
-		DMK_CORE_INFO(std::to_string(12));
-
-		auto application = Dynamik::createApplication();
-		application->run();
-
-		delete application;
-	}
-	catch (std::exception & e) {
-		std::cout << e.what();
-
-		return DMK_FAIL;
-	}
-
-	return DMK_SUCCESS;
-}
+DYNAMIK_ENGINE_MAIN()
 
 #endif

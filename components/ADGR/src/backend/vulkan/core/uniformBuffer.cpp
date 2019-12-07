@@ -88,7 +88,7 @@ namespace Dynamik {
 				ubo.view = glm::lookAt(glm::vec3(0.5f, 3.0f, 0.5f), glm::vec3(0.0f, 0.0f, 0.0f),
 					glm::vec3(0.0f, 0.0f, 1.0f));
 				//ubo.proj = glm::perspective(glm::radians(45.0f), swapChainExtent.width / (float)swapChainExtent.height, 0.001f, 10.0f);
-				ubo.proj = glm::ortho(-10.0f, 800.0f, 600.0f, 10.0f, 0.0f, 100.0f);
+				ubo.proj = glm::ortho(-800.0f, 800.0f, -800.0f, 800.0f, 0.0f, 100.0f);
 				ubo.proj[1][1] *= -1;
 
 				void* data;

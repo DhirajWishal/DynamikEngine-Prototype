@@ -19,8 +19,8 @@ namespace Dynamik {
 				std::vector<float> offsets = { 0.0f, 0.0f, 0.0f };
 
 				std::vector<Vertex>* vertexBufferObject = {};
-				VkBuffer* vertexBuffer = {};
-				VkDeviceMemory* vertexBufferMemory = VK_NULL_HANDLE;
+				std::vector<VkBuffer>* vertexBuffers = {};
+				std::vector<VkDeviceMemory>* vertexBufferMemories = {};
 
 				std::vector<uint32_t>* indexBufferObject = {};
 				VkBuffer* indexBuffer = VK_NULL_HANDLE;

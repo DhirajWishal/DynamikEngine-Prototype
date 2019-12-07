@@ -75,9 +75,6 @@ namespace Dynamik {
 			void setModelPaths(std::vector<std::string>& object, std::vector<std::vector<std::string>>& texture);
 			void setShaderPaths(std::string& vertex, std::string& fragment);
 
-			void initGameObjects();
-			void initManagerFunctions();
-
 			inline std::tuple<int, mouseEventData*> getEvent() { return myWindow.getEvent(); }
 
 			inline VkDevice getDevice() { return myManager.getResourceAddr<ADGRVulkanDataContainer>(DMK_CDH_MANAGER_RESOURCE_TYPE_VULKAN_DATA_CONTAINER, vulkanContainerIndex)->device; }
@@ -91,8 +88,33 @@ namespace Dynamik {
 
 			void includeShader();
 
+			/* STAGE BASED INITIALIZATION(STARTUP) */
+			void initManagerFunctions();
+			void initGameObjects();
+			void initWindow();
+			void initInstance();
+			void initDebugger();
+			void initWindowSurface();
+			void initDevice();
+			void initSwapChain();
+			void initDescriptorSetLayout();
+			void initPipelines();
+			void initCommandPool();
+			void initColorBuffer();
+			void initDepthBuffer();
+			void initFrameBuffers();
+			void initSkyboxsAndTextures();
+			void initCubemapAndModels();
+			void initUniformBuffers();
+			void initDescriptorPoolsAndSets();
+			void initCommandBuffers();
+			void initSemaphoresAndFences();
+
+			/* STAGE BASED SHUTDOWN */
+			void rendererWait();
+
 			void initModels(std::vector<DMKObjectData> data);
-			void initSkybox();
+			void initCubemap(DMKObjectData* data);
 
 		private:
 			static void thread_third(DMKVulkanRendererLoadObjectInfo createInfo);	// models

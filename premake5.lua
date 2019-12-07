@@ -41,7 +41,6 @@ include "components/Networking"
 include "components/Sampler"
 
 -- test build include
-include "components/Core"
 
 -- Libraries
 --include "components/Libraries/ADGR_Vulkan_API"
@@ -103,7 +102,6 @@ project "Dynamik"
 		"Audio",
 		"Events",
 		"Platform",
-		"Core",
 		"glfw3dll",
 		"opengl32",
 		"vulkan-1",
@@ -180,24 +178,9 @@ project "Application"
 		"%{IncludeDir.Vulkan}"
 	}
 
-	libdirs {
-		"$(SolutionDir)libs/GLFW/lib-vc2019",
-		"E:/Programming/SDKs/Vulkan/1.1.121.0/Lib"
-	}
-
 	links {
 		"Dynamik",
-		"ADGR",
-		"Audio",
-		"Events",
-		"Platform",
-		"Core",
-		"glfw3dll",
-		"opengl32",
-		"vulkan-1",
-		"Debugger",
-		"CentralDataHub",
-		"Networking"
+		"Debugger"
 	}
 
 	postbuildcommands {

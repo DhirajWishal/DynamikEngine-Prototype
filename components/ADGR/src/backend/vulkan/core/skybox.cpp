@@ -28,19 +28,8 @@ namespace Dynamik {
 			void skybox::loadCubemap(ADGRVulkanDataContainer* container, DMKInitCubemapInfo initInfo) {
 				resource::TextureData texData = {};
 
-				//std::string images = "";
-				//for (auto path : initInfo.path) {
-				//	unsigned char* cubemap = texData.loadTexture(path, resource::TEXTURE_TYPE_RGBA);
-				//
-				//	for (int i = 0; i < texData.size; i++)
-				//		images.push_back(cubemap[i]);
-				//
-				//	texData.freeData(cubemap);
-				//}
-				//
-				//VkDeviceSize imageSize = ((texData.texWidth * texData.texHeight) * 4) * 6;
-				unsigned char* cubemap = texData.loadTexture(initInfo.path[0], resource::TEXTURE_TYPE_RGBA);
-				VkDeviceSize imageSize = ((texData.texWidth * texData.texHeight) * 4);
+				unsigned char* cubemap = texData.loadTexture(initInfo.path, resource::TEXTURE_TYPE_RGBA, initInfo.flipImage);
+				VkDeviceSize imageSize = texData.size;
 
 				width = texData.texWidth;
 				height = texData.texHeight;
@@ -62,11 +51,10 @@ namespace Dynamik {
 				void* data = nullptr;
 				if (vkMapMemory(container->device, stagingBufferMemory, 0, imageSize, 0, &data) != VK_SUCCESS)
 					DMK_CORE_FATAL("Failed to map memory!")
-					//memcpy(data, images.data(), images.size());
 					memcpy(data, cubemap, imageSize);
 				vkUnmapMemory(container->device, stagingBufferMemory);
 
-				//images.clear();
+				texData.freeData(cubemap);
 
 				DMKCreateImageInfo info;
 				info.device = container->device;

@@ -9,8 +9,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Audio", "components\Audio\A
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CentralDataHub", "components\CentralDataHub\CentralDataHub.vcxproj", "{27660F4E-1334-0354-FCC7-737AE834DFB8}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Core", "components\Core\Core.vcxproj", "{2EB4837C-1AEB-840D-C3D7-6A10AFED000F}"
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Debugger", "components\Debugger\Debugger.vcxproj", "{2ACD0289-169A-5D94-3FB3-4B3C2BDF9222}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DevCon", "components\DevConsole\DevCon.vcxproj", "{E45AE3AD-D0FC-0D84-B9B7-21D8A5F894D4}"
@@ -58,12 +56,6 @@ Global
 		{27660F4E-1334-0354-FCC7-737AE834DFB8}.Distribution|x64.Build.0 = Distribution|x64
 		{27660F4E-1334-0354-FCC7-737AE834DFB8}.Release|x64.ActiveCfg = Release|x64
 		{27660F4E-1334-0354-FCC7-737AE834DFB8}.Release|x64.Build.0 = Release|x64
-		{2EB4837C-1AEB-840D-C3D7-6A10AFED000F}.Debug|x64.ActiveCfg = Debug|x64
-		{2EB4837C-1AEB-840D-C3D7-6A10AFED000F}.Debug|x64.Build.0 = Debug|x64
-		{2EB4837C-1AEB-840D-C3D7-6A10AFED000F}.Distribution|x64.ActiveCfg = Distribution|x64
-		{2EB4837C-1AEB-840D-C3D7-6A10AFED000F}.Distribution|x64.Build.0 = Distribution|x64
-		{2EB4837C-1AEB-840D-C3D7-6A10AFED000F}.Release|x64.ActiveCfg = Release|x64
-		{2EB4837C-1AEB-840D-C3D7-6A10AFED000F}.Release|x64.Build.0 = Release|x64
 		{2ACD0289-169A-5D94-3FB3-4B3C2BDF9222}.Debug|x64.ActiveCfg = Debug|x64
 		{2ACD0289-169A-5D94-3FB3-4B3C2BDF9222}.Debug|x64.Build.0 = Debug|x64
 		{2ACD0289-169A-5D94-3FB3-4B3C2BDF9222}.Distribution|x64.ActiveCfg = Distribution|x64

@@ -22,7 +22,7 @@ void main() {
 
     gl_Position = Ubo.proj * Ubo.view * Ubo.model * vec4(inPosition, mapSize);
 
-    fragColor = inColor;
-    fragTexCoord = inTexCoord;
+    //fragColor = inColor;
+    //fragTexCoord = inTexCoord;
 }
 

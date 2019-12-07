@@ -17,7 +17,9 @@ namespace Dynamik {
 		}
 	};
 
-	InputContainer submit();
+	//InputContainer submit() {
+	//	return InputContainer();
+	//};
 }
 
 #endif // !_DYNAMIK_SUBMIT_ASSETS_H

@@ -53,6 +53,8 @@ namespace Dynamik {
 
 				void onWindowResizeEvent();
 
+				void setWindowIcon(std::string& path) override;
+
 				bool isFrameBufferResized() { return frameBufferResized; }
 				void frameBufferResizedUpdate(bool state) { frameBufferResized = state; }
 

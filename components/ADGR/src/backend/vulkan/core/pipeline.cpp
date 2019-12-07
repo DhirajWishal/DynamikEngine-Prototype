@@ -61,7 +61,7 @@ namespace Dynamik {
 					subpass.pipelineBindPoint = VK_PIPELINE_BIND_POINT_GRAPHICS;
 					subpass.colorAttachmentCount = 1;
 					subpass.pColorAttachments = &colorAttachmentRef;
-					subpass.pDepthStencilAttachment = &depthAttachmentRef;
+					//subpass.pDepthStencilAttachment = &depthAttachmentRef;
 					subpass.pResolveAttachments = &colorAttachmentResolveRef;
 
 					VkSubpassDependency dependency = {};

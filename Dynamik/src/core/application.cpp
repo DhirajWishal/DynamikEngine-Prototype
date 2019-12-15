@@ -11,6 +11,8 @@
 #include "debugger.h"
 
 #include "core/Windows.h"
+#include "data store/containers.h"
+#include "modelManager.h"
 
 /*
 	TODO:
@@ -22,46 +24,25 @@ namespace Dynamik {
 	uint32_t progress = 0;
 	static bool shouldClose = false;
 
-	Application::Application() {
-		//gameObjectsWrapper = myLoader.run();
-
-		if (gameObjects.size() < 1) {
+	Application::Application(std::vector<Scene*>& _scenes) : scenes(_scenes) {
+		if (_scenes[sceneCount]->myGameObjects.size() < 1) {
 			DMK_CORE_ERROR("No Game Objects found!");
 			return;
 		}
 
 		getObjectPaths();
+		for (int i = 0; i < gameObjects.size(); i++)
+			internalFormats.push_back(internalFormat(gameObjects[i]));
+		loadObjectData();
 
 		std::thread myThread(Application::showProgress);
 
-		std::vector<std::vector<std::string>>& texture = myLoader.getTexturePaths();
-		std::vector<std::string>& model = myLoader.getModelPaths();
-
-		myRenderingEngine.getGameObjects(gameObjects);
-		myRenderingEngine.initRenderer({ "", 1.0f,  model, texture,  &progress });
-		shouldClose = true;
-
-		myThread.join();
-
-		initSuccessful = true;
-	}
-
-	Application::Application(std::vector<GameObject>& _gameObjects) : gameObjects(_gameObjects){
-		if (gameObjects.size() < 1) {
-			DMK_CORE_ERROR("No Game Objects found!");
-			return;
-		}
-
-
-		getObjectPaths();
-
-		std::thread myThread(Application::showProgress);
-
-		std::vector<std::vector<std::string>>& texture = myLoader.getTexturePaths();
-		std::vector<std::string>& model = myLoader.getModelPaths();
-
-		myRenderingEngine.getGameObjects(gameObjects);
-		myRenderingEngine.initRenderer({ "", 1.0f,  model, texture,  &progress });
+		initRendererFormats();
+		for (int i = 0; i < internalFormats.size(); i++)
+			internalFormatsBase.push_back(&internalFormats[i]);
+		myRenderingEngine.setRendererFormats(internalFormatsBase);
+		myRenderingEngine.setProgress(&progress);
+		myRenderingEngine.initRenderer();
 		shouldClose = true;
 
 		myThread.join();
@@ -74,20 +55,19 @@ namespace Dynamik {
 	}
 
 	DMK_API void Application::run() {
-		while (!myRenderingEngine.getWindowCloseEvent()) {
-			myRenderingEngine.draw();
-			myEngine.update();
-			//my shitty code
+		if (initSuccessful) {
+			while (!myRenderingEngine.getWindowCloseEvent()) {
+				myRenderingEngine.draw();
+				myEngine.update();
+				auto events = myRenderingEngine.getEvents();
+				onEvent(events);
 
-			auto [keyEvent, mouseEvent] = myRenderingEngine.pollEvents();
+				for (auto layer : layerStack)
+					layer->update();
+			}
 
-			onEvent(keyEvent);
-
-			for (auto layer : layerStack)
-				layer->update();
+			myRenderingEngine.idleCall();
 		}
-
-		myRenderingEngine.idleCall();
 	}
 
 	void Application::pushLayer(ADGR::Layer* layer) {
@@ -98,62 +78,38 @@ namespace Dynamik {
 		layerStack.pushOverLay(layer);
 	}
 
-	void Application::onEvent(int ked) {
-		//KeyPressedEvent keyPressed = ked.keyPressedEvent;
-		//KeyReleasedEvent keyReleased = ked.keyReleasedEvent;
-		//KeyPressedEvent keyRepeat = ked.keyRepeatEvent;
+	void Application::onEvent(std::deque<DMKEventContainer> events) {
+		for (int i = 0; i < events.size(); i++) {
+			DMKEventContainer eventContainer = events.back();
+			events.pop_back();
 
-		switch (ked) {
-		case DMK_KEY_F: {
-			Audio::BasicAudioController* audController = new Audio::BasicAudioController("E:/Projects/Dynamik Engine/Dynamik/components/Audio/media/explosion.wav");
-			audController->isPaused = false;
-			audController->isLooped = false;
+			if (eventContainer.eventType == DMKEventType::DMK_EVENT_TYPE_KEY_PRESS) {
+				switch (eventContainer.code) {
+				case DMK_KEY_F: {
+					Audio::BasicAudioController audController("E:/Projects/Dynamik Engine/Dynamik/components/Audio/media/explosion.wav");
+					audController.isPaused = false;
+					audController.isLooped = false;
 
-			//Audio code
-			myEngine.addAudioController(*audController);
-			break;
+					//Audio code
+					myEngine.addAudioController(audController);
+					//delete audController;
+					break;
+				}
+				}
+			}
+			//if (eventContainer.eventType == DMKEventType::DMK_EVENT_TYPE_KEY_REPEAT) {
+			//	switch (eventContainer.code) {
+			//
+			//	}
+			//}
+			//if (eventContainer.eventType == DMKEventType::DMK_EVENT_TYPE_MOUSE_MOVED) {
+			//
+			//}
 		}
-		case DMK_KEY_SPACE:
-			break;
-		default:
-			break;
-		}
-
-		//EventDispatcher dispatcher(*event.event);
-		//
-		//DMK_CORE_INFO("Im on Event!");
-		//
-		//static Audio::BasicAudioController audController("media/shooting.mp3");
-		//
-		//KeyPressedEvent* kpe = nullptr;
-		//KeyReleasedEvent* kre;
-		//
-		//switch (event.type) {
-		//case KEY_PRESSED_EVENT:
-		//	*kpe = dynamic_cast<KeyPressedEvent&>(*event.event);
-		//	printf("%s\n", kpe->toString());
-		//	break;
-		//}
-		//
-		//printf("%d\n", event.event->getEventType());
-		//
-		//switch (event.event->getEventType()) {
-		//case EVENT_TYPE::keyPressed:
-		//	audController.isPaused = false;
-		//	myEngine.addAudioController(audController);
-		//	break;
-		//case EVENT_TYPE::keyReleased:
-		//	audController.isPaused = true;
-		//	break;
-		//}
-		//
-		//
 		//for (auto it = layerStack.end(); it != layerStack.begin();) {
 		//	(*--it)->onEvent(*event.event);
 		//	if (event.event->handled)
 		//		break;
-		//
-		//}
 	}
 
 	void Application::showProgress() {
@@ -169,8 +125,10 @@ namespace Dynamik {
 		};
 
 		while (!shouldClose) {
-			percentage = ((float)progress / 34.0) * 100.0;
+			percentage = ((float)progress / 19.0) * 100.0;
+#ifdef DMK_DEBUG
 			printf("\rProgress: %f%%\t%s", percentage, symbols[count].c_str());
+#endif
 			count++;
 
 			if (count > 3)	count = 0;
@@ -178,14 +136,18 @@ namespace Dynamik {
 			old = progress;
 			Sleep(100);
 		}
+#ifdef DMK_DEBUG
 		printf("\rProgress: %f%%\t%s\t\n", 100.0f, symbols[count].c_str());
 
 		printf("ADGR Initiated! Let the rendering begin!\n");
+#endif
 	}
 
 	void Application::getObjectPaths() {
+		gameObjects = scenes[sceneCount]->myGameObjects;
+
 		for (int itr = 0; itr < gameObjects.size(); itr++) {
-			GameObject* gameObject = &gameObjects[itr];
+			GameObject* gameObject = gameObjects[itr];
 
 			utils::daiManager fileManager;
 			fileManager.open(gameObject->myProperties.location + (
@@ -226,6 +188,40 @@ namespace Dynamik {
 				(fileManager.getData(utils::DMK_DAI_FILE_DATA_TYPE_FRAGMENT).size() > 0) ?
 				basePath + fileManager.getData(utils::DMK_DAI_FILE_DATA_TYPE_FRAGMENT)[0] : "NONE"
 				);	// fragment shader
+		}
+	}
+
+	void Application::loadObjectData() {
+		std::vector<std::future<void>> threads = {};
+		for (int i = 0; i < internalFormats.size(); i++) {
+			internalFormats[i].myVertexBufferObjects.resize(1);
+			internalFormats[i].myIndexBufferObjects.resize(1);
+			//internalFormats[i]->initVertedAndIndexBufferObjects(1);
+
+			DMKModelLoadInfo loadInfo = {};
+			loadInfo.path = internalFormats[i].myGameObject->myProperties.objectPath[0];
+			loadInfo.vertices = &internalFormats[i].myVertexBufferObjects[0];
+			loadInfo.indices = &internalFormats[i].myIndexBufferObjects[0];
+			loadInfo.vertexOffset = internalFormats[i].myGameObject->myProperties.transformProperties.location;
+
+			threads.push_back(std::async(std::launch::async, loadModel, loadInfo));
+		}
+	}
+
+	void Application::initRendererFormats() {
+		for (int i = 0; i < internalFormats.size(); i++) {
+			if ((internalFormats[i].myGameObject->myProperties.type == DMKObjectType::DMK_OBJECT_TYPE_STATIC_OBJECT)
+				|| (internalFormats[i].myGameObject->myProperties.type == DMKObjectType::DMK_OBJECT_TYPE_STATIC_OBJECT)
+				|| (internalFormats[i].myGameObject->myProperties.type == DMKObjectType::DMK_OBJECT_TYPE_INTERACTIVE_OBJECT)
+				|| (internalFormats[i].myGameObject->myProperties.type == DMKObjectType::DMK_OBJECT_TYPE_PLAYER)
+				|| (internalFormats[i].myGameObject->myProperties.type == DMKObjectType::DMK_OBJECT_TYPE_NPC)
+				|| (internalFormats[i].myGameObject->myProperties.type == DMKObjectType::DMK_OBJECT_TYPE_TEXTURE_UI)
+				|| (internalFormats[i].myGameObject->myProperties.type == DMKObjectType::DMK_OBJECT_TYPE_SKYBOX)
+				|| (internalFormats[i].myGameObject->myProperties.type == DMKObjectType::DMK_OBJECT_TYPE_SPRITES)
+				|| (internalFormats[i].myGameObject->myProperties.type == DMKObjectType::DMK_OBJECT_TYPE_FONT)
+				|| (internalFormats[i].myGameObject->myProperties.type == DMKObjectType::DMK_OBJECT_TYPE_PARTICLE)
+				)
+				rendererFormats.push_back(&ADGR::RendererFormat((InternalFormat*)&internalFormats[i]));
 		}
 	}
 }

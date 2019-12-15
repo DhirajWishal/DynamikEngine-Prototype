@@ -13,7 +13,7 @@ namespace Dynamik {
 				//std::vector<PointVertex> pointVertices = {};
 
 				VkBuffer* buffer = VK_NULL_HANDLE;
-				VkDeviceMemory* buffereMemory = VK_NULL_HANDLE;
+				VkDeviceMemory* bufferMemory = VK_NULL_HANDLE;
 			};
 
 			struct DMKVertexBufferDeleteInfo {

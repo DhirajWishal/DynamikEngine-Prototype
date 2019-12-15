@@ -45,8 +45,8 @@ project "Platform"
 	}
 
 	libdirs {
-		"$(SolutionDir)libs/GLFW/lib-vc2019",
-		"E:/Programming/SDKs/Vulkan/1.1.121.0/Lib"
+		"%{IncludeLib.GLFW}",
+		"%{IncludeLib.Vulkan}"
 	}
 
 	links { 

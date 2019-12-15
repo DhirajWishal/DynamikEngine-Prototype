@@ -10,6 +10,8 @@
 #include "src/engineInstance.h"
 #include "src/imports.h"
 
+#include "src/objectDefinitions.h"
+
 /* -----||||| MAIN LAUNCH SYSTEM |||||----- */
 
 #ifdef DMK_PLATFORM_WINDOWS
@@ -17,8 +19,6 @@
 int main(int argc, char** argv) {
 	try {
 		auto paths = getTexturePath(readFile("E:/Projects/Dynamik Engine/Dynamik/Application/paths.txt"));
-
-		std::vector<Dynamik::GameObject> gameObjects = {};
 
 		std::vector<std::vector<float>> locations = {
 			{0.0f,	0.0f,	0.0f},
@@ -60,20 +60,33 @@ int main(int argc, char** argv) {
 			Dynamik::DMKObjectType::DMK_OBJECT_TYPE_STATIC_OBJECT,
 		};
 
+		std::vector<mars> marses(paths.size());
+		std::vector<GameObject*> objects = {};
+
 		for (int i = 0; i < paths.size(); i++) {
 			Dynamik::GameObjectProperties props;
-			props.name = "Charlet";
+			props.name = "Mars";
 			props.ID = std::to_string(i);
 			props.location = paths[i];
 			props.transformProperties.location = locations[i];
 
-			gameObjects.push_back(charlet(props));
+			marses[i].myProperties = props;
 		}
 
-		auto application = Dynamik::createApplication(gameObjects);
-		application->run();
+		for (int i = 0; i < marses.size(); i++) {
+			objects.push_back(&marses[i]);
+		}
 
-		delete application;
+		sceneOne scene(objects);
+
+		std::vector<Scene*> scenes = { &scene };
+		//auto application = Dynamik::createApplication(scenes);
+		//application->run();
+
+		Engine myEngine(scenes);
+		myEngine.run();
+
+		//delete application;
 	}
 	catch (std::exception & e) {
 		std::cout << e.what();

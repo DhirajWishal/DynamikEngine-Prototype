@@ -45,6 +45,7 @@
 #include <thread>
 #include <future>
 #include <mutex>
+#include <deque>
 
 #include "core/log.h"
 #include "CentralDataHub.h"

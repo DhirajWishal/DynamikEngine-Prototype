@@ -20,6 +20,7 @@ namespace Dynamik {
 	struct Vertex {
 		glm::vec3 Position;
 		glm::vec3 Color;
+		//glm::vec3 Normals;
 		glm::vec2 TexCoordinates;
 
 		static std::vector<VkVertexInputBindingDescription> getBindingDescription(int bindCount);

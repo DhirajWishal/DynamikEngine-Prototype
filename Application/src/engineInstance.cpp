@@ -1,12 +1,12 @@
 #include "engineInstance.h"
 
-Engine::Engine(std::vector<Dynamik::GameObject>& gameObjects) : Application(gameObjects) {
+Engine::Engine(std::vector<Dynamik::Scene*>& scene) : Application(scene) {
 	//pushLayer(new layer);
 }
 
 Engine::~Engine() {
 }
 
-Dynamik::Application* Dynamik::createApplication(std::vector<Dynamik::GameObject>& gameObjects) {
-	return new Engine(gameObjects);
+Dynamik::Application* Dynamik::createApplication(std::vector<Dynamik::Scene*>& scene) {
+	return new Engine(scene);
 }

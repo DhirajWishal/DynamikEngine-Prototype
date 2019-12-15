@@ -45,88 +45,58 @@ namespace Dynamik {
 				m_window = container->window;
 			}
 
-			void window::eventCallbackFunc(KeyPressedEvent& event) {
-				myData.event = &event;
-			}
-
 			void window::framebufferResizeCallback(GLFWwindow* win, int width, int height) {
 				auto app = reinterpret_cast<window*>(glfwGetWindowUserPointer(win));
 				app->frameBufferResized = true;
 			}
 
-			void window::onKeyEvent(GLFWwindow* win, int keycode, int scancode,
-				int action, int mods) {
+			void window::onKeyEvent(GLFWwindow* win, int keycode, int scancode, int action, int mods) {
 				auto data = reinterpret_cast<window*>(glfwGetWindowUserPointer(win));
+				data->keyEventHandler(DMKEventType::DMK_EVENT_TYPE_KEY_REPEAT, -1);
 
 				switch (action) {
 				case DMK_PRESS: {
-					KeyPressedEvent kp_event(keycode, 0);
-					data->keyEventHandler(keycode);
+					data->keyEventHandler(DMKEventType::DMK_EVENT_TYPE_KEY_PRESS, keycode);
 
 					if (keycode == DMK_KEY_ESCAPE)
 						glfwSetWindowShouldClose(win, GL_TRUE);
-
 					break;
 				}
 				case DMK_BUTTON_RELEASE: {
-					KeyReleasedEvent kr_event(keycode);
-					data->kE.turnEventR = false;	// temp
-					data->kE.turnEventL = false;	// temp
-					data->kE.moveEventU = false;	// temp
-					data->kE.moveEventD = false;	// temp
-					data->kE.rotEventL = false;		// temp
-					data->kE.rotEventR = false;		// temp
-					data->kE.rotEventU = false;		// temp
-					data->kE.rotEventD = false;		// temp
-					data->kE.reCompileShaders = false;		// temp
-					data->keyCodeOne = NULL;
-
+					data->keyEventHandler(DMKEventType::DMK_EVENT_TYPE_KEY_RELEASE, keycode);
 					break;
 				}
 				case DMK_REPEAT: {
-					KeyPressedEvent krep_event(keycode, 1);
-					data->keyEventHandler(keycode);
-
+					data->keyEventHandler(DMKEventType::DMK_EVENT_TYPE_KEY_REPEAT, keycode, 1);
 					break;
 				}
-				default:
-					data->myData.event = nullptr;
-					break;
 				}
 			}
 
 			void window::onMouseButtonEvent(GLFWwindow* win, int button, int action, int mods) {
 				auto data = reinterpret_cast<window*>(glfwGetWindowUserPointer(win));
+				data->mouseButtonEvent(DMKEventType::DMK_EVENT_TYPE_UNKNOWN, -1);
 
 				switch (action) {
 				case DMK_PRESS: {
-					MouseButtonPressedEvent mbp_event(button);
-
+					data->mouseButtonEvent(DMKEventType::DMK_EVENT_TYPE_MOUSE_PRESS, button);
 					break;
 				}
 				case DMK_BUTTON_RELEASE: {
-					MouseButtonReleasedEvent mbr_event(button);
-
+					data->mouseButtonEvent(DMKEventType::DMK_EVENT_TYPE_MOUSE_RELEASE, button);
 					break;
 				}
-				default:
-					data->myData.event = nullptr;
-					break;
 				}
 			}
 
 			void window::onMouseScrolledEvent(GLFWwindow* win, double xOffset, double yOffset) {
 				auto data = reinterpret_cast<window*>(glfwGetWindowUserPointer(win));
-
-				MouseScrolledEvent event((float)xOffset, (float)yOffset);
+				data->mouseScrolledEvent(xOffset, yOffset);
 			}
 
 			void window::onCursorPosEvent(GLFWwindow* win, double xPos, double yPos) {
 				auto data = reinterpret_cast<window*>(glfwGetWindowUserPointer(win));
-				data->cE.x = (float)xPos;
-				data->cE.y = (float)yPos;
-
-				MouseMovedEvent event((float)xPos, (float)yPos);
+				data->mouseMovedEvent(xPos, yPos);
 			}
 
 			void window::onWindowCloseEvent(GLFWwindow* window) {
@@ -178,114 +148,36 @@ namespace Dynamik {
 				imageData.freeData(pixels);
 			}
 
-			keyEvent window::getKeyEvent() {
-				return kE;
+			void window::keyEventHandler(DMKEventType type, int keycode, int count) {
+				DMKEventContainer _localContainer = {};
+				_localContainer.eventType = type;
+				_localContainer.code = keycode;
+				_localContainer.count = count;
+				eventContainer.push_back(_localContainer);
 			}
 
-			cursorEvent window::getCursorEvent()
-			{
-				return cE;
+			void window::mouseButtonEvent(DMKEventType type, int keycode, int count) {
+				DMKEventContainer _localContainer = {};
+				_localContainer.eventType = type;
+				_localContainer.code = keycode;
+				_localContainer.count = count;
+				eventContainer.push_back(_localContainer);
 			}
 
-			void window::keyEventHandler(int keycode) {
-				switch (keycode) {
-				case DMK_KEY_A:
-					kE.moveEventD = true;
-					break;
-				case DMK_KEY_B:
-					break;
-				case DMK_KEY_C:
-					break;
-				case DMK_KEY_D:
-					kE.moveEventU = true;
-					break;
-				case DMK_KEY_E:
-					break;
-				case DMK_KEY_F:
-					keyCodeOne = keycode;
-					break;
-				case DMK_KEY_G:
-					break;
-				case DMK_KEY_H:
-					break;
-				case DMK_KEY_I:
-					break;
-				case DMK_KEY_J:
-					break;
-				case DMK_KEY_K:
-					break;
-				case DMK_KEY_L:
-					kE.reCompileShaders = true;
-					break;
-				case DMK_KEY_M:
-					break;
-				case DMK_KEY_N:
-					break;
-				case DMK_KEY_O:
-					break;
-				case DMK_KEY_P:
-					break;
-				case DMK_KEY_Q:
-					break;
-				case DMK_KEY_R:
-					break;
-				case DMK_KEY_S:
-					kE.turnEventR = true;
-					break;
-				case DMK_KEY_T:
-					break;
-				case DMK_KEY_U:
-					break;
-				case DMK_KEY_V:
-					break;
-				case DMK_KEY_W:
-					kE.turnEventL = true;
-					break;
-				case DMK_KEY_X:
-					break;
-				case DMK_KEY_Y:
-					break;
-				case DMK_KEY_Z:
-					break;
-				case DMK_KEY_0:
-					break;
-				case DMK_KEY_1:
-					break;
-				case DMK_KEY_2:
-					break;
-				case DMK_KEY_3:
-					break;
-				case DMK_KEY_4:
-					break;
-				case DMK_KEY_5:
-					break;
-				case DMK_KEY_6:
-					break;
-				case DMK_KEY_7:
-					break;
-				case DMK_KEY_8:
-					break;
-				case DMK_KEY_9:
-					break;
-				case DMK_KEY_UP:
-					kE.rotEventU = true;
-					break;
-				case DMK_KEY_DOWN:
-					//kE.rotEventD = true;
-					break;
-				case DMK_KEY_LEFT:
-					kE.rotEventL = true;
-					break;
-				case DMK_KEY_RIGHT:
-					kE.rotEventR = true;
-					break;
-				case DMK_KEY_SPACE:
-					kE.rotEventD = true;
-					break;
+			void window::mouseScrolledEvent(float xOffset, float yOffset) {
+				DMKEventContainer _localContainer = {};
+				_localContainer.eventType = DMKEventType::DMK_EVENT_TYPE_MOUSE_SCROLL;
+				_localContainer.xOffset = xOffset;
+				_localContainer.yOffset = yOffset;
+				eventContainer.push_back(_localContainer);
+			}
 
-				default:
-					break;
-				}
+			void window::mouseMovedEvent(float xOffset, float yOffset) {
+				DMKEventContainer _localContainer = {};
+				_localContainer.eventType = DMKEventType::DMK_EVENT_TYPE_MOUSE_MOVED;
+				_localContainer.xAxis = xOffset;
+				_localContainer.yAxis = yOffset;
+				eventContainer.push_back(_localContainer);
 			}
 		}
 	}

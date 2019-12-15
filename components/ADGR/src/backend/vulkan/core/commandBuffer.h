@@ -6,12 +6,15 @@
 #include "core/Buffer.h"
 
 #include "data structures/DMK_ADGR_DataStructures.h"
+#include "vulkanFormat.h"
+#include "core/data store/containers.h"
+#include "core/data store/objectSpecifications.h"
 
 namespace Dynamik {
 	namespace ADGR {
 		namespace core {
 			struct ADGRObjectRenderData {
-				DMK_ADGR_RENDERING_TECHNOLOGY renderingType = DMK_ADGR_VULKAN_RENDERER_INDEXED;
+				DMK_ADGR_RENDERING_TECHNOLOGY renderingType = DMK_ADGR_RENDERING_TECHNOLOGY::DMK_ADGR_RENDER_INDEXED;
 
 				std::vector<std::string> paths = {};
 				std::vector<Vertex> vertexBufferObject = {};
@@ -43,7 +46,7 @@ namespace Dynamik {
 			struct DMKBindCommandBufferInfo {
 				std::vector<VkFramebuffer> frameBuffers = {};
 
-				std::vector<ADGRObjectRenderData>* objectBindDatas = {};
+				std::vector<vulkanFormat>* objectBindDatas = {};
 
 				DMKVulkanSkyboxCommandBufferBindData skybox;
 			};

@@ -40,8 +40,8 @@ project "Sampler"
 	}
 
 	libdirs {
-		"$(SolutionDir)libs/GLFW/lib-vc2019",
-		"E:/Programming/Codes/Game Development/Libraries/VulkanSDK/1.1.108.0/Lib"
+		"%{IncludeLib.GLFW}",
+		"%{IncludeLib.Vulkan}"
 	}
 
 	links { 

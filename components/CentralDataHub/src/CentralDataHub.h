@@ -5,9 +5,6 @@
 
 #include "core/base/Manager.h"
 
-#include "core/objectSpecifications.h"
-#include "core/internalObjectFormat.h"
-
 #include "core/global/datatypes.h"
 #include "core/global/constants.h"
 

@@ -153,6 +153,9 @@
     <ClInclude Include="src\backend\vulkan\core\functions\textureFunctions.h">
       <Filter>src\backend\vulkan\core\functions</Filter>
     </ClInclude>
+    <ClInclude Include="src\backend\vulkan\core\glTexture.h">
+      <Filter>src\backend\vulkan\core</Filter>
+    </ClInclude>
     <ClInclude Include="src\backend\vulkan\core\indexBuffer.h">
       <Filter>src\backend\vulkan\core</Filter>
     </ClInclude>
@@ -160,9 +163,6 @@
       <Filter>src\backend\vulkan\core</Filter>
     </ClInclude>
     <ClInclude Include="src\backend\vulkan\core\manager.h">
-      <Filter>src\backend\vulkan\core</Filter>
-    </ClInclude>
-    <ClInclude Include="src\backend\vulkan\core\modelManager.h">
       <Filter>src\backend\vulkan\core</Filter>
     </ClInclude>
     <ClInclude Include="src\backend\vulkan\core\others\semaphores.h">
@@ -207,13 +207,10 @@
     <ClInclude Include="src\backend\vulkan\vulkanRenderer.h">
       <Filter>src\backend\vulkan</Filter>
     </ClInclude>
-    <ClInclude Include="src\backend\vulkan\vulkanRenderer2D.h">
-      <Filter>src\backend\vulkan</Filter>
-    </ClInclude>
-    <ClInclude Include="src\backend\vulkan\core\glTexture.h" />
+    <ClInclude Include="src\rendererFormat.h" />
+    <ClInclude Include="src\backend\vulkan\core\vulkanFormat.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp" />
     <ClCompile Include="src\Layers\layer.cpp">
       <Filter>src\Layers</Filter>
     </ClCompile>
@@ -259,6 +256,9 @@
     <ClCompile Include="src\backend\vulkan\core\functions\textureFunctions.cpp">
       <Filter>src\backend\vulkan\core\functions</Filter>
     </ClCompile>
+    <ClCompile Include="src\backend\vulkan\core\glTexture.cpp">
+      <Filter>src\backend\vulkan\core</Filter>
+    </ClCompile>
     <ClCompile Include="src\backend\vulkan\core\indexBuffer.cpp">
       <Filter>src\backend\vulkan\core</Filter>
     </ClCompile>
@@ -266,9 +266,6 @@
       <Filter>src\backend\vulkan\core</Filter>
     </ClCompile>
     <ClCompile Include="src\backend\vulkan\core\manager.cpp">
-      <Filter>src\backend\vulkan\core</Filter>
-    </ClCompile>
-    <ClCompile Include="src\backend\vulkan\core\modelManager.cpp">
       <Filter>src\backend\vulkan\core</Filter>
     </ClCompile>
     <ClCompile Include="src\backend\vulkan\core\others\semaphores.cpp">
@@ -313,10 +310,7 @@
     <ClCompile Include="src\backend\vulkan\vulkanRenderer.cpp">
       <Filter>src\backend\vulkan</Filter>
     </ClCompile>
-    <ClCompile Include="src\backend\vulkan\vulkanRenderer2D.cpp">
-      <Filter>src\backend\vulkan</Filter>
-    </ClCompile>
-    <ClCompile Include="src\backend\vulkan\core\glTexture.cpp" />
+    <ClCompile Include="src\rendererFormat.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="premake5.lua" />

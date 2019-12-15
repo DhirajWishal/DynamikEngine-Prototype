@@ -8,16 +8,16 @@
 #include "core/utils/DMK_Functions.h"
 
 #include "debugger.h"
-#include "GameObject/GameObject.h"
+#include "GameObject.h"
 
 //#include "imports.h"
 
 class Engine : public Dynamik::Application {
 public:
-	Engine(std::vector<Dynamik::GameObject>& gameObjects);
+	Engine(std::vector<Dynamik::Scene*>& scene);
 
 	~Engine();
 };
 
-Dynamik::Application* Dynamik::createApplication(std::vector<Dynamik::GameObject>& gameObjects);
+Dynamik::Application* Dynamik::createApplication(std::vector<Dynamik::Scene*>& scene);
 

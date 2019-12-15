@@ -17,8 +17,10 @@
 #include "core/backend.h"
 #include "core/data structures/DMK_ADGR_DataStructures.h"
 
-#include "GameObject/GameObject.h"
+#include "GameObject.h"
 #include "debugger.h"
+
+#include "core/data store/internalFormat.h"
 
 #define INC_PROGRESS					(*myProgress += 1)
 #define MULTIPLE_INC_PROGRESS(count)	for(int i_itr__ = 0; i_itr__ < count; i_itr__++) INC_PROGRESS
@@ -47,7 +49,7 @@ namespace Dynamik {
 			std::vector<VkDeviceMemory>* uniformBufferMemory = {};
 
 			uint32_t mipLevel = 1;
-			DMK_ADGR_RENDERING_TECHNOLOGY renderingType = DMK_ADGR_VULKAN_RENDERER_INDEXED;
+			DMK_ADGR_RENDERING_TECHNOLOGY renderingType = DMK_ADGR_RENDERING_TECHNOLOGY::DMK_ADGR_RENDER_INDEXED;
 		};
 
 		class vulkanRenderer {
@@ -55,9 +57,9 @@ namespace Dynamik {
 			vulkanRenderer();
 			~vulkanRenderer();
 
-			inline void setProgress(uint32_t* progress) {
-				myProgress = progress;
-			}
+			//inline void setProgress(uint32_t* progress) {
+			//	myProgress = progress;
+			//}
 
 			void init();
 			void drawFrame();
@@ -65,17 +67,15 @@ namespace Dynamik {
 
 			void recreateSwapChain();
 
-			void loadObject(DMKVulkanRendererLoadObjectInfo info);
-			inline void events() {
-				myWindow.pollEvents();
-			}
+			std::deque<DMKEventContainer> events();
 			inline bool closeEvent() { return myWindow.closeEvent(myManager.getResourceAddr<ADGRVulkanDataContainer>(DMK_CDH_MANAGER_RESOURCE_TYPE_VULKAN_DATA_CONTAINER, vulkanContainerIndex)); }
 
-			void setGameObjects(std::vector<GameObject>& gameObjects);
+			void setProgress(uint32_t* progress) {
+				myProgress = progress;
+			}
+			void setRendererFormats(std::vector<RendererFormat>& rendererFormats);
 			void setModelPaths(std::vector<std::string>& object, std::vector<std::vector<std::string>>& texture);
 			void setShaderPaths(std::string& vertex, std::string& fragment);
-
-			inline std::tuple<int, mouseEventData*> getEvent() { return myWindow.getEvent(); }
 
 			inline VkDevice getDevice() { return myManager.getResourceAddr<ADGRVulkanDataContainer>(DMK_CDH_MANAGER_RESOURCE_TYPE_VULKAN_DATA_CONTAINER, vulkanContainerIndex)->device; }
 
@@ -90,7 +90,6 @@ namespace Dynamik {
 
 			/* STAGE BASED INITIALIZATION(STARTUP) */
 			void initManagerFunctions();
-			void initGameObjects();
 			void initWindow();
 			void initInstance();
 			void initDebugger();
@@ -104,7 +103,8 @@ namespace Dynamik {
 			void initDepthBuffer();
 			void initFrameBuffers();
 			void initSkyboxsAndTextures();
-			void initCubemapAndModels();
+			//void initCubemapAndModels();
+			void initVertexAndIndexBuffers();
 			void initUniformBuffers();
 			void initDescriptorPoolsAndSets();
 			void initCommandBuffers();
@@ -117,8 +117,6 @@ namespace Dynamik {
 			void initCubemap(DMKObjectData* data);
 
 		private:
-			static void thread_third(DMKVulkanRendererLoadObjectInfo createInfo);	// models
-
 			// renderer core classes
 			core::window myWindow{};
 			core::instanceManager myInstance{};
@@ -131,7 +129,7 @@ namespace Dynamik {
 			core::depthBufferManager myDepthBufferManager{};
 			core::frameBufferManager myFrameBufferManager{};
 			core::textureManager myTextureManager{};
-			core::modelManager myModelManager{};
+			//core::modelManager myModelManager{};
 			core::vertexBufferManager myVertexBufferManager{};
 			core::indexBufferManager myIndexBufferManager{};
 			core::skybox mySkyboxManager{};
@@ -141,25 +139,17 @@ namespace Dynamik {
 			// main data manager
 			core::manager myManager{};
 
-			std::vector<DMKUniformBufferUpdateInfo> updateInfo = {};
-
 			uint32_t currentFrame = 0;
-			uint32_t myMipLevel = 1;
-
-			core::keyEvent myEvent{};
-			core::cursorEvent myCEvent{};
+			uint32_t vulkanFormatObjectsCount = 0;
 
 			uint32_t* myProgress = 0;
 
 			bool compileShaders = false;
 			bool enableVertexAndIndexClear = true;
 
-			int uniformCount = 3;
 			int vulkanContainerIndex = 0;
-
-			Debugger::benchmark::Profiler localProfiler;
 		};
 	}
 }
 
-#endif	//	_DMK_ADGR_VULKAN_RENDERER_H
+#endif	//	_DMK_ADGR_RENDER_H

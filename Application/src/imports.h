@@ -68,7 +68,7 @@ std::vector<std::string> getTexturePath(std::vector<char>& file) {
 //				Render data abstraction
 //	*/
 //
-//	std::vector<Dynamik::GameObject> gameObjects = {};
+//	std::vector<Dynamik::GameObject*> gameObjects = {};
 //
 //	std::vector<std::vector<float>> locations = {
 //		{0.0f,	0.0f,	0.0f},

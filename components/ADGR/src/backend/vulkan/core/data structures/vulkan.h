@@ -17,6 +17,18 @@
 #include <GLFW/glfw3.h>
 #include <vulkan/vulkan.h>
 #include <vector>
+#include <array>
+
+#define GLM_FORCE_RADIANS
+#define GLM_FORCE_DEPTH_ZERO_TO_ONE
+#define GLM_FORCE_DEFAULT_ALIGNED_GENTYPES
+#include <glm/glm.hpp>
+#include <glm/vec4.hpp>
+#include <glm/mat4x4.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+
+#define GLM_ENABLE_EXPERIMENTAL
+#include <glm/gtx/hash.hpp>
 
 #include "backend/vulkan/core/data structures/DMK_ADGR_DataStructures.h"
 #include "CentralDataHub.h"
@@ -30,19 +42,6 @@ namespace Dynamik {
 				DMK_ADGR_VULKAN_SHADER_STAGE_TESSELLATION = 1,	// tessellation shader
 				DMK_ADGR_VULKAN_SHADER_STAGE_GEOMETRY = 2,		// geometry shader
 				DMK_ADGR_VULKAN_SHADER_STAGE_FRAGMENT = 3		// fragment shader
-			};
-
-			/* RENDERING TECHNOLOGY ENUM */
-			enum DMK_ADGR_RENDERING_TECHNOLOGY {
-				DMK_ADGR_VULKAN_RENDERER_VERTEX = 0,					// Render individual vertexes
-				DMK_ADGR_VULKAN_RENDERER_INDEXED = 1,					// Render indexed vertexes
-				DMK_ADGR_VULKAN_RENDERER_INDIRECT = 2,					// Render indirectly (only if supported)
-				DMK_ADGR_VULKAN_RENDERER_INDEXED_INDIRECT = 3,			// Render indexed vertexes indirectly (only if supported)
-
-				DMK_ADGR_VULKAN_RENDERER_SKYBOX_VERTEX = 4,				// Render skybox individual vertexes
-				DMK_ADGR_VULKAN_RENDERER_SKYBOX_INDEXED = 5,			// Render skybox indexed vertexes
-				DMK_ADGR_VULKAN_RENDERER_SKYBOX_INDIRECT = 6,			// Render skybox indirectly (only if supported)
-				DMK_ADGR_VULKAN_RENDERER_SKYBOX_INDEXED_INDIRECT = 7	// Render skybox indexed vertexes indirectly (only if supported)
 			};
 
 			/* SWAPCHAIN DATA CONTAINER */
@@ -275,6 +274,8 @@ namespace Dynamik {
 				/* CORE MIP LEVELS */
 				float minMipLevel = 0.0f;												// Vulkan minimum mipmap level
 				float maxMipLevel = 0.0f;												// Vulkan maximum mipmap level
+			
+				std::array<glm::vec4, 6> pushConstants;
 			};
 		}
 	}

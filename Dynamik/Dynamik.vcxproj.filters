@@ -30,12 +30,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="GameLibraries\GameObject\GameObject.h">
-      <Filter>GameLibraries\GameObject</Filter>
-    </ClInclude>
-    <ClInclude Include="GameLibraries\Key Bindings\KeyBingings.h">
-      <Filter>GameLibraries\Key Bindings</Filter>
-    </ClInclude>
     <ClInclude Include="src\Dynamik.h">
       <Filter>src</Filter>
     </ClInclude>
@@ -75,6 +69,21 @@
     <ClInclude Include="src\dmkafx.h">
       <Filter>src</Filter>
     </ClInclude>
+    <ClInclude Include="GameLibraries\Data Types\Vertex.h" />
+    <ClInclude Include="GameLibraries\Data Types\Uniform.h" />
+    <ClInclude Include="src\core\modelManager.h" />
+    <ClInclude Include="src\core\data store\internalFormat.h" />
+    <ClInclude Include="src\core\data store\objectSpecifications.h" />
+    <ClInclude Include="src\core\data store\internalObjectFormat.h" />
+    <ClInclude Include="src\core\data store\containers.h" />
+    <ClInclude Include="GameLibraries\GameObject.h">
+      <Filter>GameLibraries\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="GameLibraries\KeyBingings.h">
+      <Filter>GameLibraries\Key Bindings</Filter>
+    </ClInclude>
+    <ClInclude Include="GameLibraries\Scene.h" />
+    <ClInclude Include="GameLibraries\Level.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\core\application.cpp">
@@ -101,6 +110,8 @@
     <ClCompile Include="src\dmkafx.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="src\core\modelManager.cpp" />
+    <ClCompile Include="src\core\data store\internalFormat.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="IMPORTANT.txt" />

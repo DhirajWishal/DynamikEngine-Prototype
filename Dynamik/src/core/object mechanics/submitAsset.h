@@ -4,8 +4,8 @@
 #define _DYNAMIK_SUBMIT_ASSETS_H
 
 #include <vector>
-#include "GameObject/GameObject.h"
-#include "Key Bindings/KeyBingings.h"
+#include "GameObject.h"
+#include "KeyBingings.h"
 
 namespace Dynamik {
 	struct InputContainer {

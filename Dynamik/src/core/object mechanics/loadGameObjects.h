@@ -4,7 +4,7 @@
 #define _DYNAMIK_LOAD_GAME_OBJECTS_H
 
 #include "submitAsset.h"
-#include "GameObject/GameObject.h"
+#include "GameObject.h"
 
 namespace Dynamik {
 	class InputLoader {

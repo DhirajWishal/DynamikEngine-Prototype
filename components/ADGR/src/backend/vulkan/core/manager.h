@@ -19,8 +19,9 @@
 
 #include "GLFW/glfw3.h"
 #include "data structures/vulkan.h"
-#include "GameObject/GameObject.h"
+#include "GameObject.h"
 #include "commandBuffer.h"
+#include "vulkanFormat.h"
 
 #include "core/log.h"
 
@@ -285,6 +286,9 @@ namespace Dynamik {
 					case DMK_CDH_MANAGER_RESOURCE_TYPE_GAME_OBJECT:
 						_returnData = &gameObjects;
 						break;
+					case DMK_CDH_MANAGER_RESOURCE_TYPE_VULKAN_OBJECT_FORMAT:
+						_returnData = &vulkanFormats;
+						break;
 					case DMK_CDH_MANAGER_RESOURCE_TYPE_OBJECT_DATA_CONTAINER:
 						_returnData = &objectDatas;
 						break;
@@ -374,6 +378,7 @@ namespace Dynamik {
 
 				_SET_VECTOR(DMKObjectData) objectDatas = {};
 				_SET_VECTOR(GameObject*) gameObjects = {};
+				_SET_VECTOR(vulkanFormat) vulkanFormats = {};
 				_SET_VECTOR(ADGRObjectRenderData) renderDatas = {};
 
 				_SET_VECTOR(std::string) modelPaths = {};

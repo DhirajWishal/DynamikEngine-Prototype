@@ -5,6 +5,7 @@
 
 #include "core.h"
 #include "src/Renderer.h"
+#include "src/rendererFormat.h"
 #include "src/Layers/layer.h"
 #include "src/Layers/layerStack.h"
 
@@ -12,13 +13,21 @@
 
 #include "Audio.h"
 
+#include "data store/internalFormat.h"
 #include "object mechanics/loadGameObjects.h"
+#include "Level.h"
 
 namespace Dynamik {
+	/* Local internal format instance */
+	class internalFormat : public InternalFormat {
+	public:
+		internalFormat(GameObject* object) : InternalFormat(object) {}
+		~internalFormat() {}
+	};
+
 	class DMK_API Application {
 	public:
-		Application();
-		Application(std::vector<GameObject>& gameObjects);
+		Application(std::vector<Scene*>& gameObjects);
 		virtual ~Application();
 
 		void run();
@@ -26,33 +35,39 @@ namespace Dynamik {
 		void pushLayer(ADGR::Layer* layer);
 		void pushOverlay(ADGR::Layer* layer);
 
-		void onEvent(int ked);
+		void onEvent(std::deque<DMKEventContainer> events);
 
 		static void showProgress();
 
 	private:
 		void getObjectPaths();
+		void loadObjectData();
+		void initRendererFormats();
 
 		bool initSuccessful = false;
 
 		ADGR::Renderer myRenderingEngine;
 
-		std::vector<GameObject> gameObjects = {};
+		std::vector<internalFormat> internalFormats = {};
+		std::vector<InternalFormat*> internalFormatsBase = {};
 
-		//Event& myEvent;
+		std::vector<const void*> references = {};
+
+		std::vector<Level*> levels = {};
+		std::vector<Scene*> scenes = {};
+		std::vector<GameObject*> gameObjects = {};
+		std::vector<ADGR::RendererFormat*> rendererFormats = {};
 
 		ADGR::layerStack layerStack;
 
-		InputLoader myLoader;
-
-		//inputHandler myInputHandler{ myEvent };
-
 		Audio::AudioEngine myEngine;
+
+		uint32_t sceneCount = 0;
 	};
 
 	// Defined by the Client
 	//Application* createApplication();
-	Application* createApplication(std::vector<Dynamik::GameObject>& gameObjects);
+	Application* createApplication(std::vector<Dynamik::Scene*>& gameObjects);
 }
 
 #define DYNAMIK_ENGINE_MAIN()																				\
@@ -60,7 +75,7 @@ int main(int argc, char** argv) {																			\
 	try {																									\
 		auto paths = getTexturePath(readFile("E:/Projects/Dynamik Engine/Dynamik/Application/paths.txt"));	\
 																											\
-		std::vector<Dynamik::GameObject> gameObjects = {};													\
+		std::vector<Dynamik::GameObject*> gameObjects = {};													\
 																											\
 		std::vector<std::vector<float>> locations = {														\
 			{0.0f,	0.0f,	0.0f},																			\

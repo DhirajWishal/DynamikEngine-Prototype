@@ -29,7 +29,7 @@
 #include "core/utils/dataStructures/heap.h"
 #include "core/utils/dataStructures/linkedLists.h"
 
-#include "GameObject/GameObject.h"
-#include "Key Bindings/KeyBingings.h"
+#include "GameObject.h"
+#include "KeyBingings.h"
 
 #endif // !_DYNAMIK_H

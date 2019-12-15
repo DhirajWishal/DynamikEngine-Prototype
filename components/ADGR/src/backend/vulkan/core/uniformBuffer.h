@@ -5,6 +5,8 @@
 
 #include "core/Buffer.h"
 
+#include "vulkanFormat.h"
+
 namespace Dynamik {
 	namespace ADGR {
 		namespace core {
@@ -69,6 +71,7 @@ namespace Dynamik {
 
 				void updateBuffer2D(ADGRVulkanDataContainer* container, DMKUniformBufferUpdateInfo* info);
 				void updateBuffer3D(ADGRVulkanDataContainer* container, DMKUniformBufferUpdateInfo* info);
+				void updateBuffer3D(ADGRVulkanDataContainer* container, std::deque<DMKEventContainer>& eventContainers, vulkanFormat* gameObject, uint32_t currentImage = 0);
 
 				void deleteBuffer(ADGRVulkanDataContainer* container, VkBuffer* buffer) override;
 

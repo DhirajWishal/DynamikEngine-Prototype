@@ -31,15 +31,19 @@ namespace Dynamik {
 		Renderer::~Renderer() {
 		}
 
-		void Renderer::initRenderer(initInfo::ADGR info) {
-			rendererCore.setModelPaths(info.modelPaths, info.texturePaths);
-			rendererCore.setProgress(info.progress);
+		void Renderer::setProgress(uint32_t* progress) {
+			rendererCore.setProgress(progress);
+		}
 
+		void Renderer::initRenderer() {
 			rendererCore.init();
 		}
 
-		void Renderer::getGameObjects(std::vector<GameObject>& gameObjects) {
-			rendererCore.setGameObjects(gameObjects);
+		void Renderer::setRendererFormats(std::vector<InternalFormat*>& internalFormats) {
+			for (int i = 0; i < internalFormats.size(); i++)
+				myRendererFormats.push_back(RendererFormat(internalFormats[i]));
+
+			rendererCore.setRendererFormats(myRendererFormats);
 		}
 
 		void Renderer::draw() {
@@ -58,23 +62,15 @@ namespace Dynamik {
 			return rendererCore.closeEvent();
 		}
 
-		std::tuple<int, mouseEventData*> Renderer::pollEvents() {
-			rendererCore.events();
-
-			int prop = NULL;
-
-			auto [ked, med] = rendererCore.getEvent();
-
-			if (ked != prop)
-				return rendererCore.getEvent();
-			return { NULL, nullptr };
-		}
-
 		void Renderer::idleCall() {
 			vkDeviceWaitIdle(rendererCore.getDevice());
 		}
 
 		void Renderer::bindKeys() {
+		}
+
+		std::deque<DMKEventContainer> Renderer::getEvents() {
+			return rendererCore.events();
 		}
 	}
 }

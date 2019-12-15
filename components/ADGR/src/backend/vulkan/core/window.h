@@ -4,9 +4,12 @@
 #define _DYNAMIK_ADGR_VULKAN_WINDOW_H
 
 #include "core/Window.h"
+#include <deque>
 
 #include "keyEvent.h"
 #include "mouseEvent.h"
+
+#include "CentralDataHub.h"
 
 namespace Dynamik {
 	namespace ADGR {
@@ -58,18 +61,21 @@ namespace Dynamik {
 				bool isFrameBufferResized() { return frameBufferResized; }
 				void frameBufferResizedUpdate(bool state) { frameBufferResized = state; }
 
-				keyEvent getKeyEvent();
-				cursorEvent getCursorEvent();
-
-				std::tuple<int, mouseEventData*> getEvent() {
-					std::tuple<int, mouseEventData*> data = { keyCodeOne, med };
-					return data;
+				std::deque<DMKEventContainer> getEventContainer() {
+					auto container = eventContainer;
+					eventContainer.clear();
+					return container;
 				}
+
 
 			private:
 				GLFWwindow* m_window = nullptr;
 
-				void keyEventHandler(int keycode);
+				std::deque<DMKEventContainer> eventContainer = {};
+				void keyEventHandler(DMKEventType type, int keycode = -1, int count = 0);
+				void mouseButtonEvent(DMKEventType type, int keycode = -1, int count = 0);
+				void mouseScrolledEvent(float xOffset = 0.0f, float yOffset = 0.0f);
+				void mouseMovedEvent(float xOffset = 0.0f, float yOffset = 0.0f);
 
 				using eventCallbackFunction = std::function<void(Event&, int)>;
 
@@ -86,30 +92,11 @@ namespace Dynamik {
 				static void onCursorPosEvent(GLFWwindow* window, double xPos, double yPos);
 				static void onWindowCloseEvent(GLFWwindow* window);
 
-				void eventCallbackFunc(KeyPressedEvent& event);
-				void eventCallbackFunc(KeyReleasedEvent& event);
-				void eventCallbackFunc(MouseButtonPressedEvent& event);
-				void eventCallbackFunc(MouseButtonReleasedEvent& event);
-				void eventCallbackFunc(MouseScrolledEvent& event);
-				void eventCallbackFunc(MouseMovedEvent& event);
-
-				void setEventCallback(const eventCallbackFunction& callback)
-				{
+				void setEventCallback(const eventCallbackFunction& callback) {
 					myEventCallbackFunction = callback;
 				}
 
 				eventCallbackFunction myEventCallbackFunction;
-
-				eventData myData = {};
-
-				keyEvent kE = {};
-				cursorEvent cE = {};
-
-				//codes
-				mouseEventData* med;
-				keyEventData* ked;
-
-				int keyCodeOne;
 			};
 		}
 	}

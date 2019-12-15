@@ -11,7 +11,7 @@ namespace Dynamik {
 	namespace ADGR {
 		namespace core {
 			struct ADGRObjectRenderData {
-				DMK_ADGR_RENDERING_TECHNOLOGY renderingType = DMK_ADGR_VULKAN_RENDERER_INDEXED;
+				DMK_ADGR_RENDERING_TECHNOLOGY renderingType = DMK_ADGR_RENDER_INDEXED;
 
 				std::vector<Vertex> vertexBufferObject = {};
 				std::vector<VkBuffer> vertexBuffers = {};

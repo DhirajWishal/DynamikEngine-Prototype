@@ -25,6 +25,8 @@
 #include <queue>
 #include <deque>
 
+#include <future>
+
 #ifdef DMK_PLATFORM_WINDOWS
 #include <fstream>
 

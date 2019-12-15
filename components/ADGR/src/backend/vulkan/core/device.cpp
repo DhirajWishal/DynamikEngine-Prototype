@@ -136,19 +136,30 @@ namespace Dynamik {
 				auto props = VkPhysicalDeviceProperties{};
 				vkGetPhysicalDeviceProperties(container->physicalDevice, &props);
 
-#if defined(DMK_DEBUG) || defined(DMK_RELEASE)
+#if defined(DMK_DEBUG)
 				printf("\n\t---------- VULKAN PHYSICAL DEVICE INFO ----------\n");
 				printf("API Version: %I32d\n", props.apiVersion);
 				printf("Driver Version: %I32d\n", props.driverVersion);
 				printf("Vendor ID: %I32d\n", props.vendorID);
 				printf("Device ID: %I32d\n", props.deviceID);
 
-				if (props.deviceType == VkPhysicalDeviceType::VK_PHYSICAL_DEVICE_TYPE_DISCRETE_GPU)
-					printf("Device Type: Discrete GPU (external)\n");
-				else if (props.deviceType == VkPhysicalDeviceType::VK_PHYSICAL_DEVICE_TYPE_INTEGRATED_GPU)
+				switch (props.deviceType) {
+				case VkPhysicalDeviceType::VK_PHYSICAL_DEVICE_TYPE_OTHER:
+					printf("Device Type: Other GPU\n");
+					break;
+				case VkPhysicalDeviceType::VK_PHYSICAL_DEVICE_TYPE_INTEGRATED_GPU:
 					printf("Device Type: Integrated GPU (onboard)\n");
-				else
+					break;
+				case VkPhysicalDeviceType::VK_PHYSICAL_DEVICE_TYPE_VIRTUAL_GPU:
+					printf("Device Type: Virtual GPU\n");
+					break;
+				case VkPhysicalDeviceType::VK_PHYSICAL_DEVICE_TYPE_CPU:
+					printf("Device Type: CPU\n");
+					break;
+				default:
 					printf("Device Type: *UNIDENTIFIED\n");
+					break;
+				}
 
 				printf("Device Name: %s\n", props.deviceName);
 				printf("\t-------------------------------------------------\n\n");

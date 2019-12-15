@@ -16,7 +16,6 @@
 #include "frameBuffer.h"
 #include "texture.h"
 #include "glTexture.h"
-#include "modelManager.h"
 #include "vertexBuffer.h"
 #include "indexBuffer.h"
 #include "skybox.h"
@@ -31,5 +30,7 @@
 
 #include "keyEvent.h"
 #include "mouseEvent.h"
+
+#include "vulkanFormat.h"
 
 #endif // !_DYNAMIK_ADGR_VULKAN_BACKEND_H

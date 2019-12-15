@@ -6,16 +6,23 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\engineInstance.h">
+      <Filter>src</Filter>
+    </ClInclude>
     <ClInclude Include="src\imports.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="src\engineInstance.h" />
+    <ClInclude Include="src\objectDefinitions.h">
+      <Filter>src</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="src\engineInstance.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="paths.txt" />
+    <ClCompile Include="src\engineInstance.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\objectDefinitions.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

@@ -17,8 +17,9 @@
 
 #include <string>
 #include <vector>
+#include <deque>
 
-//#include "GameObject/GameObject.h"
+#include "core//data store/containers.h"
 
 #define _SET_VECTOR(x)	std::vector<x>
 #define _SET_2D_VECTOR(x)	std::vector<std::vector<x>>
@@ -85,6 +86,9 @@ namespace Dynamik {
 				DMK_CDH_MANAGER_RESOURCE_TYPE_ICON,
 
 				DMK_CDH_MANAGER_RESOURCE_TYPE_GAME_OBJECT,
+				DMK_CDH_MANAGER_RESOURCE_TYPE_INTERNAL_OBJECT_FORMAT,
+				DMK_CDH_MANAGER_RESOURCE_TYPE_RENDERER_OBJECT_FORMAT,
+				DMK_CDH_MANAGER_RESOURCE_TYPE_VULKAN_OBJECT_FORMAT,
 				DMK_CDH_MANAGER_RESOURCE_TYPE_OBJECT_DATA_CONTAINER,
 				DMK_CDH_MANAGER_RESOURCE_TYPE_RENDER_DATA_CONTAINER,
 
@@ -104,6 +108,7 @@ namespace Dynamik {
 				DMK_CDH_MANAGER_RESOURCE_TYPE_EVENT_APPLICATION,
 				DMK_CDH_MANAGER_RESOURCE_TYPE_EVENT_KEYBOARD,
 				DMK_CDH_MANAGER_RESOURCE_TYPE_EVENT_MOUSE,
+				DMK_CDH_MANAGER_RESOURCE_TYPE_EVENT_CONTAINER,
 
 				// NETWORKING
 				DMK_CDH_MANAGER_RESOURCE_TYPE_SOCKET,
@@ -121,6 +126,12 @@ namespace Dynamik {
 				virtual ~Manager() {
 				}
 
+				// event manager
+				void addEvent(DMKEventContainer& event) { eventContainer.push_back(event); }
+				void setEventContainer(std::deque<DMKEventContainer>& container) { eventContainer = container; }
+				std::deque<DMKEventContainer> getEventContainer() { return eventContainer; }
+				std::deque<DMKEventContainer>* getEventContainerAddr() { return &eventContainer; }
+
 				// Global/ Public variable to store an address
 				const void* globalPointer = nullptr;
 
@@ -129,6 +140,7 @@ namespace Dynamik {
 
 				_SET_VECTOR(void*) global = {};
 				_SET_2D_VECTOR(void*) unknown = {};
+				std::deque<DMKEventContainer> eventContainer;
 			};
 		}
 	}

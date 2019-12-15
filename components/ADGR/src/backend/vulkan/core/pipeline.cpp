@@ -206,7 +206,7 @@ namespace Dynamik {
 					for (int i = 0; i <= info.pushConstantCount; i++) {
 						VkPushConstantRange pushConsInfo = {};
 						pushConsInfo.stageFlags = VK_SHADER_STAGE_VERTEX_BIT;
-						//pushConsInfo.size = sizeof(pushConstants);
+						pushConsInfo.size = sizeof(container->pushConstants);
 						pushConsInfo.offset = info.pushConstantOffset;
 
 						pushConstantInfos.push_back(pushConsInfo);

@@ -20,13 +20,17 @@ IncludeDir["glm"] = "$(SolutionDir)libs/glm"
 IncludeDir["stb"] = "$(SolutionDir)libs/stb-master"
 IncludeDir["tol"] = "$(SolutionDir)libs/tinyobjloader-master"
 IncludeDir["spdlog"] = "$(SolutionDir)Dynamik/lib/spdlog/include"
-IncludeDir["Vulkan"] = "E:/Programming/SDKs/Vulkan/1.1.121.0/Include"
+IncludeDir["Vulkan"] = "E:/Programming/SDKs/Vulkan/1.1.126.0/Include"
 --Include the Vulkan SDK Include path here
 IncludeDir["boost"] = "E:/Programming/Modules and Runtime/boost_1_70_0"
 IncludeDir["gil"] = "$(SolutionDir)libs/gil/boost"
 IncludeDir["jpeg"] = "$(SolutionDir)libs/gil/jpeg-6b"
 IncludeDir["irrKlang"] = "$(SolutionDir)/libs/irrKlang/include"
 IncludeDir["assimp"] = "$(SolutionDir)/libs/assimp"
+
+IncludeLib = {}
+IncludeLib["GLFW"] = "$(SolutionDir)libs/GLFW/lib-vc2019"
+IncludeLib["Vulkan"] = "E:/Programming/SDKs/Vulkan/1.1.126.0/Lib"
 
 --include "Launcher"
 include "components/ADGR"
@@ -93,8 +97,8 @@ project "Dynamik"
 	}
 
 	libdirs {
-		"$(SolutionDir)libs/GLFW/lib-vc2019",
-		"E:/Programming/SDKs/Vulkan/1.1.121.0/Lib"
+		"%{IncludeLib.GLFW}",
+		"%{IncludeLib.Vulkan}"
 	}
 
 	links { 

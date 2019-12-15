@@ -13,13 +13,15 @@
 #define _DYNAMIK_ADGR_RENDERER_H
 
 #include "backend/interface.h"
+#include "backend/vulkan/core/vulkanFormat.h"
 #include "core/core.h"
 
 #include "Platform.h"
 
-#include "GameObject/GameObject.h"
+#include "GameObject.h"
 #include "keyEvent.h"
 #include "mouseEvent.h"
+#include <deque>
 
 #include "core/utils/DMK_Descriptors.h"
 
@@ -30,8 +32,9 @@ namespace Dynamik {
 			Renderer();
 			~Renderer();
 
-			void initRenderer(initInfo::ADGR info);
-			void getGameObjects(std::vector<GameObject>& gameObjects);
+			void setProgress(uint32_t* progress);
+			void initRenderer();
+			void setRendererFormats(std::vector<InternalFormat*>& internalFormats);
 			void draw();
 
 			void run();
@@ -39,12 +42,14 @@ namespace Dynamik {
 			void end();
 
 			void bindKeys();
+			std::deque<DMKEventContainer> getEvents();
 
 			// core functions
 
 			bool getWindowCloseEvent();
-			std::tuple<int, mouseEventData*> pollEvents();
 			void idleCall();
+
+			std::vector<RendererFormat> myRendererFormats = {};
 		};
 	}
 }

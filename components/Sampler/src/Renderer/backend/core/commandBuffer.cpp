@@ -84,21 +84,21 @@ namespace Dynamik {
 							info.objectBindDatas[_itr].pipelineLayout, 0, 1, &info.objectBindDatas[_itr].descriptorSets[i], 0, nullptr);
 
 						// Render type selection
-						if (info.objectBindDatas[_itr].renderingType == DMK_ADGR_VULKAN_RENDERER_VERTEX) {		// Render as individual vertexes
+						if (info.objectBindDatas[_itr].renderingType == DMK_ADGR_RENDER_VERTEX) {		// Render as individual vertexes
 							// draw command
 							vkCmdDraw(container->commandBufferContainer.buffers[i], info.objectBindDatas[_itr].vertexCount, 1, 0, 1);
 						}
-						else if (info.objectBindDatas[_itr].renderingType == DMK_ADGR_VULKAN_RENDERER_INDEXED) {		// Render as individual indexes
+						else if (info.objectBindDatas[_itr].renderingType == DMK_ADGR_RENDER_INDEXED) {		// Render as individual indexes
 							// index buffer bind
 							vkCmdBindIndexBuffer(container->commandBufferContainer.buffers[i], info.objectBindDatas[_itr].indexBuffer, 0, VK_INDEX_TYPE_UINT32);
 
 							// draw command
 							vkCmdDrawIndexed(container->commandBufferContainer.buffers[i], info.objectBindDatas[_itr].indexCount, 1, 0, 0, 0);
 						}
-						else if (info.objectBindDatas[_itr].renderingType == DMK_ADGR_VULKAN_RENDERER_INDIRECT) {
+						else if (info.objectBindDatas[_itr].renderingType == DMK_ADGR_RENDER_INDIRECT) {
 
 						}
-						else if (info.objectBindDatas[_itr].renderingType == DMK_ADGR_VULKAN_RENDERER_INDEXED_INDIRECT) {
+						else if (info.objectBindDatas[_itr].renderingType == DMK_ADGR_RENDER_INDEXED_INDIRECT) {
 
 						}
 						else

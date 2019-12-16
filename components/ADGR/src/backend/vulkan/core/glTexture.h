@@ -10,7 +10,6 @@
 namespace Dynamik {
 	namespace ADGR {
 		namespace core {
-
 			class glTexture : public Core {
 			public:
 				glTexture(std::string& path);

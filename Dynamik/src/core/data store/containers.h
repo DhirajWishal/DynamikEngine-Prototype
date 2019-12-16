@@ -24,7 +24,6 @@ namespace Dynamik {
 	};
 
 	struct DMKEventSubSet {
-
 	};
 
 	struct DMKEventContainer {

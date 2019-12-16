@@ -20,4 +20,3 @@ namespace Dynamik {
 }
 
 #endif // !_DYNAMIK_LEVEL_H
-

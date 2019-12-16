@@ -13,8 +13,9 @@ namespace Dynamik {
 		class RendererFormat {
 		public:
 			RendererFormat(InternalFormat* format) : myInternalFormat(format) {}
-			virtual ~RendererFormat() {}
+			~RendererFormat() {}
 
+			// Internal formats
 			InternalFormat* myInternalFormat = nullptr;
 
 			// Rendering technology

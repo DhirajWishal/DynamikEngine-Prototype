@@ -69,7 +69,7 @@ namespace Dynamik {
 		void Renderer::bindKeys() {
 		}
 
-		std::deque<DMKEventContainer> Renderer::getEvents() {
+		std::deque<DMKEventContainer>* Renderer::getEvents() {
 			return rendererCore.events();
 		}
 	}

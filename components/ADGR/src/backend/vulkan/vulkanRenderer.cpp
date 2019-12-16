@@ -211,7 +211,7 @@ namespace Dynamik {
 		// draw frame
 		void vulkanRenderer::drawFrame() {
 #ifdef DMK_DEBUG
-			myFPSCal.getFPS();	// FPS calculator
+			//myFPSCal.getFPS();	// FPS calculator
 
  // ----------
 #endif
@@ -343,11 +343,11 @@ namespace Dynamik {
 		}
 
 		// events
-		std::deque<DMKEventContainer> vulkanRenderer::events() {
+		std::deque<DMKEventContainer>* vulkanRenderer::events() {
 			myWindow.pollEvents();
 			myManager.setEventContainer(myWindow.getEventContainer());
 
-			return *myManager.getEventContainerAddr();
+			return myManager.getEventContainerAddr();
 		}
 
 		void vulkanRenderer::setRendererFormats(std::vector<RendererFormat>& rendererFormats) {
@@ -437,7 +437,7 @@ namespace Dynamik {
 			DMKIndexBufferCreateInfo indexBufferInfo;
 			indexBufferInfo.buffer = info.buffer;
 			indexBufferInfo.buffereMemory = info.bufferMemory;
-			indexBufferInfo.indices = info.indexBufferObject;
+			indexBufferInfo.indices = *info.indexBufferObject;
 			myIndexBufferManager.createIndexBuffer(myManager.getResourceAddr<ADGRVulkanDataContainer>(DMK_CDH_MANAGER_RESOURCE_TYPE_VULKAN_DATA_CONTAINER, vulkanContainerIndex), indexBufferInfo);
 		}
 
@@ -521,7 +521,7 @@ namespace Dynamik {
 			for (int i = 0; i < data.size(); i++) {
 				// create vertexBuffer
 				DMKVulkanRendererCreateVertexBufferInfo vertBuffInfo;
-				vertBuffInfo.vertexBufferObject = *data[i].vertexBufferObject;
+				vertBuffInfo.vertexBufferObject = data[i].vertexBufferObject;
 				vertBuffInfo.buffer = &data[i].vertexBuffers->at(0);
 				vertBuffInfo.bufferMemory = &data[i].vertexBufferMemories->at(0);
 				createVertexBuffer(vertBuffInfo);
@@ -530,7 +530,7 @@ namespace Dynamik {
 
 				// create indexBuffer
 				DMKVulkanRendererCreateIndexBufferInfo idxBuffInfo;
-				idxBuffInfo.indexBufferObject = *data[i].indexBufferObject;
+				idxBuffInfo.indexBufferObject = data[i].indexBufferObject;
 				idxBuffInfo.buffer = data[i].indexBuffer;
 				idxBuffInfo.bufferMemory = data[i].indexBufferMemory;
 				createIndexBuffer(idxBuffInfo);
@@ -606,7 +606,7 @@ namespace Dynamik {
 				}
 
 				DMKVulkanRendererCreateVertexBufferInfo vertBuffInfo;
-				vertBuffInfo.vertexBufferObject = _localVertexBufferObject;
+				vertBuffInfo.vertexBufferObject = &_localVertexBufferObject;
 				vertBuffInfo.buffer = &data->vertexBuffers->at(itr);
 				vertBuffInfo.bufferMemory = &data->vertexBufferMemories->at(itr);
 				createVertexBuffer(vertBuffInfo);
@@ -879,7 +879,7 @@ namespace Dynamik {
 
 				// create vertexBuffer
 				DMKVulkanRendererCreateVertexBufferInfo vertBuffInfo;
-				vertBuffInfo.vertexBufferObject = myManager.getFullResourceAddr<vulkanFormat>(DMK_CDH_MANAGER_RESOURCE_TYPE_VULKAN_OBJECT_FORMAT)->at(i).myRendererFormat->myInternalFormat->myVertexBufferObjects[0];
+				vertBuffInfo.vertexBufferObject = &myManager.getFullResourceAddr<vulkanFormat>(DMK_CDH_MANAGER_RESOURCE_TYPE_VULKAN_OBJECT_FORMAT)->at(i).myRendererFormat->myInternalFormat->myVertexBufferObjects[0];
 				vertBuffInfo.buffer = &myManager.getFullResourceAddr<vulkanFormat>(DMK_CDH_MANAGER_RESOURCE_TYPE_VULKAN_OBJECT_FORMAT)->at(i).myVertexBuffers[0];
 				vertBuffInfo.bufferMemory = &myManager.getFullResourceAddr<vulkanFormat>(DMK_CDH_MANAGER_RESOURCE_TYPE_VULKAN_OBJECT_FORMAT)->at(i).myVertexBufferMemories[0];
 				createVertexBuffer(vertBuffInfo);
@@ -889,7 +889,7 @@ namespace Dynamik {
 
 				// create indexBuffer
 				DMKVulkanRendererCreateIndexBufferInfo idxBuffInfo;
-				idxBuffInfo.indexBufferObject = myManager.getFullResourceAddr<vulkanFormat>(DMK_CDH_MANAGER_RESOURCE_TYPE_VULKAN_OBJECT_FORMAT)->at(i).myRendererFormat->myInternalFormat->myIndexBufferObjects[0];
+				idxBuffInfo.indexBufferObject = &myManager.getFullResourceAddr<vulkanFormat>(DMK_CDH_MANAGER_RESOURCE_TYPE_VULKAN_OBJECT_FORMAT)->at(i).myRendererFormat->myInternalFormat->myIndexBufferObjects[0];
 				idxBuffInfo.buffer = &myManager.getFullResourceAddr<vulkanFormat>(DMK_CDH_MANAGER_RESOURCE_TYPE_VULKAN_OBJECT_FORMAT)->at(i).myIndexBuffers[0];
 				idxBuffInfo.bufferMemory = &myManager.getFullResourceAddr<vulkanFormat>(DMK_CDH_MANAGER_RESOURCE_TYPE_VULKAN_OBJECT_FORMAT)->at(i).myIndexBufferMemories[0];
 				createIndexBuffer(idxBuffInfo);

@@ -199,7 +199,7 @@ namespace Dynamik {
 					glm::vec3(0.0f, 0.0f, 1.0f));
 				ubo.proj = glm::perspective(glm::radians(45.0f), (float)container->swapchainContainer.swapchainExtent.width / (float)container->swapchainContainer.swapchainExtent.height, 0.001f, 10.0f);
 				ubo.proj[1][1] *= -1;
-				ubo.color = glm::vec3((256.0f / 256.0f), (256.0f / 256.0f), (256.0f / 256.0f));
+				//ubo.color = glm::vec3((256.0f / 256.0f), (256.0f / 256.0f), (256.0f / 256.0f));
 
 				void* data;
 				vkMapMemory(container->device, format->myUniformBufferMemories[currentImage], 0, sizeof(ubo), 0, &data);

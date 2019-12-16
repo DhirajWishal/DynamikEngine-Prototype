@@ -1,5 +1,8 @@
 #pragma once
 
+#ifndef _DYNAMIK_GAME_OBJECT_H
+#define _DYNAMIK_GAME_OBJECT_H
+
 /*
  GameObject data type for Dynamik Engine
 
@@ -10,9 +13,6 @@
 
  GameObject.h file.
 */
-
-#ifndef _DYNAMIK_GAME_OBJECT_H
-#define _DYNAMIK_GAME_OBJECT_H
 
 /* MAIN INCLUDES */
 #include <deque>
@@ -160,10 +160,10 @@ namespace Dynamik {
 		 - Lighting
 		 - Upload and Retrieval of data
 		 - Drawing of the selected file/ object
-		 * HEAP ALLOCATION IS OPTIONAL YET RECOMMENDED *
+		 * STACK ALLOCATION IS OPTIONAL YET RECOMMENDED *
 		 * PASS ALL VALUES BY REFERENCE (MEMORY AND CODE OPTIMIZATION) *
 		 - Asset files must be inside its own folder with a "modelData.dai" file stating the model and textures
-		 - In that file, models are stated as "M model.obj" and textures as "T texture.jpeg"
+		 - In that file, models are stated as "M model.obj" and textures as "I texture.jpeg"
 	*/
 	class GameObject {
 	public:

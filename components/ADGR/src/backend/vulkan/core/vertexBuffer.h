@@ -9,7 +9,7 @@ namespace Dynamik {
 	namespace ADGR {
 		namespace core {
 			struct DMKVertexBufferCreateInfo {
-				std::vector<Vertex> vertices = {};
+				std::vector<Vertex>* vertices = {};
 				//std::vector<PointVertex> pointVertices = {};
 
 				VkBuffer* buffer = VK_NULL_HANDLE;

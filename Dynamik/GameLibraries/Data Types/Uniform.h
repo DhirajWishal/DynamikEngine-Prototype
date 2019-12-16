@@ -5,7 +5,6 @@
 
 namespace Dynamik {
 	struct Uniform {
-
 	};
 }
 

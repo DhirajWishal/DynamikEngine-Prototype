@@ -25,20 +25,19 @@ namespace Dynamik {
 				if (localBuffer)
 					texData.freeData(localBuffer);
 			}
-			
-			glTexture::~glTexture(){
+
+			glTexture::~glTexture() {
 				glDeleteTextures(1, &rendererID);
 			}
-			
-			void glTexture::bind(unsigned int slot){
+
+			void glTexture::bind(unsigned int slot) {
 				//glActiveTexture()
 				glBindTexture(GL_TEXTURE_2D, rendererID);
 			}
-			
-			void glTexture::unBind(){
+
+			void glTexture::unBind() {
 				glBindTexture(GL_TEXTURE_2D, 0);
 			}
-
 		}
 	}
 }

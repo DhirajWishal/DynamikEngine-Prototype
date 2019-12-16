@@ -59,7 +59,6 @@ namespace Dynamik {
 			void beginProfiler(std::string fileName);
 			void writeToProfiler(const benchmarkResult& result);
 			void endProfiler();
-
 		}
 	}
 }
@@ -77,14 +76,14 @@ namespace Dynamik {
 #define DMK_DEBUGGER_PROFILER_TIMER_STOP(...) 	_##__VA_ARGS__.stopTimer()
 
 #else
-#define DMK_DEBUGGER_PROFILER_BEGIN(name)	
-#define DMK_DEBUGGER_PROFILER_BEGIN_PATH(name, path)	
-#define DMK_DEBUGGER_PROFILER_END 
+#define DMK_DEBUGGER_PROFILER_BEGIN(name)
+#define DMK_DEBUGGER_PROFILER_BEGIN_PATH(name, path)
+#define DMK_DEBUGGER_PROFILER_END
 
-#define DMK_DEBUGGER_SET_FUNCTION_NAME(...) 
-#define DMK_DEBUGGER_PROFILER_TIMER_INITIATE	
-#define DMK_DEBUGGER_PROFILER_TIMER_START(...) 	
-#define DMK_DEBUGGER_PROFILER_TIMER_STOP(...) 	
+#define DMK_DEBUGGER_SET_FUNCTION_NAME(...)
+#define DMK_DEBUGGER_PROFILER_TIMER_INITIATE
+#define DMK_DEBUGGER_PROFILER_TIMER_START(...)
+#define DMK_DEBUGGER_PROFILER_TIMER_STOP(...)
 
 #endif
 

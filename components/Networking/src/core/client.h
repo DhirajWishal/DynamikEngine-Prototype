@@ -15,7 +15,6 @@ namespace Dynamik {
 			int connect(std::string& ipAddress, int portNumber) override;
 
 		private:
-
 		};
 	}
 }

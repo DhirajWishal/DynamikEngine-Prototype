@@ -43,14 +43,14 @@ namespace Dynamik {
 				VkBuffer* buffer = VK_NULL_HANDLE;
 				VkDeviceMemory* bufferMemory = VK_NULL_HANDLE;
 
-				std::vector<Vertex> vertexBufferObject = {};
+				std::vector<Vertex>* vertexBufferObject = {};
 			};
 
 			struct DMKVulkanRendererCreateIndexBufferInfo {
 				VkBuffer* buffer = VK_NULL_HANDLE;
 				VkDeviceMemory* bufferMemory = VK_NULL_HANDLE;
 
-				std::vector<uint32_t> indexBufferObject = {};
+				std::vector<uint32_t>* indexBufferObject = {};
 			};
 
 			struct DMKVulkanRendererCreateUniformBufferInfo {

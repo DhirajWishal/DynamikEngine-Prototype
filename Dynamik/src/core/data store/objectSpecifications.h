@@ -120,7 +120,7 @@ namespace Dynamik {
 	/* KEY BINDINGS */
 	// Human Interfce Device(s) (HID) binding options:
 	enum class DMKHumanInterfaceDeviceBindingOptions {
-		DMK_HID_UNKNOWN,										
+		DMK_HID_UNKNOWN,
 		DMK_HID_KEY_BINDING_UNKNOWN,
 
 		DMK_HID_KEY_BINDING_MOUSE_BUTTON_RELEASE,

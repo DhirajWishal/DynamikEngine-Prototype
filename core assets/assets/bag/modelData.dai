@@ -1,2 +1,4 @@
 M mesh.obj
-T mesh.jpeg
+I mesh.jpeg
+V vert.spv
+F frag.spv

@@ -25,7 +25,7 @@ namespace Dynamik {
 
 				functions::createBuffer(bufferInfo);
 
-				void* data;
+				void* data = nullptr;
 				vkMapMemory(container->device, stagingBufferMemory, 0, bufferSize, 0, &data);
 				memcpy(data, info.indices.data(), (size_t)bufferSize);
 				vkUnmapMemory(container->device, stagingBufferMemory);

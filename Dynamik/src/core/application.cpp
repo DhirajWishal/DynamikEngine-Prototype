@@ -78,10 +78,10 @@ namespace Dynamik {
 		layerStack.pushOverLay(layer);
 	}
 
-	void Application::onEvent(std::deque<DMKEventContainer> events) {
-		for (int i = 0; i < events.size(); i++) {
-			DMKEventContainer eventContainer = events.back();
-			events.pop_back();
+	void Application::onEvent(std::deque<DMKEventContainer>* events) {
+		for (int i = 0; i < events->size(); i++) {
+			DMKEventContainer eventContainer = events->back();
+			events->pop_back();
 
 			if (eventContainer.eventType == DMKEventType::DMK_EVENT_TYPE_KEY_PRESS) {
 				switch (eventContainer.code) {

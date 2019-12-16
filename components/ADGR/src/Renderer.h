@@ -42,7 +42,7 @@ namespace Dynamik {
 			void end();
 
 			void bindKeys();
-			std::deque<DMKEventContainer> getEvents();
+			std::deque<DMKEventContainer>* getEvents();
 
 			// core functions
 

@@ -162,7 +162,7 @@
     <ProjectReference Include="..\Events\Events.vcxproj">
       <Project>{3A8963B1-262B-8E87-0FE6-A1DBFB2615D8}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\Managers\Managers.vcxproj">
+    <ProjectReference Include="..\Managers\components\Managers\Managers.vcxproj">
       <Project>{B34CFEBD-9F19-59C9-C832-4771B45E8E57}</Project>
     </ProjectReference>
     <ProjectReference Include="..\Debugger\Debugger.vcxproj">

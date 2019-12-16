@@ -153,6 +153,6 @@ namespace Dynamik {
 				profilerOutputFile.flush();
 				profilerOutputFile.close();
 			}
-}
+		}
 	}
 }

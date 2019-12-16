@@ -32,7 +32,6 @@ namespace Dynamik {
 		private:
 			void closeSocket(SOCKET& socket) override;
 			void cleanUp() override;
-
 		};
 	}
 }

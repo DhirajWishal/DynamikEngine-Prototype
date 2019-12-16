@@ -42,8 +42,7 @@ namespace Dynamik {
 			sound->setIsPaused(true);
 		}
 
-		void AudioObject::update()
-		{
+		void AudioObject::update() {
 			if (controller->shouldPlay()) play();
 			else pause();
 		}

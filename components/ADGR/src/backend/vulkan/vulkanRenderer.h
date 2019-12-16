@@ -9,7 +9,9 @@
  IDE:		MS Visual Studio Community 2019
 
  vulkanRenderer.h
-*/
+
+ * Commit convention: (Finalising Dynamik Engine Architecture: stage #)
+ */
 
 #ifndef _DYNAMIK_ADGR_VULKAN_RENDERER_H
 #define _DYNAMIK_ADGR_VULKAN_RENDERER_H
@@ -67,7 +69,7 @@ namespace Dynamik {
 
 			void recreateSwapChain();
 
-			std::deque<DMKEventContainer> events();
+			std::deque<DMKEventContainer>* events();
 			inline bool closeEvent() { return myWindow.closeEvent(myManager.getResourceAddr<ADGRVulkanDataContainer>(DMK_CDH_MANAGER_RESOURCE_TYPE_VULKAN_DATA_CONTAINER, vulkanContainerIndex)); }
 
 			void setProgress(uint32_t* progress) {
@@ -129,7 +131,6 @@ namespace Dynamik {
 			core::depthBufferManager myDepthBufferManager{};
 			core::frameBufferManager myFrameBufferManager{};
 			core::textureManager myTextureManager{};
-			//core::modelManager myModelManager{};
 			core::vertexBufferManager myVertexBufferManager{};
 			core::indexBufferManager myIndexBufferManager{};
 			core::skybox mySkyboxManager{};

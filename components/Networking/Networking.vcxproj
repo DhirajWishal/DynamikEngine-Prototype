@@ -152,7 +152,7 @@
     <ProjectReference Include="..\Platform\Platform.vcxproj">
       <Project>{2AC788B4-1694-E3BF-3FAD-D1672BD9184E}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\Managers\Managers.vcxproj">
+    <ProjectReference Include="..\Managers\components\Managers\Managers.vcxproj">
       <Project>{B34CFEBD-9F19-59C9-C832-4771B45E8E57}</Project>
     </ProjectReference>
     <ProjectReference Include="..\CentralDataHub\CentralDataHub.vcxproj">

@@ -35,7 +35,7 @@ namespace Dynamik {
 		void pushLayer(ADGR::Layer* layer);
 		void pushOverlay(ADGR::Layer* layer);
 
-		void onEvent(std::deque<DMKEventContainer> events);
+		void onEvent(std::deque<DMKEventContainer>* events);
 
 		static void showProgress();
 

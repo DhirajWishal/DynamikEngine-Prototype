@@ -76,7 +76,6 @@ namespace Dynamik {
 				void deleteBuffer(ADGRVulkanDataContainer* container, VkBuffer* buffer) override;
 
 			private:
-
 			};
 		}
 	}

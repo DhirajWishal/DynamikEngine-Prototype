@@ -32,13 +32,12 @@ namespace Dynamik {
 			virtual bool operator==(const Vertex& other) const {}
 		};
 
-		virtual std::vector<DMKVertexInputBindingDescription> getVertexInputBindingDescription(int bindCount) { 
+		virtual std::vector<DMKVertexInputBindingDescription> getVertexInputBindingDescription(int bindCount) {
 			return std::vector<DMKVertexInputBindingDescription>();
 		}
 		virtual std::vector<DMKVertexInputAttributeDescription> getVertexInputAttributeDescription() {
 			return std::vector<DMKVertexInputAttributeDescription>();
 		}
-
 	};
 }
 

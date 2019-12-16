@@ -201,14 +201,18 @@
     <ClInclude Include="src\backend\vulkan\core\vertexBuffer.h">
       <Filter>src\backend\vulkan\core</Filter>
     </ClInclude>
+    <ClInclude Include="src\backend\vulkan\core\vulkanFormat.h">
+      <Filter>src\backend\vulkan\core</Filter>
+    </ClInclude>
     <ClInclude Include="src\backend\vulkan\core\window.h">
       <Filter>src\backend\vulkan\core</Filter>
     </ClInclude>
     <ClInclude Include="src\backend\vulkan\vulkanRenderer.h">
       <Filter>src\backend\vulkan</Filter>
     </ClInclude>
-    <ClInclude Include="src\rendererFormat.h" />
-    <ClInclude Include="src\backend\vulkan\core\vulkanFormat.h" />
+    <ClInclude Include="src\rendererFormat.h">
+      <Filter>src</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Layers\layer.cpp">
@@ -310,7 +314,9 @@
     <ClCompile Include="src\backend\vulkan\vulkanRenderer.cpp">
       <Filter>src\backend\vulkan</Filter>
     </ClCompile>
-    <ClCompile Include="src\rendererFormat.cpp" />
+    <ClCompile Include="src\rendererFormat.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="premake5.lua" />

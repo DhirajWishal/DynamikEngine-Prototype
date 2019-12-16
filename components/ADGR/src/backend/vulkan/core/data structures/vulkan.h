@@ -274,7 +274,7 @@ namespace Dynamik {
 				/* CORE MIP LEVELS */
 				float minMipLevel = 0.0f;												// Vulkan minimum mipmap level
 				float maxMipLevel = 0.0f;												// Vulkan maximum mipmap level
-			
+
 				std::array<glm::vec4, 6> pushConstants;
 			};
 		}

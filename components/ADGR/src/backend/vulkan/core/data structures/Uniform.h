@@ -9,7 +9,6 @@ namespace Dynamik {
 				alignas(16) glm::mat4 model;
 				glm::mat4 view;
 				glm::mat4 proj;
-				glm::vec3 color;
 			};
 		}
 	}

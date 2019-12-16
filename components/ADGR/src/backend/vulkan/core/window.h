@@ -67,7 +67,6 @@ namespace Dynamik {
 					return container;
 				}
 
-
 			private:
 				GLFWwindow* m_window = nullptr;
 

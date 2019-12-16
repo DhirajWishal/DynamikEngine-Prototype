@@ -149,14 +149,14 @@
     <ClInclude Include="GameLibraries\KeyBingings.h" />
     <ClInclude Include="GameLibraries\Level.h" />
     <ClInclude Include="GameLibraries\Scene.h" />
+    <ClInclude Include="src\Dynamik.h" />
+    <ClInclude Include="src\core\application.h" />
+    <ClInclude Include="src\core\core.h" />
     <ClInclude Include="src\core\data store\containers.h" />
     <ClInclude Include="src\core\data store\internalFormat.h" />
     <ClInclude Include="src\core\data store\internalObjectFormat.h" />
     <ClInclude Include="src\core\data store\objectSpecifications.h" />
     <ClInclude Include="src\core\modelManager.h" />
-    <ClInclude Include="src\Dynamik.h" />
-    <ClInclude Include="src\core\application.h" />
-    <ClInclude Include="src\core\core.h" />
     <ClInclude Include="src\core\object mechanics\loadGameObjects.h" />
     <ClInclude Include="src\core\object mechanics\submitAsset.h" />
     <ClInclude Include="src\core\utils\DMK_Descriptors.h" />

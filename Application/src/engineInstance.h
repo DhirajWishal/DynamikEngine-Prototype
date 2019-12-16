@@ -20,4 +20,3 @@ public:
 };
 
 Dynamik::Application* Dynamik::createApplication(std::vector<Dynamik::Scene*>& scene);
-

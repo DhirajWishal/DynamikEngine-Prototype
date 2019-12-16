@@ -80,7 +80,6 @@ namespace Dynamik {
 		void server::startListning() {
 			// Receive until the peer shuts down the connection
 			do {
-
 				iResult = recv(clientSocket, recvbuf, recvbuflen, 0);
 				if (iResult > 0) {
 					DMK_CORE_INFO("Bytes received: " + std::to_string(iResult));
@@ -101,7 +100,6 @@ namespace Dynamik {
 					closeSocket(clientSocket);
 					cleanUp();
 				}
-
 			} while (iResult > 0);
 		}
 

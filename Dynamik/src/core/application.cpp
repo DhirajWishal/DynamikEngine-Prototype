@@ -192,19 +192,27 @@ namespace Dynamik {
 	}
 
 	void Application::loadObjectData() {
-		std::vector<std::future<void>> threads = {};
+		{
+			std::vector<std::future<void>> threads = {};
+			for (int i = 0; i < internalFormats.size(); i++) {
+				internalFormats[i].myVertexBufferObjects.resize(1);
+				internalFormats[i].myIndexBufferObjects.resize(1);
+
+				DMKModelLoadInfo loadInfo = {};
+				loadInfo.path = internalFormats[i].myGameObject->myProperties.objectPath[0];
+				loadInfo.vertices = &internalFormats[i].myVertexBufferObjects[0];
+				loadInfo.indices = &internalFormats[i].myIndexBufferObjects[0];
+				loadInfo.vertexOffset = internalFormats[i].myGameObject->myProperties.transformProperties.location;
+
+				threads.push_back(std::async(std::launch::async, loadModel, loadInfo));
+			}
+		}
+
 		for (int i = 0; i < internalFormats.size(); i++) {
-			internalFormats[i].myVertexBufferObjects.resize(1);
-			internalFormats[i].myIndexBufferObjects.resize(1);
-			//internalFormats[i]->initVertedAndIndexBufferObjects(1);
-
-			DMKModelLoadInfo loadInfo = {};
-			loadInfo.path = internalFormats[i].myGameObject->myProperties.objectPath[0];
-			loadInfo.vertices = &internalFormats[i].myVertexBufferObjects[0];
-			loadInfo.indices = &internalFormats[i].myIndexBufferObjects[0];
-			loadInfo.vertexOffset = internalFormats[i].myGameObject->myProperties.transformProperties.location;
-
-			threads.push_back(std::async(std::launch::async, loadModel, loadInfo));
+			internalFormats[i].myVertexCounts.resize(1);
+			internalFormats[i].myVertexCounts[0] = internalFormats[i].myVertexBufferObjects[0].size();
+			internalFormats[i].myIndexCounts.resize(1);
+			internalFormats[i].myIndexCounts[0] = internalFormats[i].myIndexBufferObjects[0].size();
 		}
 	}
 

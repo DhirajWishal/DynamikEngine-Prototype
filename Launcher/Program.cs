@@ -22,7 +22,7 @@ namespace Launcher
 
             string command = Console.ReadLine();
 
-            if(command == "Y")
+            if (command == "Y")
             {
             }
         }

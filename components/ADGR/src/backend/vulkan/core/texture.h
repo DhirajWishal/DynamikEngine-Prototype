@@ -26,10 +26,6 @@ namespace Dynamik {
 
 				uint32_t mipLevels = 1;
 				VkImageAspectFlags flags = 0;
-
-				DMKInitTextureImageViewsInfo(
-					VkImageAspectFlags flgs = VK_IMAGE_ASPECT_COLOR_BIT
-				) : flags(flgs) {}
 			};
 
 			struct DMKInitTextureSamplerInfo {
@@ -42,17 +38,6 @@ namespace Dynamik {
 				VkSamplerAddressMode modeU = VK_SAMPLER_ADDRESS_MODE_REPEAT;
 				VkSamplerAddressMode modeV = VK_SAMPLER_ADDRESS_MODE_REPEAT;
 				VkSamplerAddressMode modeW = VK_SAMPLER_ADDRESS_MODE_REPEAT;
-
-				DMKInitTextureSamplerInfo(
-					VkFilter mag = VK_FILTER_LINEAR,
-					VkFilter min = VK_FILTER_LINEAR,
-
-					VkSamplerAddressMode mode1 = VK_SAMPLER_ADDRESS_MODE_REPEAT,
-					VkSamplerAddressMode mode2 = VK_SAMPLER_ADDRESS_MODE_REPEAT,
-					VkSamplerAddressMode mode3 = VK_SAMPLER_ADDRESS_MODE_REPEAT
-				) :
-					magFilter(mag), minFilter(min),
-					modeU(mode1), modeV(mode2), modeW(mode3) {}
 			};
 
 			struct DMKTextureDeleteInfo {

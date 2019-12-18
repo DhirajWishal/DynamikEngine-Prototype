@@ -14,33 +14,6 @@ namespace Dynamik {
 		return bindingDescription;
 	}
 
-	//std::vector<std::array<VkVertexInputAttributeDescription, 3>> Vertex::getAttributeDescriptions(int bindCount) {
-	//	std::vector<std::array<VkVertexInputAttributeDescription, 3>> attribDesc;
-	//
-	//	for (int i = 0; i < bindCount; i++) {
-	//		std::array<VkVertexInputAttributeDescription, 3> attributeDescriptions = {};
-	//
-	//		attributeDescriptions[0].binding = i;
-	//		attributeDescriptions[0].location = (i == 1) ? 0 : 3 ;
-	//		attributeDescriptions[0].format = VK_FORMAT_R32G32B32_SFLOAT;
-	//		attributeDescriptions[0].offset = offsetof(Vertex, Position);
-	//
-	//		attributeDescriptions[1].binding = i;
-	//		attributeDescriptions[1].location = (i == 1) ? 1 : 4;
-	//		attributeDescriptions[1].format = VK_FORMAT_R32G32B32_SFLOAT;
-	//		attributeDescriptions[1].offset = offsetof(Vertex, Color);
-	//
-	//		attributeDescriptions[2].binding = i;
-	//		attributeDescriptions[2].location = (i == 1) ? 2 : 5;
-	//		attributeDescriptions[2].format = VK_FORMAT_R32G32_SFLOAT;
-	//		attributeDescriptions[2].offset = offsetof(Vertex, TexCoordinates);
-	//
-	//		attribDesc.push_back(attributeDescriptions);
-	//	}
-	//
-	//	return attribDesc;
-	//}
-
 	std::vector<VkVertexInputAttributeDescription> Vertex::getAttributeDescriptions(int bindCount) {
 		std::vector<VkVertexInputAttributeDescription> attributeDescriptions(3);
 

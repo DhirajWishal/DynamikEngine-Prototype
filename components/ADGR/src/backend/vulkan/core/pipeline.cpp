@@ -11,94 +11,87 @@ namespace Dynamik {
 			std::pair<VkPipeline, VkPipelineLayout> pipeline::init(ADGRVulkanDataContainer* container, DMKPipelineInitInfo info) {
 				/* INIT RENDER PASS */
 				VkRenderPass renderPass = VK_NULL_HANDLE;
-				if (container->renderPass == VK_NULL_HANDLE) {
-					// attachment descriptions
-					VkAttachmentDescription colorAttachment = {};
-					colorAttachment.format = container->swapchainContainer.swapchainImageFormat;
-					colorAttachment.samples = container->msaaSamples;
-					colorAttachment.loadOp = VK_ATTACHMENT_LOAD_OP_CLEAR;
-					colorAttachment.storeOp = VK_ATTACHMENT_STORE_OP_STORE;
-					colorAttachment.stencilLoadOp = VK_ATTACHMENT_LOAD_OP_DONT_CARE;
-					colorAttachment.stencilStoreOp = VK_ATTACHMENT_STORE_OP_DONT_CARE;
-					colorAttachment.initialLayout = VK_IMAGE_LAYOUT_UNDEFINED;
-					colorAttachment.finalLayout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
+				// attachment descriptions
+				VkAttachmentDescription colorAttachment = {};
+				colorAttachment.format = container->swapchainContainer.swapchainImageFormat;
+				colorAttachment.samples = container->msaaSamples;
+				colorAttachment.loadOp = VK_ATTACHMENT_LOAD_OP_CLEAR;
+				colorAttachment.storeOp = VK_ATTACHMENT_STORE_OP_STORE;
+				colorAttachment.stencilLoadOp = VK_ATTACHMENT_LOAD_OP_DONT_CARE;
+				colorAttachment.stencilStoreOp = VK_ATTACHMENT_STORE_OP_DONT_CARE;
+				colorAttachment.initialLayout = VK_IMAGE_LAYOUT_UNDEFINED;
+				colorAttachment.finalLayout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
 
-					VkAttachmentDescription depthAttachment = {};
-					depthAttachment.format = findDepthFormat(container->physicalDevice);
-					depthAttachment.samples = container->msaaSamples;
-					depthAttachment.loadOp = VK_ATTACHMENT_LOAD_OP_CLEAR;
-					depthAttachment.storeOp = VK_ATTACHMENT_STORE_OP_DONT_CARE;
-					depthAttachment.stencilLoadOp = VK_ATTACHMENT_LOAD_OP_DONT_CARE;
-					depthAttachment.stencilStoreOp = VK_ATTACHMENT_STORE_OP_DONT_CARE;
-					depthAttachment.initialLayout = VK_IMAGE_LAYOUT_UNDEFINED;
-					depthAttachment.finalLayout = VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL;
+				VkAttachmentDescription depthAttachment = {};
+				depthAttachment.format = findDepthFormat(container->physicalDevice);
+				depthAttachment.samples = container->msaaSamples;
+				depthAttachment.loadOp = VK_ATTACHMENT_LOAD_OP_CLEAR;
+				depthAttachment.storeOp = VK_ATTACHMENT_STORE_OP_DONT_CARE;
+				depthAttachment.stencilLoadOp = VK_ATTACHMENT_LOAD_OP_DONT_CARE;
+				depthAttachment.stencilStoreOp = VK_ATTACHMENT_STORE_OP_DONT_CARE;
+				depthAttachment.initialLayout = VK_IMAGE_LAYOUT_UNDEFINED;
+				depthAttachment.finalLayout = VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL;
 
-					VkAttachmentDescription colorAttachmentResolve = {};
-					colorAttachmentResolve.format = container->swapchainContainer.swapchainImageFormat;
-					colorAttachmentResolve.samples = VK_SAMPLE_COUNT_1_BIT;
-					colorAttachmentResolve.loadOp = VK_ATTACHMENT_LOAD_OP_DONT_CARE;
-					colorAttachmentResolve.storeOp = VK_ATTACHMENT_STORE_OP_STORE;
-					colorAttachmentResolve.stencilLoadOp = VK_ATTACHMENT_LOAD_OP_DONT_CARE;
-					colorAttachmentResolve.stencilStoreOp = VK_ATTACHMENT_STORE_OP_DONT_CARE;
-					colorAttachmentResolve.initialLayout = VK_IMAGE_LAYOUT_UNDEFINED;
-					colorAttachmentResolve.finalLayout = VK_IMAGE_LAYOUT_PRESENT_SRC_KHR;
+				VkAttachmentDescription colorAttachmentResolve = {};
+				colorAttachmentResolve.format = container->swapchainContainer.swapchainImageFormat;
+				colorAttachmentResolve.samples = VK_SAMPLE_COUNT_1_BIT;
+				colorAttachmentResolve.loadOp = VK_ATTACHMENT_LOAD_OP_DONT_CARE;
+				colorAttachmentResolve.storeOp = VK_ATTACHMENT_STORE_OP_STORE;
+				colorAttachmentResolve.stencilLoadOp = VK_ATTACHMENT_LOAD_OP_DONT_CARE;
+				colorAttachmentResolve.stencilStoreOp = VK_ATTACHMENT_STORE_OP_DONT_CARE;
+				colorAttachmentResolve.initialLayout = VK_IMAGE_LAYOUT_UNDEFINED;
+				colorAttachmentResolve.finalLayout = VK_IMAGE_LAYOUT_PRESENT_SRC_KHR;
 
-					// attachment references
-					VkAttachmentReference colorAttachmentRef = {};
-					colorAttachmentRef.attachment = 0;
-					colorAttachmentRef.layout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
+				// attachment references
+				VkAttachmentReference colorAttachmentRef = {};
+				colorAttachmentRef.attachment = 0;
+				colorAttachmentRef.layout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
 
-					VkAttachmentReference depthAttachmentRef = {};
-					depthAttachmentRef.attachment = 1;
-					depthAttachmentRef.layout = VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL;
+				VkAttachmentReference depthAttachmentRef = {};
+				depthAttachmentRef.attachment = 1;
+				depthAttachmentRef.layout = VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL;
 
-					VkAttachmentReference colorAttachmentResolveRef = {};
-					colorAttachmentResolveRef.attachment = 2;
-					colorAttachmentResolveRef.layout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
+				VkAttachmentReference colorAttachmentResolveRef = {};
+				colorAttachmentResolveRef.attachment = 2;
+				colorAttachmentResolveRef.layout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
 
-					// sub passes
-					VkSubpassDescription subpass = {};
-					subpass.pipelineBindPoint = VK_PIPELINE_BIND_POINT_GRAPHICS;
-					subpass.colorAttachmentCount = 1;
-					subpass.pColorAttachments = &colorAttachmentRef;
-					subpass.pDepthStencilAttachment = &depthAttachmentRef;
-					subpass.pResolveAttachments = &colorAttachmentResolveRef;
+				// sub passes
+				VkSubpassDescription subpass = {};
+				subpass.pipelineBindPoint = VK_PIPELINE_BIND_POINT_GRAPHICS;
+				subpass.colorAttachmentCount = 1;
+				subpass.pColorAttachments = &colorAttachmentRef;
+				subpass.pDepthStencilAttachment = &depthAttachmentRef;
+				subpass.pResolveAttachments = &colorAttachmentResolveRef;
 
-					VkSubpassDependency dependency = {};
-					dependency.srcSubpass = VK_SUBPASS_EXTERNAL;
-					dependency.dstSubpass = 0;
-					dependency.srcStageMask = VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT;
-					dependency.srcAccessMask = 0;
-					dependency.dstStageMask = VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT;
-					dependency.dstAccessMask = VK_ACCESS_COLOR_ATTACHMENT_READ_BIT | VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT;
+				VkSubpassDependency dependency = {};
+				dependency.srcSubpass = VK_SUBPASS_EXTERNAL;
+				dependency.dstSubpass = 0;
+				dependency.srcStageMask = VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT;
+				dependency.srcAccessMask = 0;
+				dependency.dstStageMask = VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT;
+				dependency.dstAccessMask = VK_ACCESS_COLOR_ATTACHMENT_READ_BIT | VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT;
 
-					// render pass info
-					std::array<VkAttachmentDescription, 3> attachments = { colorAttachment, depthAttachment, colorAttachmentResolve };
-					VkRenderPassCreateInfo renderPassInfo = {};
-					renderPassInfo.sType = VK_STRUCTURE_TYPE_RENDER_PASS_CREATE_INFO;
-					renderPassInfo.attachmentCount = static_cast<uint32_t>(attachments.size());
-					renderPassInfo.pAttachments = attachments.data();
-					renderPassInfo.subpassCount = 1;
-					renderPassInfo.pSubpasses = &subpass;
-					renderPassInfo.dependencyCount = 1;
-					renderPassInfo.pDependencies = &dependency;
+				// render pass info
+				std::array<VkAttachmentDescription, 3> attachments = { colorAttachment, depthAttachment, colorAttachmentResolve };
+				VkRenderPassCreateInfo renderPassInfo = {};
+				renderPassInfo.sType = VK_STRUCTURE_TYPE_RENDER_PASS_CREATE_INFO;
+				renderPassInfo.attachmentCount = static_cast<uint32_t>(attachments.size());
+				renderPassInfo.pAttachments = attachments.data();
+				renderPassInfo.subpassCount = 1;
+				renderPassInfo.pSubpasses = &subpass;
+				renderPassInfo.dependencyCount = 1;
+				renderPassInfo.pDependencies = &dependency;
 
-					// create the render pass
-					if (vkCreateRenderPass(container->device, &renderPassInfo, nullptr, &renderPass) != VK_SUCCESS)
-						DMK_CORE_FATAL("failed to create render pass!");
-					container->renderPass = renderPass;
-				}
-				else {
-					renderPass = container->renderPass;
-				}
+				// create the render pass
+				if (vkCreateRenderPass(container->device, &renderPassInfo, nullptr, &renderPass) != VK_SUCCESS)
+					DMK_CORE_FATAL("failed to create render pass!");
 
 				/* INIT PIPELINE */
-				VkPipelineVertexInputStateCreateInfo vertexInputInfo = {};
-				vertexInputInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO;
-
 				auto bindingDescription = Vertex::getBindingDescription(1);
 				auto attributeDescriptions = Vertex::getAttributeDescriptions(2);
 
+				VkPipelineVertexInputStateCreateInfo vertexInputInfo = {};
+				vertexInputInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO;
 				vertexInputInfo.vertexBindingDescriptionCount = static_cast<uint32_t>(bindingDescription.size());
 				vertexInputInfo.vertexAttributeDescriptionCount = static_cast<uint32_t>(attributeDescriptions.size());
 				vertexInputInfo.pVertexBindingDescriptions = bindingDescription.data();
@@ -231,7 +224,7 @@ namespace Dynamik {
 					dynamicStateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_DYNAMIC_STATE_CREATE_INFO;
 					dynamicStateInfo.dynamicStateCount = static_cast<uint32_t>(dynamicState.size());
 					dynamicStateInfo.pDynamicStates = dynamicState.data();
-					dynamicStateInfo.flags = 0;
+					dynamicStateInfo.flags = info.dynamicStateFlags;
 				}
 
 				// shader stages
@@ -256,6 +249,7 @@ namespace Dynamik {
 				pipelineInfo.renderPass = renderPass;
 				pipelineInfo.subpass = info.pipelineSubPass;
 				pipelineInfo.basePipelineHandle = info.pipelineBasePipelineHandle;
+				pipelineInfo.basePipelineIndex = info.pipelineBasePipelineIndex;
 
 				if (info.dynamicStateEnable)
 					pipelineInfo.pDynamicState = &dynamicStateInfo;
@@ -270,6 +264,7 @@ namespace Dynamik {
 				pipelineContainer.pipeline = pipeline;
 
 				container->pipelineContainers.push_back(pipelineContainer);
+				container->renderPass = renderPass;
 
 				return { pipelineContainer.pipeline, pipelineContainer.pipelineLayout };
 			}

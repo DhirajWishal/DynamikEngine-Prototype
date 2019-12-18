@@ -227,7 +227,7 @@ namespace Dynamik {
 				cinfo.image = texInfo.textureImage;
 				cinfo.format = texInfo.textureImageFormat;
 				cinfo.mipLevels = texInfo.mipLevels;
-				cinfo.aspectFlags = texInfo.flags;
+				cinfo.aspectFlags = info.aspectFlags;
 
 				*info.textureImageView = createImageView(cinfo);
 			}

@@ -1,2 +1,4 @@
 M Mercury 1K.obj
-T Diffuse_1K.png
+I Diffuse_1K.png
+V vert.spv
+F frag.spv

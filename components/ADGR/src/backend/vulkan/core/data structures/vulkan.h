@@ -114,10 +114,10 @@ namespace Dynamik {
 				VkBool32 inputAssemblyPrimitiveRestartEnable = VK_FALSE;			// Vulkan primitive assembly restart enable
 
 				// viewport info
-				int viweportCount = 1;												// Vulkan view port count
+				uint32_t viweportCount = 1;											// Vulkan view port count
 
 				// scissor info
-				int scissorCount = 1;												// Vulkan scissor count
+				uint32_t scissorCount = 1;											// Vulkan scissor count
 				std::vector<VkOffset2D> offsets = { { 0, 0 } };						// Vulkan scissor offsets
 
 				// rasterizer info
@@ -152,7 +152,7 @@ namespace Dynamik {
 
 				VkBool32 colorBlendingLogicOpEnable = VK_FALSE;						// Vulkan color blend blending logical op enable
 				VkLogicOp colorBlendingLogicOp = VkLogicOp::VK_LOGIC_OP_COPY;		// Vulkan color blend blending logical op
-				int colorBlendingColorBlendCount = 1;								// Vulkan color blend blending count
+				uint32_t colorBlendingColorBlendCount = 1;							// Vulkan color blend blending count
 				std::vector<float> colorBlendingBlendConstants = {					// Vulkan color blend constants
 					0.0f,	// Red
 					0.0f,	// Green
@@ -162,16 +162,18 @@ namespace Dynamik {
 
 				// push constants info
 				bool pushConstantsEnable = false;									// Vulkan push constants enable
-				int pushConstantCount = 1;											// Vulkan push constants count
-				int pushConstantOffset = 0;											// Vulkan push constants offset
+				uint32_t pushConstantCount = 1;										// Vulkan push constants count
+				int32_t pushConstantOffset = 0;										// Vulkan push constants offset
 
 				// dynamic state info
 				bool dynamicStateEnable = false;									// Vulkan dynamic state enable
+				VkPipelineDynamicStateCreateFlags dynamicStateFlags = 0;			// Vulkan dynamic state flags
 
 				// pipeline info
-				int pipelineStageCount = 2;											// Vulkan pipeline stage count
-				int pipelineSubPass = 0;											// Vulkan pipeline sub pass
+				uint32_t pipelineStageCount = 2;									// Vulkan pipeline stage count
+				uint32_t pipelineSubPass = 0;										// Vulkan pipeline sub pass
 				VkPipeline pipelineBasePipelineHandle = VK_NULL_HANDLE;				// Vulkan base pipeline handle
+				uint32_t pipelineBasePipelineIndex = 0;
 			};
 
 			/* COMMAND BUFFER CONTAINER */

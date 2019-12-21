@@ -30,16 +30,10 @@ namespace Dynamik {
 			return;
 		}
 
-		getObjectPaths();
-		for (int i = 0; i < gameObjects.size(); i++)
-			internalFormats.push_back(internalFormat(gameObjects[i]));
-		loadObjectData();
+		gameObjectInitialization();
 
 		std::thread myThread(Application::showProgress);
 
-		initRendererFormats();
-		for (int i = 0; i < internalFormats.size(); i++)
-			internalFormatsBase.push_back(&internalFormats[i]);
 		myRenderingEngine.setRendererFormats(internalFormatsBase);
 		myRenderingEngine.setProgress(&progress);
 		myRenderingEngine.initRenderer();
@@ -57,9 +51,10 @@ namespace Dynamik {
 	DMK_API void Application::run() {
 		if (initSuccessful) {
 			while (!myRenderingEngine.getWindowCloseEvent()) {
+				auto events = myRenderingEngine.getEvents();
+
 				myRenderingEngine.draw();
 				myEngine.update();
-				auto events = myRenderingEngine.getEvents();
 				onEvent(events);
 
 				for (auto layer : layerStack)
@@ -86,17 +81,26 @@ namespace Dynamik {
 			if (eventContainer.eventType == DMKEventType::DMK_EVENT_TYPE_KEY_PRESS) {
 				switch (eventContainer.code) {
 				case DMK_KEY_F: {
-					Audio::BasicAudioController audController("E:/Projects/Dynamik Engine/Dynamik/components/Audio/media/explosion.wav");
-					audController.isPaused = false;
-					audController.isLooped = false;
-
-					//Audio code
-					myEngine.addAudioController(audController);
-					//delete audController;
+					for (int x = 0; x < audioControllers.size(); x++) {
+						audioControllers[x].isPaused = false;
+						audioControllers[x].isLooped = false;
+						myEngine.addAudioController(audioControllers[i]);
+					}
 					break;
 				}
+				case DMK_KEY_G:
+					for (int x = 0; x < audioControllers.size(); x++) {
+						audioControllers[x].isPaused = true;
+						audioControllers[x].isLooped = true;
+						myEngine.addAudioController(audioControllers[i]);
+					}
+					break;
+				default:
+					break;
 				}
 			}
+			//Audio code
+
 			//if (eventContainer.eventType == DMKEventType::DMK_EVENT_TYPE_KEY_REPEAT) {
 			//	switch (eventContainer.code) {
 			//
@@ -143,51 +147,68 @@ namespace Dynamik {
 #endif
 	}
 
+	void Application::gameObjectInitialization() {
+		getObjectPaths();
+		initAudioControllers();
+		loadObjectData();
+		initRendererFormats();
+	}
+
 	void Application::getObjectPaths() {
 		gameObjects = scenes[sceneCount]->myGameObjects;
 
 		for (int itr = 0; itr < gameObjects.size(); itr++) {
-			GameObject* gameObject = gameObjects[itr];
+			if (
+				(gameObjects[itr]->myProperties.type == DMKObjectType::DMK_OBJECT_TYPE_MESH)
+				|| (gameObjects[itr]->myProperties.type == DMKObjectType::DMK_OBJECT_TYPE_STATIC_OBJECT)
+				|| (gameObjects[itr]->myProperties.type == DMKObjectType::DMK_OBJECT_TYPE_INTERACTIVE_OBJECT)
+				|| (gameObjects[itr]->myProperties.type == DMKObjectType::DMK_OBJECT_TYPE_PLAYER)
+				|| (gameObjects[itr]->myProperties.type == DMKObjectType::DMK_OBJECT_TYPE_NPC)
+				|| (gameObjects[itr]->myProperties.type == DMKObjectType::DMK_OBJECT_TYPE_CUSTOM)
+				) {
+				GameObject* gameObject = gameObjects[itr];
 
-			utils::daiManager fileManager;
-			fileManager.open(gameObject->myProperties.location + (
-				(gameObject->myProperties.location[gameObject->myProperties.location.size() - 1] == '/')
-				? "modelData.dai" : "/modelData.dai"));
+				utils::daiManager fileManager;
+				fileManager.open(gameObject->myProperties.location + (
+					(gameObject->myProperties.location[gameObject->myProperties.location.size() - 1] == '/')
+					? "modelData.dai" : "/modelData.dai"));
 
-			if (!fileManager.isOpen())
-				DMK_CORE_FATAL("modelData.dai file not found --> " + gameObject->myProperties.location);
+				if (!fileManager.isOpen())
+					DMK_CORE_FATAL("modelData.dai file not found --> " + gameObject->myProperties.location);
 
-			std::string basePath = "";
-			if (gameObject->myProperties.location[gameObject->myProperties.location.size() - 1] == '/')
-				basePath = gameObject->myProperties.location;
-			else
-				basePath = gameObject->myProperties.location + '/';
+				std::string basePath = "";
+				if (gameObject->myProperties.location[gameObject->myProperties.location.size() - 1] == '/')
+					basePath = gameObject->myProperties.location;
+				else
+					basePath = gameObject->myProperties.location + '/';
 
-			// get model paths
-			for (auto modelPath : fileManager.getData(utils::DMK_DAI_FILE_DATA_TYPE_MODEL))
-				gameObject->myProperties.objectPath.push_back(basePath + modelPath);
+				// get model paths
+				for (auto modelPath : fileManager.getData(utils::DMK_DAI_FILE_DATA_TYPE_MODEL))
+					gameObject->myProperties.objectPath.push_back(basePath + modelPath);
 
-			// get texture paths
-			for (auto texturePath : fileManager.getData(utils::DMK_DAI_FILE_DATA_TYPE_TEXTURE))
-				gameObject->myProperties.texturePaths.push_back(basePath + texturePath);
+				// get texture paths
+				for (auto texturePath : fileManager.getData(utils::DMK_DAI_FILE_DATA_TYPE_TEXTURE))
+					gameObject->myProperties.texturePaths.push_back(basePath + texturePath);
 
-			// get shader paths
-			gameObject->myProperties.renderableObjectProperties.vertexShaderPath = (
-				(fileManager.getData(utils::DMK_DAI_FILE_DATA_TYPE_VERTEX).size() > 0) ?
-				basePath + fileManager.getData(utils::DMK_DAI_FILE_DATA_TYPE_VERTEX)[0] : "NONE"
-				);	// vertex shader
-			gameObject->myProperties.renderableObjectProperties.tessellationShaderPath = (
-				(fileManager.getData(utils::DMK_DAI_FILE_DATA_TYPE_TESSELLATION).size() > 0) ?
-				basePath + fileManager.getData(utils::DMK_DAI_FILE_DATA_TYPE_TESSELLATION)[0] : "NONE"
-				);	// tessellation shader
-			gameObject->myProperties.renderableObjectProperties.geometryShaderPath = (
-				(fileManager.getData(utils::DMK_DAI_FILE_DATA_TYPE_GEOMETRY).size() > 0) ?
-				basePath + fileManager.getData(utils::DMK_DAI_FILE_DATA_TYPE_GEOMETRY)[0] : "NONE"
-				);	// geometry shader
-			gameObject->myProperties.renderableObjectProperties.fragmentShaderPath = (
-				(fileManager.getData(utils::DMK_DAI_FILE_DATA_TYPE_FRAGMENT).size() > 0) ?
-				basePath + fileManager.getData(utils::DMK_DAI_FILE_DATA_TYPE_FRAGMENT)[0] : "NONE"
-				);	// fragment shader
+				// get shader paths
+				gameObject->myProperties.renderableObjectProperties.vertexShaderPath = (
+					(fileManager.getData(utils::DMK_DAI_FILE_DATA_TYPE_VERTEX).size() > 0) ?
+					basePath + fileManager.getData(utils::DMK_DAI_FILE_DATA_TYPE_VERTEX)[0] : "NONE"
+					);	// vertex shader
+				gameObject->myProperties.renderableObjectProperties.tessellationShaderPath = (
+					(fileManager.getData(utils::DMK_DAI_FILE_DATA_TYPE_TESSELLATION).size() > 0) ?
+					basePath + fileManager.getData(utils::DMK_DAI_FILE_DATA_TYPE_TESSELLATION)[0] : "NONE"
+					);	// tessellation shader
+				gameObject->myProperties.renderableObjectProperties.geometryShaderPath = (
+					(fileManager.getData(utils::DMK_DAI_FILE_DATA_TYPE_GEOMETRY).size() > 0) ?
+					basePath + fileManager.getData(utils::DMK_DAI_FILE_DATA_TYPE_GEOMETRY)[0] : "NONE"
+					);	// geometry shader
+				gameObject->myProperties.renderableObjectProperties.fragmentShaderPath = (
+					(fileManager.getData(utils::DMK_DAI_FILE_DATA_TYPE_FRAGMENT).size() > 0) ?
+					basePath + fileManager.getData(utils::DMK_DAI_FILE_DATA_TYPE_FRAGMENT)[0] : "NONE"
+					);	// fragment shader
+			}
+			internalFormats.push_back(internalFormat(gameObjects[itr]));
 		}
 	}
 
@@ -195,41 +216,56 @@ namespace Dynamik {
 		{
 			std::vector<std::future<void>> threads = {};
 			for (int i = 0; i < internalFormats.size(); i++) {
-				internalFormats[i].myVertexBufferObjects.resize(1);
-				internalFormats[i].myIndexBufferObjects.resize(1);
+				if (renderableObjectCheck(internalFormats[i])) {
+					internalFormats[i].myVertexBufferObjects.resize(1);
+					internalFormats[i].myIndexBufferObjects.resize(1);
 
-				DMKModelLoadInfo loadInfo = {};
-				loadInfo.path = internalFormats[i].myGameObject->myProperties.objectPath[0];
-				loadInfo.vertices = &internalFormats[i].myVertexBufferObjects[0];
-				loadInfo.indices = &internalFormats[i].myIndexBufferObjects[0];
-				loadInfo.vertexOffset = internalFormats[i].myGameObject->myProperties.transformProperties.location;
+					DMKModelLoadInfo loadInfo = {};
+					loadInfo.path = internalFormats[i].myGameObject->myProperties.objectPath[0];
+					loadInfo.vertices = &internalFormats[i].myVertexBufferObjects[0];
+					loadInfo.indices = &internalFormats[i].myIndexBufferObjects[0];
+					loadInfo.vertexOffset = internalFormats[i].myGameObject->myProperties.transformProperties.location;
 
-				threads.push_back(std::async(std::launch::async, loadModel, loadInfo));
+					threads.push_back(std::async(std::launch::async, loadModel, loadInfo));
+				}
 			}
 		}
 
 		for (int i = 0; i < internalFormats.size(); i++) {
-			internalFormats[i].myVertexCounts.resize(1);
-			internalFormats[i].myVertexCounts[0] = internalFormats[i].myVertexBufferObjects[0].size();
-			internalFormats[i].myIndexCounts.resize(1);
-			internalFormats[i].myIndexCounts[0] = internalFormats[i].myIndexBufferObjects[0].size();
+			if (renderableObjectCheck(internalFormats[i])) {
+				internalFormats[i].myVertexCounts.resize(1);
+				internalFormats[i].myVertexCounts[0] = internalFormats[i].myVertexBufferObjects[0].size();
+				internalFormats[i].myIndexCounts.resize(1);
+				internalFormats[i].myIndexCounts[0] = internalFormats[i].myIndexBufferObjects[0].size();
+			}
 		}
 	}
 
 	void Application::initRendererFormats() {
 		for (int i = 0; i < internalFormats.size(); i++) {
-			if ((internalFormats[i].myGameObject->myProperties.type == DMKObjectType::DMK_OBJECT_TYPE_STATIC_OBJECT)
-				|| (internalFormats[i].myGameObject->myProperties.type == DMKObjectType::DMK_OBJECT_TYPE_STATIC_OBJECT)
-				|| (internalFormats[i].myGameObject->myProperties.type == DMKObjectType::DMK_OBJECT_TYPE_INTERACTIVE_OBJECT)
-				|| (internalFormats[i].myGameObject->myProperties.type == DMKObjectType::DMK_OBJECT_TYPE_PLAYER)
-				|| (internalFormats[i].myGameObject->myProperties.type == DMKObjectType::DMK_OBJECT_TYPE_NPC)
-				|| (internalFormats[i].myGameObject->myProperties.type == DMKObjectType::DMK_OBJECT_TYPE_TEXTURE_UI)
-				|| (internalFormats[i].myGameObject->myProperties.type == DMKObjectType::DMK_OBJECT_TYPE_SKYBOX)
-				|| (internalFormats[i].myGameObject->myProperties.type == DMKObjectType::DMK_OBJECT_TYPE_SPRITES)
-				|| (internalFormats[i].myGameObject->myProperties.type == DMKObjectType::DMK_OBJECT_TYPE_FONT)
-				|| (internalFormats[i].myGameObject->myProperties.type == DMKObjectType::DMK_OBJECT_TYPE_PARTICLE)
-				)
-				rendererFormats.push_back(&ADGR::RendererFormat((InternalFormat*)&internalFormats[i]));
+			if (renderableObjectCheck(internalFormats[i]))
+				internalFormatsBase.push_back(&internalFormats[i]);
+			//rendererFormats.push_back(&ADGR::RendererFormat((InternalFormat*)&internalFormats[i]));
 		}
+	}
+
+	void Application::initAudioControllers() {
+		for (int itr = 0; itr < gameObjects.size(); itr++) {
+			if (gameObjects[itr]->myProperties.type == DMKObjectType::DMK_OBJECT_TYPE_AUDIO) {
+				audioControllers.push_back(Audio::BasicAudioController(gameObjects[itr]->myProperties.objectPath[0]));
+			}
+		}
+	}
+	bool Application::renderableObjectCheck(internalFormat format) {
+		return (format.myGameObject->myProperties.type == DMKObjectType::DMK_OBJECT_TYPE_MESH)
+			|| (format.myGameObject->myProperties.type == DMKObjectType::DMK_OBJECT_TYPE_STATIC_OBJECT)
+			|| (format.myGameObject->myProperties.type == DMKObjectType::DMK_OBJECT_TYPE_INTERACTIVE_OBJECT)
+			|| (format.myGameObject->myProperties.type == DMKObjectType::DMK_OBJECT_TYPE_PLAYER)
+			|| (format.myGameObject->myProperties.type == DMKObjectType::DMK_OBJECT_TYPE_NPC)
+			|| (format.myGameObject->myProperties.type == DMKObjectType::DMK_OBJECT_TYPE_TEXTURE_UI)
+			|| (format.myGameObject->myProperties.type == DMKObjectType::DMK_OBJECT_TYPE_SKYBOX)
+			|| (format.myGameObject->myProperties.type == DMKObjectType::DMK_OBJECT_TYPE_SPRITES)
+			|| (format.myGameObject->myProperties.type == DMKObjectType::DMK_OBJECT_TYPE_FONT)
+			|| (format.myGameObject->myProperties.type == DMKObjectType::DMK_OBJECT_TYPE_PARTICLE);
 	}
 }

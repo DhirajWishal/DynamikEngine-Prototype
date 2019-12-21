@@ -292,9 +292,6 @@ namespace Dynamik {
 					case DMK_CDH_MANAGER_RESOURCE_TYPE_OBJECT_DATA_CONTAINER:
 						_returnData = &objectDatas;
 						break;
-					case DMK_CDH_MANAGER_RESOURCE_TYPE_RENDER_DATA_CONTAINER:
-						_returnData = &renderDatas;
-						break;
 					case DMK_CDH_MANAGER_RESOURCE_TYPE_PATH_MODEL:
 						_returnData = &modelPaths;
 						break;
@@ -379,7 +376,6 @@ namespace Dynamik {
 				_SET_VECTOR(DMKObjectData) objectDatas = {};
 				_SET_VECTOR(GameObject*) gameObjects = {};
 				_SET_VECTOR(vulkanFormat) vulkanFormats = {};
-				_SET_VECTOR(ADGRObjectRenderData) renderDatas = {};
 
 				_SET_VECTOR(std::string) modelPaths = {};
 				_SET_VECTOR(std::string) texturePaths = {};

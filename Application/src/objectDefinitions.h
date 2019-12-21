@@ -41,9 +41,15 @@ struct uniformBufferObject : public Uniform {
 class mars : public GameObject {
 public:
 	mars() {}
-	mars(GameObjectProperties& props) :GameObject(props) {}
+	mars(GameObjectProperties& props) : GameObject(props) {}
 
 	DMKUpdateInfo draw(std::deque<DMKEventContainer>& eventContainers) override;
 
 	//vertexDataType = &vertexDataContainer();
+};
+
+class explosion : public GameObject {
+public:
+	explosion() {}
+	explosion(GameObjectProperties& props) : GameObject(props) {}
 };

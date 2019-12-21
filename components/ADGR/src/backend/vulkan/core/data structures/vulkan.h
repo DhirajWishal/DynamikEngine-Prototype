@@ -38,10 +38,10 @@ namespace Dynamik {
 		namespace core {
 			/* SHADER STAGE INFO ENUM */
 			enum DMK_ADGR_VULKAN_SHADER_STAGE_INFO {
-				DMK_ADGR_VULKAN_SHADER_STAGE_VERTEX = 0,		// vertex shader
-				DMK_ADGR_VULKAN_SHADER_STAGE_TESSELLATION = 1,	// tessellation shader
-				DMK_ADGR_VULKAN_SHADER_STAGE_GEOMETRY = 2,		// geometry shader
-				DMK_ADGR_VULKAN_SHADER_STAGE_FRAGMENT = 3		// fragment shader
+				DMK_ADGR_VULKAN_SHADER_STAGE_VERTEX = 0,							// vertex shader
+				DMK_ADGR_VULKAN_SHADER_STAGE_TESSELLATION = 1,						// tessellation shader
+				DMK_ADGR_VULKAN_SHADER_STAGE_GEOMETRY = 2,							// geometry shader
+				DMK_ADGR_VULKAN_SHADER_STAGE_FRAGMENT = 3							// fragment shader
 			};
 
 			/* SWAPCHAIN DATA CONTAINER */
@@ -107,7 +107,7 @@ namespace Dynamik {
 				ADGRVulkanShaderDataContainer shaderDataContainer = {};				// Vulkan shader data container
 				VkRenderPass renderPass = VK_NULL_HANDLE;							// Vulkan render pass
 
-				std::vector<VkDescriptorSetLayout_T*> layouts;						// Vulkan descriptor set layouts
+				std::vector<VkDescriptorSetLayout_T*> layouts = {};					// Vulkan descriptor set layouts
 
 				// primitive assembly info
 				VkPrimitiveTopology inputAssemblyTopology = VkPrimitiveTopology::VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST;	// Vulkan input assembler topologies
@@ -254,7 +254,7 @@ namespace Dynamik {
 				ADGRVulkanSemaphoresAndFencesDataContainer semaphoresAndFencesContainer = {};	// ADGR semaphores and fences container
 
 				/* BLANK SCREEN BACKGROUND COLOR */
-				std::vector<float> clearScreenValues = {								// Vulkan clear screen values
+				std::vector<float> clearScreenValues = {							// Vulkan clear screen values
 					(2.0f / 256.0f),		// Red
 					(8.0f / 256.0f),		// Green
 					(32.0f / 256.0f),		// Blue
@@ -262,22 +262,22 @@ namespace Dynamik {
 				};	// Dynwamik color code: rgba(2, 8, 32, 1)
 
 				/* QUEUES */
-				VkQueue graphicsQueue = VK_NULL_HANDLE;									// Vulkan graphics queue
-				VkQueue presentQueue = VK_NULL_HANDLE;									// Vulkan present queue
+				VkQueue graphicsQueue = VK_NULL_HANDLE;								// Vulkan graphics queue
+				VkQueue presentQueue = VK_NULL_HANDLE;								// Vulkan present queue
 
 				/* MSAA BITS */
 				VkSampleCountFlagBits msaaSamples = VkSampleCountFlagBits::VK_SAMPLE_COUNT_1_BIT;	// Vulkan msaa sample bits
 
 				/* CORE EVENTS */
-				bool frameBufferResizedEvent = false;									// Vulkan GLFW frame buffer resized event
-				unsigned int WIDTH = 720;												// Vulkan GLFW window width
-				unsigned int HEIGHT = 1280;												// Vulkan GLFW window height
+				bool frameBufferResizedEvent = false;								// Vulkan GLFW frame buffer resized event
+				unsigned int WIDTH = 720;											// Vulkan GLFW window width
+				unsigned int HEIGHT = 1280;											// Vulkan GLFW window height
 
 				/* CORE MIP LEVELS */
-				float minMipLevel = 0.0f;												// Vulkan minimum mipmap level
-				float maxMipLevel = 0.0f;												// Vulkan maximum mipmap level
+				float minMipLevel = 0.0f;											// Vulkan minimum mipmap level
+				float maxMipLevel = 0.0f;											// Vulkan maximum mipmap level
 
-				std::array<glm::vec4, 6> pushConstants;
+				std::array<glm::vec4, 6> pushConstants;								// Vulkan push constants
 			};
 		}
 	}

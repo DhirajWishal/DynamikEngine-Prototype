@@ -40,11 +40,16 @@ namespace Dynamik {
 		static void showProgress();
 
 	private:
+		void gameObjectInitialization();
 		void getObjectPaths();
 		void loadObjectData();
 		void initRendererFormats();
+		void initAudioControllers();
+
+		bool renderableObjectCheck(internalFormat format);
 
 		bool initSuccessful = false;
+		bool canDeleteController = false;
 
 		ADGR::Renderer myRenderingEngine;
 
@@ -57,6 +62,7 @@ namespace Dynamik {
 		std::vector<Scene*> scenes = {};
 		std::vector<GameObject*> gameObjects = {};
 		std::vector<ADGR::RendererFormat*> rendererFormats = {};
+		std::vector<Audio::BasicAudioController> audioControllers = {};
 
 		ADGR::layerStack layerStack;
 

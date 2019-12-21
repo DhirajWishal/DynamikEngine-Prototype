@@ -8,13 +8,11 @@
 
  vulkanRenderer.cpp file
 
-
  Latest build/ version has a known bug that is yet to be fixed.
 */
 
 #include "adgrafx.h"
 #include "vulkanRenderer.h"
-
 #include "Platform/Windows.h"
 #include "keyCodes.h"
 
@@ -434,7 +432,7 @@ namespace Dynamik {
 			DMKIndexBufferCreateInfo indexBufferInfo;
 			indexBufferInfo.buffer = info.buffer;
 			indexBufferInfo.buffereMemory = info.bufferMemory;
-			indexBufferInfo.indices = *info.indexBufferObject;
+			indexBufferInfo.indices = info.indexBufferObject;
 			myIndexBufferManager.createIndexBuffer(myManager.getResourceAddr<ADGRVulkanDataContainer>(DMK_CDH_MANAGER_RESOURCE_TYPE_VULKAN_DATA_CONTAINER, vulkanContainerIndex), indexBufferInfo);
 		}
 

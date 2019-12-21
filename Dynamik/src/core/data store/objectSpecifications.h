@@ -575,15 +575,20 @@ namespace Dynamik {
 
 	/* RENDERING TECHNOLOGY ENUM */
 	enum class DMK_ADGR_RENDERING_TECHNOLOGY {
-		DMK_ADGR_RENDER_VERTEX = 0,					// Render individual vertexes
-		DMK_ADGR_RENDER_INDEXED = 1,				// Render indexed vertexes
-		DMK_ADGR_RENDER_INDIRECT = 2,				// Render indirectly (only if supported)
-		DMK_ADGR_RENDER_INDEXED_INDIRECT = 3,		// Render indexed vertexes indirectly (only if supported)
+		DMK_ADGR_RENDER_VERTEX,						// Render individual vertexes
+		DMK_ADGR_RENDER_INDEXED,					// Render indexed vertexes
+		DMK_ADGR_RENDER_INDIRECT,					// Render indirectly (only if supported)
+		DMK_ADGR_RENDER_INDEXED_INDIRECT,			// Render indexed vertexes indirectly (only if supported)
 
-		DMK_ADGR_RENDER_SKYBOX_VERTEX = 4,			// Render skybox individual vertexes
-		DMK_ADGR_RENDER_SKYBOX_INDEXED = 5,			// Render skybox indexed vertexes
-		DMK_ADGR_RENDER_SKYBOX_INDIRECT = 6,		// Render skybox indirectly (only if supported)
-		DMK_ADGR_RENDER_SKYBOX_INDEXED_INDIRECT = 7	// Render skybox indexed vertexes indirectly (only if supported)
+		DMK_ADGR_RENDER_SKYBOX_VERTEX,				// Render skybox individual vertexes
+		DMK_ADGR_RENDER_SKYBOX_INDEXED,				// Render skybox indexed vertexes
+		DMK_ADGR_RENDER_SKYBOX_INDIRECT,			// Render skybox indirectly (only if supported)
+		DMK_ADGR_RENDER_SKYBOX_INDEXED_INDIRECT,	// Render skybox indexed vertexes indirectly (only if supported)
+
+		DMK_ADGR_RENDER_VERTEX_MESH_ONLY,			// Render individual vertexes (meshes only)
+		DMK_ADGR_RENDER_INDEXED_MESH_ONLY,			// Render indexed vertexes (meshes only)
+		DMK_ADGR_RENDER_INDIRECT_MESH_ONLY,			// Render indirectly (only if supported) (meshes only)
+		DMK_ADGR_RENDER_INDEXED_INDIRECT_MESH_ONLY	// Render indexed vertexes indirectly (only if supported) (meshes only)
 	};
 }
 

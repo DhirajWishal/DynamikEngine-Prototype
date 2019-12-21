@@ -19,6 +19,7 @@ namespace Dynamik {
 			if (sound->isFinished()) {
 				//delete controller;
 				//delete this;
+				//controller = nullptr;
 				return true;
 			}
 

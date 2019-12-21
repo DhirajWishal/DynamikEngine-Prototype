@@ -9,7 +9,7 @@ namespace Dynamik {
 			using namespace functions;
 
 			void indexBufferManager::createIndexBuffer(ADGRVulkanDataContainer* container, DMKIndexBufferCreateInfo info) {
-				VkDeviceSize bufferSize = sizeof(info.indices[0]) * info.indices.size();
+				VkDeviceSize bufferSize = sizeof(info.indices[0]) * info.indices->size();
 
 				VkBuffer stagingBuffer;
 				VkDeviceMemory stagingBufferMemory;
@@ -27,7 +27,7 @@ namespace Dynamik {
 
 				void* data = nullptr;
 				vkMapMemory(container->device, stagingBufferMemory, 0, bufferSize, 0, &data);
-				memcpy(data, info.indices.data(), (size_t)bufferSize);
+				memcpy(data, info.indices->data(), (size_t)bufferSize);
 				vkUnmapMemory(container->device, stagingBufferMemory);
 
 				DMKCreateBufferInfo idxBufferInfo;

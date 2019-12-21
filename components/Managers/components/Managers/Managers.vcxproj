@@ -131,6 +131,27 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\src\Platform\Windows.h" />
+    <ClInclude Include="..\..\src\Platform\Windows\file\fileManager.h" />
+    <ClInclude Include="..\..\src\Platform\Windows\file\readFile.h" />
+    <ClInclude Include="..\..\src\Platform\Windows\memory\memoryManager.h" />
+    <ClInclude Include="..\..\src\Platform\Windows\resource\imageLoader.h" />
+    <ClInclude Include="..\..\src\Platform\Windows\resource\objectLoader.h" />
+    <ClInclude Include="..\..\src\Platform\Windows\window.h" />
+    <ClInclude Include="..\..\src\mngafx.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\Platform\Windows\file\fileManager.cpp" />
+    <ClCompile Include="..\..\src\Platform\Windows\file\readFile.cpp" />
+    <ClCompile Include="..\..\src\Platform\Windows\memory\memoryManager.cpp" />
+    <ClCompile Include="..\..\src\Platform\Windows\resource\imageLoader.cpp" />
+    <ClCompile Include="..\..\src\Platform\Windows\resource\objectLoader.cpp" />
+    <ClCompile Include="..\..\src\Platform\Windows\window.cpp" />
+    <ClCompile Include="..\..\src\mngafx.cpp">
+      <PrecompiledHeader>Create</PrecompiledHeader>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\..\..\Debugger\Debugger.vcxproj">
       <Project>{2ACD0289-169A-5D94-3FB3-4B3C2BDF9222}</Project>
     </ProjectReference>

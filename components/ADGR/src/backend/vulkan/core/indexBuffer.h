@@ -9,7 +9,7 @@ namespace Dynamik {
 	namespace ADGR {
 		namespace core {
 			struct DMKIndexBufferCreateInfo {
-				std::vector<uint32_t> indices = {};
+				std::vector<uint32_t>* indices = {};
 
 				VkBuffer* buffer = VK_NULL_HANDLE;
 				VkDeviceMemory* buffereMemory = VK_NULL_HANDLE;

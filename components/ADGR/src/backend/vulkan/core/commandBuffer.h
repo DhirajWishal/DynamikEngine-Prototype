@@ -13,36 +13,6 @@
 namespace Dynamik {
 	namespace ADGR {
 		namespace core {
-			struct ADGRObjectRenderData {
-				DMK_ADGR_RENDERING_TECHNOLOGY renderingType = DMK_ADGR_RENDERING_TECHNOLOGY::DMK_ADGR_RENDER_INDEXED;
-
-				std::vector<std::string> paths = {};
-				std::vector<Vertex> vertexBufferObject = {};
-				std::vector<VkBuffer> vertexBuffers = {};
-				std::vector<VkDeviceMemory> vertexBufferMemories = {};
-
-				std::vector<uint32_t> indexBufferObject = {};
-				VkBuffer indexBuffer = {};
-				VkDeviceMemory indexBufferMemory = {};
-
-				std::vector<float> location = { 0.0f, 0.0f, 0.0f };
-				uint32_t indexCount = 0;
-				uint32_t vertexCount = 0;
-
-				DMKObjectType objectType = DMKObjectType::DMK_OBJECT_TYPE_STATIC_OBJECT;
-
-				std::vector<std::string> texturePaths = {};
-				std::vector<VkImage> textureImages = {};
-				std::vector<VkDeviceMemory> textureImageMemories = {};
-				std::vector<VkSampler> textureSamplers = {};
-				std::vector<VkImageView> textureImageViews = {};
-				std::vector<std::vector<VkDescriptorSet>> descriptorSets = {};
-				uint32_t mipLevel = 1;
-
-				VkPipeline pipeline = {};
-				VkPipelineLayout pipelineLayout = {};
-			};
-
 			struct DMKBindCommandBufferInfo {
 				std::vector<VkFramebuffer> frameBuffers = {};
 
@@ -59,6 +29,31 @@ namespace Dynamik {
 				void initCommandPool(ADGRVulkanDataContainer* container);
 
 				void bindCommands(ADGRVulkanDataContainer* container, DMKBindCommandBufferInfo info);
+
+			private:
+				void drawVertex(VkCommandBuffer* buffer, int index,  vulkanFormat* format, VkDeviceSize* offsets);
+				void drawIndexed(VkCommandBuffer* buffer, int index, vulkanFormat* format, VkDeviceSize* offsets);
+			};
+
+			/* ONE TIME COMMAND BUFFER CLASS */
+			class oneTimeCommandBufferManager {
+			public:
+				oneTimeCommandBufferManager(VkDevice device, VkCommandPool commandPool, VkQueue graphicsQueue, uint32_t count = 1);
+				~oneTimeCommandBufferManager();
+
+				void destroyBuffers();
+				std::vector<VkCommandBuffer> getCommandBuffers();
+
+			private:
+				uint32_t myCount = 0;
+
+				VkDevice myDevice = VK_NULL_HANDLE;
+				VkCommandPool myCommandPool = VK_NULL_HANDLE;
+				VkQueue myGraphicsQueue = VK_NULL_HANDLE;
+
+				std::vector<VkCommandBuffer> myCommandBuffers = {};
+
+				bool isDestroyed = false;
 			};
 		}
 	}

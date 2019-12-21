@@ -4,6 +4,8 @@
 #include "functions/textureFunctions.h"
 #include "functions/bufferFunctions.h"
 
+#include "commandBuffer.h"
+
 namespace Dynamik {
 	namespace ADGR {
 		namespace core {
@@ -93,7 +95,8 @@ namespace Dynamik {
 			}
 
 			void skybox::generateMipMaps(ADGRVulkanDataContainer* container, DMKGenerateMipMapInfo info) {
-				VkCommandBuffer commandBuff = beginSingleTimeCommands(container->device, container->commandBufferContainer.commandPool);
+				oneTimeCommandBufferManager oneTimeCommandBuffer(container->device, container->commandBufferContainer.commandPool, container->graphicsQueue);
+				VkCommandBuffer commandBuffer = oneTimeCommandBuffer.getCommandBuffers()[0];
 
 				std::vector<VkBufferImageCopy> bufferCopyRegions;
 				uint32_t offset = 0;
@@ -165,8 +168,6 @@ namespace Dynamik {
 				initInfo.skybox = info.textureImage;
 
 				initSampler(container, initInfo);
-
-				endSingleTimeCommands(container->device, container->commandBufferContainer.commandPool, commandBuff, container->graphicsQueue);
 			}
 
 			void skybox::initSampler(ADGRVulkanDataContainer* container, DMKSkyboxSampelrInitInfo info) {

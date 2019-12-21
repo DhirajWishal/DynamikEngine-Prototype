@@ -20,7 +20,7 @@ namespace Dynamik {
 		bool AudioEngine::addAudioController(AudioObjectController& controller)
 		{
 			LOG("Controller for " + controller.filepath + " added");
-			AudioObject* audObject = new AudioObject(irrklangEngine, controller);
+			AudioObject audObject(irrklangEngine, controller);
 			audioObjectList.push_back(audObject);
 			return true;
 		}
@@ -28,12 +28,12 @@ namespace Dynamik {
 		{
 			LOG("Audio Engine update loop started");
 			for (auto itr = audioObjectList.begin(); itr != audioObjectList.end(); itr++) {
-				if (&(*itr) == nullptr) {
+				if (&(itr) == nullptr) {
 					audioObjectList.erase(itr);
 					continue;
 				}
 
-				(*itr)->update();
+				(itr)->update();
 			}
 		}
 	}

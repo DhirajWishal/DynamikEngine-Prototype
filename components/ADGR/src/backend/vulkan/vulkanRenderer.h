@@ -35,33 +35,10 @@ namespace Dynamik {
 			DMKPipelineInitInfo pipelineInitInfo = {};
 		};
 
-		struct DMKObjectDataCreateInfo {
-			std::string modelPath = "";
-			std::vector<std::string> texturePaths = {};
-
-			std::vector<float> offsets = { 0.0f, 0.0f, 0.0f };
-
-			DMKPipelineInitInfo pipelineInfo = {};
-			bool compileShaders = false;
-			std::vector<std::string> shaderPaths;
-			std::vector<std::string> rawShaderPaths = {};
-
-			bool requireUniformBuffer = false;
-			std::vector<VkBuffer>* uniformBuffers = {};
-			std::vector<VkDeviceMemory>* uniformBufferMemory = {};
-
-			uint32_t mipLevel = 1;
-			DMK_ADGR_RENDERING_TECHNOLOGY renderingType = DMK_ADGR_RENDERING_TECHNOLOGY::DMK_ADGR_RENDER_INDEXED;
-		};
-
 		class vulkanRenderer {
 		public:
 			vulkanRenderer();
 			~vulkanRenderer();
-
-			//inline void setProgress(uint32_t* progress) {
-			//	myProgress = progress;
-			//}
 
 			void init();
 			void drawFrame();
@@ -142,13 +119,12 @@ namespace Dynamik {
 
 			uint32_t currentFrame = 0;
 			uint32_t vulkanFormatObjectsCount = 0;
+			uint32_t vulkanContainerIndex = 0;
 
 			uint32_t* myProgress = 0;
 
 			bool compileShaders = false;
 			bool enableVertexAndIndexClear = true;
-
-			int vulkanContainerIndex = 0;
 		};
 	}
 }

@@ -21,8 +21,7 @@
     <OutputPath>$(SolutionDir)bin\$(Configuration)-$(Platform)\Launcher\</OutputPath>
     <BaseIntermediateOutputPath>$(SolutionDir)intDir\$(Configuration)-$(Platform)\$(ProjectName)\Debug\Launcher\</BaseIntermediateOutputPath>
     <IntermediateOutputPath>$(BaseIntermediateOutputPath)</IntermediateOutputPath>
-    <DefineConstants>
-    </DefineConstants>
+    <DefineConstants></DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -33,8 +32,7 @@
     <OutputPath>$(SolutionDir)bin\$(Configuration)-$(Platform)\Launcher\</OutputPath>
     <BaseIntermediateOutputPath>$(SolutionDir)intDir\$(Configuration)-$(Platform)\$(ProjectName)\Release\Launcher\</BaseIntermediateOutputPath>
     <IntermediateOutputPath>$(BaseIntermediateOutputPath)</IntermediateOutputPath>
-    <DefineConstants>
-    </DefineConstants>
+    <DefineConstants></DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -45,18 +43,18 @@
     <OutputPath>$(SolutionDir)bin\$(Configuration)-$(Platform)\Launcher\</OutputPath>
     <BaseIntermediateOutputPath>$(SolutionDir)intDir\$(Configuration)-$(Platform)\$(ProjectName)\Distribution\Launcher\</BaseIntermediateOutputPath>
     <IntermediateOutputPath>$(BaseIntermediateOutputPath)</IntermediateOutputPath>
-    <DefineConstants>
-    </DefineConstants>
+    <DefineConstants></DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Program.cs" />
     <Compile Include="obj\Debug\netcoreapp3.1\Launcher.AssemblyInfo.cs" />
     <None Include="premake5.lua" />
+  </ItemGroup>
+  <ItemGroup>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

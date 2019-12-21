@@ -88,7 +88,7 @@ namespace Dynamik {
 
 				/* INIT PIPELINE */
 				auto bindingDescription = Vertex::getBindingDescription(1);
-				auto attributeDescriptions = Vertex::getAttributeDescriptions(2);
+				auto attributeDescriptions = Vertex::getAttributeDescriptions(1);
 
 				VkPipelineVertexInputStateCreateInfo vertexInputInfo = {};
 				vertexInputInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO;

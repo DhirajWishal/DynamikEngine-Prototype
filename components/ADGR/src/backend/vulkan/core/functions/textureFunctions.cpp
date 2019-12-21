@@ -4,6 +4,7 @@
 #include "bufferFunctions.h"
 
 #include "backend/defines.h"
+#include "backend/vulkan/core/commandBuffer.h"
 
 namespace Dynamik {
 	namespace ADGR {
@@ -65,7 +66,8 @@ namespace Dynamik {
 				}
 
 				void transitionImageLayout(DMKTransitionImageLayoutInfo info) {
-					VkCommandBuffer commandBuffer = beginSingleTimeCommands(info.device, info.commandPool);
+					oneTimeCommandBufferManager oneTimeCommandBuffer(info.device, info.commandPool, info.graphicsQueue);
+					VkCommandBuffer commandBuffer = oneTimeCommandBuffer.getCommandBuffers()[0];
 
 					VkImageMemoryBarrier barrier = {};
 					barrier.sType = VK_STRUCTURE_TYPE_IMAGE_MEMORY_BARRIER;
@@ -136,12 +138,11 @@ namespace Dynamik {
 						0, nullptr,
 						1, &barrier
 					);
-
-					endSingleTimeCommands(info.device, info.commandPool, commandBuffer, info.graphicsQueue);
 				}
 
 				void copyBufferToImage(DMKCopyBufferToImageInfo info) {
-					VkCommandBuffer commandBuffer = beginSingleTimeCommands(info.device, info.commandPool);
+					oneTimeCommandBufferManager oneTimeCommandBuffer(info.device, info.commandPool, info.graphicsQueue);
+					VkCommandBuffer commandBuffer = oneTimeCommandBuffer.getCommandBuffers()[0];
 
 					VkBufferImageCopy region = {};
 					region.bufferOffset = 0;
@@ -168,8 +169,6 @@ namespace Dynamik {
 						1,
 						&region
 					);
-
-					endSingleTimeCommands(info.device, info.commandPool, commandBuffer, info.graphicsQueue);
 				}
 			}
 		}

@@ -73,20 +73,20 @@ int main(int argc, char** argv) {
 			marses[i].myProperties = props;
 		}
 
-		for (int i = 0; i < marses.size(); i++) {
+		Dynamik::GameObjectProperties _localProps;
+		_localProps.type = DMKObjectType::DMK_OBJECT_TYPE_AUDIO;
+		_localProps.objectPath = { "E:/Projects/Dynamik Engine/Dynamik/components/Audio/media/explosion.wav" };
+		explosion exp(_localProps);
+		objects.push_back(&exp);
+
+		for (int i = 0; i < marses.size(); i++)
 			objects.push_back(&marses[i]);
-		}
 
 		sceneOne scene(objects);
-
 		std::vector<Scene*> scenes = { &scene };
-		//auto application = Dynamik::createApplication(scenes);
-		//application->run();
 
 		Engine myEngine(scenes);
 		myEngine.run();
-
-		//delete application;
 	}
 	catch (std::exception & e) {
 		std::cout << e.what();

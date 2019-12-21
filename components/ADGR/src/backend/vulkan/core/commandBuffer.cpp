@@ -89,43 +89,12 @@ namespace Dynamik {
 						//vkCmdPushConstants(container->commandBufferContainer.buffers[i], info.objectBindDatas->at(_itr).myPipelineLayout, VK_SHADER_STAGE_VERTEX_BIT, 0, sizeof(container->pushConstants), container->pushConstants.data());
 
 						// Render type selection
-						if (info.objectBindDatas->at(_itr).myRendererFormat->myRenderTechnology == DMK_ADGR_RENDERING_TECHNOLOGY::DMK_ADGR_RENDER_VERTEX) {		// Render as individual vertexes
-							// bind pipeline
-							vkCmdBindPipeline(container->commandBufferContainer.buffers[i], VK_PIPELINE_BIND_POINT_GRAPHICS, info.objectBindDatas->at(_itr).myPipeline);
+						if (info.objectBindDatas->at(_itr).myRendererFormat->myRenderTechnology == DMK_ADGR_RENDERING_TECHNOLOGY::DMK_ADGR_RENDER_VERTEX) 		// Render as individual vertexes
+							drawVertex(&container->commandBufferContainer.buffers[i], i, &info.objectBindDatas->at(_itr), offsets);
 
-							// vertex buffer bind
-							vkCmdBindVertexBuffers(container->commandBufferContainer.buffers[i], 0,
-								info.objectBindDatas->at(_itr).myVertexBuffers.size(), info.objectBindDatas->at(_itr).myVertexBuffers.data(), offsets);
+						else if (info.objectBindDatas->at(_itr).myRendererFormat->myRenderTechnology == DMK_ADGR_RENDERING_TECHNOLOGY::DMK_ADGR_RENDER_INDEXED) 		// Render as individual indexes
+							drawIndexed(&container->commandBufferContainer.buffers[i], i, &info.objectBindDatas->at(_itr), offsets);
 
-							// binding descriptor set(s)
-							if (info.objectBindDatas->at(_itr).myDescriptorSets.size() > 0)
-								for (int count = 0; count < info.objectBindDatas->at(_itr).myDescriptorSets.size(); count++)
-									vkCmdBindDescriptorSets(container->commandBufferContainer.buffers[i], VK_PIPELINE_BIND_POINT_GRAPHICS,
-										info.objectBindDatas->at(_itr).myPipelineLayout, 0, 1, &info.objectBindDatas->at(_itr).myDescriptorSets[count][i], 0, nullptr);
-
-							// draw command
-							vkCmdDraw(container->commandBufferContainer.buffers[i], info.objectBindDatas->at(_itr).myRendererFormat->myInternalFormat->myVertexCounts[0], 1, 0, 1);
-						}
-						else if (info.objectBindDatas->at(_itr).myRendererFormat->myRenderTechnology == DMK_ADGR_RENDERING_TECHNOLOGY::DMK_ADGR_RENDER_INDEXED) {		// Render as individual indexes
-							// bind pipeline
-							vkCmdBindPipeline(container->commandBufferContainer.buffers[i], VK_PIPELINE_BIND_POINT_GRAPHICS, info.objectBindDatas->at(_itr).myPipeline);
-
-							// vertex buffer bind
-							vkCmdBindVertexBuffers(container->commandBufferContainer.buffers[i], 0,
-								info.objectBindDatas->at(_itr).myVertexBuffers.size(), info.objectBindDatas->at(_itr).myVertexBuffers.data(), offsets);
-
-							// binding descriptor set(s)
-							if (info.objectBindDatas->at(_itr).myDescriptorSets.size() > 0)
-								for (int count = 0; count < info.objectBindDatas->at(_itr).myDescriptorSets.size(); count++)
-									vkCmdBindDescriptorSets(container->commandBufferContainer.buffers[i], VK_PIPELINE_BIND_POINT_GRAPHICS,
-										info.objectBindDatas->at(_itr).myPipelineLayout, 0, 1, &info.objectBindDatas->at(_itr).myDescriptorSets[count][i], 0, nullptr);
-
-							// index buffer bind
-							vkCmdBindIndexBuffer(container->commandBufferContainer.buffers[i], info.objectBindDatas->at(_itr).myIndexBuffers[0], 0, VK_INDEX_TYPE_UINT32);
-
-							// draw command
-							vkCmdDrawIndexed(container->commandBufferContainer.buffers[i], info.objectBindDatas->at(_itr).myRendererFormat->myInternalFormat->myIndexCounts[0], 1, 0, 0, 0);
-						}
 						else if (info.objectBindDatas->at(_itr).myRendererFormat->myRenderTechnology == DMK_ADGR_RENDERING_TECHNOLOGY::DMK_ADGR_RENDER_INDIRECT) {
 						}
 						else if (info.objectBindDatas->at(_itr).myRendererFormat->myRenderTechnology == DMK_ADGR_RENDERING_TECHNOLOGY::DMK_ADGR_RENDER_INDEXED_INDIRECT) {
@@ -195,6 +164,94 @@ namespace Dynamik {
 						end command buffer
 					*/
 				}
+			}
+
+			// if drawing in vertex
+			void commandBufferManager::drawVertex(VkCommandBuffer* buffer, int index, vulkanFormat* format, VkDeviceSize* offsets) {
+				// bind pipeline
+				vkCmdBindPipeline(*buffer, VK_PIPELINE_BIND_POINT_GRAPHICS, format->myPipeline);
+
+				// vertex buffer bind
+				vkCmdBindVertexBuffers(*buffer, 0, format->myVertexBuffers.size(), format->myVertexBuffers.data(), offsets);
+
+				// binding descriptor set(s)
+				if (format->myDescriptorSets.size() > 0)
+					for (int count = 0; count < format->myDescriptorSets.size(); count++)
+						vkCmdBindDescriptorSets(*buffer, VK_PIPELINE_BIND_POINT_GRAPHICS, format->myPipelineLayout, 0, 1, &format->myDescriptorSets[count][index], 0, nullptr);
+
+				// draw command
+				vkCmdDraw(*buffer, format->myRendererFormat->myInternalFormat->myVertexCounts[0], 1, 0, 1);
+			}
+
+			// if drawing in indexed
+			void commandBufferManager::drawIndexed(VkCommandBuffer* buffer, int index, vulkanFormat* format, VkDeviceSize* offsets) {
+				// bind pipeline
+				vkCmdBindPipeline(*buffer, VK_PIPELINE_BIND_POINT_GRAPHICS, format->myPipeline);
+
+				// vertex buffer bind
+				vkCmdBindVertexBuffers(*buffer, 0, format->myVertexBuffers.size(), format->myVertexBuffers.data(), offsets);
+
+				// binding descriptor set(s)
+				if (format->myDescriptorSets.size() > 0)
+					for (int count = 0; count < format->myDescriptorSets.size(); count++)
+						vkCmdBindDescriptorSets(*buffer, VK_PIPELINE_BIND_POINT_GRAPHICS, format->myPipelineLayout, 0, 1, &format->myDescriptorSets[count][index], 0, nullptr);
+
+				// index buffer bind
+				vkCmdBindIndexBuffer(*buffer, format->myIndexBuffers[0], 0, VK_INDEX_TYPE_UINT32);
+
+				// draw command
+				vkCmdDrawIndexed(*buffer, format->myRendererFormat->myInternalFormat->myIndexCounts[0], 1, 0, 0, 0);
+			}
+
+			/* ONE TIME COMMAND BUFFER CLASS DEFINITION */
+			oneTimeCommandBufferManager::oneTimeCommandBufferManager(VkDevice device, VkCommandPool commandPool, VkQueue graphicsQueue, uint32_t count) {
+				myDevice = device;
+				myCommandPool = commandPool;
+				myGraphicsQueue = graphicsQueue;
+				myCount = count;
+
+				VkCommandBufferAllocateInfo allocInfo = {};
+				allocInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO;
+				allocInfo.level = VK_COMMAND_BUFFER_LEVEL_PRIMARY;
+				allocInfo.commandPool = myCommandPool;
+				allocInfo.commandBufferCount = myCount;
+
+				myCommandBuffers.resize(myCount);
+				vkAllocateCommandBuffers(myDevice, &allocInfo, myCommandBuffers.data());
+
+				for (int i = 0; i < myCount; i++) {
+					VkCommandBufferBeginInfo beginInfo = {};
+					beginInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO;
+					beginInfo.flags = VK_COMMAND_BUFFER_USAGE_ONE_TIME_SUBMIT_BIT;
+
+					vkBeginCommandBuffer(myCommandBuffers[i], &beginInfo);
+				}
+			}
+
+			oneTimeCommandBufferManager::~oneTimeCommandBufferManager() {
+				if (!isDestroyed)
+					destroyBuffers();
+			}
+
+			void oneTimeCommandBufferManager::destroyBuffers() {
+				for (int i = 0; i < myCount; i++)
+					vkEndCommandBuffer(myCommandBuffers[i]);
+
+				VkSubmitInfo submitInfo = {};
+				submitInfo.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO;
+				submitInfo.commandBufferCount = myCount;
+				submitInfo.pCommandBuffers = myCommandBuffers.data();
+
+				vkQueueSubmit(myGraphicsQueue, 1, &submitInfo, VK_NULL_HANDLE);
+				vkQueueWaitIdle(myGraphicsQueue);
+
+				vkFreeCommandBuffers(myDevice, myCommandPool, myCount, myCommandBuffers.data());
+
+				isDestroyed = true;
+			}
+
+			std::vector<VkCommandBuffer> oneTimeCommandBufferManager::getCommandBuffers() {
+				return myCommandBuffers;
 			}
 		}
 	}

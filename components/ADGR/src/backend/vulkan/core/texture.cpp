@@ -4,6 +4,7 @@
 #include "functions/bufferFunctions.h"
 
 #include "debugger.h"
+#include "commandBuffer.h"
 
 namespace Dynamik {
 	namespace ADGR {
@@ -17,7 +18,8 @@ namespace Dynamik {
 				if (!(formatProperties.optimalTilingFeatures & VK_FORMAT_FEATURE_SAMPLED_IMAGE_FILTER_LINEAR_BIT))
 					DMK_CORE_FATAL("texture image format does not support linear blitting!");
 
-				VkCommandBuffer commandBuff = beginSingleTimeCommands(container->device, container->commandBufferContainer.commandPool);
+				oneTimeCommandBufferManager oneTimeCommandBuffer(container->device, container->commandBufferContainer.commandPool, container->graphicsQueue);
+				VkCommandBuffer commandBuffer = oneTimeCommandBuffer.getCommandBuffers()[0];
 
 				VkImageMemoryBarrier barrier = {};
 				barrier.sType = VK_STRUCTURE_TYPE_IMAGE_MEMORY_BARRIER;
@@ -36,7 +38,7 @@ namespace Dynamik {
 					barrier.srcAccessMask = VK_ACCESS_TRANSFER_WRITE_BIT;
 					barrier.dstAccessMask = VK_ACCESS_TRANSFER_READ_BIT;
 
-					vkCmdPipelineBarrier(commandBuff,
+					vkCmdPipelineBarrier(commandBuffer,
 						VK_PIPELINE_STAGE_TRANSFER_BIT, VK_PIPELINE_STAGE_TRANSFER_BIT, 0,
 						0, nullptr,
 						0, nullptr,
@@ -56,7 +58,7 @@ namespace Dynamik {
 					blit.dstSubresource.baseArrayLayer = 0;
 					blit.dstSubresource.layerCount = 1;
 
-					vkCmdBlitImage(commandBuff,
+					vkCmdBlitImage(commandBuffer,
 						info.textureImage, VK_IMAGE_LAYOUT_TRANSFER_SRC_OPTIMAL,
 						info.textureImage, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL,
 						1, &blit,
@@ -67,7 +69,7 @@ namespace Dynamik {
 					barrier.srcAccessMask = VK_ACCESS_TRANSFER_READ_BIT;
 					barrier.dstAccessMask = VK_ACCESS_SHADER_READ_BIT;
 
-					vkCmdPipelineBarrier(commandBuff,
+					vkCmdPipelineBarrier(commandBuffer,
 						VK_PIPELINE_STAGE_TRANSFER_BIT, VK_PIPELINE_STAGE_FRAGMENT_SHADER_BIT, 0,
 						0, nullptr,
 						0, nullptr,
@@ -83,19 +85,15 @@ namespace Dynamik {
 				barrier.srcAccessMask = VK_ACCESS_TRANSFER_WRITE_BIT;
 				barrier.dstAccessMask = VK_ACCESS_SHADER_READ_BIT;
 
-				vkCmdPipelineBarrier(commandBuff,
+				vkCmdPipelineBarrier(commandBuffer,
 					VK_PIPELINE_STAGE_TRANSFER_BIT, VK_PIPELINE_STAGE_FRAGMENT_SHADER_BIT, 0,
 					0, nullptr,
 					0, nullptr,
 					1, &barrier);
-
-				endSingleTimeCommands(container->device, container->commandBufferContainer.commandPool, commandBuff, container->graphicsQueue);
 			}
 
-			/* TODO: RGB texture loader and SRGB texture loader */
 			void textureManager::initTexture(ADGRVulkanDataContainer* container, DMKInitTextureInfo initInfo) {
 				resource::TextureData texData;
-
 				unsigned char* pixels = nullptr;
 
 				if (initInfo.textureImageFormat == VK_FORMAT_R8G8B8A8_UNORM)
@@ -110,11 +108,8 @@ namespace Dynamik {
 				if (!pixels)
 					DMK_CORE_FATAL("failed to load texture image!");
 
-				if (!pixels)
-					printf("NoData!");
-
-				VkBuffer stagingBuffer;
-				VkDeviceMemory stagingBufferMemory;
+				VkBuffer stagingBuffer = VK_NULL_HANDLE;
+				VkDeviceMemory stagingBufferMemory = VK_NULL_HANDLE;
 
 				DMKCreateBufferInfo bufferInfo;
 				bufferInfo.device = container->device;
@@ -130,7 +125,6 @@ namespace Dynamik {
 				void* data;
 				if (vkMapMemory(container->device, stagingBufferMemory, 0, static_cast<size_t>(imageSize), 0, &data) != VK_SUCCESS)
 					DMK_CORE_FATAL("Failed to map memory!");
-
 				memcpy(data, pixels, static_cast<size_t>(imageSize));
 				vkUnmapMemory(container->device, stagingBufferMemory);
 

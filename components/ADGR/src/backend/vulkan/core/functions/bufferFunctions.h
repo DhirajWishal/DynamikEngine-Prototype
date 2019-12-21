@@ -27,11 +27,6 @@ namespace Dynamik {
 				void copyBuffer(VkDevice device, VkBuffer srcBuffer, VkBuffer dstBuffer, VkDeviceSize size,
 					VkCommandPool commandPool, VkQueue graphicsQueue);
 
-				VkCommandBuffer beginSingleTimeCommands(VkDevice device, VkCommandPool commandPool);
-
-				void endSingleTimeCommands(VkDevice device, VkCommandPool& commandPool, VkCommandBuffer commandBuffer,
-					VkQueue graphicsQueue);
-
 				VkSampleCountFlagBits getMaxUsableSampleCount(VkPhysicalDevice physicalDevice);
 
 				bool hasStencilComponent(VkFormat format);

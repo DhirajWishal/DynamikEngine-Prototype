@@ -1,83 +1,131 @@
 #include "objectDefinitions.h"
+#include <future>
+#include <functional>
 
 void moon::update(Event& currentEvent) {
 }
 
-DMKUpdateInfo mars::draw(std::deque<DMKEventContainer>& eventContainers) {
-	for (int i = 0; i < eventContainers.size(); i++) {
-		DMKEventContainer eventContainer = eventContainers.back();
-		eventContainers.pop_back();
+mars::mars() {
+	init();
+	myUpdateProperties.movementBiasFrontBack = 0.05f;
+	myUpdateProperties.movementBiasLeftRight = 0.05f;
+	myUpdateProperties.movementBiasUpDown = 0.05f;
+}
 
-		if (eventContainer.eventType == DMKEventType::DMK_EVENT_TYPE_KEY_PRESS) {
-			switch (eventContainer.code) {
-			case DMK_KEY_W:
-				myUpdateProperties.frontBack += myUpdateProperties.movementBiasFrontBack;
-				break;
-			case DMK_KEY_A:
-				myUpdateProperties.leftRight -= myUpdateProperties.movementBiasLeftRight;
-				break;
-			case DMK_KEY_S:
-				myUpdateProperties.frontBack -= myUpdateProperties.movementBiasFrontBack;
-				break;
-			case DMK_KEY_D:
-				myUpdateProperties.leftRight += myUpdateProperties.movementBiasLeftRight;
-				break;
-			case DMK_KEY_UP:
-				myUpdateProperties.upDown -= myUpdateProperties.movementBiasUpDown;
-				break;
-			case DMK_KEY_DOWN:
-				myUpdateProperties.upDown += myUpdateProperties.movementBiasUpDown;
-				break;
-			case DMK_KEY_LEFT:
-				myUpdateProperties.rotationZ -= myUpdateProperties.rotationBias;
-				break;
-			case DMK_KEY_RIGHT:
-				myUpdateProperties.rotationZ += myUpdateProperties.rotationBias;
-				break;
-			}
-		}
-		if (eventContainer.eventType == DMKEventType::DMK_EVENT_TYPE_KEY_REPEAT) {
-			switch (eventContainer.code) {
-			case DMK_KEY_W:
-				myUpdateProperties.frontBack += myUpdateProperties.movementBiasFrontBack;
-				break;
-			case DMK_KEY_A:
-				myUpdateProperties.leftRight -= myUpdateProperties.movementBiasLeftRight;
-				break;
-			case DMK_KEY_S:
-				myUpdateProperties.frontBack -= myUpdateProperties.movementBiasFrontBack;
-				break;
-			case DMK_KEY_D:
-				myUpdateProperties.leftRight += myUpdateProperties.movementBiasLeftRight;
-				break;
-			case DMK_KEY_UP:
-				myUpdateProperties.upDown -= myUpdateProperties.movementBiasUpDown;
-				break;
-			case DMK_KEY_DOWN:
-				myUpdateProperties.upDown += myUpdateProperties.movementBiasUpDown;
-				break;
-			case DMK_KEY_LEFT:
-				myUpdateProperties.rotationZ -= myUpdateProperties.rotationBias;
-				break;
-			case DMK_KEY_RIGHT:
-				myUpdateProperties.rotationZ += myUpdateProperties.rotationBias;
-				break;
-			}
-		}
-		if (eventContainer.eventType == DMKEventType::DMK_EVENT_TYPE_MOUSE_MOVED) {
-			myUpdateProperties.rotationX = eventContainer.xAxis;
-			myUpdateProperties.rotationY = eventContainer.yAxis;
+DMKUpdateInfo mars::draw(std::deque<DMKEventContainer>& eventContainers) {
+	{
+		std::vector<std::future<void>> threads;
+
+		for (int i = 0; i < eventContainers.size(); i++) {
+			DMKEventContainer eventContainer = eventContainers.back();
+			eventContainers.pop_back();
+
+			if (eventContainer.eventType == DMKEventType::DMK_EVENT_TYPE_KEY_PRESS)
+				threads.push_back(std::async(std::launch::async, [](DMKEventContainer eventContainer, DMKUpdateInfo* myUpdateProperties) {
+				switch (eventContainer.code) {
+				case DMK_KEY_W:
+					myUpdateProperties->frontBack += myUpdateProperties->movementBiasFrontBack;
+					break;
+				case DMK_KEY_A:
+					myUpdateProperties->leftRight -= myUpdateProperties->movementBiasLeftRight;
+					break;
+				case DMK_KEY_S:
+					myUpdateProperties->frontBack -= myUpdateProperties->movementBiasFrontBack;
+					break;
+				case DMK_KEY_D:
+					myUpdateProperties->leftRight += myUpdateProperties->movementBiasLeftRight;
+					break;
+				case DMK_KEY_UP:
+					myUpdateProperties->upDown -= myUpdateProperties->movementBiasUpDown;
+					break;
+				case DMK_KEY_DOWN:
+					myUpdateProperties->upDown += myUpdateProperties->movementBiasUpDown;
+					break;
+				case DMK_KEY_LEFT:
+					myUpdateProperties->rotationZ -= myUpdateProperties->rotationBias;
+					break;
+				case DMK_KEY_RIGHT:
+					myUpdateProperties->rotationZ += myUpdateProperties->rotationBias;
+					break;
+				}
+					}, eventContainer, &myUpdateProperties));
+			else if (eventContainer.eventType == DMKEventType::DMK_EVENT_TYPE_KEY_REPEAT)
+				threads.push_back(std::async(std::launch::async, [](DMKEventContainer eventContainer, DMKUpdateInfo* myUpdateProperties) {
+				switch (eventContainer.code) {
+				case DMK_KEY_W:
+					myUpdateProperties->frontBack += myUpdateProperties->movementBiasFrontBack;
+					break;
+				case DMK_KEY_A:
+					myUpdateProperties->leftRight -= myUpdateProperties->movementBiasLeftRight;
+					break;
+				case DMK_KEY_S:
+					myUpdateProperties->frontBack -= myUpdateProperties->movementBiasFrontBack;
+					break;
+				case DMK_KEY_D:
+					myUpdateProperties->leftRight += myUpdateProperties->movementBiasLeftRight;
+					break;
+				case DMK_KEY_UP:
+					myUpdateProperties->upDown -= myUpdateProperties->movementBiasUpDown;
+					break;
+				case DMK_KEY_DOWN:
+					myUpdateProperties->upDown += myUpdateProperties->movementBiasUpDown;
+					break;
+				case DMK_KEY_LEFT:
+					myUpdateProperties->rotationZ -= myUpdateProperties->rotationBias;
+					break;
+				case DMK_KEY_RIGHT:
+					myUpdateProperties->rotationZ += myUpdateProperties->rotationBias;
+					break;
+				}
+					}, eventContainer, &myUpdateProperties));
+			else if (eventContainer.eventType == DMKEventType::DMK_EVENT_TYPE_MOUSE_MOVED)
+				threads.push_back(std::async(std::launch::async, [](DMKEventContainer eventContainer, DMKUpdateInfo* myUpdateProperties) {
+				myUpdateProperties->rotationX = eventContainer.xAxis;
+				myUpdateProperties->rotationY = eventContainer.yAxis;
+					}, eventContainer, &myUpdateProperties));
 		}
 	}
 
 	return myUpdateProperties;
 }
 
-bool vertexDataContainer::vertex::operator==(const vertex& other) {
-	return Position == other.Position
-		&& Color == other.Color
-		&& Normals == other.Normals
-		&& TexCoordinates == other.TexCoordinates;
+void mars::init() {
+	myVertexDataContainer = vertexDataContainer();
+}
+
+void vertexDataContainer::setVertexData(DMKObjectVertexDataType dataType, std::vector<float> data) {
+	switch (dataType) {
+	case Dynamik::DMKObjectVertexDataType::DMK_VERTEX_DATA_POSITION:
+		vertexData.Position = { data[0], data[1], data[2] };
+		break;
+	case Dynamik::DMKObjectVertexDataType::DMK_VERTEX_DATA_COLOR:
+		vertexData.Color = { data[0], data[1], data[2] };
+		break;
+	case Dynamik::DMKObjectVertexDataType::DMK_VERTEX_DATA_REFLECTANCE:
+		break;
+	case Dynamik::DMKObjectVertexDataType::DMK_VERTEX_DATA_TEXTURE_COORDINATES:
+		vertexData.TexCoordinates = { data[0], data[1] };
+		break;
+	case Dynamik::DMKObjectVertexDataType::DMK_VERTEX_DATA_NORMAL_VECTORS:
+		vertexData.Normals = { data[0], data[1], data[2] };
+		break;
+	case Dynamik::DMKObjectVertexDataType::DMK_VERTEX_DATA_TANGENT_VECTORS:
+		break;
+	case Dynamik::DMKObjectVertexDataType::DMK_VERTEX_DATA_BLEND_WEIGHTS:
+		break;
+	case Dynamik::DMKObjectVertexDataType::DMK_VERTEX_DATA_BLEND_SHAPES:
+		break;
+	case Dynamik::DMKObjectVertexDataType::DMK_VERTEX_DATA_BOND_WEIGHTS:
+		break;
+	case Dynamik::DMKObjectVertexDataType::DMK_VERTEX_DATA_INTEGRITY:
+		break;
+	case Dynamik::DMKObjectVertexDataType::DMK_VERTEX_DATA_CUSTOM:
+		break;
+	case Dynamik::DMKObjectVertexDataType::DMK_VERTEX_DATA_UNKNOWN:
+		break;
+	default:
+		break;
+	}
 }
 
 std::vector<DMKVertexInputBindingDescription> vertexDataContainer::getVertexInputBindingDescription(int bindCount) {

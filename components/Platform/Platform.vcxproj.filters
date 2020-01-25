@@ -30,12 +30,16 @@
     <ClInclude Include="src\core\Windows\utils\loadIcon.h">
       <Filter>src\core\Windows\utils</Filter>
     </ClInclude>
+    <ClInclude Include="src\core\Windows\utils\objectLoader.h">
+      <Filter>src\core\Windows\utils</Filter>
+    </ClInclude>
     <ClInclude Include="src\core\Windows\utils\readFile.h">
       <Filter>src\core\Windows\utils</Filter>
     </ClInclude>
     <ClInclude Include="src\core\Windows\window.h">
       <Filter>src\core\Windows</Filter>
     </ClInclude>
+    <ClInclude Include="src\core\Windows\utils\modelManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\core\Windows\inputs.cpp">
@@ -47,12 +51,16 @@
     <ClCompile Include="src\core\Windows\utils\loadIcon.cpp">
       <Filter>src\core\Windows\utils</Filter>
     </ClCompile>
+    <ClCompile Include="src\core\Windows\utils\objectLoader.cpp">
+      <Filter>src\core\Windows\utils</Filter>
+    </ClCompile>
     <ClCompile Include="src\core\Windows\utils\readFile.cpp">
       <Filter>src\core\Windows\utils</Filter>
     </ClCompile>
     <ClCompile Include="src\core\Windows\window.cpp">
       <Filter>src\core\Windows</Filter>
     </ClCompile>
+    <ClCompile Include="src\core\Windows\utils\modelManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="premake5.lua" />

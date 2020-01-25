@@ -69,9 +69,6 @@
     <ClInclude Include="src\core\data store\objectSpecifications.h">
       <Filter>src\core\data store</Filter>
     </ClInclude>
-    <ClInclude Include="src\core\modelManager.h">
-      <Filter>src\core</Filter>
-    </ClInclude>
     <ClInclude Include="src\core\object mechanics\loadGameObjects.h">
       <Filter>src\core\object mechanics</Filter>
     </ClInclude>
@@ -109,9 +106,6 @@
     </ClCompile>
     <ClCompile Include="src\core\data store\internalFormat.cpp">
       <Filter>src\core\data store</Filter>
-    </ClCompile>
-    <ClCompile Include="src\core\modelManager.cpp">
-      <Filter>src\core</Filter>
     </ClCompile>
     <ClCompile Include="src\core\object mechanics\loadGameObjects.cpp">
       <Filter>src\core\object mechanics</Filter>

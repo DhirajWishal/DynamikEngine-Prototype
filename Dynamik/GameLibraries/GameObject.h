@@ -148,6 +148,36 @@ namespace Dynamik {
 		float size = 1.0f;
 	};
 
+	struct DMKVertexInputBindingDescription {
+		uint32_t binding = 0;
+		uint32_t stride = 0;
+	};
+
+	struct DMKVertexInputAttributeDescription {
+		uint32_t binding = 0;
+		uint32_t location = 0;
+		DMKFormat format;
+		uint32_t offset = 0;
+	};
+
+	// vertex Data
+	class VertexDataContainer {
+	public:
+		struct Vertex {};
+
+		virtual void setVertexData(DMKObjectVertexDataType dataType, std::vector<float> data) {}
+		virtual void setVertexDataF(DMKObjectVertexDataType& dataType, std::vector<float>& data) {}
+		virtual void setVertexDataI(DMKObjectVertexDataType& dataType, std::vector<int32_t>& data) {}
+		virtual void setVertexDataUI(DMKObjectVertexDataType& dataType, std::vector<uint32_t>& data) {}
+
+		virtual std::vector<DMKVertexInputBindingDescription> getVertexInputBindingDescription(int bindCount) {
+			return std::vector<DMKVertexInputBindingDescription>();
+		}
+		virtual std::vector<DMKVertexInputAttributeDescription> getVertexInputAttributeDescription() {
+			return std::vector<DMKVertexInputAttributeDescription>();
+		}
+	};
+
 	/*
 		 GameObject definition.
 		 GameObject class can be used to send and get data from the Rendering API specifically designed
@@ -230,8 +260,10 @@ namespace Dynamik {
 		DMKUpdateInfo myUpdateProperties = {};
 
 		// Data Types
-		Vertex* vertexDataType = nullptr;
+		VertexDataContainer myVertexDataContainer = {};
 		Uniform* uniformDataType = nullptr;
+
+		//typeid(uniformDataType) == 
 	};
 }
 

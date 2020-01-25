@@ -33,6 +33,8 @@ IncludeLib = {}
 IncludeLib["GLFW"] = "$(SolutionDir)libs/GLFW/lib-vc2019"
 --Include the Vulkan SDK path here
 IncludeLib["Vulkan"] = "E:/Programming/SDKs/Vulkan/1.1.126.0/Lib"
+IncludeLib["boostD"] = "E:/Programming/Modules and Runtime/boost_1_70_0/bin/libs/iostreams/build/msvc-14.2/debug/address-model-64/link-static/threading-multi"
+IncludeLib["boostR"] = "E:/Programming/Modules and Runtime/boost_1_70_0/bin/libs/iostreams/build/msvc-14.2/release/address-model-64/link-static/threading-multi"
 
 include "Launcher"
 include "Application"
@@ -126,15 +128,12 @@ project "Dynamik"
 
 	filter "configurations:Debug"
 		defines "DMK_DEBUG"
-		--buildoptions "\\MDd"
 		symbols "On"
 		
 	filter "configurations:Release"
 		defines "DMK_RELEASE"
-		--buildoptions "\\MD"
 		optimize "On"
 
 	filter "configurations:Distribution"
 		defines "DMK_DISTRIBUTION"
-		--buildoptions "\\MD"
 		optimize "On"

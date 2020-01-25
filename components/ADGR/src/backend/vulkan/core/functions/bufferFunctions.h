@@ -8,15 +8,15 @@ namespace Dynamik {
 		namespace core {
 			namespace functions {
 				struct DMKCreateBufferInfo {
-					VkDevice device;
-					VkPhysicalDevice physicalDevice;
+					VkDevice device = VK_NULL_HANDLE;
+					VkPhysicalDevice physicalDevice = VK_NULL_HANDLE;
 
-					VkBuffer* buffer;
-					VkBufferUsageFlagBits usage;
-					VkDeviceSize bufferSize;
-					VkDeviceMemory* bufferMemory;
+					VkBuffer* buffer = nullptr;
+					VkBufferUsageFlagBits usage = VK_BUFFER_USAGE_TRANSFER_SRC_BIT;
+					VkDeviceSize bufferSize = 0;
+					VkDeviceMemory* bufferMemory = nullptr;
 
-					VkMemoryPropertyFlags bufferMemoryPropertyflags;
+					VkMemoryPropertyFlags bufferMemoryPropertyflags = VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT;
 				};
 
 				void createBuffer(DMKCreateBufferInfo info);

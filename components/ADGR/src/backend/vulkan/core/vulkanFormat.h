@@ -63,6 +63,8 @@ namespace Dynamik {
 				// Uniform buffers
 				std::vector<VkBuffer> myUniformBuffers = {};
 				std::vector<VkDeviceMemory> myUniformBufferMemories = {};
+
+				bool isInitialized = false;
 			};
 		}
 	}

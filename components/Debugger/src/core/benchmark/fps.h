@@ -19,6 +19,7 @@ namespace Dynamik {
 				uint64_t current = 0;
 				uint64_t minimum = (uint64_t)10e10;
 				uint64_t maximum = 0;
+				uint64_t counter = 0;
 
 				bool refresh = false;
 			};

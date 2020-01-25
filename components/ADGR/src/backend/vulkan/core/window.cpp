@@ -42,7 +42,7 @@ namespace Dynamik {
 
 				glfwSetInputMode(container->window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
 
-				m_window = container->window;
+				container->window;
 			}
 
 			void window::framebufferResizeCallback(GLFWwindow* win, int width, int height) {
@@ -128,22 +128,22 @@ namespace Dynamik {
 				return glfwWindowShouldClose(container->window);
 			}
 
-			void window::onWindowResizeEvent() {
+			void window::onWindowResizeEvent(ADGRVulkanDataContainer* container) {
 				int width = 0, height = 0;
 				while (width == 0 || height == 0) {
-					glfwGetFramebufferSize(m_window, &width, &height);
+					glfwGetFramebufferSize(container->window, &width, &height);
 					glfwWaitEvents();
 				}
 			}
 
-			void window::setWindowIcon(std::string& path) {
+			void window::setWindowIcon(ADGRVulkanDataContainer* container, std::string& path) {
 				resource::TextureData imageData = {};
 
 				auto pixels = imageData.loadTexture(path, resource::TEXTURE_TYPE_RGBA, true);
 
 				GLFWimage icon[1];
 				icon[0].pixels = pixels;
-				glfwSetWindowIcon(m_window, 1, icon);
+				glfwSetWindowIcon(container->window, 1, icon);
 
 				imageData.freeData(pixels);
 			}

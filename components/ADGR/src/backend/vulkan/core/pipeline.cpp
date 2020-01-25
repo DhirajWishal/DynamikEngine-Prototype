@@ -9,84 +9,10 @@ namespace Dynamik {
 			using namespace functions;
 
 			std::pair<VkPipeline, VkPipelineLayout> pipeline::init(ADGRVulkanDataContainer* container, DMKPipelineInitInfo info) {
-				/* INIT RENDER PASS */
-				VkRenderPass renderPass = VK_NULL_HANDLE;
-				// attachment descriptions
-				VkAttachmentDescription colorAttachment = {};
-				colorAttachment.format = container->swapchainContainer.swapchainImageFormat;
-				colorAttachment.samples = container->msaaSamples;
-				colorAttachment.loadOp = VK_ATTACHMENT_LOAD_OP_CLEAR;
-				colorAttachment.storeOp = VK_ATTACHMENT_STORE_OP_STORE;
-				colorAttachment.stencilLoadOp = VK_ATTACHMENT_LOAD_OP_DONT_CARE;
-				colorAttachment.stencilStoreOp = VK_ATTACHMENT_STORE_OP_DONT_CARE;
-				colorAttachment.initialLayout = VK_IMAGE_LAYOUT_UNDEFINED;
-				colorAttachment.finalLayout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
+				// init render pass if not created
+				if (container->renderPass == VK_NULL_HANDLE)
+					initRenderPass(container);
 
-				VkAttachmentDescription depthAttachment = {};
-				depthAttachment.format = findDepthFormat(container->physicalDevice);
-				depthAttachment.samples = container->msaaSamples;
-				depthAttachment.loadOp = VK_ATTACHMENT_LOAD_OP_CLEAR;
-				depthAttachment.storeOp = VK_ATTACHMENT_STORE_OP_DONT_CARE;
-				depthAttachment.stencilLoadOp = VK_ATTACHMENT_LOAD_OP_DONT_CARE;
-				depthAttachment.stencilStoreOp = VK_ATTACHMENT_STORE_OP_DONT_CARE;
-				depthAttachment.initialLayout = VK_IMAGE_LAYOUT_UNDEFINED;
-				depthAttachment.finalLayout = VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL;
-
-				VkAttachmentDescription colorAttachmentResolve = {};
-				colorAttachmentResolve.format = container->swapchainContainer.swapchainImageFormat;
-				colorAttachmentResolve.samples = VK_SAMPLE_COUNT_1_BIT;
-				colorAttachmentResolve.loadOp = VK_ATTACHMENT_LOAD_OP_DONT_CARE;
-				colorAttachmentResolve.storeOp = VK_ATTACHMENT_STORE_OP_STORE;
-				colorAttachmentResolve.stencilLoadOp = VK_ATTACHMENT_LOAD_OP_DONT_CARE;
-				colorAttachmentResolve.stencilStoreOp = VK_ATTACHMENT_STORE_OP_DONT_CARE;
-				colorAttachmentResolve.initialLayout = VK_IMAGE_LAYOUT_UNDEFINED;
-				colorAttachmentResolve.finalLayout = VK_IMAGE_LAYOUT_PRESENT_SRC_KHR;
-
-				// attachment references
-				VkAttachmentReference colorAttachmentRef = {};
-				colorAttachmentRef.attachment = 0;
-				colorAttachmentRef.layout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
-
-				VkAttachmentReference depthAttachmentRef = {};
-				depthAttachmentRef.attachment = 1;
-				depthAttachmentRef.layout = VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL;
-
-				VkAttachmentReference colorAttachmentResolveRef = {};
-				colorAttachmentResolveRef.attachment = 2;
-				colorAttachmentResolveRef.layout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
-
-				// sub passes
-				VkSubpassDescription subpass = {};
-				subpass.pipelineBindPoint = VK_PIPELINE_BIND_POINT_GRAPHICS;
-				subpass.colorAttachmentCount = 1;
-				subpass.pColorAttachments = &colorAttachmentRef;
-				subpass.pDepthStencilAttachment = &depthAttachmentRef;
-				subpass.pResolveAttachments = &colorAttachmentResolveRef;
-
-				VkSubpassDependency dependency = {};
-				dependency.srcSubpass = VK_SUBPASS_EXTERNAL;
-				dependency.dstSubpass = 0;
-				dependency.srcStageMask = VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT;
-				dependency.srcAccessMask = 0;
-				dependency.dstStageMask = VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT;
-				dependency.dstAccessMask = VK_ACCESS_COLOR_ATTACHMENT_READ_BIT | VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT;
-
-				// render pass info
-				std::array<VkAttachmentDescription, 3> attachments = { colorAttachment, depthAttachment, colorAttachmentResolve };
-				VkRenderPassCreateInfo renderPassInfo = {};
-				renderPassInfo.sType = VK_STRUCTURE_TYPE_RENDER_PASS_CREATE_INFO;
-				renderPassInfo.attachmentCount = static_cast<uint32_t>(attachments.size());
-				renderPassInfo.pAttachments = attachments.data();
-				renderPassInfo.subpassCount = 1;
-				renderPassInfo.pSubpasses = &subpass;
-				renderPassInfo.dependencyCount = 1;
-				renderPassInfo.pDependencies = &dependency;
-
-				// create the render pass
-				if (vkCreateRenderPass(container->device, &renderPassInfo, nullptr, &renderPass) != VK_SUCCESS)
-					DMK_CORE_FATAL("failed to create render pass!");
-
-				/* INIT PIPELINE */
 				auto bindingDescription = Vertex::getBindingDescription(1);
 				auto attributeDescriptions = Vertex::getAttributeDescriptions(1);
 
@@ -103,9 +29,8 @@ namespace Dynamik {
 				inputAssembly.topology = info.inputAssemblyTopology;
 				inputAssembly.primitiveRestartEnable = info.inputAssemblyPrimitiveRestartEnable;
 
-				std::vector<VkViewport> viewports;
-
 				// initialize the viewport(s)
+				std::vector<VkViewport> viewports;
 				for (int i = 0; i < info.viweportCount; i++) {
 					VkViewport viewport = {};
 					viewport.x = 0.0f;
@@ -118,9 +43,8 @@ namespace Dynamik {
 					viewports.push_back(viewport);
 				}
 
-				std::vector<VkRect2D> scissors;
-
 				// initialize the scissor(s)
+				std::vector<VkRect2D> scissors;
 				for (int i = 0; i < info.scissorCount; i++) {
 					VkRect2D scissor = {};
 					scissor.offset = info.offsets[0];
@@ -246,7 +170,7 @@ namespace Dynamik {
 				pipelineInfo.pDepthStencilState = &depthStencil;
 				pipelineInfo.pColorBlendState = &colorBlending;
 				pipelineInfo.layout = pipelineLayout;
-				pipelineInfo.renderPass = renderPass;
+				pipelineInfo.renderPass = container->renderPass;
 				pipelineInfo.subpass = info.pipelineSubPass;
 				pipelineInfo.basePipelineHandle = info.pipelineBasePipelineHandle;
 				pipelineInfo.basePipelineIndex = info.pipelineBasePipelineIndex;
@@ -259,14 +183,7 @@ namespace Dynamik {
 				if (vkCreateGraphicsPipelines(container->device, VK_NULL_HANDLE, 1, &pipelineInfo, nullptr, &pipeline) != VK_SUCCESS)
 					DMK_CORE_FATAL("failed to create graphics pipeline!");
 
-				ADGRVulkanPipelineDataContainer pipelineContainer = {};
-				pipelineContainer.pipelineLayout = pipelineLayout;
-				pipelineContainer.pipeline = pipeline;
-
-				container->pipelineContainers.push_back(pipelineContainer);
-				container->renderPass = renderPass;
-
-				return { pipelineContainer.pipeline, pipelineContainer.pipelineLayout };
+				return { pipeline, pipelineLayout };
 			}
 
 			void pipeline::initRenderPass(ADGRVulkanDataContainer* container) {

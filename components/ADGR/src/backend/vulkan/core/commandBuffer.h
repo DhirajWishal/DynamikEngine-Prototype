@@ -31,8 +31,8 @@ namespace Dynamik {
 				void bindCommands(ADGRVulkanDataContainer* container, DMKBindCommandBufferInfo info);
 
 			private:
-				void drawVertex(VkCommandBuffer* buffer, int index,  vulkanFormat* format, VkDeviceSize* offsets);
-				void drawIndexed(VkCommandBuffer* buffer, int index, vulkanFormat* format, VkDeviceSize* offsets);
+				void drawVertex(VkCommandBuffer buffer, int index,  vulkanFormat* format, VkDeviceSize* offsets);
+				void drawIndexed(VkCommandBuffer buffer, int index, vulkanFormat* format, VkDeviceSize* offsets);
 			};
 
 			/* ONE TIME COMMAND BUFFER CLASS */

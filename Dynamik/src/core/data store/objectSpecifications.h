@@ -590,6 +590,24 @@ namespace Dynamik {
 		DMK_ADGR_RENDER_INDIRECT_MESH_ONLY,			// Render indirectly (only if supported) (meshes only)
 		DMK_ADGR_RENDER_INDEXED_INDIRECT_MESH_ONLY	// Render indexed vertexes indirectly (only if supported) (meshes only)
 	};
+
+	/* VERTEX DATA TYPE ENUM */
+	enum class DMKObjectVertexDataType {
+		DMK_VERTEX_DATA_POSITION,					// Positional vectors
+		DMK_VERTEX_DATA_COLOR,						// Color vectors
+		DMK_VERTEX_DATA_REFLECTANCE,				// Reflectance vectors
+		DMK_VERTEX_DATA_TEXTURE_COORDINATES,		// Texture coordinates
+		DMK_VERTEX_DATA_NORMAL_VECTORS,				// Normal vectors
+		DMK_VERTEX_DATA_TANGENT_VECTORS,			// Tangent vectors
+		DMK_VERTEX_DATA_BLEND_WEIGHTS,				// Blend weights
+		DMK_VERTEX_DATA_BLEND_SHAPES,				// Blend shapes
+		DMK_VERTEX_DATA_BOND_WEIGHTS,				// Bond weights
+
+		DMK_VERTEX_DATA_INTEGRITY,					// Dynamik specific data (destruction)
+
+		DMK_VERTEX_DATA_CUSTOM,						// Custom data type
+		DMK_VERTEX_DATA_UNKNOWN						// Unknown
+	};
 }
 
 #endif // !_DYNAMIK_CENTRAL_DATA_HUB_OBJECT_SPECIFICATIONS_H

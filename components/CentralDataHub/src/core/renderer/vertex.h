@@ -29,18 +29,6 @@ namespace Dynamik {
 			return Position == other.Position && Color == other.Color && TexCoordinates == other.TexCoordinates;
 		}
 	};
-
-	struct PointVertex {
-		glm::vec3 Position;
-		glm::vec3 Color;
-
-		static std::vector<VkVertexInputBindingDescription> getBindingDescription(int bindCount);
-		static std::vector<VkVertexInputAttributeDescription> getAttributeDescriptions(int bindCount);
-
-		bool operator==(const Vertex& other) const {
-			return Position == other.Position && Color == other.Color;
-		}
-	};
 }
 
 #endif // !_DYNAMIK_ADGR_VULKAN_VERTEX_H

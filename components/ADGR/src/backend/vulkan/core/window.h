@@ -54,9 +54,9 @@ namespace Dynamik {
 				void onUpdate() override;
 				bool closeEvent(ADGRVulkanDataContainer* container) override;
 
-				void onWindowResizeEvent();
+				void onWindowResizeEvent(ADGRVulkanDataContainer* container);
 
-				void setWindowIcon(std::string& path) override;
+				void setWindowIcon(ADGRVulkanDataContainer* container, std::string& path) override;
 
 				bool isFrameBufferResized() { return frameBufferResized; }
 				void frameBufferResizedUpdate(bool state) { frameBufferResized = state; }
@@ -68,8 +68,6 @@ namespace Dynamik {
 				}
 
 			private:
-				GLFWwindow* m_window = nullptr;
-
 				std::deque<DMKEventContainer> eventContainer = {};
 				void keyEventHandler(DMKEventType type, int keycode = -1, int count = 0);
 				void mouseButtonEvent(DMKEventType type, int keycode = -1, int count = 0);

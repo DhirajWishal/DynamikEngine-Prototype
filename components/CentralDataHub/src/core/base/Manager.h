@@ -122,8 +122,7 @@ namespace Dynamik {
 			class Manager {
 			public:
 				Manager() {}
-				virtual ~Manager() {
-				}
+				virtual ~Manager() {}
 
 				// event manager
 				void addEvent(DMKEventContainer& event) { eventContainer.push_back(event); }
@@ -139,7 +138,7 @@ namespace Dynamik {
 
 				_SET_VECTOR(void*) global = {};
 				_SET_2D_VECTOR(void*) unknown = {};
-				std::deque<DMKEventContainer> eventContainer;
+				std::deque<DMKEventContainer> eventContainer = {};
 			};
 		}
 	}

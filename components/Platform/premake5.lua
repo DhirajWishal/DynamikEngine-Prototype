@@ -42,7 +42,7 @@ project "Platform"
 		"%{IncludeDir.tol}",
 		"%{IncludeDir.assimp}",
 		"%{IncludeDir.Vulkan}"
-	}
+		}
 
 	libdirs {
 		"%{IncludeLib.GLFW}",

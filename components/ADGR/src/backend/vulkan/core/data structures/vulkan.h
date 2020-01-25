@@ -137,7 +137,7 @@ namespace Dynamik {
 				// depth stencil info
 				VkBool32 depthStencilEnable = VK_TRUE;								// Vulkan depth stencil enable
 				VkBool32 depthStencilWriteEnable = VK_TRUE;							// Vulkan depth stencil write enable
-				VkCompareOp depthStencilCompareOp = VkCompareOp::VK_COMPARE_OP_LESS;				// Vulkan depth stencil compare op
+				VkCompareOp depthStencilCompareOp = VkCompareOp::VK_COMPARE_OP_LESS;	// Vulkan depth stencil compare op
 				VkBool32 depthStencilBoundsTestEnable = VK_FALSE;					// Vulkan depth stencil bounds test enable
 				VkBool32 depthStencilTestEnable = VK_FALSE;							// Vulkan depth stencil test enable
 

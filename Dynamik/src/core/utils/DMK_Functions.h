@@ -51,6 +51,12 @@ namespace Dynamik {
 
 		// var = utils::square(value);
 		DMK_API long double square(double base);
+
+		// var = utils::splitLine(line, character);
+		DMK_API std::vector<std::string> splitLine(std::string_view line, char splitBy);
+
+		// var = rand();
+		DMK_API uint32_t rand(uint32_t from = 0, uint32_t to = 100);
 	}
 }
 

@@ -90,10 +90,10 @@ namespace Dynamik {
 
 						// Render type selection
 						if (info.objectBindDatas->at(_itr).myRendererFormat->myRenderTechnology == DMK_ADGR_RENDERING_TECHNOLOGY::DMK_ADGR_RENDER_VERTEX) 		// Render as individual vertexes
-							drawVertex(&container->commandBufferContainer.buffers[i], i, &info.objectBindDatas->at(_itr), offsets);
+							drawVertex(container->commandBufferContainer.buffers[i], i, &info.objectBindDatas->at(_itr), offsets);
 
 						else if (info.objectBindDatas->at(_itr).myRendererFormat->myRenderTechnology == DMK_ADGR_RENDERING_TECHNOLOGY::DMK_ADGR_RENDER_INDEXED) 		// Render as individual indexes
-							drawIndexed(&container->commandBufferContainer.buffers[i], i, &info.objectBindDatas->at(_itr), offsets);
+							drawIndexed(container->commandBufferContainer.buffers[i], i, &info.objectBindDatas->at(_itr), offsets);
 
 						else if (info.objectBindDatas->at(_itr).myRendererFormat->myRenderTechnology == DMK_ADGR_RENDERING_TECHNOLOGY::DMK_ADGR_RENDER_INDIRECT) {
 						}
@@ -167,40 +167,42 @@ namespace Dynamik {
 			}
 
 			// if drawing in vertex
-			void commandBufferManager::drawVertex(VkCommandBuffer* buffer, int index, vulkanFormat* format, VkDeviceSize* offsets) {
-				// bind pipeline
-				vkCmdBindPipeline(*buffer, VK_PIPELINE_BIND_POINT_GRAPHICS, format->myPipeline);
+			void commandBufferManager::drawVertex(VkCommandBuffer buffer, int index, vulkanFormat* format, VkDeviceSize* offsets) {
+				for (int i = 0; i < format->myVertexBuffers.size(); i++) {
+					// bind pipeline
+					vkCmdBindPipeline(buffer, VK_PIPELINE_BIND_POINT_GRAPHICS, format->myPipeline);
 
-				// vertex buffer bind
-				vkCmdBindVertexBuffers(*buffer, 0, format->myVertexBuffers.size(), format->myVertexBuffers.data(), offsets);
+					// vertex buffer bind
+					vkCmdBindVertexBuffers(buffer, 0, 1, &format->myVertexBuffers[i], offsets);
 
-				// binding descriptor set(s)
-				if (format->myDescriptorSets.size() > 0)
-					for (int count = 0; count < format->myDescriptorSets.size(); count++)
-						vkCmdBindDescriptorSets(*buffer, VK_PIPELINE_BIND_POINT_GRAPHICS, format->myPipelineLayout, 0, 1, &format->myDescriptorSets[count][index], 0, nullptr);
+					// binding descriptor set(s)
+					if (format->myDescriptorSets.size())
+						vkCmdBindDescriptorSets(buffer, VK_PIPELINE_BIND_POINT_GRAPHICS, format->myPipelineLayout, 0, 1, &format->myDescriptorSets[i][index], 0, nullptr);
 
-				// draw command
-				vkCmdDraw(*buffer, format->myRendererFormat->myInternalFormat->myVertexCounts[0], 1, 0, 1);
+					// draw command
+					vkCmdDraw(buffer, format->myRendererFormat->myInternalFormat->myVertexCounts[i], 1, 0, 1);
+				}
 			}
 
 			// if drawing in indexed
-			void commandBufferManager::drawIndexed(VkCommandBuffer* buffer, int index, vulkanFormat* format, VkDeviceSize* offsets) {
-				// bind pipeline
-				vkCmdBindPipeline(*buffer, VK_PIPELINE_BIND_POINT_GRAPHICS, format->myPipeline);
+			void commandBufferManager::drawIndexed(VkCommandBuffer buffer, int index, vulkanFormat* format, VkDeviceSize* offsets) {
+				for (int i = 0; i < format->myVertexBuffers.size(); i++) {
+					// bind pipeline
+					vkCmdBindPipeline(buffer, VK_PIPELINE_BIND_POINT_GRAPHICS, format->myPipeline);
 
-				// vertex buffer bind
-				vkCmdBindVertexBuffers(*buffer, 0, format->myVertexBuffers.size(), format->myVertexBuffers.data(), offsets);
+					// vertex buffer bind
+					vkCmdBindVertexBuffers(buffer, 0, 1, &format->myVertexBuffers[i], offsets);
 
-				// binding descriptor set(s)
-				if (format->myDescriptorSets.size() > 0)
-					for (int count = 0; count < format->myDescriptorSets.size(); count++)
-						vkCmdBindDescriptorSets(*buffer, VK_PIPELINE_BIND_POINT_GRAPHICS, format->myPipelineLayout, 0, 1, &format->myDescriptorSets[count][index], 0, nullptr);
+					// binding descriptor set(s)
+					if (format->myDescriptorSets.size())
+						vkCmdBindDescriptorSets(buffer, VK_PIPELINE_BIND_POINT_GRAPHICS, format->myPipelineLayout, 0, 1, &format->myDescriptorSets[i][index], 0, nullptr);
 
-				// index buffer bind
-				vkCmdBindIndexBuffer(*buffer, format->myIndexBuffers[0], 0, VK_INDEX_TYPE_UINT32);
+					// index buffer bind
+					vkCmdBindIndexBuffer(buffer, format->myIndexBuffers[i], 0, VK_INDEX_TYPE_UINT32);
 
-				// draw command
-				vkCmdDrawIndexed(*buffer, format->myRendererFormat->myInternalFormat->myIndexCounts[0], 1, 0, 0, 0);
+					// draw command
+					vkCmdDrawIndexed(buffer, format->myRendererFormat->myInternalFormat->myIndexCounts[i], 1, 0, 0, 0);
+				}
 			}
 
 			/* ONE TIME COMMAND BUFFER CLASS DEFINITION */

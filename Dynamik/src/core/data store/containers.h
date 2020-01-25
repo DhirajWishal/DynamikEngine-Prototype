@@ -41,9 +41,9 @@ namespace Dynamik {
 	// Update info
 	struct DMKUpdateInfo {
 		// movement and rotation biases
-		float movementBiasUpDown = 0.05f;
-		float movementBiasFrontBack = 0.05f;
-		float movementBiasLeftRight = 0.05f;
+		float movementBiasUpDown = 0.005f;
+		float movementBiasFrontBack = 0.005f;
+		float movementBiasLeftRight = 0.005f;
 		float rotationBias = 2.5f;
 
 		// movement and rotaion container

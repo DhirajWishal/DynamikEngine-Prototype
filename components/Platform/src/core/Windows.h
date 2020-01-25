@@ -19,6 +19,8 @@
 #include "Windows/utils/readFile.h"
 #include "Windows/utils/loadIcon.h"
 #include "Windows/utils/daiFileManager.h"
+#include "Windows/utils/objectLoader.h"
+#include "Windows/utils/modelManager.h"
 
 #endif
 

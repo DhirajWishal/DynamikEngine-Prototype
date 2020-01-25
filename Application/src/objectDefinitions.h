@@ -22,9 +22,9 @@ class vertexDataContainer : public Dynamik::VertexDataContainer {
 		glm::vec3 Color;
 		glm::vec3 Normals;
 		glm::vec2 TexCoordinates;
+	} vertexData;
 
-		bool operator==(const vertex& other);
-	};
+	void setVertexData(DMKObjectVertexDataType dataType, std::vector<float> data) override;
 
 	std::vector<DMKVertexInputBindingDescription> getVertexInputBindingDescription(int bindCount) override;
 
@@ -33,19 +33,18 @@ class vertexDataContainer : public Dynamik::VertexDataContainer {
 
 struct uniformBufferObject : public Uniform {
 	alignas(16) glm::mat4 model;
-	glm::mat4 view;
-	glm::mat4 proj;
-	glm::vec3 color;
+	alignas(16) glm::mat4 view;
+	alignas(16) glm::mat4 proj;
+	alignas(16) glm::vec3 color;
 };
 
 class mars : public GameObject {
 public:
-	mars() {}
+	mars();
 	mars(GameObjectProperties& props) : GameObject(props) {}
 
 	DMKUpdateInfo draw(std::deque<DMKEventContainer>& eventContainers) override;
-
-	//vertexDataType = &vertexDataContainer();
+	void init() override;
 };
 
 class explosion : public GameObject {

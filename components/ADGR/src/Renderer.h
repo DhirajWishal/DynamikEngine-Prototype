@@ -37,7 +37,12 @@ namespace Dynamik {
 			void setRendererFormats(std::vector<InternalFormat*>& internalFormats);
 			void draw();
 
+			void setVertices(std::vector<Vertex>* vertices);
+
 			void run();
+			void loadDataToUpdate(std::vector<InternalFormat*>& internalFormats);
+			void updateRendererFormats();
+			void loadData(std::vector<InternalFormat*>& internalFormats, std::vector<RendererFormat>* formats);
 
 			void end();
 
@@ -50,6 +55,9 @@ namespace Dynamik {
 			void idleCall();
 
 			std::vector<RendererFormat> myRendererFormats = {};
+			std::vector<RendererFormat> myTemporaryFormats;
+
+			std::vector<Vertex> localContainer;
 		};
 	}
 }

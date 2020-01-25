@@ -9,7 +9,7 @@ namespace Dynamik {
 			using namespace functions;
 
 			void vertexBufferManager::createVertexBuffer(ADGRVulkanDataContainer* container, DMKVertexBufferCreateInfo info) {
-				VkDeviceSize bufferSize = sizeof(info.vertices[0]) * info.vertices->size();
+				VkDeviceSize bufferSize = sizeof((*info.vertices).at(0)) * (*info.vertices).size();
 
 				VkBuffer stagingBuffer;
 				VkDeviceMemory stagingBufferMemory;
@@ -25,9 +25,9 @@ namespace Dynamik {
 
 				functions::createBuffer(bufferInfo);
 
-				void* data;
+				void* data = nullptr;
 				vkMapMemory(container->device, stagingBufferMemory, 0, bufferSize, 0, &data);
-				memcpy(data, info.vertices->data(), (size_t)bufferSize);
+				memcpy(data, (*info.vertices).data(), (size_t)bufferSize);
 				vkUnmapMemory(container->device, stagingBufferMemory);
 
 				DMKCreateBufferInfo vertBufferInfo;

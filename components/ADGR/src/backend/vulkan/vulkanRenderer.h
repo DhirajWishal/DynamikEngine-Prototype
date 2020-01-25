@@ -41,6 +41,11 @@ namespace Dynamik {
 			~vulkanRenderer();
 
 			void init();
+
+			void initStageOne();
+			void initStageTwo();
+			void initStageThree();
+
 			void drawFrame();
 			void shutdown();
 
@@ -52,9 +57,13 @@ namespace Dynamik {
 			void setProgress(uint32_t* progress) {
 				myProgress = progress;
 			}
-			void setRendererFormats(std::vector<RendererFormat>& rendererFormats);
+			void setVulkanFormats(std::vector<RendererFormat>& rendererFormats);
+			void updateVulkanFormats(std::vector<RendererFormat>& rendererFormats);
 			void setModelPaths(std::vector<std::string>& object, std::vector<std::vector<std::string>>& texture);
 			void setShaderPaths(std::string& vertex, std::string& fragment);
+			void setVertices(std::vector<Vertex>& vertices) {
+				myVertices = vertices;
+			}
 
 			inline VkDevice getDevice() { return myManager.getResourceAddr<ADGRVulkanDataContainer>(DMK_CDH_MANAGER_RESOURCE_TYPE_VULKAN_DATA_CONTAINER, vulkanContainerIndex)->device; }
 
@@ -75,19 +84,24 @@ namespace Dynamik {
 			void initWindowSurface();
 			void initDevice();
 			void initSwapChain();
-			void initDescriptorSetLayout();
-			void initPipelines();
+			void initDescriptorSetLayout(vulkanFormat* myVulkanFormat);
+			void initRenderPass();
+			void initPipelines(vulkanFormat* myVulkanFormat);
 			void initCommandPool();
 			void initColorBuffer();
 			void initDepthBuffer();
 			void initFrameBuffers();
-			void initSkyboxsAndTextures();
-			//void initCubemapAndModels();
-			void initVertexAndIndexBuffers();
-			void initUniformBuffers();
-			void initDescriptorPoolsAndSets();
-			void initCommandBuffers();
+			void initSkyboxsAndTextures(vulkanFormat* myVulkanFormat);
+			//void initCubemapAndModels(vulkanFormat* myVulkanFormat);
+			void initVertexAndIndexBuffers(vulkanFormat* myVulkanFormat);
+			void initUniformBuffers(vulkanFormat* myVulkanFormat);
+			void initDescriptorPoolsAndSets(vulkanFormat* myVulkanFormat);
+			void initCommandBuffers(std::vector<vulkanFormat>* myVulkanFormats);
 			void initSemaphoresAndFences();
+
+			//void initModelsAndTextures(vulkanFormat* format);
+
+			void initObjectBasedFunctions(std::vector<vulkanFormat>* myVulkanFormats);
 
 			/* STAGE BASED SHUTDOWN */
 			void rendererWait();
@@ -96,6 +110,8 @@ namespace Dynamik {
 			void initCubemap(DMKObjectData* data);
 
 		private:
+			void _addVulkanFormatsToManager(std::vector<RendererFormat>& rendererFormats);
+
 			// renderer core classes
 			core::window myWindow{};
 			core::instanceManager myInstance{};
@@ -117,6 +133,7 @@ namespace Dynamik {
 			// main data manager
 			core::manager myManager{};
 
+			uint32_t imageIndex = 0;
 			uint32_t currentFrame = 0;
 			uint32_t vulkanFormatObjectsCount = 0;
 			uint32_t vulkanContainerIndex = 0;
@@ -125,6 +142,9 @@ namespace Dynamik {
 
 			bool compileShaders = false;
 			bool enableVertexAndIndexClear = true;
+
+			std::vector<Vertex> myVertices = {};
+			std::vector<std::future<void>> myThreads = {};
 		};
 	}
 }

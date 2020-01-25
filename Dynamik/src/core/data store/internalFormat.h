@@ -39,6 +39,8 @@ namespace Dynamik {
 		// Index buffers
 		std::vector<std::vector<uint32_t>> myIndexBufferObjects = {};
 		std::vector<uint32_t> myIndexCounts;
+
+		bool isInitializedPrimary = false;
 	};
 }
 

@@ -332,6 +332,7 @@ ASALocalRun/
 # Other Files
 *gitUpload.bat
 bin/
+core assets/assets
 backup/
 libs/*.html
 libs/*.xml

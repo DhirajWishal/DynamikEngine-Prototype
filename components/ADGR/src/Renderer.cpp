@@ -14,8 +14,8 @@
 #include "backend/vulkan/ADGR_Vulkan_API.h"
 #include "debugger.h"
 
-#ifdef DMK_PLATFORM_WINDOWS
-#include "Platform/Windows.h"
+#ifdef DMK_PLATFORM_windowS
+#include "Platform/windows.h"
 
 #else
 

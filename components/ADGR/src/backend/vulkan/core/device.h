@@ -8,10 +8,10 @@
 namespace Dynamik {
 	namespace ADGR {
 		namespace core {
-			class device : public Device {
+			class deviceManager : public Device {
 			public:
-				device() {}
-				~device() {}
+				deviceManager() {}
+				~deviceManager() {}
 
 				void init(ADGRVulkanDataContainer* container) override;
 

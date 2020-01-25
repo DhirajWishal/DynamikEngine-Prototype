@@ -1,9 +1,9 @@
 #pragma once
 
-#ifndef _DYNAMIK_ADGR_VULKAN_WINDOW_H
-#define _DYNAMIK_ADGR_VULKAN_WINDOW_H
+#ifndef _DYNAMIK_ADGR_VULKAN_window_H
+#define _DYNAMIK_ADGR_VULKAN_window_H
 
-#include "core/Window.h"
+#include "core/window.h"
 #include <deque>
 
 #include "keyEvent.h"
@@ -40,23 +40,23 @@ namespace Dynamik {
 				float y;
 			};
 
-			class window : public Window {
+			class windowManager : public Window {
 			public:
-				window() {}
-				~window() {}
+				windowManager() {}
+				~windowManager() {}
 
 				void init(ADGRVulkanDataContainer* container) override;
 				void clear(ADGRVulkanDataContainer* container) override;
 
-				bool createWindowSurface(ADGRVulkanDataContainer* container);
+				bool createwindowSurface(ADGRVulkanDataContainer* container);
 
 				void pollEvents() override;
 				void onUpdate() override;
 				bool closeEvent(ADGRVulkanDataContainer* container) override;
 
-				void onWindowResizeEvent(ADGRVulkanDataContainer* container);
+				void onwindowResizeEvent(ADGRVulkanDataContainer* container);
 
-				void setWindowIcon(ADGRVulkanDataContainer* container, std::vector<std::string> paths) override;
+				void setwindowIcon(ADGRVulkanDataContainer* container, std::vector<std::string> paths) override;
 
 				bool isFrameBufferResized() { return frameBufferResized; }
 				void frameBufferResizedUpdate(bool state) { frameBufferResized = state; }
@@ -87,7 +87,7 @@ namespace Dynamik {
 				static void onMouseButtonEvent(GLFWwindow* window, int button, int action, int mods);
 				static void onMouseScrolledEvent(GLFWwindow* window, double xOffset, double yOffset);
 				static void onCursorPosEvent(GLFWwindow* window, double xPos, double yPos);
-				static void onWindowCloseEvent(GLFWwindow* window);
+				static void onwindowCloseEvent(GLFWwindow* window);
 
 				void setEventCallback(const eventCallbackFunction& callback) {
 					myEventCallbackFunction = callback;
@@ -99,4 +99,4 @@ namespace Dynamik {
 	}
 }
 
-#endif // !_DYNAMIK_ADGR_VULKAN_WINDOW_H
+#endif // !_DYNAMIK_ADGR_VULKAN_window_H

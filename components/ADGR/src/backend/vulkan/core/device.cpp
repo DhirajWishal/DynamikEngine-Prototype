@@ -14,7 +14,7 @@ namespace Dynamik {
 		namespace core {
 			using namespace functions;
 
-			bool device::checkDeviceExtensionSupport(VkPhysicalDevice device) {
+			bool deviceManager::checkDeviceExtensionSupport(VkPhysicalDevice device) {
 				uint32_t extensionCount = 0;
 				vkEnumerateDeviceExtensionProperties(device, nullptr, &extensionCount, nullptr);
 
@@ -29,7 +29,7 @@ namespace Dynamik {
 				return requiredExtensions.empty();
 			}
 
-			bool device::isDeviceSuitable(VkPhysicalDevice device, VkSurfaceKHR* surface) {
+			bool deviceManager::isDeviceSuitable(VkPhysicalDevice device, VkSurfaceKHR* surface) {
 				queueFamilyindices indices = findQueueFamilies(device, *surface);
 
 				bool extensionsSupported = checkDeviceExtensionSupport(device);
@@ -50,12 +50,12 @@ namespace Dynamik {
 					&& supportedFeatures.samplerAnisotropy;
 			}
 
-			void device::init(ADGRVulkanDataContainer* container) {
+			void deviceManager::init(ADGRVulkanDataContainer* container) {
 				initPhysicalDevice(container);
 				initLogicalDevice(container);
 			}
 
-			void device::initLogicalDevice(ADGRVulkanDataContainer* container) {
+			void deviceManager::initLogicalDevice(ADGRVulkanDataContainer* container) {
 				queueFamilyindices indices = findQueueFamilies(container->physicalDevice, container->surface);
 
 				std::vector<VkDeviceQueueCreateInfo> queueCreateInfos;
@@ -101,7 +101,7 @@ namespace Dynamik {
 				vkGetDeviceQueue(container->device, indices.presentFamily.value(), 0, &container->presentQueue);
 			}
 
-			void device::initPhysicalDevice(ADGRVulkanDataContainer* container) {
+			void deviceManager::initPhysicalDevice(ADGRVulkanDataContainer* container) {
 				uint32 deviceCount = 0;
 				vkEnumeratePhysicalDevices(container->instance, &deviceCount, nullptr);
 

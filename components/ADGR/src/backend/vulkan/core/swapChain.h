@@ -16,10 +16,10 @@ namespace Dynamik {
 				std::vector<VkPipelineLayout> pipelineLayouts;
 			};
 
-			class swapChain : public SwapChain {
+			class swapChainManager : public SwapChain {
 			public:
-				swapChain() {}
-				~swapChain() {}
+				swapChainManager() {}
+				~swapChainManager() {}
 
 				void init(ADGRVulkanDataContainer* container) override;
 				void clear(ADGRVulkanDataContainer* container) override;

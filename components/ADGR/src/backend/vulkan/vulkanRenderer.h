@@ -9,8 +9,6 @@
  IDE:		MS Visual Studio Community 2019
 
  vulkanRenderer.h
-
- * Commit convention: (Finalising Dynamik Engine Architecture: stage #)
  */
 
 #ifndef _DYNAMIK_ADGR_VULKAN_RENDERER_H
@@ -52,7 +50,7 @@ namespace Dynamik {
 			void recreateSwapChain();
 
 			std::deque<DMKEventContainer>* events();
-			inline bool closeEvent() { return myWindow.closeEvent(myManager.getResourceAddr<ADGRVulkanDataContainer>(DMK_CDH_MANAGER_RESOURCE_TYPE_VULKAN_DATA_CONTAINER, vulkanContainerIndex)); }
+			inline bool closeEvent() { return myWindowManager.closeEvent(&myVulkanDataContainers[vulkanContainerIndex]); }
 
 			void setProgress(uint32_t* progress) {
 				myProgress = progress;
@@ -65,23 +63,19 @@ namespace Dynamik {
 				myVertices = vertices;
 			}
 
-			inline VkDevice getDevice() { return myManager.getResourceAddr<ADGRVulkanDataContainer>(DMK_CDH_MANAGER_RESOURCE_TYPE_VULKAN_DATA_CONTAINER, vulkanContainerIndex)->device; }
-
-			void initPipeline(DMK_ADGR_CreatePipelineInfo info);
+			inline VkDevice getDevice() { return myVulkanDataContainers[vulkanContainerIndex].device; }
 
 			void createVertexBuffer(DMKVulkanRendererCreateVertexBufferInfo info);
 			void createIndexBuffer(DMKVulkanRendererCreateIndexBufferInfo info);
 			void createUniformBuffer(DMKVulkanRendererCreateUniformBufferInfo info);
 			void createDescriptorSets(DMKVulkanRendereCreateDescriptorSetsInfo info);
 
-			void includeShader();
-
 			/* STAGE BASED INITIALIZATION(STARTUP) */
 			void initManagerFunctions();
 			void initWindow();
 			void initInstance();
 			void initDebugger();
-			void initWindowSurface();
+			void initwindowSurface();
 			void initDevice();
 			void initSwapChain();
 			void initDescriptorSetLayout(vulkanFormat* myVulkanFormat);
@@ -113,12 +107,12 @@ namespace Dynamik {
 			void _addVulkanFormatsToManager(std::vector<RendererFormat>& rendererFormats);
 
 			// renderer core classes
-			core::window myWindow{};
-			core::instanceManager myInstance{};
-			core::device myDevice{};
-			core::swapChain mySwapChain{};
-			core::pipeline myPipeline{};
-			core::uniformBufferManager uniformBuffer{};
+			core::windowManager myWindowManager{};
+			core::instanceManager myInstanceManager{};
+			core::deviceManager myDeviceManager{};
+			core::swapChainManager mySwapChainManager{};
+			core::pipelineManager myPipelineManager{};
+			core::uniformBufferManager uniformBufferManager{};
 			core::commandBufferManager myCommandBufferManager{};
 			core::colorBufferManager myColorBufferManager{};
 			core::depthBufferManager myDepthBufferManager{};
@@ -126,12 +120,9 @@ namespace Dynamik {
 			core::textureManager myTextureManager{};
 			core::vertexBufferManager myVertexBufferManager{};
 			core::indexBufferManager myIndexBufferManager{};
-			core::skybox mySkyboxManager{};
+			core::skyboxManager mySkyboxManager{};
 			core::shaderManager myShaderManager{};
 			core::debugger myDebugger{};
-
-			// main data manager
-			core::manager myManager{};
 
 			uint32_t imageIndex = 0;
 			uint32_t currentFrame = 0;
@@ -145,6 +136,20 @@ namespace Dynamik {
 
 			std::vector<Vertex> myVertices = {};
 			std::vector<std::future<void>> myThreads = {};
+
+			/* DATA STORE */
+			std::vector<ADGRVulkanDataContainer> myVulkanDataContainers = {};
+			std::vector<vulkanFormat> myVulkanFormats = {};
+			std::deque<DMKEventContainer> myEventContainers = {};
+
+			std::vector<VkDescriptorSetLayout> myDescriptorSetLayouts = {};
+			std::vector<VkSemaphore> myImageAvailableSemaphores = {};
+			std::vector<VkSemaphore> myRenderFinishedSemaphores = {};
+			std::vector<VkFence> myFencesInFlight = {};
+
+			std::vector<std::string> myModelPaths = {};
+			std::vector<std::vector<std::string>> myTexturePaths = {};
+			std::vector<std::string> myShaderPaths = {};
 		};
 	}
 }

@@ -217,8 +217,8 @@ namespace Dynamik {
 
 			/* DATA CONTAINER */
 			struct ADGRVulkanDataContainer {
-				/* WINDOW */
-				GLFWwindow* window = nullptr;										// GLFW Window
+				/* window */
+				GLFWwindow* window = nullptr;										// GLFW window
 
 				/* VULKAN CORE */
 				VkInstance instance = VK_NULL_HANDLE;								// Vulkan instance

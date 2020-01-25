@@ -4,7 +4,7 @@
 #define _DYNAMIK_ADGR_VULKAN_RENDERER_TEXTURE_H
 
 #include "Core.h"
-#include "Platform/Windows/resource/imageLoader.h"
+#include "Platform/windows/resource/imageLoader.h"
 
 namespace Dynamik {
 	namespace ADGR {

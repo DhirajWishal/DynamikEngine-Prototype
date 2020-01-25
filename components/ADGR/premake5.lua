@@ -66,7 +66,7 @@ project "ADGR"
 		systemversion "latest"
 
 		defines {
-			"DMK_PLATFORM_WINDOWS",
+			"DMK_PLATFORM_windowS",
 			"DMK_BUILD_DLL",
 			"GLFW_INCLUDE_VULKAN"
 		}

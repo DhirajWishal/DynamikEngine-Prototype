@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef _DYNAMIK_ADGR_VULKAN_RENDERER_WINDOW_H
-#define _DYNAMIK_ADGR_VULKAN_RENDERER_WINDOW_H
+#ifndef _DYNAMIK_ADGR_VULKAN_RENDERER_window_H
+#define _DYNAMIK_ADGR_VULKAN_RENDERER_window_H
 
 #include "Core.h"
 
@@ -17,10 +17,10 @@ namespace Dynamik {
 				virtual void onUpdate() {}
 				virtual bool closeEvent(ADGRVulkanDataContainer* container) { return false; }
 
-				virtual void setWindowIcon(ADGRVulkanDataContainer* container, std::vector<std::string> paths) {}
+				virtual void setwindowIcon(ADGRVulkanDataContainer* container, std::vector<std::string> paths) {}
 			};
 		}
 	}
 }
 
-#endif // !_DYNAMIK_ADGR_VULKAN_RENDERER_WINDOW_H
+#endif // !_DYNAMIK_ADGR_VULKAN_RENDERER_window_H

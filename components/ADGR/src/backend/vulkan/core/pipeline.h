@@ -10,10 +10,10 @@ namespace Dynamik {
 		namespace core {
 			// TODO: Pipeline cashe
 
-			class pipeline : public Pipeline {
+			class pipelineManager : public Pipeline {
 			public:
-				pipeline() {}
-				~pipeline() {}
+				pipelineManager() {}
+				~pipelineManager() {}
 
 				std::pair<VkPipeline, VkPipelineLayout> init(ADGRVulkanDataContainer* container, DMKPipelineInitInfo info);
 				void initRenderPass(ADGRVulkanDataContainer* container) override;

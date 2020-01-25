@@ -6,12 +6,12 @@
 #include "applicationEvent.h"
 #include "keyCodes.h"
 
-#include "Platform/Windows/resource/imageLoader.h"
+#include "Platform/windows/resource/imageLoader.h"
 
 namespace Dynamik {
 	namespace ADGR {
 		namespace core {
-			void window::init(ADGRVulkanDataContainer* container) {
+			void windowManager::init(ADGRVulkanDataContainer* container) {
 				glfwInit();
 
 				glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
@@ -22,12 +22,12 @@ namespace Dynamik {
 				GLFWmonitor* monitor = glfwGetPrimaryMonitor();
 				const GLFWvidmode* mode = glfwGetVideoMode(monitor);
 
-				glfwWindowHint(GLFW_RED_BITS, mode->redBits);
-				glfwWindowHint(GLFW_GREEN_BITS, mode->greenBits);
-				glfwWindowHint(GLFW_BLUE_BITS, mode->blueBits);
-				glfwWindowHint(GLFW_REFRESH_RATE, mode->refreshRate);
+				glfwwindowHint(GLFW_RED_BITS, mode->redBits);
+				glfwwindowHint(GLFW_GREEN_BITS, mode->greenBits);
+				glfwwindowHint(GLFW_BLUE_BITS, mode->blueBits);
+				glfwwindowHint(GLFW_REFRESH_RATE, mode->refreshRate);
 
-				container->window = glfwCreateWindow(mode->width, mode->height, "Dynamik Engine", monitor, NULL);
+				container->window = glfwCreatewindow(mode->width, mode->height, "Dynamik Engine", monitor, NULL);
 
 #endif
 				glfwMakeContextCurrent(container->window);
@@ -38,20 +38,20 @@ namespace Dynamik {
 				glfwSetMouseButtonCallback(container->window, onMouseButtonEvent);
 				glfwSetScrollCallback(container->window, onMouseScrolledEvent);
 				glfwSetCursorPosCallback(container->window, onCursorPosEvent);
-				glfwSetWindowCloseCallback(container->window, onWindowCloseEvent);
+				glfwSetWindowCloseCallback(container->window, onwindowCloseEvent);
 
 				glfwSetInputMode(container->window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
 
 				container->window;
 			}
 
-			void window::framebufferResizeCallback(GLFWwindow* win, int width, int height) {
-				auto app = reinterpret_cast<window*>(glfwGetWindowUserPointer(win));
+			void windowManager::framebufferResizeCallback(GLFWwindow* win, int width, int height) {
+				auto app = reinterpret_cast<windowManager*>(glfwGetWindowUserPointer(win));
 				app->frameBufferResized = true;
 			}
 
-			void window::onKeyEvent(GLFWwindow* win, int keycode, int scancode, int action, int mods) {
-				auto data = reinterpret_cast<window*>(glfwGetWindowUserPointer(win));
+			void windowManager::onKeyEvent(GLFWwindow* win, int keycode, int scancode, int action, int mods) {
+				auto data = reinterpret_cast<windowManager*>(glfwGetWindowUserPointer(win));
 				data->keyEventHandler(DMKEventType::DMK_EVENT_TYPE_KEY_REPEAT, -1);
 
 				switch (action) {
@@ -73,8 +73,8 @@ namespace Dynamik {
 				}
 			}
 
-			void window::onMouseButtonEvent(GLFWwindow* win, int button, int action, int mods) {
-				auto data = reinterpret_cast<window*>(glfwGetWindowUserPointer(win));
+			void windowManager::onMouseButtonEvent(GLFWwindow* win, int button, int action, int mods) {
+				auto data = reinterpret_cast<windowManager*>(glfwGetWindowUserPointer(win));
 				data->mouseButtonEvent(DMKEventType::DMK_EVENT_TYPE_UNKNOWN, -1);
 
 				switch (action) {
@@ -89,20 +89,20 @@ namespace Dynamik {
 				}
 			}
 
-			void window::onMouseScrolledEvent(GLFWwindow* win, double xOffset, double yOffset) {
-				auto data = reinterpret_cast<window*>(glfwGetWindowUserPointer(win));
+			void windowManager::onMouseScrolledEvent(GLFWwindow* win, double xOffset, double yOffset) {
+				auto data = reinterpret_cast<windowManager*>(glfwGetWindowUserPointer(win));
 				data->mouseScrolledEvent(xOffset, yOffset);
 			}
 
-			void window::onCursorPosEvent(GLFWwindow* win, double xPos, double yPos) {
-				auto data = reinterpret_cast<window*>(glfwGetWindowUserPointer(win));
+			void windowManager::onCursorPosEvent(GLFWwindow* win, double xPos, double yPos) {
+				auto data = reinterpret_cast<windowManager*>(glfwGetWindowUserPointer(win));
 				data->mouseMovedEvent(xPos, yPos);
 			}
 
-			void window::onWindowCloseEvent(GLFWwindow* window) {
+			void windowManager::onwindowCloseEvent(GLFWwindow* window) {
 			}
 
-			bool window::createWindowSurface(ADGRVulkanDataContainer* container) {
+			bool windowManager::createwindowSurface(ADGRVulkanDataContainer* container) {
 				if (glfwCreateWindowSurface(container->instance, container->window, nullptr, &container->surface) != VK_SUCCESS) {
 					DMK_CORE_FATAL("Failed to create window surface!");
 					return false;
@@ -111,24 +111,24 @@ namespace Dynamik {
 				return true;
 			}
 
-			void window::clear(ADGRVulkanDataContainer* container) {
+			void windowManager::clear(ADGRVulkanDataContainer* container) {
 				glfwDestroyWindow(container->window);
 				glfwTerminate();
 			}
 
-			void window::pollEvents() {
+			void windowManager::pollEvents() {
 				glfwPollEvents();
 			}
 
-			void window::onUpdate() {
+			void windowManager::onUpdate() {
 				pollEvents();
 			}
 
-			bool window::closeEvent(ADGRVulkanDataContainer* container) {
+			bool windowManager::closeEvent(ADGRVulkanDataContainer* container) {
 				return glfwWindowShouldClose(container->window);
 			}
 
-			void window::onWindowResizeEvent(ADGRVulkanDataContainer* container) {
+			void windowManager::onwindowResizeEvent(ADGRVulkanDataContainer* container) {
 				int width = 0, height = 0;
 				while (width == 0 || height == 0) {
 					glfwGetFramebufferSize(container->window, &width, &height);
@@ -136,7 +136,7 @@ namespace Dynamik {
 				}
 			}
 
-			void window::setWindowIcon(ADGRVulkanDataContainer* container, std::vector<std::string> paths) {
+			void windowManager::setwindowIcon(ADGRVulkanDataContainer* container, std::vector<std::string> paths) {
 				uint32_t _imageCount = paths.size();
 				std::vector<GLFWimage> icons;
 				std::vector<resource::TextureData> texDatas;
@@ -159,7 +159,7 @@ namespace Dynamik {
 				glfwSetWindowIcon(container->window, _imageCount, icons.data());
 			}
 
-			void window::keyEventHandler(DMKEventType type, int keycode, int count) {
+			void windowManager::keyEventHandler(DMKEventType type, int keycode, int count) {
 				DMKEventContainer _localContainer = {};
 				_localContainer.eventType = type;
 				_localContainer.code = keycode;
@@ -167,7 +167,7 @@ namespace Dynamik {
 				eventContainer.push_back(_localContainer);
 			}
 
-			void window::mouseButtonEvent(DMKEventType type, int keycode, int count) {
+			void windowManager::mouseButtonEvent(DMKEventType type, int keycode, int count) {
 				DMKEventContainer _localContainer = {};
 				_localContainer.eventType = type;
 				_localContainer.code = keycode;
@@ -175,7 +175,7 @@ namespace Dynamik {
 				eventContainer.push_back(_localContainer);
 			}
 
-			void window::mouseScrolledEvent(float xOffset, float yOffset) {
+			void windowManager::mouseScrolledEvent(float xOffset, float yOffset) {
 				DMKEventContainer _localContainer = {};
 				_localContainer.eventType = DMKEventType::DMK_EVENT_TYPE_MOUSE_SCROLL;
 				_localContainer.xOffset = xOffset;
@@ -183,7 +183,7 @@ namespace Dynamik {
 				eventContainer.push_back(_localContainer);
 			}
 
-			void window::mouseMovedEvent(float xOffset, float yOffset) {
+			void windowManager::mouseMovedEvent(float xOffset, float yOffset) {
 				DMKEventContainer _localContainer = {};
 				_localContainer.eventType = DMKEventType::DMK_EVENT_TYPE_MOUSE_MOVED;
 				_localContainer.xAxis = xOffset;

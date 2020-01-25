@@ -12,7 +12,7 @@
 
 #endif
 #else
-#error Dynamik Engine only supports MS Windows!
+#error Dynamik Engine only supports MS windows!
 
 #endif
 

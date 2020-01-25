@@ -8,7 +8,7 @@ namespace Dynamik {
 		namespace core {
 			using namespace functions;
 
-			std::pair<VkPipeline, VkPipelineLayout> pipeline::init(ADGRVulkanDataContainer* container, DMKPipelineInitInfo info) {
+			std::pair<VkPipeline, VkPipelineLayout> pipelineManager::init(ADGRVulkanDataContainer* container, DMKPipelineInitInfo info) {
 				// init render pass if not created
 				if (container->renderPass == VK_NULL_HANDLE)
 					initRenderPass(container);
@@ -186,7 +186,7 @@ namespace Dynamik {
 				return { pipeline, pipelineLayout };
 			}
 
-			void pipeline::initRenderPass(ADGRVulkanDataContainer* container) {
+			void pipelineManager::initRenderPass(ADGRVulkanDataContainer* container) {
 				// attachment descriptions
 				VkAttachmentDescription colorAttachment = {};
 				colorAttachment.format = container->swapchainContainer.swapchainImageFormat;

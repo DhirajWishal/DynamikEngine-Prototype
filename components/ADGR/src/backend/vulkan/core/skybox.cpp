@@ -11,7 +11,7 @@ namespace Dynamik {
 		namespace core {
 			using namespace functions;
 
-			void skybox::initSkybox(ADGRVulkanDataContainer* container, DMKSkyboxInitInfo info) {
+			void skyboxManager::initSkybox(ADGRVulkanDataContainer* container, DMKSkyboxInitInfo info) {
 				DMKInitCubemapInfo cinfo;
 				cinfo.path = { info.path };
 				cinfo.imageLayout = info.imageLayout;
@@ -24,10 +24,10 @@ namespace Dynamik {
 				loadCubemap(container, cinfo);
 			}
 
-			void skybox::deleteSkybox(ADGRVulkanDataContainer* container) {
+			void skyboxManager::deleteSkybox(ADGRVulkanDataContainer* container) {
 			}
 
-			void skybox::loadCubemap(ADGRVulkanDataContainer* container, DMKInitCubemapInfo initInfo) {
+			void skyboxManager::loadCubemap(ADGRVulkanDataContainer* container, DMKInitCubemapInfo initInfo) {
 				resource::TextureData texData = {};
 
 				unsigned char* cubemap = texData.loadTexture(initInfo.path, resource::TEXTURE_TYPE_RGBA, initInfo.flipImage);
@@ -94,7 +94,7 @@ namespace Dynamik {
 				vkDestroyBuffer(container->device, stagingBuffer, nullptr);
 			}
 
-			void skybox::generateMipMaps(ADGRVulkanDataContainer* container, DMKGenerateMipMapInfo info) {
+			void skyboxManager::generateMipMaps(ADGRVulkanDataContainer* container, DMKGenerateMipMapInfo info) {
 				oneTimeCommandBufferManager oneTimeCommandBuffer(container->device, container->commandBufferContainer.commandPool, container->graphicsQueue);
 				VkCommandBuffer commandBuffer = oneTimeCommandBuffer.getCommandBuffers()[0];
 
@@ -170,7 +170,7 @@ namespace Dynamik {
 				initSampler(container, initInfo);
 			}
 
-			void skybox::initSampler(ADGRVulkanDataContainer* container, DMKSkyboxSampelrInitInfo info) {
+			void skyboxManager::initSampler(ADGRVulkanDataContainer* container, DMKSkyboxSampelrInitInfo info) {
 				// Create sampler
 				VkSamplerCreateInfo sampler = {};
 				sampler.sType = VK_STRUCTURE_TYPE_SAMPLER_CREATE_INFO;

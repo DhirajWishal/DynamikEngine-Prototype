@@ -33,10 +33,10 @@ namespace Dynamik {
 				VkImageView* imageView = nullptr;
 			};
 
-			class skybox : Texture {
+			class skyboxManager : Texture {
 			public:
-				skybox() {}
-				~skybox() {}
+				skyboxManager() {}
+				~skyboxManager() {}
 
 				void initSkybox(ADGRVulkanDataContainer* container, DMKSkyboxInitInfo) override;
 				void deleteSkybox(ADGRVulkanDataContainer* container) override;

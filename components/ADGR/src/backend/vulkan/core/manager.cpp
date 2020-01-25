@@ -35,7 +35,7 @@ namespace Dynamik {
 			//	case DMK_CDH_MANAGER_RESOURCE_TYPE_VULKAN_PHYSICAL_DEVICE:
 			//		returnData = &physicalDevices;
 			//		break;
-			//	case DMK_CDH_MANAGER_RESOURCE_TYPE_VULKAN_WINDOW:
+			//	case DMK_CDH_MANAGER_RESOURCE_TYPE_VULKAN_window:
 			//		returnData = &windows;
 			//		break;
 			//	case DMK_CDH_MANAGER_RESOURCE_TYPE_VULKAN_SURFACE:

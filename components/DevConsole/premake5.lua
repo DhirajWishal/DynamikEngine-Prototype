@@ -25,7 +25,7 @@ project "DevCon"
 		"$(SolutionDir)Dynamik/src",
 		"$(SolutionDir)components/Debugger/src",
 		"%{IncludeDir.GLFW}",
-		"%{IncludeDir.Glad}",
+		"%{IncludeDir.GLEW}",
 		"%{IncludeDir.glm}",
 		"%{IncludeDir.stb}",
 		"%{IncludeDir.tol}",

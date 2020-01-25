@@ -3,23 +3,30 @@
 #ifndef _DYNAMIK_ADGR_VULKAN_SHADER_H
 #define _DYNAMIK_ADGR_VULKAN_SHADER_H
 
-#include "core/Shader.h"
+#include "backend/vulkan/core/data structures/vulkan.h"
 
 namespace Dynamik {
 	namespace ADGR {
 		namespace core {
-			class shaderManager : public Shader {
+			enum ShaderType {
+				VERTEX_SHADER,
+				TESSELLATION_SHADER,
+				GEOMETRY_SHADER,
+				FRAGMENT_SHADER
+			};
+
+			class shaderManager {
 			public:
 				shaderManager() {}
 				~shaderManager() {}
 
 				void init(ADGRVulkanDataContainer* container, ADGRVulkanShaderDataContainer* shaderDataContainer);
 
-				void loadShader(DMK_ShaderCode shaderCode, ShaderType type) override;
-				VkShaderModule createShaderModule(VkDevice device, DMK_ShaderCode& code) override;
-				void deleteShaders(ADGRVulkanDataContainer& container, ADGRVulkanPipelineDataContainer& pipelineContainer) override;
+				void loadShader(DMK_ShaderCode shaderCode, ShaderType type) ;
+				VkShaderModule createShaderModule(VkDevice device, DMK_ShaderCode& code) ;
+				void deleteShaders(ADGRVulkanDataContainer& container, ADGRVulkanPipelineDataContainer& pipelineContainer);
 
-				void compileShaders(std::string path, bool activate) override;
+				void compileShaders(std::string path, bool activate) ;
 
 			private:
 				std::string command = "";

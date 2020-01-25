@@ -3,14 +3,12 @@
 #ifndef _DYNAMIK_ADGR_VULKAN_GL_TEXTURE_H
 #define _DYNAMIK_ADGR_VULKAN_GL_TEXTURE_H
 
-#include "core/Texture.h"
-
 #include <string>
 
 namespace Dynamik {
 	namespace ADGR {
 		namespace core {
-			class glTexture : public Core {
+			class glTexture {
 			public:
 				glTexture(std::string& path);
 				~glTexture();

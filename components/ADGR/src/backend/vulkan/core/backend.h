@@ -22,8 +22,6 @@
 
 #include "manager.h"
 
-#include "data structures/vertex.h"
-
 #include "others/syncObjects.h"
 
 #include "validators/debugger/debugger.h"

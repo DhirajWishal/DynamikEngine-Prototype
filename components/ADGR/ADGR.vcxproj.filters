@@ -4,9 +4,6 @@
     <Filter Include="src">
       <UniqueIdentifier>{2DAB880B-99B4-887C-2230-9F7C8E38947C}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\Data Structures">
-      <UniqueIdentifier>{1A6D9C1F-86CE-792D-0F3C-C0DF7B9CB0EC}</UniqueIdentifier>
-    </Filter>
     <Filter Include="src\Layers">
       <UniqueIdentifier>{4C4DA51D-3805-E76A-A10C-C0C68DE3815B}</UniqueIdentifier>
     </Filter>
@@ -16,14 +13,20 @@
     <Filter Include="src\backend">
       <UniqueIdentifier>{0427456E-70DC-BD63-F9D0-B73A6585B467}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\backend\directx12">
+      <UniqueIdentifier>{09066B5D-7572-2658-3E66-BEB5AA9148C0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\backend\opengl">
+      <UniqueIdentifier>{185C1CF4-0440-DD49-6DA0-D79C59A3C7CB}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\backend\opengl\core">
+      <UniqueIdentifier>{905BBCBB-FC92-0453-059D-687671532B4C}</UniqueIdentifier>
+    </Filter>
     <Filter Include="src\backend\vulkan">
       <UniqueIdentifier>{24BCCE04-10A0-8F5A-7900-8AAD65037ADC}</UniqueIdentifier>
     </Filter>
     <Filter Include="src\backend\vulkan\core">
       <UniqueIdentifier>{1CA3E816-88DA-30AE-91E4-94D1FD9A57A7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\backend\vulkan\core\core">
-      <UniqueIdentifier>{14A5A125-0060-91D1-A917-0A1C95B1DB61}</UniqueIdentifier>
     </Filter>
     <Filter Include="src\backend\vulkan\core\data structures">
       <UniqueIdentifier>{493FB445-B5CE-7530-BECA-56482AD9B03C}</UniqueIdentifier>
@@ -48,12 +51,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\Data Structures\index.h">
-      <Filter>src\Data Structures</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Data Structures\vertex.h">
-      <Filter>src\Data Structures</Filter>
-    </ClInclude>
     <ClInclude Include="src\Layers\layer.h">
       <Filter>src\Layers</Filter>
     </ClInclude>
@@ -75,8 +72,17 @@
     <ClInclude Include="src\backend\defines.h">
       <Filter>src\backend</Filter>
     </ClInclude>
+    <ClInclude Include="src\backend\directx12\directx12Renderer.h">
+      <Filter>src\backend\directx12</Filter>
+    </ClInclude>
     <ClInclude Include="src\backend\interface.h">
       <Filter>src\backend</Filter>
+    </ClInclude>
+    <ClInclude Include="src\backend\opengl\core\window.h">
+      <Filter>src\backend\opengl\core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\backend\opengl\openglRenderer.h">
+      <Filter>src\backend\opengl</Filter>
     </ClInclude>
     <ClInclude Include="src\backend\vulkan\ADGR_Vulkan_API.h">
       <Filter>src\backend\vulkan</Filter>
@@ -92,36 +98,6 @@
     </ClInclude>
     <ClInclude Include="src\backend\vulkan\core\controlHeader.h">
       <Filter>src\backend\vulkan\core</Filter>
-    </ClInclude>
-    <ClInclude Include="src\backend\vulkan\core\core\Buffer.h">
-      <Filter>src\backend\vulkan\core\core</Filter>
-    </ClInclude>
-    <ClInclude Include="src\backend\vulkan\core\core\Core.h">
-      <Filter>src\backend\vulkan\core\core</Filter>
-    </ClInclude>
-    <ClInclude Include="src\backend\vulkan\core\core\Device.h">
-      <Filter>src\backend\vulkan\core\core</Filter>
-    </ClInclude>
-    <ClInclude Include="src\backend\vulkan\core\core\Instance.h">
-      <Filter>src\backend\vulkan\core\core</Filter>
-    </ClInclude>
-    <ClInclude Include="src\backend\vulkan\core\core\Model.h">
-      <Filter>src\backend\vulkan\core\core</Filter>
-    </ClInclude>
-    <ClInclude Include="src\backend\vulkan\core\core\Pipeline.h">
-      <Filter>src\backend\vulkan\core\core</Filter>
-    </ClInclude>
-    <ClInclude Include="src\backend\vulkan\core\core\Shader.h">
-      <Filter>src\backend\vulkan\core\core</Filter>
-    </ClInclude>
-    <ClInclude Include="src\backend\vulkan\core\core\SwapChain.h">
-      <Filter>src\backend\vulkan\core\core</Filter>
-    </ClInclude>
-    <ClInclude Include="src\backend\vulkan\core\core\Texture.h">
-      <Filter>src\backend\vulkan\core\core</Filter>
-    </ClInclude>
-    <ClInclude Include="src\backend\vulkan\core\core\Window.h">
-      <Filter>src\backend\vulkan\core\core</Filter>
     </ClInclude>
     <ClInclude Include="src\backend\vulkan\core\data structures\DMK_ADGR_DataStructures.h">
       <Filter>src\backend\vulkan\core\data structures</Filter>
@@ -233,14 +209,20 @@
     <ClCompile Include="src\adgrafx.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="src\backend\directx12\directx12Renderer.cpp">
+      <Filter>src\backend\directx12</Filter>
+    </ClCompile>
+    <ClCompile Include="src\backend\opengl\core\window.cpp">
+      <Filter>src\backend\opengl\core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\backend\opengl\openglRenderer.cpp">
+      <Filter>src\backend\opengl</Filter>
+    </ClCompile>
     <ClCompile Include="src\backend\vulkan\core\colorBuffer.cpp">
       <Filter>src\backend\vulkan\core</Filter>
     </ClCompile>
     <ClCompile Include="src\backend\vulkan\core\commandBuffer.cpp">
       <Filter>src\backend\vulkan\core</Filter>
-    </ClCompile>
-    <ClCompile Include="src\backend\vulkan\core\core\Core.cpp">
-      <Filter>src\backend\vulkan\core\core</Filter>
     </ClCompile>
     <ClCompile Include="src\backend\vulkan\core\depthBuffer.cpp">
       <Filter>src\backend\vulkan\core</Filter>

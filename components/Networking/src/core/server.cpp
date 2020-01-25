@@ -18,15 +18,15 @@ namespace Dynamik {
 				return DMK_RESULT_UNSUCCESSFUL;
 			}
 
-			ZeroMemory(&hints, sizeof(hints));
-			hints.ai_family = AF_INET;
-			hints.ai_socktype = SOCK_STREAM;
-			hints.ai_protocol = IPPROTO_TCP;
-			hints.ai_flags = AI_PASSIVE;
+			ZeroMemory(hints, sizeof(*hints));
+			hints->ai_family = AF_INET;
+			hints->ai_socktype = SOCK_STREAM;
+			hints->ai_protocol = IPPROTO_TCP;
+			hints->ai_flags = AI_PASSIVE;
 
 			PCSTR port = std::to_string(myPort).c_str();
 
-			iResult = getaddrinfo(NULL, port, &hints, &result);
+			iResult = getaddrinfo(NULL, port, hints, &result);
 			if (iResult != 0) {
 				DMK_CORE_FATAL("getaddrinfo failed with error: " + std::to_string(iResult));
 				cleanUp();

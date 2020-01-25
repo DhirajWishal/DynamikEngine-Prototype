@@ -7,7 +7,7 @@
 
 namespace Dynamik {
 	namespace Networking {
-		class client : public Client {
+		class NETW_API client : public Client {
 		public:
 			client() {}
 			~client() {}

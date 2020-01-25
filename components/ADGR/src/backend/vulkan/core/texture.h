@@ -3,12 +3,30 @@
 #ifndef _DYNAMIK_ADGR_VULKAN_TEXTURE_H
 #define _DYNAMIK_ADGR_VULKAN_TEXTURE_H
 
-#include "core/Texture.h"
+#include "backend/vulkan/core/data structures/vulkan.h"
+#include "backend/vulkan/core/functions/textureFunctions.h"
 
 namespace Dynamik {
 	namespace ADGR {
 		namespace core {
 			using namespace functions;
+
+			struct DMKGenerateMipMapInfo {
+				VkFormat imageFormat;
+				VkImage textureImage;
+
+				int width;
+				int height;
+
+				uint32_t mipLevels;
+
+				// for skybox and cubamap
+				uint32_t size;
+				VkBuffer* stagingBuffer = nullptr;
+				VkImageLayout imageLayout;
+				VkImageView* imageView = nullptr;
+				VkSampler* imageSampler = nullptr;
+			};
 
 			struct DMKInitTextureInfo {
 				std::string path = "";
@@ -47,13 +65,13 @@ namespace Dynamik {
 				VkDeviceMemory textureImageMemory = VK_NULL_HANDLE;
 			};
 
-			class textureManager : public Texture {
+			class textureManager {
 			public:
 				textureManager() {}
 				~textureManager() {}
 
 				void initTexture(ADGRVulkanDataContainer* container, DMKInitTextureInfo info);
-				void generateMipMaps(ADGRVulkanDataContainer* container, DMKGenerateMipMapInfo info) override;
+				void generateMipMaps(ADGRVulkanDataContainer* container, DMKGenerateMipMapInfo info) ;
 				void initTextureImageViews(ADGRVulkanDataContainer* container, DMKInitTextureImageViewsInfo texInfo, DMKCreateImageViewInfo info);
 				void initTextureSampler(ADGRVulkanDataContainer* container, DMKInitTextureSamplerInfo info);
 

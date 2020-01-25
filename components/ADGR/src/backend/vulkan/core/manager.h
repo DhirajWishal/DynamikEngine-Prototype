@@ -14,7 +14,6 @@
 #ifndef _DYNAMIK_ADGR_VULKAN_MANAGER_H
 #define _DYNAMIK_ADGR_VULKAN_MANAGER_H
 
-#include "core/Core.h"
 #include "CentralDataHub.h"
 
 #include "GLFW/glfw3.h"
@@ -31,7 +30,7 @@ namespace Dynamik {
 			/*
 				Use addresses as much as possible for more memory efficiency.
 			*/
-			class manager : public Manager, public Core {
+			class manager : public Manager {
 			public:
 				// Default constructor
 				manager() {

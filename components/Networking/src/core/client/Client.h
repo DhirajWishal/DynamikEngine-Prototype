@@ -5,7 +5,7 @@
 
 #include <string>
 #include <queue>
-
+#include "core/interface.h"
 #include "CentralDataHub.h"
 
 namespace Dynamik {
@@ -15,10 +15,10 @@ namespace Dynamik {
 			Client() {}
 			virtual ~Client() {}
 
-			virtual int connect(std::string& ipAddress, int portNumber) {}
-			virtual void send(MessageType type, std::string& message) {}
-			virtual void receive() {}
-			virtual MessageData getReceivedData() {}
+			virtual int connect(std::string& ipAddress, int portNumber) { return 0; }
+			//virtual void send(MessageType type, std::string& message) {}
+			//virtual void receive() {}
+			//virtual MessageData getReceivedData() { return nullptr; }
 
 			virtual void close() {}
 
@@ -26,8 +26,8 @@ namespace Dynamik {
 			std::string serverAddress = "";
 			int port = 0000;
 
-			std::queue<MessageData> sendDataQueue;
-			std::queue<MessageData> receivedDataQueue;
+			//std::queue<MessageData> sendDataQueue;
+			//std::queue<MessageData> receivedDataQueue;
 		};
 	}
 }

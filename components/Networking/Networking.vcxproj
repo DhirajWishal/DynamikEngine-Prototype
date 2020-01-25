@@ -23,19 +23,19 @@
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
     <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
     <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Distribution|x64'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
     <PlatformToolset>v142</PlatformToolset>
@@ -54,22 +54,25 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
     <OutDir>$(SolutionDir)bin\$(Configuration)-$(Platform)\Application\</OutDir>
     <IntDir>$(SolutionDir)intDir\$(Configuration)-$(Platform)\$(ProjectName)\Debug\Networking\</IntDir>
     <TargetName>Networking</TargetName>
-    <TargetExt>.lib</TargetExt>
+    <TargetExt>.dll</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
     <OutDir>$(SolutionDir)bin\$(Configuration)-$(Platform)\Application\</OutDir>
     <IntDir>$(SolutionDir)intDir\$(Configuration)-$(Platform)\$(ProjectName)\Release\Networking\</IntDir>
     <TargetName>Networking</TargetName>
-    <TargetExt>.lib</TargetExt>
+    <TargetExt>.dll</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Distribution|x64'">
+    <LinkIncremental>false</LinkIncremental>
     <OutDir>$(SolutionDir)bin\$(Configuration)-$(Platform)\Application\</OutDir>
     <IntDir>$(SolutionDir)intDir\$(Configuration)-$(Platform)\$(ProjectName)\Distribution\Networking\</IntDir>
     <TargetName>Networking</TargetName>
-    <TargetExt>.lib</TargetExt>
+    <TargetExt>.dll</TargetExt>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -77,7 +80,7 @@
       <PrecompiledHeaderFile>netafx.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>DMK_PLATFORM_WINDOWS;DMK_BUILD_DLL;DMK_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)libs;$(SolutionDir)Dynamik\src;$(SolutionDir)Dynamik\GameLibraries;$(SolutionDir)components\ADGR;$(SolutionDir)components\ADGR\src;$(SolutionDir)components\Events\src;$(SolutionDir)components\Managers\src;$(SolutionDir)components\Platform\src;$(SolutionDir)components\DevConsole\src;$(SolutionDir)components\Debugger\src;$(SolutionDir)components\CentralDataHub\src;$(SolutionDir)components\Networking\src;$(SolutionDir)components\Core\src;$(SolutionDir)libs\Glad\include;$(SolutionDir)\libs\irrKlang\include;$(SolutionDir)libs\GLFW\include;$(SolutionDir)libs\glm;$(SolutionDir)libs\stb-master;$(SolutionDir)libs\tinyobjloader-master;$(SolutionDir)\libs\assimp;$(SolutionDir)libs\Vulkan\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)libs;$(SolutionDir)Dynamik\src;$(SolutionDir)Dynamik\GameLibraries;$(SolutionDir)components\ADGR;$(SolutionDir)components\ADGR\src;$(SolutionDir)components\Events\src;$(SolutionDir)components\Managers\src;$(SolutionDir)components\Platform\src;$(SolutionDir)components\DevConsole\src;$(SolutionDir)components\Debugger\src;$(SolutionDir)components\CentralDataHub\src;$(SolutionDir)components\Networking\src;$(SolutionDir)components\Core\src;$(SolutionDir)libs\GLEW\include;$(SolutionDir)\libs\irrKlang\include;$(SolutionDir)libs\GLFW\include;$(SolutionDir)libs\glm;$(SolutionDir)libs\stb-master;$(SolutionDir)libs\tinyobjloader-master;$(SolutionDir)\libs\assimp;$(SolutionDir)libs\Vulkan\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
@@ -86,6 +89,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ImportLibrary>$(SolutionDir)bin\$(Configuration)-$(Platform)\Application\Networking.lib</ImportLibrary>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -94,7 +98,7 @@
       <PrecompiledHeaderFile>netafx.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>DMK_PLATFORM_WINDOWS;DMK_BUILD_DLL;DMK_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)libs;$(SolutionDir)Dynamik\src;$(SolutionDir)Dynamik\GameLibraries;$(SolutionDir)components\ADGR;$(SolutionDir)components\ADGR\src;$(SolutionDir)components\Events\src;$(SolutionDir)components\Managers\src;$(SolutionDir)components\Platform\src;$(SolutionDir)components\DevConsole\src;$(SolutionDir)components\Debugger\src;$(SolutionDir)components\CentralDataHub\src;$(SolutionDir)components\Networking\src;$(SolutionDir)components\Core\src;$(SolutionDir)libs\Glad\include;$(SolutionDir)\libs\irrKlang\include;$(SolutionDir)libs\GLFW\include;$(SolutionDir)libs\glm;$(SolutionDir)libs\stb-master;$(SolutionDir)libs\tinyobjloader-master;$(SolutionDir)\libs\assimp;$(SolutionDir)libs\Vulkan\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)libs;$(SolutionDir)Dynamik\src;$(SolutionDir)Dynamik\GameLibraries;$(SolutionDir)components\ADGR;$(SolutionDir)components\ADGR\src;$(SolutionDir)components\Events\src;$(SolutionDir)components\Managers\src;$(SolutionDir)components\Platform\src;$(SolutionDir)components\DevConsole\src;$(SolutionDir)components\Debugger\src;$(SolutionDir)components\CentralDataHub\src;$(SolutionDir)components\Networking\src;$(SolutionDir)components\Core\src;$(SolutionDir)libs\GLEW\include;$(SolutionDir)\libs\irrKlang\include;$(SolutionDir)libs\GLFW\include;$(SolutionDir)libs\glm;$(SolutionDir)libs\stb-master;$(SolutionDir)libs\tinyobjloader-master;$(SolutionDir)\libs\assimp;$(SolutionDir)libs\Vulkan\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -107,6 +111,7 @@
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <ImportLibrary>$(SolutionDir)bin\$(Configuration)-$(Platform)\Application\Networking.lib</ImportLibrary>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Distribution|x64'">
@@ -115,7 +120,7 @@
       <PrecompiledHeaderFile>netafx.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>DMK_PLATFORM_WINDOWS;DMK_BUILD_DLL;DMK_DISTRIBUTION;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)libs;$(SolutionDir)Dynamik\src;$(SolutionDir)Dynamik\GameLibraries;$(SolutionDir)components\ADGR;$(SolutionDir)components\ADGR\src;$(SolutionDir)components\Events\src;$(SolutionDir)components\Managers\src;$(SolutionDir)components\Platform\src;$(SolutionDir)components\DevConsole\src;$(SolutionDir)components\Debugger\src;$(SolutionDir)components\CentralDataHub\src;$(SolutionDir)components\Networking\src;$(SolutionDir)components\Core\src;$(SolutionDir)libs\Glad\include;$(SolutionDir)\libs\irrKlang\include;$(SolutionDir)libs\GLFW\include;$(SolutionDir)libs\glm;$(SolutionDir)libs\stb-master;$(SolutionDir)libs\tinyobjloader-master;$(SolutionDir)\libs\assimp;$(SolutionDir)libs\Vulkan\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)libs;$(SolutionDir)Dynamik\src;$(SolutionDir)Dynamik\GameLibraries;$(SolutionDir)components\ADGR;$(SolutionDir)components\ADGR\src;$(SolutionDir)components\Events\src;$(SolutionDir)components\Managers\src;$(SolutionDir)components\Platform\src;$(SolutionDir)components\DevConsole\src;$(SolutionDir)components\Debugger\src;$(SolutionDir)components\CentralDataHub\src;$(SolutionDir)components\Networking\src;$(SolutionDir)components\Core\src;$(SolutionDir)libs\GLEW\include;$(SolutionDir)\libs\irrKlang\include;$(SolutionDir)libs\GLFW\include;$(SolutionDir)libs\glm;$(SolutionDir)libs\stb-master;$(SolutionDir)libs\tinyobjloader-master;$(SolutionDir)\libs\assimp;$(SolutionDir)libs\Vulkan\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -128,12 +133,14 @@
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <ImportLibrary>$(SolutionDir)bin\$(Configuration)-$(Platform)\Application\Networking.lib</ImportLibrary>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="src\Networking.h" />
     <ClInclude Include="src\core\client.h" />
     <ClInclude Include="src\core\client\Client.h" />
+    <ClInclude Include="src\core\interface.h" />
     <ClInclude Include="src\core\server.h" />
     <ClInclude Include="src\core\server\Server.h" />
     <ClInclude Include="src\netafx.h" />

@@ -4,6 +4,7 @@
 #define _DYNAMIK_NETWORKING_SERVER_BASE_H
 
 #include <string>
+#include "core/interface.h"
 
 constexpr auto DEFAULT_BUFFER_LENGTH = 512;
 
@@ -15,7 +16,7 @@ namespace Dynamik {
 			virtual ~Server() {}
 
 			virtual void init(std::string& ipAddress, int portNumber) {}
-			virtual int setSocket() {}
+			virtual int setSocket() { return 0; }
 			virtual void handleRequests() {}
 			virtual void startListning() {}
 
@@ -34,7 +35,7 @@ namespace Dynamik {
 			SOCKET listenSocket = INVALID_SOCKET;
 			SOCKET clientSocket = INVALID_SOCKET;
 			struct addrinfo* result = NULL;
-			struct addrinfo hints = {};
+			struct addrinfo* hints = NULL;
 
 			int iSendResult = 0;
 			char recvbuf[DEFAULT_BUFFER_LENGTH] = {};

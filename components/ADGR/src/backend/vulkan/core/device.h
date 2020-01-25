@@ -3,21 +3,21 @@
 #ifndef _DYNAMIK_ADGR_VULKAN_DEVICE_H
 #define _DYNAMIK_ADGR_VULKAN_DEVICE_H
 
-#include "core/Device.h"
+#include "backend/vulkan/core/data structures/vulkan.h"
 
 namespace Dynamik {
 	namespace ADGR {
 		namespace core {
-			class deviceManager : public Device {
+			class deviceManager {
 			public:
 				deviceManager() {}
 				~deviceManager() {}
 
-				void init(ADGRVulkanDataContainer* container) override;
+				void init(ADGRVulkanDataContainer* container);
 
 			private:
-				void initPhysicalDevice(ADGRVulkanDataContainer* container) override;
-				void initLogicalDevice(ADGRVulkanDataContainer* container) override;
+				void initPhysicalDevice(ADGRVulkanDataContainer* container);
+				void initLogicalDevice(ADGRVulkanDataContainer* container);
 
 				bool checkDeviceExtensionSupport(VkPhysicalDevice device);
 				bool isDeviceSuitable(VkPhysicalDevice device, VkSurfaceKHR* surface);

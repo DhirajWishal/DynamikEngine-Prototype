@@ -3,12 +3,11 @@
 #ifndef _DYNAMIK_ADGR_VULKAN_COMMAND_BUFFER_H
 #define _DYNAMIK_ADGR_VULKAN_COMMAND_BUFFER_H
 
-#include "core/Buffer.h"
-
 #include "data structures/DMK_ADGR_DataStructures.h"
 #include "vulkanFormat.h"
 #include "core/data store/containers.h"
 #include "core/data store/objectSpecifications.h"
+#include "backend/vulkan/core/data structures/vulkan.h"
 
 namespace Dynamik {
 	namespace ADGR {
@@ -21,7 +20,7 @@ namespace Dynamik {
 				DMKVulkanSkyboxCommandBufferBindData skybox;
 			};
 
-			class commandBufferManager : public Buffer {
+			class commandBufferManager {
 			public:
 				commandBufferManager() {}
 				~commandBufferManager() {}

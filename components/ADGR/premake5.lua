@@ -34,7 +34,7 @@ project "ADGR"
 		"$(SolutionDir)components/CentralDataHub/src",
 		"$(SolutionDir)components/Networking/src",
 		"$(SolutionDir)components/Core/src",
-		"%{IncludeDir.Glad}",
+		"%{IncludeDir.GLEW}",
 		"%{IncludeDir.irrKlang}",
 		"$(SolutionDir)libs/glm/**.hpp",
 		"$(SolutionDir)libs/glm/**.inl",
@@ -66,8 +66,9 @@ project "ADGR"
 		systemversion "latest"
 
 		defines {
-			"DMK_PLATFORM_windowS",
+			"DMK_PLATFORM_WINDOWS",
 			"DMK_BUILD_DLL",
+			"DMK_USE_VULKAN",
 			"GLFW_INCLUDE_VULKAN"
 		}
 

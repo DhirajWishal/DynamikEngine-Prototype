@@ -1,6 +1,6 @@
 #include "adgrafx.h"
 #include "glTexture.h"
-
+#include "Platform/windows/resource/imageLoader.h"
 #include "Platform.h"
 
 namespace Dynamik {

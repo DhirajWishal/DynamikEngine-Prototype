@@ -3,7 +3,7 @@
 #ifndef _DYNAMIK_ADGR_VULKAN_COLOR_BUFFER_H
 #define _DYNAMIK_ADGR_VULKAN_COLOR_BUFFER_H
 
-#include "core/Buffer.h"
+#include "backend/vulkan/core/data structures/vulkan.h"
 
 namespace Dynamik {
 	namespace ADGR {
@@ -16,7 +16,7 @@ namespace Dynamik {
 				VkSampleCountFlagBits msaaSamples;
 			};
 
-			class colorBufferManager : public Buffer {
+			class colorBufferManager {
 			public:
 				colorBufferManager() {}
 				~colorBufferManager() {}
@@ -26,7 +26,7 @@ namespace Dynamik {
 				void initResources(ADGRVulkanDataContainer* container);
 				void createResources(ADGRVulkanDataContainer* container, DMKColorImageCreateInfo info);
 
-				void clear(ADGRVulkanDataContainer* container) override;
+				void clear(ADGRVulkanDataContainer* container);
 			};
 		}
 	}

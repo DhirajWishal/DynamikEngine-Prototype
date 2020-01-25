@@ -3,7 +3,7 @@
 #ifndef _DYNAMIK_ADGR_VULKAN_DEPTH_BUFFER_H
 #define _DYNAMIK_ADGR_VULKAN_DEPTH_BUFFER_H
 
-#include "core/Buffer.h"
+#include "backend/vulkan/core/data structures/vulkan.h"
 
 namespace Dynamik {
 	namespace ADGR {
@@ -16,15 +16,15 @@ namespace Dynamik {
 				VkSampleCountFlagBits msaaSamples;
 			};
 
-			class depthBufferManager : public Buffer {
+			class depthBufferManager {
 			public:
 				depthBufferManager() {}
 				~depthBufferManager() {}
 
-				void init(ADGRVulkanDataContainer* container) override;
+				void init(ADGRVulkanDataContainer* container);
 				void createBuffer(ADGRVulkanDataContainer* container, DMKDepthBufferCreateInfo info);
 
-				void clear(ADGRVulkanDataContainer* container) override;
+				void clear(ADGRVulkanDataContainer* container);
 			};
 		}
 	}

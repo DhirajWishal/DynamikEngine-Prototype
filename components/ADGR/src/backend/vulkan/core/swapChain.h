@@ -3,11 +3,17 @@
 #ifndef _DYNAMIK_ADGR_VULKAN_SWAPCHAIN_H
 #define _DYNAMIK_ADGR_VULKAN_SWAPCHAIN_H
 
-#include "core/SwapChain.h"
+#include "backend/vulkan/core/data structures/vulkan.h"
 
 namespace Dynamik {
 	namespace ADGR {
 		namespace core {
+			struct swapChainSupportDetails {
+				VkSurfaceCapabilitiesKHR capabilities = {};
+				std::vector<VkSurfaceFormatKHR> formats = {};
+				std::vector<VkPresentModeKHR> presentModes = {};
+			};
+
 			struct DMKSwapChainCleanUpInfo {
 				std::vector<std::vector<VkBuffer>> uniformBuffers;
 				std::vector<std::vector<VkDeviceMemory>> uniformBufferMemories;
@@ -16,17 +22,17 @@ namespace Dynamik {
 				std::vector<VkPipelineLayout> pipelineLayouts;
 			};
 
-			class swapChainManager : public SwapChain {
+			class swapChainManager {
 			public:
 				swapChainManager() {}
 				~swapChainManager() {}
 
-				void init(ADGRVulkanDataContainer* container) override;
-				void clear(ADGRVulkanDataContainer* container) override;
+				void init(ADGRVulkanDataContainer* container) ;
+				void clear(ADGRVulkanDataContainer* container) ;
 
 				void cleanUp(ADGRVulkanDataContainer* container, DMKSwapChainCleanUpInfo& info);
 
-				void initImageViews(ADGRVulkanDataContainer* container) override;
+				void initImageViews(ADGRVulkanDataContainer* container) ;
 
 			private:
 				VkSurfaceFormatKHR chooseSwapSurfaceFormat(const std::vector<VkSurfaceFormatKHR>& availableFormats);

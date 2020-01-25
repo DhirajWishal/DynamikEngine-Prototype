@@ -22,12 +22,12 @@ namespace Dynamik {
 				GLFWmonitor* monitor = glfwGetPrimaryMonitor();
 				const GLFWvidmode* mode = glfwGetVideoMode(monitor);
 
-				glfwwindowHint(GLFW_RED_BITS, mode->redBits);
-				glfwwindowHint(GLFW_GREEN_BITS, mode->greenBits);
-				glfwwindowHint(GLFW_BLUE_BITS, mode->blueBits);
-				glfwwindowHint(GLFW_REFRESH_RATE, mode->refreshRate);
+				glfwWindowHint(GLFW_RED_BITS, mode->redBits);
+				glfwWindowHint(GLFW_GREEN_BITS, mode->greenBits);
+				glfwWindowHint(GLFW_BLUE_BITS, mode->blueBits);
+				glfwWindowHint(GLFW_REFRESH_RATE, mode->refreshRate);
 
-				container->window = glfwCreatewindow(mode->width, mode->height, "Dynamik Engine", monitor, NULL);
+				container->window = glfwCreateWindow(mode->width, mode->height, "Dynamik Engine", monitor, NULL);
 
 #endif
 				glfwMakeContextCurrent(container->window);
@@ -189,6 +189,9 @@ namespace Dynamik {
 				_localContainer.xAxis = xOffset;
 				_localContainer.yAxis = yOffset;
 				eventContainer.push_back(_localContainer);
+			}
+
+			void windowManager::_drawOnce() {
 			}
 		}
 	}

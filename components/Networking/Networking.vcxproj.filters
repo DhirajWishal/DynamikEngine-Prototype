@@ -24,6 +24,9 @@
     <ClInclude Include="src\core\client\Client.h">
       <Filter>src\core\client</Filter>
     </ClInclude>
+    <ClInclude Include="src\core\interface.h">
+      <Filter>src\core</Filter>
+    </ClInclude>
     <ClInclude Include="src\core\server.h">
       <Filter>src\core</Filter>
     </ClInclude>

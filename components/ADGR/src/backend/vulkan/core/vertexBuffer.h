@@ -3,7 +3,7 @@
 #ifndef _DYNAMIK_ADGR_VULKAN_VERTEX_BUFFER_H
 #define _DYNAMIK_ADGR_VULKAN_VERTEX_BUFFER_H
 
-#include "core/Buffer.h"
+#include "backend/vulkan/core/data structures/vulkan.h"
 
 namespace Dynamik {
 	namespace ADGR {
@@ -21,7 +21,7 @@ namespace Dynamik {
 				VkDeviceMemory bufferMemory = VK_NULL_HANDLE;
 			};
 
-			class vertexBufferManager : public Buffer {
+			class vertexBufferManager {
 			public:
 				vertexBufferManager() {}
 				~vertexBufferManager() {}

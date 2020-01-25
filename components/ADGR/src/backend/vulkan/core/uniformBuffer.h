@@ -3,9 +3,8 @@
 #ifndef _DYNAMIK_ADGR_VULKAN_UNIFORM_BUFFER_H
 #define _DYNAMIK_ADGR_VULKAN_UNIFORM_BUFFER_H
 
-#include "core/Buffer.h"
-
 #include "vulkanFormat.h"
+#include "backend/vulkan/core/data structures/vulkan.h"
 
 namespace Dynamik {
 	namespace ADGR {
@@ -58,7 +57,7 @@ namespace Dynamik {
 				std::vector<int> bindIndex = { 0, 1, 2 };
 			};
 
-			class uniformBufferManager : public Buffer {
+			class uniformBufferManager {
 			public:
 				uniformBufferManager() {}
 				~uniformBufferManager() {}
@@ -71,7 +70,7 @@ namespace Dynamik {
 
 				void updateBuffer3D(ADGRVulkanDataContainer* container, std::deque<DMKEventContainer>& eventContainers, vulkanFormat* gameObject, uint32_t currentImage = 0);
 
-				void deleteBuffer(ADGRVulkanDataContainer* container, VkBuffer* buffer) override;
+				void deleteBuffer(ADGRVulkanDataContainer* container, VkBuffer* buffer);
 			};
 		}
 	}

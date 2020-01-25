@@ -3,7 +3,7 @@
 #ifndef _DYNAMIK_ADGR_VULKAN_FRAME_BUFFER_H
 #define _DYNAMIK_ADGR_VULKAN_FRAME_BUFFER_H
 
-#include "core/Buffer.h"
+#include "backend/vulkan/core/data structures/vulkan.h"
 
 namespace Dynamik {
 	namespace ADGR {
@@ -15,12 +15,12 @@ namespace Dynamik {
 				VkImageView depthImageView;
 			};
 
-			class frameBufferManager : public Buffer {
+			class frameBufferManager {
 			public:
 				frameBufferManager() {}
 				~frameBufferManager() {}
 
-				void init(ADGRVulkanDataContainer* container) override;
+				void init(ADGRVulkanDataContainer* container) ;
 				void createFrameBuffers(ADGRVulkanDataContainer* container, DMKFrameBuffersCreateInfo info);
 
 				void clear(ADGRVulkanDataContainer* container);

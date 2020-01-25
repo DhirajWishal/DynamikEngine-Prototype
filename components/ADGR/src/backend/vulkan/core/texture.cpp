@@ -2,6 +2,7 @@
 #include "texture.h"
 
 #include "functions/bufferFunctions.h"
+#include "Platform/Windows/resource/imageLoader.h"
 
 #include "debugger.h"
 #include "commandBuffer.h"

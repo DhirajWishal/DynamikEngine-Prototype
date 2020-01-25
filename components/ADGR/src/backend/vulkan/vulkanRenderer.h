@@ -29,10 +29,6 @@ namespace Dynamik {
 	namespace ADGR {
 		using namespace core;
 
-		struct DMK_ADGR_CreatePipelineInfo {
-			DMKPipelineInitInfo pipelineInitInfo = {};
-		};
-
 		class vulkanRenderer {
 		public:
 			vulkanRenderer();
@@ -52,16 +48,12 @@ namespace Dynamik {
 			std::deque<DMKEventContainer>* events();
 			inline bool closeEvent() { return myWindowManager.closeEvent(&myVulkanDataContainers[vulkanContainerIndex]); }
 
-			void setProgress(uint32_t* progress) {
-				myProgress = progress;
-			}
+			void setProgress(uint32_t* progress) { myProgress = progress; }
 			void setVulkanFormats(std::vector<RendererFormat>& rendererFormats);
 			void updateVulkanFormats(std::vector<RendererFormat>& rendererFormats);
 			void setModelPaths(std::vector<std::string>& object, std::vector<std::vector<std::string>>& texture);
 			void setShaderPaths(std::string& vertex, std::string& fragment);
-			void setVertices(std::vector<Vertex>& vertices) {
-				myVertices = vertices;
-			}
+			void setVertices(std::vector<Vertex>& vertices) { myVertices = vertices; }
 
 			inline VkDevice getDevice() { return myVulkanDataContainers[vulkanContainerIndex].device; }
 
@@ -86,14 +78,11 @@ namespace Dynamik {
 			void initDepthBuffer();
 			void initFrameBuffers();
 			void initSkyboxsAndTextures(vulkanFormat* myVulkanFormat);
-			//void initCubemapAndModels(vulkanFormat* myVulkanFormat);
 			void initVertexAndIndexBuffers(vulkanFormat* myVulkanFormat);
 			void initUniformBuffers(vulkanFormat* myVulkanFormat);
 			void initDescriptorPoolsAndSets(vulkanFormat* myVulkanFormat);
 			void initCommandBuffers(std::vector<vulkanFormat>* myVulkanFormats);
 			void initSemaphoresAndFences();
-
-			//void initModelsAndTextures(vulkanFormat* format);
 
 			void initObjectBasedFunctions(std::vector<vulkanFormat>* myVulkanFormats);
 

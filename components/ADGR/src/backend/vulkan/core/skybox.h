@@ -3,11 +3,25 @@
 #ifndef _DYNAMIK_ADGR_VULKAN_SKYBOX_H
 #define _DYNAMIK_ADGR_VULKAN_SKYBOX_H
 
-#include "core/Texture.h"
+#include "backend/vulkan/core/data structures/vulkan.h"
+#include "texture.h"
 
 namespace Dynamik {
 	namespace ADGR {
 		namespace core {
+			struct DMKSkyboxInitInfo {
+				std::string path = "";
+
+				VkImage* skyboxImage = nullptr;
+				VkImageLayout imageLayout;
+				VkSampler imageSampler;
+
+				VkFormat imageFormat;
+				VkDeviceMemory* imageMemory = nullptr;
+
+				uint32_t mipLevels;
+			};
+
 			struct DMKInitCubemapInfo {
 				std::string path = {};
 
@@ -33,13 +47,13 @@ namespace Dynamik {
 				VkImageView* imageView = nullptr;
 			};
 
-			class skyboxManager : Texture {
+			class skyboxManager {
 			public:
 				skyboxManager() {}
 				~skyboxManager() {}
 
-				void initSkybox(ADGRVulkanDataContainer* container, DMKSkyboxInitInfo) override;
-				void deleteSkybox(ADGRVulkanDataContainer* container) override;
+				void initSkybox(ADGRVulkanDataContainer* container, DMKSkyboxInitInfo) ;
+				void deleteSkybox(ADGRVulkanDataContainer* container) ;
 
 				void loadCubemap(ADGRVulkanDataContainer* container, DMKInitCubemapInfo initInfo);
 

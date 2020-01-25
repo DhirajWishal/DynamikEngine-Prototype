@@ -3,12 +3,11 @@
 #ifndef _DYNAMIK_ADGR_VULKAN_window_H
 #define _DYNAMIK_ADGR_VULKAN_window_H
 
-#include "core/window.h"
 #include <deque>
 
 #include "keyEvent.h"
 #include "mouseEvent.h"
-
+#include "backend/vulkan/core/data structures/vulkan.h"
 #include "CentralDataHub.h"
 
 namespace Dynamik {
@@ -40,23 +39,23 @@ namespace Dynamik {
 				float y;
 			};
 
-			class windowManager : public Window {
+			class windowManager {
 			public:
 				windowManager() {}
 				~windowManager() {}
 
-				void init(ADGRVulkanDataContainer* container) override;
-				void clear(ADGRVulkanDataContainer* container) override;
+				void init(ADGRVulkanDataContainer* container);
+				void clear(ADGRVulkanDataContainer* container);
 
 				bool createwindowSurface(ADGRVulkanDataContainer* container);
 
-				void pollEvents() override;
-				void onUpdate() override;
-				bool closeEvent(ADGRVulkanDataContainer* container) override;
+				void pollEvents();
+				void onUpdate();
+				bool closeEvent(ADGRVulkanDataContainer* container);
 
 				void onwindowResizeEvent(ADGRVulkanDataContainer* container);
 
-				void setwindowIcon(ADGRVulkanDataContainer* container, std::vector<std::string> paths) override;
+				void setwindowIcon(ADGRVulkanDataContainer* container, std::vector<std::string> paths);
 
 				bool isFrameBufferResized() { return frameBufferResized; }
 				void frameBufferResizedUpdate(bool state) { frameBufferResized = state; }
@@ -73,6 +72,8 @@ namespace Dynamik {
 				void mouseButtonEvent(DMKEventType type, int keycode = -1, int count = 0);
 				void mouseScrolledEvent(float xOffset = 0.0f, float yOffset = 0.0f);
 				void mouseMovedEvent(float xOffset = 0.0f, float yOffset = 0.0f);
+
+				void _drawOnce();
 
 				using eventCallbackFunction = std::function<void(Event&, int)>;
 

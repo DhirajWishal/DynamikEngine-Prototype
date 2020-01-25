@@ -34,7 +34,7 @@ project "Platform"
 		"$(SolutionDir)components/Core/src",
 		"$(SolutionDir)libs/glm/**.hpp",
 		"$(SolutionDir)libs/glm/**.inl",
-		"%{IncludeDir.Glad}",
+		"%{IncludeDir.GLEW}",
 		"%{IncludeDir.irrKlang}",
 		"%{IncludeDir.GLFW}",
 		"%{IncludeDir.glm}",

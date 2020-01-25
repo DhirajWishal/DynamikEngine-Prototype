@@ -21,7 +21,6 @@
 #include "CentralDataHub.h"
 #include "Platform.h"
 
-
 namespace Dynamik {
 	namespace ADGR {
 		using namespace core;

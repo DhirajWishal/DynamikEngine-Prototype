@@ -3,6 +3,7 @@
 
 #include "functions/textureFunctions.h"
 #include "functions/bufferFunctions.h"
+#include "Platform/Windows/resource/imageLoader.h"
 
 #include "commandBuffer.h"
 

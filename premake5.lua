@@ -15,7 +15,7 @@ projectNameMacro = "$(ProjectName)"
 
 IncludeDir = {}
 IncludeDir["GLFW"] = "$(SolutionDir)libs/GLFW/include"
-IncludeDir["Glad"] = "$(SolutionDir)libs/Glad/include"
+IncludeDir["GLEW"] = "$(SolutionDir)libs/GLEW/include"
 IncludeDir["glm"] = "$(SolutionDir)libs/glm"
 IncludeDir["stb"] = "$(SolutionDir)libs/stb-master"
 IncludeDir["tol"] = "$(SolutionDir)libs/tinyobjloader-master"
@@ -86,7 +86,7 @@ project "Dynamik"
 		"$(SolutionDir)components/CentralDataHub/src",
 		"$(SolutionDir)components/Networking/src",
 		"%{IncludeDir.GLFW}",
-		"%{IncludeDir.Glad}",
+		"%{IncludeDir.GLEW}",
 		"%{IncludeDir.glm}",
 		"%{IncludeDir.stb}",
 		"%{IncludeDir.tol}",

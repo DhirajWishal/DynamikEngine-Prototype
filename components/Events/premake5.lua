@@ -32,7 +32,7 @@ project "Events"
 		"$(SolutionDir)components/CentralDataHub/src",
 		"$(SolutionDir)components/Networking/src",
 		"$(SolutionDir)components/Core/src",
-		"%{IncludeDir.Glad}",
+		"%{IncludeDir.GLEW}",
 		"%{IncludeDir.irrKlang}",
 		"$(SolutionDir)libs/glm/**.hpp",
 		"$(SolutionDir)libs/glm/**.inl",

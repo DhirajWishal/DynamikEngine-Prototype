@@ -4,6 +4,7 @@
 #define _DYNAMIK_ADGR_VULKAN_FORMAT_H
 
 #include "rendererFormat.h"
+#include "backend/vulkan/core/data structures/vulkan.h"
 
 namespace Dynamik {
 	namespace ADGR {

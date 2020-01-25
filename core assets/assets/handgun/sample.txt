@@ -1,5 +1,0 @@
-"E:/Projects/Dynamik Engine/Dynamik/core assets/assets/chalet"
-"E:/Projects/Dynamik Engine/Dynamik/core assets/assets/made objects"
-"E:/Projects/Dynamik Engine/Dynamik/core assets/assets/glock18"
-"E:/Projects/Dynamik Engine/Dynamik/core assets/assets/food"
-"E:/Projects/Dynamik Engine/Dynamik/core assets/assets/bag"

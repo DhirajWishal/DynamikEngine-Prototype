@@ -213,8 +213,6 @@ namespace Dynamik {
 		}
 #ifdef DMK_DEBUG
 		printf("\rProgress: %f%%\t%s\t\n", 100.0f, symbols[count].c_str());
-		printf("ADGR Initiated! Let the rendering begin!\n");
-
 #endif
 	}
 

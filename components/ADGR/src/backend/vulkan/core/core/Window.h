@@ -17,7 +17,7 @@ namespace Dynamik {
 				virtual void onUpdate() {}
 				virtual bool closeEvent(ADGRVulkanDataContainer* container) { return false; }
 
-				virtual void setWindowIcon(ADGRVulkanDataContainer* container, std::string& path) {}
+				virtual void setWindowIcon(ADGRVulkanDataContainer* container, std::vector<std::string> paths) {}
 			};
 		}
 	}

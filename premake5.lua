@@ -21,7 +21,8 @@ IncludeDir["stb"] = "$(SolutionDir)libs/stb-master"
 IncludeDir["tol"] = "$(SolutionDir)libs/tinyobjloader-master"
 IncludeDir["spdlog"] = "$(SolutionDir)Dynamik/lib/spdlog/include"
 --Include the Vulkan SDK Include path here
-IncludeDir["Vulkan"] = "E:/Programming/SDKs/Vulkan/1.1.126.0/Include"
+--IncludeDir["Vulkan"] = "E:/Programming/SDKs/Vulkan/1.1.126.0/Include"
+IncludeDir["Vulkan"] = "$(SolutionDir)libs/Vulkan/include"
 IncludeDir["boost"] = "E:/Programming/Modules and Runtime/boost_1_70_0"
 IncludeDir["gil"] = "$(SolutionDir)libs/gil/boost"
 IncludeDir["jpeg"] = "$(SolutionDir)libs/gil/jpeg-6b"
@@ -32,7 +33,8 @@ IncludeLib = {}
 --Include the GLFW library path here
 IncludeLib["GLFW"] = "$(SolutionDir)libs/GLFW/lib-vc2019"
 --Include the Vulkan SDK path here
-IncludeLib["Vulkan"] = "E:/Programming/SDKs/Vulkan/1.1.126.0/Lib"
+--IncludeLib["Vulkan"] = "E:/Programming/SDKs/Vulkan/1.1.126.0/Lib"
+IncludeLib["Vulkan"] = "$(SolutionDir)libs/Vulkan/lib"
 IncludeLib["boostD"] = "E:/Programming/Modules and Runtime/boost_1_70_0/bin/libs/iostreams/build/msvc-14.2/debug/address-model-64/link-static/threading-multi"
 IncludeLib["boostR"] = "E:/Programming/Modules and Runtime/boost_1_70_0/bin/libs/iostreams/build/msvc-14.2/release/address-model-64/link-static/threading-multi"
 

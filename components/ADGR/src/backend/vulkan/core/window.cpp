@@ -136,16 +136,27 @@ namespace Dynamik {
 				}
 			}
 
-			void window::setWindowIcon(ADGRVulkanDataContainer* container, std::string& path) {
-				resource::TextureData imageData = {};
+			void window::setWindowIcon(ADGRVulkanDataContainer* container, std::vector<std::string> paths) {
+				uint32_t _imageCount = paths.size();
+				std::vector<GLFWimage> icons;
+				std::vector<resource::TextureData> texDatas;
+				texDatas.resize(_imageCount);
 
-				auto pixels = imageData.loadTexture(path, resource::TEXTURE_TYPE_RGBA, true);
+				for (uint32_t i = 0; i < _imageCount; i++) {
+					std::string_view path = paths[i];
+					GLFWimage icon;
+					auto pixels = texDatas[i].loadTexture(path.data(), resource::TEXTURE_TYPE_RGBA);
 
-				GLFWimage icon[1];
-				icon[0].pixels = pixels;
-				glfwSetWindowIcon(container->window, 1, icon);
+					if (!pixels)
+						DMK_CORE_ERROR("Icon not Loaded!");
 
-				imageData.freeData(pixels);
+					icon.pixels = pixels;
+					icon.height = texDatas[i].texHeight;
+					icon.width = texDatas[i].texWidth;
+					icons.push_back(icon);
+				}
+
+				glfwSetWindowIcon(container->window, _imageCount, icons.data());
 			}
 
 			void window::keyEventHandler(DMKEventType type, int keycode, int count) {

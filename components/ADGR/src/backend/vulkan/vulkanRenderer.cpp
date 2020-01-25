@@ -318,6 +318,18 @@ namespace Dynamik {
 			// init swapchain
 			initSwapChain();
 
+			// TODO: manually initialization
+			initColorBuffer();
+
+			// TODO: manually initialization
+			initDepthBuffer();
+
+			// initialize the render pass
+			initRenderPass();
+
+			// TODO: manually initialization
+			initFrameBuffers();
+
 			for (uint32_t _itr = 0; _itr < vulkanFormatObjectsCount; _itr++) {
 				vulkanFormat* _localVulkanFormat = myManager.getResourceAddr<vulkanFormat>(DMK_CDH_MANAGER_RESOURCE_TYPE_VULKAN_OBJECT_FORMAT, _itr);
 
@@ -330,15 +342,6 @@ namespace Dynamik {
 				// descriptor pool creation
 				initDescriptorPoolsAndSets(_localVulkanFormat);
 			}
-
-			// TODO: manually initialization
-			initColorBuffer();
-
-			// TODO: manually initialization
-			initDepthBuffer();
-
-			// TODO: manually initialization
-			initFrameBuffers();
 
 			// init command buffers
 			initCommandBuffers(myManager.getFullResourceAddr<vulkanFormat>(DMK_CDH_MANAGER_RESOURCE_TYPE_VULKAN_OBJECT_FORMAT));
@@ -641,8 +644,8 @@ namespace Dynamik {
 		void vulkanRenderer::initWindow() {
 			myWindow.init(myManager.getResourceAddr<ADGRVulkanDataContainer>(DMK_CDH_MANAGER_RESOURCE_TYPE_VULKAN_DATA_CONTAINER, vulkanContainerIndex));
 
-			std::string _localTexturePath = "E:/Projects/Dynamik Engine/Dynamik/core assets/icons/icon1.jpg";
-			myWindow.setWindowIcon(myManager.getResourceAddr<ADGRVulkanDataContainer>(DMK_CDH_MANAGER_RESOURCE_TYPE_VULKAN_DATA_CONTAINER, vulkanContainerIndex), _localTexturePath);
+			std::string _localTexturePath = "E:/Projects/Dynamik Engine/Dynamik/core assets/icons/Dynamik.jpg";
+			myWindow.setWindowIcon(myManager.getResourceAddr<ADGRVulkanDataContainer>(DMK_CDH_MANAGER_RESOURCE_TYPE_VULKAN_DATA_CONTAINER, vulkanContainerIndex), { _localTexturePath });
 		}
 
 		// initialize the instance

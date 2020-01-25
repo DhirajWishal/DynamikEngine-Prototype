@@ -222,7 +222,7 @@ namespace Dynamik {
 		// var = rand();
 		uint32_t rand(uint32_t from, uint32_t to)
 		{
-			return uint32_t();
+			return std::rand();
 		}
 	}
 }

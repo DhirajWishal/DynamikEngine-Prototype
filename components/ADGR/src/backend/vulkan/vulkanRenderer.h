@@ -8,11 +8,13 @@
  Date:		30/07/2019
  IDE:		MS Visual Studio Community 2019
 
- vulkanRenderer.h
+ vulkanRenderer.h file
  */
 
 #ifndef _DYNAMIK_ADGR_VULKAN_RENDERER_H
 #define _DYNAMIK_ADGR_VULKAN_RENDERER_H
+
+#include "backend/base/RendererBackendBase.h"
 
 #include "core/backend.h"
 #include "core/data structures/DMK_ADGR_DataStructures.h"
@@ -22,37 +24,32 @@
 
 #include "core/data store/internalFormat.h"
 
-#define INC_PROGRESS					(*myProgress += 1)
-#define MULTIPLE_INC_PROGRESS(count)	for(int i_itr__ = 0; i_itr__ < count; i_itr__++) INC_PROGRESS
-
 namespace Dynamik {
 	namespace ADGR {
 		using namespace core;
 
-		class vulkanRenderer {
+		class vulkanRenderer : public RendererBackend {
 		public:
 			vulkanRenderer();
+			vulkanRenderer(DMKRendererSettings settings) : RendererBackend(settings) {}
 			~vulkanRenderer();
 
-			void init();
+			void init() override;
+			void initStageOne() override;
+			void initStageTwo() override;
+			void initStageThree() override;
 
-			void initStageOne();
-			void initStageTwo();
-			void initStageThree();
+			void drawFrame() override;
+			void shutDown() override;
 
-			void drawFrame();
-			void shutdown();
+
+			std::deque<DMKEventContainer>* events() override;
+			inline bool closeEvent() override { return myWindowManager.closeEvent(&myVulkanDataContainers[vulkanContainerIndex]); }
+
+			void setFormats(std::vector<RendererFormat>& rendererFormats) override;
+			void updateFormats(std::vector<RendererFormat>& rendererFormats) override;
 
 			void recreateSwapChain();
-
-			std::deque<DMKEventContainer>* events();
-			inline bool closeEvent() { return myWindowManager.closeEvent(&myVulkanDataContainers[vulkanContainerIndex]); }
-
-			void setProgress(uint32_t* progress) { myProgress = progress; }
-			void setVulkanFormats(std::vector<RendererFormat>& rendererFormats);
-			void updateVulkanFormats(std::vector<RendererFormat>& rendererFormats);
-			void setModelPaths(std::vector<std::string>& object, std::vector<std::vector<std::string>>& texture);
-			void setShaderPaths(std::string& vertex, std::string& fragment);
 			void setVertices(std::vector<Vertex>& vertices) { myVertices = vertices; }
 
 			inline VkDevice getDevice() { return myVulkanDataContainers[vulkanContainerIndex].device; }
@@ -115,12 +112,8 @@ namespace Dynamik {
 
 			uint32_t imageIndex = 0;
 			uint32_t currentFrame = 0;
-			uint32_t vulkanFormatObjectsCount = 0;
 			uint32_t vulkanContainerIndex = 0;
 
-			uint32_t* myProgress = 0;
-
-			bool compileShaders = false;
 			bool enableVertexAndIndexClear = true;
 
 			std::vector<Vertex> myVertices = {};
@@ -129,16 +122,11 @@ namespace Dynamik {
 			/* DATA STORE */
 			std::vector<ADGRVulkanDataContainer> myVulkanDataContainers = {};
 			std::vector<vulkanFormat> myVulkanFormats = {};
-			std::deque<DMKEventContainer> myEventContainers = {};
 
 			std::vector<VkDescriptorSetLayout> myDescriptorSetLayouts = {};
 			std::vector<VkSemaphore> myImageAvailableSemaphores = {};
 			std::vector<VkSemaphore> myRenderFinishedSemaphores = {};
 			std::vector<VkFence> myFencesInFlight = {};
-
-			std::vector<std::string> myModelPaths = {};
-			std::vector<std::vector<std::string>> myTexturePaths = {};
-			std::vector<std::string> myShaderPaths = {};
 		};
 	}
 }

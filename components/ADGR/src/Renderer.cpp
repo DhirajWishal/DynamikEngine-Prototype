@@ -11,7 +11,6 @@
 #include "Renderer.h"
 #include "backend/defines.h"
 
-#include "backend/vulkan/ADGR_Vulkan_API.h"
 #include "debugger.h"
 
 #ifdef DMK_PLATFORM_WINDOWS
@@ -21,9 +20,30 @@
 
 #endif
 
+#if defined(DMK_USE_VULKAN)
+#include "backend/vulkan/vulkanRenderer.h"
+
+#elif defined (DMK_USE_DIRECTX)
+#include "backend/directx12/directx12Renderer.h"
+
+#elif defined (DMK_USE_OPENGL)
+#include "backend/opengl/openglRenderer.h"
+
+#endif
+
 namespace Dynamik {
 	namespace ADGR {
+
+#if defined(DMK_USE_VULKAN)
 		vulkanRenderer rendererCore;
+
+#elif defined (DMK_USE_DIRECTX)
+		directx12Renderer rendererCore;
+
+#elif defined (DMK_USE_OPENGL)
+		openglRenderer rendererCore;
+
+#endif
 
 		Renderer::Renderer() {
 		}
@@ -43,7 +63,7 @@ namespace Dynamik {
 
 		void Renderer::setRendererFormats(std::vector<InternalFormat*>& internalFormats) {
 			loadData(internalFormats, &myRendererFormats);
-			rendererCore.setVulkanFormats(myRendererFormats);
+			rendererCore.setFormats(myRendererFormats);
 		}
 
 		void Renderer::draw() {
@@ -65,7 +85,7 @@ namespace Dynamik {
 
 		void Renderer::updateRendererFormats() {
 			myRendererFormats = myTemporaryFormats;
-			rendererCore.updateVulkanFormats(myRendererFormats);
+			rendererCore.updateFormats(myRendererFormats);
 			myTemporaryFormats.clear();
 		}
 
@@ -106,7 +126,7 @@ namespace Dynamik {
 		}
 
 		void Renderer::end() {
-			rendererCore.shutdown();
+			rendererCore.shutDown();
 		}
 
 		bool Renderer::getWindowCloseEvent() {

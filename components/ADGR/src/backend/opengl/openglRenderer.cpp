@@ -8,5 +8,11 @@ namespace Dynamik {
 
 		openglRenderer::~openglRenderer() {
 		}
+
+		void openglRenderer::init() {
+			myOpenGLDataContainers.resize(openGLDataContainerIndex + 1);
+
+			myWindowManager.init(&myOpenGLDataContainers[openGLDataContainerIndex]);
+		}
 	}
 }

@@ -113,7 +113,7 @@ namespace Dynamik {
 		}
 
 		// shutdown the renderer
-		void vulkanRenderer::shutdown() {
+		void vulkanRenderer::shutDown() {
 			// idle vulkanFormat*
 			rendererWait();
 
@@ -123,7 +123,7 @@ namespace Dynamik {
 			// clear color buffer
 			myColorBufferManager.clear(&myVulkanDataContainers[vulkanContainerIndex]);
 
-			for (int itr = 0; itr < vulkanFormatObjectsCount; itr++) {
+			for (int itr = 0; itr < myFormatsCount; itr++) {
 				vulkanFormat* _localVulkanFormat = &myVulkanFormats[itr];
 
 				// clear swapChain, Pipeline, Uniform buffers and descriptorPool
@@ -222,7 +222,7 @@ namespace Dynamik {
 
 			// draw call
 			// uniform buffer object update
-			for (int itr = 0; itr < vulkanFormatObjectsCount; itr++)
+			for (int itr = 0; itr < myFormatsCount; itr++)
 				myThreads.push_back(std::async(std::launch::async, [](vulkanRenderer* renderer, vulkanFormat* format) {
 				renderer->uniformBufferManager.updateBuffer3D(&renderer->myVulkanDataContainers[renderer->vulkanContainerIndex],
 					renderer->myEventContainers, format, renderer->imageIndex);
@@ -292,7 +292,7 @@ namespace Dynamik {
 			vkDeviceWaitIdle(myVulkanDataContainers[vulkanContainerIndex].device);
 
 			// clear swapChain, Pipeline, Uniform buffers and descriptorPool
-			for (int itr = 0; itr < vulkanFormatObjectsCount; itr++) {
+			for (int itr = 0; itr < myFormatsCount; itr++) {
 				vulkanFormat* _localVulkanFormat = &myVulkanFormats[itr];
 
 				DMKSwapChainCleanUpInfo cleanInfo = {};
@@ -322,7 +322,7 @@ namespace Dynamik {
 			// TODO: manually initialization
 			initFrameBuffers();
 
-			for (uint32_t _itr = 0; _itr < vulkanFormatObjectsCount; _itr++) {
+			for (uint32_t _itr = 0; _itr < myFormatsCount; _itr++) {
 				vulkanFormat* _localVulkanFormat = &myVulkanFormats[_itr];
 
 				// init pipelines
@@ -347,31 +347,14 @@ namespace Dynamik {
 			return &myEventContainers;
 		}
 
-		void vulkanRenderer::setVulkanFormats(std::vector<RendererFormat>& rendererFormats) {
+		void vulkanRenderer::setFormats(std::vector<RendererFormat>& rendererFormats) {
 			_addVulkanFormatsToManager(rendererFormats);
 		}
 
-		void vulkanRenderer::updateVulkanFormats(std::vector<RendererFormat>& rendererFormats) {
+		void vulkanRenderer::updateFormats(std::vector<RendererFormat>& rendererFormats) {
 			_addVulkanFormatsToManager(rendererFormats);
 
 			initObjectBasedFunctions(&myVulkanFormats);
-		}
-
-		// set model paths
-		void vulkanRenderer::setModelPaths(std::vector<std::string>& object, std::vector<std::vector<std::string>>& texture) {
-			myModelPaths = object;
-			myTexturePaths = texture;
-		}
-
-		// set shader paths
-		void vulkanRenderer::setShaderPaths(std::string& vertex, std::string& fragment) {
-			std::vector<std::string> _localPathContainer = {
-				vertex,
-				"",
-				"",
-				fragment
-			};
-			myShaderPaths = _localPathContainer;
 		}
 
 		// create vertex buffer
@@ -524,10 +507,10 @@ namespace Dynamik {
 		}
 
 		void vulkanRenderer::_addVulkanFormatsToManager(std::vector<RendererFormat>& rendererFormats) {
-			vulkanFormatObjectsCount = rendererFormats.size();
+			myFormatsCount = rendererFormats.size();
 			std::vector<vulkanFormat> _localFormats;
 
-			for (int i = 0; i < vulkanFormatObjectsCount; i++)
+			for (int i = 0; i < myFormatsCount; i++)
 				_localFormats.push_back(vulkanFormat(&rendererFormats[i]));
 
 			myVulkanFormats = _localFormats;
@@ -740,7 +723,7 @@ namespace Dynamik {
 		}
 
 		void vulkanRenderer::initVertexAndIndexBuffers(vulkanFormat* myVulkanFormat) {
-			for (int i = 0; i < vulkanFormatObjectsCount; i++) {
+			for (int i = 0; i < myFormatsCount; i++) {
 				myVulkanFormat->myVertexBuffers.resize(1);
 				myVulkanFormat->myVertexBufferMemories.resize(1);
 				myVulkanFormat->myIndexBuffers.resize(1);

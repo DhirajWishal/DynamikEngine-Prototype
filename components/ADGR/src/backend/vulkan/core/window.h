@@ -13,32 +13,6 @@
 namespace Dynamik {
 	namespace ADGR {
 		namespace core {
-			struct windowProperties {
-				std::string title;
-				unsigned int width;
-				unsigned int height;
-			};
-
-			struct keyEvent {
-				bool turnEventR = false;
-				bool turnEventL = false;
-				bool moveEventU = false;
-				bool moveEventD = false;
-				bool upDownEventU = false;
-				bool upDownEventD = false;
-				bool rotEventL = false;
-				bool rotEventR = false;
-				bool rotEventU = false;
-				bool rotEventD = false;
-
-				bool reCompileShaders = false;
-			};
-
-			struct cursorEvent {
-				float x;
-				float y;
-			};
-
 			class windowManager {
 			public:
 				windowManager() {}

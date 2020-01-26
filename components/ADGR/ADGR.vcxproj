@@ -143,6 +143,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\backend\base\RendererBackendBase.h" />
+    <ClInclude Include="src\backend\opengl\core\data structures\opengl.h" />
     <ClInclude Include="src\Layers\layer.h" />
     <ClInclude Include="src\Layers\layerStack.h" />
     <ClInclude Include="src\Renderer.h" />
@@ -154,7 +156,6 @@
     <ClInclude Include="src\backend\interface.h" />
     <ClInclude Include="src\backend\opengl\core\window.h" />
     <ClInclude Include="src\backend\opengl\openglRenderer.h" />
-    <ClInclude Include="src\backend\vulkan\ADGR_Vulkan_API.h" />
     <ClInclude Include="src\backend\vulkan\core\backend.h" />
     <ClInclude Include="src\backend\vulkan\core\colorBuffer.h" />
     <ClInclude Include="src\backend\vulkan\core\commandBuffer.h" />

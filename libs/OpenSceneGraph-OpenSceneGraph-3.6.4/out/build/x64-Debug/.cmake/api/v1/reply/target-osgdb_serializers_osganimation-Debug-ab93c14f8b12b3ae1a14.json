@@ -1,0 +1,544 @@
+{
+	"artifacts" : 
+	[
+		{
+			"path" : "src/osgWrappers/serializers/osgAnimation/osgdb_serializers_osganimationd.dll"
+		},
+		{
+			"path" : "src/osgWrappers/serializers/osgAnimation/osgdb_serializers_osganimationd.pdb"
+		}
+	],
+	"backtrace" : 2,
+	"backtraceGraph" : 
+	{
+		"commands" : 
+		[
+			"ADD_LIBRARY",
+			"SETUP_PLUGIN",
+			"INSTALL",
+			"TARGET_LINK_LIBRARIES",
+			"LINK_INTERNAL",
+			"SETUP_LINK_LIBRARIES",
+			"INCLUDE_DIRECTORIES"
+		],
+		"files" : 
+		[
+			"CMakeModules/OsgMacroUtils.cmake",
+			"src/osgWrappers/serializers/osgAnimation/CMakeLists.txt",
+			"CMakeLists.txt"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 1
+			},
+			{
+				"command" : 1,
+				"file" : 1,
+				"line" : 7,
+				"parent" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 299,
+				"parent" : 1
+			},
+			{
+				"command" : 2,
+				"file" : 0,
+				"line" : 347,
+				"parent" : 1
+			},
+			{
+				"command" : 5,
+				"file" : 0,
+				"line" : 343,
+				"parent" : 1
+			},
+			{
+				"command" : 4,
+				"file" : 0,
+				"line" : 143,
+				"parent" : 4
+			},
+			{
+				"command" : 3,
+				"file" : 0,
+				"line" : 54,
+				"parent" : 5
+			},
+			{
+				"file" : 2
+			},
+			{
+				"command" : 6,
+				"file" : 2,
+				"line" : 304,
+				"parent" : 7
+			},
+			{
+				"command" : 6,
+				"file" : 2,
+				"line" : 307,
+				"parent" : 7
+			}
+		]
+	},
+	"compileGroups" : 
+	[
+		{
+			"compileCommandFragments" : 
+			[
+				{
+					"fragment" : "/DWIN32 /D_WINDOWS /W3 /GR /EHsc /W4 /wd4589 /wd4706 /wd4127 /wd4100 /Zp16 /MDd /Zi /Ob0 /Od /RTC1  "
+				}
+			],
+			"defines" : 
+			[
+				{
+					"define" : "_CRT_SECURE_NO_DEPRECATE"
+				},
+				{
+					"define" : "_SCL_SECURE_NO_WARNINGS"
+				},
+				{
+					"define" : "_WIN32_WINNT=0x0A00"
+				},
+				{
+					"define" : "osgdb_serializers_osganimation_EXPORTS"
+				}
+			],
+			"includes" : 
+			[
+				{
+					"backtrace" : 8,
+					"path" : "E:/Projects/Dynamik Engine/Dynamik/libs/OpenSceneGraph-OpenSceneGraph-3.6.4/out/build/x64-Debug/include"
+				},
+				{
+					"backtrace" : 9,
+					"path" : "E:/Projects/Dynamik Engine/Dynamik/libs/OpenSceneGraph-OpenSceneGraph-3.6.4/include"
+				}
+			],
+			"language" : "CXX",
+			"sourceIndexes" : 
+			[
+				0,
+				1,
+				2,
+				3,
+				4,
+				5,
+				6,
+				7,
+				8,
+				9,
+				10,
+				11,
+				12,
+				13,
+				14,
+				15,
+				16,
+				17,
+				18,
+				19,
+				20,
+				21,
+				22,
+				23,
+				24,
+				25,
+				26,
+				27,
+				28,
+				29,
+				30,
+				31,
+				32,
+				33,
+				34
+			]
+		},
+		{
+			"compileCommandFragments" : 
+			[
+				{
+					"fragment" : "-DWIN32 -D_DEBUG  "
+				}
+			],
+			"defines" : 
+			[
+				{
+					"define" : "_CRT_SECURE_NO_DEPRECATE"
+				},
+				{
+					"define" : "_SCL_SECURE_NO_WARNINGS"
+				},
+				{
+					"define" : "_WIN32_WINNT=0x0A00"
+				},
+				{
+					"define" : "osgdb_serializers_osganimation_EXPORTS"
+				}
+			],
+			"includes" : 
+			[
+				{
+					"backtrace" : 8,
+					"path" : "E:/Projects/Dynamik Engine/Dynamik/libs/OpenSceneGraph-OpenSceneGraph-3.6.4/out/build/x64-Debug/include"
+				},
+				{
+					"backtrace" : 9,
+					"path" : "E:/Projects/Dynamik Engine/Dynamik/libs/OpenSceneGraph-OpenSceneGraph-3.6.4/include"
+				}
+			],
+			"language" : "RC",
+			"sourceIndexes" : 
+			[
+				35
+			]
+		}
+	],
+	"dependencies" : 
+	[
+		{
+			"backtrace" : 6,
+			"id" : "OpenThreads::@dac12d0619a846a6325a"
+		},
+		{
+			"backtrace" : 6,
+			"id" : "osgDB::@d58dd7a1d38fc0c734e6"
+		},
+		{
+			"backtrace" : 6,
+			"id" : "osgGA::@95c3e4387aed87065cb4"
+		},
+		{
+			"backtrace" : 6,
+			"id" : "osgUtil::@8a7cd080b8239a026cfa"
+		},
+		{
+			"backtrace" : 6,
+			"id" : "osg::@df9faed0b2b115623d4e"
+		},
+		{
+			"backtrace" : 6,
+			"id" : "osgAnimation::@d5551e554d6a6b5636a2"
+		},
+		{
+			"backtrace" : 6,
+			"id" : "osgText::@e54226242c104e5868c3"
+		},
+		{
+			"backtrace" : 6,
+			"id" : "osgViewer::@7805197b6e112df857ee"
+		}
+	],
+	"folder" : 
+	{
+		"name" : "Plugins"
+	},
+	"id" : "osgdb_serializers_osganimation::@885d0007b6dcbb16d080",
+	"install" : 
+	{
+		"destinations" : 
+		[
+			{
+				"backtrace" : 3,
+				"path" : "bin/osgPlugins-3.6.4"
+			}
+		],
+		"prefix" : 
+		{
+			"path" : "E:/Projects/Dynamik Engine/Dynamik/libs/OpenSceneGraph-OpenSceneGraph-3.6.4/out/install/x64-Debug"
+		}
+	},
+	"link" : 
+	{
+		"commandFragments" : 
+		[
+			{
+				"fragment" : "/machine:x64 /debug /INCREMENTAL",
+				"role" : "flags"
+			},
+			{
+				"fragment" : "..\\..\\..\\osgAnimation\\osgAnimationd.lib opengl32.lib ..\\..\\..\\osgViewer\\osgViewerd.lib ..\\..\\..\\osgText\\osgTextd.lib ..\\..\\..\\osgGA\\osgGAd.lib ..\\..\\..\\osgDB\\osgDBd.lib ..\\..\\..\\osgUtil\\osgUtild.lib ..\\..\\..\\osg\\osgd.lib ..\\..\\..\\OpenThreads\\win32\\OpenThreadsd.lib opengl32.lib kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib",
+				"role" : "libraries"
+			}
+		],
+		"language" : "CXX"
+	},
+	"name" : "osgdb_serializers_osganimation",
+	"nameOnDisk" : "osgdb_serializers_osganimationd.dll",
+	"paths" : 
+	{
+		"build" : "src/osgWrappers/serializers/osgAnimation",
+		"source" : "src/osgWrappers/serializers/osgAnimation"
+	},
+	"sourceGroups" : 
+	[
+		{
+			"name" : "Source Files",
+			"sourceIndexes" : 
+			[
+				0,
+				1,
+				2,
+				3,
+				4,
+				5,
+				6,
+				7,
+				8,
+				9,
+				10,
+				11,
+				12,
+				13,
+				14,
+				15,
+				16,
+				17,
+				18,
+				19,
+				20,
+				21,
+				22,
+				23,
+				24,
+				25,
+				26,
+				27,
+				28,
+				29,
+				30,
+				31,
+				32,
+				33,
+				34,
+				35
+			]
+		}
+	],
+	"sources" : 
+	[
+		{
+			"backtrace" : 2,
+			"compileGroupIndex" : 0,
+			"path" : "src/osgWrappers/serializers/osgAnimation/Action.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 2,
+			"compileGroupIndex" : 0,
+			"path" : "src/osgWrappers/serializers/osgAnimation/ActionAnimation.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 2,
+			"compileGroupIndex" : 0,
+			"path" : "src/osgWrappers/serializers/osgAnimation/ActionBlendIn.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 2,
+			"compileGroupIndex" : 0,
+			"path" : "src/osgWrappers/serializers/osgAnimation/ActionBlendOut.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 2,
+			"compileGroupIndex" : 0,
+			"path" : "src/osgWrappers/serializers/osgAnimation/ActionStripAnimation.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 2,
+			"compileGroupIndex" : 0,
+			"path" : "src/osgWrappers/serializers/osgAnimation/Animation.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 2,
+			"compileGroupIndex" : 0,
+			"path" : "src/osgWrappers/serializers/osgAnimation/AnimationManagerBase.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 2,
+			"compileGroupIndex" : 0,
+			"path" : "src/osgWrappers/serializers/osgAnimation/BasicAnimationManager.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 2,
+			"compileGroupIndex" : 0,
+			"path" : "src/osgWrappers/serializers/osgAnimation/Bone.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 2,
+			"compileGroupIndex" : 0,
+			"path" : "src/osgWrappers/serializers/osgAnimation/LibraryWrapper.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 2,
+			"compileGroupIndex" : 0,
+			"path" : "src/osgWrappers/serializers/osgAnimation/MorphGeometry.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 2,
+			"compileGroupIndex" : 0,
+			"path" : "src/osgWrappers/serializers/osgAnimation/RigComputeBoundingBoxCallback.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 2,
+			"compileGroupIndex" : 0,
+			"path" : "src/osgWrappers/serializers/osgAnimation/RigGeometry.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 2,
+			"compileGroupIndex" : 0,
+			"path" : "src/osgWrappers/serializers/osgAnimation/RigTransform.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 2,
+			"compileGroupIndex" : 0,
+			"path" : "src/osgWrappers/serializers/osgAnimation/Skeleton.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 2,
+			"compileGroupIndex" : 0,
+			"path" : "src/osgWrappers/serializers/osgAnimation/StackedMatrixElement.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 2,
+			"compileGroupIndex" : 0,
+			"path" : "src/osgWrappers/serializers/osgAnimation/StackedQuaternionElement.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 2,
+			"compileGroupIndex" : 0,
+			"path" : "src/osgWrappers/serializers/osgAnimation/StackedRotateAxisElement.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 2,
+			"compileGroupIndex" : 0,
+			"path" : "src/osgWrappers/serializers/osgAnimation/StackedScaleElement.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 2,
+			"compileGroupIndex" : 0,
+			"path" : "src/osgWrappers/serializers/osgAnimation/StackedTransformElement.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 2,
+			"compileGroupIndex" : 0,
+			"path" : "src/osgWrappers/serializers/osgAnimation/StackedTranslateElement.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 2,
+			"compileGroupIndex" : 0,
+			"path" : "src/osgWrappers/serializers/osgAnimation/Timeline.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 2,
+			"compileGroupIndex" : 0,
+			"path" : "src/osgWrappers/serializers/osgAnimation/TimelineAnimationManager.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 2,
+			"compileGroupIndex" : 0,
+			"path" : "src/osgWrappers/serializers/osgAnimation/UpdateBone.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 2,
+			"compileGroupIndex" : 0,
+			"path" : "src/osgWrappers/serializers/osgAnimation/UpdateFloatUniform.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 2,
+			"compileGroupIndex" : 0,
+			"path" : "src/osgWrappers/serializers/osgAnimation/UpdateMaterial.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 2,
+			"compileGroupIndex" : 0,
+			"path" : "src/osgWrappers/serializers/osgAnimation/UpdateMatrixTransform.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 2,
+			"compileGroupIndex" : 0,
+			"path" : "src/osgWrappers/serializers/osgAnimation/UpdateMatrixfUniform.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 2,
+			"compileGroupIndex" : 0,
+			"path" : "src/osgWrappers/serializers/osgAnimation/UpdateMorph.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 2,
+			"compileGroupIndex" : 0,
+			"path" : "src/osgWrappers/serializers/osgAnimation/UpdateMorphGeometry.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 2,
+			"compileGroupIndex" : 0,
+			"path" : "src/osgWrappers/serializers/osgAnimation/UpdateRigGeometry.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 2,
+			"compileGroupIndex" : 0,
+			"path" : "src/osgWrappers/serializers/osgAnimation/UpdateSkeleton.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 2,
+			"compileGroupIndex" : 0,
+			"path" : "src/osgWrappers/serializers/osgAnimation/UpdateVec2fUniform.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 2,
+			"compileGroupIndex" : 0,
+			"path" : "src/osgWrappers/serializers/osgAnimation/UpdateVec3fUniform.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 2,
+			"compileGroupIndex" : 0,
+			"path" : "src/osgWrappers/serializers/osgAnimation/UpdateVec4fUniform.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 2,
+			"compileGroupIndex" : 1,
+			"path" : "out/build/x64-Debug/PlatformSpecifics/Windows/OpenSceneGraphVersionInfo.rc",
+			"sourceGroupIndex" : 0
+		}
+	],
+	"type" : "MODULE_LIBRARY"
+}

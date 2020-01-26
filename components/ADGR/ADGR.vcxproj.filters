@@ -84,9 +84,6 @@
     <ClInclude Include="src\backend\opengl\openglRenderer.h">
       <Filter>src\backend\opengl</Filter>
     </ClInclude>
-    <ClInclude Include="src\backend\vulkan\ADGR_Vulkan_API.h">
-      <Filter>src\backend\vulkan</Filter>
-    </ClInclude>
     <ClInclude Include="src\backend\vulkan\core\backend.h">
       <Filter>src\backend\vulkan\core</Filter>
     </ClInclude>
@@ -189,6 +186,8 @@
     <ClInclude Include="src\rendererFormat.h">
       <Filter>src</Filter>
     </ClInclude>
+    <ClInclude Include="src\backend\opengl\core\data structures\opengl.h" />
+    <ClInclude Include="src\backend\base\RendererBackendBase.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Layers\layer.cpp">

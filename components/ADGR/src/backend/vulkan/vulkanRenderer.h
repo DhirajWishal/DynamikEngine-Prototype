@@ -24,6 +24,7 @@
 
 #include "core/data store/internalFormat.h"
 
+#if defined(DMK_USE_VULKAN)
 namespace Dynamik {
 	namespace ADGR {
 		using namespace core;
@@ -131,4 +132,5 @@ namespace Dynamik {
 	}
 }
 
+#endif
 #endif	//	_DMK_ADGR_RENDER_H

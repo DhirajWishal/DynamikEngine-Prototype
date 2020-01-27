@@ -2,6 +2,7 @@
 
 #ifndef _DYNAMIK_ADGR_VULKAN_CONTROL_HEADER_H
 #define _DYNAMIK_ADGR_VULKAN_CONTROL_HEADER_H
+#ifdef DMK_USE_VULKAN
 
 namespace Dynamik {
 	namespace ADGR {
@@ -19,5 +20,7 @@ namespace Dynamik {
 		}
 	}
 }
+
+#endif // DMK_USE_VULKAN
 
 #endif // !_DYNAMIK_ADGR_VULKAN_CONTROL_HEADER_H

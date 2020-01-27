@@ -21,6 +21,7 @@
 #include "CentralDataHub.h"
 #include "Platform.h"
 
+#ifdef DMK_USE_VULKAN
 namespace Dynamik {
 	namespace ADGR {
 		using namespace core;
@@ -45,7 +46,7 @@ namespace Dynamik {
 			initStageOne();
 			initStageTwo();
 			initStageThree();
-		} 
+		}
 
 		// Basic one-time initializations
 		void vulkanRenderer::initStageOne() {
@@ -286,7 +287,7 @@ namespace Dynamik {
 		// recreate the swapchain
 		void vulkanRenderer::recreateSwapChain() {
 			// window resize event
-			myWindowManager.onwindowResizeEvent(&myVulkanDataContainers[vulkanContainerIndex]);
+			myWindowManager.onWindowResizeEvent(&myVulkanDataContainers[vulkanContainerIndex]);
 
 			// idle
 			vkDeviceWaitIdle(myVulkanDataContainers[vulkanContainerIndex].device);
@@ -508,12 +509,8 @@ namespace Dynamik {
 
 		void vulkanRenderer::_addVulkanFormatsToManager(std::vector<RendererFormat>& rendererFormats) {
 			myFormatsCount = rendererFormats.size();
-			std::vector<vulkanFormat> _localFormats;
-
 			for (int i = 0; i < myFormatsCount; i++)
-				_localFormats.push_back(vulkanFormat(&rendererFormats[i]));
-
-			myVulkanFormats = _localFormats;
+				myVulkanFormats.push_back(vulkanFormat(&rendererFormats[i]));
 		}
 
 		/* STAGE BASED INITIALIZATION */
@@ -531,7 +528,7 @@ namespace Dynamik {
 			myWindowManager.init(&myVulkanDataContainers[vulkanContainerIndex]);
 
 			std::string _localTexturePath = "E:/Projects/Dynamik Engine/Dynamik/core assets/icons/Dynamik.jpg";
-			myWindowManager.setwindowIcon(&myVulkanDataContainers[vulkanContainerIndex], { _localTexturePath });
+			myWindowManager.setWindowIcon(&myVulkanDataContainers[vulkanContainerIndex], { _localTexturePath });
 		}
 
 		// initialize the instance
@@ -549,7 +546,7 @@ namespace Dynamik {
 
 		// initialize the window surface
 		void vulkanRenderer::initwindowSurface() {
-			myWindowManager.createwindowSurface(&myVulkanDataContainers[vulkanContainerIndex]);
+			myWindowManager.createWindowSurface(&myVulkanDataContainers[vulkanContainerIndex]);
 		}
 
 		// initialize the device
@@ -830,3 +827,5 @@ namespace Dynamik {
 		}
 	}
 }
+
+#endif

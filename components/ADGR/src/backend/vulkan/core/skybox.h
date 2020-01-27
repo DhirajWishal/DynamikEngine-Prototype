@@ -2,6 +2,7 @@
 
 #ifndef _DYNAMIK_ADGR_VULKAN_SKYBOX_H
 #define _DYNAMIK_ADGR_VULKAN_SKYBOX_H
+#ifdef DMK_USE_VULKAN
 
 #include "backend/vulkan/core/data structures/vulkan.h"
 #include "texture.h"
@@ -52,8 +53,8 @@ namespace Dynamik {
 				skyboxManager() {}
 				~skyboxManager() {}
 
-				void initSkybox(ADGRVulkanDataContainer* container, DMKSkyboxInitInfo) ;
-				void deleteSkybox(ADGRVulkanDataContainer* container) ;
+				void initSkybox(ADGRVulkanDataContainer* container, DMKSkyboxInitInfo);
+				void deleteSkybox(ADGRVulkanDataContainer* container);
 
 				void loadCubemap(ADGRVulkanDataContainer* container, DMKInitCubemapInfo initInfo);
 
@@ -75,5 +76,7 @@ namespace Dynamik {
 		}
 	}
 }
+
+#endif // DMK_USE_VULKAN
 
 #endif // !_DYNAMIK_ADGR_VULKAN_SKYBOX_H

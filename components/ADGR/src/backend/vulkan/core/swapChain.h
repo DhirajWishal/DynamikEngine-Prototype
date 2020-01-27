@@ -2,6 +2,7 @@
 
 #ifndef _DYNAMIK_ADGR_VULKAN_SWAPCHAIN_H
 #define _DYNAMIK_ADGR_VULKAN_SWAPCHAIN_H
+#ifdef DMK_USE_VULKAN
 
 #include "backend/vulkan/core/data structures/vulkan.h"
 
@@ -27,12 +28,12 @@ namespace Dynamik {
 				swapChainManager() {}
 				~swapChainManager() {}
 
-				void init(ADGRVulkanDataContainer* container) ;
-				void clear(ADGRVulkanDataContainer* container) ;
+				void init(ADGRVulkanDataContainer* container);
+				void clear(ADGRVulkanDataContainer* container);
 
 				void cleanUp(ADGRVulkanDataContainer* container, DMKSwapChainCleanUpInfo& info);
 
-				void initImageViews(ADGRVulkanDataContainer* container) ;
+				void initImageViews(ADGRVulkanDataContainer* container);
 
 			private:
 				VkSurfaceFormatKHR chooseSwapSurfaceFormat(const std::vector<VkSurfaceFormatKHR>& availableFormats);
@@ -46,5 +47,7 @@ namespace Dynamik {
 		}
 	}
 }
+
+#endif // DMK_USE_VULKAN
 
 #endif	// !_DYNAMIK_ADGR_VULKAN_SWAPCHAIN_H

@@ -8,6 +8,8 @@
 */
 
 #include "adgrafx.h"
+#ifdef DMK_USE_VULKAN
+
 #include "semaphores.h"
 #include "backend/vulkan/core/controlHeader.h"
 
@@ -35,3 +37,5 @@ namespace Dynamik {
 		}
 	}
 }
+
+#endif

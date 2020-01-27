@@ -8,6 +8,8 @@
 */
 
 #include "adgrafx.h"
+#ifdef DMK_USE_VULKAN
+
 #include "validators.h"
 
 namespace Dynamik {
@@ -39,3 +41,4 @@ namespace Dynamik {
 		}
 	}
 }
+#endif // DMK_USE_VULKAN

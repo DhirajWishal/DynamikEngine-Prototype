@@ -2,6 +2,7 @@
 
 #ifndef _DYNAMIK_ADGR_VULKAN_BUFFER_FUNCTIONS_H
 #define _DYNAMIK_ADGR_VULKAN_BUFFER_FUNCTIONS_H
+#if defined(DMK_USE_VULKAN)
 
 namespace Dynamik {
 	namespace ADGR {
@@ -40,4 +41,5 @@ namespace Dynamik {
 	}
 }
 
+#endif 
 #endif // !_DYNAMIK_ADGR_VULKAN_BUFFER_FUNCTIONS_H

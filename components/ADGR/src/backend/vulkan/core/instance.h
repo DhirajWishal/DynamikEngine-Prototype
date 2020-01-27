@@ -2,13 +2,14 @@
 
 #ifndef _DYNAMIK_ADGR_VULKAN_INSTANCE_H
 #define _DYNAMIK_ADGR_VULKAN_INSTANCE_H
+#ifdef DMK_USE_VULKAN
 
 #include "backend/vulkan/core/data structures/vulkan.h"
 
 namespace Dynamik {
 	namespace ADGR {
 		namespace core {
-			class instanceManager  {
+			class instanceManager {
 			public:
 				instanceManager() {}
 				~instanceManager() {}
@@ -20,5 +21,7 @@ namespace Dynamik {
 		}
 	}
 }
+
+#endif // DMK_USE_VULKAN
 
 #endif // !_DYNAMIK_ADGR_VULKAN_INSTANCE_H

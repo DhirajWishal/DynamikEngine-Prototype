@@ -72,7 +72,6 @@ namespace Dynamik {
 
 		void Renderer::setVertices(std::vector<Vertex>* vertices) {
 			vertices;
-			rendererCore.setVertices(*vertices);
 		}
 
 		void Renderer::run() {
@@ -102,7 +101,7 @@ namespace Dynamik {
 						for (uint32_t itr = 0; itr < _localFormat->myInternalFormat->myVertexBufferObjects.size(); itr++)
 							if (_localFormat->myInternalFormat->myVertexBufferObjects[itr].size())
 								isInitiated = true;
-					if (isInitiated)
+					if (isInitiated || _localFormat->myInternalFormat->myGameObject->myProperties.objectPath.size() == 0)
 						continue;
 
 					_localFormat->myInternalFormat->myVertexBufferObjects.resize(1);
@@ -118,6 +117,9 @@ namespace Dynamik {
 			}
 
 			for (auto format : *formats) {
+				if (format.myInternalFormat->myGameObject->myProperties.objectPath.size() == 0)
+					continue;
+
 				format.myInternalFormat->myVertexCounts.resize(1);
 				format.myInternalFormat->myVertexCounts[0] = format.myInternalFormat->myVertexBufferObjects[0].size();
 				format.myInternalFormat->myIndexCounts.resize(1);
@@ -134,7 +136,10 @@ namespace Dynamik {
 		}
 
 		void Renderer::idleCall() {
-			vkDeviceWaitIdle(rendererCore.getDevice());
+#if defined(DMK_USE_VULKAN)
+			//vkDeviceWaitIdle(rendererCore.getDevice());
+
+#endif
 		}
 
 		void Renderer::bindKeys() {

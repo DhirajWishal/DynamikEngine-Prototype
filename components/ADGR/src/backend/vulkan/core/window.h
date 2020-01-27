@@ -2,6 +2,7 @@
 
 #ifndef _DYNAMIK_ADGR_VULKAN_window_H
 #define _DYNAMIK_ADGR_VULKAN_window_H
+#ifdef DMK_USE_VULKAN
 
 #include <deque>
 
@@ -21,15 +22,15 @@ namespace Dynamik {
 				void init(ADGRVulkanDataContainer* container);
 				void clear(ADGRVulkanDataContainer* container);
 
-				bool createwindowSurface(ADGRVulkanDataContainer* container);
+				bool createWindowSurface(ADGRVulkanDataContainer* container);
 
 				void pollEvents();
 				void onUpdate();
 				bool closeEvent(ADGRVulkanDataContainer* container);
 
-				void onwindowResizeEvent(ADGRVulkanDataContainer* container);
+				void onWindowResizeEvent(ADGRVulkanDataContainer* container);
 
-				void setwindowIcon(ADGRVulkanDataContainer* container, std::vector<std::string> paths);
+				void setWindowIcon(ADGRVulkanDataContainer* container, std::vector<std::string> paths);
 
 				bool isFrameBufferResized() { return frameBufferResized; }
 				void frameBufferResizedUpdate(bool state) { frameBufferResized = state; }
@@ -73,5 +74,7 @@ namespace Dynamik {
 		}
 	}
 }
+
+#endif // DMK_USE_VULKAN
 
 #endif // !_DYNAMIK_ADGR_VULKAN_window_H

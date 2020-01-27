@@ -2,6 +2,7 @@
 
 #ifndef _DYNAMIK_ADGR_VULKAN_TEXTURE_FUNCTIONS_H
 #define _DYNAMIK_ADGR_VULKAN_TEXTURE_FUNCTIONS_H
+#ifdef DMK_USE_VULKAN
 
 namespace Dynamik {
 	namespace ADGR {
@@ -84,4 +85,6 @@ namespace Dynamik {
 		}
 	}
 }
+
+#endif 
 #endif // !_DYNAMIK_ADGR_VULKAN_TEXTURE_FUNCTIONS_H

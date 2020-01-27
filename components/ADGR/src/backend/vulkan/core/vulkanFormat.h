@@ -2,6 +2,7 @@
 
 #ifndef _DYNAMIK_ADGR_VULKAN_FORMAT_H
 #define _DYNAMIK_ADGR_VULKAN_FORMAT_H
+#ifdef DMK_USE_VULKAN
 
 #include "rendererFormat.h"
 #include "backend/vulkan/core/data structures/vulkan.h"
@@ -70,5 +71,7 @@ namespace Dynamik {
 		}
 	}
 }
+
+#endif // DMK_USE_VULKAN
 
 #endif // !_DYNAMIK_ADGR_VULKAN_FORMAT_H

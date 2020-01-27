@@ -4,7 +4,7 @@
 #define _DYNAMIK_ADGR_RENDERER_BACKEND_BASE_H
 
 /*
- Renderer Backend Base class 
+ Renderer Backend Base class
 
  Author:	Dhiraj Wishal
  Project:	Dynamik Engine
@@ -23,15 +23,15 @@
 */
 
 #include <cstdint>
-#include <deque>
 #include <vector>
 #include <string>
+#include <deque>
 
 #include <CentralDataHub.h>
 #include <rendererFormat.h>
 
 #define INC_PROGRESS					(*myProgress += 1)
-#define MULTIPLE_INC_PROGRESS(count)	for(int i_itr__ = 0; i_itr__ < count; i_itr__++) INC_PROGRESS
+#define MULTIPLE_INC_PROGRESS(count)	for (int i_itr__ = 0; i_itr__ < count; i_itr__++) INC_PROGRESS
 
 namespace Dynamik {
 	namespace ADGR {
@@ -40,6 +40,13 @@ namespace Dynamik {
 			uint32_t myWindowWidth = 720;
 			uint32_t myWindowHeight = 480;
 			std::vector<std::string> myWindowIconPaths = { "E:/Projects/Dynamik Engine/Dynamik/core assets/icons/Dynamik.jpg" };
+
+			std::vector<float> clearScreenValues = {							// Vulkan clear screen values
+				(2.0f / 256.0f),		// Red
+				(8.0f / 256.0f),		// Green
+				(32.0f / 256.0f),		// Blue
+				(1.00000000f)			// Alpha
+			};	// Dynwamik color code: rgba(2, 8, 32, 1)
 		};
 
 		class RendererBackend {

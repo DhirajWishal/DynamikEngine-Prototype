@@ -13,7 +13,7 @@
 #define _DYNAMIK_ADGR_RENDERER_H
 
 #include "backend/interface.h"
-#include "backend/vulkan/core/vulkanFormat.h"
+#include "rendererFormat.h"
 #include "core/core.h"
 
 #include "Platform.h"

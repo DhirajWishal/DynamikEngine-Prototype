@@ -1,4 +1,5 @@
 #include "adgrafx.h"
+#ifdef DMK_USE_VULKAN
 #include "device.h"
 
 #include "extensions/extensions.h"
@@ -170,3 +171,4 @@ namespace Dynamik {
 		}
 	}
 }
+#endif // DMK_USE_VULKAN

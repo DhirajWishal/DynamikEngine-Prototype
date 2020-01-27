@@ -2,6 +2,7 @@
 
 #ifndef _DYNAMIK_ADGR_OPENGL_WINDOW_H
 #define _DYNAMIK_ADGR_OPENGL_WINDOW_H
+#ifdef DMK_USE_OPENGL
 
 #include "backend/opengl/core/data structures/opengl.h"
 
@@ -92,6 +93,8 @@ namespace Dynamik {
 		}
 	}
 }
+
+#endif // DMK_USE_OPENGL
 
 #endif // !_DYNAMIK_ADGR_OPENGL_WINDOW_H
 

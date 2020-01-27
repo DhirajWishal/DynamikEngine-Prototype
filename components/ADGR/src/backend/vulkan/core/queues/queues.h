@@ -11,6 +11,7 @@
 
 #ifndef _DYNAMIK_ADGR_VULKAN_QUEUES_H
 #define _DYNAMIK_ADGR_VULKAN_QUEUES_H
+#ifdef DMK_USE_VULKAN
 
 #include "CentralDataHub.h"
 
@@ -31,4 +32,5 @@ namespace Dynamik {
 	}
 }
 
+#endif // DMK_USE_VULKAN
 #endif // !_DYNAMIK_ADGR_VULKAN_QUEUES_H

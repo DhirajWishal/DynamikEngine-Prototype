@@ -1,4 +1,5 @@
 #include "adgrafx.h"
+#ifdef DMK_USE_VULKAN
 #include "glTexture.h"
 #include "Platform/windows/resource/imageLoader.h"
 #include "Platform.h"
@@ -41,3 +42,4 @@ namespace Dynamik {
 		}
 	}
 }
+#endif // DMK_USE_VULKAN

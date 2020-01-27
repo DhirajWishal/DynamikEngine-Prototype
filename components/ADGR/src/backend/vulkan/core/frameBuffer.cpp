@@ -1,4 +1,5 @@
 #include "adgrafx.h"
+#ifdef DMK_USE_VULKAN
 #include "frameBuffer.h"
 
 namespace Dynamik {
@@ -58,3 +59,4 @@ namespace Dynamik {
 		}
 	}
 }
+#endif // DMK_USE_VULKAN

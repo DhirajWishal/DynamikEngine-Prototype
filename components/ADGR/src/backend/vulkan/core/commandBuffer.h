@@ -2,6 +2,7 @@
 
 #ifndef _DYNAMIK_ADGR_VULKAN_COMMAND_BUFFER_H
 #define _DYNAMIK_ADGR_VULKAN_COMMAND_BUFFER_H
+#ifdef DMK_USE_VULKAN
 
 #include "data structures/DMK_ADGR_DataStructures.h"
 #include "vulkanFormat.h"
@@ -30,7 +31,7 @@ namespace Dynamik {
 				void bindCommands(ADGRVulkanDataContainer* container, DMKBindCommandBufferInfo info);
 
 			private:
-				void drawVertex(VkCommandBuffer buffer, int index,  vulkanFormat* format, VkDeviceSize* offsets);
+				void drawVertex(VkCommandBuffer buffer, int index, vulkanFormat* format, VkDeviceSize* offsets);
 				void drawIndexed(VkCommandBuffer buffer, int index, vulkanFormat* format, VkDeviceSize* offsets);
 			};
 
@@ -57,5 +58,7 @@ namespace Dynamik {
 		}
 	}
 }
+
+#endif // DMK_USE_VULKAN
 
 #endif	// !_DYNAMIK_ADGR_VULKAN_COMMAND_BUFFER_H

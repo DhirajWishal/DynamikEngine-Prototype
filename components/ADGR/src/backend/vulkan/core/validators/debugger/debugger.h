@@ -11,6 +11,7 @@
 
 #ifndef _DYNAMIK_ADGR_VULKAN_DEBUGGER_H
 #define _DYNAMIK_ADGR_VULKAN_DEBUGGER_H
+#ifdef DMK_USE_VULKAN
 
 #include "backend/vulkan/core/data structures/vulkan.h"
 
@@ -59,4 +60,5 @@ namespace Dynamik {
 	}
 }
 
+#endif // DMK_USE_VULKAN
 #endif // !_DYNAMIK_ADGR_VULKAN_DEBUGGER_H

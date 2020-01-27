@@ -48,11 +48,13 @@ project "ADGR"
 
 	libdirs {
 		"%{IncludeLib.GLFW}",
+		"%{IncludeLib.GLEW}",
 		"%{IncludeLib.Vulkan}"
 	}
 
 	links { 
 		"glfw3dll",
+		"glew32s",
 		"opengl32",
 		"vulkan-1",
 		"Events",
@@ -69,6 +71,8 @@ project "ADGR"
 			"DMK_PLATFORM_WINDOWS",
 			"DMK_BUILD_DLL",
 			"DMK_USE_VULKAN",
+			--"DMK_USE_OPENGL",
+			"GLEW_STATIC",
 			"GLFW_INCLUDE_VULKAN"
 		}
 

@@ -1,4 +1,5 @@
 #include "adgrafx.h"
+#ifdef DMK_USE_VULKAN
 #include "manager.h"
 
 namespace Dynamik {
@@ -221,3 +222,4 @@ namespace Dynamik {
 		}
 	}
 }
+#endif // DMK_USE_VULKAN

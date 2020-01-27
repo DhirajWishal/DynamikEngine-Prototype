@@ -2,6 +2,7 @@
 
 #ifndef _DYNAMIK_ADGR_VULKAN_TEXTURE_H
 #define _DYNAMIK_ADGR_VULKAN_TEXTURE_H
+#ifdef DMK_USE_VULKAN
 
 #include "backend/vulkan/core/data structures/vulkan.h"
 #include "backend/vulkan/core/functions/textureFunctions.h"
@@ -71,7 +72,7 @@ namespace Dynamik {
 				~textureManager() {}
 
 				void initTexture(ADGRVulkanDataContainer* container, DMKInitTextureInfo info);
-				void generateMipMaps(ADGRVulkanDataContainer* container, DMKGenerateMipMapInfo info) ;
+				void generateMipMaps(ADGRVulkanDataContainer* container, DMKGenerateMipMapInfo info);
 				void initTextureImageViews(ADGRVulkanDataContainer* container, DMKInitTextureImageViewsInfo texInfo, DMKCreateImageViewInfo info);
 				void initTextureSampler(ADGRVulkanDataContainer* container, DMKInitTextureSamplerInfo info);
 
@@ -80,5 +81,7 @@ namespace Dynamik {
 		}
 	}
 }
+
+#endif // DMK_USE_VULKAN
 
 #endif // !_DYNAMIK_ADGR_VULKAN_TEXTURE_H

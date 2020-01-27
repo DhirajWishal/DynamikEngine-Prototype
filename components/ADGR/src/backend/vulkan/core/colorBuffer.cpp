@@ -1,4 +1,6 @@
 #include "adgrafx.h"
+#ifdef DMK_USE_VULKAN
+
 #include "colorBuffer.h"
 
 #include "data structures/vulkan.h"
@@ -105,3 +107,4 @@ namespace Dynamik {
 		}
 	}
 }
+#endif // DMK_USE_VULKAN

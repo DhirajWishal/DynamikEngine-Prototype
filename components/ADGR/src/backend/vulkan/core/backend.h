@@ -2,6 +2,7 @@
 
 #ifndef _DYNAMIK_ADGR_VULKAN_BACKEND_H
 #define _DYNAMIK_ADGR_VULKAN_BACKEND_H
+#ifdef DMK_USE_VULKAN
 
 #include "window.h"
 #include "instance.h"
@@ -30,5 +31,7 @@
 #include "mouseEvent.h"
 
 #include "vulkanFormat.h"
+
+#endif // DMK_USE_VULKAN
 
 #endif // !_DYNAMIK_ADGR_VULKAN_BACKEND_H

@@ -1,4 +1,6 @@
 #include "adgrafx.h"
+#if defined(DMK_USE_VULKAN)
+
 #include "textureFunctions.h"
 
 #include "bufferFunctions.h"
@@ -174,3 +176,5 @@ namespace Dynamik {
 		}
 	}
 }
+
+#endif

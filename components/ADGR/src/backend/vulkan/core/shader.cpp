@@ -1,7 +1,9 @@
 #include "adgrafx.h"
+#ifdef DMK_USE_VULKAN
 #include "shader.h"
 
 #include "controlHeader.h"
+#include "..\..\opengl\core\shader.h"
 
 namespace Dynamik {
 	namespace ADGR {
@@ -102,3 +104,4 @@ namespace Dynamik {
 		}
 	}
 }
+#endif // !DMK_USE_VULKAN

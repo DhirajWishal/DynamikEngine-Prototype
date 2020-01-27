@@ -1,4 +1,5 @@
 #include "adgrafx.h"
+#ifdef DMK_USE_OPENGL
 #include "window.h"
 
 #include "keyEvent.h"
@@ -14,7 +15,10 @@ namespace Dynamik {
 			void windowManagerGL::init(ADGROpenGLDataContainer* container) {
 				glfwInit();
 
-				glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
+				//glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
+				glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
+				glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 5);
+				glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 #if defined(DMK_DEBUG)
 				container->window = glfwCreateWindow(WIDTH, HEIGHT, "Dynamik Engine", nullptr, nullptr);
 
@@ -31,6 +35,8 @@ namespace Dynamik {
 
 #endif
 				glfwMakeContextCurrent(container->window);
+				if (glewInit() != GLEW_OK)
+					std::cout << "Error!" << std::endl;
 
 				glfwSetWindowUserPointer(container->window, this);
 				glfwSetFramebufferSizeCallback(container->window, framebufferResizeCallback);
@@ -187,3 +193,4 @@ namespace Dynamik {
 		}
 	}
 }
+#endif // DMK_USE_OPENGL

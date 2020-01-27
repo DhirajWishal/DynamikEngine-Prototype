@@ -13,6 +13,7 @@
 
 #ifndef _DYNAMIK_ADGR_VULKAN_H
 #define _DYNAMIK_ADGR_VULKAN_H
+#if defined(DMK_USE_VULKAN)
 
 #include <GLFW/glfw3.h>
 #include <vulkan/vulkan.h>
@@ -283,4 +284,5 @@ namespace Dynamik {
 	}
 }
 
+#endif	
 #endif	// !_DYNAMIK_ADGR_VULKAN_H

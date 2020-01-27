@@ -1,4 +1,6 @@
 #include "adgrafx.h"
+#ifdef DMK_USE_VULKAN
+
 #include "commandBuffer.h"
 
 #include "queues/queues.h"
@@ -258,3 +260,4 @@ namespace Dynamik {
 		}
 	}
 }
+#endif // DMK_USE_VULKAN

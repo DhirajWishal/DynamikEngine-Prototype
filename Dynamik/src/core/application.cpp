@@ -74,7 +74,8 @@ namespace Dynamik {
 
 				myRenderingEngine.draw();
 				myEngine.update();
-				onEvent(events);
+				if (events->size())
+					onEvent(events);
 
 				for (auto layer : layerStack)
 					layer->update();

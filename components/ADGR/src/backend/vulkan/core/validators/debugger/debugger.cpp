@@ -8,6 +8,8 @@
 */
 
 #include "adgrafx.h"
+#ifdef DMK_USE_VULKAN
+
 #include "debugger.h"
 #include "backend/vulkan/core/validators/validators.h"
 
@@ -102,3 +104,4 @@ namespace Dynamik {
 		}
 	}
 }
+#endif // DMK_USE_VULKAN

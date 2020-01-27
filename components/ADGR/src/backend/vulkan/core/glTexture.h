@@ -2,6 +2,7 @@
 
 #ifndef _DYNAMIK_ADGR_VULKAN_GL_TEXTURE_H
 #define _DYNAMIK_ADGR_VULKAN_GL_TEXTURE_H
+#ifdef DMK_USE_VULKAN
 
 #include <string>
 
@@ -30,5 +31,7 @@ namespace Dynamik {
 		}
 	}
 }
+
+#endif // DMK_USE_VULKAN
 
 #endif

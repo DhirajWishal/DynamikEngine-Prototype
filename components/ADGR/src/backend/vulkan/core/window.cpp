@@ -1,4 +1,5 @@
 ﻿#include "adgrafx.h"
+#ifdef DMK_USE_VULKAN
 #include "window.h"
 
 #include "keyEvent.h"
@@ -102,7 +103,7 @@ namespace Dynamik {
 			void windowManager::onwindowCloseEvent(GLFWwindow* window) {
 			}
 
-			bool windowManager::createwindowSurface(ADGRVulkanDataContainer* container) {
+			bool windowManager::createWindowSurface(ADGRVulkanDataContainer* container) {
 				if (glfwCreateWindowSurface(container->instance, container->window, nullptr, &container->surface) != VK_SUCCESS) {
 					DMK_CORE_FATAL("Failed to create window surface!");
 					return false;
@@ -128,7 +129,7 @@ namespace Dynamik {
 				return glfwWindowShouldClose(container->window);
 			}
 
-			void windowManager::onwindowResizeEvent(ADGRVulkanDataContainer* container) {
+			void windowManager::onWindowResizeEvent(ADGRVulkanDataContainer* container) {
 				int width = 0, height = 0;
 				while (width == 0 || height == 0) {
 					glfwGetFramebufferSize(container->window, &width, &height);
@@ -136,7 +137,7 @@ namespace Dynamik {
 				}
 			}
 
-			void windowManager::setwindowIcon(ADGRVulkanDataContainer* container, std::vector<std::string> paths) {
+			void windowManager::setWindowIcon(ADGRVulkanDataContainer* container, std::vector<std::string> paths) {
 				uint32_t _imageCount = paths.size();
 				std::vector<GLFWimage> icons;
 				std::vector<resource::TextureData> texDatas;
@@ -196,3 +197,4 @@ namespace Dynamik {
 		}
 	}
 }
+#endif // DMK_USE_VULKAN

@@ -11,6 +11,7 @@
 
 #ifndef _DYNAMIK_ADGR_VULKAN_EXTENSIONS_H
 #define _DYNAMIK_ADGR_VULKAN_EXTENSIONS_H
+#if defined(DMK_USE_VULKAN)
 
 #include "CentralDataHub.h"
 
@@ -22,4 +23,5 @@ namespace Dynamik {
 	}
 }
 
+#endif 
 #endif // !_DYNAMIK_ADGR_VULKAN_EXTENSIONS_H

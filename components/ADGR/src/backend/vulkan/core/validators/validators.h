@@ -11,6 +11,7 @@
 
 #ifndef _DYNAMIK_ADGR_VULKAN_VALIDATORS_H
 #define _DYNAMIK_ADGR_VULKAN_VALIDATORS_H
+#ifdef DMK_USE_VULKAN
 
 #include "debugger/debugger.h"
 #include "CentralDataHub.h"
@@ -40,5 +41,7 @@ namespace Dynamik {
 		}
 	}
 }
+
+#endif // DMK_USE_VULKAN
 
 #endif	// !_DYNAMIK_ADGR_VULKAN_VALIDATORS_H

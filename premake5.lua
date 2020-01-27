@@ -31,6 +31,7 @@ IncludeDir["assimp"] = "$(SolutionDir)/libs/assimp"
 IncludeLib = {}
 --Include the GLFW library path here
 IncludeLib["GLFW"] = "$(SolutionDir)libs/GLFW/lib-vc2019"
+IncludeLib["GLEW"] = "$(SolutionDir)libs/GLEW/glew-2.1.0/lib/Release/x64"
 --Include the Vulkan SDK path here
 IncludeLib["Vulkan"] = "$(SolutionDir)libs/Vulkan/lib"
 IncludeLib["boostD"] = "E:/Programming/Modules and Runtime/boost_1_70_0/bin/libs/iostreams/build/msvc-14.2/debug/address-model-64/link-static/threading-multi"

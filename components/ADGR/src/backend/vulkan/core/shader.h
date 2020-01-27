@@ -2,6 +2,7 @@
 
 #ifndef _DYNAMIK_ADGR_VULKAN_SHADER_H
 #define _DYNAMIK_ADGR_VULKAN_SHADER_H
+#ifdef DMK_USE_VULKAN
 
 #include "backend/vulkan/core/data structures/vulkan.h"
 
@@ -22,11 +23,11 @@ namespace Dynamik {
 
 				void init(ADGRVulkanDataContainer* container, ADGRVulkanShaderDataContainer* shaderDataContainer);
 
-				void loadShader(DMK_ShaderCode shaderCode, ShaderType type) ;
-				VkShaderModule createShaderModule(VkDevice device, DMK_ShaderCode& code) ;
+				void loadShader(DMK_ShaderCode shaderCode, ShaderType type);
+				VkShaderModule createShaderModule(VkDevice device, DMK_ShaderCode& code);
 				void deleteShaders(ADGRVulkanDataContainer& container, ADGRVulkanPipelineDataContainer& pipelineContainer);
 
-				void compileShaders(std::string path, bool activate) ;
+				void compileShaders(std::string path, bool activate);
 
 			private:
 				std::string command = "";
@@ -35,5 +36,7 @@ namespace Dynamik {
 		}
 	}
 }
+
+#endif // DMK_USE_VULKAN
 
 #endif // !_DYNAMIK_ADGR_VULKAN_SHADER_H

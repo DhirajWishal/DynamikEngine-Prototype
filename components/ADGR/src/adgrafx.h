@@ -96,6 +96,8 @@ using namespace Microsoft::WRL;
 #include <Helpers.h>
 
 #elif defined(DMK_USE_OPENGL)
+#include <GLEW/glew-2.1.0/include/GL/glew.h>
+#include <GLFW/glfw3.h>
 
 #endif
 

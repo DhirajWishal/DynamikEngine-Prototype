@@ -13,6 +13,9 @@
     <Filter Include="src\backend">
       <UniqueIdentifier>{0427456E-70DC-BD63-F9D0-B73A6585B467}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\backend\base">
+      <UniqueIdentifier>{2E127427-1A0B-9379-433D-78FE2F957285}</UniqueIdentifier>
+    </Filter>
     <Filter Include="src\backend\directx12">
       <UniqueIdentifier>{09066B5D-7572-2658-3E66-BEB5AA9148C0}</UniqueIdentifier>
     </Filter>
@@ -21,6 +24,9 @@
     </Filter>
     <Filter Include="src\backend\opengl\core">
       <UniqueIdentifier>{905BBCBB-FC92-0453-059D-687671532B4C}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\backend\opengl\core\data structures">
+      <UniqueIdentifier>{BD5FB255-29EF-7340-32EB-54589EF9AE4C}</UniqueIdentifier>
     </Filter>
     <Filter Include="src\backend\vulkan">
       <UniqueIdentifier>{24BCCE04-10A0-8F5A-7900-8AAD65037ADC}</UniqueIdentifier>
@@ -69,6 +75,9 @@
     <ClInclude Include="src\adgrafx.h">
       <Filter>src</Filter>
     </ClInclude>
+    <ClInclude Include="src\backend\base\RendererBackendBase.h">
+      <Filter>src\backend\base</Filter>
+    </ClInclude>
     <ClInclude Include="src\backend\defines.h">
       <Filter>src\backend</Filter>
     </ClInclude>
@@ -77,6 +86,21 @@
     </ClInclude>
     <ClInclude Include="src\backend\interface.h">
       <Filter>src\backend</Filter>
+    </ClInclude>
+    <ClInclude Include="src\backend\opengl\core\data structures\opengl.h">
+      <Filter>src\backend\opengl\core\data structures</Filter>
+    </ClInclude>
+    <ClInclude Include="src\backend\opengl\core\openglFormat.h">
+      <Filter>src\backend\opengl\core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\backend\opengl\core\shader.h">
+      <Filter>src\backend\opengl\core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\backend\opengl\core\texture.h">
+      <Filter>src\backend\opengl\core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\backend\opengl\core\vertexAndIndexBuffer.h">
+      <Filter>src\backend\opengl\core</Filter>
     </ClInclude>
     <ClInclude Include="src\backend\opengl\core\window.h">
       <Filter>src\backend\opengl\core</Filter>
@@ -100,9 +124,6 @@
       <Filter>src\backend\vulkan\core\data structures</Filter>
     </ClInclude>
     <ClInclude Include="src\backend\vulkan\core\data structures\Uniform.h">
-      <Filter>src\backend\vulkan\core\data structures</Filter>
-    </ClInclude>
-    <ClInclude Include="src\backend\vulkan\core\data structures\mesh.h">
       <Filter>src\backend\vulkan\core\data structures</Filter>
     </ClInclude>
     <ClInclude Include="src\backend\vulkan\core\data structures\vulkan.h">
@@ -186,8 +207,6 @@
     <ClInclude Include="src\rendererFormat.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="src\backend\opengl\core\data structures\opengl.h" />
-    <ClInclude Include="src\backend\base\RendererBackendBase.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Layers\layer.cpp">
@@ -210,6 +229,15 @@
     </ClCompile>
     <ClCompile Include="src\backend\directx12\directx12Renderer.cpp">
       <Filter>src\backend\directx12</Filter>
+    </ClCompile>
+    <ClCompile Include="src\backend\opengl\core\shader.cpp">
+      <Filter>src\backend\opengl\core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\backend\opengl\core\texture.cpp">
+      <Filter>src\backend\opengl\core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\backend\opengl\core\vertexAndIndexBuffer.cpp">
+      <Filter>src\backend\opengl\core</Filter>
     </ClCompile>
     <ClCompile Include="src\backend\opengl\core\window.cpp">
       <Filter>src\backend\opengl\core</Filter>

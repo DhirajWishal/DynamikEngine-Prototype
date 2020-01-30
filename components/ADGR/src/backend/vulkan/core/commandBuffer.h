@@ -13,14 +13,6 @@
 namespace Dynamik {
 	namespace ADGR {
 		namespace core {
-			struct DMKBindCommandBufferInfo {
-				std::vector<VkFramebuffer> frameBuffers = {};
-
-				std::vector<vulkanFormat>* objectBindDatas = {};
-
-				DMKVulkanSkyboxCommandBufferBindData skybox;
-			};
-
 			class commandBufferManager {
 			public:
 				commandBufferManager() {}
@@ -28,7 +20,7 @@ namespace Dynamik {
 
 				void initCommandPool(ADGRVulkanDataContainer* container);
 
-				void bindCommands(ADGRVulkanDataContainer* container, DMKBindCommandBufferInfo info);
+				void bindCommands(ADGRVulkanDataContainer* container, std::vector<vulkanFormat>* formats);
 
 			private:
 				void drawVertex(VkCommandBuffer buffer, int index, vulkanFormat* format, VkDeviceSize* offsets);

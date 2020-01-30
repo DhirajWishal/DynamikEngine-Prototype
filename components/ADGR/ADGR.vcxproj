@@ -143,6 +143,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\backend\vulkan\vulkanRenderer2D.h" />
     <ClInclude Include="src\Layers\layer.h" />
     <ClInclude Include="src\Layers\layerStack.h" />
     <ClInclude Include="src\Renderer.h" />
@@ -195,6 +196,7 @@
     <ClInclude Include="src\rendererFormat.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\backend\vulkan\vulkanRenderer2D.cpp" />
     <ClCompile Include="src\Layers\layer.cpp" />
     <ClCompile Include="src\Layers\layerStack.cpp" />
     <ClCompile Include="src\Renderer.cpp" />

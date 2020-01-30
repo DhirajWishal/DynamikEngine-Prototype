@@ -140,6 +140,7 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\core\Windows\utils\duiFileManager.h" />
     <ClInclude Include="src\Platform.h" />
     <ClInclude Include="src\core\Windows.h" />
     <ClInclude Include="src\core\Windows\inputs.h" />
@@ -153,6 +154,7 @@
   <ItemGroup>
     <ClCompile Include="src\core\Windows\inputs.cpp" />
     <ClCompile Include="src\core\Windows\utils\daiFileManager.cpp" />
+    <ClCompile Include="src\core\Windows\utils\duiFileManager.cpp" />
     <ClCompile Include="src\core\Windows\utils\loadIcon.cpp" />
     <ClCompile Include="src\core\Windows\utils\modelManager.cpp" />
     <ClCompile Include="src\core\Windows\utils\objectLoader.cpp" />

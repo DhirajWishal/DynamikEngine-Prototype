@@ -10,23 +10,6 @@
 namespace Dynamik {
 	namespace ADGR {
 		namespace core {
-			struct DMKUniformBufferCreateInfo {
-				std::vector<VkBuffer>* buffers = {};
-				std::vector<VkDeviceMemory>* bufferMemories = {};
-			};
-
-			struct DMKDescriptorSetsInitInfo {
-				std::vector<VkBuffer>* uniformBuffers = {};
-				std::vector<VkDescriptorSet>* descriptorSets = {};
-				VkDescriptorPool descriptorPool = VK_NULL_HANDLE;
-
-				VkImageView textureImageView = VK_NULL_HANDLE;
-				VkSampler textureSampler = VK_NULL_HANDLE;
-				VkDescriptorSetLayout* layout = VK_NULL_HANDLE;
-
-				std::vector<int> bindIndex = { 0, 1 };
-			};
-
 			struct DMKUniformBufferUpdateInfo {
 				std::vector<VkDeviceMemory> bufferMemory = {};
 
@@ -53,23 +36,21 @@ namespace Dynamik {
 				bool turnLock = false;
 			};
 
-			struct DMKUniformBufferCreateDescriptorSetLayoutInfo {
-				VkDescriptorSetLayout* layout = {};
-				std::vector<int> bindIndex = { 0, 1, 2 };
-			};
-
 			class uniformBufferManager {
 			public:
 				uniformBufferManager() {}
 				~uniformBufferManager() {}
 
-				void createDescriptorSetLayout(ADGRVulkanDataContainer* container, DMKUniformBufferCreateDescriptorSetLayoutInfo info);
-				void initDescriptorPool(ADGRVulkanDataContainer* container, VkDescriptorPool* descriptorPool);
-				void initDescriptorSets(ADGRVulkanDataContainer* container, DMKDescriptorSetsInitInfo info);
+				void createDescriptorSetLayout(ADGRVulkanDataContainer* container, vulkanFormat* format);
+				void createDescriptorSetLayout(ADGRVulkanDataContainer* container, VkDescriptorSetLayout* descriptorSetLayout);
+				void initDescriptorPool(ADGRVulkanDataContainer* container, vulkanFormat* format);
+				void initDescriptorSets(ADGRVulkanDataContainer* container, vulkanFormat* format);
 
-				void createUniformBuffers(ADGRVulkanDataContainer* container, DMKUniformBufferCreateInfo info);
+				void createUniformBuffers(ADGRVulkanDataContainer* container, vulkanFormat* format);
+				void createUniformBuffers(ADGRVulkanDataContainer* container,
+					std::vector<VkBuffer>* uniformBuffers, std::vector<VkDeviceMemory>* uniformBufferMemories);
 
-				void updateBuffer3D(ADGRVulkanDataContainer* container, std::deque<DMKEventContainer>& eventContainers, vulkanFormat* gameObject, uint32_t currentImage = 0);
+				void updateBuffer3D(ADGRVulkanDataContainer* container, std::deque<DMKEventContainer> eventContainers, vulkanFormat* gameObject, uint32_t currentImage = 0);
 
 				void deleteBuffer(ADGRVulkanDataContainer* container, VkBuffer* buffer);
 			};

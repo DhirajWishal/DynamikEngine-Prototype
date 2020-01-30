@@ -25,77 +25,67 @@ namespace Dynamik {
 		~DebugObject() {}
 
 		DMKUpdateInfo draw(std::deque<DMKEventContainer>& eventContainers) override {
-			{
-				std::vector<std::future<void>> threads;
+			for (int i = 0; i < eventContainers.size(); i++) {
+				DMKEventContainer eventContainer = eventContainers.back();
+				eventContainers.pop_back();
 
-				for (int i = 0; i < eventContainers.size(); i++) {
-					DMKEventContainer eventContainer = eventContainers.back();
-					eventContainers.pop_back();
-
-					if (eventContainer.eventType == DMKEventType::DMK_EVENT_TYPE_KEY_PRESS)
-						threads.push_back(std::async(std::launch::async, [](DMKEventContainer eventContainer, DMKUpdateInfo* myUpdateProperties) {
-						switch (eventContainer.code) {
-						case DMK_KEY_W:
-							myUpdateProperties->frontBack += myUpdateProperties->movementBiasFrontBack;
-							break;
-						case DMK_KEY_A:
-							myUpdateProperties->leftRight -= myUpdateProperties->movementBiasLeftRight;
-							break;
-						case DMK_KEY_S:
-							myUpdateProperties->frontBack -= myUpdateProperties->movementBiasFrontBack;
-							break;
-						case DMK_KEY_D:
-							myUpdateProperties->leftRight += myUpdateProperties->movementBiasLeftRight;
-							break;
-						case DMK_KEY_UP:
-							myUpdateProperties->upDown -= myUpdateProperties->movementBiasUpDown;
-							break;
-						case DMK_KEY_DOWN:
-							myUpdateProperties->upDown += myUpdateProperties->movementBiasUpDown;
-							break;
-						case DMK_KEY_LEFT:
-							myUpdateProperties->rotationZ -= myUpdateProperties->rotationBias;
-							break;
-						case DMK_KEY_RIGHT:
-							myUpdateProperties->rotationZ += myUpdateProperties->rotationBias;
-							break;
-						}
-							}, eventContainer, &myUpdateProperties));
-					else if (eventContainer.eventType == DMKEventType::DMK_EVENT_TYPE_KEY_REPEAT)
-						threads.push_back(std::async(std::launch::async, [](DMKEventContainer eventContainer, DMKUpdateInfo* myUpdateProperties) {
-						switch (eventContainer.code) {
-						case DMK_KEY_W:
-							myUpdateProperties->frontBack += myUpdateProperties->movementBiasFrontBack;
-							break;
-						case DMK_KEY_A:
-							myUpdateProperties->leftRight -= myUpdateProperties->movementBiasLeftRight;
-							break;
-						case DMK_KEY_S:
-							myUpdateProperties->frontBack -= myUpdateProperties->movementBiasFrontBack;
-							break;
-						case DMK_KEY_D:
-							myUpdateProperties->leftRight += myUpdateProperties->movementBiasLeftRight;
-							break;
-						case DMK_KEY_UP:
-							myUpdateProperties->upDown -= myUpdateProperties->movementBiasUpDown;
-							break;
-						case DMK_KEY_DOWN:
-							myUpdateProperties->upDown += myUpdateProperties->movementBiasUpDown;
-							break;
-						case DMK_KEY_LEFT:
-							myUpdateProperties->rotationZ -= myUpdateProperties->rotationBias;
-							break;
-						case DMK_KEY_RIGHT:
-							myUpdateProperties->rotationZ += myUpdateProperties->rotationBias;
-							break;
-						}
-							}, eventContainer, &myUpdateProperties));
-					else if (eventContainer.eventType == DMKEventType::DMK_EVENT_TYPE_MOUSE_MOVED)
-						threads.push_back(std::async(std::launch::async, [](DMKEventContainer eventContainer, DMKUpdateInfo* myUpdateProperties) {
-						myUpdateProperties->rotationX = eventContainer.xAxis;
-						myUpdateProperties->rotationY = eventContainer.yAxis;
-							}, eventContainer, &myUpdateProperties));
-				}
+				if (eventContainer.eventType == DMKEventType::DMK_EVENT_TYPE_KEY_PRESS)
+					switch (eventContainer.code) {
+					case DMK_KEY_W:
+						myUpdateProperties.frontBack += myUpdateProperties.movementBiasFrontBack;
+						break;
+					case DMK_KEY_A:
+						myUpdateProperties.leftRight -= myUpdateProperties.movementBiasLeftRight;
+						break;
+					case DMK_KEY_S:
+						myUpdateProperties.frontBack -= myUpdateProperties.movementBiasFrontBack;
+						break;
+					case DMK_KEY_D:
+						myUpdateProperties.leftRight += myUpdateProperties.movementBiasLeftRight;
+						break;
+					case DMK_KEY_UP:
+						myUpdateProperties.upDown -= myUpdateProperties.movementBiasUpDown;
+						break;
+					case DMK_KEY_DOWN:
+						myUpdateProperties.upDown += myUpdateProperties.movementBiasUpDown;
+						break;
+					case DMK_KEY_LEFT:
+						myUpdateProperties.rotationZ -= myUpdateProperties.rotationBias;
+						break;
+					case DMK_KEY_RIGHT:
+						myUpdateProperties.rotationZ += myUpdateProperties.rotationBias;
+						break;
+					}
+				else if (eventContainer.eventType == DMKEventType::DMK_EVENT_TYPE_KEY_REPEAT)
+					switch (eventContainer.code) {
+					case DMK_KEY_W:
+						myUpdateProperties.frontBack += myUpdateProperties.movementBiasFrontBack;
+						break;
+					case DMK_KEY_A:
+						myUpdateProperties.leftRight -= myUpdateProperties.movementBiasLeftRight;
+						break;
+					case DMK_KEY_S:
+						myUpdateProperties.frontBack -= myUpdateProperties.movementBiasFrontBack;
+						break;
+					case DMK_KEY_D:
+						myUpdateProperties.leftRight += myUpdateProperties.movementBiasLeftRight;
+						break;
+					case DMK_KEY_UP:
+						myUpdateProperties.upDown -= myUpdateProperties.movementBiasUpDown;
+						break;
+					case DMK_KEY_DOWN:
+						myUpdateProperties.upDown += myUpdateProperties.movementBiasUpDown;
+						break;
+					case DMK_KEY_LEFT:
+						myUpdateProperties.rotationZ -= myUpdateProperties.rotationBias;
+						break;
+					case DMK_KEY_RIGHT:
+						myUpdateProperties.rotationZ += myUpdateProperties.rotationBias;
+						break;
+					}
+				else if (eventContainer.eventType == DMKEventType::DMK_EVENT_TYPE_MOUSE_MOVED)
+					myUpdateProperties.rotationX = eventContainer.xAxis;
+				myUpdateProperties.rotationY = eventContainer.yAxis;
 			}
 
 			return myUpdateProperties;
@@ -107,6 +97,21 @@ namespace Dynamik {
 	public:
 		internalFormat(GameObject* object) : InternalFormat(object) {}
 		~internalFormat() {}
+	};
+
+	enum class DMKRendererAPI {
+		DMK_RENDERER_API_VULKAN,
+		DMK_RENDERER_API_DIRECT_X_12,
+		DMK_RENDERER_API_OPENGL,
+
+		DMK_RENDERER_API_UNDEFNED
+	};
+
+	struct DMKEngineSettings {
+		std::string myInstanceName = "Dynamik Engine";
+		std::string myInstanceID = "01";
+
+		DMKRendererAPI myRendererAPI = DMKRendererAPI::DMK_RENDERER_API_VULKAN;
 	};
 
 	class DMK_API Application {

@@ -24,7 +24,7 @@
 
 #include "core/data store/internalFormat.h"
 
-#if defined(DMK_USE_VULKAN)
+#ifdef DMK_USE_VULKAN
 namespace Dynamik {
 	namespace ADGR {
 		using namespace core;
@@ -50,36 +50,35 @@ namespace Dynamik {
 			void setFormats(std::vector<RendererFormat>& rendererFormats) override;
 			void updateFormats(std::vector<RendererFormat>& rendererFormats) override;
 
+		private:
 			void recreateSwapChain();
 			void setVertices(std::vector<Vertex>& vertices) { myVertices = vertices; }
 
 			inline VkDevice getDevice() { return myVulkanDataContainers[vulkanContainerIndex].device; }
-
-			void createVertexBuffer(DMKVulkanRendererCreateVertexBufferInfo info);
-			void createIndexBuffer(DMKVulkanRendererCreateIndexBufferInfo info);
-			void createUniformBuffer(DMKVulkanRendererCreateUniformBufferInfo info);
-			void createDescriptorSets(DMKVulkanRendereCreateDescriptorSetsInfo info);
 
 			/* STAGE BASED INITIALIZATION(STARTUP) */
 			void initManagerFunctions();
 			void initWindow();
 			void initInstance();
 			void initDebugger();
-			void initwindowSurface();
+			void initWindowSurface();
 			void initDevice();
 			void initSwapChain();
-			void initDescriptorSetLayout(vulkanFormat* myVulkanFormat);
-			void initRenderPass();
-			void initPipelines(vulkanFormat* myVulkanFormat);
 			void initCommandPool();
 			void initColorBuffer();
 			void initDepthBuffer();
+			void initRenderPass();
 			void initFrameBuffers();
+			void otherInitFunctions();
+
+			void initDescriptorSetLayout(vulkanFormat* myVulkanFormat);
+			void initPipelines(vulkanFormat* myVulkanFormat);
 			void initSkyboxsAndTextures(vulkanFormat* myVulkanFormat);
 			void initVertexAndIndexBuffers(vulkanFormat* myVulkanFormat);
 			void initUniformBuffers(vulkanFormat* myVulkanFormat);
 			void initDescriptorPoolsAndSets(vulkanFormat* myVulkanFormat);
 			void initCommandBuffers(std::vector<vulkanFormat>* myVulkanFormats);
+
 			void initSemaphoresAndFences();
 
 			void initObjectBasedFunctions(std::vector<vulkanFormat>* myVulkanFormats);
@@ -90,7 +89,6 @@ namespace Dynamik {
 			void initModels(std::vector<DMKObjectData> data);
 			void initCubemap(DMKObjectData* data);
 
-		private:
 			void _addVulkanFormatsToManager(std::vector<RendererFormat>& rendererFormats);
 
 			// renderer core classes
@@ -99,7 +97,7 @@ namespace Dynamik {
 			core::deviceManager myDeviceManager{};
 			core::swapChainManager mySwapChainManager{};
 			core::pipelineManager myPipelineManager{};
-			core::uniformBufferManager uniformBufferManager{};
+			core::uniformBufferManager myUniformBufferManager{};
 			core::commandBufferManager myCommandBufferManager{};
 			core::colorBufferManager myColorBufferManager{};
 			core::depthBufferManager myDepthBufferManager{};
@@ -124,10 +122,13 @@ namespace Dynamik {
 			std::vector<ADGRVulkanDataContainer> myVulkanDataContainers = {};
 			std::vector<vulkanFormat> myVulkanFormats = {};
 
-			std::vector<VkDescriptorSetLayout> myDescriptorSetLayouts = {};
 			std::vector<VkSemaphore> myImageAvailableSemaphores = {};
 			std::vector<VkSemaphore> myRenderFinishedSemaphores = {};
 			std::vector<VkFence> myFencesInFlight = {};
+
+			VkDescriptorSetLayout myTerrainDescriptorSetLayout;
+			std::vector<VkBuffer> myTerrainUniformBuffers;
+			std::vector<VkDeviceMemory> myTerrainUniformBufferMamories;
 		};
 	}
 }

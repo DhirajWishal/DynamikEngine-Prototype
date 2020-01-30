@@ -48,6 +48,7 @@ namespace Dynamik {
 				std::vector<VkDeviceMemory> myTextureImageMemories = {};
 				std::vector<VkSampler> myTextureImageSamplers = {};
 				std::vector<VkImageView> myTextureImageViews = {};
+				DMKFormat myTextureFormat = DMKFormat::DMK_FORMAT_R8G8B8A8_UNORM;
 
 				// Vertex buffers
 				std::vector<VkBuffer> myVertexBuffers = {};

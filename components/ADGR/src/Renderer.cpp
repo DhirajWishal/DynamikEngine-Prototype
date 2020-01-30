@@ -29,6 +29,9 @@
 #elif defined (DMK_USE_OPENGL)
 #include "backend/opengl/openglRenderer.h"
 
+#else
+#error Renderer Backend Undefined!
+
 #endif
 
 namespace Dynamik {
@@ -136,10 +139,6 @@ namespace Dynamik {
 		}
 
 		void Renderer::idleCall() {
-#if defined(DMK_USE_VULKAN)
-			//vkDeviceWaitIdle(rendererCore.getDevice());
-
-#endif
 		}
 
 		void Renderer::bindKeys() {

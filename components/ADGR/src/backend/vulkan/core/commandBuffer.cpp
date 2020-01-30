@@ -20,7 +20,7 @@ namespace Dynamik {
 					DMK_CORE_FATAL("failed to create command pool!");
 			}
 
-			void commandBufferManager::bindCommands(ADGRVulkanDataContainer* container, DMKBindCommandBufferInfo info) {
+			void commandBufferManager::bindCommands(ADGRVulkanDataContainer* container, std::vector<vulkanFormat>* formats) {
 				container->commandBufferContainer.buffers.resize(container->frameBufferContainer.buffers.size());
 
 				VkCommandBufferAllocateInfo allocInfo = {};
@@ -73,7 +73,7 @@ namespace Dynamik {
 					// w component = light radius scale
 
 					/* DRAW COMMANDS */
-					for (int _itr = 0; _itr < info.objectBindDatas->size(); _itr++) {
+					for (int _itr = 0; _itr < formats->size(); _itr++) {
 #define r 7.5f
 #define sin_t sin(glm::radians(1.5f * 360))
 #define cos_t cos(glm::radians(1.5f * 360))
@@ -88,59 +88,59 @@ namespace Dynamik {
 #undef y
 #undef sin_t
 #undef cos_t
-						//vkCmdPushConstants(container->commandBufferContainer.buffers[i], info.objectBindDatas->at(_itr).myPipelineLayout, VK_SHADER_STAGE_VERTEX_BIT, 0, sizeof(container->pushConstants), container->pushConstants.data());
+						//vkCmdPushConstants(container->commandBufferContainer.buffers[i], formats->at(_itr).myPipelineLayout, VK_SHADER_STAGE_VERTEX_BIT, 0, sizeof(container->pushConstants), container->pushConstants.data());
 
 						// Render type selection
-						if (info.objectBindDatas->at(_itr).myRendererFormat->myRenderTechnology == DMK_ADGR_RENDERING_TECHNOLOGY::DMK_ADGR_RENDER_VERTEX) 		// Render as individual vertexes
-							drawVertex(container->commandBufferContainer.buffers[i], i, &info.objectBindDatas->at(_itr), offsets);
+						if (formats->at(_itr).myRendererFormat->myRenderTechnology == DMK_ADGR_RENDERING_TECHNOLOGY::DMK_ADGR_RENDER_VERTEX) 		// Render as individual vertexes
+							drawVertex(container->commandBufferContainer.buffers[i], i, &formats->at(_itr), offsets);
 
-						else if (info.objectBindDatas->at(_itr).myRendererFormat->myRenderTechnology == DMK_ADGR_RENDERING_TECHNOLOGY::DMK_ADGR_RENDER_INDEXED) 		// Render as individual indexes
-							drawIndexed(container->commandBufferContainer.buffers[i], i, &info.objectBindDatas->at(_itr), offsets);
+						else if (formats->at(_itr).myRendererFormat->myRenderTechnology == DMK_ADGR_RENDERING_TECHNOLOGY::DMK_ADGR_RENDER_INDEXED) 		// Render as individual indexes
+							drawIndexed(container->commandBufferContainer.buffers[i], i, &formats->at(_itr), offsets);
 
-						else if (info.objectBindDatas->at(_itr).myRendererFormat->myRenderTechnology == DMK_ADGR_RENDERING_TECHNOLOGY::DMK_ADGR_RENDER_INDIRECT) {
+						else if (formats->at(_itr).myRendererFormat->myRenderTechnology == DMK_ADGR_RENDERING_TECHNOLOGY::DMK_ADGR_RENDER_INDIRECT) {
 						}
-						else if (info.objectBindDatas->at(_itr).myRendererFormat->myRenderTechnology == DMK_ADGR_RENDERING_TECHNOLOGY::DMK_ADGR_RENDER_INDEXED_INDIRECT) {
+						else if (formats->at(_itr).myRendererFormat->myRenderTechnology == DMK_ADGR_RENDERING_TECHNOLOGY::DMK_ADGR_RENDER_INDEXED_INDIRECT) {
 						}
-						else if (info.objectBindDatas->at(_itr).myRendererFormat->myRenderTechnology == DMK_ADGR_RENDERING_TECHNOLOGY::DMK_ADGR_RENDER_SKYBOX_VERTEX) {		// Render as individual vertexes
-							for (int x = 0; x < info.objectBindDatas->at(_itr).myVertexBuffers.size(); x++) {
+						else if (formats->at(_itr).myRendererFormat->myRenderTechnology == DMK_ADGR_RENDERING_TECHNOLOGY::DMK_ADGR_RENDER_SKYBOX_VERTEX) {		// Render as individual vertexes
+							for (int x = 0; x < formats->at(_itr).myVertexBuffers.size(); x++) {
 								// bind pipeline
-								vkCmdBindPipeline(container->commandBufferContainer.buffers[i], VK_PIPELINE_BIND_POINT_GRAPHICS, info.objectBindDatas->at(_itr).myPipeline);
+								vkCmdBindPipeline(container->commandBufferContainer.buffers[i], VK_PIPELINE_BIND_POINT_GRAPHICS, formats->at(_itr).myPipeline);
 
 								// vertex buffer bind
-								vkCmdBindVertexBuffers(container->commandBufferContainer.buffers[i], 0, 1, &info.objectBindDatas->at(_itr).myVertexBuffers[x], offsets);
+								vkCmdBindVertexBuffers(container->commandBufferContainer.buffers[i], 0, 1, &formats->at(_itr).myVertexBuffers[x], offsets);
 
 								// binding descriptor set(s)
-								if (info.objectBindDatas->at(_itr).myDescriptorSets.size() > 0)
+								if (formats->at(_itr).myDescriptorSets.size() > 0)
 									vkCmdBindDescriptorSets(container->commandBufferContainer.buffers[i], VK_PIPELINE_BIND_POINT_GRAPHICS,
-										info.objectBindDatas->at(_itr).myPipelineLayout, 0, 1, &info.objectBindDatas->at(_itr).myDescriptorSets[x][i], 0, nullptr);
+										formats->at(_itr).myPipelineLayout, 0, 1, &formats->at(_itr).myDescriptorSets[x][i], 0, nullptr);
 
 								// draw command
-								vkCmdDraw(container->commandBufferContainer.buffers[i], info.objectBindDatas->at(_itr).myRendererFormat->myInternalFormat->myIndexCounts[0], 1, 0, 1);
+								vkCmdDraw(container->commandBufferContainer.buffers[i], formats->at(_itr).myRendererFormat->myInternalFormat->myIndexCounts[0], 1, 0, 1);
 							}
 						}
-						else if (info.objectBindDatas->at(_itr).myRendererFormat->myRenderTechnology == DMK_ADGR_RENDERING_TECHNOLOGY::DMK_ADGR_RENDER_SKYBOX_INDEXED) {		// Render as individual indexes
-							for (int x = 0; x < info.objectBindDatas->at(_itr).myVertexBuffers.size(); x++) {
+						else if (formats->at(_itr).myRendererFormat->myRenderTechnology == DMK_ADGR_RENDERING_TECHNOLOGY::DMK_ADGR_RENDER_SKYBOX_INDEXED) {		// Render as individual indexes
+							for (int x = 0; x < formats->at(_itr).myVertexBuffers.size(); x++) {
 								// bind pipeline
-								vkCmdBindPipeline(container->commandBufferContainer.buffers[i], VK_PIPELINE_BIND_POINT_GRAPHICS, info.objectBindDatas->at(_itr).myPipeline);
+								vkCmdBindPipeline(container->commandBufferContainer.buffers[i], VK_PIPELINE_BIND_POINT_GRAPHICS, formats->at(_itr).myPipeline);
 
 								// vertex buffer bind
-								vkCmdBindVertexBuffers(container->commandBufferContainer.buffers[i], 0, 1, &info.objectBindDatas->at(_itr).myVertexBuffers[x], offsets);
+								vkCmdBindVertexBuffers(container->commandBufferContainer.buffers[i], 0, 1, &formats->at(_itr).myVertexBuffers[x], offsets);
 
 								// binding descriptor set(s)
-								if (info.objectBindDatas->at(_itr).myDescriptorSets.size() > 0)
+								if (formats->at(_itr).myDescriptorSets.size() > 0)
 									vkCmdBindDescriptorSets(container->commandBufferContainer.buffers[i], VK_PIPELINE_BIND_POINT_GRAPHICS,
-										info.objectBindDatas->at(_itr).myPipelineLayout, 0, 1, &info.objectBindDatas->at(_itr).myDescriptorSets[x][i], 0, nullptr);
+										formats->at(_itr).myPipelineLayout, 0, 1, &formats->at(_itr).myDescriptorSets[x][i], 0, nullptr);
 
 								// index buffer bind
-								vkCmdBindIndexBuffer(container->commandBufferContainer.buffers[i], info.objectBindDatas->at(_itr).myIndexBuffers[0], 0, VK_INDEX_TYPE_UINT32);
+								vkCmdBindIndexBuffer(container->commandBufferContainer.buffers[i], formats->at(_itr).myIndexBuffers[0], 0, VK_INDEX_TYPE_UINT32);
 
 								// draw command
-								vkCmdDrawIndexed(container->commandBufferContainer.buffers[i], info.objectBindDatas->at(_itr).myRendererFormat->myInternalFormat->myIndexCounts[0], 1, 0, 0, 0);
+								vkCmdDrawIndexed(container->commandBufferContainer.buffers[i], formats->at(_itr).myRendererFormat->myInternalFormat->myIndexCounts[0], 1, 0, 0, 0);
 							}
 						}
-						else if (info.objectBindDatas->at(_itr).myRendererFormat->myRenderTechnology == DMK_ADGR_RENDERING_TECHNOLOGY::DMK_ADGR_RENDER_SKYBOX_INDIRECT) {
+						else if (formats->at(_itr).myRendererFormat->myRenderTechnology == DMK_ADGR_RENDERING_TECHNOLOGY::DMK_ADGR_RENDER_SKYBOX_INDIRECT) {
 						}
-						else if (info.objectBindDatas->at(_itr).myRendererFormat->myRenderTechnology == DMK_ADGR_RENDERING_TECHNOLOGY::DMK_ADGR_RENDER_SKYBOX_INDEXED_INDIRECT) {
+						else if (formats->at(_itr).myRendererFormat->myRenderTechnology == DMK_ADGR_RENDERING_TECHNOLOGY::DMK_ADGR_RENDER_SKYBOX_INDEXED_INDIRECT) {
 						}
 						else
 							DMK_CORE_FATAL("Invalid rendering type!");

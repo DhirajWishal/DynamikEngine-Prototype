@@ -119,7 +119,7 @@ namespace Dynamik {
 					bool canFinish = false;
 					GameObjectProperties props;
 					props.name = "Debug Object";
-					props.location = "E:/Projects/Dynamik Engine/Dynamik/core assets/assets/moon";
+					props.location = "E:/Projects/Dynamik Engine/Game Repository/assets/assets/moon";
 					props.transformProperties.location = { 0.0f, 5.0f, 0.0f };
 
 					myObject.myProperties = props;

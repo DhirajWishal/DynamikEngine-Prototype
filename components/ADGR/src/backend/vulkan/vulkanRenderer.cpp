@@ -67,7 +67,7 @@ namespace Dynamik {
 			INC_PROGRESS;
 
 			// create window surface
-			initwindowSurface();
+			initWindowSurface();
 			INC_PROGRESS;
 
 			// init Vulkan device
@@ -97,6 +97,9 @@ namespace Dynamik {
 			// TODO: manually initialization
 			initFrameBuffers();
 			INC_PROGRESS;
+
+			// other initialization functions
+			otherInitFunctions();
 		}
 
 		// object loading and initialization
@@ -147,20 +150,11 @@ namespace Dynamik {
 				}
 
 				// clear index buffer
-				for (int i = 0; i < _localVulkanFormat->myIndexBuffers.size(); i++) {
-					DMKindexBufferDeleteInfo deleteIndInfo = {};
-					deleteIndInfo.buffer = _localVulkanFormat->myIndexBuffers[i];
-					deleteIndInfo.bufferMemory = _localVulkanFormat->myIndexBufferMemories[i];
-					myIndexBufferManager.deleteBuffer(&myVulkanDataContainers[vulkanContainerIndex], deleteIndInfo);
-				}
+				if (_localVulkanFormat->myRendererFormat->myRenderTechnology == DMK_ADGR_RENDERING_TECHNOLOGY::DMK_ADGR_RENDER_INDEXED)
+					myIndexBufferManager.deleteBuffer(&myVulkanDataContainers[vulkanContainerIndex], _localVulkanFormat);
 
 				// clear vertex buffer
-				for (int i = 0; i < _localVulkanFormat->myVertexBuffers.size(); i++) {
-					DMKVertexBufferDeleteInfo deleteVertInfo = {};
-					deleteVertInfo.buffer = _localVulkanFormat->myVertexBuffers[i];
-					deleteVertInfo.bufferMemory = _localVulkanFormat->myVertexBufferMemories[i];
-					myVertexBufferManager.deleteBuffer(&myVulkanDataContainers[vulkanContainerIndex], deleteVertInfo);
-				}
+				myVertexBufferManager.deleteBuffer(&myVulkanDataContainers[vulkanContainerIndex], _localVulkanFormat);
 
 				// destroy descriptorSetLayout
 				vkDestroyDescriptorSetLayout(myVulkanDataContainers[vulkanContainerIndex].device,
@@ -224,12 +218,8 @@ namespace Dynamik {
 			// draw call
 			// uniform buffer object update
 			for (int itr = 0; itr < myFormatsCount; itr++)
-				myThreads.push_back(std::async(std::launch::async, [](vulkanRenderer* renderer, vulkanFormat* format) {
-				renderer->uniformBufferManager.updateBuffer3D(&renderer->myVulkanDataContainers[renderer->vulkanContainerIndex],
-					renderer->myEventContainers, format, renderer->imageIndex);
-					}, this,
-					&myVulkanFormats[itr]));
-			myThreads.clear();
+				myUniformBufferManager.updateBuffer3D(&myVulkanDataContainers[vulkanContainerIndex],
+					myEventContainers, &myVulkanFormats[itr], imageIndex);
 
 			// submit info
 			VkSubmitInfo submitInfo = {};
@@ -358,45 +348,6 @@ namespace Dynamik {
 			initObjectBasedFunctions(&myVulkanFormats);
 		}
 
-		// create vertex buffer
-		void vulkanRenderer::createVertexBuffer(DMKVulkanRendererCreateVertexBufferInfo info) {
-			DMKVertexBufferCreateInfo vertexBufferInfo;
-			vertexBufferInfo.buffer = info.buffer;
-			vertexBufferInfo.bufferMemory = info.bufferMemory;
-			vertexBufferInfo.vertices = info.vertexBufferObject;
-			myVertexBufferManager.createVertexBuffer(&myVulkanDataContainers[vulkanContainerIndex], vertexBufferInfo);
-		}
-
-		// create index buffer
-		void vulkanRenderer::createIndexBuffer(DMKVulkanRendererCreateIndexBufferInfo info) {
-			DMKIndexBufferCreateInfo indexBufferInfo;
-			indexBufferInfo.buffer = info.buffer;
-			indexBufferInfo.buffereMemory = info.bufferMemory;
-			indexBufferInfo.indices = *info.indexBufferObject;
-			myIndexBufferManager.createIndexBuffer(&myVulkanDataContainers[vulkanContainerIndex], indexBufferInfo);
-		}
-
-		// create uniform buffer
-		void vulkanRenderer::createUniformBuffer(DMKVulkanRendererCreateUniformBufferInfo info) {
-			DMKUniformBufferCreateInfo unibuffinfo;
-			unibuffinfo.buffers = info.buffer;
-			unibuffinfo.bufferMemories = info.bufferMemory;
-			uniformBufferManager.createUniformBuffers(&myVulkanDataContainers[vulkanContainerIndex], unibuffinfo);
-		}
-
-		// init descriptor sets
-		void vulkanRenderer::createDescriptorSets(DMKVulkanRendereCreateDescriptorSetsInfo info) {
-			DMKDescriptorSetsInitInfo descripInfo;
-			descripInfo.uniformBuffers = info.uniformBuffers;
-			descripInfo.textureImageView = info.textureImageView;
-			descripInfo.textureSampler = info.textureSampler;
-			descripInfo.descriptorSets = info.descriptorSets;
-			descripInfo.layout = info.layout;
-			descripInfo.descriptorPool = info.descriptorPool;
-			descripInfo.bindIndex = { (int)info.bindIndexes[0], (int)info.bindIndexes[1] };
-			uniformBufferManager.initDescriptorSets(&myVulkanDataContainers[vulkanContainerIndex], descripInfo);
-		}
-
 		// initialize models
 		void vulkanRenderer::initModels(std::vector<DMKObjectData> data) {
 			{
@@ -416,7 +367,6 @@ namespace Dynamik {
 				vertBuffInfo.vertexBufferObject = data[i].vertexBufferObject;
 				vertBuffInfo.buffer = &data[i].vertexBuffers->at(0);
 				vertBuffInfo.bufferMemory = &data[i].vertexBufferMemories->at(0);
-				createVertexBuffer(vertBuffInfo);
 
 				*data[i].vertexCount = (uint32_t)data[i].vertexBufferObject->size();
 
@@ -425,7 +375,6 @@ namespace Dynamik {
 				idxBuffInfo.indexBufferObject = data[i].indexBufferObject;
 				idxBuffInfo.buffer = data[i].indexBuffer;
 				idxBuffInfo.bufferMemory = data[i].indexBufferMemory;
-				createIndexBuffer(idxBuffInfo);
 
 				*data[i].indexCount = (uint32_t)data[i].indexBufferObject->size();
 
@@ -501,7 +450,7 @@ namespace Dynamik {
 				vertBuffInfo.vertexBufferObject = &_localVertexBufferObject;
 				vertBuffInfo.buffer = &data->vertexBuffers->at(itr);
 				vertBuffInfo.bufferMemory = &data->vertexBufferMemories->at(itr);
-				createVertexBuffer(vertBuffInfo);
+				//createVertexBuffer(vertBuffInfo);
 
 				*data->vertexCount = (uint32_t)_localVertexBufferObject.size();
 			}
@@ -509,6 +458,7 @@ namespace Dynamik {
 
 		void vulkanRenderer::_addVulkanFormatsToManager(std::vector<RendererFormat>& rendererFormats) {
 			myFormatsCount = rendererFormats.size();
+			myVulkanFormats.clear();
 			for (int i = 0; i < myFormatsCount; i++)
 				myVulkanFormats.push_back(vulkanFormat(&rendererFormats[i]));
 		}
@@ -517,7 +467,6 @@ namespace Dynamik {
 		// initialize the manager variables locally
 		void vulkanRenderer::initManagerFunctions() {
 			myVulkanDataContainers.resize(vulkanContainerIndex + 1);
-			myDescriptorSetLayouts.resize(1);
 			myImageAvailableSemaphores.resize(MAX_FRAMES_IN_FLIGHT);
 			myRenderFinishedSemaphores.resize(MAX_FRAMES_IN_FLIGHT);
 			myFencesInFlight.resize(MAX_FRAMES_IN_FLIGHT);
@@ -545,7 +494,7 @@ namespace Dynamik {
 		}
 
 		// initialize the window surface
-		void vulkanRenderer::initwindowSurface() {
+		void vulkanRenderer::initWindowSurface() {
 			myWindowManager.createWindowSurface(&myVulkanDataContainers[vulkanContainerIndex]);
 		}
 
@@ -562,10 +511,7 @@ namespace Dynamik {
 
 		// initialize the descriptor set layout
 		void vulkanRenderer::initDescriptorSetLayout(vulkanFormat* myVulkanFormat) {
-			DMKUniformBufferCreateDescriptorSetLayoutInfo layoutInfo;
-			layoutInfo.layout = &myVulkanFormat->myDescriptorSetLayout;
-			layoutInfo.bindIndex = { 0, 1 };
-			uniformBufferManager.createDescriptorSetLayout(&myVulkanDataContainers[vulkanContainerIndex], layoutInfo);
+			myUniformBufferManager.createDescriptorSetLayout(&myVulkanDataContainers[vulkanContainerIndex], myVulkanFormat);
 		}
 
 		void vulkanRenderer::initRenderPass() {
@@ -644,6 +590,12 @@ namespace Dynamik {
 			myFrameBufferManager.init(&myVulkanDataContainers[vulkanContainerIndex]);
 		}
 
+		// other initializing functions
+		void vulkanRenderer::otherInitFunctions() {
+			//myUniformBufferManager.createDescriptorSetLayout(&myVulkanDataContainers[vulkanContainerIndex], &myTerrainDescriptorSetLayout);
+			//myUniformBufferManager.createUniformBuffers(&myVulkanDataContainers[vulkanContainerIndex], &myTerrainUniformBuffers, &myTerrainUniformBufferMamories);
+		}
+
 		// initialize skyboxes and textures
 		void vulkanRenderer::initSkyboxsAndTextures(vulkanFormat* myVulkanFormat) {
 			std::vector<bool> invert = {
@@ -719,68 +671,30 @@ namespace Dynamik {
 			}
 		}
 
+		// initialize vertex and index buffers
 		void vulkanRenderer::initVertexAndIndexBuffers(vulkanFormat* myVulkanFormat) {
-			for (int i = 0; i < myFormatsCount; i++) {
-				myVulkanFormat->myVertexBuffers.resize(1);
-				myVulkanFormat->myVertexBufferMemories.resize(1);
-				myVulkanFormat->myIndexBuffers.resize(1);
-				myVulkanFormat->myIndexBufferMemories.resize(1);
-				//myVulkanFormat->myRendererFormat->myRenderTechnology = DMK_ADGR_RENDERING_TECHNOLOGY::DMK_ADGR_RENDER_VERTEX;
+			myVertexBufferManager.createVertexBuffer(&myVulkanDataContainers[vulkanContainerIndex], myVulkanFormat);
 
-				DMKVulkanRendererCreateVertexBufferInfo vertBuffInfo;
-				vertBuffInfo.vertexBufferObject = &myVulkanFormat->myRendererFormat->myInternalFormat->myVertexBufferObjects[0];
-				vertBuffInfo.buffer = &myVulkanFormat->myVertexBuffers[0];
-				vertBuffInfo.bufferMemory = &myVulkanFormat->myVertexBufferMemories[0];
-				createVertexBuffer(vertBuffInfo);
-
-				if (myVulkanFormat->myRendererFormat->myRenderTechnology == DMK_ADGR_RENDERING_TECHNOLOGY::DMK_ADGR_RENDER_INDEXED) {
-					// create indexBuffer
-					DMKVulkanRendererCreateIndexBufferInfo idxBuffInfo;
-					idxBuffInfo.indexBufferObject = &myVulkanFormat->myRendererFormat->myInternalFormat->myIndexBufferObjects[0];
-					idxBuffInfo.buffer = &myVulkanFormat->myIndexBuffers[0];
-					idxBuffInfo.bufferMemory = &myVulkanFormat->myIndexBufferMemories[0];
-					createIndexBuffer(idxBuffInfo);
-				}
-			}
+			if (myVulkanFormat->myRendererFormat->myRenderTechnology == DMK_ADGR_RENDERING_TECHNOLOGY::DMK_ADGR_RENDER_INDEXED)
+				myIndexBufferManager.createIndexBuffer(&myVulkanDataContainers[vulkanContainerIndex], myVulkanFormat);
 		}
 
 		// initialize uniform buffers
 		void vulkanRenderer::initUniformBuffers(vulkanFormat* myVulkanFormat) {
-			DMKVulkanRendererCreateUniformBufferInfo uBuffInfo;
-			uBuffInfo.buffer = &myVulkanFormat->myUniformBuffers;
-			uBuffInfo.bufferMemory = &myVulkanFormat->myUniformBufferMemories;
-			createUniformBuffer(uBuffInfo);
+			myUniformBufferManager.createUniformBuffers(&myVulkanDataContainers[vulkanContainerIndex], myVulkanFormat);
 		}
 
 		// initialize descriptor pools and sets
 		void vulkanRenderer::initDescriptorPoolsAndSets(vulkanFormat* myVulkanFormat) {
-			int textureImagesSize = myVulkanFormat->myTextureImages.size();
-			myVulkanFormat->myDescriptorSets.resize(textureImagesSize); // wrong method
-			myVulkanFormat->myDescriptorPools.resize(textureImagesSize); // wrong method
+			myUniformBufferManager.initDescriptorPool(&myVulkanDataContainers[vulkanContainerIndex], myVulkanFormat);
 
-			for (int itr = 0; itr < textureImagesSize; itr++) {
-				// init descriptor pool
-				uniformBufferManager.initDescriptorPool(&myVulkanDataContainers[vulkanContainerIndex],
-					&myVulkanFormat->myDescriptorPools[itr]);
-
-				// init descriptor set
-				DMKVulkanRendereCreateDescriptorSetsInfo descInitInfo;
-				descInitInfo.uniformBuffers = &myVulkanFormat->myUniformBuffers;
-				descInitInfo.textureImageView = myVulkanFormat->myTextureImageViews[itr];
-				descInitInfo.textureSampler = myVulkanFormat->myTextureImageSamplers[itr];
-				descInitInfo.descriptorSets = &myVulkanFormat->myDescriptorSets[itr];
-				descInitInfo.layout = &myVulkanFormat->myDescriptorSetLayout;
-				descInitInfo.descriptorPool = myVulkanFormat->myDescriptorPools[itr];
-				descInitInfo.bindIndexes = { 0, 1 };
-				createDescriptorSets(descInitInfo);
-			}
+			// init descriptor set
+			myUniformBufferManager.initDescriptorSets(&myVulkanDataContainers[vulkanContainerIndex], myVulkanFormat);
 		}
 
 		// initialize command buffers
 		void vulkanRenderer::initCommandBuffers(std::vector<vulkanFormat>* myVulkanFormats) {
-			DMKBindCommandBufferInfo commandInfo;
-			commandInfo.objectBindDatas = myVulkanFormats;
-			myCommandBufferManager.bindCommands(&myVulkanDataContainers[vulkanContainerIndex], commandInfo);
+			myCommandBufferManager.bindCommands(&myVulkanDataContainers[vulkanContainerIndex], myVulkanFormats);
 		}
 
 		// initialize semaphores and fences
@@ -827,5 +741,4 @@ namespace Dynamik {
 		}
 	}
 }
-
 #endif

@@ -22,10 +22,10 @@ int main(int argc, char** argv) {
 
 		std::vector<std::vector<float>> locations = {
 			{0.0f,	0.0f,	0.0f},
-			{0.0f,	5.0f,	0.0f},
-			{0.0f,	-5.0f,	0.0f},
-			{0.0f,	10.0f,	0.0f},
-			{0.0f,	-10.0f,	0.0f},
+			{-0.5f,	1.5f,	0.0f},
+			{1.7f,	-2.0f,	0.0f},
+			{2.3f,	7.0f,	0.0f},
+			{5.1f,	-6.0f,	0.0f},
 
 			{5.0f,	0.0f,	0.0f},
 			{5.0f,	5.0f,	0.0f},

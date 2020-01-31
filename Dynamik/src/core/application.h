@@ -138,10 +138,8 @@ namespace Dynamik {
 		void initAudioControllers(GameObject* object);
 
 		bool renderableObjectCheck(internalFormat format);
+	
 	private:
-
-		//static void vertexAndIndexLoader(DMKModelLoadInfo& loadInfo);
-
 		bool initSuccessful = false;
 		bool canDeleteController = false;
 
@@ -211,11 +209,11 @@ int main(int argc, char** argv) {																			\
 		};																									\
 																											\
 		std::vector<Dynamik::DMKObjectType> objTypes = {													\
-			Dynamik::DMKObjectType::DMK_OBJECT_TYPE_INTERACTIVE_OBJECT,													\
-			Dynamik::DMKObjectType::DMK_OBJECT_TYPE_INTERACTIVE_OBJECT,													\
-			Dynamik::DMKObjectType::DMK_OBJECT_TYPE_STATIC_OBJECT,															\
-			Dynamik::DMKObjectType::DMK_OBJECT_TYPE_AI,																	\
-			Dynamik::DMKObjectType::DMK_OBJECT_TYPE_STATIC_OBJECT,															\
+			Dynamik::DMKObjectType::DMK_OBJECT_TYPE_INTERACTIVE_OBJECT,										\			\
+			Dynamik::DMKObjectType::DMK_OBJECT_TYPE_INTERACTIVE_OBJECT,										\			\
+			Dynamik::DMKObjectType::DMK_OBJECT_TYPE_STATIC_OBJECT,											\				\
+			Dynamik::DMKObjectType::DMK_OBJECT_TYPE_AI,														\			\
+			Dynamik::DMKObjectType::DMK_OBJECT_TYPE_STATIC_OBJECT,											\				\
 		};																									\
 																											\
 		for (int i = 0; i < paths.size(); i++) {															\

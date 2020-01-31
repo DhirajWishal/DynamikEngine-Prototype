@@ -124,27 +124,27 @@ namespace Dynamik {
 
 					myObject.myProperties = props;
 
-					//std::thread _threadOne([](Application* application, bool* canFinish) {
-					//	while (!(*canFinish)) {
-					//		DMK_CORE_INFO("In Subroutine");
-					//		auto events = application->myRenderingEngine.getEvents();
-					//
-					//		application->myRenderingEngine.draw();
-					//		application->myEngine.update();
-					//		application->onEvent(events);
-					//
-					//		for (auto layer : application->layerStack)
-					//			layer->update();
-					//	}
-					//	}, this, &canFinish);
-					//
+					std::thread _threadOne([](Application* application, bool* canFinish) {
+						while (!(*canFinish)) {
+							DMK_CORE_INFO("In Subroutine");
+							auto events = application->myRenderingEngine.getEvents();
+					
+							application->myRenderingEngine.draw();
+							application->myEngine.update();
+							application->onEvent(events);
+					
+							for (auto layer : application->layerStack)
+								layer->update();
+						}
+						}, this, &canFinish);
+					
 					getObjectPaths(&myObject);
 					initAudioControllers(&myObject);
 					std::vector<InternalFormat*> _localInternalFormatBases;
 					initRendererFormats(&_localInternalFormatBases);
 					myRenderingEngine.loadDataToUpdate(_localInternalFormatBases);
 					canFinish = true;
-					//_threadOne.join();
+					_threadOne.join();
 					myRenderingEngine.updateRendererFormats();
 					internalFormatsBase = _localInternalFormatBases;
 

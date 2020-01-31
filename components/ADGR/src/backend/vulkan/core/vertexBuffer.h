@@ -16,7 +16,7 @@ namespace Dynamik {
 				~vertexBufferManager() {}
 
 				void createVertexBuffer(ADGRVulkanDataContainer* container, vulkanFormat* format);
-				void deleteBuffer(ADGRVulkanDataContainer* container, vulkanFormat* format);
+				void clear(ADGRVulkanDataContainer* container, vulkanFormat* format);
 			};
 		}
 	}

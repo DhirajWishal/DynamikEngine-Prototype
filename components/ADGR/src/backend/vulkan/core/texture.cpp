@@ -209,12 +209,14 @@ namespace Dynamik {
 					DMK_CORE_FATAL("failed to create texture sampler!");
 			}
 
-			void textureManager::deleteTexture(ADGRVulkanDataContainer* container, DMKTextureDeleteInfo info) {
-				vkDestroySampler(container->device, info.sampler, nullptr);
-				vkDestroyImageView(container->device, info.imageView, nullptr);
+			void textureManager::clear(ADGRVulkanDataContainer* container, vulkanFormat* format) {
+				for (uint32_t itr = 0; itr < format->myTextureImages.size(); itr++) {
+					vkDestroySampler(container->device, format->myTextureImageSamplers[itr], nullptr);
+					vkDestroyImageView(container->device, format->myTextureImageViews[itr], nullptr);
 
-				vkDestroyImage(container->device, info.texture, nullptr);
-				vkFreeMemory(container->device, info.textureImageMemory, nullptr);
+					vkDestroyImage(container->device, format->myTextureImages[itr], nullptr);
+					vkFreeMemory(container->device, format->myTextureImageMemories[itr], nullptr);
+				}
 			}
 
 			void textureManager::initTextureImageViews(ADGRVulkanDataContainer* container, DMKInitTextureImageViewsInfo texInfo, DMKCreateImageViewInfo info) {

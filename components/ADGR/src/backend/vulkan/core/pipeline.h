@@ -5,6 +5,7 @@
 #ifdef DMK_USE_VULKAN
 
 #include "backend/vulkan/core/data structures/vulkan.h"
+#include "vulkanFormat.h"
 
 namespace Dynamik {
 	namespace ADGR {
@@ -18,6 +19,9 @@ namespace Dynamik {
 
 				std::pair<VkPipeline, VkPipelineLayout> init(ADGRVulkanDataContainer* container, DMKPipelineInitInfo info);
 				void initRenderPass(ADGRVulkanDataContainer* container);
+
+				void clear(ADGRVulkanDataContainer* container, vulkanFormat* format);
+				void destroyRenderPass(ADGRVulkanDataContainer* container);
 			};
 		}
 	}

@@ -118,7 +118,14 @@ namespace Dynamik {
 
 		// shutdown the renderer
 		void vulkanRenderer::shutDown() {
-			// idle vulkanFormat*
+			shutDownStageOne();
+			shutDownStageTwo();
+			shutDownStageThree();
+		}
+
+		// basic one-time shut down functions
+		void vulkanRenderer::shutDownStageOne() {
+			// idle call
 			rendererWait();
 
 			// clear depth buffer
@@ -127,40 +134,48 @@ namespace Dynamik {
 			// clear color buffer
 			myColorBufferManager.clear(&myVulkanDataContainers[vulkanContainerIndex]);
 
+			// clean frame buffer
+			myFrameBufferManager.clear(&myVulkanDataContainers[vulkanContainerIndex]);
+
+			// clear command buffers
+			myCommandBufferManager.clear(&myVulkanDataContainers[vulkanContainerIndex]);
+
+			// destroy the render pass
+			myPipelineManager.destroyRenderPass(&myVulkanDataContainers[vulkanContainerIndex]);
+
+			// clean one swapchain
+			mySwapChainManager.clear(&myVulkanDataContainers[vulkanContainerIndex]);
+		}
+
+		// per object shut down functions
+		void vulkanRenderer::shutDownStageTwo() {
 			for (int itr = 0; itr < myFormatsCount; itr++) {
 				vulkanFormat* _localVulkanFormat = &myVulkanFormats[itr];
 
-				// clear swapChain, Pipeline, Uniform buffers and descriptorPool
-				DMKSwapChainCleanUpInfo cleanInfo = {};
-				cleanInfo.uniformBuffers = { _localVulkanFormat->myUniformBuffers };
-				cleanInfo.uniformBufferMemories = { _localVulkanFormat->myUniformBufferMemories };
-				cleanInfo.descriptorPools = _localVulkanFormat->myDescriptorPools;
-				cleanInfo.pipelines = { _localVulkanFormat->myPipeline };
-				cleanInfo.pipelineLayouts = { _localVulkanFormat->myPipelineLayout };
-				mySwapChainManager.cleanUp(&myVulkanDataContainers[vulkanContainerIndex], cleanInfo);
+				// clean pipeline and pipeline layout
+				myPipelineManager.clear(&myVulkanDataContainers[vulkanContainerIndex], _localVulkanFormat);
+
+				// clean uniform buffers, uniform buffer memories and descriptor pools
+				myUniformBufferManager.clean(&myVulkanDataContainers[vulkanContainerIndex], _localVulkanFormat);
 
 				// clear textures
-				for (int i = 0; i < _localVulkanFormat->myTextureImages.size(); i++) {
-					DMKTextureDeleteInfo deleteTexInfo = {};
-					deleteTexInfo.texture = _localVulkanFormat->myTextureImages[i];
-					deleteTexInfo.textureImageMemory = _localVulkanFormat->myTextureImageMemories[i];
-					deleteTexInfo.sampler = _localVulkanFormat->myTextureImageSamplers[i];
-					deleteTexInfo.imageView = _localVulkanFormat->myTextureImageViews[i];
-					myTextureManager.deleteTexture(&myVulkanDataContainers[vulkanContainerIndex], deleteTexInfo);
-				}
+				myTextureManager.clear(&myVulkanDataContainers[vulkanContainerIndex], _localVulkanFormat);
 
 				// clear index buffer
 				if (_localVulkanFormat->myRendererFormat->myRenderTechnology == DMK_ADGR_RENDERING_TECHNOLOGY::DMK_ADGR_RENDER_INDEXED)
-					myIndexBufferManager.deleteBuffer(&myVulkanDataContainers[vulkanContainerIndex], _localVulkanFormat);
+					myIndexBufferManager.clear(&myVulkanDataContainers[vulkanContainerIndex], _localVulkanFormat);
 
 				// clear vertex buffer
-				myVertexBufferManager.deleteBuffer(&myVulkanDataContainers[vulkanContainerIndex], _localVulkanFormat);
+				myVertexBufferManager.clear(&myVulkanDataContainers[vulkanContainerIndex], _localVulkanFormat);
 
 				// destroy descriptorSetLayout
 				vkDestroyDescriptorSetLayout(myVulkanDataContainers[vulkanContainerIndex].device,
 					_localVulkanFormat->myDescriptorSetLayout, nullptr);
 			}
+		}
 
+		// final shut down functions
+		void vulkanRenderer::shutDownStageThree() {
 			// delete frames in flight
 			for (size_t i = 0; i < MAX_FRAMES_IN_FLIGHT; i++) {
 				vkDestroySemaphore(myVulkanDataContainers[vulkanContainerIndex].device, myImageAvailableSemaphores[i], nullptr);
@@ -168,19 +183,14 @@ namespace Dynamik {
 				vkDestroyFence(myVulkanDataContainers[vulkanContainerIndex].device, myFencesInFlight[i], nullptr);
 			}
 
-			// delete the command pool
-			vkDestroyCommandPool(myVulkanDataContainers[vulkanContainerIndex].device,
-				myVulkanDataContainers[vulkanContainerIndex].commandBufferContainer.commandPool, nullptr);
-
 			// delete device
 			vkDestroyDevice(myVulkanDataContainers[vulkanContainerIndex].device, nullptr);
 
 			// stop the debugger
 			myDebugger.deleteDebugger();
 
-			// destroy surface
-			vkDestroySurfaceKHR(myVulkanDataContainers[vulkanContainerIndex].instance,
-				myVulkanDataContainers[vulkanContainerIndex].surface, nullptr);
+			// destroy vulkan surface
+			vkDestroySurfaceKHR(myVulkanDataContainers[vulkanContainerIndex].instance, myVulkanDataContainers[vulkanContainerIndex].surface, nullptr);
 
 			// clear instance
 			myInstanceManager.clear(&myVulkanDataContainers[vulkanContainerIndex]);
@@ -279,24 +289,22 @@ namespace Dynamik {
 			// window resize event
 			myWindowManager.onWindowResizeEvent(&myVulkanDataContainers[vulkanContainerIndex]);
 
-			// idle
-			vkDeviceWaitIdle(myVulkanDataContainers[vulkanContainerIndex].device);
+			// first stage shut down
+			shutDownStageOne();
+
+			// initialize the command pool
+			initCommandPool();
 
 			// clear swapChain, Pipeline, Uniform buffers and descriptorPool
 			for (int itr = 0; itr < myFormatsCount; itr++) {
 				vulkanFormat* _localVulkanFormat = &myVulkanFormats[itr];
 
-				DMKSwapChainCleanUpInfo cleanInfo = {};
-				cleanInfo.uniformBuffers = { _localVulkanFormat->myUniformBuffers };
-				cleanInfo.uniformBufferMemories = { _localVulkanFormat->myUniformBufferMemories };
-				cleanInfo.descriptorPools = _localVulkanFormat->myDescriptorPools;
-				cleanInfo.pipelines = { _localVulkanFormat->myPipeline };
-				cleanInfo.pipelineLayouts = { _localVulkanFormat->myPipelineLayout };
-				mySwapChainManager.cleanUp(&myVulkanDataContainers[vulkanContainerIndex], cleanInfo);
-			}
+				// clean pipeline and pipeline layout
+				myPipelineManager.clear(&myVulkanDataContainers[vulkanContainerIndex], _localVulkanFormat);
 
-			// clean frame buffer
-			myFrameBufferManager.clear(&myVulkanDataContainers[vulkanContainerIndex]);
+				// clean uniform buffers, uniform buffer memories and descriptor pools
+				myUniformBufferManager.clean(&myVulkanDataContainers[vulkanContainerIndex], _localVulkanFormat);
+			}
 
 			// init swapchain
 			initSwapChain();
@@ -692,7 +700,7 @@ namespace Dynamik {
 			myUniformBufferManager.initDescriptorSets(&myVulkanDataContainers[vulkanContainerIndex], myVulkanFormat);
 		}
 
-		// initialize command buffers
+		// initialize command pool and buffers
 		void vulkanRenderer::initCommandBuffers(std::vector<vulkanFormat>* myVulkanFormats) {
 			myCommandBufferManager.bindCommands(&myVulkanDataContainers[vulkanContainerIndex], myVulkanFormats);
 		}

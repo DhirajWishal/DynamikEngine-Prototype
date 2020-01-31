@@ -16,7 +16,7 @@ namespace Dynamik {
 				~indexBufferManager() {}
 
 				void createIndexBuffer(ADGRVulkanDataContainer* container, vulkanFormat* format);
-				void deleteBuffer(ADGRVulkanDataContainer* container, vulkanFormat* format);
+				void clear(ADGRVulkanDataContainer* container, vulkanFormat* format);
 			};
 		}
 	}

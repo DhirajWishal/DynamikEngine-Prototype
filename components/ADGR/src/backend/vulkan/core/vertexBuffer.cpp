@@ -57,7 +57,7 @@ namespace Dynamik {
 				}
 			}
 
-			void vertexBufferManager::deleteBuffer(ADGRVulkanDataContainer* container, vulkanFormat* format) {
+			void vertexBufferManager::clear(ADGRVulkanDataContainer* container, vulkanFormat* format) {
 				for (uint32_t itr = 0; itr < format->myVertexBuffers.size(); itr++) {
 					vkDestroyBuffer(container->device, format->myVertexBuffers[itr], nullptr);
 					vkFreeMemory(container->device, format->myVertexBufferMemories[itr], nullptr);

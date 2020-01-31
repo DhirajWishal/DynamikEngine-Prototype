@@ -41,7 +41,11 @@ namespace Dynamik {
 			void initStageThree() override;
 
 			void drawFrame() override;
+
 			void shutDown() override;
+			void shutDownStageOne() override;
+			void shutDownStageTwo() override;
+			void shutDownStageThree() override;
 
 
 			std::deque<DMKEventContainer>* events() override;

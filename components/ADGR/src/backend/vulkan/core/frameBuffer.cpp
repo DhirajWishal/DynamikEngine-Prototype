@@ -54,6 +54,10 @@ namespace Dynamik {
 			}
 
 			void frameBufferManager::clear(ADGRVulkanDataContainer* container) {
+				// destroy frame buffers
+				for (VkFramebuffer buffer : container->frameBufferContainer.buffers)
+					vkDestroyFramebuffer(container->device, buffer, nullptr);
+
 				container->frameBufferContainer.buffers.clear();
 			}
 		}

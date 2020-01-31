@@ -6,6 +6,7 @@
 
 #include "backend/vulkan/core/data structures/vulkan.h"
 #include "backend/vulkan/core/functions/textureFunctions.h"
+#include "vulkanFormat.h"
 
 namespace Dynamik {
 	namespace ADGR {
@@ -59,13 +60,6 @@ namespace Dynamik {
 				VkSamplerAddressMode modeW = VK_SAMPLER_ADDRESS_MODE_REPEAT;
 			};
 
-			struct DMKTextureDeleteInfo {
-				VkSampler sampler = VK_NULL_HANDLE;
-				VkImageView imageView = VK_NULL_HANDLE;
-				VkImage texture = VK_NULL_HANDLE;
-				VkDeviceMemory textureImageMemory = VK_NULL_HANDLE;
-			};
-
 			class textureManager {
 			public:
 				textureManager() {}
@@ -76,7 +70,7 @@ namespace Dynamik {
 				void initTextureImageViews(ADGRVulkanDataContainer* container, DMKInitTextureImageViewsInfo texInfo, DMKCreateImageViewInfo info);
 				void initTextureSampler(ADGRVulkanDataContainer* container, DMKInitTextureSamplerInfo info);
 
-				void deleteTexture(ADGRVulkanDataContainer* container, DMKTextureDeleteInfo info);
+				void clear(ADGRVulkanDataContainer* container, vulkanFormat* format);
 			};
 		}
 	}

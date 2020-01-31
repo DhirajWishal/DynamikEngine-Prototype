@@ -19,8 +19,8 @@ namespace Dynamik {
 				~commandBufferManager() {}
 
 				void initCommandPool(ADGRVulkanDataContainer* container);
-
 				void bindCommands(ADGRVulkanDataContainer* container, std::vector<vulkanFormat>* formats);
+				void clear(ADGRVulkanDataContainer* container);
 
 			private:
 				void drawVertex(VkCommandBuffer buffer, int index, vulkanFormat* format, VkDeviceSize* offsets);

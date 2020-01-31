@@ -52,7 +52,7 @@ namespace Dynamik {
 
 				void updateBuffer3D(ADGRVulkanDataContainer* container, std::deque<DMKEventContainer> eventContainers, vulkanFormat* gameObject, uint32_t currentImage = 0);
 
-				void deleteBuffer(ADGRVulkanDataContainer* container, VkBuffer* buffer);
+				void clean(ADGRVulkanDataContainer* container, vulkanFormat* format);
 			};
 		}
 	}

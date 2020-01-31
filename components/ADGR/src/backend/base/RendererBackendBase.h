@@ -62,7 +62,11 @@ namespace Dynamik {
 			virtual void initStageThree() {}	// initialize stage three
 
 			virtual void drawFrame() {}	// draw call
+
 			virtual void shutDown() {}	// shut down the renderer
+			virtual void shutDownStageOne() {}	// shut down stage one
+			virtual void shutDownStageTwo() {}	// shut down stage two
+			virtual void shutDownStageThree() {}	// shut down stage three
 
 			virtual void setFormats(std::vector<RendererFormat>& formats) {}	// set formats to the renderer
 			virtual void updateFormats(std::vector<RendererFormat>& formats) {}	// update formats in the renderer

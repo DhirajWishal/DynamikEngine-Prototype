@@ -76,6 +76,22 @@ namespace Dynamik {
 				vkUnmapMemory(container->device, format->myUniformBufferMemories[currentImage]);
 			}
 
+			void uniformBufferManager::clean(ADGRVulkanDataContainer* container, vulkanFormat* format) {
+				// destroy uniformNuffers and uniformBufferMemories
+				for (int x = 0; x < format->myUniformBuffers.size(); x++) {
+					vkDestroyBuffer(container->device, format->myUniformBuffers[x], nullptr);
+					vkFreeMemory(container->device, format->myUniformBufferMemories[x], nullptr);
+				}
+
+				// destroy descriptor pools
+				for (VkDescriptorPool descriptorPool : format->myDescriptorPools)
+					vkDestroyDescriptorPool(container->device, descriptorPool, nullptr);
+
+				format->myUniformBuffers.clear();
+				format->myUniformBufferMemories.clear();
+				format->myDescriptorPools.clear();
+			}
+
 			void uniformBufferManager::createDescriptorSetLayout(ADGRVulkanDataContainer* container, vulkanFormat* format) {
 				VkDescriptorSetLayoutBinding uboLayoutBinding = {};
 				uboLayoutBinding.binding = 0; // info.bindIndex;
@@ -223,10 +239,6 @@ namespace Dynamik {
 							descriptorWrites.data(), 0, nullptr);
 					} // make two descriptor layouts for each descriptor set
 				}
-			}
-
-			void uniformBufferManager::deleteBuffer(ADGRVulkanDataContainer* container, VkBuffer* buffer) {
-				vkDestroyBuffer(container->device, *buffer, nullptr);
 			}
 		}
 	}

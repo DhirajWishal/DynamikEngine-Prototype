@@ -263,6 +263,16 @@ namespace Dynamik {
 				if (vkCreateRenderPass(container->device, &renderPassInfo, nullptr, &container->renderPass) != VK_SUCCESS)
 					DMK_CORE_FATAL("failed to create render pass!");
 			}
+
+			void pipelineManager::clear(ADGRVulkanDataContainer* container, vulkanFormat* format) {
+				vkDestroyPipeline(container->device, format->myPipeline, nullptr);
+				vkDestroyPipelineLayout(container->device, format->myPipelineLayout, nullptr);
+			}
+
+			void pipelineManager::destroyRenderPass(ADGRVulkanDataContainer* container) {
+				if (container->renderPass != VK_NULL_HANDLE)
+					vkDestroyRenderPass(container->device, container->renderPass, nullptr);
+			}
 		}
 	}
 }

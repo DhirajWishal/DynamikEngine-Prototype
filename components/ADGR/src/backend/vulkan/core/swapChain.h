@@ -15,14 +15,6 @@ namespace Dynamik {
 				std::vector<VkPresentModeKHR> presentModes = {};
 			};
 
-			struct DMKSwapChainCleanUpInfo {
-				std::vector<std::vector<VkBuffer>> uniformBuffers;
-				std::vector<std::vector<VkDeviceMemory>> uniformBufferMemories;
-				std::vector<VkDescriptorPool> descriptorPools;
-				std::vector<VkPipeline> pipelines;
-				std::vector<VkPipelineLayout> pipelineLayouts;
-			};
-
 			class swapChainManager {
 			public:
 				swapChainManager() {}
@@ -30,8 +22,6 @@ namespace Dynamik {
 
 				void init(ADGRVulkanDataContainer* container);
 				void clear(ADGRVulkanDataContainer* container);
-
-				void cleanUp(ADGRVulkanDataContainer* container, DMKSwapChainCleanUpInfo& info);
 
 				void initImageViews(ADGRVulkanDataContainer* container);
 

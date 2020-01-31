@@ -168,6 +168,15 @@ namespace Dynamik {
 				}
 			}
 
+			// free command buffer and command pool
+			void commandBufferManager::clear(ADGRVulkanDataContainer* container) {
+				vkFreeCommandBuffers(container->device, container->commandBufferContainer.commandPool,
+					static_cast<uint32>(container->commandBufferContainer.buffers.size()),
+					container->commandBufferContainer.buffers.data());
+
+				vkDestroyCommandPool(container->device, container->commandBufferContainer.commandPool, nullptr);
+			}
+
 			// if drawing in vertex
 			void commandBufferManager::drawVertex(VkCommandBuffer buffer, int index, vulkanFormat* format, VkDeviceSize* offsets) {
 				for (int i = 0; i < format->myVertexBuffers.size(); i++) {

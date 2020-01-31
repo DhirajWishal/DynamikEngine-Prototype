@@ -16,7 +16,7 @@ namespace Dynamik {
 			}
 
 			void colorBufferManager::initResources(ADGRVulkanDataContainer* container) {
-				VkFormat colorFormat = container->swapchainContainer.swapchainImageFormat;;
+				VkFormat colorFormat = container->swapchainContainer.swapchainImageFormat;
 
 				DMKCreateImageInfo info;
 				info.device = container->device;

@@ -57,7 +57,7 @@ namespace Dynamik {
 				}
 			}
 
-			void indexBufferManager::deleteBuffer(ADGRVulkanDataContainer* container, vulkanFormat* format) {
+			void indexBufferManager::clear(ADGRVulkanDataContainer* container, vulkanFormat* format) {
 				for (uint32_t itr = 0; itr < format->myIndexBuffers.size(); itr++) {
 					vkDestroyBuffer(container->device, format->myIndexBuffers[itr], nullptr);
 					vkFreeMemory(container->device, format->myIndexBufferMemories[itr], nullptr);

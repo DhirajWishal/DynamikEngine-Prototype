@@ -694,6 +694,7 @@ namespace Dynamik {
 
 		// initialize descriptor pools and sets
 		void vulkanRenderer::initDescriptorPoolsAndSets(vulkanFormat* myVulkanFormat) {
+			// init descriptor pool
 			myUniformBufferManager.initDescriptorPool(&myVulkanDataContainers[vulkanContainerIndex], myVulkanFormat);
 
 			// init descriptor set

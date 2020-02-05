@@ -14,14 +14,14 @@ platformMacro = "$(Platform)"
 projectNameMacro = "$(ProjectName)"
 
 IncludeDir = {}
-IncludeDir["GLFW"] = "$(SolutionDir)libs/GLFW/include"
+IncludeDir["GLFW"] = "$(SolutionDir)libs/glfw-master/include"
 IncludeDir["GLEW"] = "$(SolutionDir)libs/GLEW/include"
 IncludeDir["glm"] = "$(SolutionDir)libs/glm"
 IncludeDir["stb"] = "$(SolutionDir)libs/stb-master"
 IncludeDir["tol"] = "$(SolutionDir)libs/tinyobjloader-master"
 IncludeDir["spdlog"] = "$(SolutionDir)Dynamik/lib/spdlog/include"
 --Include the Vulkan SDK Include path here
-IncludeDir["Vulkan"] = "$(SolutionDir)libs/Vulkan/include"
+IncludeDir["Vulkan"] = "$(SolutionDir)libs/Vulkan-Headers-master/include"
 IncludeDir["boost"] = "E:/Programming/Modules and Runtime/boost_1_70_0"
 IncludeDir["gil"] = "$(SolutionDir)libs/gil/boost"
 IncludeDir["jpeg"] = "$(SolutionDir)libs/gil/jpeg-6b"
@@ -30,10 +30,10 @@ IncludeDir["assimp"] = "$(SolutionDir)/libs/assimp"
 
 IncludeLib = {}
 --Include the GLFW library path here
-IncludeLib["GLFW"] = "$(SolutionDir)libs/GLFW/lib-vc2019"
+IncludeLib["GLFW"] = "$(SolutionDir)libs/GLFW-Lib/lib-vc2019"
 IncludeLib["GLEW"] = "$(SolutionDir)libs/GLEW/glew-2.1.0/lib/Release/x64"
 --Include the Vulkan SDK path here
-IncludeLib["Vulkan"] = "$(SolutionDir)libs/Vulkan/lib"
+IncludeLib["Vulkan"] = "$(SolutionDir)libs/Vulkan-Lib/lib"
 IncludeLib["boostD"] = "E:/Programming/Modules and Runtime/boost_1_70_0/bin/libs/iostreams/build/msvc-14.2/debug/address-model-64/link-static/threading-multi"
 IncludeLib["boostR"] = "E:/Programming/Modules and Runtime/boost_1_70_0/bin/libs/iostreams/build/msvc-14.2/release/address-model-64/link-static/threading-multi"
 

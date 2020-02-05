@@ -1,7 +1,7 @@
 # Dynamik Engine
 ## Engine and Launcher
 
-###### Main Components Of The Engine:
+### Main Components Of The Engine:
 - Advanced Dynamik Graphics Renderer (ADGR)
 - Audio Engine
 - Central Data Hub
@@ -12,7 +12,7 @@
 - Networking
 - Platform Specifics
 
-###### Main Components Of The Launcher:
+### Main Components Of The Launcher:
 - Launcher
 - Studio
 - Marketplace

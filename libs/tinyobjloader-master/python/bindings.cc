@@ -1,6 +1,6 @@
-#include "pybind11/pybind11.h"
-#include "pybind11/stl.h"
-#include "pybind11/numpy.h"
+#include <pybind11/pybind11.h>
+#include <pybind11/stl.h>
+#include <pybind11/numpy.h>
 #include <cstring>
 
 // Use double precision for better python integration.
@@ -38,6 +38,12 @@ PYBIND11_MODULE(tinyobjloader, tobj_module)
   py::class_<attrib_t>(tobj_module, "attrib_t")
     .def(py::init<>())
     .def_readonly("vertices", &attrib_t::vertices)
+    .def("numpy_vertices", [] (attrib_t &instance) {
+        auto ret = py::array_t<real_t>(instance.vertices.size());
+        py::buffer_info buf = ret.request();
+        memcpy(buf.ptr, instance.vertices.data(), instance.vertices.size() * sizeof(real_t));
+        return ret;
+    })
     .def_readonly("normals", &attrib_t::normals)
     .def_readonly("texcoords", &attrib_t::texcoords)
     .def_readonly("colors", &attrib_t::colors)
@@ -115,8 +121,25 @@ PYBIND11_MODULE(tinyobjloader, tobj_module)
 
   py::class_<mesh_t>(tobj_module, "mesh_t")
     .def(py::init<>())
+    .def_readonly("num_face_vertices", &mesh_t::num_face_vertices)
+    .def("numpy_num_face_vertices", [] (mesh_t &instance) {
+        auto ret = py::array_t<unsigned char>(instance.num_face_vertices.size());
+        py::buffer_info buf = ret.request();
+        memcpy(buf.ptr, instance.num_face_vertices.data(), instance.num_face_vertices.size() * sizeof(unsigned char));
+        return ret;
+    })
     .def_readonly("indices", &mesh_t::indices)
     .def("numpy_indices", [] (mesh_t &instance) {
+        // Flatten indexes. index_t is composed of 3 ints(vertex_index, normal_index, texcoord_index).
+        // numpy_indices = [0, -1, -1, 1, -1, -1, ...]
+        // C++11 or later should pack POD struct tightly and does not reorder variables, 
+        // so we can memcpy to copy data.
+        // Still, we check the size of struct and byte offsets of each variable just for sure.
+        static_assert(sizeof(index_t) == 12, "sizeof(index_t) must be 12");
+        static_assert(offsetof(index_t, vertex_index) == 0, "offsetof(index_t, vertex_index) must be 0");
+        static_assert(offsetof(index_t, normal_index) == 4, "offsetof(index_t, normal_index) must be 4");
+        static_assert(offsetof(index_t, texcoord_index) == 8, "offsetof(index_t, texcoord_index) must be 8");
+
         auto ret = py::array_t<int>(instance.indices.size() * 3);
         py::buffer_info buf = ret.request();
         memcpy(buf.ptr, instance.indices.data(), instance.indices.size() * 3 * sizeof(int));

@@ -4,13 +4,13 @@
 
 [![Build Status](https://travis-ci.org/syoyo/tinyobjloader.svg)](https://travis-ci.org/syoyo/tinyobjloader)
 
-[![wercker status](https://app.wercker.com/status/495a3bac400212cdacdeb4dd9397bf4f/m "wercker status")](https://app.wercker.com/project/bykey/495a3bac400212cdacdeb4dd9397bf4f)
+[![AZ Build Status](https://dev.azure.com/syoyo/lte%20oss/_apis/build/status/syoyo.tinyobjloader?branchName=master)](https://dev.azure.com/syoyo/lte%20oss/_build/latest?definitionId=2&branchName=master)
 
-[![Build status](https://ci.appveyor.com/api/projects/status/tlb421q3t2oyobcn/branch/master?svg=true)](https://ci.appveyor.com/project/syoyo/tinyobjloader/branch/master)
+[![AppVeyor Build status](https://ci.appveyor.com/api/projects/status/tlb421q3t2oyobcn/branch/master?svg=true)](https://ci.appveyor.com/project/syoyo/tinyobjloader/branch/master)
 
 [![Coverage Status](https://coveralls.io/repos/github/syoyo/tinyobjloader/badge.svg?branch=master)](https://coveralls.io/github/syoyo/tinyobjloader?branch=master)
 
-[https://github.com/syoyo/tinyobjloader](https://github.com/syoyo/tinyobjloader)
+[![Download](https://api.bintray.com/packages/conan/conan-center/tinyobjloader%3A_/images/download.svg)](https://bintray.com/conan/conan-center/tinyobjloader%3A_/_latestVersion)
 
 Tiny but powerful single file wavefront obj loader written in C++03. No dependency except for C++ STL. It can parse over 10M polygons with moderate memory and time.
 
@@ -30,13 +30,13 @@ Old version is available as `v0.9.x` branch https://github.com/syoyo/tinyobjload
 * 14 Apr, 2019 : Bump version v2.0.0 rc0. New C++ API and python bindings!(1.x API still exists for backward compatibility)
 * 20 Aug, 2016 : Bump version v1.0.0. New data structure and API!
 
-## Requirents
+## Requirements
 
 * C++03 compiler
 
 ### Old version
 
-Previous old version is avaiable in `v0.9.x` branch.
+Previous old version is available in `v0.9.x` branch.
 
 ## Example
 
@@ -64,6 +64,10 @@ TinyObjLoader is successfully used in ...
 * cudabox: CUDA Solid Voxelizer Engine https://github.com/gaspardzoss/cudavox
 * Drake: A planning, control, and analysis toolbox for nonlinear dynamical systems https://github.com/RobotLocomotion/drake
 * VFPR - a Vulkan Forward Plus Renderer : https://github.com/WindyDarian/Vulkan-Forward-Plus-Renderer
+* glslViewer: https://github.com/patriciogonzalezvivo/glslViewer
+* Lighthouse2: https://github.com/jbikker/lighthouse2
+* rayrender(an open source R package for raytracing scenes in created in R): https://github.com/tylermorganwall/rayrender
+* liblava - A modern C++ and easy-to-use framework for the Vulkan API. [MIT]: https://github.com/liblava/liblava
 * Your project here! (Letting us know via github issue is welcome!)
 
 ### Old version(v0.9.x)
@@ -129,11 +133,17 @@ TinyObjLoader is successfully used in ...
 
 TinyObjLoader is licensed under MIT license.
 
-### Third party licences.
+### Third party licenses.
 
 * pybind11 : BSD-style license.
 
 ## Usage
+
+### Installation
+
+One option is to simply copy the header file into your project and to make sure that `TINYOBJLOADER_IMPLEMENTATION` is defined exactly once.
+
+Tinyobjlaoder is also available as a [conan package](https://bintray.com/conan/conan-center/tinyobjloader%3A_/_latestVersion). Conan integrates with many build systems and lets you avoid manual dependency installation. Their [documentation](https://docs.conan.io/en/latest/getting_started.html) is a great starting point.
 
 ### Data format
 

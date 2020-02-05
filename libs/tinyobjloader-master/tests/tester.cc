@@ -1,15 +1,26 @@
 #define TINYOBJLOADER_IMPLEMENTATION
 #include "../tiny_obj_loader.h"
 
-#ifdef __clang__
+#if defined(__clang__)
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Weverything"
+#elif defined(__GNUC__)
+#pragma GCC diagnostic ignored "-Wmissing-declarations"
+#pragma GCC diagnostic ignored "-Wignored-qualifiers"
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wcast-qual"
+#pragma GCC diagnostic ignored "-Wsign-conversion"
+#pragma GCC diagnostic ignored "-Wformat"
+#pragma GCC diagnostic ignored "-Wswitch-default"
 #endif
+
 
 #include "acutest.h"
 
-#ifdef __clang__
+#if defined(__clang__)
 #pragma clang diagnostic pop
+#elif defined(__GNUC__)
+#pragma GCC diagnostic pop
 #endif
 
 #include <cassert>
@@ -1049,6 +1060,7 @@ void test_initialize_all_texopts() {
   bool ret = tinyobj::LoadObj(&attrib, &shapes, &materials, &warn, &err,
                               "../models/cornell_box.obj", gMtlBasePath, false);
 
+  TEST_CHECK(ret == true);
   TEST_CHECK(0 < materials.size());
 
 #define TEST_CHECK_DEFAULT_TEXOPT(texopt)                \
@@ -1179,6 +1191,123 @@ void test_leading_zero_in_exponent_notation_issue210() {
   std::cout << "bora " << attrib.vertices[0] << std::endl;
 }
 
+void test_usemtl_then_o_issue235() {
+  tinyobj::attrib_t attrib;
+  std::vector<tinyobj::shape_t> shapes;
+  std::vector<tinyobj::material_t> materials;
+
+  std::string warn;
+  std::string err;
+  bool ret = tinyobj::LoadObj(
+      &attrib, &shapes, &materials, &warn, &err,
+      "../models/issue-235-usemtl-then-o.obj",
+      gMtlBasePath);
+
+  if (!warn.empty()) {
+    std::cout << "WARN: " << warn << std::endl;
+  }
+
+  if (!err.empty()) {
+    std::cerr << "ERR: " << err << std::endl;
+  }
+
+  TEST_CHECK(true == ret);
+  TEST_CHECK(2 == shapes.size());
+  TEST_CHECK(2 == materials.size());
+  TEST_CHECK(4 == shapes[1].mesh.indices[0].vertex_index);
+}
+
+void test_mtl_searchpaths_issue244() {
+  tinyobj::attrib_t attrib;
+  std::vector<tinyobj::shape_t> shapes;
+  std::vector<tinyobj::material_t> materials;
+
+  // .mtl is located at ./assets/issue-244.mtl
+#if _WIN32
+  std::string search_paths("../;../models;./assets");
+#else
+  std::string search_paths("../:../models:./assets");
+#endif
+
+  std::string warn;
+  std::string err;
+  bool ret = tinyobj::LoadObj(
+      &attrib, &shapes, &materials, &warn, &err,
+      "../models/issue-244-mtl-searchpaths.obj",
+      search_paths.c_str());
+
+  TEST_CHECK(warn.empty());
+
+  if (!warn.empty()) {
+    std::cout << "WARN: " << warn << std::endl;
+  }
+
+  if (!err.empty()) {
+    std::cerr << "ERR: " << err << std::endl;
+  }
+
+  TEST_CHECK(true == ret);
+  TEST_CHECK(2 == shapes.size());
+  TEST_CHECK(2 == materials.size());
+  TEST_CHECK(4 == shapes[1].mesh.indices[0].vertex_index);
+}
+
+void test_usemtl_whitespace_issue246() {
+  tinyobj::attrib_t attrib;
+  std::vector<tinyobj::shape_t> shapes;
+  std::vector<tinyobj::material_t> materials;
+
+  std::string warn;
+  std::string err;
+  bool ret = tinyobj::LoadObj(
+      &attrib, &shapes, &materials, &warn, &err,
+      "../models/issue-246-usemtl-whitespace.obj",
+      gMtlBasePath);
+
+  TEST_CHECK(warn.empty());
+
+  if (!warn.empty()) {
+    std::cout << "WARN: " << warn << std::endl;
+  }
+
+  if (!err.empty()) {
+    std::cerr << "ERR: " << err << std::endl;
+  }
+
+  TEST_CHECK(true == ret);
+  TEST_CHECK(1 == shapes.size());
+  TEST_CHECK(1 == materials.size());
+  TEST_CHECK(0 == shapes[0].mesh.material_ids[0]);
+}
+
+void test_texres_texopt_issue248() {
+  tinyobj::attrib_t attrib;
+  std::vector<tinyobj::shape_t> shapes;
+  std::vector<tinyobj::material_t> materials;
+
+  std::string warn;
+  std::string err;
+  bool ret = tinyobj::LoadObj(
+      &attrib, &shapes, &materials, &warn, &err,
+      "../models/issue-248-texres-texopt.obj",
+      gMtlBasePath);
+
+  TEST_CHECK(warn.empty());
+
+  if (!warn.empty()) {
+    std::cout << "WARN: " << warn << std::endl;
+  }
+
+  if (!err.empty()) {
+    std::cerr << "ERR: " << err << std::endl;
+  }
+
+  TEST_CHECK(true == ret);
+  TEST_CHECK(1 < materials.size());
+  TEST_CHECK(512 == materials[0].diffuse_texopt.texture_resolution);
+  TEST_CHECK("input.jpg" == materials[0].diffuse_texname);
+}
+
 // Fuzzer test.
 // Just check if it does not crash.
 // Disable by default since Windows filesystem can't create filename of afl
@@ -1270,4 +1399,12 @@ TEST_LIST = {
      test_mtl_default_search_path_v2_API_issue208},
     {"leading_zero_in_exponent_notation_issue210",
      test_leading_zero_in_exponent_notation_issue210},
+    {"usemtl_then_o_issue235",
+     test_usemtl_then_o_issue235},
+    {"mtl_searchpaths_issue244",
+     test_mtl_searchpaths_issue244},
+    {"usemtl_whitespece_issue246",
+     test_usemtl_whitespace_issue246},
+    {"texres_texopt_issue248",
+     test_texres_texopt_issue248},
     {NULL, NULL}};

@@ -42,7 +42,7 @@ RSC=rc.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /c
-# ADD CPP /nologo /G6 /MT /W3 /GX /Z7 /O2 /Ob2 /I ".." /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /D "GRID_TEST" /FD /c
+# ADD CPP /nologo /G6 /MT /W3 /GX /Z7 /O2 /Ob2 /I ".." /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /D "VORBIS_TEST" /FD /c
 # ADD BASE RSC /l 0x409 /d "NDEBUG"
 # ADD RSC /l 0x409 /d "NDEBUG"
 BSC32=bscmake.exe
@@ -138,6 +138,10 @@ SOURCE=..\stb_image_write.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\stb_include.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\stb_leakcheck.h
 # End Source File
 # Begin Source File
@@ -223,6 +227,10 @@ SOURCE=.\test_image.c
 # Begin Source File
 
 SOURCE=.\test_image_write.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\test_packer.c
 # End Source File
 # Begin Source File
 

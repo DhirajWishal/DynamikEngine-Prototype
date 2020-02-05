@@ -1,7 +1,7 @@
 # Dynamik Engine
 ## Engine and Launcher
 
-###### Main Components:
+###### Main Components Of The Engine:
 - Advanced Dynamik Graphics Renderer (ADGR)
 - Audio Engine
 - Central Data Hub
@@ -11,3 +11,16 @@
 - Manager
 - Networking
 - Platform Specifics
+
+###### Main Components Of The Launcher:
+- Launcher
+- Studio
+- Marketplace
+
+### First Run:
+1. Double click (run/ execute) the GenProject.bat file.
+2. Open the Dynamik.sln file in Visual Studio.
+3. Unzip the mars.zip or moon.zip in "core assets/" and set the assets path in "Application/paths.txt".
+   - Eg: E:/Dynamik/core assets/moon    (single quotes or double quates are not needed)
+4. Select "Application" in the Solution Explorer as the StartUp Project if not selected by default.
+5. Run the Build and Run the solution. 

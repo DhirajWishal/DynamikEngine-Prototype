@@ -21,6 +21,6 @@
 1. Double click (run/ execute) the GenProject.bat file.
 2. Open the Dynamik.sln file in Visual Studio.
 3. Unzip the mars.zip or moon.zip in "core assets/" and set the assets path in "Application/paths.txt".
-   - Eg: E:/Dynamik/core assets/moon    (single quotes or double quates are not needed)
+   - Eg: E:/Dynamik/core assets/moon    (single quotes or double quotes are not needed)
 4. Select "Application" in the Solution Explorer as the StartUp Project if not selected by default.
 5. Run the Build and Run the solution. 

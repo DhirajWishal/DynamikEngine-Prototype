@@ -3,16 +3,33 @@
 
 namespace Dynamik {
 	namespace manager {
-		allocator::allocator(uint32 size) : totalSize(size) {
-			stackPool = malloc(size);
+		Allocator::Allocator(uint32 size) : memorySize(size) {
+			memoryPool = malloc(size);
 		}
 
-		allocator::~allocator() {
-			free(stackPool);
+		Allocator::~Allocator() {
+			free(memoryPool);
 		}
 
-		void* allocator::allocate(uint32 size, uint32 align, uint32 offset) {
-			return nullptr;
+		doubleBufferedStack::doubleBufferedStack(uint32_t size) : Allocator(size) {
+			endPointer = (uint8_t*)memoryPool;
+		}
+
+		doubleBufferedStack::~doubleBufferedStack() {
+		}
+
+		poolAllocator::poolAllocator(uint32_t size) : Allocator(size) {
+			endPointer = (uint8_t*)memoryPool;
+		}
+
+		void* poolAllocator::allocate(uint32_t size, uint32_t align, uint32_t offset) {
+			if (memorySize < size)
+				return nullptr;
+
+			endPointer += size;
+			allocatedSize += size;
+
+			return endPointer;
 		}
 	}
 }

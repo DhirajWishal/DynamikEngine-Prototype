@@ -11,6 +11,7 @@
 #include "src/imports.h"
 
 #include "src/objectDefinitions.h"
+#include "Platform.h"
 
 /* -----||||| MAIN LAUNCH SYSTEM |||||----- */
 

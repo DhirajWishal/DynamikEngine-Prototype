@@ -49,6 +49,12 @@ namespace Dynamik {
 			return;
 		}
 
+		{
+			manager::doubleBufferedStack myAllocator(10);
+
+			int* myPtr = myAllocator.allocate<int>(5, 0, 0);
+		}
+
 		gameObjectInitialization();
 
 		std::thread myThread(Application::showProgress);

@@ -133,6 +133,14 @@ namespace Dynamik {
 			VkDescriptorSetLayout myTerrainDescriptorSetLayout;
 			std::vector<VkBuffer> myTerrainUniformBuffers;
 			std::vector<VkDeviceMemory> myTerrainUniformBufferMamories;
+
+			VkResult result;
+			VkSubmitInfo submitInfo = {};
+			VkPresentInfoKHR presentInfo = {};
+			VkSemaphore waitSemaphores[1];
+			VkPipelineStageFlags waitStages[1];
+			VkSemaphore signalSemaphores[1];
+			VkSwapchainKHR swapChains[1];
 		};
 	}
 }

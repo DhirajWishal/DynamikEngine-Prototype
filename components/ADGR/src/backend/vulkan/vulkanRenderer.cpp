@@ -213,7 +213,7 @@ namespace Dynamik {
 
 			// get image index
 			imageIndex = 0;
-			VkResult result = vkAcquireNextImageKHR(myVulkanDataContainers[vulkanContainerIndex].device,
+			result = vkAcquireNextImageKHR(myVulkanDataContainers[vulkanContainerIndex].device,
 				myVulkanDataContainers[vulkanContainerIndex].swapchainContainer.swapchain, std::numeric_limits<uint64_t>::max(),
 				myImageAvailableSemaphores[currentFrame], VK_NULL_HANDLE, &imageIndex);
 
@@ -232,12 +232,11 @@ namespace Dynamik {
 					myEventContainers, &myVulkanFormats[itr], imageIndex);
 
 			// submit info
-			VkSubmitInfo submitInfo = {};
 			submitInfo.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO;
 
 			// wait for semaphores
-			VkSemaphore waitSemaphores[] = { myImageAvailableSemaphores[currentFrame] };
-			VkPipelineStageFlags waitStages[] = { VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT };
+			waitSemaphores[0] = { myImageAvailableSemaphores[currentFrame] };
+			waitStages[0] = { VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT };
 			submitInfo.waitSemaphoreCount = 1;
 			submitInfo.pWaitSemaphores = waitSemaphores;
 			submitInfo.pWaitDstStageMask = waitStages;
@@ -245,7 +244,7 @@ namespace Dynamik {
 			submitInfo.pCommandBuffers = &myVulkanDataContainers[vulkanContainerIndex].commandBufferContainer.buffers[imageIndex];
 
 			// signal semaphores
-			VkSemaphore signalSemaphores[] = { myRenderFinishedSemaphores[currentFrame] };
+			signalSemaphores[0] = { myRenderFinishedSemaphores[currentFrame] };
 			submitInfo.signalSemaphoreCount = 1;
 			submitInfo.pSignalSemaphores = signalSemaphores;
 
@@ -258,13 +257,12 @@ namespace Dynamik {
 				DMK_CORE_FATAL("failed to submit draw command buffer!");
 
 			// present queue info
-			VkPresentInfoKHR presentInfo = {};
 			presentInfo.sType = VK_STRUCTURE_TYPE_PRESENT_INFO_KHR;
 			presentInfo.waitSemaphoreCount = 1;
 			presentInfo.pWaitSemaphores = signalSemaphores;
 
 			// swapchain info
-			VkSwapchainKHR swapChains[] = { myVulkanDataContainers[vulkanContainerIndex].swapchainContainer.swapchain };
+			swapChains[0] = { myVulkanDataContainers[vulkanContainerIndex].swapchainContainer.swapchain };
 			presentInfo.swapchainCount = 1;
 			presentInfo.pSwapchains = swapChains;
 			presentInfo.pImageIndices = &imageIndex;

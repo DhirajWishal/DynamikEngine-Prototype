@@ -17,6 +17,7 @@
 
 #include "Windows/file/readFile.h"
 #include "Windows/file/fileManager.h"
+#include "Windows/memory/memoryManager.h"
 
 #endif
 

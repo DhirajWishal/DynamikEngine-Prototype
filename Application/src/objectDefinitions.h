@@ -5,7 +5,11 @@ using namespace Dynamik;
 
 class moon : public GameObject {
 public:
-	moon(GameObjectProperties& props) :GameObject(props) {}
+	moon(GameObjectProperties& props) :GameObject(props) {
+		myProperties.name = "Moon";
+		myProperties.location = "E:/Projects/Dynamik Engine/Game Repository/assets/assets/moon";
+		myProperties.transformProperties.location = { 0.0f,	0.0f,	0.0f };
+	}
 
 	void update(Event& currentEvent) override;
 };

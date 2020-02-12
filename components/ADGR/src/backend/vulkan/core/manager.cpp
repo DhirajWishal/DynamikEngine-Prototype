@@ -15,7 +15,7 @@ namespace Dynamik {
 			//}
 			//
 			//template<typename _Type>
-			//_Type& manager::getResource(DMKManagerResourceType type, int index) {
+			//_Type& manager::getResource(DMKManagerResourceType type, I32 index) {
 			//	return _resource<_Type>(type)->at(index);
 			//}
 			//

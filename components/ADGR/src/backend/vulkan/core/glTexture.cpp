@@ -31,7 +31,7 @@ namespace Dynamik {
 				glDeleteTextures(1, &rendererID);
 			}
 
-			void glTexture::bind(unsigned int slot) {
+			void glTexture::bind(UI32 slot) {
 				//glActiveTexture()
 				glBindTexture(GL_TEXTURE_2D, rendererID);
 			}

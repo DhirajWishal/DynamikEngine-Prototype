@@ -14,7 +14,7 @@ namespace Dynamik {
 				for (std::string_view path : format->myRendererFormat->myInternalFormat->myGameObject->myProperties.texturePaths) {
 					unsigned char* localBuffer = texData.loadTexture(path.data(), resource::TEXTURE_TYPE_RGBA, true);
 
-					unsigned int ID = 0;
+					unsigned I32 ID = 0;
 					glGenTextures(1, &ID);
 					glBindTexture(GL_TEXTURE_2D, ID);
 
@@ -33,8 +33,8 @@ namespace Dynamik {
 				}
 			}
 
-			void textureManager::bind(openglFormat* format, unsigned int slot) {
-				for (uint32_t i = 0; i < format->myTextureIDs.size(); i++) {
+			void textureManager::bind(openglFormat* format, unsigned I32 slot) {
+				for (UI32 i = 0; i < format->myTextureIDs.size(); i++) {
 					glActiveTexture(GL_TEXTURE0 + i);
 					glBindTexture(GL_TEXTURE_2D, format->myTextureIDs[i]);
 				}
@@ -43,7 +43,7 @@ namespace Dynamik {
 			void textureManager::unBind() {
 			}
 
-			void textureManager::destroy(unsigned int id) {
+			void textureManager::destroy(unsigned I32 id) {
 				glDeleteTextures(1, &id);
 			}
 		}

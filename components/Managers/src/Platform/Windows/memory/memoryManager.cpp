@@ -3,7 +3,7 @@
 
 namespace Dynamik {
 	namespace manager {
-		Allocator::Allocator(uint32 size) : memorySize(size) {
+		Allocator::Allocator(UI32 size) : memorySize(size) {
 			memoryPool = malloc(size);
 		}
 
@@ -11,18 +11,18 @@ namespace Dynamik {
 			free(memoryPool);
 		}
 
-		doubleBufferedStack::doubleBufferedStack(uint32_t size) : Allocator(size) {
-			endPointer = (uint8_t*)memoryPool;
+		doubleBufferedStack::doubleBufferedStack(UI32 size) : Allocator(size) {
+			endPointer = (BYTE*)memoryPool;
 		}
 
 		doubleBufferedStack::~doubleBufferedStack() {
 		}
 
-		poolAllocator::poolAllocator(uint32_t size) : Allocator(size) {
-			endPointer = (uint8_t*)memoryPool;
+		poolAllocator::poolAllocator(UI32 size) : Allocator(size) {
+			endPointer = (BYTE*)memoryPool;
 		}
 
-		void* poolAllocator::allocate(uint32_t size, uint32_t align, uint32_t offset) {
+		VPTR poolAllocator::allocate(UI32 size, UI32 align, UI32 offset) {
 			if (memorySize < size)
 				return nullptr;
 
@@ -30,6 +30,10 @@ namespace Dynamik {
 			allocatedSize += size;
 
 			return endPointer;
+		}
+		
+		void poolAllocator::deAllocate(VPTR data, UI32 size, UI32 offset) {
+			free(data);
 		}
 	}
 }

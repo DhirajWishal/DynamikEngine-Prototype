@@ -33,7 +33,7 @@ namespace Dynamik {
 				barrier.subresourceRange.layerCount = 1;
 				barrier.subresourceRange.levelCount = 1;
 
-				for (uint32_t i = 1; i < info.mipLevels; i++) {
+				for (UI32 i = 1; i < info.mipLevels; i++) {
 					barrier.subresourceRange.baseMipLevel = i - 1;
 					barrier.oldLayout = VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL;
 					barrier.newLayout = VK_IMAGE_LAYOUT_TRANSFER_SRC_OPTIMAL;
@@ -167,8 +167,8 @@ namespace Dynamik {
 				cpyInfo.commandPool = container->commandBufferContainer.commandPool;
 				cpyInfo.buffer = stagingBuffer;
 				cpyInfo.image = *initInfo.textureImage;
-				cpyInfo.width = static_cast<uint32_t>(texData.texWidth);
-				cpyInfo.height = static_cast<uint32_t>(texData.texHeight);
+				cpyInfo.width = static_cast<UI32>(texData.texWidth);
+				cpyInfo.height = static_cast<UI32>(texData.texHeight);
 				cpyInfo.graphicsQueue = container->graphicsQueue;
 
 				copyBufferToImage(cpyInfo);
@@ -202,7 +202,7 @@ namespace Dynamik {
 				samplerInfo.compareOp = VK_COMPARE_OP_ALWAYS;
 				samplerInfo.mipmapMode = VK_SAMPLER_MIPMAP_MODE_LINEAR;
 				samplerInfo.minLod = container->minMipLevel; // change this for varying mip levels
-				samplerInfo.maxLod = static_cast<float>(container->maxMipLevel);
+				samplerInfo.maxLod = static_cast<F32>(container->maxMipLevel);
 				samplerInfo.mipLodBias = 0; // Optional
 
 				if (vkCreateSampler(container->device, &samplerInfo, nullptr, info.textureSampler) != VK_SUCCESS)
@@ -210,7 +210,7 @@ namespace Dynamik {
 			}
 
 			void textureManager::clear(ADGRVulkanDataContainer* container, vulkanFormat* format) {
-				for (uint32_t itr = 0; itr < format->myTextureImages.size(); itr++) {
+				for (UI32 itr = 0; itr < format->myTextureImages.size(); itr++) {
 					vkDestroySampler(container->device, format->myTextureImageSamplers[itr], nullptr);
 					vkDestroyImageView(container->device, format->myTextureImageViews[itr], nullptr);
 

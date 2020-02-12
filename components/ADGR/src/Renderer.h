@@ -32,7 +32,7 @@ namespace Dynamik {
 			Renderer();
 			~Renderer();
 
-			void setProgress(uint32_t* progress);
+			void setProgress(UI32* progress);
 			void initRenderer();
 			void setRendererFormats(std::vector<InternalFormat*>& internalFormats);
 			void draw();
@@ -51,7 +51,7 @@ namespace Dynamik {
 
 			// core functions
 
-			bool getWindowCloseEvent();
+			B1 getWindowCloseEvent();
 			void idleCall();
 
 			std::vector<RendererFormat> myRendererFormats = {};

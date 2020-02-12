@@ -9,7 +9,7 @@ void processInput(GLFWwindow* window) {
 		glfwSetWindowShouldClose(window, true);
 }
 
-void framebuffer_size_callback(GLFWwindow* window, int width, int height) {
+void framebuffer_size_callback(GLFWwindow* window, I32 width, I32 height) {
 	// make sure the viewport matches the new window dimensions; note that width and 
 	// height will be significantly larger than specified on retina displays.
 	glViewport(0, 0, width, height);
@@ -38,7 +38,7 @@ namespace Dynamik {
 		}
 
 		void openglRenderer::initStageTwo() {
-			for (uint32_t itr = 0; itr < myFormatsCount; itr++) {
+			for (UI32 itr = 0; itr < myFormatsCount; itr++) {
 				openglFormat* _localFormat = &myOpenglFormats[itr];
 
 				// vertex shader
@@ -81,7 +81,7 @@ namespace Dynamik {
 				myRendererSettings.clearScreenValues[3]);
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-			for (uint32_t itr = 0; itr < myFormatsCount; itr++) {
+			for (UI32 itr = 0; itr < myFormatsCount; itr++) {
 				openglFormat* _localFormat = &myOpenglFormats[itr];
 				//myTextureManager.bind(_localFormat);
 				myShaderManager.bind(_localFormat);
@@ -122,7 +122,7 @@ namespace Dynamik {
 
 		void openglRenderer::_addFormats(std::vector<RendererFormat>& rendererFormats) {
 			myFormatsCount = rendererFormats.size();
-			for (int i = 0; i < myFormatsCount; i++)
+			for (I32 i = 0; i < myFormatsCount; i++)
 				myOpenglFormats.push_back(openglFormat(&rendererFormats[i]));
 		}
 	}

@@ -17,13 +17,13 @@ namespace Dynamik {
 				VkFormat imageFormat;
 				VkImage textureImage;
 
-				int width;
-				int height;
+				I32 width;
+				I32 height;
 
-				uint32_t mipLevels;
+				UI32 mipLevels;
 
 				// for skybox and cubamap
-				uint32_t size;
+				UI32 size;
 				VkBuffer* stagingBuffer = nullptr;
 				VkImageLayout imageLayout;
 				VkImageView* imageView = nullptr;
@@ -37,20 +37,20 @@ namespace Dynamik {
 				VkImage* textureImage = VK_NULL_HANDLE;
 				VkDeviceMemory* textureImageMemory = VK_NULL_HANDLE;
 
-				uint32_t mipLevels = 1;
+				UI32 mipLevels = 1;
 			};
 
 			struct DMKInitTextureImageViewsInfo {
 				VkFormat textureImageFormat = VK_FORMAT_UNDEFINED;
 				VkImage textureImage = VK_NULL_HANDLE;
 
-				uint32_t mipLevels = 1;
+				UI32 mipLevels = 1;
 				VkImageAspectFlags flags = 0;
 			};
 
 			struct DMKInitTextureSamplerInfo {
 				VkSampler* textureSampler = VK_NULL_HANDLE;
-				uint32_t mipLevel = 1;
+				UI32 mipLevel = 1;
 
 				VkFilter magFilter = VK_FILTER_NEAREST;
 				VkFilter minFilter = VK_FILTER_NEAREST;

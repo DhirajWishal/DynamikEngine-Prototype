@@ -19,10 +19,10 @@ namespace Dynamik {
 	namespace ADGR {
 		namespace core {
 			struct queueFamilyindices {
-				std::optional<uint32> graphicsFamily;
-				std::optional<uint32> presentFamily;
+				std::optional<UI32> graphicsFamily;
+				std::optional<UI32> presentFamily;
 
-				bool isComplete() {
+				B1 isComplete() {
 					return graphicsFamily.has_value() && presentFamily.has_value();
 				}
 			};

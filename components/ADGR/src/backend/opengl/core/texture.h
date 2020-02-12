@@ -15,9 +15,9 @@ namespace Dynamik {
 				~textureManager() {}
 
 				void init(openglFormat* format);
-				void bind(openglFormat* format, unsigned int slot = 0);
+				void bind(openglFormat* format, unsigned I32 slot = 0);
 				void unBind();
-				void destroy(unsigned int id);
+				void destroy(unsigned I32 id);
 			};
 		}
 	}

@@ -20,8 +20,8 @@ namespace Dynamik {
 				void initPhysicalDevice(ADGRVulkanDataContainer* container);
 				void initLogicalDevice(ADGRVulkanDataContainer* container);
 
-				bool checkDeviceExtensionSupport(VkPhysicalDevice device);
-				bool isDeviceSuitable(VkPhysicalDevice device, VkSurfaceKHR* surface);
+				B1 checkDeviceExtensionSupport(VkPhysicalDevice device);
+				B1 isDeviceSuitable(VkPhysicalDevice device, VkSurfaceKHR* surface);
 
 				const std::vector<const char*> deviceExtensions = {
 					VK_KHR_SWAPCHAIN_EXTENSION_NAME

@@ -27,7 +27,7 @@ namespace Dynamik {
 				void clear(ADGRVulkanDataContainer* container);
 
 			private:
-				int mySize = 0;
+				I32 mySize = 0;
 			};
 		}
 	}

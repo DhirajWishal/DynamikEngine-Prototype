@@ -13,27 +13,27 @@ namespace Dynamik {
 			struct DMKUniformBufferUpdateInfo {
 				std::vector<VkDeviceMemory> bufferMemory = {};
 
-				int currentImage = 0;
+				I32 currentImage = 0;
 
-				std::vector<bool> move = { false, false };
-				std::vector<bool> turn = { false, false };
-				std::vector<bool> upDown = { false, false };
-				std::vector<bool> rotation = { false, false };
-				std::vector<float> cPos = { 0.0f, 0.0f };
+				std::vector<B1> move = { false, false };
+				std::vector<B1> turn = { false, false };
+				std::vector<B1> upDown = { false, false };
+				std::vector<B1> rotation = { false, false };
+				std::vector<F32> cPos = { 0.0f, 0.0f };
 
-				float movementBias = 0.0075f;
-				float upDownBias = 0.015f;
-				float rotationBias = 2.5f;
+				F32 movementBias = 0.0075f;
+				F32 upDownBias = 0.015f;
+				F32 rotationBias = 2.5f;
 
-				float trn = 0.0f;
-				float mve = 0.0f;
-				float up = 0.0f;
-				float rot = 0.0f;
+				F32 trn = 0.0f;
+				F32 mve = 0.0f;
+				F32 up = 0.0f;
+				F32 rot = 0.0f;
 
-				bool rotationLock = false;
-				bool verticalLock = false;
-				bool horizontalLock = false;
-				bool turnLock = false;
+				B1 rotationLock = false;
+				B1 verticalLock = false;
+				B1 horizontalLock = false;
+				B1 turnLock = false;
 			};
 
 			class uniformBufferManager {
@@ -50,7 +50,7 @@ namespace Dynamik {
 				void createUniformBuffers(ADGRVulkanDataContainer* container,
 					std::vector<VkBuffer>* uniformBuffers, std::vector<VkDeviceMemory>* uniformBufferMemories);
 
-				void updateBuffer3D(ADGRVulkanDataContainer* container, std::deque<DMKEventContainer> eventContainers, vulkanFormat* gameObject, uint32_t currentImage = 0);
+				void updateBuffer3D(ADGRVulkanDataContainer* container, std::deque<DMKEventContainer> eventContainers, vulkanFormat* gameObject, UI32 currentImage = 0);
 
 				void clean(ADGRVulkanDataContainer* container, vulkanFormat* format);
 			};

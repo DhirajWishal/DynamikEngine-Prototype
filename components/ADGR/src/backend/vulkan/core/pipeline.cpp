@@ -19,8 +19,8 @@ namespace Dynamik {
 
 				VkPipelineVertexInputStateCreateInfo vertexInputInfo = {};
 				vertexInputInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO;
-				vertexInputInfo.vertexBindingDescriptionCount = static_cast<uint32_t>(bindingDescription.size());
-				vertexInputInfo.vertexAttributeDescriptionCount = static_cast<uint32_t>(attributeDescriptions.size());
+				vertexInputInfo.vertexBindingDescriptionCount = static_cast<UI32>(bindingDescription.size());
+				vertexInputInfo.vertexAttributeDescriptionCount = static_cast<UI32>(attributeDescriptions.size());
 				vertexInputInfo.pVertexBindingDescriptions = bindingDescription.data();
 				vertexInputInfo.pVertexAttributeDescriptions = attributeDescriptions.data();
 
@@ -32,12 +32,12 @@ namespace Dynamik {
 
 				// initialize the viewport(s)
 				std::vector<VkViewport> viewports;
-				for (int i = 0; i < info.viweportCount; i++) {
+				for (I32 i = 0; i < info.viweportCount; i++) {
 					VkViewport viewport = {};
 					viewport.x = 0.0f;
 					viewport.y = 0.0f;
-					viewport.width = (float)container->swapchainContainer.swapchainExtent.width;
-					viewport.height = (float)container->swapchainContainer.swapchainExtent.height;
+					viewport.width = (F32)container->swapchainContainer.swapchainExtent.width;
+					viewport.height = (F32)container->swapchainContainer.swapchainExtent.height;
 					viewport.minDepth = 0.0f;
 					viewport.maxDepth = 1.0f;
 
@@ -46,7 +46,7 @@ namespace Dynamik {
 
 				// initialize the scissor(s)
 				std::vector<VkRect2D> scissors;
-				for (int i = 0; i < info.scissorCount; i++) {
+				for (I32 i = 0; i < info.scissorCount; i++) {
 					VkRect2D scissor = {};
 					scissor.offset = info.offsets[0];
 					scissor.extent = container->swapchainContainer.swapchainExtent;
@@ -91,7 +91,7 @@ namespace Dynamik {
 				std::vector<VkPipelineColorBlendAttachmentState> colorBlendAttachments;
 
 				// initialize the color blender(s)
-				for (int i = 0; i < info.colorBlendingColorBlendCount; i++) {
+				for (I32 i = 0; i < info.colorBlendingColorBlendCount; i++) {
 					VkPipelineColorBlendAttachmentState colorBlendAttachment = {};
 					colorBlendAttachment.colorWriteMask = info.colorBlenderColorWriteMasks[i];
 					colorBlendAttachment.blendEnable = info.colorBlenderBlendEnables[i];
@@ -114,14 +114,14 @@ namespace Dynamik {
 				// initialize the pipeline layout
 				VkPipelineLayoutCreateInfo pipelineLayoutInfo = {};
 				pipelineLayoutInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO;
-				pipelineLayoutInfo.setLayoutCount = static_cast<uint32_t>(info.layouts.size());
+				pipelineLayoutInfo.setLayoutCount = static_cast<UI32>(info.layouts.size());
 				pipelineLayoutInfo.pSetLayouts = info.layouts.data();
 
 				if (info.pushConstantsEnable) {
 					std::vector<VkPushConstantRange> pushConstantInfos;
 
 					// initialize push constants
-					for (int i = 0; i <= info.pushConstantCount; i++) {
+					for (I32 i = 0; i <= info.pushConstantCount; i++) {
 						VkPushConstantRange pushConsInfo = {};
 						pushConsInfo.stageFlags = VK_SHADER_STAGE_VERTEX_BIT;
 						pushConsInfo.size = sizeof(container->pushConstants);
@@ -147,14 +147,14 @@ namespace Dynamik {
 					};
 
 					dynamicStateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_DYNAMIC_STATE_CREATE_INFO;
-					dynamicStateInfo.dynamicStateCount = static_cast<uint32_t>(dynamicState.size());
+					dynamicStateInfo.dynamicStateCount = static_cast<UI32>(dynamicState.size());
 					dynamicStateInfo.pDynamicStates = dynamicState.data();
 					dynamicStateInfo.flags = info.dynamicStateFlags;
 				}
 
 				// shader stages
 				std::vector<VkPipelineShaderStageCreateInfo> ShaderStages = {};
-				for (int i = 0; i < 4; i++)
+				for (I32 i = 0; i < 4; i++)
 					if (info.shaderDataContainer.shaderCodes[i].size())
 						ShaderStages.push_back(info.shaderDataContainer.shaderStageInfo[i]);
 
@@ -252,7 +252,7 @@ namespace Dynamik {
 				std::array<VkAttachmentDescription, 3> attachments = { colorAttachment, depthAttachment, colorAttachmentResolve };
 				VkRenderPassCreateInfo renderPassInfo = {};
 				renderPassInfo.sType = VK_STRUCTURE_TYPE_RENDER_PASS_CREATE_INFO;
-				renderPassInfo.attachmentCount = static_cast<uint32_t>(attachments.size());
+				renderPassInfo.attachmentCount = static_cast<UI32>(attachments.size());
 				renderPassInfo.pAttachments = attachments.data();
 				renderPassInfo.subpassCount = 1;
 				renderPassInfo.pSubpasses = &subpass;

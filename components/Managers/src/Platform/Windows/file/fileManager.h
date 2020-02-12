@@ -31,7 +31,7 @@ namespace Dynamik {
 			std::fstream* backup = nullptr;
 
 			std::string myPath = "";
-			uint8 myMode = 0;
+			UI8 myMode = 0;
 		};
 	}
 }

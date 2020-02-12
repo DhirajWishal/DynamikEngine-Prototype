@@ -19,7 +19,7 @@
 namespace Dynamik {
 	namespace utils {
 		// to the (=)pow(base, exponent);
-		int64 pow(int32 base, int16 exp);
+		I64 pow(int base, I16 exp);
 	}
 }
 

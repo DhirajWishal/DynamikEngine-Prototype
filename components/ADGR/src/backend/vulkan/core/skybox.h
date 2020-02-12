@@ -20,7 +20,7 @@ namespace Dynamik {
 				VkFormat imageFormat;
 				VkDeviceMemory* imageMemory = nullptr;
 
-				uint32_t mipLevels;
+				UI32 mipLevels;
 			};
 
 			struct DMKInitCubemapInfo {
@@ -33,13 +33,13 @@ namespace Dynamik {
 				VkSampler* imageSampler = nullptr;
 				VkImageView* imageView = nullptr;
 
-				uint32_t mipLevels = 1;
+				UI32 mipLevels = 1;
 
-				bool flipImage = false;
+				B1 flipImage = false;
 			};
 
 			struct DMKSkyboxSampelrInitInfo {
-				uint32_t mipLevels = 0;
+				UI32 mipLevels = 0;
 
 				VkImage skybox = VK_NULL_HANDLE;
 				VkFormat format = VK_FORMAT_UNDEFINED;
@@ -68,8 +68,8 @@ namespace Dynamik {
 
 				VkDescriptorSet skyBox = VK_NULL_HANDLE;
 
-				uint32_t width = NULL;
-				uint32_t height = NULL;
+				UI32 width = NULL;
+				UI32 height = NULL;
 
 				uint8_t layerCount = 1;
 			};

@@ -3,8 +3,8 @@
 #ifndef _DYNAMIK_APPLICATION_IMPORTS_H
 #define _DYNAMIK_APPLICATION_IMPORTS_H
 
-DMK_API Dynamik::int32 Dynamik::utils::max(Dynamik::int32, Dynamik::int32);
-DMK_API Dynamik::uint32 Dynamik::utils::max(Dynamik::uint32, Dynamik::uint32);
+DMK_API Dynamik::I32 Dynamik::utils::max(Dynamik::I32, Dynamik::I32);
+DMK_API Dynamik::UI32 Dynamik::utils::max(Dynamik::UI32, Dynamik::UI32);
 DMK_API float Dynamik::utils::max(float, float);
 
 class charlet : public Dynamik::GameObject {

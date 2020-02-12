@@ -17,13 +17,13 @@ namespace Dynamik {
 				// local renderer format
 				RendererFormat* myRendererFormat = nullptr;
 
-				unsigned int myShaderID = 0;
+				unsigned I32 myShaderID = 0;
 
-				unsigned int vertexArrayObject = 0;
-				unsigned int vertexBufferObject = 0;
-				unsigned int indexBufferObject = 0;	// elementBufferObject
+				unsigned I32 vertexArrayObject = 0;
+				unsigned I32 vertexBufferObject = 0;
+				unsigned I32 indexBufferObject = 0;	// elementBufferObject
 
-				std::vector<unsigned int> myTextureIDs = {};
+				std::vector<unsigned I32> myTextureIDs = {};
 			};
 		}
 	}

@@ -17,7 +17,7 @@ namespace Dynamik {
 	namespace utils {
 		/* ---------- ########## ////////// MIN HEAP \\\\\\\\\\ ########## ---------- */
 		template<class Alloc>
-		minHeap<Alloc>::minHeap(uint32 size) {
+		minHeap<Alloc>::minHeap(UI32 size) {
 			arr.resize(size);
 		}
 
@@ -48,7 +48,7 @@ namespace Dynamik {
 		}
 
 		template<class Alloc>
-		Alloc minHeap<Alloc>::getValue(uint32 idx) {
+		Alloc minHeap<Alloc>::getValue(UI32 idx) {
 			if (index <= myIndex)
 				return arr[index];
 			else
@@ -75,23 +75,23 @@ namespace Dynamik {
 		}
 
 		template<class Alloc>
-		uint32 minHeap<Alloc>::getLeft(uint32 parent) {
+		UI32 minHeap<Alloc>::getLeft(UI32 parent) {
 			return 2 * parent + 1;
 		}
 
 		template<class Alloc>
-		uint32 minHeap<Alloc>::getRight(uint32 parent) {
+		UI32 minHeap<Alloc>::getRight(UI32 parent) {
 			return 2 * parent + 2;
 		}
 
 		template<class Alloc>
-		uint32 minHeap<Alloc>::getParent(uint32 child) {
+		UI32 minHeap<Alloc>::getParent(UI32 child) {
 			return (child - 1) / 2;
 		}
 
 		/* ---------- ########## ////////// MAX HEAP \\\\\\\\\\ ########## ---------- */
 		template<class Alloc>
-		maxHeap<Alloc>::maxHeap(uint32 size) {
+		maxHeap<Alloc>::maxHeap(UI32 size) {
 			arr.resize(size);
 		}
 
@@ -122,7 +122,7 @@ namespace Dynamik {
 		}
 
 		template<class Alloc>
-		Alloc maxHeap<Alloc>::getValue(uint32 idx) {
+		Alloc maxHeap<Alloc>::getValue(UI32 idx) {
 			if (index <= myIndex)
 				return arr[index];
 			else
@@ -130,17 +130,17 @@ namespace Dynamik {
 		}
 
 		template<class Alloc>
-		uint32 maxHeap<Alloc>::getLeft(uint32 parent) {
+		UI32 maxHeap<Alloc>::getLeft(UI32 parent) {
 			return 2 * parent + 1;
 		}
 
 		template<class Alloc>
-		uint32 maxHeap<Alloc>::getRight(uint32 parent) {
+		UI32 maxHeap<Alloc>::getRight(UI32 parent) {
 			return 2 * parent + 2;
 		}
 
 		template<class Alloc>
-		uint32 maxHeap<Alloc>::getParent(uint32 child) {
+		UI32 maxHeap<Alloc>::getParent(UI32 child) {
 			return (child - 1) / 2;
 		}
 	}

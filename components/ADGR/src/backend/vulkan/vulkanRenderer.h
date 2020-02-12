@@ -49,7 +49,7 @@ namespace Dynamik {
 
 
 			std::deque<DMKEventContainer>* events() override;
-			inline bool closeEvent() override { return myWindowManager.closeEvent(&myVulkanDataContainers[vulkanContainerIndex]); }
+			inline B1 closeEvent() override { return myWindowManager.closeEvent(&myVulkanDataContainers[vulkanContainerIndex]); }
 
 			void setFormats(std::vector<RendererFormat>& rendererFormats) override;
 			void updateFormats(std::vector<RendererFormat>& rendererFormats) override;
@@ -113,11 +113,11 @@ namespace Dynamik {
 			core::shaderManager myShaderManager{};
 			core::debugger myDebugger{};
 
-			uint32_t imageIndex = 0;
-			uint32_t currentFrame = 0;
-			uint32_t vulkanContainerIndex = 0;
+			UI32 imageIndex = 0;
+			UI32 currentFrame = 0;
+			UI32 vulkanContainerIndex = 0;
 
-			bool enableVertexAndIndexClear = true;
+			B1 enableVertexAndIndexClear = true;
 
 			std::vector<Vertex> myVertices = {};
 			std::vector<std::future<void>> myThreads = {};

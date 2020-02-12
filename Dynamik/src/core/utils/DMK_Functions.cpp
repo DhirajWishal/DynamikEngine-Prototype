@@ -26,7 +26,7 @@ namespace Dynamik {
 		}
 
 		// var = utils::min(first, secons);
-		int32 min(int32 first, int32 second)
+		int min(int first, int second)
 		{
 			if (first < second)
 				return (first);
@@ -35,7 +35,7 @@ namespace Dynamik {
 		}
 
 		// var = utils::min(first, secons);
-		uint32 min(uint32 first, uint32 second)
+		UI32 min(UI32 first, UI32 second)
 		{
 			if (first < second)
 				return (first);
@@ -64,7 +64,7 @@ namespace Dynamik {
 		}
 
 		// var = utils::max(first, secons);
-		int32 max(int32 first, int32 second)
+		int max(int first, int second)
 		{
 			if (first > second)
 				return first;
@@ -73,7 +73,7 @@ namespace Dynamik {
 		}
 
 		// var = utils::max(first, secons);
-		uint32 max(uint32 first, uint32 second)
+		UI32 max(UI32 first, UI32 second)
 		{
 			if (first > second)
 				return (first);
@@ -101,17 +101,17 @@ namespace Dynamik {
 		}
 
 		// var = utils::swap(&first, &secons);
-		void swap(int32* first, int32* second)
+		void swap(int* first, int* second)
 		{
-			int32* temp = first;
+			int* temp = first;
 			first = second;
 			second = temp;
 		}
 
 		// var = utils::swap(&first, &secons);
-		void swap(uint32* first, uint32* second)
+		void swap(UI32* first, UI32* second)
 		{
-			uint32* temp = first;
+			UI32* temp = first;
 			first = second;
 			second = temp;
 		}
@@ -133,9 +133,9 @@ namespace Dynamik {
 		}
 
 		// var = utils::swap(&first, &secons);
-		void swap(ccp* first, ccp* second)
+		void swap(CCPTR* first, CCPTR* second)
 		{
-			ccp* temp = first;
+			CCPTR* temp = first;
 			first = second;
 			second = temp;
 		}

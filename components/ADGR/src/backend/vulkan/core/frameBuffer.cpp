@@ -6,7 +6,7 @@ namespace Dynamik {
 	namespace ADGR {
 		namespace core {
 			void frameBufferManager::init(ADGRVulkanDataContainer* container) {
-				mySize = static_cast<uint32_t>(container->swapchainContainer.swapchainImageViews.size());
+				mySize = static_cast<UI32>(container->swapchainContainer.swapchainImageViews.size());
 				container->frameBufferContainer.buffers.resize(mySize);
 
 				for (size_t i = 0; i < mySize; i++) {
@@ -19,7 +19,7 @@ namespace Dynamik {
 					VkFramebufferCreateInfo framebufferInfo = {};
 					framebufferInfo.sType = VK_STRUCTURE_TYPE_FRAMEBUFFER_CREATE_INFO;
 					framebufferInfo.renderPass = container->renderPass;
-					framebufferInfo.attachmentCount = static_cast<uint32_t>(attachments.size());
+					framebufferInfo.attachmentCount = static_cast<UI32>(attachments.size());
 					framebufferInfo.pAttachments = attachments.data();
 					framebufferInfo.width = container->swapchainContainer.swapchainExtent.width;
 					framebufferInfo.height = container->swapchainContainer.swapchainExtent.height;
@@ -42,7 +42,7 @@ namespace Dynamik {
 					VkFramebufferCreateInfo framebufferInfo = {};
 					framebufferInfo.sType = VK_STRUCTURE_TYPE_FRAMEBUFFER_CREATE_INFO;
 					framebufferInfo.renderPass = container->renderPass;
-					framebufferInfo.attachmentCount = static_cast<uint32_t>(attachments.size());
+					framebufferInfo.attachmentCount = static_cast<UI32>(attachments.size());
 					framebufferInfo.pAttachments = attachments.data();
 					framebufferInfo.width = container->swapchainContainer.swapchainExtent.width;
 					framebufferInfo.height = container->swapchainContainer.swapchainExtent.height;

@@ -57,7 +57,7 @@ namespace Dynamik {
 				VkShaderModuleCreateInfo createInfo = {};
 				createInfo.sType = VK_STRUCTURE_TYPE_SHADER_MODULE_CREATE_INFO;
 				createInfo.codeSize = code.size();
-				createInfo.pCode = reinterpret_cast<const uint32_t*>(code.data());
+				createInfo.pCode = reinterpret_cast<const UI32*>(code.data());
 
 				VkShaderModule shaderModule;
 				if (vkCreateShaderModule(device, &createInfo, nullptr, &shaderModule) != VK_SUCCESS)
@@ -67,14 +67,14 @@ namespace Dynamik {
 			}
 
 			void shaderManager::deleteShaders(ADGRVulkanDataContainer& container, ADGRVulkanPipelineDataContainer& pipelineContainer) {
-				for (int i = 0; i < 4; i++)
+				for (I32 i = 0; i < 4; i++)
 					if (pipelineContainer.shaderModules[i] != VK_NULL_HANDLE)
 						vkDestroyShaderModule(container.device, pipelineContainer.shaderModules[i], nullptr);
 			}
 
-			void shaderManager::compileShaders(std::string path, bool activate) {
+			void shaderManager::compileShaders(std::string path, B1 activate) {
 				if (activate) {
-					bool check = path.find(".conf") != std::string::npos
+					B1 check = path.find(".conf") != std::string::npos
 						|| path.find(".vert") != std::string::npos
 						|| path.find(".tesc") != std::string::npos
 						|| path.find(".tese") != std::string::npos

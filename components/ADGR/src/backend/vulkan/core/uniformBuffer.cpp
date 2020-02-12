@@ -53,7 +53,7 @@ namespace Dynamik {
 				}
 			}
 
-			void uniformBufferManager::updateBuffer3D(ADGRVulkanDataContainer* container, std::deque<DMKEventContainer> eventContainers, vulkanFormat* format, uint32_t currentImage) {
+			void uniformBufferManager::updateBuffer3D(ADGRVulkanDataContainer* container, std::deque<DMKEventContainer> eventContainers, vulkanFormat* format, UI32 currentImage) {
 				// TODO: update
 				DMKUpdateInfo updateInfo = {};
 				updateInfo = format->myRendererFormat->myInternalFormat->myGameObject->draw(eventContainers);
@@ -67,7 +67,7 @@ namespace Dynamik {
 						glm::radians(updateInfo.rotationZ), glm::vec3(1.0f, 0.0f, 0.0f));
 				ubo.view = glm::lookAt(glm::vec3(0.5f, 3.0f, 0.5f), glm::vec3(0.0f, 0.0f, 0.0f),
 					glm::vec3(0.0f, 0.0f, 1.0f));
-				ubo.proj = glm::perspective(glm::radians(45.0f), (float)container->swapchainContainer.swapchainExtent.width / (float)container->swapchainContainer.swapchainExtent.height, 0.001f, 10.0f);
+				ubo.proj = glm::perspective(glm::radians(45.0f), (F32)container->swapchainContainer.swapchainExtent.width / (F32)container->swapchainContainer.swapchainExtent.height, 0.001f, 10.0f);
 				ubo.proj[1][1] *= -1;
 
 				void* data = nullptr;
@@ -78,7 +78,7 @@ namespace Dynamik {
 
 			void uniformBufferManager::clean(ADGRVulkanDataContainer* container, vulkanFormat* format) {
 				// destroy uniformNuffers and uniformBufferMemories
-				for (int x = 0; x < format->myUniformBuffers.size(); x++) {
+				for (I32 x = 0; x < format->myUniformBuffers.size(); x++) {
 					vkDestroyBuffer(container->device, format->myUniformBuffers[x], nullptr);
 					vkFreeMemory(container->device, format->myUniformBufferMemories[x], nullptr);
 				}
@@ -117,7 +117,7 @@ namespace Dynamik {
 				std::array<VkDescriptorSetLayoutBinding, 2> bindings = { uboLayoutBinding, samplerLayoutBinding };
 				VkDescriptorSetLayoutCreateInfo layoutInfo = {};
 				layoutInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_LAYOUT_CREATE_INFO;
-				layoutInfo.bindingCount = static_cast<uint32_t>(bindings.size());
+				layoutInfo.bindingCount = static_cast<UI32>(bindings.size());
 				layoutInfo.pBindings = bindings.data();
 
 				if (vkCreateDescriptorSetLayout(container->device, &layoutInfo, nullptr, &format->myDescriptorSetLayout) != VK_SUCCESS)
@@ -149,7 +149,7 @@ namespace Dynamik {
 				std::array<VkDescriptorSetLayoutBinding, 2> bindings = { uboLayoutBinding, samplerLayoutBinding };
 				VkDescriptorSetLayoutCreateInfo layoutInfo = {};
 				layoutInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_LAYOUT_CREATE_INFO;
-				layoutInfo.bindingCount = static_cast<uint32_t>(bindings.size());
+				layoutInfo.bindingCount = static_cast<UI32>(bindings.size());
 				layoutInfo.pBindings = bindings.data();
 
 				if (vkCreateDescriptorSetLayout(container->device, &layoutInfo, nullptr, descriptorSetLayout) != VK_SUCCESS)
@@ -157,22 +157,22 @@ namespace Dynamik {
 			}
 
 			void uniformBufferManager::initDescriptorPool(ADGRVulkanDataContainer* container, vulkanFormat* format) {
-				for (uint32_t itr = 0; itr < format->myTextureImages.size(); itr++) {
+				for (UI32 itr = 0; itr < format->myTextureImages.size(); itr++) {
 					std::array<VkDescriptorPoolSize, 2> poolSizes = {};
 					poolSizes[0].type = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;
-					poolSizes[0].descriptorCount = static_cast<uint32>(container->swapchainContainer.swapChainImages.size());
+					poolSizes[0].descriptorCount = static_cast<UI32>(container->swapchainContainer.swapChainImages.size());
 
 					//poolSizes[1].type = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;
-					//poolSizes[1].descriptorCount = static_cast<uint32>(swapChainImages.size());
+					//poolSizes[1].descriptorCount = static_cast<UI32>(swapChainImages.size());
 
 					poolSizes[1].type = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
-					poolSizes[1].descriptorCount = static_cast<uint32>(container->swapchainContainer.swapChainImages.size());
+					poolSizes[1].descriptorCount = static_cast<UI32>(container->swapchainContainer.swapChainImages.size());
 
 					VkDescriptorPoolCreateInfo poolInfo = {};
 					poolInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_POOL_CREATE_INFO;
-					poolInfo.poolSizeCount = static_cast<uint32>(poolSizes.size());
+					poolInfo.poolSizeCount = static_cast<UI32>(poolSizes.size());
 					poolInfo.pPoolSizes = poolSizes.data();
-					poolInfo.maxSets = static_cast<uint32>(container->swapchainContainer.swapChainImages.size());
+					poolInfo.maxSets = static_cast<UI32>(container->swapchainContainer.swapChainImages.size());
 
 					VkDescriptorPool _localDescriptorPool = VK_NULL_HANDLE;
 
@@ -187,11 +187,11 @@ namespace Dynamik {
 				std::vector<VkDescriptorSetLayout> layouts(container->swapchainContainer.swapChainImages.size(), format->myDescriptorSetLayout);
 				format->myDescriptorSets.resize(format->myTextureImages.size());
 
-				for (uint32_t itr = 0; itr < format->myTextureImages.size(); itr++) {
+				for (UI32 itr = 0; itr < format->myTextureImages.size(); itr++) {
 					VkDescriptorSetAllocateInfo allocInfo = {};
 					allocInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_ALLOCATE_INFO;
 					allocInfo.descriptorPool = format->myDescriptorPools[itr];
-					allocInfo.descriptorSetCount = static_cast<uint32>(container->swapchainContainer.swapChainImages.size());
+					allocInfo.descriptorSetCount = static_cast<UI32>(container->swapchainContainer.swapChainImages.size());
 					allocInfo.pSetLayouts = layouts.data();
 
 					format->myDescriptorSets[itr].resize(container->swapchainContainer.swapChainImages.size());
@@ -235,7 +235,7 @@ namespace Dynamik {
 						descriptorWrites[1].descriptorCount = 1;
 						descriptorWrites[1].pImageInfo = &imageInfo;
 
-						vkUpdateDescriptorSets(container->device, static_cast<uint32_t>(descriptorWrites.size()),
+						vkUpdateDescriptorSets(container->device, static_cast<UI32>(descriptorWrites.size()),
 							descriptorWrites.data(), 0, nullptr);
 					} // make two descriptor layouts for each descriptor set
 				}

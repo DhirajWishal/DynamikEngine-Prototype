@@ -27,16 +27,16 @@ namespace Dynamik {
 			};
 
 #if defined(DMK_DEBUG)
-			const bool enableValidationLayers = true;
+			const B1 enableValidationLayers = true;
 
 			// ----------
 #else
-			const bool enableValidationLayers = false;
+			const B1 enableValidationLayers = false;
 
 			// ----------
 #endif
 
-			bool checkValidationLayerSupport();
+			B1 checkValidationLayerSupport();
 			void destroyDebugUtilsMessengerEXT(VkInstance, VkDebugUtilsMessengerEXT, const VkAllocationCallbacks*);
 		}
 	}

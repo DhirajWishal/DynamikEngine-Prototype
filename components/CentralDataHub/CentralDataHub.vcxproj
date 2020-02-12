@@ -146,6 +146,7 @@
     <ClInclude Include="src\CentralDataHub.h" />
     <ClInclude Include="src\cdhafx.h" />
     <ClInclude Include="src\core\base\Manager.h" />
+    <ClInclude Include="src\core\dataPipeline.h" />
     <ClInclude Include="src\core\global\constants.h" />
     <ClInclude Include="src\core\global\datatypes.h" />
     <ClInclude Include="src\core\network\messageData.h" />
@@ -157,6 +158,7 @@
     <ClCompile Include="src\cdhafx.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="src\core\dataPipeline.cpp" />
     <ClCompile Include="src\core\network\messageData.cpp" />
     <ClCompile Include="src\core\renderer\vertex.cpp" />
   </ItemGroup>

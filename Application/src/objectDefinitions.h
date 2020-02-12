@@ -45,7 +45,10 @@ struct uniformBufferObject : public Uniform {
 class mars : public GameObject {
 public:
 	mars();
-	mars(GameObjectProperties& props) : GameObject(props) {}
+	mars(GameObjectProperties& props) : GameObject(props) {
+		myProperties.location = "E:/Projects/Dynamik Engine/Game Repository/assets/assets/mars";
+		myProperties.name = "Mars";
+	}
 
 	DMKUpdateInfo draw(std::deque<DMKEventContainer>& eventContainers) override;
 	void init() override;

@@ -10,7 +10,7 @@ namespace Dynamik {
 			using namespace functions;
 
 			void indexBufferManager::createIndexBuffer(ADGRVulkanDataContainer* container, vulkanFormat* format) {
-				for (uint32_t itr = 0; itr < format->myRendererFormat->myInternalFormat->myVertexBufferObjects.size(); itr++) {
+				for (UI32 itr = 0; itr < format->myRendererFormat->myInternalFormat->myVertexBufferObjects.size(); itr++) {
 					VkDeviceSize bufferSize = sizeof(format->myRendererFormat->myInternalFormat->myIndexBufferObjects[itr].at(0))
 						* format->myRendererFormat->myInternalFormat->myIndexBufferObjects[itr].size();
 
@@ -58,7 +58,7 @@ namespace Dynamik {
 			}
 
 			void indexBufferManager::clear(ADGRVulkanDataContainer* container, vulkanFormat* format) {
-				for (uint32_t itr = 0; itr < format->myIndexBuffers.size(); itr++) {
+				for (UI32 itr = 0; itr < format->myIndexBuffers.size(); itr++) {
 					vkDestroyBuffer(container->device, format->myIndexBuffers[itr], nullptr);
 					vkFreeMemory(container->device, format->myIndexBufferMemories[itr], nullptr);
 				}

@@ -101,10 +101,10 @@ namespace Dynamik {
 				VkCommandBuffer commandBuffer = oneTimeCommandBuffer.getCommandBuffers()[0];
 
 				std::vector<VkBufferImageCopy> bufferCopyRegions;
-				uint32_t offset = 0;
+				UI32 offset = 0;
 
-				for (uint32_t face = 0; face < 6; face++) {
-					for (uint32_t level = 0; level < info.mipLevels; level++) {
+				for (UI32 face = 0; face < 6; face++) {
+					for (UI32 level = 0; level < info.mipLevels; level++) {
 						VkBufferImageCopy bufferCopyRegion = {};
 						bufferCopyRegion.imageSubresource.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
 						bufferCopyRegion.imageSubresource.mipLevel = level;
@@ -140,8 +140,8 @@ namespace Dynamik {
 				cpyInfo.commandPool = container->commandBufferContainer.commandPool;
 				cpyInfo.buffer = *info.stagingBuffer;
 				cpyInfo.image = info.textureImage;
-				cpyInfo.width = static_cast<uint32_t>(width);
-				cpyInfo.height = static_cast<uint32_t>(height);
+				cpyInfo.width = static_cast<UI32>(width);
+				cpyInfo.height = static_cast<UI32>(height);
 				cpyInfo.graphicsQueue = container->graphicsQueue;
 
 				copyBufferToImage(cpyInfo);

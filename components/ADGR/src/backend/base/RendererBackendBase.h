@@ -31,17 +31,17 @@
 #include <rendererFormat.h>
 
 #define INC_PROGRESS					(*myProgress += 1)
-#define MULTIPLE_INC_PROGRESS(count)	for (int i_itr__ = 0; i_itr__ < count; i_itr__++) INC_PROGRESS
+#define MULTIPLE_INC_PROGRESS(count)	for (I32 i_itr__ = 0; i_itr__ < count; i_itr__++) INC_PROGRESS
 
 namespace Dynamik {
 	namespace ADGR {
 		struct DMKRendererSettings {
 			std::string myWindowTitle = "Dynamik Engine";
-			uint32_t myWindowWidth = 720;
-			uint32_t myWindowHeight = 480;
+			UI32 myWindowWidth = 720;
+			UI32 myWindowHeight = 480;
 			std::vector<std::string> myWindowIconPaths = { "E:/Projects/Dynamik Engine/Dynamik/core assets/icons/Dynamik.jpg" };
 
-			std::vector<float> clearScreenValues = {							// Vulkan clear screen values
+			std::vector<F32> clearScreenValues = {							// Vulkan clear screen values
 				(2.0f / 256.0f),		// Red
 				(8.0f / 256.0f),		// Green
 				(32.0f / 256.0f),		// Blue
@@ -78,10 +78,10 @@ namespace Dynamik {
 			}
 
 			virtual std::deque<DMKEventContainer>* events() { return &std::deque<DMKEventContainer>(); }	// get event containers
-			virtual bool closeEvent() { return false; }	// get close event
+			virtual B1 closeEvent() { return false; }	// get close event
 
 			/* DEFINED FUNCTION(S) */
-			void setProgress(uint32_t* progress) { myProgress = progress; }	// set progress
+			void setProgress(UI32* progress) { myProgress = progress; }	// set progress
 			void setRendererSettings(DMKRendererSettings settings) { myRendererSettings = settings; }	// set renderer settings
 
 		protected:
@@ -93,9 +93,9 @@ namespace Dynamik {
 			std::vector<std::vector<std::string>> myTexturePaths = {};	// texture paths
 			std::vector<std::string> myShaderPaths = {};	// shader paths
 
-			uint32_t* myProgress = 0;	// progress counter
-			bool compileShaders = false;	// compile shaders command
-			uint32_t myFormatsCount = 0;	// format counter
+			UI32* myProgress = 0;	// progress counter
+			B1 compileShaders = false;	// compile shaders command
+			UI32 myFormatsCount = 0;	// format counter
 		};
 	}
 }

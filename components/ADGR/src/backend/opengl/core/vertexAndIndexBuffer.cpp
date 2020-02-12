@@ -17,13 +17,13 @@ namespace Dynamik {
 					format->myRendererFormat->myInternalFormat->myVertexBufferObjects[0].data(), GL_STATIC_DRAW);
 
 				// position attribute
-				glVertexAttribPointer(0, 3, GL_FLOAT_VEC3, GL_FALSE, 8 * sizeof(float), (void*)0);
+				glVertexAttribPointer(0, 3, GL_FLOAT_VEC3, GL_FALSE, 8 * sizeof(F32), (void*)0);
 				glEnableVertexAttribArray(0);
 				// color attribute
-				glVertexAttribPointer(1, 3, GL_FLOAT_VEC3, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
+				glVertexAttribPointer(1, 3, GL_FLOAT_VEC3, GL_FALSE, 8 * sizeof(F32), (void*)(3 * sizeof(F32)));
 				glEnableVertexAttribArray(1);
 				// texture coord attribute
-				glVertexAttribPointer(2, 2, GL_FLOAT_VEC2, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
+				glVertexAttribPointer(2, 2, GL_FLOAT_VEC2, GL_FALSE, 8 * sizeof(F32), (void*)(6 * sizeof(F32)));
 				glEnableVertexAttribArray(2);
 
 				glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, format->indexBufferObject);
@@ -39,13 +39,13 @@ namespace Dynamik {
 				//glBindVertexArray(format->vertexArrayObject);
 				glBindBuffer(GL_ARRAY_BUFFER, format->vertexBufferObject);
 				// position attribute
-				glVertexAttribPointer(0, 3, GL_FLOAT_VEC3, GL_FALSE, 8 * sizeof(float), (void*)0);
+				glVertexAttribPointer(0, 3, GL_FLOAT_VEC3, GL_FALSE, 8 * sizeof(F32), (void*)0);
 				glEnableVertexAttribArray(0);
 				// color attribute
-				glVertexAttribPointer(1, 3, GL_FLOAT_VEC3, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
+				glVertexAttribPointer(1, 3, GL_FLOAT_VEC3, GL_FALSE, 8 * sizeof(F32), (void*)(3 * sizeof(F32)));
 				glEnableVertexAttribArray(1);
 				// texture coord attribute
-				glVertexAttribPointer(2, 2, GL_FLOAT_VEC2, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
+				glVertexAttribPointer(2, 2, GL_FLOAT_VEC2, GL_FALSE, 8 * sizeof(F32), (void*)(6 * sizeof(F32)));
 				glEnableVertexAttribArray(2);
 
 				glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, format->indexBufferObject);

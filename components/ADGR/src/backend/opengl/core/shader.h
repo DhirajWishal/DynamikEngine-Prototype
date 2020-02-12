@@ -21,13 +21,13 @@ namespace Dynamik {
 				shaderManager() {}
 				~shaderManager() {}
 
-				void init(unsigned int* ID, const std::string& path, DMKOpengGLShaderType shaderType);
+				void init(unsigned I32* ID, const std::string& path, DMKOpengGLShaderType shaderType);
 				void bind(const openglFormat* format);
 				void unbind();
 
-				void updateBool(unsigned int id, const std::string& name, bool value) const;
-				void updateInt(unsigned int id, const std::string& name, int value) const;
-				void updateFloat(unsigned int id, const std::string& name, float value) const;
+				void updateBool(unsigned I32 id, const std::string& name, B1 value) const;
+				void updateInt(unsigned I32 id, const std::string& name, I32 value) const;
+				void updateFloat(unsigned I32 id, const std::string& name, F32 value) const;
 
 				void setTransform(openglFormat* format, std::deque<DMKEventContainer>& eventContainers) const;
 			};

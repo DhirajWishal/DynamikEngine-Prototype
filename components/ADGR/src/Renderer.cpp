@@ -54,7 +54,7 @@ namespace Dynamik {
 		Renderer::~Renderer() {
 		}
 
-		void Renderer::setProgress(uint32_t* progress) {
+		void Renderer::setProgress(UI32* progress) {
 			rendererCore.setProgress(progress);
 		}
 
@@ -97,11 +97,11 @@ namespace Dynamik {
 
 			{
 				std::vector<std::future<void>> threads = {};
-				for (int i = 0; i < internalFormats.size(); i++) {
-					bool isInitiated = false;
+				for (I32 i = 0; i < internalFormats.size(); i++) {
+					B1 isInitiated = false;
 					RendererFormat* _localFormat = &formats->at(i);
 					if (_localFormat->myInternalFormat->myVertexBufferObjects.size())
-						for (uint32_t itr = 0; itr < _localFormat->myInternalFormat->myVertexBufferObjects.size(); itr++)
+						for (UI32 itr = 0; itr < _localFormat->myInternalFormat->myVertexBufferObjects.size(); itr++)
 							if (_localFormat->myInternalFormat->myVertexBufferObjects[itr].size())
 								isInitiated = true;
 					if (isInitiated || _localFormat->myInternalFormat->myGameObject->myProperties.objectPath.size() == 0)
@@ -134,7 +134,7 @@ namespace Dynamik {
 			rendererCore.shutDown();
 		}
 
-		bool Renderer::getWindowCloseEvent() {
+		B1 Renderer::getWindowCloseEvent() {
 			return rendererCore.closeEvent();
 		}
 

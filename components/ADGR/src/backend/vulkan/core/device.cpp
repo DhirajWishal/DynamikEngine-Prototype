@@ -15,8 +15,8 @@ namespace Dynamik {
 		namespace core {
 			using namespace functions;
 
-			bool deviceManager::checkDeviceExtensionSupport(VkPhysicalDevice device) {
-				uint32_t extensionCount = 0;
+			B1 deviceManager::checkDeviceExtensionSupport(VkPhysicalDevice device) {
+				UI32 extensionCount = 0;
 				vkEnumerateDeviceExtensionProperties(device, nullptr, &extensionCount, nullptr);
 
 				std::vector<VkExtensionProperties> availableExtensions(extensionCount);
@@ -30,12 +30,12 @@ namespace Dynamik {
 				return requiredExtensions.empty();
 			}
 
-			bool deviceManager::isDeviceSuitable(VkPhysicalDevice device, VkSurfaceKHR* surface) {
+			B1 deviceManager::isDeviceSuitable(VkPhysicalDevice device, VkSurfaceKHR* surface) {
 				queueFamilyindices indices = findQueueFamilies(device, *surface);
 
-				bool extensionsSupported = checkDeviceExtensionSupport(device);
+				B1 extensionsSupported = checkDeviceExtensionSupport(device);
 
-				bool swapChainAdequate = false;
+				B1 swapChainAdequate = false;
 				if (extensionsSupported) {
 					swapChainSupportDetails swapChainSupport = querySwapChainSupport(&device, surface);
 					swapChainAdequate = !swapChainSupport.formats.empty()
@@ -60,13 +60,13 @@ namespace Dynamik {
 				queueFamilyindices indices = findQueueFamilies(container->physicalDevice, container->surface);
 
 				std::vector<VkDeviceQueueCreateInfo> queueCreateInfos;
-				std::set<uint32> uniqueQueueFamilies = {
+				std::set<UI32> uniqueQueueFamilies = {
 					indices.graphicsFamily.value(),
 					indices.presentFamily.value()
 				};
 
-				float queuePriority = 1.0f;
-				for (uint32 queueFamily : uniqueQueueFamilies) {
+				F32 queuePriority = 1.0f;
+				for (UI32 queueFamily : uniqueQueueFamilies) {
 					VkDeviceQueueCreateInfo queueCreateInfo = {};
 					queueCreateInfo.sType = VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO;
 					queueCreateInfo.queueFamilyIndex = queueFamily;
@@ -81,14 +81,14 @@ namespace Dynamik {
 
 				VkDeviceCreateInfo createInfo = {};
 				createInfo.sType = VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO;
-				createInfo.queueCreateInfoCount = static_cast<uint32>(queueCreateInfos.size());
+				createInfo.queueCreateInfoCount = static_cast<UI32>(queueCreateInfos.size());
 				createInfo.pQueueCreateInfos = queueCreateInfos.data();
 				createInfo.pEnabledFeatures = &deviceFeatures;
-				createInfo.enabledExtensionCount = static_cast<uint32>(deviceExtensions.size());
+				createInfo.enabledExtensionCount = static_cast<UI32>(deviceExtensions.size());
 				createInfo.ppEnabledExtensionNames = deviceExtensions.data();
 
 				if (enableValidationLayers) {
-					createInfo.enabledLayerCount = static_cast<uint32>(validationLayer.size());
+					createInfo.enabledLayerCount = static_cast<UI32>(validationLayer.size());
 					createInfo.ppEnabledLayerNames = validationLayer.data();
 				}
 				else {
@@ -103,7 +103,7 @@ namespace Dynamik {
 			}
 
 			void deviceManager::initPhysicalDevice(ADGRVulkanDataContainer* container) {
-				uint32 deviceCount = 0;
+				UI32 deviceCount = 0;
 				vkEnumeratePhysicalDevices(container->instance, &deviceCount, nullptr);
 
 				if (deviceCount == 0)
@@ -112,7 +112,7 @@ namespace Dynamik {
 				std::vector<VkPhysicalDevice> devices(deviceCount);
 				vkEnumeratePhysicalDevices(container->instance, &deviceCount, devices.data());
 
-				//std::multimap<int, VkPhysicalDevice> candidates;
+				//std::multimap<I32, VkPhysicalDevice> candidates;
 
 				for (const auto& device : devices) {
 					if (isDeviceSuitable(device, &container->surface)) {

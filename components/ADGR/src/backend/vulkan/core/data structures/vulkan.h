@@ -115,17 +115,17 @@ namespace Dynamik {
 				VkBool32 inputAssemblyPrimitiveRestartEnable = VK_FALSE;			// Vulkan primitive assembly restart enable
 
 				// viewport info
-				uint32_t viweportCount = 1;											// Vulkan view port count
+				UI32 viweportCount = 1;											// Vulkan view port count
 
 				// scissor info
-				uint32_t scissorCount = 1;											// Vulkan scissor count
+				UI32 scissorCount = 1;											// Vulkan scissor count
 				std::vector<VkOffset2D> offsets = { { 0, 0 } };						// Vulkan scissor offsets
 
 				// rasterizer info
 				VkBool32 rasterizerDepthClampEnable = VK_FALSE;						// Vulkan rasterizer depth clamp enable
 				VkBool32 rasterizerDiscardEnable = VK_FALSE;						// Vulkan rasterizer discard enable
 				VkPolygonMode rasterizerPolygonMode = VkPolygonMode::VK_POLYGON_MODE_FILL;			// Vulkan rasterizer polygon mode
-				float rasterizerLineWidth = 1.0f;									// Vulkan rasterizer line width
+				F32 rasterizerLineWidth = 1.0f;									// Vulkan rasterizer line width
 				VkCullModeFlagBits rasterizerCullMode = VkCullModeFlagBits::VK_CULL_MODE_BACK_BIT;		// Vulkan rasterizer cull mode
 				VkFrontFace rasterizerFrontFace = VkFrontFace::VK_FRONT_FACE_COUNTER_CLOCKWISE;	// Vulkan rasterizer front face
 				VkBool32 rasterizerDepthBiasEnable = VK_FALSE;						// Vulkan rasterizer depth bias enable
@@ -133,7 +133,7 @@ namespace Dynamik {
 				// multisampling info
 				VkSampleCountFlagBits multisamplerMsaaSamples = VkSampleCountFlagBits::VK_SAMPLE_COUNT_1_BIT;	// Vulkan multisampler MSAA samples
 				VkBool32 multisamplerSampleShadingEnable = VK_TRUE;					// Vulkan multisampler sample shading enable
-				float multisamplerMinSampleShading = 0.2f;							// Vulkan multisampler sample shading
+				F32 multisamplerMinSampleShading = 0.2f;							// Vulkan multisampler sample shading
 
 				// depth stencil info
 				VkBool32 depthStencilEnable = VK_TRUE;								// Vulkan depth stencil enable
@@ -153,8 +153,8 @@ namespace Dynamik {
 
 				VkBool32 colorBlendingLogicOpEnable = VK_FALSE;						// Vulkan color blend blending logical op enable
 				VkLogicOp colorBlendingLogicOp = VkLogicOp::VK_LOGIC_OP_COPY;		// Vulkan color blend blending logical op
-				uint32_t colorBlendingColorBlendCount = 1;							// Vulkan color blend blending count
-				std::vector<float> colorBlendingBlendConstants = {					// Vulkan color blend constants
+				UI32 colorBlendingColorBlendCount = 1;							// Vulkan color blend blending count
+				std::vector<F32> colorBlendingBlendConstants = {					// Vulkan color blend constants
 					0.0f,	// Red
 					0.0f,	// Green
 					0.0f,	// Blue
@@ -162,19 +162,19 @@ namespace Dynamik {
 				};
 
 				// push constants info
-				bool pushConstantsEnable = false;									// Vulkan push constants enable
-				uint32_t pushConstantCount = 1;										// Vulkan push constants count
-				int32_t pushConstantOffset = 0;										// Vulkan push constants offset
+				B1 pushConstantsEnable = false;									// Vulkan push constants enable
+				UI32 pushConstantCount = 1;										// Vulkan push constants count
+				I32 pushConstantOffset = 0;										// Vulkan push constants offset
 
 				// dynamic state info
-				bool dynamicStateEnable = false;									// Vulkan dynamic state enable
+				B1 dynamicStateEnable = false;									// Vulkan dynamic state enable
 				VkPipelineDynamicStateCreateFlags dynamicStateFlags = 0;			// Vulkan dynamic state flags
 
 				// pipeline info
-				uint32_t pipelineStageCount = 2;									// Vulkan pipeline stage count
-				uint32_t pipelineSubPass = 0;										// Vulkan pipeline sub pass
+				UI32 pipelineStageCount = 2;									// Vulkan pipeline stage count
+				UI32 pipelineSubPass = 0;										// Vulkan pipeline sub pass
 				VkPipeline pipelineBasePipelineHandle = VK_NULL_HANDLE;				// Vulkan base pipeline handle
-				uint32_t pipelineBasePipelineIndex = 0;
+				UI32 pipelineBasePipelineIndex = 0;
 			};
 
 			/* COMMAND BUFFER CONTAINER */
@@ -255,7 +255,7 @@ namespace Dynamik {
 				ADGRVulkanSemaphoresAndFencesDataContainer semaphoresAndFencesContainer = {};	// ADGR semaphores and fences container
 
 				/* BLANK SCREEN BACKGROUND COLOR */
-				std::vector<float> clearScreenValues = {							// Vulkan clear screen values
+				std::vector<F32> clearScreenValues = {							// Vulkan clear screen values
 					(2.0f / 256.0f),		// Red
 					(8.0f / 256.0f),		// Green
 					(32.0f / 256.0f),		// Blue
@@ -270,13 +270,13 @@ namespace Dynamik {
 				VkSampleCountFlagBits msaaSamples = VkSampleCountFlagBits::VK_SAMPLE_COUNT_1_BIT;	// Vulkan msaa sample bits
 
 				/* CORE EVENTS */
-				bool frameBufferResizedEvent = false;								// Vulkan GLFW frame buffer resized event
-				unsigned int WIDTH = 720;											// Vulkan GLFW window width
-				unsigned int HEIGHT = 1280;											// Vulkan GLFW window height
+				B1 frameBufferResizedEvent = false;								// Vulkan GLFW frame buffer resized event
+				UI32 WIDTH = 720;													// Vulkan GLFW window width
+				UI32 HEIGHT = 1280;													// Vulkan GLFW window height
 
 				/* CORE MIP LEVELS */
-				float minMipLevel = 0.0f;											// Vulkan minimum mipmap level
-				float maxMipLevel = 0.0f;											// Vulkan maximum mipmap level
+				F32 minMipLevel = 0.0f;											// Vulkan minimum mipmap level
+				F32 maxMipLevel = 0.0f;											// Vulkan maximum mipmap level
 
 				std::array<glm::vec4, 6> pushConstants;								// Vulkan push constants
 			};

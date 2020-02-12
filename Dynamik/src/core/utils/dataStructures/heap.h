@@ -23,54 +23,54 @@ namespace Dynamik {
 		template<class Alloc>
 		class minHeap {
 		public:
-			minHeap(uint32 size);
+			minHeap(UI32 size);
 			~minHeap() {}
 
 			void insert(Alloc value);
 			void pop();
 
-			Alloc getValue(uint32 index);
+			Alloc getValue(UI32 index);
 			std::vector<Alloc> sort();
 
 		private:
-			inline uint32 getLeft(uint32 parent);
-			inline uint32 getRight(uint32 parent);
-			inline uint32 getParent(uint32 child);
+			inline UI32 getLeft(UI32 parent);
+			inline UI32 getRight(UI32 parent);
+			inline UI32 getParent(UI32 child);
 
 			std::vector<Alloc> arr;
-			uint32 myIndex = 0;
+			UI32 myIndex = 0;
 		};
 
 		/* Max Heap Data Structure */
 		template<class Alloc>
 		class maxHeap {
 		public:
-			maxHeap(uint32 size);
+			maxHeap(UI32 size);
 			~maxHeap() {}
 
 			void insert(Alloc value);
 			void pop();
 
-			Alloc getValue(uint32 index);
+			Alloc getValue(UI32 index);
 
 		private:
-			inline uint32 getLeft(uint32 parent);
-			inline uint32 getRight(uint32 parent);
-			inline uint32 getParent(uint32 child);
+			inline UI32 getLeft(UI32 parent);
+			inline UI32 getRight(UI32 parent);
+			inline UI32 getParent(UI32 child);
 
 			std::vector<Alloc> arr;
-			uint32 myIndex;
+			UI32 myIndex;
 		};
 
 		// Exporting/ Importing minHeap class
 		minHeap<int>;
-		minHeap<uint32>;
+		minHeap<UI32>;
 		minHeap<float>;
 		minHeap<double>;
 
 		// Exporting/ Importing maxHeap class
 		maxHeap<int>;
-		maxHeap<uint32>;
+		maxHeap<UI32>;
 		maxHeap<float>;
 		maxHeap<double>;
 	}

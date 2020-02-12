@@ -51,12 +51,12 @@ namespace Dynamik {
 				container->window;
 			}
 
-			void windowManagerGL::framebufferResizeCallback(GLFWwindow* win, int width, int height) {
+			void windowManagerGL::framebufferResizeCallback(GLFWwindow* win, I32 width, I32 height) {
 				auto app = reinterpret_cast<windowManagerGL*>(glfwGetWindowUserPointer(win));
 				app->frameBufferResized = true;
 			}
 
-			void windowManagerGL::onKeyEvent(GLFWwindow* win, int keycode, int scancode, int action, int mods) {
+			void windowManagerGL::onKeyEvent(GLFWwindow* win, I32 keycode, I32 scancode, I32 action, I32 mods) {
 				auto data = reinterpret_cast<windowManagerGL*>(glfwGetWindowUserPointer(win));
 				data->keyEventHandler(DMKEventType::DMK_EVENT_TYPE_KEY_REPEAT, -1);
 
@@ -79,7 +79,7 @@ namespace Dynamik {
 				}
 			}
 
-			void windowManagerGL::onMouseButtonEvent(GLFWwindow* win, int button, int action, int mods) {
+			void windowManagerGL::onMouseButtonEvent(GLFWwindow* win, I32 button, I32 action, I32 mods) {
 				auto data = reinterpret_cast<windowManagerGL*>(glfwGetWindowUserPointer(win));
 				data->mouseButtonEvent(DMKEventType::DMK_EVENT_TYPE_UNKNOWN, -1);
 
@@ -121,12 +121,12 @@ namespace Dynamik {
 				pollEvents();
 			}
 
-			bool windowManagerGL::closeEvent(ADGROpenGLDataContainer* container) {
+			B1 windowManagerGL::closeEvent(ADGROpenGLDataContainer* container) {
 				return glfwWindowShouldClose(container->window);
 			}
 
 			void windowManagerGL::onwindowResizeEvent(ADGROpenGLDataContainer* container) {
-				int width = 0, height = 0;
+				I32 width = 0, height = 0;
 				while (width == 0 || height == 0) {
 					glfwGetFramebufferSize(container->window, &width, &height);
 					glfwWaitEvents();
@@ -134,12 +134,12 @@ namespace Dynamik {
 			}
 
 			void windowManagerGL::setwindowIcon(ADGROpenGLDataContainer* container, std::vector<std::string> paths) {
-				uint32_t _imageCount = paths.size();
+				UI32 _imageCount = paths.size();
 				std::vector<GLFWimage> icons;
 				std::vector<resource::TextureData> texDatas;
 				texDatas.resize(_imageCount);
 
-				for (uint32_t i = 0; i < _imageCount; i++) {
+				for (UI32 i = 0; i < _imageCount; i++) {
 					std::string_view path = paths[i];
 					GLFWimage icon;
 					auto pixels = texDatas[i].loadTexture(path.data(), resource::TEXTURE_TYPE_RGBA);
@@ -156,7 +156,7 @@ namespace Dynamik {
 				glfwSetWindowIcon(container->window, _imageCount, icons.data());
 			}
 
-			void windowManagerGL::keyEventHandler(DMKEventType type, int keycode, int count) {
+			void windowManagerGL::keyEventHandler(DMKEventType type, I32 keycode, I32 count) {
 				DMKEventContainer _localContainer = {};
 				_localContainer.eventType = type;
 				_localContainer.code = keycode;
@@ -164,7 +164,7 @@ namespace Dynamik {
 				eventContainer.push_back(_localContainer);
 			}
 
-			void windowManagerGL::mouseButtonEvent(DMKEventType type, int keycode, int count) {
+			void windowManagerGL::mouseButtonEvent(DMKEventType type, I32 keycode, I32 count) {
 				DMKEventContainer _localContainer = {};
 				_localContainer.eventType = type;
 				_localContainer.code = keycode;
@@ -172,7 +172,7 @@ namespace Dynamik {
 				eventContainer.push_back(_localContainer);
 			}
 
-			void windowManagerGL::mouseScrolledEvent(float xOffset, float yOffset) {
+			void windowManagerGL::mouseScrolledEvent(F32 xOffset, F32 yOffset) {
 				DMKEventContainer _localContainer = {};
 				_localContainer.eventType = DMKEventType::DMK_EVENT_TYPE_MOUSE_SCROLL;
 				_localContainer.xOffset = xOffset;
@@ -180,7 +180,7 @@ namespace Dynamik {
 				eventContainer.push_back(_localContainer);
 			}
 
-			void windowManagerGL::mouseMovedEvent(float xOffset, float yOffset) {
+			void windowManagerGL::mouseMovedEvent(F32 xOffset, F32 yOffset) {
 				DMKEventContainer _localContainer = {};
 				_localContainer.eventType = DMKEventType::DMK_EVENT_TYPE_MOUSE_MOVED;
 				_localContainer.xAxis = xOffset;

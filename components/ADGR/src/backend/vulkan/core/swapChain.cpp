@@ -28,7 +28,7 @@ namespace Dynamik {
 					? VK_COMPOSITE_ALPHA_POST_MULTIPLIED_BIT_KHR
 					: VK_COMPOSITE_ALPHA_INHERIT_BIT_KHR;
 
-				uint32_t imageCount = swapChainSupport.capabilities.minImageCount + 1;
+				UI32 imageCount = swapChainSupport.capabilities.minImageCount + 1;
 				if (swapChainSupport.capabilities.maxImageCount > 0
 					&& imageCount > swapChainSupport.capabilities.maxImageCount)
 					imageCount = swapChainSupport.capabilities.maxImageCount;
@@ -45,7 +45,7 @@ namespace Dynamik {
 				//createInfo.imageUsage = VK_IMAGE_USAGE_TRANSFER_DST_BIT;
 
 				queueFamilyindices indices = Dynamik::ADGR::core::findQueueFamilies(container->physicalDevice, container->surface);
-				uint32_t queueFamilyindices[] = {
+				UI32 queueFamilyindices[] = {
 					indices.graphicsFamily.value(),
 					indices.presentFamily.value()
 				};
@@ -82,7 +82,7 @@ namespace Dynamik {
 				swapChainSupportDetails details;
 				vkGetPhysicalDeviceSurfaceCapabilitiesKHR(device, surface, &details.capabilities);
 
-				uint32_t formatCount;
+				UI32 formatCount;
 				vkGetPhysicalDeviceSurfaceFormatsKHR(device, surface, &formatCount, nullptr);
 
 				if (formatCount != 0) {
@@ -90,7 +90,7 @@ namespace Dynamik {
 					vkGetPhysicalDeviceSurfaceFormatsKHR(device, surface, &formatCount, details.formats.data());
 				}
 
-				uint32_t presentModeCount;
+				UI32 presentModeCount;
 				vkGetPhysicalDeviceSurfacePresentModesKHR(device, surface, &presentModeCount, nullptr);
 
 				if (presentModeCount != 0) {
@@ -106,7 +106,7 @@ namespace Dynamik {
 				swapChainSupportDetails details;
 				vkGetPhysicalDeviceSurfaceCapabilitiesKHR(*device, *surface, &details.capabilities);
 
-				uint32_t formatCount;
+				UI32 formatCount;
 				vkGetPhysicalDeviceSurfaceFormatsKHR(*device, *surface, &formatCount, nullptr);
 
 				if (formatCount != 0) {
@@ -114,7 +114,7 @@ namespace Dynamik {
 					vkGetPhysicalDeviceSurfaceFormatsKHR(*device, *surface, &formatCount, details.formats.data());
 				}
 
-				uint32_t presentModeCount;
+				UI32 presentModeCount;
 				vkGetPhysicalDeviceSurfacePresentModesKHR(*device, *surface, &presentModeCount, nullptr);
 
 				if (presentModeCount != 0) {
@@ -150,7 +150,7 @@ namespace Dynamik {
 			}
 
 			VkExtent2D swapChainManager::chooseSwapExtent(ADGRVulkanDataContainer* container, const VkSurfaceCapabilitiesKHR& capabilities) {
-				if (capabilities.currentExtent.width != std::numeric_limits<uint32_t>::max())
+				if (capabilities.currentExtent.width != std::numeric_limits<UI32>::max())
 					return capabilities.currentExtent;
 				else {
 					VkExtent2D actualExtent = {
@@ -168,15 +168,15 @@ namespace Dynamik {
 			}
 
 			VkExtent2D swapChainManager::chooseSwapExtent(GLFWwindow& window, const VkSurfaceCapabilitiesKHR& capabilities) {
-				if (capabilities.currentExtent.width != std::numeric_limits<uint32_t>::max())
+				if (capabilities.currentExtent.width != std::numeric_limits<UI32>::max())
 					return capabilities.currentExtent;
 				else {
-					int width, height;
+					I32 width, height;
 					glfwGetFramebufferSize(&window, &width, &height);
 
 					VkExtent2D actualExtent = {
-						static_cast<uint32_t>(width),
-						static_cast<uint32_t>(height)
+						static_cast<UI32>(width),
+						static_cast<UI32>(height)
 					};
 
 					actualExtent.width = std::max(capabilities.minImageExtent.width,
@@ -192,7 +192,7 @@ namespace Dynamik {
 				swapChainSupportDetails details;
 				vkGetPhysicalDeviceSurfaceCapabilitiesKHR(*device, *surface, &details.capabilities);
 
-				uint32_t formatCount;
+				UI32 formatCount;
 				vkGetPhysicalDeviceSurfaceFormatsKHR(*device, *surface, &formatCount, nullptr);
 
 				if (formatCount != 0) {
@@ -200,7 +200,7 @@ namespace Dynamik {
 					vkGetPhysicalDeviceSurfaceFormatsKHR(*device, *surface, &formatCount, details.formats.data());
 				}
 
-				uint32_t presentModeCount;
+				UI32 presentModeCount;
 				vkGetPhysicalDeviceSurfacePresentModesKHR(*device, *surface, &presentModeCount, nullptr);
 
 				if (presentModeCount != 0) {
@@ -224,7 +224,7 @@ namespace Dynamik {
 			void swapChainManager::initImageViews(ADGRVulkanDataContainer* container) {
 				container->swapchainContainer.swapchainImageViews.resize(container->swapchainContainer.swapChainImages.size());
 
-				for (uint32_t i = 0; i < container->swapchainContainer.swapChainImages.size(); i++) {
+				for (UI32 i = 0; i < container->swapchainContainer.swapChainImages.size(); i++) {
 					DMKCreateImageViewInfo info;
 					info.device = container->device;
 					info.image = container->swapchainContainer.swapChainImages[i];

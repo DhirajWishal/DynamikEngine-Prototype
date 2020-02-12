@@ -12,8 +12,8 @@ namespace Dynamik {
 					VkDevice device = VK_NULL_HANDLE;
 					VkPhysicalDevice physicalDevice = VK_NULL_HANDLE;
 
-					uint32_t width = 0;
-					uint32_t height = 0;
+					UI32 width = 0;
+					UI32 height = 0;
 
 					VkFormat format = VK_FORMAT_UNDEFINED;
 					VkImage* image = nullptr;
@@ -24,9 +24,9 @@ namespace Dynamik {
 					VkMemoryPropertyFlags properties = VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT;
 					VkSampleCountFlagBits numSamples = VK_SAMPLE_COUNT_1_BIT;
 
-					uint32_t mipLevels = 0;
+					UI32 mipLevels = 0;
 
-					uint32_t arrayLayers = 2;
+					UI32 arrayLayers = 2;
 
 					VkImageCreateFlags flags = VK_IMAGE_CREATE_SPARSE_BINDING_BIT;
 				};
@@ -42,10 +42,10 @@ namespace Dynamik {
 
 					VkQueue graphicsQueue;
 
-					uint32_t mipLevels;
-					uint32_t layerCount;
+					UI32 mipLevels;
+					UI32 layerCount;
 
-					uint32_t arrayLayers = 0;
+					UI32 arrayLayers = 0;
 				};
 
 				struct DMKCreateImageViewInfo {
@@ -55,7 +55,7 @@ namespace Dynamik {
 					VkImageAspectFlags aspectFlags;
 					VkImageView* textureImageView;
 
-					uint32_t mipLevels;
+					UI32 mipLevels;
 				};
 
 				struct DMKCopyBufferToImageInfo {
@@ -65,11 +65,11 @@ namespace Dynamik {
 					VkBuffer buffer;
 					VkImage image;
 
-					uint32_t width;
-					uint32_t height;
+					UI32 width;
+					UI32 height;
 
-					uint32_t baseArrayCount = 0;
-					uint32_t layerCount = 1;
+					UI32 baseArrayCount = 0;
+					UI32 layerCount = 1;
 
 					VkQueue graphicsQueue;
 				};

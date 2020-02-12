@@ -27,7 +27,7 @@ namespace Dynamik {
 				allocInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO;
 				allocInfo.commandPool = container->commandBufferContainer.commandPool;
 				allocInfo.level = VK_COMMAND_BUFFER_LEVEL_PRIMARY;
-				allocInfo.commandBufferCount = static_cast<uint32_t>(container->frameBufferContainer.buffers.size());
+				allocInfo.commandBufferCount = static_cast<UI32>(container->frameBufferContainer.buffers.size());
 
 				if (vkAllocateCommandBuffers(container->device, &allocInfo, container->commandBufferContainer.buffers.data()) != VK_SUCCESS)
 					DMK_CORE_FATAL("failed to allocate command buffers!");
@@ -56,7 +56,7 @@ namespace Dynamik {
 					};
 					clearValues[1].depthStencil = { 1.0f, 0 };
 
-					renderPassInfo.clearValueCount = static_cast<uint32_t>(clearValues.size());
+					renderPassInfo.clearValueCount = static_cast<UI32>(clearValues.size());
 					renderPassInfo.pClearValues = clearValues.data();
 
 					/* BEGIN VULKAN COMMANDS */
@@ -73,7 +73,7 @@ namespace Dynamik {
 					// w component = light radius scale
 
 					/* DRAW COMMANDS */
-					for (int _itr = 0; _itr < formats->size(); _itr++) {
+					for (I32 _itr = 0; _itr < formats->size(); _itr++) {
 #define r 7.5f
 #define sin_t sin(glm::radians(1.5f * 360))
 #define cos_t cos(glm::radians(1.5f * 360))
@@ -102,7 +102,7 @@ namespace Dynamik {
 						else if (formats->at(_itr).myRendererFormat->myRenderTechnology == DMK_ADGR_RENDERING_TECHNOLOGY::DMK_ADGR_RENDER_INDEXED_INDIRECT) {
 						}
 						else if (formats->at(_itr).myRendererFormat->myRenderTechnology == DMK_ADGR_RENDERING_TECHNOLOGY::DMK_ADGR_RENDER_SKYBOX_VERTEX) {		// Render as individual vertexes
-							for (int x = 0; x < formats->at(_itr).myVertexBuffers.size(); x++) {
+							for (I32 x = 0; x < formats->at(_itr).myVertexBuffers.size(); x++) {
 								// bind pipeline
 								vkCmdBindPipeline(container->commandBufferContainer.buffers[i], VK_PIPELINE_BIND_POINT_GRAPHICS, formats->at(_itr).myPipeline);
 
@@ -119,7 +119,7 @@ namespace Dynamik {
 							}
 						}
 						else if (formats->at(_itr).myRendererFormat->myRenderTechnology == DMK_ADGR_RENDERING_TECHNOLOGY::DMK_ADGR_RENDER_SKYBOX_INDEXED) {		// Render as individual indexes
-							for (int x = 0; x < formats->at(_itr).myVertexBuffers.size(); x++) {
+							for (I32 x = 0; x < formats->at(_itr).myVertexBuffers.size(); x++) {
 								// bind pipeline
 								vkCmdBindPipeline(container->commandBufferContainer.buffers[i], VK_PIPELINE_BIND_POINT_GRAPHICS, formats->at(_itr).myPipeline);
 
@@ -171,15 +171,15 @@ namespace Dynamik {
 			// free command buffer and command pool
 			void commandBufferManager::clear(ADGRVulkanDataContainer* container) {
 				vkFreeCommandBuffers(container->device, container->commandBufferContainer.commandPool,
-					static_cast<uint32>(container->commandBufferContainer.buffers.size()),
+					static_cast<UI32>(container->commandBufferContainer.buffers.size()),
 					container->commandBufferContainer.buffers.data());
 
 				vkDestroyCommandPool(container->device, container->commandBufferContainer.commandPool, nullptr);
 			}
 
 			// if drawing in vertex
-			void commandBufferManager::drawVertex(VkCommandBuffer buffer, int index, vulkanFormat* format, VkDeviceSize* offsets) {
-				for (int i = 0; i < format->myVertexBuffers.size(); i++) {
+			void commandBufferManager::drawVertex(VkCommandBuffer buffer, I32 index, vulkanFormat* format, VkDeviceSize* offsets) {
+				for (I32 i = 0; i < format->myVertexBuffers.size(); i++) {
 					// bind pipeline
 					vkCmdBindPipeline(buffer, VK_PIPELINE_BIND_POINT_GRAPHICS, format->myPipeline);
 
@@ -196,8 +196,8 @@ namespace Dynamik {
 			}
 
 			// if drawing in indexed
-			void commandBufferManager::drawIndexed(VkCommandBuffer buffer, int index, vulkanFormat* format, VkDeviceSize* offsets) {
-				for (int i = 0; i < format->myVertexBuffers.size(); i++) {
+			void commandBufferManager::drawIndexed(VkCommandBuffer buffer, I32 index, vulkanFormat* format, VkDeviceSize* offsets) {
+				for (I32 i = 0; i < format->myVertexBuffers.size(); i++) {
 					// bind pipeline
 					vkCmdBindPipeline(buffer, VK_PIPELINE_BIND_POINT_GRAPHICS, format->myPipeline);
 
@@ -217,7 +217,7 @@ namespace Dynamik {
 			}
 
 			/* ONE TIME COMMAND BUFFER CLASS DEFINITION */
-			oneTimeCommandBufferManager::oneTimeCommandBufferManager(VkDevice device, VkCommandPool commandPool, VkQueue graphicsQueue, uint32_t count) {
+			oneTimeCommandBufferManager::oneTimeCommandBufferManager(VkDevice device, VkCommandPool commandPool, VkQueue graphicsQueue, UI32 count) {
 				myDevice = device;
 				myCommandPool = commandPool;
 				myGraphicsQueue = graphicsQueue;
@@ -232,7 +232,7 @@ namespace Dynamik {
 				myCommandBuffers.resize(myCount);
 				vkAllocateCommandBuffers(myDevice, &allocInfo, myCommandBuffers.data());
 
-				for (int i = 0; i < myCount; i++) {
+				for (I32 i = 0; i < myCount; i++) {
 					VkCommandBufferBeginInfo beginInfo = {};
 					beginInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO;
 					beginInfo.flags = VK_COMMAND_BUFFER_USAGE_ONE_TIME_SUBMIT_BIT;
@@ -247,7 +247,7 @@ namespace Dynamik {
 			}
 
 			void oneTimeCommandBufferManager::destroyBuffers() {
-				for (int i = 0; i < myCount; i++)
+				for (I32 i = 0; i < myCount; i++)
 					vkEndCommandBuffer(myCommandBuffers[i]);
 
 				VkSubmitInfo submitInfo = {};

@@ -18,7 +18,7 @@ namespace Dynamik {
 				// local renderer format
 				RendererFormat* myRendererFormat = nullptr;
 
-				void initVertexAndIndexBuffers(int size) {
+				void initVertexAndIndexBuffers(I32 size) {
 					myVertexBuffers.resize(size);
 					myVertexBufferMemories.resize(size);
 					myRendererFormat->myInternalFormat->myVertexCounts.resize(size);
@@ -27,7 +27,7 @@ namespace Dynamik {
 					myRendererFormat->myInternalFormat->myIndexCounts.resize(size);
 				}
 
-				void initTexturesAndDescriptors(int size) {
+				void initTexturesAndDescriptors(I32 size) {
 					myTextureImages.resize(size);
 					myTextureImageMemories.resize(size);
 					myTextureImageViews.resize(size);
@@ -43,7 +43,7 @@ namespace Dynamik {
 				VkPipelineLayout myPipelineLayout = VK_NULL_HANDLE;
 
 				// Textures
-				uint32_t myMipLevel = 1.0f;
+				UI32 myMipLevel = 1.0f;
 				std::vector<VkImage> myTextureImages = {};
 				std::vector<VkDeviceMemory> myTextureImageMemories = {};
 				std::vector<VkSampler> myTextureImageSamplers = {};
@@ -67,7 +67,7 @@ namespace Dynamik {
 				std::vector<VkBuffer> myUniformBuffers = {};
 				std::vector<VkDeviceMemory> myUniformBufferMemories = {};
 
-				bool isInitialized = false;
+				B1 isInitialized = false;
 			};
 		}
 	}

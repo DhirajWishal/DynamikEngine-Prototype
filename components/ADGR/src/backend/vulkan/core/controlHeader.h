@@ -7,11 +7,11 @@
 namespace Dynamik {
 	namespace ADGR {
 		namespace core {
-			inline bool meshShadingSupported = false;
-			inline bool pushDescriptorsSupported = false;
-			inline bool checkpointsSupported = false;
+			inline B1 meshShadingSupported = false;
+			inline B1 pushDescriptorsSupported = false;
+			inline B1 checkpointsSupported = false;
 
-			inline bool VSYNC = true;
+			inline B1 VSYNC = true;
 
 			//#define USE_SHADER_TESSELLATION
 			//#define USE_SHADER_GEOMETRY

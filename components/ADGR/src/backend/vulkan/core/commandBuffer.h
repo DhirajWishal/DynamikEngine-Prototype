@@ -23,21 +23,21 @@ namespace Dynamik {
 				void clear(ADGRVulkanDataContainer* container);
 
 			private:
-				void drawVertex(VkCommandBuffer buffer, int index, vulkanFormat* format, VkDeviceSize* offsets);
-				void drawIndexed(VkCommandBuffer buffer, int index, vulkanFormat* format, VkDeviceSize* offsets);
+				void drawVertex(VkCommandBuffer buffer, I32 index, vulkanFormat* format, VkDeviceSize* offsets);
+				void drawIndexed(VkCommandBuffer buffer, I32 index, vulkanFormat* format, VkDeviceSize* offsets);
 			};
 
 			/* ONE TIME COMMAND BUFFER CLASS */
 			class oneTimeCommandBufferManager {
 			public:
-				oneTimeCommandBufferManager(VkDevice device, VkCommandPool commandPool, VkQueue graphicsQueue, uint32_t count = 1);
+				oneTimeCommandBufferManager(VkDevice device, VkCommandPool commandPool, VkQueue graphicsQueue, UI32 count = 1);
 				~oneTimeCommandBufferManager();
 
 				void destroyBuffers();
 				std::vector<VkCommandBuffer> getCommandBuffers();
 
 			private:
-				uint32_t myCount = 0;
+				UI32 myCount = 0;
 
 				VkDevice myDevice = VK_NULL_HANDLE;
 				VkCommandPool myCommandPool = VK_NULL_HANDLE;
@@ -45,7 +45,7 @@ namespace Dynamik {
 
 				std::vector<VkCommandBuffer> myCommandBuffers = {};
 
-				bool isDestroyed = false;
+				B1 isDestroyed = false;
 			};
 		}
 	}

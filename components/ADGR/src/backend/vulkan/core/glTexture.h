@@ -14,19 +14,19 @@ namespace Dynamik {
 				glTexture(std::string& path);
 				~glTexture();
 
-				void bind(unsigned int slot = 0);
+				void bind(UI32 slot = 0);
 				void unBind();
 
-				inline unsigned int getWidth() const { return myWidth; }
-				inline unsigned int getHeight() const { return myHeight; };
+				inline UI32 getWidth() const { return myWidth; }
+				inline UI32 getHeight() const { return myHeight; };
 
 			private:
-				unsigned int rendererID = 0;
+				UI32 rendererID = 0;
 				std::string filePath = "";
-				unsigned char* localBuffer = nullptr;
-				int myWidth = 0;
-				int myHeight = 0;
-				int myBufferPerPixel = 0;
+				UCPTR localBuffer = nullptr;
+				I32 myWidth = 0;
+				I32 myHeight = 0;
+				I32 myBufferPerPixel = 0;
 			};
 		}
 	}

@@ -22,18 +22,18 @@ namespace Dynamik {
 				void init(ADGRVulkanDataContainer* container);
 				void clear(ADGRVulkanDataContainer* container);
 
-				bool createWindowSurface(ADGRVulkanDataContainer* container);
+				B1 createWindowSurface(ADGRVulkanDataContainer* container);
 
 				void pollEvents();
 				void onUpdate();
-				bool closeEvent(ADGRVulkanDataContainer* container);
+				B1 closeEvent(ADGRVulkanDataContainer* container);
 
 				void onWindowResizeEvent(ADGRVulkanDataContainer* container);
 
 				void setWindowIcon(ADGRVulkanDataContainer* container, std::vector<std::string> paths);
 
-				bool isFrameBufferResized() { return frameBufferResized; }
-				void frameBufferResizedUpdate(bool state) { frameBufferResized = state; }
+				B1 isFrameBufferResized() { return frameBufferResized; }
+				void frameBufferResizedUpdate(B1 state) { frameBufferResized = state; }
 
 				std::deque<DMKEventContainer> getEventContainer() {
 					auto container = eventContainer;
@@ -43,24 +43,24 @@ namespace Dynamik {
 
 			private:
 				std::deque<DMKEventContainer> eventContainer = {};
-				void keyEventHandler(DMKEventType type, int keycode = -1, int count = 0);
-				void mouseButtonEvent(DMKEventType type, int keycode = -1, int count = 0);
-				void mouseScrolledEvent(float xOffset = 0.0f, float yOffset = 0.0f);
-				void mouseMovedEvent(float xOffset = 0.0f, float yOffset = 0.0f);
+				void keyEventHandler(DMKEventType type, I32 keycode = -1, I32 count = 0);
+				void mouseButtonEvent(DMKEventType type, I32 keycode = -1, I32 count = 0);
+				void mouseScrolledEvent(F32 xOffset = 0.0f, F32 yOffset = 0.0f);
+				void mouseMovedEvent(F32 xOffset = 0.0f, F32 yOffset = 0.0f);
 
 				void _drawOnce();
 
-				using eventCallbackFunction = std::function<void(Event&, int)>;
+				using eventCallbackFunction = std::function<void(Event&, I32)>;
 
-				const unsigned int HEIGHT = 720;
-				const unsigned int WIDTH = 1280;
+				const UI32 HEIGHT = 720;
+				const UI32 WIDTH = 1280;
 
-				bool frameBufferResized = false;
+				B1 frameBufferResized = false;
 
-				static void framebufferResizeCallback(GLFWwindow* win, int width, int height);
-				static void onKeyEvent(GLFWwindow* window, int keycode, int scancode,
-					int action, int mods);
-				static void onMouseButtonEvent(GLFWwindow* window, int button, int action, int mods);
+				static void framebufferResizeCallback(GLFWwindow* win, I32 width, I32 height);
+				static void onKeyEvent(GLFWwindow* window, I32 keycode, I32 scancode,
+					I32 action, I32 mods);
+				static void onMouseButtonEvent(GLFWwindow* window, I32 button, I32 action, I32 mods);
 				static void onMouseScrolledEvent(GLFWwindow* window, double xOffset, double yOffset);
 				static void onCursorPosEvent(GLFWwindow* window, double xPos, double yPos);
 				static void onwindowCloseEvent(GLFWwindow* window);

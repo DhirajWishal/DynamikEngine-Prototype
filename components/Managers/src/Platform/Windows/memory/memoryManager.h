@@ -19,65 +19,71 @@ namespace Dynamik {
 		class Allocator {
 		public:
 			Allocator() {}
-			Allocator(uint32 size);
+			Allocator(UI32 size);
 			virtual ~Allocator();
 
-			virtual void* allocate(uint32_t size, uint32_t align, uint32_t offset) { return nullptr; }
-			virtual void deAllocate(uint32_t size, void* data, uint32_t offset) {}
+			virtual VPTR allocate(UI32 size, UI32 align, UI32 offset) { return nullptr; }
+			virtual void deAllocate(VPTR data, UI32 size, UI32 offset) {}
 
 			virtual void pack() {}
 
 		protected:
-			void* memoryPool = nullptr;
-			uint32_t memorySize = 0;
+			template<typename T>
+			VPTR _incrementBy(VPTR address, UI32 size) {
+				return (T*)address + size;
+			}
+
+			VPTR memoryPool = nullptr;
+			UI32 memorySize = 0;
 		};
 
 		/* MAIN DOUBLE BUFFERED ALLOCATOR CLASS */
 		class DoubleBufferedAllocator : public Allocator {
 			DoubleBufferedAllocator() {}
-			DoubleBufferedAllocator(uint32_t size) : Allocator(size) {
-				lowEndPointer = (uint8_t*)memoryPool;
+			DoubleBufferedAllocator(UI32 size) : Allocator(size) {
+				lowEndPointer = (BYTE*)memoryPool;
 				highEndPointer = lowEndPointer + size;
 			}
 			virtual ~DoubleBufferedAllocator() {}
 
-			virtual void* allocateHigh(uint32_t size, uint32_t align, uint32_t offset) { return nullptr; }
-			virtual void* allocateLow(uint32_t size, uint32_t align, uint32_t offset) { return nullptr; }
+			virtual VPTR allocateHigh(UI32 size, UI32 align, UI32 offset) { return nullptr; }
+			virtual VPTR allocateLow(UI32 size, UI32 align, UI32 offset) { return nullptr; }
 
 			virtual void packHigh() {}
 			virtual void packLow() {}
 
 		protected:
-			uint8_t* highEndPointer = nullptr;
-			uint32_t highEndAllocatedSize = 0;
+			BYTE* highEndPointer = nullptr;
+			UI32 highEndAllocatedSize = 0;
 
-			uint8_t* lowEndPointer = nullptr;
-			uint32_t lowEndAllocatedSize = 0;
+			BYTE* lowEndPointer = nullptr;
+			UI32 lowEndAllocatedSize = 0;
 		};
 
 		/* POOL ALLOCATOR CLASS */
 		class poolAllocator : public Allocator {
 		public:
 			poolAllocator() {}
-			poolAllocator(uint32_t size);
+			poolAllocator(UI32 size);
 			~poolAllocator() {}
 
-			void* allocate(uint32_t size, uint32_t align, uint32_t offset) override;
+			VPTR allocate(UI32 size, UI32 align, UI32 offset) override;
+			void deAllocate(VPTR data, UI32 size, UI32 offset) override;
 
 		private:
-			uint8_t* endPointer = nullptr;
-			uint32_t allocatedSize = 0;
+			BYTE* endPointer = nullptr;
+			UI32 allocatedSize = 0;
 		};
 
 		/* DOUBLE BUFFERED STACK ALLOCATOR CLASS */
 		class doubleBufferedStack : public Allocator{
 		public:
 			doubleBufferedStack() {}
-			doubleBufferedStack(uint32_t size);
+			doubleBufferedStack(UI32 size);
 			~doubleBufferedStack();
 
 			template<typename T>
-			T* allocate(uint32_t size, uint32_t align, uint32_t offset) {
+			T* allocate(UI32 size, UI32 align, UI32 offset) {
 				if (size > myMemorySize)
 					return nullptr;
 
@@ -87,11 +93,23 @@ namespace Dynamik {
 				return (T*)endPointer;
 			}
 
-			void deAllocate();
+			void deAllocate() {}
 
 		private:
-			uint8_t* endPointer = nullptr;
-			uint32_t allocatedSize = 0;
+			BYTE* endPointer = nullptr;
+			UI32 allocatedSize = 0;
+		};
+
+		/* MEMORY MANAGER - Manage a set amount of memory */
+		class MemoryManager {
+		public:
+			MemoryManager() {}
+			MemoryManager(UI32 size) : mySize(size) {}
+			~MemoryManager() {}
+
+		private:
+			UI32 mySize = 0;
+			VPTR myAddress = nullptr;
 		};
 	}
 }

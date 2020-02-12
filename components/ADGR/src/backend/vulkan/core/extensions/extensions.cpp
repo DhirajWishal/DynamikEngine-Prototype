@@ -17,8 +17,8 @@
 namespace Dynamik {
 	namespace ADGR {
 		namespace core {
-			std::vector<const char*> getRequiredExtentions(bool vaidationLayer) {
-				uint32 glfwExtentionCount = 0;
+			std::vector<const char*> getRequiredExtentions(B1 vaidationLayer) {
+				UI32 glfwExtentionCount = 0;
 				const char** glfwExtentions;
 				glfwExtentions = glfwGetRequiredInstanceExtensions(&glfwExtentionCount);
 

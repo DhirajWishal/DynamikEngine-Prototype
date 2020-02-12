@@ -85,7 +85,7 @@ namespace Dynamik {
 	struct CameraProperties {
 		DMKCameraType type = DMKCameraType::DMK_CAMERA_TYPE_DEFAULT;
 		float background[4] = { 0.0f, 0.0f, 0.0f, 1.0f };	// r, g, b, a
-		uint32 FOV = 120;
+		UI32 FOV = 120;
 		float depth = 1.0f;
 		bool isHDR = false;
 		bool isOcclusionCulling = true;

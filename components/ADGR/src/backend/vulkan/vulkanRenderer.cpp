@@ -149,7 +149,7 @@ namespace Dynamik {
 
 		// per object shut down functions
 		void vulkanRenderer::shutDownStageTwo() {
-			for (int itr = 0; itr < myFormatsCount; itr++) {
+			for (I32 itr = 0; itr < myFormatsCount; itr++) {
 				vulkanFormat* _localVulkanFormat = &myVulkanFormats[itr];
 
 				// clean pipeline and pipeline layout
@@ -227,7 +227,7 @@ namespace Dynamik {
 
 			// draw call
 			// uniform buffer object update
-			for (int itr = 0; itr < myFormatsCount; itr++)
+			for (I32 itr = 0; itr < myFormatsCount; itr++)
 				myUniformBufferManager.updateBuffer3D(&myVulkanDataContainers[vulkanContainerIndex],
 					myEventContainers, &myVulkanFormats[itr], imageIndex);
 
@@ -294,7 +294,7 @@ namespace Dynamik {
 			initCommandPool();
 
 			// clear swapChain, Pipeline, Uniform buffers and descriptorPool
-			for (int itr = 0; itr < myFormatsCount; itr++) {
+			for (I32 itr = 0; itr < myFormatsCount; itr++) {
 				vulkanFormat* _localVulkanFormat = &myVulkanFormats[itr];
 
 				// clean pipeline and pipeline layout
@@ -319,7 +319,7 @@ namespace Dynamik {
 			// TODO: manually initialization
 			initFrameBuffers();
 
-			for (uint32_t _itr = 0; _itr < myFormatsCount; _itr++) {
+			for (UI32 _itr = 0; _itr < myFormatsCount; _itr++) {
 				vulkanFormat* _localVulkanFormat = &myVulkanFormats[_itr];
 
 				// init pipelines
@@ -367,14 +367,14 @@ namespace Dynamik {
 				}
 			}
 
-			for (int i = 0; i < data.size(); i++) {
+			for (I32 i = 0; i < data.size(); i++) {
 				// create vertexBuffer
 				DMKVulkanRendererCreateVertexBufferInfo vertBuffInfo;
 				vertBuffInfo.vertexBufferObject = data[i].vertexBufferObject;
 				vertBuffInfo.buffer = &data[i].vertexBuffers->at(0);
 				vertBuffInfo.bufferMemory = &data[i].vertexBufferMemories->at(0);
 
-				*data[i].vertexCount = (uint32_t)data[i].vertexBufferObject->size();
+				*data[i].vertexCount = (UI32)data[i].vertexBufferObject->size();
 
 				// create indexBuffer
 				DMKVulkanRendererCreateIndexBufferInfo idxBuffInfo;
@@ -382,7 +382,7 @@ namespace Dynamik {
 				idxBuffInfo.buffer = data[i].indexBuffer;
 				idxBuffInfo.bufferMemory = data[i].indexBufferMemory;
 
-				*data[i].indexCount = (uint32_t)data[i].indexBufferObject->size();
+				*data[i].indexCount = (UI32)data[i].indexBufferObject->size();
 
 				if (enableVertexAndIndexClear) {
 					data[i].vertexBufferObject->clear();
@@ -395,9 +395,9 @@ namespace Dynamik {
 		void vulkanRenderer::initCubemap(DMKObjectData* data) {
 			std::vector<Vertex> _localVertexBufferObject = {};
 
-			float S_SIZE = 2048.0f;
+			F32 S_SIZE = 2048.0f;
 
-			std::vector<std::vector<float>> locations =
+			std::vector<std::vector<F32>> locations =
 			{
 				{-S_SIZE, S_SIZE, -S_SIZE},
 				{-S_SIZE, -S_SIZE, -S_SIZE},
@@ -442,8 +442,8 @@ namespace Dynamik {
 				{S_SIZE, -S_SIZE, S_SIZE  }
 			};
 
-			for (int itr = 0; itr < 6; itr++) {
-				for (int x = itr * 6; x < (itr * 6 + 6); x++) {
+			for (I32 itr = 0; itr < 6; itr++) {
+				for (I32 x = itr * 6; x < (itr * 6 + 6); x++) {
 					Vertex v;
 					v.Position = { locations[x][0], locations[x][1], locations[x][2] };
 					v.Color = { 1.0f, 1.0f, 1.0f };
@@ -458,14 +458,14 @@ namespace Dynamik {
 				vertBuffInfo.bufferMemory = &data->vertexBufferMemories->at(itr);
 				//createVertexBuffer(vertBuffInfo);
 
-				*data->vertexCount = (uint32_t)_localVertexBufferObject.size();
+				*data->vertexCount = (UI32)_localVertexBufferObject.size();
 			}
 		}
 
 		void vulkanRenderer::_addVulkanFormatsToManager(std::vector<RendererFormat>& rendererFormats) {
 			myFormatsCount = rendererFormats.size();
 			myVulkanFormats.clear();
-			for (int i = 0; i < myFormatsCount; i++)
+			for (I32 i = 0; i < myFormatsCount; i++)
 				myVulkanFormats.push_back(vulkanFormat(&rendererFormats[i]));
 		}
 
@@ -529,7 +529,7 @@ namespace Dynamik {
 		void vulkanRenderer::initPipelines(vulkanFormat* myVulkanFormat) {
 			// compile shaders
 			if (compileShaders)
-				for (int itr = 0; itr < myShaderPaths.size(); itr++)
+				for (I32 itr = 0; itr < myShaderPaths.size(); itr++)
 					myShaderManager.compileShaders(myShaderPaths[itr], true);
 
 			// load shaders
@@ -604,7 +604,7 @@ namespace Dynamik {
 
 		// initialize skyboxes and textures
 		void vulkanRenderer::initSkyboxsAndTextures(vulkanFormat* myVulkanFormat) {
-			std::vector<bool> invert = {
+			std::vector<B1> invert = {
 				false,
 				false,
 				false,
@@ -614,15 +614,15 @@ namespace Dynamik {
 			};
 
 			// textures and skyboxes
-			int texturePathSize = myVulkanFormat->myRendererFormat->myInternalFormat->myGameObject->myProperties.texturePaths.size();
-			float mipLevels = myVulkanFormat->myRendererFormat->myInternalFormat->myMipLevel;
+			I32 texturePathSize = myVulkanFormat->myRendererFormat->myInternalFormat->myGameObject->myProperties.texturePaths.size();
+			F32 mipLevels = myVulkanFormat->myRendererFormat->myInternalFormat->myMipLevel;
 			myVulkanFormat->myTextureImages.resize(texturePathSize);
 			myVulkanFormat->myTextureImageMemories.resize(texturePathSize);
 			myVulkanFormat->myTextureImageSamplers.resize(texturePathSize);
 			myVulkanFormat->myTextureImageViews.resize(texturePathSize);
 
 			if (myVulkanFormat->myRendererFormat->myInternalFormat->myGameObject->myProperties.type == DMKObjectType::DMK_OBJECT_TYPE_SKYBOX) {
-				for (int itr = 0; itr < texturePathSize; itr++) {
+				for (I32 itr = 0; itr < texturePathSize; itr++) {
 					// skybox
 					DMKInitCubemapInfo cubemapInfo = {};
 					cubemapInfo.path = myVulkanFormat->myRendererFormat->myInternalFormat->myGameObject->myProperties.texturePaths[itr];
@@ -638,7 +638,7 @@ namespace Dynamik {
 			}
 			else {
 				// texture
-				for (int itr = 0; itr < texturePathSize; itr++) {
+				for (I32 itr = 0; itr < texturePathSize; itr++) {
 					// texture creation - init
 					DMKInitTextureInfo textureInfo;
 					textureInfo.path = myVulkanFormat->myRendererFormat->myInternalFormat->myGameObject->myProperties.texturePaths[itr];
@@ -711,7 +711,7 @@ namespace Dynamik {
 
 		// initialize individual objects
 		void vulkanRenderer::initObjectBasedFunctions(std::vector<vulkanFormat>* myVulkanFormats) {
-			for (uint32_t _itr = 0; _itr < myVulkanFormats->size(); _itr++) {
+			for (UI32 _itr = 0; _itr < myVulkanFormats->size(); _itr++) {
 				vulkanFormat* _localVulkanFormat = &myVulkanFormats->at(_itr);
 				if (_localVulkanFormat->isInitialized)
 					continue;

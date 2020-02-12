@@ -22,7 +22,7 @@ namespace Dynamik {
 
 				void createBuffer(DMKCreateBufferInfo info);
 
-				uint32_t findMemoryType(uint32_t typeFilter, VkMemoryPropertyFlags properties,
+				UI32 findMemoryType(UI32 typeFilter, VkMemoryPropertyFlags properties,
 					VkPhysicalDevice physicalDevice);
 
 				void copyBuffer(VkDevice device, VkBuffer srcBuffer, VkBuffer dstBuffer, VkDeviceSize size,
@@ -30,7 +30,7 @@ namespace Dynamik {
 
 				VkSampleCountFlagBits getMaxUsableSampleCount(VkPhysicalDevice physicalDevice);
 
-				bool hasStencilComponent(VkFormat format);
+				B1 hasStencilComponent(VkFormat format);
 
 				VkFormat findSupportedFormat(const std::vector<VkFormat>& candidates,
 					VkImageTiling tiling, VkFormatFeatureFlags features, VkPhysicalDevice physicalDevice);

@@ -4,10 +4,10 @@
 namespace Dynamik {
 	namespace utils {
 		// to the (=)pow(base, exponent);
-		int64 pow(int32 base, int16 exp) {
-			int64 res = 1;
+		I64 pow(int base, I16 exp) {
+			I64 res = 1;
 
-			for (int16 a = 0; a <= exp; a++)
+			for (I16 a = 0; a <= exp; a++)
 				res *= base;
 
 			return res;

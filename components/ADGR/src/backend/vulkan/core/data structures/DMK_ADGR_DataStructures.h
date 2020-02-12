@@ -17,18 +17,18 @@ namespace Dynamik {
 
 			struct DMKObjectData {
 				std::string path = "";
-				std::vector<float> offsets = { 0.0f, 0.0f, 0.0f };
+				std::vector<F32> offsets = { 0.0f, 0.0f, 0.0f };
 
 				std::vector<Vertex>* vertexBufferObject = {};
 				std::vector<VkBuffer>* vertexBuffers = {};
 				std::vector<VkDeviceMemory>* vertexBufferMemories = {};
 
-				std::vector<uint32_t>* indexBufferObject = {};
+				std::vector<UI32>* indexBufferObject = {};
 				VkBuffer* indexBuffer = VK_NULL_HANDLE;
 				VkDeviceMemory* indexBufferMemory = VK_NULL_HANDLE;
 
-				uint32_t* vertexCount = 0;
-				uint32_t* indexCount = 0;
+				UI32* vertexCount = 0;
+				UI32* indexCount = 0;
 			};
 
 			enum DMKVulkanRendererCreateBufferType {
@@ -51,7 +51,7 @@ namespace Dynamik {
 				VkBuffer* buffer = VK_NULL_HANDLE;
 				VkDeviceMemory* bufferMemory = VK_NULL_HANDLE;
 
-				std::vector<uint32_t>* indexBufferObject = {};
+				std::vector<UI32>* indexBufferObject = {};
 			};
 
 			struct DMKVulkanRendererCreateUniformBufferInfo {
@@ -81,7 +81,7 @@ namespace Dynamik {
 				VkImageView imageView = VK_NULL_HANDLE;
 				VkSampler sampler = VK_NULL_HANDLE;
 
-				uint32_t mipLevels = 1;
+				UI32 mipLevels = 1;
 			};
 
 			struct DMKVulkanVertexBuffer {
@@ -92,7 +92,7 @@ namespace Dynamik {
 			};
 
 			struct DMKVulkanIndexBuffer {
-				std::vector<uint32_t> indexBuffers = {};
+				std::vector<UI32> indexBuffers = {};
 
 				VkBuffer buffer = VK_NULL_HANDLE;
 				VkDeviceMemory bufferMemory = VK_NULL_HANDLE;
@@ -101,7 +101,7 @@ namespace Dynamik {
 			struct DMKVulkanSkyboxCommandBufferBindData {
 				VkBuffer vertexBuffer = VK_NULL_HANDLE;
 				VkBuffer indexBuffer = VK_NULL_HANDLE;
-				std::vector<uint32_t> indexes = {};
+				std::vector<UI32> indexes = {};
 
 				VkPipeline pipeline = VK_NULL_HANDLE;
 				VkDescriptorSet descriptorSet = VK_NULL_HANDLE;
@@ -117,7 +117,7 @@ namespace Dynamik {
 				VkFormat skyboxFormat = VK_FORMAT_UNDEFINED;
 				VkDeviceMemory skyboxMemory = VK_NULL_HANDLE;
 
-				uint32_t mipLevels = NULL;
+				UI32 mipLevels = NULL;
 
 				DMKVulkanSkyboxCommandBufferBindData commandBufferBindData = {};
 

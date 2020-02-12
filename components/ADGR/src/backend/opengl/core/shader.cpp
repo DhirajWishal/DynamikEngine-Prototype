@@ -5,7 +5,7 @@
 namespace Dynamik {
 	namespace ADGR {
 		namespace core {
-			void shaderManager::init(unsigned int* ID, const std::string& path, DMKOpengGLShaderType shaderType) {
+			void shaderManager::init(unsigned I32* ID, const std::string& path, DMKOpengGLShaderType shaderType) {
 				std::string shaderCode;
 				std::ifstream shaderFile;
 				// ensure ifstream objects can throw exceptions:
@@ -26,8 +26,8 @@ namespace Dynamik {
 				}
 
 				const char* shaderCodeCCP = shaderCode.c_str();
-				unsigned int shader = 0;
-				int success;
+				unsigned I32 shader = 0;
+				I32 success;
 				char infoLog[512];
 
 				if (shaderType == DMKOpengGLShaderType::DMK_ADGR_OPENGL_SHADER_TYPE_VERTEX)
@@ -59,15 +59,15 @@ namespace Dynamik {
 			void shaderManager::unbind() {
 			}
 
-			void shaderManager::updateBool(unsigned int id, const std::string& name, bool value) const {
-				glUniform1i(glGetUniformLocation(id, name.c_str()), (int)value);
+			void shaderManager::updateBool(unsigned I32 id, const std::string& name, B1 value) const {
+				glUniform1i(glGetUniformLocation(id, name.c_str()), (I32)value);
 			}
 
-			void shaderManager::updateInt(unsigned int id, const std::string& name, int value) const {
+			void shaderManager::updateInt(unsigned I32 id, const std::string& name, I32 value) const {
 				glUniform1i(glGetUniformLocation(id, name.c_str()), value);
 			}
 
-			void shaderManager::updateFloat(unsigned int id, const std::string& name, float value) const {
+			void shaderManager::updateFloat(unsigned I32 id, const std::string& name, F32 value) const {
 				glUniform1f(glGetUniformLocation(id, name.c_str()), value);
 			}
 
@@ -83,7 +83,7 @@ namespace Dynamik {
 						glm::radians(updateInfo.rotationZ), glm::vec3(1.0f, 0.0f, 0.0f));
 				glm::mat4 view = glm::lookAt(glm::vec3(0.5f, 3.0f, 0.5f), glm::vec3(0.0f, 0.0f, 0.0f),
 					glm::vec3(0.0f, 0.0f, 1.0f));
-				glm::mat4 proj = glm::perspective(glm::radians(45.0f), (float)1280 / (float)720, 0.001f, 10.0f);	// width, height
+				glm::mat4 proj = glm::perspective(glm::radians(45.0f), (F32)1280 / (F32)720, 0.001f, 10.0f);	// width, height
 				proj[1][1] *= -1;
 
 				glUniformMatrix4fv(glGetUniformLocation(format->myShaderID, "model"), 1, GL_FALSE, &model[0][0]);

@@ -27,7 +27,7 @@ namespace Dynamik {
 				VkShaderModule createShaderModule(VkDevice device, DMK_ShaderCode& code);
 				void deleteShaders(ADGRVulkanDataContainer& container, ADGRVulkanPipelineDataContainer& pipelineContainer);
 
-				void compileShaders(std::string path, bool activate);
+				void compileShaders(std::string path, B1 activate);
 
 			private:
 				std::string command = "";

@@ -62,13 +62,13 @@ namespace Dynamik {
 
 				// Clear a sub resource from the manager
 				template<typename _Type>
-				void clearResource(int index, DMKManagerResourceType type = DMK_CDH_MANAGER_RESOURCE_TYPE_UNKNOWN) {
+				void clearResource(I32 index, DMKManagerResourceType type = DMK_CDH_MANAGER_RESOURCE_TYPE_UNKNOWN) {
 					(std::vector<_Type>*)_resource(type)->at(index).clear();
 				}
 
 				// Allocate a size to a perticular store
 				template<typename _Type>
-				void allocate(DMKManagerResourceType type = DMK_CDH_MANAGER_RESOURCE_TYPE_UNKNOWN, int size = 1) {
+				void allocate(DMKManagerResourceType type = DMK_CDH_MANAGER_RESOURCE_TYPE_UNKNOWN, I32 size = 1) {
 					((std::vector<_Type>*)_resource(type))->resize(size);
 				}
 
@@ -86,8 +86,8 @@ namespace Dynamik {
 
 				// Get a resource from the manager
 				template<typename _Type>
-				_Type& getResource(DMKManagerResourceType type = DMK_CDH_MANAGER_RESOURCE_TYPE_UNKNOWN, int index = 0) {
-					int _resourceSize = ((std::vector<_Type>*)_resource(type))->size();
+				_Type& getResource(DMKManagerResourceType type = DMK_CDH_MANAGER_RESOURCE_TYPE_UNKNOWN, I32 index = 0) {
+					I32 _resourceSize = ((std::vector<_Type>*)_resource(type))->size();
 
 					if (index > _resourceSize)
 						DMK_CORE_FATAL("Invalid resource index!");
@@ -97,8 +97,8 @@ namespace Dynamik {
 
 				// Get a resource address from the manager
 				template<typename _Type>
-				_Type* getResourceAddr(DMKManagerResourceType type = DMK_CDH_MANAGER_RESOURCE_TYPE_UNKNOWN, int index = 0) {
-					int _resourceSize = ((std::vector<_Type>*)_resource(type))->size();
+				_Type* getResourceAddr(DMKManagerResourceType type = DMK_CDH_MANAGER_RESOURCE_TYPE_UNKNOWN, I32 index = 0) {
+					I32 _resourceSize = ((std::vector<_Type>*)_resource(type))->size();
 
 					if (index > _resourceSize)
 						DMK_CORE_FATAL("Invalid resource index!");
@@ -108,13 +108,13 @@ namespace Dynamik {
 
 				// Get resource size (array size)
 				template<typename _Type>
-				int getResourceSize(DMKManagerResourceType type = DMK_CDH_MANAGER_RESOURCE_TYPE_UNKNOWN) const {
+				I32 getResourceSize(DMKManagerResourceType type = DMK_CDH_MANAGER_RESOURCE_TYPE_UNKNOWN) const {
 					return ((std::vector<_Type>*)_resource(type))->size();
 				}
 
 				// Get resource size (array size) with an index
 				template<typename _Type>
-				int getResourceSize(DMKManagerResourceType type = DMK_CDH_MANAGER_RESOURCE_TYPE_UNKNOWN, int index = 0) {
+				I32 getResourceSize(DMKManagerResourceType type = DMK_CDH_MANAGER_RESOURCE_TYPE_UNKNOWN, I32 index = 0) {
 					return ((std::vector<_Type>*)_resource(type))->at(index).size();
 				}
 
@@ -357,7 +357,7 @@ namespace Dynamik {
 				_SET_2D_VECTOR(Vertex) vertexBufferObjects = {};
 				_SET_2D_VECTOR(VkBuffer) vertexBuffers = {};
 				_SET_2D_VECTOR(VkDeviceMemory) vertexBufferMemories = {};
-				_SET_2D_VECTOR(uint32_t) indexBufferObjects = {};
+				_SET_2D_VECTOR(UI32) indexBufferObjects = {};
 				_SET_2D_VECTOR(VkBuffer) indexBuffers = {};
 				_SET_2D_VECTOR(VkDeviceMemory) indexBufferMemories = {};
 				_SET_2D_VECTOR(VkBuffer) uniformBuffers = {};

@@ -49,12 +49,6 @@ namespace Dynamik {
 			return;
 		}
 
-		{
-			manager::doubleBufferedStack myAllocator(10);
-
-			int* myPtr = myAllocator.allocate<int>(5, 0, 0);
-		}
-
 		gameObjectInitialization();
 
 		std::thread myThread(Application::showProgress);
@@ -134,16 +128,16 @@ namespace Dynamik {
 						while (!(*canFinish)) {
 							DMK_CORE_INFO("In Subroutine");
 							auto events = application->myRenderingEngine.getEvents();
-					
+
 							application->myRenderingEngine.draw();
 							application->myEngine.update();
 							application->onEvent(events);
-					
+
 							for (auto layer : application->layerStack)
 								layer->update();
 						}
 						}, this, &canFinish);
-					
+
 					getObjectPaths(&myObject);
 					initAudioControllers(&myObject);
 					std::vector<InternalFormat*> _localInternalFormatBases;
@@ -428,86 +422,4 @@ namespace Dynamik {
 			|| (format.myGameObject->myProperties.type == DMKObjectType::DMK_OBJECT_TYPE_FONT)
 			|| (format.myGameObject->myProperties.type == DMKObjectType::DMK_OBJECT_TYPE_PARTICLE);
 	}
-
-	// function to load object data
-	//void Application::vertexAndIndexLoader(DMKModelLoadInfo& loadInfo) {
-	//	std::vector<utils::DMKObjectDataContainer> _containers = {};
-	//
-	//	if (loadInfo.path.find(".obj") != std::string::npos)
-	//		//_containers = utils::loadObjFileData(loadInfo.path);
-	//		;
-	//	std::unordered_map<Vertex, uint32_t> _uniqueVertices = {};
-	//
-	//	for (auto container : _containers) {
-	//		if (container.myIndexCount)
-	//			for (int i = 0; i < container.myIndexCount; i++) {
-	//				Vertex vertices = {};
-	//				if (container.myNormalIndex.size())
-	//					container.myNormalIndex[i];
-	//
-	//				if (container.myVertexIndex.size())
-	//					vertices.Position = {
-	//						container.myVertices[container.myVertexIndex[i]][0] + loadInfo.vertexOffset[0],
-	//						container.myVertices[container.myVertexIndex[i]][1] + loadInfo.vertexOffset[1],
-	//						container.myVertices[container.myVertexIndex[i]][2] + loadInfo.vertexOffset[2]
-	//				};
-	//				else
-	//					vertices.Position = {
-	//						1.0f,
-	//						1.0f,
-	//						1.0f
-	//				};
-	//
-	//				if (container.myTextureCoordinateIndex.size())
-	//					vertices.TexCoordinates = {
-	//						container.myTextureCoordinates[container.myTextureCoordinateIndex[i]][0],
-	//						1.0f - container.myTextureCoordinates[container.myTextureCoordinateIndex[i]][1]
-	//				};
-	//				else
-	//					vertices.TexCoordinates = {
-	//						0.5f, 0.5f
-	//				};
-	//
-	//				vertices.Color = {
-	//					1.0f,
-	//					1.0f,
-	//					1.0f
-	//				};
-	//
-	//				if (!_uniqueVertices.count(vertices)) {
-	//					_uniqueVertices[vertices] = static_cast<uint32_t>(loadInfo.vertices->size());
-	//					loadInfo.vertices->push_back(vertices);
-	//				}
-	//
-	//				loadInfo.indices->push_back(_uniqueVertices[vertices]);
-	//			}
-	//		else
-	//			for (int i = 0; i < container.myVertices.size(); i++) {
-	//				Vertex vertices = {};
-	//
-	//				vertices.Position = {
-	//					container.myVertices[i][0] + loadInfo.vertexOffset[0],
-	//					container.myVertices[i][1] + loadInfo.vertexOffset[1],
-	//					container.myVertices[i][2] + loadInfo.vertexOffset[2]
-	//				};
-	//
-	//				vertices.TexCoordinates = {
-	//					0.5f, 0.5f
-	//				};
-	//
-	//				vertices.Color = {
-	//					1.0f,
-	//					1.0f,
-	//					1.0f
-	//				};
-	//
-	//				if (!_uniqueVertices.count(vertices)) {
-	//					_uniqueVertices[vertices] = static_cast<uint32_t>(loadInfo.vertices->size());
-	//					loadInfo.vertices->push_back(vertices);
-	//				}
-	//
-	//				loadInfo.indices->push_back(_uniqueVertices[vertices]);
-	//			}
-	//	}
-	//}
 }

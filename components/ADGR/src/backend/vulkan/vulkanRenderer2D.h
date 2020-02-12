@@ -24,7 +24,7 @@ namespace Dynamik {
 
 
 			std::deque<DMKEventContainer>* events() override;
-			inline bool closeEvent() override { return true; }
+			inline B1 closeEvent() override { return true; }
 
 			void setFormats(std::vector<RendererFormat>& rendererFormats) override;
 			void updateFormats(std::vector<RendererFormat>& rendererFormats) override;

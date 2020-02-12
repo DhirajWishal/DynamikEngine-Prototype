@@ -36,11 +36,11 @@ namespace Dynamik {
 					vkBindBufferMemory(info.device, *info.buffer, *info.bufferMemory, 0);
 				}
 
-				uint32_t findMemoryType(uint32_t typeFilter, VkMemoryPropertyFlags properties, VkPhysicalDevice physicalDevice) {
+				UI32 findMemoryType(UI32 typeFilter, VkMemoryPropertyFlags properties, VkPhysicalDevice physicalDevice) {
 					VkPhysicalDeviceMemoryProperties memProperties;
 					vkGetPhysicalDeviceMemoryProperties(physicalDevice, &memProperties);
 
-					for (uint32_t i = 0; i < memProperties.memoryTypeCount; i++)
+					for (UI32 i = 0; i < memProperties.memoryTypeCount; i++)
 						if ((typeFilter & (1 << i)) && (memProperties.memoryTypes[i].propertyFlags
 							& properties) == properties)
 							return i;
@@ -89,7 +89,7 @@ namespace Dynamik {
 					);
 				}
 
-				bool hasStencilComponent(VkFormat format) {
+				B1 hasStencilComponent(VkFormat format) {
 					return format == VK_FORMAT_D32_SFLOAT_S8_UINT || format == VK_FORMAT_D24_UNORM_S8_UINT;
 				}
 

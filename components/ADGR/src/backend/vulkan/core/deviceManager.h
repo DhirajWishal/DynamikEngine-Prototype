@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef _DYNAMIK_ADGR_VULKAN_DEVICE_H
-#define _DYNAMIK_ADGR_VULKAN_DEVICE_H
+#ifndef _DYNAMIK_ADGR_VULKAN_DEVICE_MANAGER_H
+#define _DYNAMIK_ADGR_VULKAN_DEVICE_MANAGER_H
 #ifdef DMK_USE_VULKAN
 
 #include "backend/vulkan/core/data structures/vulkan.h"

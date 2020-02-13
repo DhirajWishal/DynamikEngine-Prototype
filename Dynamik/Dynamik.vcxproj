@@ -149,6 +149,8 @@
     <ClInclude Include="GameLibraries\KeyBingings.h" />
     <ClInclude Include="GameLibraries\Level.h" />
     <ClInclude Include="GameLibraries\Scene.h" />
+    <ClInclude Include="src\core\utils\bfs.h" />
+    <ClInclude Include="src\core\utils\graph.h" />
     <ClInclude Include="src\Dynamik.h" />
     <ClInclude Include="src\core\application.h" />
     <ClInclude Include="src\core\core.h" />
@@ -171,6 +173,7 @@
     <ClCompile Include="src\core\application.cpp" />
     <ClCompile Include="src\core\data store\internalFormat.cpp" />
     <ClCompile Include="src\core\object mechanics\loadGameObjects.cpp" />
+    <ClCompile Include="src\core\utils\bfs.cpp" />
     <ClCompile Include="src\core\utils\DMK_Functions.cpp" />
     <ClCompile Include="src\core\utils\DMK_Math.cpp" />
     <ClCompile Include="src\core\utils\dataStructures\heap.cpp" />

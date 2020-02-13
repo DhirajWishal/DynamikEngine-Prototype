@@ -1,13 +1,13 @@
 #include "adgrafx.h"
-#ifdef DMK_USE_VULKAN
-#include "skybox.h"
+#include "skyboxManager.h"
 
 #include "functions/textureFunctions.h"
 #include "functions/bufferFunctions.h"
 #include "Platform/Windows/resource/imageLoader.h"
 
-#include "commandBuffer.h"
+#include "commandBufferManager.h"
 
+#ifdef DMK_USE_VULKAN
 namespace Dynamik {
 	namespace ADGR {
 		namespace core {

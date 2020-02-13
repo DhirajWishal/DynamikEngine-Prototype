@@ -1,5 +1,5 @@
 #include "adgrafx.h"
-#include "vertexBuffer.h"
+#include "vertexBufferManager.h"
 
 #include "functions/bufferFunctions.h"
 

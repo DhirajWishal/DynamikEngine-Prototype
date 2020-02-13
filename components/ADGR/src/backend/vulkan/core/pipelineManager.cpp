@@ -1,9 +1,9 @@
 #include "adgrafx.h"
-#ifdef DMK_USE_VULKAN
-#include "pipeline.h"
+#include "pipelineManager.h"
 
 #include "functions/bufferFunctions.h"
 
+#ifdef DMK_USE_VULKAN
 namespace Dynamik {
 	namespace ADGR {
 		namespace core {

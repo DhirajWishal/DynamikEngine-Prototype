@@ -1,10 +1,10 @@
 #include "adgrafx.h"
-#ifdef DMK_USE_VULKAN
-#include "instance.h"
+#include "instanceManager.h"
 
 #include "validators/validators.h"
 #include "extensions/extensions.h"
 
+#ifdef DMK_USE_VULKAN
 namespace Dynamik {
 	namespace ADGR {
 		namespace core {

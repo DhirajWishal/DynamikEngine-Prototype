@@ -1,5 +1,5 @@
 #include "adgrafx.h"
-#include "indexBuffer.h"
+#include "indexBufferManager.h"
 
 #include "functions/bufferFunctions.h"
 

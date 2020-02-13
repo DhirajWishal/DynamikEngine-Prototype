@@ -1,10 +1,10 @@
 #include "adgrafx.h"
-#ifdef DMK_USE_VULKAN
-#include "depthBuffer.h"
+#include "depthBufferManager.h"
 
 #include "functions/bufferFunctions.h"
 #include "functions/textureFunctions.h"
 
+#ifdef DMK_USE_VULKAN
 namespace Dynamik {
 	namespace ADGR {
 		namespace core {

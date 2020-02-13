@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef _DYNAMIK_ADGR_VULKAN_window_H
-#define _DYNAMIK_ADGR_VULKAN_window_H
+#ifndef _DYNAMIK_ADGR_VULKAN_WINDOW_MANAGER_H
+#define _DYNAMIK_ADGR_VULKAN_WINDOW_MANAGER_H
 #ifdef DMK_USE_VULKAN
 
 #include <deque>

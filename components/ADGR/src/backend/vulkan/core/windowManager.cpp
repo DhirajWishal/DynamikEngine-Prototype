@@ -1,6 +1,5 @@
 ﻿#include "adgrafx.h"
-#ifdef DMK_USE_VULKAN
-#include "window.h"
+#include "windowManager.h"
 
 #include "keyEvent.h"
 #include "mouseEvent.h"
@@ -9,6 +8,7 @@
 
 #include "Platform/windows/resource/imageLoader.h"
 
+#ifdef DMK_USE_VULKAN
 namespace Dynamik {
 	namespace ADGR {
 		namespace core {

@@ -1,12 +1,12 @@
 #include "adgrafx.h"
-#ifdef DMK_USE_VULKAN
-#include "uniformBuffer.h"
+#include "uniformBufferManager.h"
 
 #include "queues/queues.h"
 #include "functions/bufferFunctions.h"
 
 #include "data structures/Uniform.h"
 
+#ifdef DMK_USE_VULKAN
 namespace Dynamik {
 	namespace ADGR {
 		namespace core {

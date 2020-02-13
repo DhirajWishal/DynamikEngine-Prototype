@@ -1,15 +1,15 @@
 #include "adgrafx.h"
-#ifdef DMK_USE_VULKAN
-#include "device.h"
+#include "deviceManager.h"
 
 #include "extensions/extensions.h"
 #include "validators/validators.h"
 #include "queues/queues.h"
 #include "controlHeader.h"
-#include "swapChain.h"
+#include "swapChainManager.h"
 
 #include "functions/bufferFunctions.h"
 
+#ifdef DMK_USE_VULKAN
 namespace Dynamik {
 	namespace ADGR {
 		namespace core {

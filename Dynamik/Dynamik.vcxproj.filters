@@ -99,6 +99,8 @@
     <ClInclude Include="src\dmkafx.h">
       <Filter>src</Filter>
     </ClInclude>
+    <ClInclude Include="src\core\utils\bfs.h" />
+    <ClInclude Include="src\core\utils\graph.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\core\application.cpp">
@@ -128,6 +130,7 @@
     <ClCompile Include="src\dmkafx.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="src\core\utils\bfs.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="IMPORTANT.txt" />

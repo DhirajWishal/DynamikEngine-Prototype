@@ -20,7 +20,7 @@
 #include "GLFW/glfw3.h"
 #include "data structures/vulkan.h"
 #include "GameObject.h"
-#include "commandBuffer.h"
+#include "commandBufferManager.h"
 #include "vulkanFormat.h"
 
 #include "core/log.h"

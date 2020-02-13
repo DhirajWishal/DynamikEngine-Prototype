@@ -1,10 +1,10 @@
 #include "adgrafx.h"
-#ifdef DMK_USE_VULKAN
-#include "shader.h"
+#include "shaderManager.h"
 
 #include "controlHeader.h"
 #include "..\..\opengl\core\shader.h"
 
+#ifdef DMK_USE_VULKAN
 namespace Dynamik {
 	namespace ADGR {
 		namespace core {

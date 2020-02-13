@@ -35,12 +35,14 @@ namespace Dynamik {
 
 	typedef void* VPTR;					// void pointer
 	typedef char* CPTR;					// char pointer
+	typedef wchar_t* WCPTR;				// char pointer
 	typedef const char* CCPTR;			// const char pointer
 	typedef unsigned char* UCPTR;		// unsigned char pointer
+	typedef const wchar_t* CWCPTR;		// const char pointer
 
 	typedef char CHR;					// char (ASCII)
 	typedef wchar_t WCHR;				// wide char (UTF-8)
-	
+
 	typedef std::any ANY;				// any data type
 
 	typedef UI8 BYTE;					// byte of data
@@ -71,8 +73,10 @@ namespace Dynamik {
 
 #define DMK_VOID_PTR			::Dynamik::VPTR
 #define DMK_CHAR_PTR			::Dynamik::CPTR
+#define DMK_WCHAR_PTR			::Dynamik::WCPTR
 #define DMK_CONST_CHAR_PTR		::Dynamik::CCPTR
 #define DMK_UNSIGNED_CHAR_PTR	::Dynamik::UCPTR
+#define DMK_CONST_WCHAR_PTR		::Dynamik::CWCPTR
 
 #define DMK_BYTE				::Dynamik::BYTE
 #define DMK_BYTE_PTR			::Dynamik::BPTR

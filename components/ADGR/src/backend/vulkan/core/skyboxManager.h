@@ -1,11 +1,11 @@
 #pragma once
 
-#ifndef _DYNAMIK_ADGR_VULKAN_SKYBOX_H
-#define _DYNAMIK_ADGR_VULKAN_SKYBOX_H
+#ifndef _DYNAMIK_ADGR_VULKAN_SKYBOX_MANAGER_H
+#define _DYNAMIK_ADGR_VULKAN_SKYBOX_MANAGER_H
 #ifdef DMK_USE_VULKAN
 
 #include "backend/vulkan/core/data structures/vulkan.h"
-#include "texture.h"
+#include "textureManager.h"
 
 namespace Dynamik {
 	namespace ADGR {

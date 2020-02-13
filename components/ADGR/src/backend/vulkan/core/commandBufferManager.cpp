@@ -1,10 +1,10 @@
 #include "adgrafx.h"
-#ifdef DMK_USE_VULKAN
 
-#include "commandBuffer.h"
+#include "commandBufferManager.h"
 
 #include "queues/queues.h"
 
+#ifdef DMK_USE_VULKAN
 namespace Dynamik {
 	namespace ADGR {
 		namespace core {

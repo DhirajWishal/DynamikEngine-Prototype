@@ -1,11 +1,11 @@
 #pragma once
 
-#ifndef _DYNAMIK_ADGR_VULKAN_DEPTH_BUFFER_H
-#define _DYNAMIK_ADGR_VULKAN_DEPTH_BUFFER_H
-#ifdef DMK_USE_VULKAN
+#ifndef _DYNAMIK_ADGR_VULKAN_DEPTH_BUFFER_MANAGER_H
+#define _DYNAMIK_ADGR_VULKAN_DEPTH_BUFFER_MANAGER_H
 
 #include "backend/vulkan/core/data structures/vulkan.h"
 
+#ifdef DMK_USE_VULKAN
 namespace Dynamik {
 	namespace ADGR {
 		namespace core {

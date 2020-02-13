@@ -1,7 +1,7 @@
 #include "adgrafx.h"
-#ifdef DMK_USE_VULKAN
-#include "frameBuffer.h"
+#include "frameBufferManager.h"
 
+#ifdef DMK_USE_VULKAN 
 namespace Dynamik {
 	namespace ADGR {
 		namespace core {

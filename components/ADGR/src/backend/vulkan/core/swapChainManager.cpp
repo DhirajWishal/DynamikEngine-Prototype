@@ -1,12 +1,12 @@
 #include "adgrafx.h"
-#ifdef DMK_USE_VULKAN
-#include "swapChain.h"
+#include "swapChainManager.h"
 
 #include "controlHeader.h"
 #include "queues/queues.h"
 
 #include "functions/textureFunctions.h"
 
+#ifdef DMK_USE_VULKAN
 namespace Dynamik {
 	namespace ADGR {
 		namespace core {

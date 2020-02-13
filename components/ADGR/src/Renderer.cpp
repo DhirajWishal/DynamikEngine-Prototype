@@ -21,7 +21,7 @@
 #endif
 
 #if defined(DMK_USE_VULKAN)
-#include "vulkan/vulkanRenderer.h"
+#include "core/vulkan/vulkanRenderer.h"
 
 #elif defined (DMK_USE_DIRECTX)
 #include "directx12/directx12Renderer.h"

@@ -9,7 +9,7 @@
 
 #include "adgrafx.h"
 #include "Renderer.h"
-#include "backend/defines.h"
+#include "defines.h"
 
 #include "debugger.h"
 
@@ -21,13 +21,13 @@
 #endif
 
 #if defined(DMK_USE_VULKAN)
-#include "backend/vulkan/vulkanRenderer.h"
+#include "vulkan/vulkanRenderer.h"
 
 #elif defined (DMK_USE_DIRECTX)
-#include "backend/directx12/directx12Renderer.h"
+#include "directx12/directx12Renderer.h"
 
 #elif defined (DMK_USE_OPENGL)
-#include "backend/opengl/openglRenderer.h"
+#include "opengl/openglRenderer.h"
 
 #else
 #error Renderer Backend Undefined!

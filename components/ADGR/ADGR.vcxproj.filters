@@ -75,139 +75,139 @@
     <ClInclude Include="src\adgrafx.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="src\backend\base\RendererBackendBase.h">
-      <Filter>src\backend\base</Filter>
-    </ClInclude>
-    <ClInclude Include="src\backend\defines.h">
-      <Filter>src\backend</Filter>
-    </ClInclude>
-    <ClInclude Include="src\backend\directx12\directx12Renderer.h">
-      <Filter>src\backend\directx12</Filter>
-    </ClInclude>
-    <ClInclude Include="src\backend\interface.h">
-      <Filter>src\backend</Filter>
-    </ClInclude>
-    <ClInclude Include="src\backend\opengl\core\data structures\opengl.h">
-      <Filter>src\backend\opengl\core\data structures</Filter>
-    </ClInclude>
-    <ClInclude Include="src\backend\opengl\core\openglFormat.h">
-      <Filter>src\backend\opengl\core</Filter>
-    </ClInclude>
-    <ClInclude Include="src\backend\opengl\core\shader.h">
-      <Filter>src\backend\opengl\core</Filter>
-    </ClInclude>
-    <ClInclude Include="src\backend\opengl\core\texture.h">
-      <Filter>src\backend\opengl\core</Filter>
-    </ClInclude>
-    <ClInclude Include="src\backend\opengl\core\vertexAndIndexBuffer.h">
-      <Filter>src\backend\opengl\core</Filter>
-    </ClInclude>
-    <ClInclude Include="src\backend\opengl\core\window.h">
-      <Filter>src\backend\opengl\core</Filter>
-    </ClInclude>
-    <ClInclude Include="src\backend\opengl\openglRenderer.h">
-      <Filter>src\backend\opengl</Filter>
-    </ClInclude>
-    <ClInclude Include="src\backend\vulkan\core\backend.h">
-      <Filter>src\backend\vulkan\core</Filter>
-    </ClInclude>
-    <ClInclude Include="src\backend\vulkan\core\controlHeader.h">
-      <Filter>src\backend\vulkan\core</Filter>
-    </ClInclude>
-    <ClInclude Include="src\backend\vulkan\core\data structures\DMK_ADGR_DataStructures.h">
-      <Filter>src\backend\vulkan\core\data structures</Filter>
-    </ClInclude>
-    <ClInclude Include="src\backend\vulkan\core\data structures\Uniform.h">
-      <Filter>src\backend\vulkan\core\data structures</Filter>
-    </ClInclude>
-    <ClInclude Include="src\backend\vulkan\core\data structures\vulkan.h">
-      <Filter>src\backend\vulkan\core\data structures</Filter>
-    </ClInclude>
-    <ClInclude Include="src\backend\vulkan\core\extensions\extensions.h">
-      <Filter>src\backend\vulkan\core\extensions</Filter>
-    </ClInclude>
-    <ClInclude Include="src\backend\vulkan\core\functions\bufferFunctions.h">
-      <Filter>src\backend\vulkan\core\functions</Filter>
-    </ClInclude>
-    <ClInclude Include="src\backend\vulkan\core\functions\textureFunctions.h">
-      <Filter>src\backend\vulkan\core\functions</Filter>
-    </ClInclude>
-    <ClInclude Include="src\backend\vulkan\core\glTexture.h">
-      <Filter>src\backend\vulkan\core</Filter>
-    </ClInclude>
-    <ClInclude Include="src\backend\vulkan\core\manager.h">
-      <Filter>src\backend\vulkan\core</Filter>
-    </ClInclude>
-    <ClInclude Include="src\backend\vulkan\core\others\semaphores.h">
-      <Filter>src\backend\vulkan\core\others</Filter>
-    </ClInclude>
-    <ClInclude Include="src\backend\vulkan\core\others\syncObjects.h">
-      <Filter>src\backend\vulkan\core\others</Filter>
-    </ClInclude>
-    <ClInclude Include="src\backend\vulkan\core\queues\queues.h">
-      <Filter>src\backend\vulkan\core\queues</Filter>
-    </ClInclude>
-    <ClInclude Include="src\backend\vulkan\core\validators\debugger\debugger.h">
-      <Filter>src\backend\vulkan\core\validators\debugger</Filter>
-    </ClInclude>
-    <ClInclude Include="src\backend\vulkan\core\validators\validators.h">
-      <Filter>src\backend\vulkan\core\validators</Filter>
-    </ClInclude>
-    <ClInclude Include="src\backend\vulkan\core\vulkanFormat.h">
-      <Filter>src\backend\vulkan\core</Filter>
-    </ClInclude>
-    <ClInclude Include="src\backend\vulkan\vulkanRenderer.h">
-      <Filter>src\backend\vulkan</Filter>
-    </ClInclude>
-    <ClInclude Include="src\backend\vulkan\vulkanRenderer2D.h">
-      <Filter>src\backend\vulkan</Filter>
-    </ClInclude>
     <ClInclude Include="src\rendererFormat.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="src\backend\vulkan\core\colorBufferManager.h">
+    <ClInclude Include="src\base\RendererBackendBase.h">
+      <Filter>src\backend\base</Filter>
+    </ClInclude>
+    <ClInclude Include="src\directx12\directx12Renderer.h">
+      <Filter>src\backend\directx12</Filter>
+    </ClInclude>
+    <ClInclude Include="src\opengl\openglRenderer.h">
+      <Filter>src\backend\opengl</Filter>
+    </ClInclude>
+    <ClInclude Include="src\vulkan\vulkanRenderer.h">
+      <Filter>src\backend\vulkan</Filter>
+    </ClInclude>
+    <ClInclude Include="src\vulkan\vulkanRenderer2D.h">
+      <Filter>src\backend\vulkan</Filter>
+    </ClInclude>
+    <ClInclude Include="src\defines.h">
+      <Filter>src\backend</Filter>
+    </ClInclude>
+    <ClInclude Include="src\interface.h">
+      <Filter>src\backend</Filter>
+    </ClInclude>
+    <ClInclude Include="src\opengl\backend\data structures\opengl.h">
+      <Filter>src\backend\opengl\core\data structures</Filter>
+    </ClInclude>
+    <ClInclude Include="src\opengl\backend\openglFormat.h">
+      <Filter>src\backend\opengl\core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\opengl\backend\shader.h">
+      <Filter>src\backend\opengl\core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\opengl\backend\texture.h">
+      <Filter>src\backend\opengl\core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\opengl\backend\vertexAndIndexBuffer.h">
+      <Filter>src\backend\opengl\core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\opengl\backend\window.h">
+      <Filter>src\backend\opengl\core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\vulkan\backend\data structures\DMK_ADGR_DataStructures.h">
+      <Filter>src\backend\vulkan\core\data structures</Filter>
+    </ClInclude>
+    <ClInclude Include="src\vulkan\backend\data structures\Uniform.h">
+      <Filter>src\backend\vulkan\core\data structures</Filter>
+    </ClInclude>
+    <ClInclude Include="src\vulkan\backend\data structures\vulkan.h">
+      <Filter>src\backend\vulkan\core\data structures</Filter>
+    </ClInclude>
+    <ClInclude Include="src\vulkan\backend\extensions\extensions.h">
+      <Filter>src\backend\vulkan\core\extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="src\vulkan\backend\functions\bufferFunctions.h">
+      <Filter>src\backend\vulkan\core\functions</Filter>
+    </ClInclude>
+    <ClInclude Include="src\vulkan\backend\functions\textureFunctions.h">
+      <Filter>src\backend\vulkan\core\functions</Filter>
+    </ClInclude>
+    <ClInclude Include="src\vulkan\backend\others\semaphores.h">
+      <Filter>src\backend\vulkan\core\others</Filter>
+    </ClInclude>
+    <ClInclude Include="src\vulkan\backend\others\syncObjects.h">
+      <Filter>src\backend\vulkan\core\others</Filter>
+    </ClInclude>
+    <ClInclude Include="src\vulkan\backend\queues\queues.h">
+      <Filter>src\backend\vulkan\core\queues</Filter>
+    </ClInclude>
+    <ClInclude Include="src\vulkan\backend\validators\debugger\debugger.h">
+      <Filter>src\backend\vulkan\core\validators\debugger</Filter>
+    </ClInclude>
+    <ClInclude Include="src\vulkan\backend\validators\validators.h">
+      <Filter>src\backend\vulkan\core\validators</Filter>
+    </ClInclude>
+    <ClInclude Include="src\vulkan\backend\backend.h">
       <Filter>src\backend\vulkan\core</Filter>
     </ClInclude>
-    <ClInclude Include="src\backend\vulkan\core\commandBufferManager.h">
+    <ClInclude Include="src\vulkan\backend\colorBufferManager.h">
       <Filter>src\backend\vulkan\core</Filter>
     </ClInclude>
-    <ClInclude Include="src\backend\vulkan\core\depthBufferManager.h">
+    <ClInclude Include="src\vulkan\backend\commandBufferManager.h">
       <Filter>src\backend\vulkan\core</Filter>
     </ClInclude>
-    <ClInclude Include="src\backend\vulkan\core\deviceManager.h">
+    <ClInclude Include="src\vulkan\backend\controlHeader.h">
       <Filter>src\backend\vulkan\core</Filter>
     </ClInclude>
-    <ClInclude Include="src\backend\vulkan\core\frameBufferManager.h">
+    <ClInclude Include="src\vulkan\backend\depthBufferManager.h">
       <Filter>src\backend\vulkan\core</Filter>
     </ClInclude>
-    <ClInclude Include="src\backend\vulkan\core\indexBufferManager.h">
+    <ClInclude Include="src\vulkan\backend\deviceManager.h">
       <Filter>src\backend\vulkan\core</Filter>
     </ClInclude>
-    <ClInclude Include="src\backend\vulkan\core\instanceManager.h">
+    <ClInclude Include="src\vulkan\backend\frameBufferManager.h">
       <Filter>src\backend\vulkan\core</Filter>
     </ClInclude>
-    <ClInclude Include="src\backend\vulkan\core\pipelineManager.h">
+    <ClInclude Include="src\vulkan\backend\glTexture.h">
       <Filter>src\backend\vulkan\core</Filter>
     </ClInclude>
-    <ClInclude Include="src\backend\vulkan\core\shaderManager.h">
+    <ClInclude Include="src\vulkan\backend\indexBufferManager.h">
       <Filter>src\backend\vulkan\core</Filter>
     </ClInclude>
-    <ClInclude Include="src\backend\vulkan\core\skyboxManager.h">
+    <ClInclude Include="src\vulkan\backend\instanceManager.h">
       <Filter>src\backend\vulkan\core</Filter>
     </ClInclude>
-    <ClInclude Include="src\backend\vulkan\core\swapChainManager.h">
+    <ClInclude Include="src\vulkan\backend\manager.h">
       <Filter>src\backend\vulkan\core</Filter>
     </ClInclude>
-    <ClInclude Include="src\backend\vulkan\core\textureManager.h">
+    <ClInclude Include="src\vulkan\backend\pipelineManager.h">
       <Filter>src\backend\vulkan\core</Filter>
     </ClInclude>
-    <ClInclude Include="src\backend\vulkan\core\uniformBufferManager.h">
+    <ClInclude Include="src\vulkan\backend\shaderManager.h">
       <Filter>src\backend\vulkan\core</Filter>
     </ClInclude>
-    <ClInclude Include="src\backend\vulkan\core\vertexBufferManager.h">
+    <ClInclude Include="src\vulkan\backend\skyboxManager.h">
       <Filter>src\backend\vulkan\core</Filter>
     </ClInclude>
-    <ClInclude Include="src\backend\vulkan\core\windowManager.h">
+    <ClInclude Include="src\vulkan\backend\swapChainManager.h">
+      <Filter>src\backend\vulkan\core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\vulkan\backend\textureManager.h">
+      <Filter>src\backend\vulkan\core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\vulkan\backend\uniformBufferManager.h">
+      <Filter>src\backend\vulkan\core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\vulkan\backend\vertexBufferManager.h">
+      <Filter>src\backend\vulkan\core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\vulkan\backend\vulkanFormat.h">
+      <Filter>src\backend\vulkan\core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\vulkan\backend\windowManager.h">
       <Filter>src\backend\vulkan\core</Filter>
     </ClInclude>
   </ItemGroup>
@@ -230,106 +230,106 @@
     <ClCompile Include="src\adgrafx.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="src\backend\directx12\directx12Renderer.cpp">
-      <Filter>src\backend\directx12</Filter>
-    </ClCompile>
-    <ClCompile Include="src\backend\opengl\core\shader.cpp">
-      <Filter>src\backend\opengl\core</Filter>
-    </ClCompile>
-    <ClCompile Include="src\backend\opengl\core\texture.cpp">
-      <Filter>src\backend\opengl\core</Filter>
-    </ClCompile>
-    <ClCompile Include="src\backend\opengl\core\vertexAndIndexBuffer.cpp">
-      <Filter>src\backend\opengl\core</Filter>
-    </ClCompile>
-    <ClCompile Include="src\backend\opengl\core\window.cpp">
-      <Filter>src\backend\opengl\core</Filter>
-    </ClCompile>
-    <ClCompile Include="src\backend\opengl\openglRenderer.cpp">
-      <Filter>src\backend\opengl</Filter>
-    </ClCompile>
-    <ClCompile Include="src\backend\vulkan\core\extensions\extensions.cpp">
-      <Filter>src\backend\vulkan\core\extensions</Filter>
-    </ClCompile>
-    <ClCompile Include="src\backend\vulkan\core\functions\bufferFunctions.cpp">
-      <Filter>src\backend\vulkan\core\functions</Filter>
-    </ClCompile>
-    <ClCompile Include="src\backend\vulkan\core\functions\textureFunctions.cpp">
-      <Filter>src\backend\vulkan\core\functions</Filter>
-    </ClCompile>
-    <ClCompile Include="src\backend\vulkan\core\glTexture.cpp">
-      <Filter>src\backend\vulkan\core</Filter>
-    </ClCompile>
-    <ClCompile Include="src\backend\vulkan\core\manager.cpp">
-      <Filter>src\backend\vulkan\core</Filter>
-    </ClCompile>
-    <ClCompile Include="src\backend\vulkan\core\others\semaphores.cpp">
-      <Filter>src\backend\vulkan\core\others</Filter>
-    </ClCompile>
-    <ClCompile Include="src\backend\vulkan\core\others\syncObjects.cpp">
-      <Filter>src\backend\vulkan\core\others</Filter>
-    </ClCompile>
-    <ClCompile Include="src\backend\vulkan\core\queues\queues.cpp">
-      <Filter>src\backend\vulkan\core\queues</Filter>
-    </ClCompile>
-    <ClCompile Include="src\backend\vulkan\core\validators\debugger\debugger.cpp">
-      <Filter>src\backend\vulkan\core\validators\debugger</Filter>
-    </ClCompile>
-    <ClCompile Include="src\backend\vulkan\core\validators\validators.cpp">
-      <Filter>src\backend\vulkan\core\validators</Filter>
-    </ClCompile>
-    <ClCompile Include="src\backend\vulkan\vulkanRenderer.cpp">
-      <Filter>src\backend\vulkan</Filter>
-    </ClCompile>
-    <ClCompile Include="src\backend\vulkan\vulkanRenderer2D.cpp">
-      <Filter>src\backend\vulkan</Filter>
-    </ClCompile>
     <ClCompile Include="src\rendererFormat.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="src\backend\vulkan\core\colorBufferManager.cpp">
+    <ClCompile Include="src\directx12\directx12Renderer.cpp">
+      <Filter>src\backend\directx12</Filter>
+    </ClCompile>
+    <ClCompile Include="src\opengl\openglRenderer.cpp">
+      <Filter>src\backend\opengl</Filter>
+    </ClCompile>
+    <ClCompile Include="src\vulkan\vulkanRenderer.cpp">
+      <Filter>src\backend\vulkan</Filter>
+    </ClCompile>
+    <ClCompile Include="src\vulkan\vulkanRenderer2D.cpp">
+      <Filter>src\backend\vulkan</Filter>
+    </ClCompile>
+    <ClCompile Include="src\opengl\backend\shader.cpp">
+      <Filter>src\backend\opengl\core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\opengl\backend\texture.cpp">
+      <Filter>src\backend\opengl\core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\opengl\backend\vertexAndIndexBuffer.cpp">
+      <Filter>src\backend\opengl\core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\opengl\backend\window.cpp">
+      <Filter>src\backend\opengl\core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\vulkan\backend\extensions\extensions.cpp">
+      <Filter>src\backend\vulkan\core\extensions</Filter>
+    </ClCompile>
+    <ClCompile Include="src\vulkan\backend\functions\bufferFunctions.cpp">
+      <Filter>src\backend\vulkan\core\functions</Filter>
+    </ClCompile>
+    <ClCompile Include="src\vulkan\backend\functions\textureFunctions.cpp">
+      <Filter>src\backend\vulkan\core\functions</Filter>
+    </ClCompile>
+    <ClCompile Include="src\vulkan\backend\others\semaphores.cpp">
+      <Filter>src\backend\vulkan\core\others</Filter>
+    </ClCompile>
+    <ClCompile Include="src\vulkan\backend\others\syncObjects.cpp">
+      <Filter>src\backend\vulkan\core\others</Filter>
+    </ClCompile>
+    <ClCompile Include="src\vulkan\backend\queues\queues.cpp">
+      <Filter>src\backend\vulkan\core\queues</Filter>
+    </ClCompile>
+    <ClCompile Include="src\vulkan\backend\validators\debugger\debugger.cpp">
+      <Filter>src\backend\vulkan\core\validators\debugger</Filter>
+    </ClCompile>
+    <ClCompile Include="src\vulkan\backend\validators\validators.cpp">
+      <Filter>src\backend\vulkan\core\validators</Filter>
+    </ClCompile>
+    <ClCompile Include="src\vulkan\backend\colorBufferManager.cpp">
       <Filter>src\backend\vulkan\core</Filter>
     </ClCompile>
-    <ClCompile Include="src\backend\vulkan\core\commandBufferManager.cpp">
+    <ClCompile Include="src\vulkan\backend\commandBufferManager.cpp">
       <Filter>src\backend\vulkan\core</Filter>
     </ClCompile>
-    <ClCompile Include="src\backend\vulkan\core\depthBufferManager.cpp">
+    <ClCompile Include="src\vulkan\backend\depthBufferManager.cpp">
       <Filter>src\backend\vulkan\core</Filter>
     </ClCompile>
-    <ClCompile Include="src\backend\vulkan\core\deviceManager.cpp">
+    <ClCompile Include="src\vulkan\backend\deviceManager.cpp">
       <Filter>src\backend\vulkan\core</Filter>
     </ClCompile>
-    <ClCompile Include="src\backend\vulkan\core\frameBufferManager.cpp">
+    <ClCompile Include="src\vulkan\backend\frameBufferManager.cpp">
       <Filter>src\backend\vulkan\core</Filter>
     </ClCompile>
-    <ClCompile Include="src\backend\vulkan\core\indexBufferManager.cpp">
+    <ClCompile Include="src\vulkan\backend\glTexture.cpp">
       <Filter>src\backend\vulkan\core</Filter>
     </ClCompile>
-    <ClCompile Include="src\backend\vulkan\core\instanceManager.cpp">
+    <ClCompile Include="src\vulkan\backend\indexBufferManager.cpp">
       <Filter>src\backend\vulkan\core</Filter>
     </ClCompile>
-    <ClCompile Include="src\backend\vulkan\core\pipelineManager.cpp">
+    <ClCompile Include="src\vulkan\backend\instanceManager.cpp">
       <Filter>src\backend\vulkan\core</Filter>
     </ClCompile>
-    <ClCompile Include="src\backend\vulkan\core\shaderManager.cpp">
+    <ClCompile Include="src\vulkan\backend\manager.cpp">
       <Filter>src\backend\vulkan\core</Filter>
     </ClCompile>
-    <ClCompile Include="src\backend\vulkan\core\skyboxManager.cpp">
+    <ClCompile Include="src\vulkan\backend\pipelineManager.cpp">
       <Filter>src\backend\vulkan\core</Filter>
     </ClCompile>
-    <ClCompile Include="src\backend\vulkan\core\swapChainManager.cpp">
+    <ClCompile Include="src\vulkan\backend\shaderManager.cpp">
       <Filter>src\backend\vulkan\core</Filter>
     </ClCompile>
-    <ClCompile Include="src\backend\vulkan\core\textureManager.cpp">
+    <ClCompile Include="src\vulkan\backend\skyboxManager.cpp">
       <Filter>src\backend\vulkan\core</Filter>
     </ClCompile>
-    <ClCompile Include="src\backend\vulkan\core\uniformBufferManager.cpp">
+    <ClCompile Include="src\vulkan\backend\swapChainManager.cpp">
       <Filter>src\backend\vulkan\core</Filter>
     </ClCompile>
-    <ClCompile Include="src\backend\vulkan\core\vertexBufferManager.cpp">
+    <ClCompile Include="src\vulkan\backend\textureManager.cpp">
       <Filter>src\backend\vulkan\core</Filter>
     </ClCompile>
-    <ClCompile Include="src\backend\vulkan\core\windowManager.cpp">
+    <ClCompile Include="src\vulkan\backend\uniformBufferManager.cpp">
+      <Filter>src\backend\vulkan\core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\vulkan\backend\vertexBufferManager.cpp">
+      <Filter>src\backend\vulkan\core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\vulkan\backend\windowManager.cpp">
       <Filter>src\backend\vulkan\core</Filter>
     </ClCompile>
   </ItemGroup>

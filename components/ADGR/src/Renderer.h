@@ -12,7 +12,7 @@
 #ifndef _DYNAMIK_ADGR_RENDERER_H
 #define _DYNAMIK_ADGR_RENDERER_H
 
-#include "backend/interface.h"
+#include "interface.h"
 #include "rendererFormat.h"
 #include "core/core.h"
 

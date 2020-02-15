@@ -24,3 +24,6 @@
    - Eg: E:/Dynamik/core assets/moon    (single quotes or double quotes are not needed)
 4. Select "Application" in the Solution Explorer as the StartUp Project if not selected by default.
 5. Run the Build and Run the solution. 
+
+### Dynamik Engine Architecture
+![Dynamik Engine Architecture](https://github.com/DhirajWishal/Dynamik/blob/master/docs/Dynamik%20Engine%20Architecture.png)

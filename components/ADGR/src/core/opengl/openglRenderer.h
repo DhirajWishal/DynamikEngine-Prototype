@@ -6,11 +6,11 @@
 
 #include "base/RendererBackendBase.h"
 
-#include "openglFormat.h"
-#include "window.h"
-#include "shader.h"
-#include "texture.h"
-#include "vertexAndIndexBuffer.h"
+#include "backend/openglFormat.h"
+#include "backend/window.h"
+#include "backend/shader.h"
+#include "backend/texture.h"
+#include "backend/vertexAndIndexBuffer.h"
 
 namespace Dynamik {
 	namespace ADGR {

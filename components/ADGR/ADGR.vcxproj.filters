@@ -108,9 +108,6 @@
     <ClInclude Include="src\core\opengl\openglRenderer.h">
       <Filter>src\backend\opengl</Filter>
     </ClInclude>
-    <ClInclude Include="src\core\vulkan\backend\data structures\DMK_ADGR_DataStructures.h">
-      <Filter>src\backend\vulkan\core\data structures</Filter>
-    </ClInclude>
     <ClInclude Include="src\core\vulkan\backend\data structures\Uniform.h">
       <Filter>src\backend\vulkan\core\data structures</Filter>
     </ClInclude>

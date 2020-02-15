@@ -164,7 +164,6 @@
     <ClInclude Include="src\core\vulkan\backend\colorBufferManager.h" />
     <ClInclude Include="src\core\vulkan\backend\commandBufferManager.h" />
     <ClInclude Include="src\core\vulkan\backend\controlHeader.h" />
-    <ClInclude Include="src\core\vulkan\backend\data structures\DMK_ADGR_DataStructures.h" />
     <ClInclude Include="src\core\vulkan\backend\data structures\Uniform.h" />
     <ClInclude Include="src\core\vulkan\backend\data structures\vulkan.h" />
     <ClInclude Include="src\core\vulkan\backend\depthBufferManager.h" />

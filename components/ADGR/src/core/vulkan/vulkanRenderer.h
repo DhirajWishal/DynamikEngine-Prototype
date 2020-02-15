@@ -17,7 +17,6 @@
 #include "core/base/RendererBackendBase.h"
 
 #include "backend/backend.h"
-#include "backend/data structures/DMK_ADGR_DataStructures.h"
 
 #include "GameObject.h"
 #include "debugger.h"
@@ -31,9 +30,9 @@ namespace Dynamik {
 
 		class vulkanRenderer : public RendererBackend {
 		public:
-			vulkanRenderer();
+			vulkanRenderer() {}
 			vulkanRenderer(DMKRendererSettings settings) : RendererBackend(settings) {}
-			~vulkanRenderer();
+			~vulkanRenderer(){}
 
 			void init() override;
 			void initStageOne() override;

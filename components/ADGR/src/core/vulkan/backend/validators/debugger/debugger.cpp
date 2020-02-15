@@ -8,28 +8,16 @@
 */
 
 #include "adgrafx.h"
-#ifdef DMK_USE_VULKAN
 
 #include "debugger.h"
 #include "core/vulkan/backend/validators/validators.h"
 
 #include "defines.h"
 
+#ifdef DMK_USE_VULKAN
 namespace Dynamik {
 	namespace ADGR {
 		namespace core {
-			void populateDebugMessegerCreateInfo(VkDebugUtilsMessengerCreateInfoEXT& createInfo) {
-				createInfo = {};
-				createInfo.sType = VK_STRUCTURE_TYPE_DEBUG_UTILS_MESSENGER_CREATE_INFO_EXT;
-				createInfo.messageSeverity = VK_DEBUG_UTILS_MESSAGE_SEVERITY_VERBOSE_BIT_EXT
-					| VK_DEBUG_UTILS_MESSAGE_SEVERITY_WARNING_BIT_EXT
-					| VK_DEBUG_UTILS_MESSAGE_SEVERITY_ERROR_BIT_EXT;
-				createInfo.messageType = VK_DEBUG_UTILS_MESSAGE_TYPE_GENERAL_BIT_EXT
-					| VK_DEBUG_UTILS_MESSAGE_TYPE_VALIDATION_BIT_EXT
-					| VK_DEBUG_UTILS_MESSAGE_TYPE_PERFORMANCE_BIT_EXT;
-				createInfo.pfnUserCallback = debugger::debugCallback;
-			}
-
 			debugger::debugger(VkInstance* instance, VkDebugUtilsMessengerEXT* debugMessenger) :
 				myInstance(instance), myDebugMessenger(debugMessenger) {
 			}
@@ -40,7 +28,33 @@ namespace Dynamik {
 				const VkDebugUtilsMessengerCallbackDataEXT* pCallbackData,
 				void* pUserData
 			) {
-				std::cerr << "validation layer: " << pCallbackData->pMessage << std::endl;
+				std::string myMessageStatement = "Vulkan Validation Layer ";
+				std::string myMessagePreStatement = ": ";
+
+				if (messageType = VK_DEBUG_UTILS_MESSAGE_TYPE_GENERAL_BIT_EXT)
+					myMessagePreStatement = "(General): ";
+				else if (messageType = VK_DEBUG_UTILS_MESSAGE_TYPE_VALIDATION_BIT_EXT)
+					myMessagePreStatement = "(Validation): ";
+				else if (messageType = VK_DEBUG_UTILS_MESSAGE_TYPE_PERFORMANCE_BIT_EXT)
+					myMessagePreStatement = "(Performance): ";
+
+				switch (messageSeverity) {
+				case VK_DEBUG_UTILS_MESSAGE_SEVERITY_VERBOSE_BIT_EXT:
+					std::cerr << myMessageStatement << myMessagePreStatement << pCallbackData->pMessage << std::endl;
+					break;
+				case VK_DEBUG_UTILS_MESSAGE_SEVERITY_INFO_BIT_EXT:
+					DMK_CORE_INFO(myMessageStatement + myMessagePreStatement + std::string(pCallbackData->pMessage));
+					break;
+				case VK_DEBUG_UTILS_MESSAGE_SEVERITY_WARNING_BIT_EXT:
+					DMK_CORE_WARN(myMessageStatement + myMessagePreStatement + std::string(pCallbackData->pMessage));
+					break;
+				case VK_DEBUG_UTILS_MESSAGE_SEVERITY_ERROR_BIT_EXT:
+					DMK_CORE_ERROR(myMessageStatement + myMessagePreStatement + std::string(pCallbackData->pMessage));
+					break;
+				default:
+					std::cerr << myMessageStatement << myMessagePreStatement << pCallbackData->pMessage << std::endl;
+					break;
+				}
 
 				return VK_FALSE;
 			}

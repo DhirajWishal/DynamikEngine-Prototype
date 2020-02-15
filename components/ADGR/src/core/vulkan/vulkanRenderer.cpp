@@ -33,14 +33,6 @@ namespace Dynamik {
 		// ----------
 #endif
 
-		// default constructor
-		vulkanRenderer::vulkanRenderer() {
-		}
-
-		// default destructor
-		vulkanRenderer::~vulkanRenderer() {
-		}
-
 		// initialize the renderer
 		void vulkanRenderer::init() {	// 14 inc
 			initStageOne();

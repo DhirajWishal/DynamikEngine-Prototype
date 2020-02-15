@@ -4,7 +4,6 @@
 #define _DYNAMIK_ADGR_VULKAN_COMMAND_BUFFER_MANAGER_H
 #ifdef DMK_USE_VULKAN
 
-#include "data structures/DMK_ADGR_DataStructures.h"
 #include "vulkanFormat.h"
 #include "core/data store/containers.h"
 #include "core/data store/objectSpecifications.h"

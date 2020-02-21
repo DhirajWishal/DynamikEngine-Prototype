@@ -146,6 +146,7 @@
     <ClInclude Include="src\Layers\layer.h" />
     <ClInclude Include="src\Layers\layerStack.h" />
     <ClInclude Include="src\Renderer.h" />
+    <ClInclude Include="src\rendererCommandQueue.h" />
     <ClInclude Include="src\Wrapper\dll_wrapper.h" />
     <ClInclude Include="src\Wrapper\internal_wrapper.h" />
     <ClInclude Include="src\adgrafx.h" />
@@ -198,6 +199,7 @@
     <ClCompile Include="src\Layers\layer.cpp" />
     <ClCompile Include="src\Layers\layerStack.cpp" />
     <ClCompile Include="src\Renderer.cpp" />
+    <ClCompile Include="src\rendererCommandQueue.cpp" />
     <ClCompile Include="src\Wrapper\dll_wrapper.cpp" />
     <ClCompile Include="src\Wrapper\internal_wrapper.cpp" />
     <ClCompile Include="src\adgrafx.cpp">

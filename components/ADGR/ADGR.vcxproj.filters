@@ -207,6 +207,7 @@
     <ClInclude Include="src\core\base\RendererBackendBase.h">
       <Filter>src\backend\base</Filter>
     </ClInclude>
+    <ClInclude Include="src\rendererCommandQueue.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Layers\layer.cpp">
@@ -329,6 +330,7 @@
     <ClCompile Include="src\core\vulkan\vulkanRenderer2D.cpp">
       <Filter>src\backend\vulkan</Filter>
     </ClCompile>
+    <ClCompile Include="src\rendererCommandQueue.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="premake5.lua" />

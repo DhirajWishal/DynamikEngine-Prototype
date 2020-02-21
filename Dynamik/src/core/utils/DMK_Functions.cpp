@@ -224,5 +224,23 @@ namespace Dynamik {
 		{
 			return std::rand();
 		}
+
+
+		std::vector<UI32> bubbleSort(std::vector<UI32> data)
+		{
+			UI32 _indexCount = -1;
+			UI32 _index = 0;
+			UI32 _itr = 0;
+			UI32 _size = data.size();
+
+			while ((_indexCount++) < _size - 1) {
+				_index = 0;
+				while (_itr++ < _size - _indexCount)
+					if (data[_index] > data[_itr])
+						swap(&data[_index], &data[_itr]);
+			}
+
+			return data;
+		}
 	}
 }

@@ -34,7 +34,8 @@ namespace Dynamik {
 					createInfo.enabledLayerCount = static_cast<UI32>(validationLayer.size());
 					createInfo.ppEnabledLayerNames = validationLayer.data();
 
-					populateDebugMessegerCreateInfo(debugCreateInfo);
+					debugger _localDebugger = {};
+					_localDebugger.populateDebugMessegerCreateInfo(debugCreateInfo);
 					createInfo.pNext = (VkDebugUtilsMessengerCreateInfoEXT*)&debugCreateInfo;
 				}
 				else {

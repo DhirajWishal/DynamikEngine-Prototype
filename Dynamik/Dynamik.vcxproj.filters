@@ -101,6 +101,8 @@
     </ClInclude>
     <ClInclude Include="src\core\utils\bfs.h" />
     <ClInclude Include="src\core\utils\graph.h" />
+    <ClInclude Include="src\core\utils\systemFlags.h" />
+    <ClInclude Include="src\core\engineControlUnit.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\core\application.cpp">
@@ -131,6 +133,7 @@
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="src\core\utils\bfs.cpp" />
+    <ClCompile Include="src\core\engineControlUnit.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="IMPORTANT.txt" />

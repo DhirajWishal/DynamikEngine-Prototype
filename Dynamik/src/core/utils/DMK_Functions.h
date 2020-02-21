@@ -57,6 +57,8 @@ namespace Dynamik {
 
 		// var = rand();
 		DMK_API uint32_t rand(uint32_t from = 0, uint32_t to = 100);
+
+		DMK_API std::vector<UI32> bubbleSort(std::vector<UI32> data);
 	}
 }
 

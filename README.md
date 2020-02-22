@@ -2,7 +2,7 @@
 ## Engine and Launcher
 
 ### Dynamik Engine Architecture
-![Dynamik Engine Architecture](https://github.com/DhirajWishal/Dynamik/blob/master/docs/Dynamik%20Engine%20Architecture.png)
+![Dynamik Engine Architecture](https://github.com/DhirajWishal/Dynamik/blob/master/Documentation/Dynamik%20Engine%20Architecture.png)
 
 ### First Run:
 1. Double click (run/ execute) the GenProject.bat file.

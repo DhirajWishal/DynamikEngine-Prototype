@@ -13,128 +13,44 @@ configurationMacro = "$(Configuration)"
 platformMacro = "$(Platform)"
 projectNameMacro = "$(ProjectName)"
 
+engineSourcePath = "$(SolutionDir)Engine/Source/"
+engineOutputDir = "$(SolutionDir)Builds/Engine/"
+engineOutputBinaryDir = "Binaries/"
+engineOutputIntermediateDir = "Intermediate/"
+
 IncludeDir = {}
-IncludeDir["GLFW"] = "$(SolutionDir)libs/master/glfw/include"
-IncludeDir["GLEW"] = "$(SolutionDir)libs/GLEW/include"
-IncludeDir["glm"] = "$(SolutionDir)libs/master/glm"
-IncludeDir["stb"] = "$(SolutionDir)libs/master/stb"
-IncludeDir["tol"] = "$(SolutionDir)libs/master/tinyobjloader"
-IncludeDir["spdlog"] = "$(SolutionDir)Dynamik/lib/spdlog/include"
+IncludeDir["GLFW"] = "$(SolutionDir)Dependencies/Libraries/External/glfw/include"
+IncludeDir["GLEW"] = "$(SolutionDir)Dependencies/GLEW/include"
+IncludeDir["glm"] = "$(SolutionDir)Dependencies/Libraries/External/glm"
+IncludeDir["stb"] = "$(SolutionDir)Dependencies/Libraries/External/stb"
+IncludeDir["tol"] = "$(SolutionDir)Dependencies/Libraries/External/tinyobjloader"
 --Include the Vulkan SDK Include path here
-IncludeDir["Vulkan"] = "$(SolutionDir)libs/master/Vulkan-Headers/include"
+IncludeDir["Vulkan"] = "$(SolutionDir)Dependencies/Libraries/External/Vulkan/include"
 IncludeDir["boost"] = "E:/Programming/Modules and Runtime/boost_1_70_0"
-IncludeDir["gil"] = "$(SolutionDir)libs/gil/boost"
-IncludeDir["jpeg"] = "$(SolutionDir)libs/gil/jpeg-6b"
-IncludeDir["irrKlang"] = "$(SolutionDir)/libs/irrKlang/include"
-IncludeDir["assimp"] = "$(SolutionDir)/libs/assimp"
+IncludeDir["gil"] = "$(SolutionDir)Dependencies/Libraries/Local/gil/boost"
+IncludeDir["jpeg"] = "$(SolutionDir)Dependencies/Libraries/Local/gil/jpeg-6b"
+IncludeDir["irrKlang"] = "$(SolutionDir)/Dependencies/Libraries/Local/irrKlang/include"
+IncludeDir["assimp"] = "$(SolutionDir)/Dependencies/Libraries/Local/assimp"
 
 IncludeLib = {}
 --Include the GLFW library path here
-IncludeLib["GLFW"] = "$(SolutionDir)libs/GLFW-Lib/lib-vc2019"
-IncludeLib["GLEW"] = "$(SolutionDir)libs/GLEW/glew-2.1.0/lib/Release/x64"
+IncludeLib["GLFW"] = "$(SolutionDir)Dependencies/Libraries/Binaries/GLFW/lib-vc2019"
+IncludeLib["GLEW"] = "$(SolutionDir)Dependencies/Libraries/Binaries/GLEW/Release/x64"
 --Include the Vulkan SDK path here
-IncludeLib["Vulkan"] = "$(SolutionDir)libs/Vulkan-Lib/lib"
-IncludeLib["boostD"] = "E:/Programming/Modules and Runtime/boost_1_70_0/bin/libs/iostreams/build/msvc-14.2/debug/address-model-64/link-static/threading-multi"
-IncludeLib["boostR"] = "E:/Programming/Modules and Runtime/boost_1_70_0/bin/libs/iostreams/build/msvc-14.2/release/address-model-64/link-static/threading-multi"
+IncludeLib["Vulkan"] = "$(SolutionDir)Dependencies/Libraries/Binaries/Vulkan"
+IncludeLib["irrKlang"] = "$(SolutionDir)Dependencies/Libraries/Binaries/irrKlang"
+IncludeLib["boostD"] = "E:/Programming/Modules and Runtime/boost_1_70_0/bin/Dependencies/iostreams/build/msvc-14.2/debug/address-model-64/link-static/threading-multi"
+IncludeLib["boostR"] = "E:/Programming/Modules and Runtime/boost_1_70_0/bin/Dependencies/iostreams/build/msvc-14.2/release/address-model-64/link-static/threading-multi"
 
 include "Launcher"
 include "Application"
-include "components/ADGR"
-include "components/Events"
-include "components/DevConsole"
-include "components/Audio"
-include "components/Platform"
-include "components/Debugger"
-include "components/CentralDataHub"
-include "components/Networking"
-include "components/Managers"
-
----------- Dynamik Engine project description ----------
-project "Dynamik"
-	location "Dynamik"
-	kind "SharedLib"
-	language "C++"
-
-	targetdir ("$(SolutionDir)bin/" .. outputDir .. "/Application")
-	objdir ("$(SolutionDir)intDir/" .. outputDir .. "/$(ProjectName)")
-
-	pchheader "dmkafx.h"
-	pchsource "Dynamik/src/dmkafx.cpp"
-
-	files {
-		"Dynamik/**.txt",
-		"Dynamik/src/**.h",
-		"Dynamik/src/**.cpp",
-		"Dynamik/src/**.txt",
-		"Dynamik/GameLibraries/**.cpp",
-		"Dynamik/GameLibraries/**.h",
-		"$(SolutionDir)libs/glm/**.hpp",
-		"$(SolutionDir)libs/glm/**.inl",
-	}
-
-	includedirs {
-		"$(SolutionDir)libs",
-		"$(SolutionDir)Dynamik/src",
-		"$(SolutionDir)Dynamik/GameLibraries",
-		"$(SolutionDir)components/ADGR",
-		"$(SolutionDir)components/ADGR/src",
-		"$(SolutionDir)components/Audio/src",
-		"$(SolutionDir)components/Events/src",
-		"$(SolutionDir)components/Managers/src",
-		"$(SolutionDir)components/Platform/src",
-		"$(SolutionDir)components/DevConsole/src",
-		"$(SolutionDir)components/Debugger/src",
-		"$(SolutionDir)components/CentralDataHub/src",
-		"$(SolutionDir)components/Networking/src",
-		"%{IncludeDir.GLFW}",
-		"%{IncludeDir.GLEW}",
-		"%{IncludeDir.glm}",
-		"%{IncludeDir.stb}",
-		"%{IncludeDir.tol}",
-		"%{IncludeDir.irrKlang}",
-		"%{IncludeDir.assimp}",
-		"%{IncludeDir.Vulkan}"
-	}
-
-	libdirs {
-		"%{IncludeLib.GLFW}",
-		"%{IncludeLib.Vulkan}"
-	}
-
-	links { 
-		"ADGR",
-		"Audio",
-		"Events",
-		"Platform",
-		"glfw3dll",
-		"opengl32",
-		"vulkan-1",
-		"Debugger",
-		"CentralDataHub",
-		"Networking"
-	}
-
-	filter "system:windows"
-		cppdialect "C++17"
-		staticruntime "On"
-		systemversion "latest"
-
-		defines {
-			"DMK_PLATFORM_WINDOWS",
-			"DMK_BUILD_DLL",
-			"_WINDLL",
-			"GLFW_INCLUDE_VULKAN",
-			"GLFW_INCLUDE_NONE"
-		}
-
-	filter "configurations:Debug"
-		defines "DMK_DEBUG"
-		symbols "On"
-		
-	filter "configurations:Release"
-		defines "DMK_RELEASE"
-		optimize "On"
-
-	filter "configurations:Distribution"
-		defines "DMK_DISTRIBUTION"
-		optimize "On"
+include "Engine/Source/Dynamik"
+include "Engine/Source/Components/ADGR"
+include "Engine/Source/Components/Events"
+include "Engine/Source/Components/DevConsole"
+include "Engine/Source/Components/Audio"
+include "Engine/Source/Components/Platform"
+include "Engine/Source/Components/Debugger"
+include "Engine/Source/Components/CentralDataHub"
+include "Engine/Source/Components/Networking"
+include "Engine/Source/Components/Managers"

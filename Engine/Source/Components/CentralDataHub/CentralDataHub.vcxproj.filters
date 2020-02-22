@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="src">
+      <UniqueIdentifier>{2DAB880B-99B4-887C-2230-9F7C8E38947C}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\core">
+      <UniqueIdentifier>{C55F2ECF-B12C-89DA-DA45-7782C671BE68}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\core\base">
+      <UniqueIdentifier>{8FEB13E5-FBAB-8F1B-C4E6-D8983066D4F7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\core\global">
+      <UniqueIdentifier>{A5B22B86-113E-994A-1A4F-1C3F8659F54A}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\core\network">
+      <UniqueIdentifier>{5ECF8B56-4AC8-AAA8-73FA-8F2D5F528AB4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\core\renderer">
+      <UniqueIdentifier>{2BCDB0C9-97E3-AE5F-E05A-3A814CB07FE7}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\CentralDataHub.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\cdhafx.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\base\Manager.h">
+      <Filter>src\core\base</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\dataPipeline.h">
+      <Filter>src\core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\global\constants.h">
+      <Filter>src\core\global</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\global\datatypes.h">
+      <Filter>src\core\global</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\network\messageData.h">
+      <Filter>src\core\network</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\network\messageType.h">
+      <Filter>src\core\network</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\renderer\typenames.h">
+      <Filter>src\core\renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\renderer\vertex.h">
+      <Filter>src\core\renderer</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\cdhafx.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\dataPipeline.cpp">
+      <Filter>src\core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\network\messageData.cpp">
+      <Filter>src\core\network</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\renderer\vertex.cpp">
+      <Filter>src\core\renderer</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="premake5.lua" />
+  </ItemGroup>
+</Project>

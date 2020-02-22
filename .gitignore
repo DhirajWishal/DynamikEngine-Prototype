@@ -331,8 +331,17 @@ ASALocalRun/
 
 # Other Files
 *gitUpload.bat
-bin/
-core assets/assets
+Builds/Database/Binaries
+Builds/Database/Intermediate
+Builds/Dependencies/Binaries
+Builds/Dependencies/Intermediate
+Builds/Engine/Binaries
+Builds/Engine/Intermediate
+Builds/Launcher/Binaries
+Builds/Launcher/Intermediate
+Builds/Studio/Binaries
+Builds/Studio/Intermediate
+Dependencies/Assets
 backup/
 libs/*.html
 libs/*.xml

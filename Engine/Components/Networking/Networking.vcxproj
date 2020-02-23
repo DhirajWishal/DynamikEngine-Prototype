@@ -153,7 +153,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="premake5.lua" />
+    <None Include="Networking.lua" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Platform\Platform.vcxproj">

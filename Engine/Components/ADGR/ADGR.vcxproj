@@ -241,7 +241,7 @@
     <ClCompile Include="src\rendererFormat.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="premake5.lua" />
+    <None Include="ADGR.lua" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Events\Events.vcxproj">

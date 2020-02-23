@@ -144,7 +144,7 @@
     <ClCompile Include="src\mouseEvent.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="premake5.lua" />
+    <None Include="Events.lua" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Debugger\Debugger.vcxproj">

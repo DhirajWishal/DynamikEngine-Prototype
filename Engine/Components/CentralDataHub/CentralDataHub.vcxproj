@@ -163,7 +163,7 @@
     <ClCompile Include="src\core\renderer\vertex.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="premake5.lua" />
+    <None Include="CentralDataHub.lua" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -49,6 +49,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="premake5.lua" />
+    <None Include="Debugger.lua" />
   </ItemGroup>
 </Project>

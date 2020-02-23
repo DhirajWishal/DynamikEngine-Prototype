@@ -157,7 +157,7 @@
     <ClCompile Include="src\core\AudioObjectControllers\BasicAudioController.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="premake5.lua" />
+    <None Include="Audio.lua" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Events\Events.vcxproj">

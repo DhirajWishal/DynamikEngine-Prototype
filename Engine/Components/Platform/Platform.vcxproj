@@ -162,7 +162,7 @@
     <ClCompile Include="src\core\Windows\window.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="premake5.lua" />
+    <None Include="Platform.lua" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Events\Events.vcxproj">

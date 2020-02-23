@@ -143,6 +143,7 @@
     <ClCompile Include="src\dcnsafx.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="DevCon.lua" />
     <None Include="premake5.lua" />
   </ItemGroup>
   <ItemGroup>

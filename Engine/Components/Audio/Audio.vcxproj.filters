@@ -53,6 +53,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="premake5.lua" />
+    <None Include="Audio.lua" />
   </ItemGroup>
 </Project>

@@ -54,19 +54,19 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <OutDir>$(SolutionDir)Builds\Engine\Binaries\$(Configuration)-$(Platform)\Application\</OutDir>
+    <OutDir>$(SolutionDir)Builds\Engine\Binaries\$(Configuration)-$(Platform)\</OutDir>
     <IntDir>$(SolutionDir)Builds\Engine\Intermediate\$(Configuration)-$(Platform)\$(ProjectName)\Debug\Debugger\</IntDir>
     <TargetName>Debugger</TargetName>
     <TargetExt>.lib</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <OutDir>$(SolutionDir)Builds\Engine\Binaries\$(Configuration)-$(Platform)\Application\</OutDir>
+    <OutDir>$(SolutionDir)Builds\Engine\Binaries\$(Configuration)-$(Platform)\</OutDir>
     <IntDir>$(SolutionDir)Builds\Engine\Intermediate\$(Configuration)-$(Platform)\$(ProjectName)\Release\Debugger\</IntDir>
     <TargetName>Debugger</TargetName>
     <TargetExt>.lib</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Distribution|x64'">
-    <OutDir>$(SolutionDir)Builds\Engine\Binaries\$(Configuration)-$(Platform)\Application\</OutDir>
+    <OutDir>$(SolutionDir)Builds\Engine\Binaries\$(Configuration)-$(Platform)\</OutDir>
     <IntDir>$(SolutionDir)Builds\Engine\Intermediate\$(Configuration)-$(Platform)\$(ProjectName)\Distribution\Debugger\</IntDir>
     <TargetName>Debugger</TargetName>
     <TargetExt>.lib</TargetExt>

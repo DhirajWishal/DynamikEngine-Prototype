@@ -55,21 +55,21 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <OutDir>$(SolutionDir)Builds\Engine\Binaries\$(Configuration)-$(Platform)\Application\</OutDir>
+    <OutDir>$(SolutionDir)Builds\Engine\Binaries\$(Configuration)-$(Platform)\</OutDir>
     <IntDir>$(SolutionDir)Builds\Engine\Intermediate\$(Configuration)-$(Platform)\$(ProjectName)\Debug\ADGR\</IntDir>
     <TargetName>ADGR</TargetName>
     <TargetExt>.dll</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <OutDir>$(SolutionDir)Builds\Engine\Binaries\$(Configuration)-$(Platform)\Application\</OutDir>
+    <OutDir>$(SolutionDir)Builds\Engine\Binaries\$(Configuration)-$(Platform)\</OutDir>
     <IntDir>$(SolutionDir)Builds\Engine\Intermediate\$(Configuration)-$(Platform)\$(ProjectName)\Release\ADGR\</IntDir>
     <TargetName>ADGR</TargetName>
     <TargetExt>.dll</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Distribution|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <OutDir>$(SolutionDir)Builds\Engine\Binaries\$(Configuration)-$(Platform)\Application\</OutDir>
+    <OutDir>$(SolutionDir)Builds\Engine\Binaries\$(Configuration)-$(Platform)\</OutDir>
     <IntDir>$(SolutionDir)Builds\Engine\Intermediate\$(Configuration)-$(Platform)\$(ProjectName)\Distribution\ADGR\</IntDir>
     <TargetName>ADGR</TargetName>
     <TargetExt>.dll</TargetExt>
@@ -80,7 +80,7 @@
       <PrecompiledHeaderFile>adgrafx.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>DMK_PLATFORM_WINDOWS;DMK_BUILD_DLL;DMK_USE_VULKAN;GLEW_STATIC;GLFW_INCLUDE_VULKAN;DMK_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\Libraries\Local;$(SolutionDir)Engine\Source\Dynamik\src;$(SolutionDir)Engine\Source\Dynamik\GameLibraries;$(SolutionDir)Engine\Source\Components\ADGR;$(SolutionDir)Engine\Source\Components\ADGR\src;$(SolutionDir)Engine\Source\Components\Audio\src;$(SolutionDir)Engine\Source\Components\Events\src;$(SolutionDir)Engine\Source\Components\Managers\src;$(SolutionDir)Engine\Source\Components\Platform\src;$(SolutionDir)Engine\Source\Components\DevConsole\src;$(SolutionDir)Engine\Source\Components\Debugger\src;$(SolutionDir)Engine\Source\Components\CentralDataHub\src;$(SolutionDir)Engine\Source\Components\Networking\src;$(SolutionDir)Dependencies\Libraries\External\glfw\include;$(SolutionDir)Dependencies\GLEW\include;$(SolutionDir)Dependencies\Libraries\External\glm;$(SolutionDir)Dependencies\Libraries\External\stb;$(SolutionDir)Dependencies\Libraries\External\tinyobjloader;$(SolutionDir)\Dependencies\Libraries\Local\irrKlang\include;$(SolutionDir)\Dependencies\Libraries\Local\assimp;$(SolutionDir)Dependencies\Libraries\External\Vulkan\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\Libraries\Local;$(SolutionDir)Engine\Source\Runtime\src;$(SolutionDir)Engine\Source\Runtime\GameLibraries;$(SolutionDir)Engine\Components\ADGR;$(SolutionDir)Engine\Components\ADGR\src;$(SolutionDir)Engine\Components\Audio\src;$(SolutionDir)Engine\Components\Events\src;$(SolutionDir)Engine\Components\Managers\src;$(SolutionDir)Engine\Components\Platform\src;$(SolutionDir)Engine\Components\DevConsole\src;$(SolutionDir)Engine\Components\Debugger\src;$(SolutionDir)Engine\Components\CentralDataHub\src;$(SolutionDir)Engine\Components\Networking\src;$(SolutionDir)Dependencies\Libraries\External\glfw\include;$(SolutionDir)Dependencies\GLEW\include;$(SolutionDir)Dependencies\Libraries\External\glm;$(SolutionDir)Dependencies\Libraries\External\stb;$(SolutionDir)Dependencies\Libraries\External\tinyobjloader;$(SolutionDir)Dependencies\Libraries\Local\irrKlang\include;$(SolutionDir)Dependencies\Libraries\Local\assimp;$(SolutionDir)Dependencies\Libraries\External\Vulkan\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
@@ -91,7 +91,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>glfw3dll.lib;glew32s.lib;opengl32.lib;vulkan-1.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)Dependencies\Libraries\Binaries\GLFW\lib-vc2019;$(SolutionDir)Dependencies\Libraries\Binaries\GLEW\Release\x64;$(SolutionDir)Dependencies\Libraries\Binaries\Vulkan;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <ImportLibrary>$(SolutionDir)Builds\Engine\Binaries\$(Configuration)-$(Platform)\Application\ADGR.lib</ImportLibrary>
+      <ImportLibrary>$(SolutionDir)Builds\Engine\Binaries\$(Configuration)-$(Platform)\ADGR.lib</ImportLibrary>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -100,7 +100,7 @@
       <PrecompiledHeaderFile>adgrafx.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>DMK_PLATFORM_WINDOWS;DMK_BUILD_DLL;DMK_USE_VULKAN;GLEW_STATIC;GLFW_INCLUDE_VULKAN;DMK_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\Libraries\Local;$(SolutionDir)Engine\Source\Dynamik\src;$(SolutionDir)Engine\Source\Dynamik\GameLibraries;$(SolutionDir)Engine\Source\Components\ADGR;$(SolutionDir)Engine\Source\Components\ADGR\src;$(SolutionDir)Engine\Source\Components\Audio\src;$(SolutionDir)Engine\Source\Components\Events\src;$(SolutionDir)Engine\Source\Components\Managers\src;$(SolutionDir)Engine\Source\Components\Platform\src;$(SolutionDir)Engine\Source\Components\DevConsole\src;$(SolutionDir)Engine\Source\Components\Debugger\src;$(SolutionDir)Engine\Source\Components\CentralDataHub\src;$(SolutionDir)Engine\Source\Components\Networking\src;$(SolutionDir)Dependencies\Libraries\External\glfw\include;$(SolutionDir)Dependencies\GLEW\include;$(SolutionDir)Dependencies\Libraries\External\glm;$(SolutionDir)Dependencies\Libraries\External\stb;$(SolutionDir)Dependencies\Libraries\External\tinyobjloader;$(SolutionDir)\Dependencies\Libraries\Local\irrKlang\include;$(SolutionDir)\Dependencies\Libraries\Local\assimp;$(SolutionDir)Dependencies\Libraries\External\Vulkan\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\Libraries\Local;$(SolutionDir)Engine\Source\Runtime\src;$(SolutionDir)Engine\Source\Runtime\GameLibraries;$(SolutionDir)Engine\Components\ADGR;$(SolutionDir)Engine\Components\ADGR\src;$(SolutionDir)Engine\Components\Audio\src;$(SolutionDir)Engine\Components\Events\src;$(SolutionDir)Engine\Components\Managers\src;$(SolutionDir)Engine\Components\Platform\src;$(SolutionDir)Engine\Components\DevConsole\src;$(SolutionDir)Engine\Components\Debugger\src;$(SolutionDir)Engine\Components\CentralDataHub\src;$(SolutionDir)Engine\Components\Networking\src;$(SolutionDir)Dependencies\Libraries\External\glfw\include;$(SolutionDir)Dependencies\GLEW\include;$(SolutionDir)Dependencies\Libraries\External\glm;$(SolutionDir)Dependencies\Libraries\External\stb;$(SolutionDir)Dependencies\Libraries\External\tinyobjloader;$(SolutionDir)Dependencies\Libraries\Local\irrKlang\include;$(SolutionDir)Dependencies\Libraries\Local\assimp;$(SolutionDir)Dependencies\Libraries\External\Vulkan\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -115,7 +115,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalDependencies>glfw3dll.lib;glew32s.lib;opengl32.lib;vulkan-1.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)Dependencies\Libraries\Binaries\GLFW\lib-vc2019;$(SolutionDir)Dependencies\Libraries\Binaries\GLEW\Release\x64;$(SolutionDir)Dependencies\Libraries\Binaries\Vulkan;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <ImportLibrary>$(SolutionDir)Builds\Engine\Binaries\$(Configuration)-$(Platform)\Application\ADGR.lib</ImportLibrary>
+      <ImportLibrary>$(SolutionDir)Builds\Engine\Binaries\$(Configuration)-$(Platform)\ADGR.lib</ImportLibrary>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Distribution|x64'">
@@ -124,7 +124,7 @@
       <PrecompiledHeaderFile>adgrafx.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>DMK_PLATFORM_WINDOWS;DMK_BUILD_DLL;DMK_USE_VULKAN;GLEW_STATIC;GLFW_INCLUDE_VULKAN;DMK_DISTRIBUTION;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\Libraries\Local;$(SolutionDir)Engine\Source\Dynamik\src;$(SolutionDir)Engine\Source\Dynamik\GameLibraries;$(SolutionDir)Engine\Source\Components\ADGR;$(SolutionDir)Engine\Source\Components\ADGR\src;$(SolutionDir)Engine\Source\Components\Audio\src;$(SolutionDir)Engine\Source\Components\Events\src;$(SolutionDir)Engine\Source\Components\Managers\src;$(SolutionDir)Engine\Source\Components\Platform\src;$(SolutionDir)Engine\Source\Components\DevConsole\src;$(SolutionDir)Engine\Source\Components\Debugger\src;$(SolutionDir)Engine\Source\Components\CentralDataHub\src;$(SolutionDir)Engine\Source\Components\Networking\src;$(SolutionDir)Dependencies\Libraries\External\glfw\include;$(SolutionDir)Dependencies\GLEW\include;$(SolutionDir)Dependencies\Libraries\External\glm;$(SolutionDir)Dependencies\Libraries\External\stb;$(SolutionDir)Dependencies\Libraries\External\tinyobjloader;$(SolutionDir)\Dependencies\Libraries\Local\irrKlang\include;$(SolutionDir)\Dependencies\Libraries\Local\assimp;$(SolutionDir)Dependencies\Libraries\External\Vulkan\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\Libraries\Local;$(SolutionDir)Engine\Source\Runtime\src;$(SolutionDir)Engine\Source\Runtime\GameLibraries;$(SolutionDir)Engine\Components\ADGR;$(SolutionDir)Engine\Components\ADGR\src;$(SolutionDir)Engine\Components\Audio\src;$(SolutionDir)Engine\Components\Events\src;$(SolutionDir)Engine\Components\Managers\src;$(SolutionDir)Engine\Components\Platform\src;$(SolutionDir)Engine\Components\DevConsole\src;$(SolutionDir)Engine\Components\Debugger\src;$(SolutionDir)Engine\Components\CentralDataHub\src;$(SolutionDir)Engine\Components\Networking\src;$(SolutionDir)Dependencies\Libraries\External\glfw\include;$(SolutionDir)Dependencies\GLEW\include;$(SolutionDir)Dependencies\Libraries\External\glm;$(SolutionDir)Dependencies\Libraries\External\stb;$(SolutionDir)Dependencies\Libraries\External\tinyobjloader;$(SolutionDir)Dependencies\Libraries\Local\irrKlang\include;$(SolutionDir)Dependencies\Libraries\Local\assimp;$(SolutionDir)Dependencies\Libraries\External\Vulkan\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -139,7 +139,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalDependencies>glfw3dll.lib;glew32s.lib;opengl32.lib;vulkan-1.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)Dependencies\Libraries\Binaries\GLFW\lib-vc2019;$(SolutionDir)Dependencies\Libraries\Binaries\GLEW\Release\x64;$(SolutionDir)Dependencies\Libraries\Binaries\Vulkan;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <ImportLibrary>$(SolutionDir)Builds\Engine\Binaries\$(Configuration)-$(Platform)\Application\ADGR.lib</ImportLibrary>
+      <ImportLibrary>$(SolutionDir)Builds\Engine\Binaries\$(Configuration)-$(Platform)\ADGR.lib</ImportLibrary>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -250,7 +250,7 @@
     <ProjectReference Include="..\Platform\Platform.vcxproj">
       <Project>{2AC788B4-1694-E3BF-3FAD-D1672BD9184E}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\Managers\components\Managers\Managers.vcxproj">
+    <ProjectReference Include="..\Managers\Managers.vcxproj">
       <Project>{B34CFEBD-9F19-59C9-C832-4771B45E8E57}</Project>
     </ProjectReference>
     <ProjectReference Include="..\CentralDataHub\CentralDataHub.vcxproj">

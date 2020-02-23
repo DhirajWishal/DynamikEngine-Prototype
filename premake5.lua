@@ -29,8 +29,8 @@ IncludeDir["Vulkan"] = "$(SolutionDir)Dependencies/Libraries/External/Vulkan/inc
 IncludeDir["boost"] = "E:/Programming/Modules and Runtime/boost_1_70_0"
 IncludeDir["gil"] = "$(SolutionDir)Dependencies/Libraries/Local/gil/boost"
 IncludeDir["jpeg"] = "$(SolutionDir)Dependencies/Libraries/Local/gil/jpeg-6b"
-IncludeDir["irrKlang"] = "$(SolutionDir)/Dependencies/Libraries/Local/irrKlang/include"
-IncludeDir["assimp"] = "$(SolutionDir)/Dependencies/Libraries/Local/assimp"
+IncludeDir["irrKlang"] = "$(SolutionDir)Dependencies/Libraries/Local/irrKlang/include"
+IncludeDir["assimp"] = "$(SolutionDir)Dependencies/Libraries/Local/assimp"
 
 IncludeLib = {}
 --Include the GLFW library path here
@@ -43,14 +43,18 @@ IncludeLib["boostD"] = "E:/Programming/Modules and Runtime/boost_1_70_0/bin/Depe
 IncludeLib["boostR"] = "E:/Programming/Modules and Runtime/boost_1_70_0/bin/Dependencies/iostreams/build/msvc-14.2/release/address-model-64/link-static/threading-multi"
 
 include "Launcher"
-include "Application"
-include "Engine/Source/Dynamik"
-include "Engine/Source/Components/ADGR"
-include "Engine/Source/Components/Events"
-include "Engine/Source/Components/DevConsole"
-include "Engine/Source/Components/Audio"
-include "Engine/Source/Components/Platform"
-include "Engine/Source/Components/Debugger"
-include "Engine/Source/Components/CentralDataHub"
-include "Engine/Source/Components/Networking"
-include "Engine/Source/Components/Managers"
+
+include "Studio/Source"
+
+include "Engine/Source"
+include "Engine/Application"
+include "Engine/Components/ADGR"
+include "Engine/Components/Events"
+include "Engine/Components/Intellect"
+include "Engine/Components/DevConsole"
+include "Engine/Components/Audio"
+include "Engine/Components/Platform"
+include "Engine/Components/Debugger"
+include "Engine/Components/CentralDataHub"
+include "Engine/Components/Networking"
+include "Engine/Components/Managers"

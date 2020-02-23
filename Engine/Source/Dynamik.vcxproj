@@ -55,21 +55,21 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <OutDir>$(SolutionDir)Builds\Engine\Binaries\$(Configuration)-$(Platform)\Application\</OutDir>
+    <OutDir>$(SolutionDir)Builds\Engine\Binaries\$(Configuration)-$(Platform)\</OutDir>
     <IntDir>$(SolutionDir)Builds\Engine\Intermediate\$(Configuration)-$(Platform)\$(ProjectName)\Debug\Dynamik\</IntDir>
     <TargetName>Dynamik</TargetName>
     <TargetExt>.dll</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <OutDir>$(SolutionDir)Builds\Engine\Binaries\$(Configuration)-$(Platform)\Application\</OutDir>
+    <OutDir>$(SolutionDir)Builds\Engine\Binaries\$(Configuration)-$(Platform)\</OutDir>
     <IntDir>$(SolutionDir)Builds\Engine\Intermediate\$(Configuration)-$(Platform)\$(ProjectName)\Release\Dynamik\</IntDir>
     <TargetName>Dynamik</TargetName>
     <TargetExt>.dll</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Distribution|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <OutDir>$(SolutionDir)Builds\Engine\Binaries\$(Configuration)-$(Platform)\Application\</OutDir>
+    <OutDir>$(SolutionDir)Builds\Engine\Binaries\$(Configuration)-$(Platform)\</OutDir>
     <IntDir>$(SolutionDir)Builds\Engine\Intermediate\$(Configuration)-$(Platform)\$(ProjectName)\Distribution\Dynamik\</IntDir>
     <TargetName>Dynamik</TargetName>
     <TargetExt>.dll</TargetExt>
@@ -80,7 +80,7 @@
       <PrecompiledHeaderFile>dmkafx.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>DMK_PLATFORM_WINDOWS;DMK_BUILD_DLL;_WINDLL;GLFW_INCLUDE_VULKAN;GLFW_INCLUDE_NONE;DMK_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\Libraries\Local;$(SolutionDir)Engine\Source\Dynamik\src;$(SolutionDir)Engine\Source\Dynamik\GameLibraries;$(SolutionDir)Engine\Source\Components\ADGR;$(SolutionDir)Engine\Source\Components\ADGR\src;$(SolutionDir)Engine\Source\Components\Audio\src;$(SolutionDir)Engine\Source\Components\Events\src;$(SolutionDir)Engine\Source\Components\Managers\src;$(SolutionDir)Engine\Source\Components\Platform\src;$(SolutionDir)Engine\Source\Components\DevConsole\src;$(SolutionDir)Engine\Source\Components\Debugger\src;$(SolutionDir)Engine\Source\Components\CentralDataHub\src;$(SolutionDir)Engine\Source\Components\Networking\src;$(SolutionDir)Dependencies\Libraries\External\glfw\include;$(SolutionDir)Dependencies\GLEW\include;$(SolutionDir)Dependencies\Libraries\External\glm;$(SolutionDir)Dependencies\Libraries\External\stb;$(SolutionDir)Dependencies\Libraries\External\tinyobjloader;$(SolutionDir)\Dependencies\Libraries\Local\irrKlang\include;$(SolutionDir)\Dependencies\Libraries\Local\assimp;$(SolutionDir)Dependencies\Libraries\External\Vulkan\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\Libraries\Local;$(SolutionDir)Engine\Source\Runtime\src;$(SolutionDir)Engine\Source\Runtime\GameLibraries;$(SolutionDir)Engine\Components\ADGR;$(SolutionDir)Engine\Components\ADGR\src;$(SolutionDir)Engine\Components\Audio\src;$(SolutionDir)Engine\Components\Events\src;$(SolutionDir)Engine\Components\Managers\src;$(SolutionDir)Engine\Components\Platform\src;$(SolutionDir)Engine\Components\DevConsole\src;$(SolutionDir)Engine\Components\Debugger\src;$(SolutionDir)Engine\Components\CentralDataHub\src;$(SolutionDir)Engine\Components\Networking\src;$(SolutionDir)Dependencies\Libraries\External\glfw\include;$(SolutionDir)Dependencies\GLEW\include;$(SolutionDir)Dependencies\Libraries\External\glm;$(SolutionDir)Dependencies\Libraries\External\stb;$(SolutionDir)Dependencies\Libraries\External\tinyobjloader;$(SolutionDir)Dependencies\Libraries\Local\irrKlang\include;$(SolutionDir)Dependencies\Libraries\Local\assimp;$(SolutionDir)Dependencies\Libraries\External\Vulkan\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
@@ -91,7 +91,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>glfw3dll.lib;opengl32.lib;vulkan-1.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)Dependencies\Libraries\Binaries\irrKlang;$(SolutionDir)Dependencies\Libraries\Binaries\GLFW\lib-vc2019;$(SolutionDir)Dependencies\Libraries\Binaries\GLEW\Release\x64;$(SolutionDir)Dependencies\Libraries\Binaries\Vulkan;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <ImportLibrary>$(SolutionDir)Builds\Engine\Binaries\$(Configuration)-$(Platform)\Application\Dynamik.lib</ImportLibrary>
+      <ImportLibrary>$(SolutionDir)Builds\Engine\Binaries\$(Configuration)-$(Platform)\Dynamik.lib</ImportLibrary>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -100,7 +100,7 @@
       <PrecompiledHeaderFile>dmkafx.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>DMK_PLATFORM_WINDOWS;DMK_BUILD_DLL;_WINDLL;GLFW_INCLUDE_VULKAN;GLFW_INCLUDE_NONE;DMK_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\Libraries\Local;$(SolutionDir)Engine\Source\Dynamik\src;$(SolutionDir)Engine\Source\Dynamik\GameLibraries;$(SolutionDir)Engine\Source\Components\ADGR;$(SolutionDir)Engine\Source\Components\ADGR\src;$(SolutionDir)Engine\Source\Components\Audio\src;$(SolutionDir)Engine\Source\Components\Events\src;$(SolutionDir)Engine\Source\Components\Managers\src;$(SolutionDir)Engine\Source\Components\Platform\src;$(SolutionDir)Engine\Source\Components\DevConsole\src;$(SolutionDir)Engine\Source\Components\Debugger\src;$(SolutionDir)Engine\Source\Components\CentralDataHub\src;$(SolutionDir)Engine\Source\Components\Networking\src;$(SolutionDir)Dependencies\Libraries\External\glfw\include;$(SolutionDir)Dependencies\GLEW\include;$(SolutionDir)Dependencies\Libraries\External\glm;$(SolutionDir)Dependencies\Libraries\External\stb;$(SolutionDir)Dependencies\Libraries\External\tinyobjloader;$(SolutionDir)\Dependencies\Libraries\Local\irrKlang\include;$(SolutionDir)\Dependencies\Libraries\Local\assimp;$(SolutionDir)Dependencies\Libraries\External\Vulkan\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\Libraries\Local;$(SolutionDir)Engine\Source\Runtime\src;$(SolutionDir)Engine\Source\Runtime\GameLibraries;$(SolutionDir)Engine\Components\ADGR;$(SolutionDir)Engine\Components\ADGR\src;$(SolutionDir)Engine\Components\Audio\src;$(SolutionDir)Engine\Components\Events\src;$(SolutionDir)Engine\Components\Managers\src;$(SolutionDir)Engine\Components\Platform\src;$(SolutionDir)Engine\Components\DevConsole\src;$(SolutionDir)Engine\Components\Debugger\src;$(SolutionDir)Engine\Components\CentralDataHub\src;$(SolutionDir)Engine\Components\Networking\src;$(SolutionDir)Dependencies\Libraries\External\glfw\include;$(SolutionDir)Dependencies\GLEW\include;$(SolutionDir)Dependencies\Libraries\External\glm;$(SolutionDir)Dependencies\Libraries\External\stb;$(SolutionDir)Dependencies\Libraries\External\tinyobjloader;$(SolutionDir)Dependencies\Libraries\Local\irrKlang\include;$(SolutionDir)Dependencies\Libraries\Local\assimp;$(SolutionDir)Dependencies\Libraries\External\Vulkan\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -115,7 +115,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalDependencies>glfw3dll.lib;opengl32.lib;vulkan-1.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)Dependencies\Libraries\Binaries\irrKlang;$(SolutionDir)Dependencies\Libraries\Binaries\GLFW\lib-vc2019;$(SolutionDir)Dependencies\Libraries\Binaries\GLEW\Release\x64;$(SolutionDir)Dependencies\Libraries\Binaries\Vulkan;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <ImportLibrary>$(SolutionDir)Builds\Engine\Binaries\$(Configuration)-$(Platform)\Application\Dynamik.lib</ImportLibrary>
+      <ImportLibrary>$(SolutionDir)Builds\Engine\Binaries\$(Configuration)-$(Platform)\Dynamik.lib</ImportLibrary>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Distribution|x64'">
@@ -124,7 +124,7 @@
       <PrecompiledHeaderFile>dmkafx.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>DMK_PLATFORM_WINDOWS;DMK_BUILD_DLL;_WINDLL;GLFW_INCLUDE_VULKAN;GLFW_INCLUDE_NONE;DMK_DISTRIBUTION;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\Libraries\Local;$(SolutionDir)Engine\Source\Dynamik\src;$(SolutionDir)Engine\Source\Dynamik\GameLibraries;$(SolutionDir)Engine\Source\Components\ADGR;$(SolutionDir)Engine\Source\Components\ADGR\src;$(SolutionDir)Engine\Source\Components\Audio\src;$(SolutionDir)Engine\Source\Components\Events\src;$(SolutionDir)Engine\Source\Components\Managers\src;$(SolutionDir)Engine\Source\Components\Platform\src;$(SolutionDir)Engine\Source\Components\DevConsole\src;$(SolutionDir)Engine\Source\Components\Debugger\src;$(SolutionDir)Engine\Source\Components\CentralDataHub\src;$(SolutionDir)Engine\Source\Components\Networking\src;$(SolutionDir)Dependencies\Libraries\External\glfw\include;$(SolutionDir)Dependencies\GLEW\include;$(SolutionDir)Dependencies\Libraries\External\glm;$(SolutionDir)Dependencies\Libraries\External\stb;$(SolutionDir)Dependencies\Libraries\External\tinyobjloader;$(SolutionDir)\Dependencies\Libraries\Local\irrKlang\include;$(SolutionDir)\Dependencies\Libraries\Local\assimp;$(SolutionDir)Dependencies\Libraries\External\Vulkan\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\Libraries\Local;$(SolutionDir)Engine\Source\Runtime\src;$(SolutionDir)Engine\Source\Runtime\GameLibraries;$(SolutionDir)Engine\Components\ADGR;$(SolutionDir)Engine\Components\ADGR\src;$(SolutionDir)Engine\Components\Audio\src;$(SolutionDir)Engine\Components\Events\src;$(SolutionDir)Engine\Components\Managers\src;$(SolutionDir)Engine\Components\Platform\src;$(SolutionDir)Engine\Components\DevConsole\src;$(SolutionDir)Engine\Components\Debugger\src;$(SolutionDir)Engine\Components\CentralDataHub\src;$(SolutionDir)Engine\Components\Networking\src;$(SolutionDir)Dependencies\Libraries\External\glfw\include;$(SolutionDir)Dependencies\GLEW\include;$(SolutionDir)Dependencies\Libraries\External\glm;$(SolutionDir)Dependencies\Libraries\External\stb;$(SolutionDir)Dependencies\Libraries\External\tinyobjloader;$(SolutionDir)Dependencies\Libraries\Local\irrKlang\include;$(SolutionDir)Dependencies\Libraries\Local\assimp;$(SolutionDir)Dependencies\Libraries\External\Vulkan\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -139,59 +139,57 @@
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalDependencies>glfw3dll.lib;opengl32.lib;vulkan-1.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)Dependencies\Libraries\Binaries\irrKlang;$(SolutionDir)Dependencies\Libraries\Binaries\GLFW\lib-vc2019;$(SolutionDir)Dependencies\Libraries\Binaries\GLEW\Release\x64;$(SolutionDir)Dependencies\Libraries\Binaries\Vulkan;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <ImportLibrary>$(SolutionDir)Builds\Engine\Binaries\$(Configuration)-$(Platform)\Application\Dynamik.lib</ImportLibrary>
+      <ImportLibrary>$(SolutionDir)Builds\Engine\Binaries\$(Configuration)-$(Platform)\Dynamik.lib</ImportLibrary>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="GameLibraries\Data Types\Uniform.h" />
-    <ClInclude Include="GameLibraries\Data Types\Vertex.h" />
-    <ClInclude Include="GameLibraries\GameObject.h" />
-    <ClInclude Include="GameLibraries\KeyBingings.h" />
-    <ClInclude Include="GameLibraries\Level.h" />
-    <ClInclude Include="GameLibraries\Scene.h" />
-    <ClInclude Include="src\Dynamik.h" />
-    <ClInclude Include="src\core\application.h" />
-    <ClInclude Include="src\core\core.h" />
-    <ClInclude Include="src\core\data store\containers.h" />
-    <ClInclude Include="src\core\data store\internalFormat.h" />
-    <ClInclude Include="src\core\data store\internalObjectFormat.h" />
-    <ClInclude Include="src\core\data store\objectSpecifications.h" />
-    <ClInclude Include="src\core\engineControlUnit.h" />
-    <ClInclude Include="src\core\object mechanics\loadGameObjects.h" />
-    <ClInclude Include="src\core\object mechanics\submitAsset.h" />
-    <ClInclude Include="src\core\utils\DMK_Descriptors.h" />
-    <ClInclude Include="src\core\utils\DMK_Error.h" />
-    <ClInclude Include="src\core\utils\DMK_Functions.h" />
-    <ClInclude Include="src\core\utils\DMK_Math.h" />
-    <ClInclude Include="src\core\utils\bfs.h" />
-    <ClInclude Include="src\core\utils\dataStructures\heap.h" />
-    <ClInclude Include="src\core\utils\dataStructures\linkedLists.h" />
-    <ClInclude Include="src\core\utils\graph.h" />
-    <ClInclude Include="src\core\utils\safeLock.h" />
-    <ClInclude Include="src\core\utils\systemFlags.h" />
-    <ClInclude Include="src\dmkafx.h" />
+    <ClInclude Include="Runtime\GameLibraries\Data Types\Uniform.h" />
+    <ClInclude Include="Runtime\GameLibraries\Data Types\Vertex.h" />
+    <ClInclude Include="Runtime\GameLibraries\GameObject.h" />
+    <ClInclude Include="Runtime\GameLibraries\KeyBingings.h" />
+    <ClInclude Include="Runtime\GameLibraries\Level.h" />
+    <ClInclude Include="Runtime\GameLibraries\Scene.h" />
+    <ClInclude Include="Runtime\src\Dynamik.h" />
+    <ClInclude Include="Runtime\src\core\application.h" />
+    <ClInclude Include="Runtime\src\core\core.h" />
+    <ClInclude Include="Runtime\src\core\data store\containers.h" />
+    <ClInclude Include="Runtime\src\core\data store\internalFormat.h" />
+    <ClInclude Include="Runtime\src\core\data store\internalObjectFormat.h" />
+    <ClInclude Include="Runtime\src\core\data store\objectSpecifications.h" />
+    <ClInclude Include="Runtime\src\core\engineControlUnit.h" />
+    <ClInclude Include="Runtime\src\core\object mechanics\loadGameObjects.h" />
+    <ClInclude Include="Runtime\src\core\object mechanics\submitAsset.h" />
+    <ClInclude Include="Runtime\src\core\utils\DMK_Descriptors.h" />
+    <ClInclude Include="Runtime\src\core\utils\DMK_Error.h" />
+    <ClInclude Include="Runtime\src\core\utils\DMK_Functions.h" />
+    <ClInclude Include="Runtime\src\core\utils\DMK_Math.h" />
+    <ClInclude Include="Runtime\src\core\utils\bfs.h" />
+    <ClInclude Include="Runtime\src\core\utils\dataStructures\heap.h" />
+    <ClInclude Include="Runtime\src\core\utils\dataStructures\linkedLists.h" />
+    <ClInclude Include="Runtime\src\core\utils\graph.h" />
+    <ClInclude Include="Runtime\src\core\utils\safeLock.h" />
+    <ClInclude Include="Runtime\src\core\utils\systemFlags.h" />
+    <ClInclude Include="Runtime\src\dmkafx.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\core\application.cpp" />
-    <ClCompile Include="src\core\data store\internalFormat.cpp" />
-    <ClCompile Include="src\core\engineControlUnit.cpp" />
-    <ClCompile Include="src\core\object mechanics\loadGameObjects.cpp" />
-    <ClCompile Include="src\core\utils\DMK_Functions.cpp" />
-    <ClCompile Include="src\core\utils\DMK_Math.cpp" />
-    <ClCompile Include="src\core\utils\bfs.cpp" />
-    <ClCompile Include="src\core\utils\dataStructures\heap.cpp" />
-    <ClCompile Include="src\core\utils\dataStructures\linkedLists.cpp" />
-    <ClCompile Include="src\core\utils\safeLock.cpp" />
-    <ClCompile Include="src\dmkafx.cpp">
+    <ClCompile Include="Runtime\src\core\application.cpp" />
+    <ClCompile Include="Runtime\src\core\data store\internalFormat.cpp" />
+    <ClCompile Include="Runtime\src\core\engineControlUnit.cpp" />
+    <ClCompile Include="Runtime\src\core\object mechanics\loadGameObjects.cpp" />
+    <ClCompile Include="Runtime\src\core\utils\DMK_Functions.cpp" />
+    <ClCompile Include="Runtime\src\core\utils\DMK_Math.cpp" />
+    <ClCompile Include="Runtime\src\core\utils\bfs.cpp" />
+    <ClCompile Include="Runtime\src\core\utils\dataStructures\heap.cpp" />
+    <ClCompile Include="Runtime\src\core\utils\dataStructures\linkedLists.cpp" />
+    <ClCompile Include="Runtime\src\core\utils\safeLock.cpp" />
+    <ClCompile Include="Runtime\src\dmkafx.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="IMPORTANT.txt" />
-    <None Include="architecture.txt" />
-    <None Include="cpp.hint" />
-    <None Include="premake5.lua" />
-    <None Include="src\core\media\license.txt" />
+    <None Include="Runtime\IMPORTANT.txt" />
+    <None Include="Runtime\architecture.txt" />
+    <None Include="Runtime\src\core\media\license.txt" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Components\ADGR\ADGR.vcxproj">

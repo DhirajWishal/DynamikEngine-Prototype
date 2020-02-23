@@ -15,10 +15,10 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{2AC788B4-1694-E3BF-3FAD-D1672BD9184E}</ProjectGuid>
+    <ProjectGuid>{9718D90C-032D-01BE-CCAE-A41D3882FDEE}</ProjectGuid>
     <IgnoreWarnCompileDuplicatedFilename>true</IgnoreWarnCompileDuplicatedFilename>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>Platform</RootNamespace>
+    <RootNamespace>Audio</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -54,29 +54,29 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <OutDir>$(SolutionDir)Builds\Engine\Binaries\$(Configuration)-$(Platform)\Application\</OutDir>
-    <IntDir>$(SolutionDir)Builds\Engine\Intermediate\$(Configuration)-$(Platform)\$(ProjectName)\Debug\Platform\</IntDir>
-    <TargetName>Platform</TargetName>
+    <OutDir>$(SolutionDir)Builds\Engine\Binaries\$(Configuration)-$(Platform)\</OutDir>
+    <IntDir>$(SolutionDir)Builds\Engine\Intermediate\$(Configuration)-$(Platform)\$(ProjectName)\Debug\Audio\</IntDir>
+    <TargetName>Audio</TargetName>
     <TargetExt>.lib</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <OutDir>$(SolutionDir)Builds\Engine\Binaries\$(Configuration)-$(Platform)\Application\</OutDir>
-    <IntDir>$(SolutionDir)Builds\Engine\Intermediate\$(Configuration)-$(Platform)\$(ProjectName)\Release\Platform\</IntDir>
-    <TargetName>Platform</TargetName>
+    <OutDir>$(SolutionDir)Builds\Engine\Binaries\$(Configuration)-$(Platform)\</OutDir>
+    <IntDir>$(SolutionDir)Builds\Engine\Intermediate\$(Configuration)-$(Platform)\$(ProjectName)\Release\Audio\</IntDir>
+    <TargetName>Audio</TargetName>
     <TargetExt>.lib</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Distribution|x64'">
-    <OutDir>$(SolutionDir)Builds\Engine\Binaries\$(Configuration)-$(Platform)\Application\</OutDir>
-    <IntDir>$(SolutionDir)Builds\Engine\Intermediate\$(Configuration)-$(Platform)\$(ProjectName)\Distribution\Platform\</IntDir>
-    <TargetName>Platform</TargetName>
+    <OutDir>$(SolutionDir)Builds\Engine\Binaries\$(Configuration)-$(Platform)\</OutDir>
+    <IntDir>$(SolutionDir)Builds\Engine\Intermediate\$(Configuration)-$(Platform)\$(ProjectName)\Distribution\Audio\</IntDir>
+    <TargetName>Audio</TargetName>
     <TargetExt>.lib</TargetExt>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>DMK_PLATFORM_WINDOWS;DMK_BUILD_DLL;GLFW_INCLUDE_VULKAN;DMK_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\Libraries\Local;$(SolutionDir)Engine\Source\Dynamik\src;$(SolutionDir)Engine\Source\Dynamik\GameLibraries;$(SolutionDir)Engine\Source\Components\ADGR;$(SolutionDir)Engine\Source\Components\ADGR\src;$(SolutionDir)Engine\Source\Components\Audio\src;$(SolutionDir)Engine\Source\Components\Events\src;$(SolutionDir)Engine\Source\Components\Managers\src;$(SolutionDir)Engine\Source\Components\Platform\src;$(SolutionDir)Engine\Source\Components\DevConsole\src;$(SolutionDir)Engine\Source\Components\Debugger\src;$(SolutionDir)Engine\Source\Components\CentralDataHub\src;$(SolutionDir)Engine\Source\Components\Networking\src;$(SolutionDir)Dependencies\Libraries\External\glfw\include;$(SolutionDir)Dependencies\GLEW\include;$(SolutionDir)Dependencies\Libraries\External\glm;$(SolutionDir)Dependencies\Libraries\External\stb;$(SolutionDir)Dependencies\Libraries\External\tinyobjloader;$(SolutionDir)\Dependencies\Libraries\Local\irrKlang\include;$(SolutionDir)\Dependencies\Libraries\Local\assimp;$(SolutionDir)Dependencies\Libraries\External\Vulkan\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>DMK_PLATFORM_WINDOWS;DMK_BUILD_DLL;DMK_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\Libraries\Local;$(SolutionDir)Engine\Source\Runtime\src;$(SolutionDir)Engine\Source\Runtime\GameLibraries;$(SolutionDir)Engine\Components\ADGR;$(SolutionDir)Engine\Components\ADGR\src;$(SolutionDir)Engine\Components\Audio\src;$(SolutionDir)Engine\Components\Events\src;$(SolutionDir)Engine\Components\Managers\src;$(SolutionDir)Engine\Components\Platform\src;$(SolutionDir)Engine\Components\DevConsole\src;$(SolutionDir)Engine\Components\Debugger\src;$(SolutionDir)Engine\Components\CentralDataHub\src;$(SolutionDir)Engine\Components\Networking\src;$(SolutionDir)Dependencies\Libraries\External\glfw\include;$(SolutionDir)Dependencies\GLEW\include;$(SolutionDir)Dependencies\Libraries\External\glm;$(SolutionDir)Dependencies\Libraries\External\stb;$(SolutionDir)Dependencies\Libraries\External\tinyobjloader;$(SolutionDir)Dependencies\Libraries\Local\irrKlang\include;$(SolutionDir)Dependencies\Libraries\Local\assimp;$(SolutionDir)Dependencies\Libraries\External\Vulkan\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
@@ -87,7 +87,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <Lib>
-      <AdditionalDependencies>glfw3dll.lib;opengl32.lib;vulkan-1.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>irrKlang.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)Dependencies\Libraries\Binaries\irrKlang;$(SolutionDir)Dependencies\Libraries\Binaries\GLFW\lib-vc2019;$(SolutionDir)Dependencies\Libraries\Binaries\GLEW\Release\x64;$(SolutionDir)Dependencies\Libraries\Binaries\Vulkan;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Lib>
   </ItemDefinitionGroup>
@@ -95,8 +95,8 @@
     <ClCompile>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>DMK_PLATFORM_WINDOWS;DMK_BUILD_DLL;GLFW_INCLUDE_VULKAN;DMK_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\Libraries\Local;$(SolutionDir)Engine\Source\Dynamik\src;$(SolutionDir)Engine\Source\Dynamik\GameLibraries;$(SolutionDir)Engine\Source\Components\ADGR;$(SolutionDir)Engine\Source\Components\ADGR\src;$(SolutionDir)Engine\Source\Components\Audio\src;$(SolutionDir)Engine\Source\Components\Events\src;$(SolutionDir)Engine\Source\Components\Managers\src;$(SolutionDir)Engine\Source\Components\Platform\src;$(SolutionDir)Engine\Source\Components\DevConsole\src;$(SolutionDir)Engine\Source\Components\Debugger\src;$(SolutionDir)Engine\Source\Components\CentralDataHub\src;$(SolutionDir)Engine\Source\Components\Networking\src;$(SolutionDir)Dependencies\Libraries\External\glfw\include;$(SolutionDir)Dependencies\GLEW\include;$(SolutionDir)Dependencies\Libraries\External\glm;$(SolutionDir)Dependencies\Libraries\External\stb;$(SolutionDir)Dependencies\Libraries\External\tinyobjloader;$(SolutionDir)\Dependencies\Libraries\Local\irrKlang\include;$(SolutionDir)\Dependencies\Libraries\Local\assimp;$(SolutionDir)Dependencies\Libraries\External\Vulkan\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>DMK_PLATFORM_WINDOWS;DMK_BUILD_DLL;DMK_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\Libraries\Local;$(SolutionDir)Engine\Source\Runtime\src;$(SolutionDir)Engine\Source\Runtime\GameLibraries;$(SolutionDir)Engine\Components\ADGR;$(SolutionDir)Engine\Components\ADGR\src;$(SolutionDir)Engine\Components\Audio\src;$(SolutionDir)Engine\Components\Events\src;$(SolutionDir)Engine\Components\Managers\src;$(SolutionDir)Engine\Components\Platform\src;$(SolutionDir)Engine\Components\DevConsole\src;$(SolutionDir)Engine\Components\Debugger\src;$(SolutionDir)Engine\Components\CentralDataHub\src;$(SolutionDir)Engine\Components\Networking\src;$(SolutionDir)Dependencies\Libraries\External\glfw\include;$(SolutionDir)Dependencies\GLEW\include;$(SolutionDir)Dependencies\Libraries\External\glm;$(SolutionDir)Dependencies\Libraries\External\stb;$(SolutionDir)Dependencies\Libraries\External\tinyobjloader;$(SolutionDir)Dependencies\Libraries\Local\irrKlang\include;$(SolutionDir)Dependencies\Libraries\Local\assimp;$(SolutionDir)Dependencies\Libraries\External\Vulkan\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -111,7 +111,7 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
     <Lib>
-      <AdditionalDependencies>glfw3dll.lib;opengl32.lib;vulkan-1.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>irrKlang.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)Dependencies\Libraries\Binaries\irrKlang;$(SolutionDir)Dependencies\Libraries\Binaries\GLFW\lib-vc2019;$(SolutionDir)Dependencies\Libraries\Binaries\GLEW\Release\x64;$(SolutionDir)Dependencies\Libraries\Binaries\Vulkan;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Lib>
   </ItemDefinitionGroup>
@@ -119,8 +119,8 @@
     <ClCompile>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>DMK_PLATFORM_WINDOWS;DMK_BUILD_DLL;GLFW_INCLUDE_VULKAN;DMK_DISTRIBUTION;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\Libraries\Local;$(SolutionDir)Engine\Source\Dynamik\src;$(SolutionDir)Engine\Source\Dynamik\GameLibraries;$(SolutionDir)Engine\Source\Components\ADGR;$(SolutionDir)Engine\Source\Components\ADGR\src;$(SolutionDir)Engine\Source\Components\Audio\src;$(SolutionDir)Engine\Source\Components\Events\src;$(SolutionDir)Engine\Source\Components\Managers\src;$(SolutionDir)Engine\Source\Components\Platform\src;$(SolutionDir)Engine\Source\Components\DevConsole\src;$(SolutionDir)Engine\Source\Components\Debugger\src;$(SolutionDir)Engine\Source\Components\CentralDataHub\src;$(SolutionDir)Engine\Source\Components\Networking\src;$(SolutionDir)Dependencies\Libraries\External\glfw\include;$(SolutionDir)Dependencies\GLEW\include;$(SolutionDir)Dependencies\Libraries\External\glm;$(SolutionDir)Dependencies\Libraries\External\stb;$(SolutionDir)Dependencies\Libraries\External\tinyobjloader;$(SolutionDir)\Dependencies\Libraries\Local\irrKlang\include;$(SolutionDir)\Dependencies\Libraries\Local\assimp;$(SolutionDir)Dependencies\Libraries\External\Vulkan\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>DMK_PLATFORM_WINDOWS;DMK_BUILD_DLL;DMK_DISTRIBUTION;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\Libraries\Local;$(SolutionDir)Engine\Source\Runtime\src;$(SolutionDir)Engine\Source\Runtime\GameLibraries;$(SolutionDir)Engine\Components\ADGR;$(SolutionDir)Engine\Components\ADGR\src;$(SolutionDir)Engine\Components\Audio\src;$(SolutionDir)Engine\Components\Events\src;$(SolutionDir)Engine\Components\Managers\src;$(SolutionDir)Engine\Components\Platform\src;$(SolutionDir)Engine\Components\DevConsole\src;$(SolutionDir)Engine\Components\Debugger\src;$(SolutionDir)Engine\Components\CentralDataHub\src;$(SolutionDir)Engine\Components\Networking\src;$(SolutionDir)Dependencies\Libraries\External\glfw\include;$(SolutionDir)Dependencies\GLEW\include;$(SolutionDir)Dependencies\Libraries\External\glm;$(SolutionDir)Dependencies\Libraries\External\stb;$(SolutionDir)Dependencies\Libraries\External\tinyobjloader;$(SolutionDir)Dependencies\Libraries\Local\irrKlang\include;$(SolutionDir)Dependencies\Libraries\Local\assimp;$(SolutionDir)Dependencies\Libraries\External\Vulkan\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -135,31 +135,26 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
     <Lib>
-      <AdditionalDependencies>glfw3dll.lib;opengl32.lib;vulkan-1.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>irrKlang.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)Dependencies\Libraries\Binaries\irrKlang;$(SolutionDir)Dependencies\Libraries\Binaries\GLFW\lib-vc2019;$(SolutionDir)Dependencies\Libraries\Binaries\GLEW\Release\x64;$(SolutionDir)Dependencies\Libraries\Binaries\Vulkan;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="src\Platform.h" />
-    <ClInclude Include="src\core\Windows.h" />
-    <ClInclude Include="src\core\Windows\inputs.h" />
-    <ClInclude Include="src\core\Windows\utils\daiFileManager.h" />
-    <ClInclude Include="src\core\Windows\utils\duiFileManager.h" />
-    <ClInclude Include="src\core\Windows\utils\loadIcon.h" />
-    <ClInclude Include="src\core\Windows\utils\modelManager.h" />
-    <ClInclude Include="src\core\Windows\utils\objectLoader.h" />
-    <ClInclude Include="src\core\Windows\utils\readFile.h" />
-    <ClInclude Include="src\core\Windows\window.h" />
+    <ClInclude Include="src\Audio.h" />
+    <ClInclude Include="src\core\AudioEngine.h" />
+    <ClInclude Include="src\core\AudioLog.h" />
+    <ClInclude Include="src\core\AudioObject.h" />
+    <ClInclude Include="src\core\AudioObjectController.h" />
+    <ClInclude Include="src\core\AudioObjectControllers\BackgroundAudioController.h" />
+    <ClInclude Include="src\core\AudioObjectControllers\BasicAudioController.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\core\Windows\inputs.cpp" />
-    <ClCompile Include="src\core\Windows\utils\daiFileManager.cpp" />
-    <ClCompile Include="src\core\Windows\utils\duiFileManager.cpp" />
-    <ClCompile Include="src\core\Windows\utils\loadIcon.cpp" />
-    <ClCompile Include="src\core\Windows\utils\modelManager.cpp" />
-    <ClCompile Include="src\core\Windows\utils\objectLoader.cpp" />
-    <ClCompile Include="src\core\Windows\utils\readFile.cpp" />
-    <ClCompile Include="src\core\Windows\window.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="src\core\AudioEngine.cpp" />
+    <ClCompile Include="src\core\AudioObject.cpp" />
+    <ClCompile Include="src\core\AudioObjectController.cpp" />
+    <ClCompile Include="src\core\AudioObjectControllers\BackgroundAudioController.cpp" />
+    <ClCompile Include="src\core\AudioObjectControllers\BasicAudioController.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="premake5.lua" />
@@ -167,9 +162,6 @@
   <ItemGroup>
     <ProjectReference Include="..\Events\Events.vcxproj">
       <Project>{3A8963B1-262B-8E87-0FE6-A1DBFB2615D8}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\Managers\components\Managers\Managers.vcxproj">
-      <Project>{B34CFEBD-9F19-59C9-C832-4771B45E8E57}</Project>
     </ProjectReference>
     <ProjectReference Include="..\Debugger\Debugger.vcxproj">
       <Project>{2ACD0289-169A-5D94-3FB3-4B3C2BDF9222}</Project>

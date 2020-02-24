@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="src">
+      <UniqueIdentifier>{2DAB880B-99B4-887C-2230-9F7C8E38947C}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\core">
+      <UniqueIdentifier>{C55F2ECF-B12C-89DA-DA45-7782C671BE68}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\core\Intellect">
+      <UniqueIdentifier>{38CADA76-24AE-9BCC-8D0E-961F7911864E}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\core\Intellect\neuralNetwork.h">
+      <Filter>src\core\Intellect</Filter>
+    </ClInclude>
+    <ClInclude Include="src\intafx.h">
+      <Filter>src</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\core\Intellect\neuralNetwork.cpp">
+      <Filter>src\core\Intellect</Filter>
+    </ClCompile>
+    <ClCompile Include="src\intafx.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Intellect.lua" />
+  </ItemGroup>
+</Project>

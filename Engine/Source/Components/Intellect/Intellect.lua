@@ -1,26 +1,23 @@
----------- Dynamik Engine project description ----------
+---------- Intellect project ----------
 
-project "Dynamik"
+project "Intellect"
 	kind "SharedLib"
 	language "C++"
+	cppdialect "c++17"
+	staticruntime "On"
 
 	targetdir "$(SolutionDir)Builds/Engine/Binaries/$(Configuration)-$(Platform)"
 	objdir "$(SolutionDir)Builds/Engine/Intermediate/$(Configuration)-$(Platform)/$(ProjectName)"
 
-	pchheader "dmkafx.h"
-	pchsource "Runtime/src/dmkafx.cpp"
+	pchheader "intafx.h"
+	pchsource "src/intafx.cpp"
 
 	files {
-		"Runtime/**.txt",
-		"Runtime/**.lua",
-		"Runtime/**.hint",
-		"Runtime/src/**.h",
-		"Runtime/src/**.cpp",
-		"Runtime/src/**.txt",
-		"Runtime/GameLibraries/**.cpp",
-		"Runtime/GameLibraries/**.h",
-		"$(SolutionDir)Dependencies/glm/**.hpp",
-		"$(SolutionDir)Dependencies/glm/**.inl",
+		"**.h",
+		"**.cpp",
+		"src/**.h",
+		"src/**.cpp",
+		"**.lua"
 	}
 
 	includedirs {
@@ -29,6 +26,8 @@ project "Dynamik"
 		"$(SolutionDir)Engine/Source/Runtime/GameLibraries",
 		"$(SolutionDir)Engine/Source/Components/ADGR",
 		"$(SolutionDir)Engine/Source/Components/ADGR/src",
+		"$(SolutionDir)Engine/Source/Components/Intellect",
+		"$(SolutionDir)Engine/Source/Components/Intellect/src",
 		"$(SolutionDir)Engine/Source/Components/Audio/src",
 		"$(SolutionDir)Engine/Source/Components/Events/src",
 		"$(SolutionDir)Engine/Source/Components/Managers/src",
@@ -48,46 +47,46 @@ project "Dynamik"
 	}
 
 	libdirs {
-		"%{IncludeLib.irrKlang}",
 		"%{IncludeLib.GLFW}",
 		"%{IncludeLib.GLEW}",
 		"%{IncludeLib.Vulkan}"
 	}
 
 	links { 
-		"ADGR",
-		"Audio",
-		"Events",
-		"Platform",
 		"glfw3dll",
+		"glew32s",
 		"opengl32",
 		"vulkan-1",
-		"Debugger",
+		"Events",
+		"Platform",
+		"Managers",
 		"CentralDataHub",
-		"Networking"
+		"Debugger"
 	}
 
 	filter "system:windows"
-		cppdialect "C++17"
-		staticruntime "On"
 		systemversion "latest"
 
 		defines {
 			"DMK_PLATFORM_WINDOWS",
 			"DMK_BUILD_DLL",
-			"_WINDLL",
-			"GLFW_INCLUDE_VULKAN",
-			"GLFW_INCLUDE_NONE"
+			"DMK_USE_VULKAN",
+			--"DMK_USE_OPENGL",
+			"GLEW_STATIC",
+			"GLFW_INCLUDE_VULKAN"
 		}
 
 	filter "configurations:Debug"
 		defines "DMK_DEBUG"
+		runtime "Debug"
 		symbols "On"
 		
 	filter "configurations:Release"
 		defines "DMK_RELEASE"
+		runtime "Release"
 		optimize "On"
 
 	filter "configurations:Distribution"
 		defines "DMK_DISTRIBUTION"
+		runtime "Release"
 		optimize "On"

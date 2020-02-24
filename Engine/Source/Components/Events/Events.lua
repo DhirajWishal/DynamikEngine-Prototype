@@ -1,26 +1,20 @@
----------- Dynamik Engine project description ----------
+---------- Events project ----------
 
-project "Dynamik"
-	kind "SharedLib"
+project "Events"
+	kind "StaticLib"
 	language "C++"
+	cppdialect "c++17"
+	staticruntime "On"
 
 	targetdir "$(SolutionDir)Builds/Engine/Binaries/$(Configuration)-$(Platform)"
 	objdir "$(SolutionDir)Builds/Engine/Intermediate/$(Configuration)-$(Platform)/$(ProjectName)"
 
-	pchheader "dmkafx.h"
-	pchsource "Runtime/src/dmkafx.cpp"
-
 	files {
-		"Runtime/**.txt",
-		"Runtime/**.lua",
-		"Runtime/**.hint",
-		"Runtime/src/**.h",
-		"Runtime/src/**.cpp",
-		"Runtime/src/**.txt",
-		"Runtime/GameLibraries/**.cpp",
-		"Runtime/GameLibraries/**.h",
-		"$(SolutionDir)Dependencies/glm/**.hpp",
-		"$(SolutionDir)Dependencies/glm/**.inl",
+		"**.h",
+		"**.cpp",
+		"src/**.h",
+		"src/**.cpp",
+		"**.lua"
 	}
 
 	includedirs {
@@ -47,47 +41,28 @@ project "Dynamik"
 		"%{IncludeDir.Vulkan}"
 	}
 
-	libdirs {
-		"%{IncludeLib.irrKlang}",
-		"%{IncludeLib.GLFW}",
-		"%{IncludeLib.GLEW}",
-		"%{IncludeLib.Vulkan}"
-	}
-
-	links { 
-		"ADGR",
-		"Audio",
-		"Events",
-		"Platform",
-		"glfw3dll",
-		"opengl32",
-		"vulkan-1",
+	links {
 		"Debugger",
-		"CentralDataHub",
-		"Networking"
 	}
 
 	filter "system:windows"
-		cppdialect "C++17"
-		staticruntime "On"
 		systemversion "latest"
 
 		defines {
 			"DMK_PLATFORM_WINDOWS",
-			"DMK_BUILD_DLL",
-			"_WINDLL",
-			"GLFW_INCLUDE_VULKAN",
-			"GLFW_INCLUDE_NONE"
 		}
 
 	filter "configurations:Debug"
 		defines "DMK_DEBUG"
+		runtime "Debug"
 		symbols "On"
 		
 	filter "configurations:Release"
 		defines "DMK_RELEASE"
+		runtime "Release"
 		optimize "On"
 
 	filter "configurations:Distribution"
 		defines "DMK_DISTRIBUTION"
+		runtime "Release"
 		optimize "On"

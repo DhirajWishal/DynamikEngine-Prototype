@@ -11,14 +11,14 @@ project "Dynamik"
 	pchsource "Runtime/src/dmkafx.cpp"
 
 	files {
-		"Runtime/**.txt",
-		"Runtime/**.lua",
-		"Runtime/**.hint",
-		"Runtime/src/**.h",
-		"Runtime/src/**.cpp",
-		"Runtime/src/**.txt",
-		"Runtime/GameLibraries/**.cpp",
-		"Runtime/GameLibraries/**.h",
+		"**.txt",
+		"**.lua",
+		"**.hint",
+		"src/**.h",
+		"src/**.cpp",
+		"src/**.txt",
+		"GameLibraries/**.cpp",
+		"GameLibraries/**.h",
 		"$(SolutionDir)Dependencies/glm/**.hpp",
 		"$(SolutionDir)Dependencies/glm/**.inl",
 	}

@@ -4,7 +4,7 @@
  Manager for the Advanced Dynamik Graphics Renderer
 
  Author:	Dhiraj Wishal
- Project:	Dynamik Engine
+ Project:	Dynamik
  Date:		02/12/2019
  IDE:		MS Visual Studio Community 2019
 

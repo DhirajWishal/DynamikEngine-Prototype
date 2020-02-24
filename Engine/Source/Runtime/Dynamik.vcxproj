@@ -143,74 +143,73 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Runtime\GameLibraries\Data Types\Uniform.h" />
-    <ClInclude Include="Runtime\GameLibraries\Data Types\Vertex.h" />
-    <ClInclude Include="Runtime\GameLibraries\GameObject.h" />
-    <ClInclude Include="Runtime\GameLibraries\KeyBingings.h" />
-    <ClInclude Include="Runtime\GameLibraries\Level.h" />
-    <ClInclude Include="Runtime\GameLibraries\Scene.h" />
-    <ClInclude Include="Runtime\src\Dynamik.h" />
-    <ClInclude Include="Runtime\src\core\application.h" />
-    <ClInclude Include="Runtime\src\core\core.h" />
-    <ClInclude Include="Runtime\src\core\data store\containers.h" />
-    <ClInclude Include="Runtime\src\core\data store\internalFormat.h" />
-    <ClInclude Include="Runtime\src\core\data store\internalObjectFormat.h" />
-    <ClInclude Include="Runtime\src\core\data store\objectSpecifications.h" />
-    <ClInclude Include="Runtime\src\core\engineControlUnit.h" />
-    <ClInclude Include="Runtime\src\core\object mechanics\loadGameObjects.h" />
-    <ClInclude Include="Runtime\src\core\object mechanics\submitAsset.h" />
-    <ClInclude Include="Runtime\src\core\utils\DMK_Descriptors.h" />
-    <ClInclude Include="Runtime\src\core\utils\DMK_Error.h" />
-    <ClInclude Include="Runtime\src\core\utils\DMK_Functions.h" />
-    <ClInclude Include="Runtime\src\core\utils\DMK_Math.h" />
-    <ClInclude Include="Runtime\src\core\utils\bfs.h" />
-    <ClInclude Include="Runtime\src\core\utils\dataStructures\heap.h" />
-    <ClInclude Include="Runtime\src\core\utils\dataStructures\linkedLists.h" />
-    <ClInclude Include="Runtime\src\core\utils\graph.h" />
-    <ClInclude Include="Runtime\src\core\utils\safeLock.h" />
-    <ClInclude Include="Runtime\src\core\utils\systemFlags.h" />
-    <ClInclude Include="Runtime\src\dmkafx.h" />
+    <ClInclude Include="GameLibraries\Data Types\Uniform.h" />
+    <ClInclude Include="GameLibraries\Data Types\Vertex.h" />
+    <ClInclude Include="GameLibraries\GameObject.h" />
+    <ClInclude Include="GameLibraries\KeyBingings.h" />
+    <ClInclude Include="GameLibraries\Level.h" />
+    <ClInclude Include="GameLibraries\Scene.h" />
+    <ClInclude Include="src\Dynamik.h" />
+    <ClInclude Include="src\core\application.h" />
+    <ClInclude Include="src\core\core.h" />
+    <ClInclude Include="src\core\data store\containers.h" />
+    <ClInclude Include="src\core\data store\internalFormat.h" />
+    <ClInclude Include="src\core\data store\internalObjectFormat.h" />
+    <ClInclude Include="src\core\data store\objectSpecifications.h" />
+    <ClInclude Include="src\core\engineControlUnit.h" />
+    <ClInclude Include="src\core\object mechanics\loadGameObjects.h" />
+    <ClInclude Include="src\core\object mechanics\submitAsset.h" />
+    <ClInclude Include="src\core\utils\DMK_Descriptors.h" />
+    <ClInclude Include="src\core\utils\DMK_Error.h" />
+    <ClInclude Include="src\core\utils\DMK_Functions.h" />
+    <ClInclude Include="src\core\utils\DMK_Math.h" />
+    <ClInclude Include="src\core\utils\bfs.h" />
+    <ClInclude Include="src\core\utils\dataStructures\heap.h" />
+    <ClInclude Include="src\core\utils\dataStructures\linkedLists.h" />
+    <ClInclude Include="src\core\utils\graph.h" />
+    <ClInclude Include="src\core\utils\safeLock.h" />
+    <ClInclude Include="src\core\utils\systemFlags.h" />
+    <ClInclude Include="src\dmkafx.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Runtime\src\core\application.cpp" />
-    <ClCompile Include="Runtime\src\core\data store\internalFormat.cpp" />
-    <ClCompile Include="Runtime\src\core\engineControlUnit.cpp" />
-    <ClCompile Include="Runtime\src\core\object mechanics\loadGameObjects.cpp" />
-    <ClCompile Include="Runtime\src\core\utils\DMK_Functions.cpp" />
-    <ClCompile Include="Runtime\src\core\utils\DMK_Math.cpp" />
-    <ClCompile Include="Runtime\src\core\utils\bfs.cpp" />
-    <ClCompile Include="Runtime\src\core\utils\dataStructures\heap.cpp" />
-    <ClCompile Include="Runtime\src\core\utils\dataStructures\linkedLists.cpp" />
-    <ClCompile Include="Runtime\src\core\utils\safeLock.cpp" />
-    <ClCompile Include="Runtime\src\dmkafx.cpp">
-      <PrecompiledHeader>Create</PrecompiledHeader>
-    </ClCompile>
+    <ClCompile Include="src\core\application.cpp" />
+    <ClCompile Include="src\core\data store\internalFormat.cpp" />
+    <ClCompile Include="src\core\engineControlUnit.cpp" />
+    <ClCompile Include="src\core\object mechanics\loadGameObjects.cpp" />
+    <ClCompile Include="src\core\utils\DMK_Functions.cpp" />
+    <ClCompile Include="src\core\utils\DMK_Math.cpp" />
+    <ClCompile Include="src\core\utils\bfs.cpp" />
+    <ClCompile Include="src\core\utils\dataStructures\heap.cpp" />
+    <ClCompile Include="src\core\utils\dataStructures\linkedLists.cpp" />
+    <ClCompile Include="src\core\utils\safeLock.cpp" />
+    <ClCompile Include="src\dmkafx.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Runtime\IMPORTANT.txt" />
-    <None Include="Runtime\architecture.txt" />
-    <None Include="Runtime\src\core\media\license.txt" />
+    <None Include="Dynamik.lua" />
+    <None Include="IMPORTANT.txt" />
+    <None Include="architecture.txt" />
+    <None Include="src\core\media\license.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="Components\ADGR\ADGR.vcxproj">
+    <ProjectReference Include="..\Components\ADGR\ADGR.vcxproj">
       <Project>{E3DE817C-CF15-830D-7802-69106418FF0E}</Project>
     </ProjectReference>
-    <ProjectReference Include="Components\Audio\Audio.vcxproj">
+    <ProjectReference Include="..\Components\Audio\Audio.vcxproj">
       <Project>{9718D90C-032D-01BE-CCAE-A41D3882FDEE}</Project>
     </ProjectReference>
-    <ProjectReference Include="Components\Events\Events.vcxproj">
+    <ProjectReference Include="..\Components\Events\Events.vcxproj">
       <Project>{3A8963B1-262B-8E87-0FE6-A1DBFB2615D8}</Project>
     </ProjectReference>
-    <ProjectReference Include="Components\Platform\Platform.vcxproj">
+    <ProjectReference Include="..\Components\Platform\Platform.vcxproj">
       <Project>{2AC788B4-1694-E3BF-3FAD-D1672BD9184E}</Project>
     </ProjectReference>
-    <ProjectReference Include="Components\Debugger\Debugger.vcxproj">
+    <ProjectReference Include="..\Components\Debugger\Debugger.vcxproj">
       <Project>{2ACD0289-169A-5D94-3FB3-4B3C2BDF9222}</Project>
     </ProjectReference>
-    <ProjectReference Include="Components\CentralDataHub\CentralDataHub.vcxproj">
+    <ProjectReference Include="..\Components\CentralDataHub\CentralDataHub.vcxproj">
       <Project>{27660F4E-1334-0354-FCC7-737AE834DFB8}</Project>
     </ProjectReference>
-    <ProjectReference Include="Components\Networking\Networking.vcxproj">
+    <ProjectReference Include="..\Components\Networking\Networking.vcxproj">
       <Project>{6D615D47-5919-9F94-C220-78F0AEF73985}</Project>
     </ProjectReference>
   </ItemGroup>

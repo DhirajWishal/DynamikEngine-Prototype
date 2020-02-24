@@ -4,7 +4,7 @@
  Dynamik Asset Index (DAI) file handler
 
  Author:	Dhiraj Wishal
- Project:	Dynamik Engine
+ Project:	Dynamik
  Date:		03/12/2019
  IDE:		MS Visual Studio Community 2019
 

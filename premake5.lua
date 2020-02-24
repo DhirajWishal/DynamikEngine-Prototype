@@ -44,10 +44,10 @@ IncludeLib["boostR"] = "E:/Programming/Modules and Runtime/boost_1_70_0/bin/Depe
 
 include "Launcher"
 
-include "Studio/Source"
+include "Studio/Source/Runtime/Studio.lua"
 
-include "Engine/Source/Dynamik.lua"
-include "Engine/Application/Application.lua"
+include "Engine/Source/Runtime/Dynamik.lua"
+include "Engine/Application/Runtime/Application.lua"
 include "Engine/Source/Components/ADGR/ADGR.lua"
 include "Engine/Source/Components/Audio/Audio.lua"
 include "Engine/Source/Components/CentralDataHub/CentralDataHub.lua"

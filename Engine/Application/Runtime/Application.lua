@@ -9,12 +9,12 @@ project "Application"
 	objdir "$(SolutionDir)Builds/Engine/Intermediate/$(Configuration)-$(Platform)/$(ProjectName)"
 
 	files {
-		"Runtime/**.txt",
-		"Runtime/**.cpp",
-		"Runtime/**.h",
-		"Runtime/src/**.cpp",
-		"Runtime/src/**.h",
-		"Runtime/**.lua"
+		"**.txt",
+		"**.cpp",
+		"**.h",
+		"src/**.cpp",
+		"src/**.h",
+		"**.lua"
 	}
 
 	includedirs {

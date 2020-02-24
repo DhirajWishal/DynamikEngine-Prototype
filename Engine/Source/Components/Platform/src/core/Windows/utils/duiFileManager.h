@@ -4,7 +4,7 @@
  Dynamik User Interface (DUI) file manager
 
  Author:	Dhiraj Wishal
- Project:	Dynamik Engine
+ Project:	Dynamik
  Date:		30/01/2020
  IDE:		MS Visual Studio Community 2019
 

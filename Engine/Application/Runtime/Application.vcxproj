@@ -131,23 +131,24 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Runtime\src\engineInstance.h" />
-    <ClInclude Include="Runtime\src\imports.h" />
-    <ClInclude Include="Runtime\src\objectDefinitions.h" />
+    <ClInclude Include="src\engineInstance.h" />
+    <ClInclude Include="src\imports.h" />
+    <ClInclude Include="src\objectDefinitions.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Runtime\main.cpp" />
-    <ClCompile Include="Runtime\src\engineInstance.cpp" />
-    <ClCompile Include="Runtime\src\objectDefinitions.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="src\engineInstance.cpp" />
+    <ClCompile Include="src\objectDefinitions.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Runtime\paths.txt" />
+    <None Include="Application.lua" />
+    <None Include="paths.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Source\Dynamik.vcxproj">
+    <ProjectReference Include="..\..\Source\Runtime\Dynamik.vcxproj">
       <Project>{928A7598-FE69-F433-0782-7F0A73E05A95}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\Source\Components\Debugger\Debugger.vcxproj">
+    <ProjectReference Include="..\..\Source\Components\Debugger\Debugger.vcxproj">
       <Project>{2ACD0289-169A-5D94-3FB3-4B3C2BDF9222}</Project>
     </ProjectReference>
   </ItemGroup>

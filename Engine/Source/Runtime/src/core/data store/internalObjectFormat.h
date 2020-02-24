@@ -4,7 +4,7 @@
  Internal Object Format for the Dynamik Engine
 
  Author:	Dhiraj Wishal
- Project:	Dynamik Engine
+ Project:	Dynamik
  Date:		08/012/2019
  IDE:		MS Visual Studio Community 2019
 

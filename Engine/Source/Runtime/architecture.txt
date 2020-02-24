@@ -2,7 +2,7 @@
 
 // ----------
  Author:	Dhiraj Wishal, Chamindu Abeysekera
- Project:	Dynamik Engine
+ Project:	Dynamik
  Date:		15/06/2019	(DEVELOPMENTS ONGOING)
  IDE:		MS Visual Studio Community 2019
 

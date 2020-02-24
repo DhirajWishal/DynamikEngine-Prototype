@@ -7,7 +7,7 @@
  GameObject data type for Dynamik Engine
 
  Author:	Dhiraj Wishal
- Project:	Dynamik Engine
+ Project:	Dynamik
  Date:		19/06/2019	(DEVELOPMENTS ONGOING)
  IDE:		MS Visual Studio Community 2019
 

@@ -4,7 +4,7 @@
  Dynamik Engine Networking Library
 
  Author:	Dhiraj Wishal
- Project:	Dynamik Engine
+ Project:	Dynamik
  Date:		15/11/2019
  IDE:		MS Visual Studio Community 2019
 

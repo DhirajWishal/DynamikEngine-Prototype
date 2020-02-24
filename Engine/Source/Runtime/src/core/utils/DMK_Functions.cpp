@@ -2,7 +2,7 @@
  Stand alone function library for the Dynamik Engine
 
  Author:	Dhiraj Wishal
- Project:	Dynamik Engine
+ Project:	Dynamik
  Date:		--/--/----
  IDE:		MS Visual Studio Community 2019
 

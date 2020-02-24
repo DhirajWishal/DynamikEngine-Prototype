@@ -7,7 +7,7 @@
  Renderer Backend Base class
 
  Author:	Dhiraj Wishal
- Project:	Dynamik Engine
+ Project:	Dynamik
  Date:		26/01/2020
  IDE:		MS Visual Studio Community 2019
 

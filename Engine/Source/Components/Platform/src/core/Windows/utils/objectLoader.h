@@ -4,7 +4,7 @@
  3D object loader for Dynamik Engine
 
  Author:	Dhiraj Wishal
- Project:	Dynamik Engine
+ Project:	Dynamik
  Date:		22/12/2019
  IDE:		MS Visual Studio Community 2019
 

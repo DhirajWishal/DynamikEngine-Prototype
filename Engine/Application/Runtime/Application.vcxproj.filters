@@ -6,26 +6,27 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Runtime\src\engineInstance.h">
+    <ClInclude Include="src\engineInstance.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="Runtime\src\imports.h">
+    <ClInclude Include="src\imports.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="Runtime\src\objectDefinitions.h">
+    <ClInclude Include="src\objectDefinitions.h">
       <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Runtime\main.cpp" />
-    <ClCompile Include="Runtime\src\engineInstance.cpp">
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="src\engineInstance.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="Runtime\src\objectDefinitions.cpp">
+    <ClCompile Include="src\objectDefinitions.cpp">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Runtime\paths.txt" />
+    <None Include="Application.lua" />
+    <None Include="paths.txt" />
   </ItemGroup>
 </Project>

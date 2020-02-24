@@ -4,7 +4,7 @@
  Dynamik Engine main header.
 
  Author:	Dhiraj Wishal
- Project:	Dynamik Engine
+ Project:	Dynamik
  Date:		15/6/2019	(DEVELOPMENTS ONGOING)
  IDE:		MS Visual Studio Community 2019
 

@@ -1,0 +1,193 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Distribution|x64">
+      <Configuration>Distribution</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{B34CFEBD-9F19-59C9-C832-4771B45E8E57}</ProjectGuid>
+    <IgnoreWarnCompileDuplicatedFilename>true</IgnoreWarnCompileDuplicatedFilename>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>Managers</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Distribution|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Distribution|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
+    <OutDir>$(SolutionDir)Builds\Engine\Binaries\$(Configuration)-$(Platform)\</OutDir>
+    <IntDir>$(SolutionDir)Builds\Engine\Intermediate\$(Configuration)-$(Platform)\$(ProjectName)\Debug\Managers\</IntDir>
+    <TargetName>Managers</TargetName>
+    <TargetExt>.dll</TargetExt>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(SolutionDir)Builds\Engine\Binaries\$(Configuration)-$(Platform)\</OutDir>
+    <IntDir>$(SolutionDir)Builds\Engine\Intermediate\$(Configuration)-$(Platform)\$(ProjectName)\Release\Managers\</IntDir>
+    <TargetName>Managers</TargetName>
+    <TargetExt>.dll</TargetExt>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Distribution|x64'">
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(SolutionDir)Builds\Engine\Binaries\$(Configuration)-$(Platform)\</OutDir>
+    <IntDir>$(SolutionDir)Builds\Engine\Intermediate\$(Configuration)-$(Platform)\$(ProjectName)\Distribution\Managers\</IntDir>
+    <TargetName>Managers</TargetName>
+    <TargetExt>.dll</TargetExt>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>mngafx.h</PrecompiledHeaderFile>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>DMK_PLATFORM_WINDOWS;DMK_BUILD_DLL;DMK_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\Libraries\Local;$(SolutionDir)Engine\Source\Runtime\src;$(SolutionDir)Engine\Source\Runtime\GameLibraries;$(SolutionDir)Engine\Source\Shared\ADGR\src;$(SolutionDir)Engine\Source\Shared\Audio\src;$(SolutionDir)Engine\Source\Shared\Intellect\src;$(SolutionDir)Engine\Source\Shared\Events\src;$(SolutionDir)Engine\Source\Shared\Managers\src;$(SolutionDir)Engine\Source\Shared\Networking\src;$(SolutionDir)Dependencies\Programs\DevConsole\src;$(SolutionDir)Dependencies\Programs\Debugger\src;$(SolutionDir)Engine\Source\Internal\Platform\src;$(SolutionDir)Engine\Source\Internal\Utilities\src;$(SolutionDir)Engine\Source\Internal\CentralDataHub\src;$(SolutionDir)Dependencies\Libraries\External\glfw\include;$(SolutionDir)Dependencies\GLEW\include;$(SolutionDir)Dependencies\Libraries\External\glm;$(SolutionDir)Dependencies\Libraries\External\stb;$(SolutionDir)Dependencies\Libraries\External\tinyobjloader;$(SolutionDir)Dependencies\Libraries\Local\irrKlang\include;$(SolutionDir)Dependencies\Libraries\Local\assimp;$(SolutionDir)Dependencies\Libraries\External\Vulkan\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <Optimization>Disabled</Optimization>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ImportLibrary>$(SolutionDir)Builds\Engine\Binaries\$(Configuration)-$(Platform)\Managers.lib</ImportLibrary>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>mngafx.h</PrecompiledHeaderFile>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>DMK_PLATFORM_WINDOWS;DMK_BUILD_DLL;DMK_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\Libraries\Local;$(SolutionDir)Engine\Source\Runtime\src;$(SolutionDir)Engine\Source\Runtime\GameLibraries;$(SolutionDir)Engine\Source\Shared\ADGR\src;$(SolutionDir)Engine\Source\Shared\Audio\src;$(SolutionDir)Engine\Source\Shared\Intellect\src;$(SolutionDir)Engine\Source\Shared\Events\src;$(SolutionDir)Engine\Source\Shared\Managers\src;$(SolutionDir)Engine\Source\Shared\Networking\src;$(SolutionDir)Dependencies\Programs\DevConsole\src;$(SolutionDir)Dependencies\Programs\Debugger\src;$(SolutionDir)Engine\Source\Internal\Platform\src;$(SolutionDir)Engine\Source\Internal\Utilities\src;$(SolutionDir)Engine\Source\Internal\CentralDataHub\src;$(SolutionDir)Dependencies\Libraries\External\glfw\include;$(SolutionDir)Dependencies\GLEW\include;$(SolutionDir)Dependencies\Libraries\External\glm;$(SolutionDir)Dependencies\Libraries\External\stb;$(SolutionDir)Dependencies\Libraries\External\tinyobjloader;$(SolutionDir)Dependencies\Libraries\Local\irrKlang\include;$(SolutionDir)Dependencies\Libraries\Local\assimp;$(SolutionDir)Dependencies\Libraries\External\Vulkan\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <Optimization>Full</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <StringPooling>true</StringPooling>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <ImportLibrary>$(SolutionDir)Builds\Engine\Binaries\$(Configuration)-$(Platform)\Managers.lib</ImportLibrary>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Distribution|x64'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>mngafx.h</PrecompiledHeaderFile>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>DMK_PLATFORM_WINDOWS;DMK_BUILD_DLL;DMK_DISTRIBUTION;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\Libraries\Local;$(SolutionDir)Engine\Source\Runtime\src;$(SolutionDir)Engine\Source\Runtime\GameLibraries;$(SolutionDir)Engine\Source\Shared\ADGR\src;$(SolutionDir)Engine\Source\Shared\Audio\src;$(SolutionDir)Engine\Source\Shared\Intellect\src;$(SolutionDir)Engine\Source\Shared\Events\src;$(SolutionDir)Engine\Source\Shared\Managers\src;$(SolutionDir)Engine\Source\Shared\Networking\src;$(SolutionDir)Dependencies\Programs\DevConsole\src;$(SolutionDir)Dependencies\Programs\Debugger\src;$(SolutionDir)Engine\Source\Internal\Platform\src;$(SolutionDir)Engine\Source\Internal\Utilities\src;$(SolutionDir)Engine\Source\Internal\CentralDataHub\src;$(SolutionDir)Dependencies\Libraries\External\glfw\include;$(SolutionDir)Dependencies\GLEW\include;$(SolutionDir)Dependencies\Libraries\External\glm;$(SolutionDir)Dependencies\Libraries\External\stb;$(SolutionDir)Dependencies\Libraries\External\tinyobjloader;$(SolutionDir)Dependencies\Libraries\Local\irrKlang\include;$(SolutionDir)Dependencies\Libraries\Local\assimp;$(SolutionDir)Dependencies\Libraries\External\Vulkan\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <Optimization>Full</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <StringPooling>true</StringPooling>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <ImportLibrary>$(SolutionDir)Builds\Engine\Binaries\$(Configuration)-$(Platform)\Managers.lib</ImportLibrary>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="src\Managers.h" />
+    <ClInclude Include="src\Platform\Windows.h" />
+    <ClInclude Include="src\Platform\Windows\file\fileManager.h" />
+    <ClInclude Include="src\Platform\Windows\file\readFile.h" />
+    <ClInclude Include="src\Platform\Windows\memory\memoryManager.h" />
+    <ClInclude Include="src\Platform\Windows\resource\imageLoader.h" />
+    <ClInclude Include="src\Platform\Windows\resource\objectLoader.h" />
+    <ClInclude Include="src\Platform\Windows\utils\daiFileManager.h" />
+    <ClInclude Include="src\Platform\Windows\utils\duiFileManager.h" />
+    <ClInclude Include="src\Platform\Windows\utils\loadIcon.h" />
+    <ClInclude Include="src\Platform\Windows\utils\modelManager.h" />
+    <ClInclude Include="src\Platform\Windows\utils\objectLoader.h" />
+    <ClInclude Include="src\Platform\Windows\window.h" />
+    <ClInclude Include="src\mngafx.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\Platform\Windows\file\fileManager.cpp" />
+    <ClCompile Include="src\Platform\Windows\file\readFile.cpp" />
+    <ClCompile Include="src\Platform\Windows\memory\memoryManager.cpp" />
+    <ClCompile Include="src\Platform\Windows\resource\imageLoader.cpp" />
+    <ClCompile Include="src\Platform\Windows\resource\objectLoader.cpp" />
+    <ClCompile Include="src\Platform\Windows\utils\daiFileManager.cpp" />
+    <ClCompile Include="src\Platform\Windows\utils\duiFileManager.cpp" />
+    <ClCompile Include="src\Platform\Windows\utils\loadIcon.cpp" />
+    <ClCompile Include="src\Platform\Windows\utils\modelManager.cpp" />
+    <ClCompile Include="src\Platform\Windows\utils\objectLoader.cpp">
+      <ObjectFileName>$(IntDir)\objectLoader1.obj</ObjectFileName>
+    </ClCompile>
+    <ClCompile Include="src\Platform\Windows\window.cpp" />
+    <ClCompile Include="src\mngafx.cpp">
+      <PrecompiledHeader>Create</PrecompiledHeader>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Managers.lua" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Events\Events.vcxproj">
+      <Project>{3A8963B1-262B-8E87-0FE6-A1DBFB2615D8}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\Dependencies\Programs\Debugger\Debugger.vcxproj">
+      <Project>{2ACD0289-169A-5D94-3FB3-4B3C2BDF9222}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Internal\Utilities\Utilities.vcxproj">
+      <Project>{010A8043-6D74-34BA-B6B2-E55F225C120F}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Internal\CentralDataHub\CentralDataHub.vcxproj">
+      <Project>{27660F4E-1334-0354-FCC7-737AE834DFB8}</Project>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

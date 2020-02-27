@@ -25,7 +25,7 @@
 #include "core/core.h"
 #include "core/utils/DMK_Error.h"
 #include "CentralDataHub.h"
-#include "event.h"
+#include "Events.h"
 
 #include "KeyBingings.h"
 

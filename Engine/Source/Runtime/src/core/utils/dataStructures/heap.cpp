@@ -11,7 +11,6 @@
 
 #include "dmkafx.h"
 #include "heap.h"
-#include "core/utils/DMK_Functions.h"
 
 namespace Dynamik {
 	namespace utils {

@@ -3,6 +3,16 @@
 #ifndef _DYNAMIK_PCH
 #define _DYNAMIK_PCH
 
+#include "ADGR.h"
+#include "Audio.h"
+#include "Events.h"
+#include "Intellect.h"
+#include "Managers.h"
+#include "Networking.h"
+#include "CentralDataHub.h"
+#include "Utilities.h"
+#include "Platform.h"
+
 #include <iostream>
 #include <stdio.h>
 #include <memory>

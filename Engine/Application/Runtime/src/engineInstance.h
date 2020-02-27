@@ -5,8 +5,7 @@
 #include "Layers/layerStack.h"
 #include "core/application.h"
 #include "CentralDataHub.h"
-#include "core/utils/DMK_Functions.h"
-
+#include "Utilities.h"
 #include "debugger.h"
 #include "GameObject.h"
 

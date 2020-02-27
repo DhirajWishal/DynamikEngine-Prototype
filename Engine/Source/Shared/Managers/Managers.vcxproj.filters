@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="src">
+      <UniqueIdentifier>{2DAB880B-99B4-887C-2230-9F7C8E38947C}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Platform">
+      <UniqueIdentifier>{21CA02E5-0D2D-9289-B6B2-CA3FA2F45D0C}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Platform\Windows">
+      <UniqueIdentifier>{5B054582-4794-CE4B-F0B2-E246DC20DFF1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Platform\Windows\file">
+      <UniqueIdentifier>{8AD10137-F693-35C1-3F44-C44DAB450E9F}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Platform\Windows\memory">
+      <UniqueIdentifier>{83DCC80E-EFE9-F6F4-78D0-F2DFE4DCC2AB}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Platform\Windows\resource">
+      <UniqueIdentifier>{F2B9BB8F-5ED2-A2B9-277F-325393563753}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Platform\Windows\utils">
+      <UniqueIdentifier>{1B6F5118-077F-FDE8-7038-62075C67EC81}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\Managers.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\Windows.h">
+      <Filter>src\Platform</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\Windows\file\fileManager.h">
+      <Filter>src\Platform\Windows\file</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\Windows\file\readFile.h">
+      <Filter>src\Platform\Windows\file</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\Windows\memory\memoryManager.h">
+      <Filter>src\Platform\Windows\memory</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\Windows\resource\imageLoader.h">
+      <Filter>src\Platform\Windows\resource</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\Windows\resource\objectLoader.h">
+      <Filter>src\Platform\Windows\resource</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\Windows\utils\daiFileManager.h">
+      <Filter>src\Platform\Windows\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\Windows\utils\duiFileManager.h">
+      <Filter>src\Platform\Windows\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\Windows\utils\loadIcon.h">
+      <Filter>src\Platform\Windows\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\Windows\utils\modelManager.h">
+      <Filter>src\Platform\Windows\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\Windows\utils\objectLoader.h">
+      <Filter>src\Platform\Windows\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\Windows\window.h">
+      <Filter>src\Platform\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="src\mngafx.h">
+      <Filter>src</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\Platform\Windows\file\fileManager.cpp">
+      <Filter>src\Platform\Windows\file</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\Windows\file\readFile.cpp">
+      <Filter>src\Platform\Windows\file</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\Windows\memory\memoryManager.cpp">
+      <Filter>src\Platform\Windows\memory</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\Windows\resource\imageLoader.cpp">
+      <Filter>src\Platform\Windows\resource</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\Windows\resource\objectLoader.cpp">
+      <Filter>src\Platform\Windows\resource</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\Windows\utils\daiFileManager.cpp">
+      <Filter>src\Platform\Windows\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\Windows\utils\duiFileManager.cpp">
+      <Filter>src\Platform\Windows\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\Windows\utils\loadIcon.cpp">
+      <Filter>src\Platform\Windows\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\Windows\utils\modelManager.cpp">
+      <Filter>src\Platform\Windows\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\Windows\utils\objectLoader.cpp">
+      <Filter>src\Platform\Windows\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\Windows\window.cpp">
+      <Filter>src\Platform\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mngafx.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Managers.lua" />
+  </ItemGroup>
+</Project>

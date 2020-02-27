@@ -4,10 +4,6 @@
 #define _DYNAMIK_APPLICATION_H
 
 #include "core.h"
-#include "src/Renderer.h"
-#include "src/rendererFormat.h"
-#include "src/Layers/layer.h"
-#include "src/Layers/layerStack.h"
 
 #include "inputHandler.h"
 
@@ -16,6 +12,9 @@
 #include "data store/internalFormat.h"
 #include "object mechanics/loadGameObjects.h"
 #include "Level.h"
+#include "Events.h"
+
+#include "Managers.h"
 
 namespace Dynamik {
 	class DebugObject : public GameObject {
@@ -162,6 +161,9 @@ namespace Dynamik {
 		Audio::AudioEngine myEngine;
 
 		uint32_t sceneCount = 0;
+
+		/* MANAGERS */
+		utils::daiManager fileManager;
 	};
 
 	// Defined by the Client

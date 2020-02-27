@@ -2,7 +2,7 @@
 
 #ifndef _DYNAMIK_CENTRAL_DATA_HUB_CONTAINERS_H
 #define _DYNAMIK_CENTRAL_DATA_HUB_CONTAINERS_H
-
+/*
 #include <cstdint>
 #include "keyEvent.h"
 #include "mouseEvent.h"
@@ -61,5 +61,5 @@ namespace Dynamik {
 		bool movementRotationLock = false;
 	};
 }
-
+*/
 #endif

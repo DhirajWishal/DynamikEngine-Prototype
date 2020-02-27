@@ -1,33 +1,35 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 16
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ADGR", "Engine\Source\Components\ADGR\ADGR.vcxproj", "{E3DE817C-CF15-830D-7802-69106418FF0E}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ADGR", "Engine\Source\Shared\ADGR\ADGR.vcxproj", "{E3DE817C-CF15-830D-7802-69106418FF0E}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Application", "Engine\Application\Runtime\Application.vcxproj", "{D9DE78AF-4594-F1A4-CE88-EB7B3A3DE8A8}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Audio", "Engine\Source\Components\Audio\Audio.vcxproj", "{9718D90C-032D-01BE-CCAE-A41D3882FDEE}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Audio", "Engine\Source\Shared\Audio\Audio.vcxproj", "{9718D90C-032D-01BE-CCAE-A41D3882FDEE}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CentralDataHub", "Engine\Source\Components\CentralDataHub\CentralDataHub.vcxproj", "{27660F4E-1334-0354-FCC7-737AE834DFB8}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CentralDataHub", "Engine\Source\Internal\CentralDataHub\CentralDataHub.vcxproj", "{27660F4E-1334-0354-FCC7-737AE834DFB8}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Debugger", "Engine\Source\Components\Debugger\Debugger.vcxproj", "{2ACD0289-169A-5D94-3FB3-4B3C2BDF9222}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Debugger", "Dependencies\Programs\Debugger\Debugger.vcxproj", "{2ACD0289-169A-5D94-3FB3-4B3C2BDF9222}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DevCon", "Engine\Source\Components\DevConsole\DevCon.vcxproj", "{E45AE3AD-D0FC-0D84-B9B7-21D8A5F894D4}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DevCon", "Dependencies\Programs\DevConsole\DevCon.vcxproj", "{E45AE3AD-D0FC-0D84-B9B7-21D8A5F894D4}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Dynamik", "Engine\Source\Runtime\Dynamik.vcxproj", "{928A7598-FE69-F433-0782-7F0A73E05A95}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Events", "Engine\Source\Components\Events\Events.vcxproj", "{3A8963B1-262B-8E87-0FE6-A1DBFB2615D8}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Events", "Engine\Source\Shared\Events\Events.vcxproj", "{3A8963B1-262B-8E87-0FE6-A1DBFB2615D8}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Intellect", "Engine\Source\Components\Intellect\Intellect.vcxproj", "{C915BE82-3580-72F9-7EBE-239FEA67504E}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Intellect", "Engine\Source\Shared\Intellect\Intellect.vcxproj", "{C915BE82-3580-72F9-7EBE-239FEA67504E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Launcher", "Launcher\Launcher.csproj", "{57ACF9E2-4379-54EE-6C92-429658BE897C}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Managers", "Engine\Source\Components\Managers\Managers.vcxproj", "{B34CFEBD-9F19-59C9-C832-4771B45E8E57}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Managers", "Engine\Source\Shared\Managers\Managers.vcxproj", "{B34CFEBD-9F19-59C9-C832-4771B45E8E57}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Networking", "Engine\Source\Components\Networking\Networking.vcxproj", "{6D615D47-5919-9F94-C220-78F0AEF73985}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Networking", "Engine\Source\Shared\Networking\Networking.vcxproj", "{6D615D47-5919-9F94-C220-78F0AEF73985}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Platform", "Engine\Source\Components\Platform\Platform.vcxproj", "{2AC788B4-1694-E3BF-3FAD-D1672BD9184E}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Platform", "Engine\Source\Internal\Platform\Platform.vcxproj", "{2AC788B4-1694-E3BF-3FAD-D1672BD9184E}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Studio", "Studio\Source\Runtime\Studio.vcxproj", "{1D2BF0D1-09CD-1AA8-F287-2EFCDEC8A1F8}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Utilities", "Engine\Source\Internal\Utilities\Utilities.vcxproj", "{010A8043-6D74-34BA-B6B2-E55F225C120F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -120,6 +122,12 @@ Global
 		{1D2BF0D1-09CD-1AA8-F287-2EFCDEC8A1F8}.Distribution|x64.Build.0 = Distribution|x64
 		{1D2BF0D1-09CD-1AA8-F287-2EFCDEC8A1F8}.Release|x64.ActiveCfg = Release|x64
 		{1D2BF0D1-09CD-1AA8-F287-2EFCDEC8A1F8}.Release|x64.Build.0 = Release|x64
+		{010A8043-6D74-34BA-B6B2-E55F225C120F}.Debug|x64.ActiveCfg = Debug|x64
+		{010A8043-6D74-34BA-B6B2-E55F225C120F}.Debug|x64.Build.0 = Debug|x64
+		{010A8043-6D74-34BA-B6B2-E55F225C120F}.Distribution|x64.ActiveCfg = Distribution|x64
+		{010A8043-6D74-34BA-B6B2-E55F225C120F}.Distribution|x64.Build.0 = Distribution|x64
+		{010A8043-6D74-34BA-B6B2-E55F225C120F}.Release|x64.ActiveCfg = Release|x64
+		{010A8043-6D74-34BA-B6B2-E55F225C120F}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

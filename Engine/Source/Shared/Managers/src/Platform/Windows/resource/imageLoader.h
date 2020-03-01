@@ -17,7 +17,7 @@ namespace Dynamik {
 
 			int texWidth = 0, texHeight = 0, texChannels = 0;
 
-			unsigned char* loadTexture(std::string path, TextureType type, bool flip = false);
+			unsigned char* loadTexture(std::wstring path, TextureType type, bool flip = false);
 
 			void freeData(unsigned char* image);
 		};

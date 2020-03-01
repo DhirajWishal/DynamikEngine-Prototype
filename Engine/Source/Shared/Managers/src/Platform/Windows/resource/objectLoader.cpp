@@ -8,16 +8,16 @@
 
 namespace Dynamik {
 	namespace resources {
-		//bool ObjectData::loadObject(std::string path) {
+		//bool ObjectData::loadObject(std::wstring path) {
 		//	return tinyobj::LoadObj(&attributes, &shapes, &materials, &warnings, &errors, path.c_str());
 		//}
 
 		template<typename Alloc>
-		void loadObject(std::string& path, std::vector<Alloc>* vertices, std::vector<uint32_t>* indices) {
+		void loadObject(std::wstring& path, std::vector<Alloc>* vertices, std::vector<uint32_t>* indices) {
 			tinyobj::attrib_t attrib;
 			std::vector<tinyobj::shape_t> shapes;
 			std::vector<tinyobj::material_t> materials;
-			std::string warn, err;
+			std::wstring warn, err;
 
 			if (!tinyobj::LoadObj(&attrib, &shapes, &materials, &warn, &err, path.c_str()))
 				DMK_CORE_FATAL(warn + err);

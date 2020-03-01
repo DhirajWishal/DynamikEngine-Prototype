@@ -13,7 +13,7 @@ namespace Dynamik {
 		Scene(std::vector<GameObject*>& objects) : myGameObjects(objects) {}
 		virtual ~Scene() {}
 
-		std::string name = "";
+		std::wstring name = L"";
 		uint32_t number = 0;
 		std::vector<GameObject*> myGameObjects;
 

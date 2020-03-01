@@ -10,7 +10,7 @@ namespace Dynamik {
 			glTexture::glTexture(std::string& path) : filePath(path) {
 				resource::TextureData texData;
 
-				localBuffer = texData.loadTexture(path, resource::TEXTURE_TYPE_RGB, true);
+				localBuffer = texData.loadTexture(CSTRtoWSTR(path), resource::TEXTURE_TYPE_RGB, true);
 
 				glGenTextures(1, &rendererID);
 				glBindTexture(GL_TEXTURE_2D, rendererID);

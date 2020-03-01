@@ -31,9 +31,17 @@ namespace Dynamik {
 
 			return endPointer;
 		}
-		
+
 		void poolAllocator::deAllocate(VPTR data, UI32 size, UI32 offset) {
 			free(data);
+		}
+
+		VPTR OneTimeAllocator::getAddress() {
+			return memoryPool;
+		}
+
+		UI32 OneTimeAllocator::getSize() {
+			return memorySize;
 		}
 	}
 }

@@ -17,12 +17,12 @@
 namespace Dynamik {
 	namespace ADGR {
 		namespace core {
-			std::vector<const char*> getRequiredExtentions(B1 vaidationLayer) {
+			std::vector<CCPTR> getRequiredExtentions(B1 vaidationLayer) {
 				UI32 glfwExtentionCount = 0;
-				const char** glfwExtentions;
+				CCPTR* glfwExtentions;
 				glfwExtentions = glfwGetRequiredInstanceExtensions(&glfwExtentionCount);
 
-				std::vector<const char*> extentions(glfwExtentions, glfwExtentions + glfwExtentionCount);
+				std::vector<CCPTR> extentions(glfwExtentions, glfwExtentions + glfwExtentionCount);
 
 				if (pushDescriptorsSupported)
 					extentions.push_back(VK_KHR_PUSH_DESCRIPTOR_EXTENSION_NAME);

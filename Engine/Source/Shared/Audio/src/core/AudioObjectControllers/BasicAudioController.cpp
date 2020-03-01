@@ -5,8 +5,8 @@
 namespace Dynamik {
 	namespace Audio {
 		BasicAudioController::BasicAudioController(std::string filepath) : AudioObjectController(filepath) {
-			this->isPaused = true;
-			this->isLooped = false;
+			isPaused = true;
+			isLooped = false;
 		}
 
 		bool BasicAudioController::shouldPlay() {

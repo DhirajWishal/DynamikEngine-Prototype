@@ -12,6 +12,7 @@
 
 #include "src/objectDefinitions.h"
 #include "Platform.h"
+#include "Utilities.h"
 
 /* -----||||| MAIN LAUNCH SYSTEM |||||----- */
 
@@ -19,7 +20,7 @@
 /* ---------- ########## ////////// MAIN LOOP \\\\\\\\\\ ########## ---------- */
 int main(int argc, char** argv) {
 	try {
-		auto paths = getTexturePath(readFile("E:/Projects/Dynamik Engine/Versions/Dynamik (Prototype)/Engine/Application/Runtime/paths.txt"));
+		auto paths = getTexturePath(readFile(L"E:/Projects/Dynamik Engine/Versions/Dynamik (Prototype)/Engine/Application/Runtime/paths.txt"));
 
 		std::vector<std::vector<float>> locations = {
 			{0.0f,	0.0f,	0.0f},
@@ -66,8 +67,8 @@ int main(int argc, char** argv) {
 
 		for (int i = 0; i < paths.size(); i++) {
 			Dynamik::GameObjectProperties props;
-			props.name = "Mars";
-			props.ID = std::to_string(i);
+			props.name = L"Mars";
+			props.ID = std::to_wstring(i);
 			props.location = paths[i];
 			props.transformProperties.location = locations[i];
 
@@ -76,7 +77,7 @@ int main(int argc, char** argv) {
 
 		Dynamik::GameObjectProperties _localProps;
 		_localProps.type = DMKObjectType::DMK_OBJECT_TYPE_AUDIO;
-		_localProps.objectPath = { "E:/Projects/Dynamik Engine/Dynamik/components/Audio/media/explosion.wav" };
+		_localProps.objectPath = { L"E:/Projects/Dynamik Engine/Dynamik/components/Audio/media/explosion.wav" };
 		explosion exp(_localProps);
 		objects.push_back(&exp);
 

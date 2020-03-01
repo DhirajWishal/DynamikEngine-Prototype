@@ -1,21 +1,21 @@
 #include "keyEvent.h"
 
 namespace Dynamik {
-	std::string KeyPressedEvent::toString() const {
-		std::stringstream ss;
+	std::wstring KeyPressedEvent::toString() const {
+		std::wstringstream ss;
 		ss << "KeyPressedEvent: " << k_KeyCode <<
 			" (for " << k_KeyCount << " times)";
 		return ss.str();
 	}
 
-	std::string KeyReleasedEvent::toString() const {
-		std::stringstream ss;
+	std::wstring KeyReleasedEvent::toString() const {
+		std::wstringstream ss;
 		ss << "KeyReleasedEvent: " << k_KeyCode;
 		return ss.str();
 	}
 
-	std::string KeyTypedEvent::toString() const {
-		std::stringstream ss;
+	std::wstring KeyTypedEvent::toString() const {
+		std::wstringstream ss;
 		ss << "KeyTypedEvent: " << k_KeyCode;
 		return ss.str();
 	}

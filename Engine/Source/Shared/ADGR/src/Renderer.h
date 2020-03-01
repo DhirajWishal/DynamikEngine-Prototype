@@ -15,6 +15,7 @@
 #include "interface.h"
 #include "rendererFormat.h"
 #include "core/core.h"
+#include "rendererCommandQueue.h"
 
 #include "Platform.h"
 
@@ -39,6 +40,8 @@ namespace Dynamik {
 
 			void setVertices(std::vector<Vertex>* vertices);
 
+			void addCommand(RendererCommandQueue commandQueue);
+
 			void run();
 			void loadDataToUpdate(std::vector<InternalFormat*>& internalFormats);
 			void updateRendererFormats();
@@ -58,6 +61,7 @@ namespace Dynamik {
 			std::vector<RendererFormat> myTemporaryFormats;
 
 			std::vector<Vertex> localContainer;
+			RendererCommandQueue myCommandQueue;
 		};
 	}
 }

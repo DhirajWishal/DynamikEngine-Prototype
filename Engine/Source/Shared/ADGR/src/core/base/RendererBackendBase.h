@@ -36,10 +36,10 @@
 namespace Dynamik {
 	namespace ADGR {
 		struct DMKRendererSettings {
-			std::string myWindowTitle = "Dynamik Engine";
+			std::string myWindowTitle = ("Dynamik Engine");
 			UI32 myWindowWidth = 720;
 			UI32 myWindowHeight = 480;
-			std::vector<std::string> myWindowIconPaths = { "E:/Projects/Dynamik Engine/Dynamik/core assets/icons/Dynamik.jpg" };
+			std::vector<std::string> myWindowIconPaths = { ("E:/Projects/Dynamik Engine/Dynamik/core assets/icons/Dynamik.jpg") };
 
 			std::vector<F32> clearScreenValues = {							// Vulkan clear screen values
 				(2.0f / 256.0f),		// Red

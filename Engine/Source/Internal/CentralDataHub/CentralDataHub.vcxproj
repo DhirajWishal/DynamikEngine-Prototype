@@ -153,6 +153,10 @@
     <ClInclude Include="src\core\network\messageType.h" />
     <ClInclude Include="src\core\renderer\typenames.h" />
     <ClInclude Include="src\core\renderer\vertex.h" />
+    <ClInclude Include="src\core\types\Array.h" />
+    <ClInclude Include="src\core\types\DynamicPointer.h" />
+    <ClInclude Include="src\core\types\Pair.h" />
+    <ClInclude Include="src\core\types\String.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\cdhafx.cpp">
@@ -161,6 +165,9 @@
     <ClCompile Include="src\core\dataPipeline.cpp" />
     <ClCompile Include="src\core\network\messageData.cpp" />
     <ClCompile Include="src\core\renderer\vertex.cpp" />
+    <ClCompile Include="src\core\types\Array.cpp" />
+    <ClCompile Include="src\core\types\DynamicPointer.cpp" />
+    <ClCompile Include="src\core\types\String.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="CentralDataHub.lua" />

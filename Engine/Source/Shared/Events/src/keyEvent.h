@@ -27,7 +27,7 @@ namespace Dynamik {
 
 		inline int getRepCount() const { return k_KeyCount; }
 
-		std::string toString() const override;
+		std::wstring toString() const override;
 
 		EVENT_CLASS_TYPE(keyPressed)
 
@@ -40,7 +40,7 @@ namespace Dynamik {
 		KeyReleasedEvent(int keyCode) :
 			KeyEvent(keyCode) {}
 
-		std::string toString() const override;
+		std::wstring toString() const override;
 
 		EVENT_CLASS_TYPE(keyReleased)
 	};
@@ -50,7 +50,7 @@ namespace Dynamik {
 		KeyTypedEvent(int keyCode) :
 			KeyEvent(keyCode) {}
 
-		std::string toString() const override;
+		std::wstring toString() const override;
 
 		EVENT_CLASS_TYPE(keyTyped)
 	};

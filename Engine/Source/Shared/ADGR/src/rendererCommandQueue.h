@@ -24,6 +24,8 @@ namespace Dynamik {
 			~RendererCommandQueue() {}
 
 			void addCommand(DMKRendererCommandContainer& container);
+			void addCommands(std::queue<DMKRendererCommandContainer> containers);
+			void setCommands(std::queue<DMKRendererCommandContainer>& containers);
 
 			DMKRendererCommandContainer getCommand();
 			DMKRendererCommandContainer getCommandAndPop();

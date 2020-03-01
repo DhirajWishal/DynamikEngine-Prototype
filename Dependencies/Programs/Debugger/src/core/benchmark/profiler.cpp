@@ -18,7 +18,7 @@ namespace Dynamik {
 					endSession();
 			}
 
-			void Profiler::beginSession(const std::string& filepath) {
+			void Profiler::beginSession(const std::wstring& filepath) {
 				outputFile.open(filepath);
 				writeHeader();
 			}
@@ -27,18 +27,18 @@ namespace Dynamik {
 				if (profileCount++ > 0)
 					outputFile << ",";
 
-				std::string name = result.name;
+				std::wstring name = result.name;
 				std::replace(name.begin(), name.end(), '"', '\'');
 
-				outputFile << "{";
-				outputFile << "\"cat\":\"function\",";
-				outputFile << "\"dur\":" << (result.end - result.start) << ',';
-				outputFile << "\"name\":\"" << name << "\",";
-				outputFile << "\"ph\":\"X\",";
-				outputFile << "\"pid\":0,";
-				outputFile << "\"tid\":" << result.threadID << ",";
-				outputFile << "\"ts\":" << result.start;
-				outputFile << "}";
+				outputFile << DMK_TEXT("{");
+				outputFile << DMK_TEXT("\"cat\":\"function\",");
+				outputFile << DMK_TEXT("\"dur\":") << (result.end - result.start) << DMK_TEXT(',');
+				outputFile << DMK_TEXT("\"name\":\"") << name.c_str() << DMK_TEXT("\",");
+				outputFile << DMK_TEXT("\"ph\":\"X\",");
+				outputFile << DMK_TEXT("\"pid\":0,");
+				outputFile << DMK_TEXT("\"tid\":") << result.threadID << DMK_TEXT(",");
+				outputFile << DMK_TEXT("\"ts\":") << result.start;
+				outputFile << DMK_TEXT("}");
 
 				outputFile.flush();
 			}
@@ -68,11 +68,11 @@ namespace Dynamik {
 			}
 
 			/* PROFILE TIMER */
-			ProfileTimer::ProfileTimer(std::string name) : myName(name) {
+			ProfileTimer::ProfileTimer(std::wstring name) : myName(name) {
 				startTimer();
 			}
 
-			ProfileTimer::ProfileTimer(std::string name, Profiler* profiler) :
+			ProfileTimer::ProfileTimer(std::wstring name, Profiler* profiler) :
 				myName(name), myProfiler(profiler) {
 				startTimer();
 			}
@@ -120,7 +120,7 @@ namespace Dynamik {
 			static std::ofstream profilerOutputFile;
 			static int profileCount = 0;
 
-			void beginProfiler(std::string fileName) {
+			void beginProfiler(std::wstring fileName) {
 				profilerOutputFile.open(fileName);
 
 				profilerOutputFile << "{\"otherData\": {},\"traceEvents\":[";
@@ -131,18 +131,18 @@ namespace Dynamik {
 				if (profileCount++ > 0)
 					profilerOutputFile << ",";
 
-				std::string name = result.name;
+				std::wstring name = result.name;
 				std::replace(name.begin(), name.end(), '"', '\'');
 
-				profilerOutputFile << "{";
-				profilerOutputFile << "\"cat\":\"function\",";
-				profilerOutputFile << "\"dur\":" << (result.end - result.start) << ',';
-				profilerOutputFile << "\"name\":\"" << name << "\",";
-				profilerOutputFile << "\"ph\":\"X\",";
-				profilerOutputFile << "\"pid\":0,";
-				profilerOutputFile << "\"tid\":" << result.threadID << ",";
-				profilerOutputFile << "\"ts\":" << result.start;
-				profilerOutputFile << "}";
+				profilerOutputFile << DMK_TEXT("{");
+				profilerOutputFile << DMK_TEXT("\"cat\":\"function\",");
+				profilerOutputFile << DMK_TEXT("\"dur\":") << (result.end - result.start) << DMK_TEXT(',');
+				profilerOutputFile << DMK_TEXT("\"name\":\"") << name.c_str() << DMK_TEXT("\",");
+				profilerOutputFile << DMK_TEXT("\"ph\":\"X\",");
+				profilerOutputFile << DMK_TEXT("\"pid\":0,");
+				profilerOutputFile << DMK_TEXT("\"tid\":") << result.threadID << DMK_TEXT(",");
+				profilerOutputFile << DMK_TEXT("\"ts\":") << result.start;
+				profilerOutputFile << DMK_TEXT("}");
 
 				profilerOutputFile.flush();
 			}

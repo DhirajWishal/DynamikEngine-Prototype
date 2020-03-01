@@ -19,17 +19,18 @@
 //#include <windows.h>
 
 #include <string>
+#include "CentralDataHub.h"
 
 namespace Dynamik {
 	struct windowProperties {
-		std::string title = {};
+		std::wstring title = {};
 		unsigned int width = 0;
 		unsigned int height = 0;
 
 		bool vSync = false;
 
 		windowProperties(
-			const std::string& title = "Dynamik Engine",
+			const std::wstring& title = DMK_TEXT("Dynamik Engine"),
 			unsigned int width = 1280,
 			unsigned int height = 720
 		) : title(title), width(width), height(height) {

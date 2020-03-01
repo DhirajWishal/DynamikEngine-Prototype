@@ -14,4 +14,6 @@
 #include "core/renderer/vertex.h"
 #include "core/renderer/typenames.h"
 
+#include "core/types/String.h"
+
 #endif	// !_DYNAMIK_CENTRAL_DATA_HUB_H

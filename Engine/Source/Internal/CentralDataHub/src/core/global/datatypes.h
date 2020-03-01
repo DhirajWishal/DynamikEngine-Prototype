@@ -4,6 +4,7 @@
 #define _DYNAMIK_CENTRAL_DATA_HUB_DATATYPES_H
 
 #include <any>
+#include <codecvt>
 
 namespace Dynamik {
 	/*
@@ -47,6 +48,7 @@ namespace Dynamik {
 
 	typedef UI8 BYTE;					// byte of data
 	typedef BYTE* BPTR;					// byte pointer
+
 }
 
 #define DMK_UINT_8				::Dynamik::UI8
@@ -80,5 +82,14 @@ namespace Dynamik {
 
 #define DMK_BYTE				::Dynamik::BYTE
 #define DMK_BYTE_PTR			::Dynamik::BPTR
+
+#ifdef _UNICODE
+#define DMK_TEXT(...)			L##__VA_ARGS__
+
+#else
+#define DMK_TEXT(...)			__VA_ARGS__
+
+#endif
+#define DMK_INTERNAL_TEXT(...)	__VA_ARGS__
 
 #endif	// !_DYNAMIK_CENTRAL_DATA_HUB_DATATYPES_H

@@ -9,13 +9,13 @@ namespace Dynamik {
 		//	tinyobj::attrib_t attributes;
 		//	std::vector<tinyobj::shape_t> shapes;
 		//	std::vector<tinyobj::material_t> materials;
-		//	std::string warnings, errors;
+		//	std::wstring warnings, errors;
 		//
-		//	bool loadObject(std::string path);
+		//	bool loadObject(std::wstring path);
 		//};
 
 		template<typename Alloc>
-		void loadObject(std::string& path, std::vector<Alloc>* vertices, std::vector<uint32_t>* indices);
+		void loadObject(std::wstring& path, std::vector<Alloc>* vertices, std::vector<uint32_t>* indices);
 	}
 }
 

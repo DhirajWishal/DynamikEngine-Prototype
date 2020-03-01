@@ -13,7 +13,9 @@ namespace Dynamik {
 		void shutdown();
 
 	private:
-
+		class CentralControlUnit {
+			void MainLoop();
+		};
 	};
 }
 

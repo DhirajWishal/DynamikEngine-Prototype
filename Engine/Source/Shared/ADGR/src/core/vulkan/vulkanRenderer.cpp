@@ -529,22 +529,22 @@ namespace Dynamik {
 			shaderContainer.shaderCodes.resize(4);
 
 			// vertex shader
-			if (myVulkanFormat->myRendererFormat->myInternalFormat->myGameObject->myProperties.renderableObjectProperties.vertexShaderPath != "NONE")
+			if (myVulkanFormat->myRendererFormat->myInternalFormat->myGameObject->myProperties.renderableObjectProperties.vertexShaderPath != L"NONE")
 				shaderContainer.shaderCodes[0] = utils::readFile(myVulkanFormat->myRendererFormat->myInternalFormat->myGameObject->myProperties.renderableObjectProperties.vertexShaderPath);
 			else
 				shaderContainer.shaderCodes[0] = {};
 			// tessellation shader
-			if (myVulkanFormat->myRendererFormat->myInternalFormat->myGameObject->myProperties.renderableObjectProperties.tessellationShaderPath != "NONE")
+			if (myVulkanFormat->myRendererFormat->myInternalFormat->myGameObject->myProperties.renderableObjectProperties.tessellationShaderPath != L"NONE")
 				shaderContainer.shaderCodes[1] = utils::readFile(myVulkanFormat->myRendererFormat->myInternalFormat->myGameObject->myProperties.renderableObjectProperties.tessellationShaderPath);
 			else
 				shaderContainer.shaderCodes[1] = {};
 			// geometry shader
-			if (myVulkanFormat->myRendererFormat->myInternalFormat->myGameObject->myProperties.renderableObjectProperties.geometryShaderPath != "NONE")
+			if (myVulkanFormat->myRendererFormat->myInternalFormat->myGameObject->myProperties.renderableObjectProperties.geometryShaderPath != L"NONE")
 				shaderContainer.shaderCodes[2] = utils::readFile(myVulkanFormat->myRendererFormat->myInternalFormat->myGameObject->myProperties.renderableObjectProperties.geometryShaderPath);
 			else
 				shaderContainer.shaderCodes[2] = {};
 			// fragment shader
-			if (myVulkanFormat->myRendererFormat->myInternalFormat->myGameObject->myProperties.renderableObjectProperties.fragmentShaderPath != "NONE")
+			if (myVulkanFormat->myRendererFormat->myInternalFormat->myGameObject->myProperties.renderableObjectProperties.fragmentShaderPath != L"NONE")
 				shaderContainer.shaderCodes[3] = utils::readFile(myVulkanFormat->myRendererFormat->myInternalFormat->myGameObject->myProperties.renderableObjectProperties.fragmentShaderPath);
 			else
 				shaderContainer.shaderCodes[3] = {};
@@ -617,7 +617,7 @@ namespace Dynamik {
 				for (I32 itr = 0; itr < texturePathSize; itr++) {
 					// skybox
 					DMKInitCubemapInfo cubemapInfo = {};
-					cubemapInfo.path = myVulkanFormat->myRendererFormat->myInternalFormat->myGameObject->myProperties.texturePaths[itr];
+					cubemapInfo.path = WSTRtoCSTR(myVulkanFormat->myRendererFormat->myInternalFormat->myGameObject->myProperties.texturePaths[itr]);
 					cubemapInfo.textureImage = &myVulkanFormat->myTextureImages[itr];
 					cubemapInfo.textureImageMemory = &myVulkanFormat->myTextureImageMemories[itr];
 					cubemapInfo.textureImageFormat = VK_FORMAT_R8G8B8A8_UNORM;
@@ -633,7 +633,7 @@ namespace Dynamik {
 				for (I32 itr = 0; itr < texturePathSize; itr++) {
 					// texture creation - init
 					DMKInitTextureInfo textureInfo;
-					textureInfo.path = myVulkanFormat->myRendererFormat->myInternalFormat->myGameObject->myProperties.texturePaths[itr];
+					textureInfo.path = WSTRtoCSTR(myVulkanFormat->myRendererFormat->myInternalFormat->myGameObject->myProperties.texturePaths[itr]);
 					textureInfo.textureImage = &myVulkanFormat->myTextureImages[itr];
 					textureInfo.textureImageMemory = &myVulkanFormat->myTextureImageMemories[itr];
 					textureInfo.textureImageFormat = VK_FORMAT_R8G8B8A8_UNORM;

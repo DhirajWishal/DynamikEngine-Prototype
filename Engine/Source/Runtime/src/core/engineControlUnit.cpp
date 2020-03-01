@@ -8,6 +8,9 @@ namespace Dynamik {
 
 	void EngineControlUnit::mainLoop()
 	{
+		while (true) {
+
+		}
 	}
 
 	void EngineControlUnit::shutdown()

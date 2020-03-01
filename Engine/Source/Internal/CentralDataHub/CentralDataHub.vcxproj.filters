@@ -51,6 +51,10 @@
     <ClInclude Include="src\core\renderer\vertex.h">
       <Filter>src\core\renderer</Filter>
     </ClInclude>
+    <ClInclude Include="src\core\types\String.h" />
+    <ClInclude Include="src\core\types\DynamicPointer.h" />
+    <ClInclude Include="src\core\types\Pair.h" />
+    <ClInclude Include="src\core\types\Array.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\cdhafx.cpp">
@@ -65,6 +69,9 @@
     <ClCompile Include="src\core\renderer\vertex.cpp">
       <Filter>src\core\renderer</Filter>
     </ClCompile>
+    <ClCompile Include="src\core\types\String.cpp" />
+    <ClCompile Include="src\core\types\DynamicPointer.cpp" />
+    <ClCompile Include="src\core\types\Array.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="CentralDataHub.lua" />

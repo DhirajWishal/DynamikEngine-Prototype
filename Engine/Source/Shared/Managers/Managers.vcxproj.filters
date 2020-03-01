@@ -66,6 +66,7 @@
     <ClInclude Include="src\mngafx.h">
       <Filter>src</Filter>
     </ClInclude>
+    <ClInclude Include="src\Platform\Windows\utils\threadManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Platform\Windows\file\fileManager.cpp">
@@ -104,6 +105,7 @@
     <ClCompile Include="src\mngafx.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="src\Platform\Windows\utils\threadManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Managers.lua" />

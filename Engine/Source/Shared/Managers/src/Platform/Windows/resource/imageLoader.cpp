@@ -8,15 +8,15 @@
 
 namespace Dynamik {
 	namespace resource {
-		unsigned char* TextureData::loadTexture(std::string path, TextureType type, bool flip) {
+		unsigned char* TextureData::loadTexture(std::wstring path, TextureType type, bool flip) {
 			unsigned char* myTexture = nullptr;
 
 			stbi_set_flip_vertically_on_load(flip);
 
 			if (type == TEXTURE_TYPE_RGB)
-				myTexture = stbi_load(path.c_str(), &texWidth, &texHeight, &texChannels, STBI_rgb);
+				myTexture = stbi_load(WSTRtoCSTR(path).c_str(), &texWidth, &texHeight, &texChannels, STBI_rgb);
 			else if (type == TEXTURE_TYPE_RGBA)
-				myTexture = stbi_load(path.c_str(), &texWidth, &texHeight, &texChannels, STBI_rgb_alpha);
+				myTexture = stbi_load(WSTRtoCSTR(path).c_str(), &texWidth, &texHeight, &texChannels, STBI_rgb_alpha);
 			else
 				DMK_CORE_ERROR("Invalid Texture type!");
 

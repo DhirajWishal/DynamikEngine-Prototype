@@ -9,7 +9,6 @@
  DMK_Functions.cpp file.
 */
 
-#include "intafx.h"
 #include "DMK_Functions.h"
 
 namespace Dynamik {
@@ -141,9 +140,9 @@ namespace Dynamik {
 		}
 
 		// var = utils::swap(&first, &secons);
-		void swap(std::string* first, std::string* second)
+		void swap(std::wstring* first, std::wstring* second)
 		{
-			std::string* temp = first;
+			std::wstring* temp = first;
 			first = second;
 			second = temp;
 		}
@@ -183,12 +182,12 @@ namespace Dynamik {
 		}
 
 		// var = utils::splitLine(line, character);
-		std::vector<std::string> splitLine(std::string_view line, char splitBy)
+		std::vector<std::wstring> splitLine(std::wstring_view line, char splitBy)
 		{
-			if (line.find(splitBy) != std::string::npos)
+			if (line.find(splitBy) != std::wstring::npos)
 			{
-				std::vector<std::string> _splits = {};
-				std::string _split = "";
+				std::vector<std::wstring> _splits = {};
+				std::wstring _split = DMK_TEXT("");
 				uint32_t _lineSize = line.size();
 				uint32_t _index = 0;
 
@@ -216,7 +215,7 @@ namespace Dynamik {
 				return _splits;
 			}
 
-			return std::vector<std::string>();
+			return std::vector<std::wstring>();
 		}
 
 		// var = rand();
@@ -242,5 +241,21 @@ namespace Dynamik {
 
 			return data;
 		}
+	}
+
+	std::string WSTRtoCSTR(std::wstring string)
+	{
+		using convert_typeX = std::codecvt_utf8<wchar_t>;
+		std::wstring_convert<convert_typeX, wchar_t> converterX;
+
+		return converterX.to_bytes(string);
+	}
+
+	std::wstring CSTRtoWSTR(std::string string)
+	{
+		using convert_typeX = std::codecvt_utf8<wchar_t>;
+		std::wstring_convert<convert_typeX, wchar_t> converterX;
+
+		return converterX.from_bytes(string);
 	}
 }

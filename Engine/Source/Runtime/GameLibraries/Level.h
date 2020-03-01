@@ -12,8 +12,8 @@ namespace Dynamik {
 		virtual ~Level() {}
 
 		std::vector<Scene*> myScenes = {};
-		std::string name = "";
-		std::string ID = "";
+		std::wstring name = L"";
+		std::wstring ID = L"";
 
 		float progress = 0.0f;
 	};

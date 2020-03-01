@@ -15,7 +15,7 @@ namespace Dynamik {
 		inline unsigned int getWidth() const { return w_Width; }
 		inline unsigned int getHeight() const { return w_Height; }
 
-		std::string toString() const override;
+		std::wstring toString() const override;
 
 		EVENT_CLASS_TYPE(windowResize) EVENT_CLASS_CATEGORY(eventCategoryApplication)
 

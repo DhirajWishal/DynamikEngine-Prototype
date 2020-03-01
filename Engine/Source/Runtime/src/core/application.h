@@ -107,8 +107,8 @@ namespace Dynamik {
 	};
 
 	struct DMKEngineSettings {
-		std::string myInstanceName = "Dynamik Engine";
-		std::string myInstanceID = "01";
+		std::wstring myInstanceName = L"Dynamik Engine";
+		std::wstring myInstanceID = L"01";
 
 		DMKRendererAPI myRendererAPI = DMKRendererAPI::DMK_RENDERER_API_VULKAN;
 	};
@@ -221,7 +221,7 @@ int main(int argc, char** argv) {																			\
 		for (int i = 0; i < paths.size(); i++) {															\
 			Dynamik::GameObjectProperties props;															\
 			props.name = "Charlet";																			\
-			props.ID = std::to_string(i);																	\
+			props.ID = std::to_wstring(i);																	\
 			props.location = paths[i];																		\
 			props.transformProperties.location = locations[i];												\
 																											\

@@ -14,15 +14,15 @@ namespace Dynamik {
 			Client() {}
 			virtual ~Client() {}
 
-			virtual int connect(std::string& ipAddress, int portNumber) { return 0; }
-			//virtual void send(MessageType type, std::string& message) {}
+			virtual int connect(std::wstring& ipAddress, int portNumber) { return 0; }
+			//virtual void send(MessageType type, std::wstring& message) {}
 			//virtual void receive() {}
 			//virtual MessageData getReceivedData() { return nullptr; }
 
 			virtual void close() {}
 
 		protected:
-			std::string serverAddress = "";
+			std::wstring serverAddress = DMK_TEXT("");
 			int port = 0000;
 
 			//std::queue<MessageData> sendDataQueue;

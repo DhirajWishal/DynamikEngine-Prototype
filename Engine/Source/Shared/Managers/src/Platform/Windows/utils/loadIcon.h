@@ -7,7 +7,7 @@
 #include <string>
 
 namespace Dynamik {
-	std::fstream load_icon(std::string path);
+	std::fstream load_icon(std::wstring path);
 }
 
 #endif // !_DYNAMIK_PLATFORM_WINDOWS_LOAD_ICON_H

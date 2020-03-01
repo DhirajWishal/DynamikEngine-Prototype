@@ -6,7 +6,7 @@ namespace Dynamik {
 		daiManager::daiManager() {
 		}
 
-		daiManager::daiManager(std::string& path) : myPath(path) {
+		daiManager::daiManager(std::wstring& path) : myPath(path) {
 			file.open(path);
 		}
 
@@ -14,7 +14,7 @@ namespace Dynamik {
 			file.close();
 		}
 
-		void daiManager::open(std::string path) {
+		void daiManager::open(std::wstring path) {
 			if (file.is_open())
 				file.close();
 			file.open(path);
@@ -24,18 +24,19 @@ namespace Dynamik {
 			return file.is_open();
 		}
 
-		std::string daiManager::getLine() {
-			std::string line = "";
-			std::getline(file, line, '\n');
+		std::wstring daiManager::getLine() {
+			std::wstring line = DMK_TEXT("");
+			//std::getline(file, line, '\n');
+			file.getline(line.data(), '\n');
 
 			return line;
 		}
 
-		std::istream& daiManager::getLine(std::string* line) {
-			return std::getline(file, *line, '\n');
+		std::wistream& daiManager::getLine(std::wstring* line) {
+			return file.getline(line->data(), '\n');
 		}
 
-		std::fstream& daiManager::getFile() {
+		std::wfstream& daiManager::getFile() {
 			return file;
 		}
 
@@ -43,17 +44,17 @@ namespace Dynamik {
 			file.close();
 		}
 
-		std::vector<std::string> daiManager::getData(DMKDaiFileDataType type) {
+		std::vector<std::wstring> daiManager::getData(DMKDaiFileDataType type) {
 			if (!isDataStoreInit)
 				initDataStore();
 
 			if (type > DMK_DAI_FILE_DATA_TYPE_CODE)
-				return std::vector<std::string>();
+				return std::vector<std::wstring>();
 
 			return dataStore[type];
 		}
 
-		std::vector<std::vector<std::string>> daiManager::getAllData() {
+		std::vector<std::vector<std::wstring>> daiManager::getAllData() {
 			if (!isDataStoreInit)
 				initDataStore();
 
@@ -79,7 +80,7 @@ namespace Dynamik {
 			locationData.resize(3);
 			rotationData.resize(3);
 
-			std::string _line = "";
+			std::wstring _line = DMK_TEXT("");
 			while (getLine(&_line)) {
 				if (_line[0] == 'M' || _line[0] == 'm')	// Models
 					dataStore[DMK_DAI_FILE_DATA_TYPE_MODEL].push_back((_line.substr(2, _line.size() - 2)));

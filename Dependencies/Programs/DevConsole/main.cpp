@@ -4,9 +4,9 @@
 #ifdef CMD
 
 int main(int argc, char* argv[]) {
-	std::string input;
-	std::vector<std::string> inputs;
-	std::stringstream ss;
+	std::wstring input;
+	std::vector<std::wstring> inputs;
+	std::wstringstream ss;
 
 	for (int i = 0; i < argc; i++)
 		if (i != 0)
@@ -28,7 +28,7 @@ int main(int argc, char* argv[]) {
 #else
 
 int main() {
-	std::string input;
+	std::wstring input;
 
 	while (true) {
 		std::getline(std::cin, input, '\n');
@@ -36,7 +36,7 @@ int main() {
 		Dynamik::console::Console myConsole;
 		myConsole.write(input);
 
-		if (input == "TERMINATE")
+		if (input == L"TERMINATE")
 			break;
 	}
 	return 0;

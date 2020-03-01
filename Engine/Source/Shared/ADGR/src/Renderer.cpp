@@ -77,6 +77,11 @@ namespace Dynamik {
 			vertices;
 		}
 
+		void Renderer::addCommand(RendererCommandQueue commandQueue)
+		{
+			myCommandQueue = commandQueue;
+		}
+
 		void Renderer::run() {
 			draw();
 		}

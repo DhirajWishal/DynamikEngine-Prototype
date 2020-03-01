@@ -22,7 +22,6 @@
 /* EXTERNAL INCLUDES */
 
 /* CORE INCLUDES */
-#include "core/utils/DMK_Functions.h"
 #include "core/utils/DMK_Error.h"
 #include "core/utils/DMK_Math.h"
 #include "core/utils/safeLock.h"
@@ -31,5 +30,9 @@
 
 #include "GameObject.h"
 #include "KeyBingings.h"
+
+#include "CentralDataHub.h"
+#include "Utilities.h"
+#include "Platform.h"
 
 #endif // !_DYNAMIK_H

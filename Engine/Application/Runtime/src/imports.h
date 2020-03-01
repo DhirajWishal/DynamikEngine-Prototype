@@ -3,6 +3,8 @@
 #ifndef _DYNAMIK_APPLICATION_IMPORTS_H
 #define _DYNAMIK_APPLICATION_IMPORTS_H
 
+#include "Dynamik.h"
+
 Dynamik::I32 Dynamik::utils::max(Dynamik::I32, Dynamik::I32);
 Dynamik::UI32 Dynamik::utils::max(Dynamik::UI32, Dynamik::UI32);
 float Dynamik::utils::max(float, float);
@@ -14,7 +16,7 @@ public:
 	~charlet() {}
 };
 
-std::vector<char> readFile(const std::string& filePath) {
+std::vector<char> readFile(const std::wstring& filePath) {
 	std::ifstream file(filePath, std::ios::ate | std::ios::binary);
 
 	if (!file.is_open())
@@ -30,22 +32,22 @@ std::vector<char> readFile(const std::string& filePath) {
 	return buffer;
 }
 
-std::vector<std::string> getTexturePath(std::vector<char>& file) {
-	std::vector<std::string> paths;
-	std::string path;
+std::vector<std::wstring> getTexturePath(std::vector<char>& file) {
+	std::vector<std::wstring> paths;
+	std::wstring path;
 
 	for (auto i : file)
 		path.push_back(i);
 
-	std::istringstream iss;
+	std::wistringstream iss;
 	iss.str(path);
 
-	for (std::string i; std::getline(iss, i);) {
+	for (std::wstring i; iss.getline(i.data(), '\n');) {
 		std::replace(i.begin(), i.end(), '\r', ' ');
 		std::replace(i.begin(), i.end(), (char)'\"', ' ');
 
-		if (i[0] == ' ') i.replace(0, 1, "");
-		if (i[i.size() - 1] == ' ') i.replace(i.size() - 1, 1, "");
+		if (i[0] == ' ') i.replace(0, 1, L"");
+		if (i[i.size() - 1] == ' ') i.replace(i.size() - 1, 1, L"");
 
 		paths.push_back(i);
 	}

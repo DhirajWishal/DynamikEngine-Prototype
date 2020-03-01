@@ -3,7 +3,7 @@
 
 namespace Dynamik {
 	namespace manager {
-		file::file(std::string path, mode myMode) :
+		file::file(std::wstring path, mode myMode) :
 			myPath(path), myMode(myMode) {
 		}
 

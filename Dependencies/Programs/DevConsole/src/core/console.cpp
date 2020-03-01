@@ -10,9 +10,9 @@ namespace Dynamik {
 		Console::~Console() {
 		}
 
-		void Console::write(std::string command) {
-			if (command == "help") {
-				std::string out = "Help menu.\n\
+		void Console::write(std::wstring command) {
+			if (command == L"help") {
+				std::wstring out = L"Help menu.\n\
 					help,\n\
 					set,\n\
 					clear,\n\

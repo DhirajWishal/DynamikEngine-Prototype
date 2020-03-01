@@ -7,11 +7,13 @@
 #include <string>
 #include <chrono>
 
+#define DMK_TEXT(...) L##__VA_ARGS__
+
 namespace Dynamik {
 	namespace Debugger {
 		namespace benchmark {
 			struct benchmarkResult {
-				std::string name = "";
+				std::wstring name = DMK_TEXT("");
 				long long start = 0, end = 0;
 				uint32_t threadID = 0;
 			};
@@ -22,7 +24,7 @@ namespace Dynamik {
 				Profiler() {}
 				~Profiler();
 
-				void beginSession(const std::string& filepath = "profile.json");
+				void beginSession(const std::wstring& filepath = DMK_TEXT("profile.json"));
 				void writeProfile(const benchmarkResult& result);
 				void endSession();
 
@@ -41,8 +43,8 @@ namespace Dynamik {
 			// Profile Timer
 			class ProfileTimer {
 			public:
-				ProfileTimer(std::string name);
-				ProfileTimer(std::string name, Profiler* profiler);
+				ProfileTimer(std::wstring name);
+				ProfileTimer(std::wstring name, Profiler* profiler);
 				~ProfileTimer();
 
 				void startTimer();
@@ -50,13 +52,13 @@ namespace Dynamik {
 
 			private:
 				Profiler* myProfiler = nullptr;
-				std::string myName = "";
+				std::wstring myName = DMK_TEXT("");
 				bool isTimerStopped = false;
 
 				std::chrono::time_point<std::chrono::high_resolution_clock> startTimePoint;
 			};
 
-			void beginProfiler(std::string fileName);
+			void beginProfiler(std::wstring fileName);
 			void writeToProfiler(const benchmarkResult& result);
 			void endProfiler();
 		}

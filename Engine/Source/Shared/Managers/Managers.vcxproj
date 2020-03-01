@@ -149,6 +149,7 @@
     <ClInclude Include="src\Platform\Windows\utils\loadIcon.h" />
     <ClInclude Include="src\Platform\Windows\utils\modelManager.h" />
     <ClInclude Include="src\Platform\Windows\utils\objectLoader.h" />
+    <ClInclude Include="src\Platform\Windows\utils\threadManager.h" />
     <ClInclude Include="src\Platform\Windows\window.h" />
     <ClInclude Include="src\mngafx.h" />
   </ItemGroup>
@@ -165,6 +166,7 @@
     <ClCompile Include="src\Platform\Windows\utils\objectLoader.cpp">
       <ObjectFileName>$(IntDir)\objectLoader1.obj</ObjectFileName>
     </ClCompile>
+    <ClCompile Include="src\Platform\Windows\utils\threadManager.cpp" />
     <ClCompile Include="src\Platform\Windows\window.cpp" />
     <ClCompile Include="src\mngafx.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>

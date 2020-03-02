@@ -14,6 +14,10 @@
 #include "core/renderer/vertex.h"
 #include "core/renderer/typenames.h"
 
+#include "core/types/Array.h"
+#include "core/types/DynamicPointer.h"
+#include "core/types/FastString.h"
+#include "core/types/Pair.h"
 #include "core/types/String.h"
 
 #endif	// !_DYNAMIK_CENTRAL_DATA_HUB_H

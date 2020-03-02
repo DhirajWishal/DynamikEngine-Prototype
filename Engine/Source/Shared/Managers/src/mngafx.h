@@ -26,6 +26,7 @@
 #include <chrono>
 #include <ios>
 #include <thread>
+#include <future>
 
 #include <string>
 #include <vector>

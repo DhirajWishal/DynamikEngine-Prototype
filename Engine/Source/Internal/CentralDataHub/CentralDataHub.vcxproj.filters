@@ -55,6 +55,7 @@
     <ClInclude Include="src\core\types\DynamicPointer.h" />
     <ClInclude Include="src\core\types\Pair.h" />
     <ClInclude Include="src\core\types\Array.h" />
+    <ClInclude Include="src\core\types\FastString.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\cdhafx.cpp">
@@ -72,6 +73,7 @@
     <ClCompile Include="src\core\types\String.cpp" />
     <ClCompile Include="src\core\types\DynamicPointer.cpp" />
     <ClCompile Include="src\core\types\Array.cpp" />
+    <ClCompile Include="src\core\types\FastString.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="CentralDataHub.lua" />

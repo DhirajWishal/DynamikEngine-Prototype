@@ -3,6 +3,7 @@
 #define _DYNAMIK_ADGR_H
 
 #include "Renderer.h"
+#include "RendererThread.h"
 #include "rendererCommandQueue.h"
 #include "rendererFormat.h"
 

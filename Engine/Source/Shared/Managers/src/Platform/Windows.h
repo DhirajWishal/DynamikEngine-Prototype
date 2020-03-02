@@ -23,6 +23,7 @@
 #include "Windows/utils/daiFileManager.h"
 #include "Windows/utils/objectLoader.h"
 #include "Windows/utils/modelManager.h"
+#include "Windows/utils/threadManager.h"
 
 #endif
 

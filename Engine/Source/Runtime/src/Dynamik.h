@@ -25,8 +25,6 @@
 #include "core/utils/DMK_Error.h"
 #include "core/utils/DMK_Math.h"
 #include "core/utils/safeLock.h"
-#include "core/utils/dataStructures/heap.h"
-#include "core/utils/dataStructures/linkedLists.h"
 
 #include "GameObject.h"
 #include "KeyBingings.h"

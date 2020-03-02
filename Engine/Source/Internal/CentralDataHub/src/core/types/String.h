@@ -3,7 +3,11 @@
 #define _DYNAMIK_CENTRAL_DATA_HUB_STRING_H
 
 #include "core/global/datatypes.h"
+#include "core/types/Array.h"
 #include <string>
+
+#define DMK_STRING_MATCH_NOT_FOUND	-1
+#define DMK_STRING_INVALID_INDEX	'\0'
 
 namespace Dynamik {
 	/*
@@ -37,16 +41,6 @@ namespace Dynamik {
 
 		CPTR myStringData = nullptr;
 		UI32 myStringSize = 0;
-	};
-
-	class StringPtr {
-	public:
-		StringPtr() {}
-		StringPtr(String string) {}
-		~StringPtr() {}
-
-	private:
-		CCPTR myString = nullptr;
 	};
 }
 

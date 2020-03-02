@@ -143,6 +143,7 @@ namespace Dynamik {
 		bool canDeleteController = false;
 
 		ADGR::Renderer myRenderingEngine;
+		ThreadManager myThreadManager;
 
 		std::vector<internalFormat> internalFormats = {};
 		std::vector<InternalFormat*> internalFormatsBase = {};

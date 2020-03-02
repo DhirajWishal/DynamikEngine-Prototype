@@ -42,6 +42,28 @@ namespace std {
 
 // 35
 namespace Dynamik {
+	/* SAMPLE */
+	class SampleThread : public Thread {
+	public:
+		UI32 count = 0;
+
+		void init() override {
+			std::cout << "Init Stage\n";
+		}
+
+		void mainLoop() override {
+			std::cout << "Running in Main Loop\n";
+
+			if (count == 1000)
+				terminate = true;
+			count++;
+		}
+
+		void shutdown() override {
+			std::cout << "Shuting Down\n";
+		}
+	};
+
 	uint32_t progress = 0;
 	static bool shouldClose = false;
 
@@ -51,9 +73,11 @@ namespace Dynamik {
 			return;
 		}
 
-		String string = "Hello";
-		string.add(' ');
-		string.append("World");
+		FastString fstr = "Hello World";
+
+		SampleThread thr;
+		myThreadManager.add(&thr);
+		myThreadManager.run();
 
 		gameObjectInitialization();
 

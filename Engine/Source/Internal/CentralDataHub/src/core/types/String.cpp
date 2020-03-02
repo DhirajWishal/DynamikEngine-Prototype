@@ -20,8 +20,8 @@ namespace Dynamik {
 		UI32* _cont = (UI32*)&_size;
 		*_cont = myStringSize + 1;
 		manager::OneTimeAllocator once(_size);
-		CPTR _buffer = once.getAddress();
-		
+		CPTR _buffer = (CPTR)once.getAddress();
+
 		//memset(_buffer, ' ', _size);
 
 		UI32 _itr = 0;

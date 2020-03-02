@@ -73,6 +73,19 @@ namespace Dynamik {
 		maxHeap<UI32>;
 		maxHeap<float>;
 		maxHeap<double>;
+
+		template<class TYPE>
+		class Heap {
+		public:
+			Heap() {}
+			Heap(UI32 size) {}
+			~Heap() {}
+
+			virtual void insert(TYPE value) {}
+			virtual void pop() {}
+
+			virtual TYPE getValue(UI32 index) { return TYPE(); }
+		};
 	}
 }
 

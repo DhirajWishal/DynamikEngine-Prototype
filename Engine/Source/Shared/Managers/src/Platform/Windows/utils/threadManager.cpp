@@ -9,22 +9,50 @@
 */
 
 namespace Dynamik {
-    void ThreadManager::add(Thread* myThread)
-    {
-        myThreadContainer.push_back(myThread);
-    }
+	void ThreadManager::add(Thread* myThread)
+	{
+		myThreadContainer.push_back(myThread);
+		myThreadCount++;
+	}
 
-    void ThreadManager::run(UI32 index)
-    {
-        runThread(myThreadContainer[index]);
-    }
+	void ThreadManager::run(UI32 index)
+	{
+		if (index >= myThreadCount)
+			return;
 
-    void ThreadManager::runThread(Thread* thread)
-    {
-        auto future = std::async(std::launch::async, [](Thread* thr) {
-            thr->init();
-            while (!thr->loopEndCommand()) thr->mainLoop();
-            thr->shutdown();
-            }, thread);
-    }
+		ExecutionHandle _thread(runThread, myThreadContainer[index]);
+	}
+
+	void ThreadManager::runAll()
+	{
+		std::vector<ExecutionHandle> _handles;
+		for (Thread* thread : myThreadContainer)
+			_handles.push_back((runThread, thread));
+	}
+
+	void ThreadManager::runThread(Thread* thread)
+	{
+		thread->init();
+		while (!thread->loopEndCommand())thread->mainLoop();
+		thread->shutdown();
+	}
+
+	/* EXECUTION HANDLE CLASS */
+	ExecutionHandle::ExecutionHandle(Thread* thread)
+	{
+		myThread = std::thread([](Thread* _thr) {
+			_thr->init();
+			while (!_thr->loopEndCommand())_thr->mainLoop();
+			_thr->shutdown(); }, thread);
+	}
+
+	ExecutionHandle::ExecutionHandle(std::thread thread)
+	{
+		myThread.swap(thread);
+	}
+
+	ExecutionHandle::~ExecutionHandle()
+	{
+		myThread.join();
+	}
 }

@@ -2,11 +2,19 @@
 #ifndef _DYNAMIK_MANAGERS_THREAD_MANAGER_H
 #define _DYNAMIK_MANAGERS_THREAD_MANAGER_H
 
+#include <thread>
+
 namespace Dynamik {
+	/*
+	 Data Container for Threads
+	*/
 	struct DMK_API ThreadDataContainer {
 		VPTR myRawData = nullptr;
 	};
 
+	/*
+	 Thread object
+	*/
 	class DMK_API Thread {
 	public:
 		Thread() {}
@@ -30,19 +38,50 @@ namespace Dynamik {
 		ThreadDataContainer* myDataContainer = nullptr;
 	};
 
-	class DMK_API ThreadManager {
+	/*
+	 Execution Handle for the Thread Manager
+	*/
+	class DMK_API ExecutionHandle {
 	public:
-		ThreadManager() {}
-		~ThreadManager() {}
+		// default constructor
+		template<class FUNC, class ARGS>
+		ExecutionHandle(FUNC function, ARGS arguments) : myThread(std::thread(function, arguments)) {}
+		// default constructor
+		ExecutionHandle(Thread* thread);
+		// default constructor
+		ExecutionHandle(std::thread thread);
+		// default destructor
+		~ExecutionHandle();
 
-		void add(Thread* myThread);
-		void run(UI32 index = 0);
+		// return the address of the thread
+		std::thread* getThreadAddr() { return &myThread; }
+		// check if the thread is joinable
+		B1 isJoinable() { return myThread.joinable(); }
+		// get the thread ID
+		std::thread::id getThreadID() { return myThread.get_id(); }
 
 	private:
-		void runThread(Thread* thread);
+		std::thread myThread;	// thread
+	};
+
+	/*
+	 Thread Manager
+	*/
+	class DMK_API ThreadManager {
+	public:
+		ThreadManager() {}	// default constructor
+		~ThreadManager() {}	// default destructor
+
+		void add(Thread* myThread);	// add a thread
+		void run(UI32 index = 0);	// run a thread with index
+		void runAll();	// run all threads
+
+	private:
+		static void runThread(Thread* thread);
 
 		std::vector<Thread*> myThreadContainer;
-
+		std::vector<ExecutionHandle> myThreadHandles;
+		UI32 myThreadCount = 0;
 	};
 }
 

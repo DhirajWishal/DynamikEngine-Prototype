@@ -54,7 +54,7 @@ namespace Dynamik {
 		void mainLoop() override {
 			std::cout << "Running in Main Loop\n";
 
-			if (count == 1000)
+			if (count == 100000)
 				terminate = true;
 			count++;
 		}

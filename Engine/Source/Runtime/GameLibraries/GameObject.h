@@ -39,13 +39,13 @@ namespace Dynamik {
 
 	// Renderable object properties
 	struct RenderableObjectProperties {
-		std::wstring vertexShaderPath = L"NONE";
-		std::wstring tessellationShaderPath = L"NONE";
-		std::wstring geometryShaderPath = L"NONE";
-		std::wstring fragmentShaderPath = L"NONE";
+		std::string vertexShaderPath = "NONE";
+		std::string tessellationShaderPath = "NONE";
+		std::string geometryShaderPath = "NONE";
+		std::string fragmentShaderPath = "NONE";
 
-		std::wstring scriptPath = L"NONE";
-		std::wstring codePath = L"NONE";
+		std::string scriptPath = "NONE";
+		std::string codePath = "NONE";
 	};
 
 	// Transform
@@ -105,17 +105,17 @@ namespace Dynamik {
 		~GameObjectProperties() {}
 
 		// Object info:
-		std::wstring name = L"New Object";
-		std::wstring ID = L"0000";
+		std::string name = "New Object";
+		std::string ID = "0000";
 		uint32_t instanceCount = 1;
 
 		// Location data:
-		std::wstring location = L"";
+		std::string location = "";
 
-		std::vector<std::wstring> objectPath = {};
-		std::vector<std::wstring> texturePaths = {};
+		std::vector<std::string> objectPath = {};
+		std::vector<std::string> texturePaths = {};
 #ifdef DMK_BEHAVIOUR_SCRIPTING
-		std::wstring behaviourPath = L"";
+		std::string behaviourPath = "";
 #endif
 
 		// Object characteristics:
@@ -137,8 +137,8 @@ namespace Dynamik {
 	struct ProjectileProperties {
 		GameObjectProperties objectProps = {};
 
-		std::wstring name = L"";
-		std::wstring playerID = L"";
+		std::string name = "";
+		std::string playerID = "";
 
 		float initialVelocity = 0.0f;
 		float acceleration = 0.0f;
@@ -233,7 +233,7 @@ namespace Dynamik {
 
 		/* ---------- ########## \\\\\\\\\\ DESTRUCTION/ DESTRUCTOR ////////// ########## ---------- */
 		virtual void onLoad() {}
-		virtual void onActivation(std::wstring& playerID, GameObjectProperties& objectProps) {}
+		virtual void onActivation(std::string& playerID, GameObjectProperties& objectProps) {}
 		virtual void inAir() {}
 		virtual void onImpact(GameObjectProperties& objectProps) {}
 

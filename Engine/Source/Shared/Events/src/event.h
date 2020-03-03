@@ -42,7 +42,7 @@ namespace Dynamik {
 
 #define EVENT_CLASS_TYPE(type) static EVENT_TYPE getStaticType() { return EVENT_TYPE::##type; }\
 								virtual EVENT_TYPE getEventType() const override { return getStaticType(); }\
-								virtual const wchar_t* getName() const override { return L#type; }
+								virtual CCPTR getName() const override { return #type; }
 
 #define EVENT_CLASS_CATEGORY(category) virtual int getCategoryFlags() const override { return category; }
 
@@ -52,9 +52,9 @@ namespace Dynamik {
 		bool handled = false;
 
 		virtual EVENT_TYPE getEventType() const = 0;
-		virtual const wchar_t* getName() const = 0;
+		virtual CCPTR getName() const = 0;
 		virtual int getCategoryFlags() const = 0;
-		virtual std::wstring toString() const { return getName(); }
+		virtual std::string toString() const { return getName(); }
 
 		inline bool isInCategory(EVENT_CATEGORY cat) {
 			return getCategoryFlags() & cat;

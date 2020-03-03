@@ -61,6 +61,7 @@ project "Platform"
 
 		defines {
 			"DMK_PLATFORM_WINDOWS",
+			"DMK_BUILD_LIB",
 			"GLFW_INCLUDE_VULKAN"
 		}
 

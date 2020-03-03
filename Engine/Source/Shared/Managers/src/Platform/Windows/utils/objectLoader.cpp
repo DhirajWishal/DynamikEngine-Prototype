@@ -26,8 +26,8 @@
 namespace Dynamik {
 	namespace utils {
 		// Object load function
-		std::vector<DMKObjectDataContainer> loadObjFileData(std::wstring_view path) {
-			std::wifstream myObjectFile(path.data());
+		std::vector<DMKObjectDataContainer> loadObjFileData(std::string_view path) {
+			std::ifstream myObjectFile(path.data());
 			if (!myObjectFile)
 				return std::vector<DMKObjectDataContainer>();
 
@@ -38,14 +38,14 @@ namespace Dynamik {
 			std::vector<float> _normalData = {};
 			std::vector<float> _PSData = {};
 			std::vector<uint32_t> _lineElementsData = {};
-			std::vector<std::wstring> _splits = {};
-			std::vector<std::wstring> _subSplits = {};
+			std::vector<std::string> _splits = {};
+			std::vector<std::string> _subSplits = {};
 
 			bool _singePass = true;
 			uint32_t _vertexTotalCount = 0;
 			uint32_t _vertexCount = 0;
 
-			std::wstring _line = L"";
+			std::string _line = "";
 			_containers.push_back(DMKObjectDataContainer{});
 			while (myObjectFile.getline(_line.data(), '\n')) {
 				uint32_t _lineSize = _line.size();
@@ -101,8 +101,8 @@ namespace Dynamik {
 				}
 				else if (_line[_FIRST_INDEX] == 'f') {	// face elements
 					_splits = splitLine(_line.substr(2, (_lineSize - 2)).c_str(), ' ');
-					for (std::wstring_view _split : _splits) {
-						if (_split.find('/') != std::wstring::npos) {
+					for (std::string_view _split : _splits) {
+						if (_split.find('/') != std::string::npos) {
 							_subSplits = splitLine(_split, '/');
 							if (_subSplits.size() >= 1)
 								_containers[_objectIndex].myVertexIndex.push_back(std::stoi(_subSplits[0]) - 1);
@@ -121,14 +121,14 @@ namespace Dynamik {
 				}
 				else if (_line[_FIRST_INDEX] == 'l') {	// line elements
 					_splits = splitLine(_line.substr(2, (_lineSize - 2)).c_str(), ' ');
-					for (std::wstring_view _split : _splits)
+					for (std::string_view _split : _splits)
 						_lineElementsData.push_back(std::stoi(_split.data()));
 
 					_containers[_objectIndex].myLineElements.push_back(_lineElementsData);
 					continue;
 				}
 				else if (_line[_FIRST_INDEX] == 'm') {	// MTL file reference
-					if (_line.find(L"mtllib") == std::wstring::npos) continue;
+					if (_line.find("mtllib") == std::string::npos) continue;
 					_containers[_objectIndex].myMTLFile.push_back(_line.substr(7, _lineSize - 7));
 					continue;
 				}
@@ -147,7 +147,7 @@ namespace Dynamik {
 			myInternalFormat->myIndexCounts.resize(_objectCount);
 
 			for (uint32_t _itr = 0; _itr < _objectCount; _itr++) {
-				std::wifstream _objectFile(myInternalFormat->myGameObject->myProperties.objectPath[_itr]);
+				std::ifstream _objectFile(myInternalFormat->myGameObject->myProperties.objectPath[_itr]);
 				if (!_objectFile)
 					continue;
 
@@ -159,14 +159,14 @@ namespace Dynamik {
 				std::vector<float> _normalData = {};
 				std::vector<float> _PSData = {};
 				std::vector<uint32_t> _lineElementsData = {};
-				std::vector<std::wstring> _splits = {};
-				std::vector<std::wstring> _subSplits = {};
+				std::vector<std::string> _splits = {};
+				std::vector<std::string> _subSplits = {};
 
 				bool _singePass = true;
 				uint32_t _vertexTotalCount = 0;
 				uint32_t _vertexCount = 0;
 
-				std::wstring _line = L"";
+				std::string _line = "";
 				_containers.push_back(DMKObjectDataContainer{});
 				while (_objectFile.getline(_line.data(), '\n')) {
 					uint32_t _lineSize = _line.size();
@@ -232,8 +232,8 @@ namespace Dynamik {
 							1.0f, 1.0f, 1.0f
 						};
 						_splits = splitLine(_line.substr(2, (_lineSize - 2)).c_str(), ' ');
-						for (std::wstring_view _split : _splits) {
-							if (_split.find('/') != std::wstring::npos) {
+						for (std::string_view _split : _splits) {
+							if (_split.find('/') != std::string::npos) {
 								_subSplits = splitLine(_split, '/');
 								if (_subSplits.size() >= 1) {
 									_localIndex = std::stoi(_subSplits[0]) - ((_objectIndex) ? _containers[_objectIndex - 1].myVertices.size() + 1 : 1);
@@ -281,14 +281,14 @@ namespace Dynamik {
 					}
 					else if (_line[_FIRST_INDEX] == 'l') {	// line elements
 						_splits = splitLine(_line.substr(2, (_lineSize - 2)).c_str(), ' ');
-						for (std::wstring_view _split : _splits)
+						for (std::string_view _split : _splits)
 							_lineElementsData.push_back(std::stoi(_split.data()));
 
 						_containers[_objectIndex].myLineElements.push_back(_lineElementsData);
 						continue;
 					}
 					else if (_line[_FIRST_INDEX] == 'm') {	// MTL file reference
-						if (_line.find(L"mtllib") == std::wstring::npos) continue;
+						if (_line.find("mtllib") == std::string::npos) continue;
 						_containers[_objectIndex].myMTLFile.push_back(_line.substr(7, _lineSize - 7));
 						continue;
 					}

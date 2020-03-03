@@ -32,7 +32,7 @@ namespace Dynamik {
 			void skyboxManager::loadCubemap(ADGRVulkanDataContainer* container, DMKInitCubemapInfo initInfo) {
 				resource::TextureData texData = {};
 
-				unsigned char* cubemap = texData.loadTexture(CSTRtoWSTR(initInfo.path), resource::TEXTURE_TYPE_RGBA, initInfo.flipImage);
+				unsigned char* cubemap = texData.loadTexture((initInfo.path), resource::TEXTURE_TYPE_RGBA, initInfo.flipImage);
 				VkDeviceSize imageSize = texData.size;
 
 				width = texData.texWidth;

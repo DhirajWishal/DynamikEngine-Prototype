@@ -10,7 +10,7 @@
 
 namespace Dynamik {
 	struct DMK_API DMKModelLoadInfo {
-		std::wstring path = L"";
+		std::string path = "";
 
 		std::vector<Vertex>* vertices = {};
 		std::vector<uint32_t>* indices = {};

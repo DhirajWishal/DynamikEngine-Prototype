@@ -69,6 +69,9 @@
     <ClInclude Include="src\Renderer.h">
       <Filter>src</Filter>
     </ClInclude>
+    <ClInclude Include="src\RendererThread.h">
+      <Filter>src</Filter>
+    </ClInclude>
     <ClInclude Include="src\Wrapper\dll_wrapper.h">
       <Filter>src\Wrapper</Filter>
     </ClInclude>
@@ -213,7 +216,6 @@
     <ClInclude Include="src\rendererFormat.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="src\RendererThread.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Layers\layer.cpp">
@@ -223,6 +225,9 @@
       <Filter>src\Layers</Filter>
     </ClCompile>
     <ClCompile Include="src\Renderer.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\RendererThread.cpp">
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="src\Wrapper\dll_wrapper.cpp">
@@ -339,7 +344,6 @@
     <ClCompile Include="src\rendererFormat.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="src\RendererThread.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ADGR.lua" />

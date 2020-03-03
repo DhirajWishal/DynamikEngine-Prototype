@@ -12,8 +12,8 @@ namespace Dynamik {
 		return std::vector<GameObject*>();
 	}
 
-	std::vector<std::vector<std::wstring>> InputLoader::getTexturePaths() {
-		std::vector<std::vector<std::wstring>> path;
+	std::vector<std::vector<std::string>> InputLoader::getTexturePaths() {
+		std::vector<std::vector<std::string>> path;
 		for (auto i : myContainer.assets) {
 			path.push_back(i->getProperties().texturePaths);
 		}
@@ -30,8 +30,8 @@ namespace Dynamik {
 		return renderObjects;
 	}
 
-	std::vector<std::wstring> InputLoader::getModelPaths() {
-		std::vector<std::wstring> path;
+	std::vector<std::string> InputLoader::getModelPaths() {
+		std::vector<std::string> path;
 		for (auto i : myContainer.assets) {
 			//path.push_back(i.getProperties().objectPath);
 		}

@@ -73,19 +73,24 @@ namespace Dynamik {
 			return;
 		}
 
-		FastString fstr = "Hello World";
-
-		SampleThread thr;
-		myThreadManager.add(&thr);
-		myThreadManager.run();
+		//FastString fstr = "Hello World";
 
 		gameObjectInitialization();
 
 		std::thread myThread(Application::showProgress);
 
-		myRenderingEngine.setProgress(&progress);
-		myRenderingEngine.setRendererFormats(internalFormatsBase);
-		myRenderingEngine.initRenderer();
+		//myRenderingEngine.setProgress(&progress);
+		//myRenderingEngine.setRendererFormats(internalFormatsBase);
+		//myRenderingEngine.initRenderer();
+
+		SampleThread thr;
+		RendererThread rendererThread;
+		rendererThread.addProgress(&progress);
+		rendererThread.addInternalFormats(internalFormatsBase);
+		myThreadManager.add(&thr);
+		myThreadManager.add(&rendererThread);
+		myThreadManager.runAll();
+
 		shouldClose = true;
 
 		myThread.join();
@@ -148,8 +153,8 @@ namespace Dynamik {
 				case DMK_KEY_O: {
 					bool canFinish = false;
 					GameObjectProperties props;
-					props.name = L"Debug Object";
-					props.location = L"E:/Projects/Dynamik Engine/Game Repository/assets/assets/moon";
+					props.name = "Debug Object";
+					props.location = "E:/Projects/Dynamik Engine/Game Repository/assets/assets/moon";
 					props.transformProperties.location = { 0.0f, 5.0f, 0.0f };
 
 					myObject.myProperties = props;
@@ -224,11 +229,11 @@ namespace Dynamik {
 		static uint8_t count = 0;
 		static float percentage = 0.0f;
 
-		static std::vector<std::wstring> symbols = {
-			L"|",
-			L"/",
-			L"-",
-			L"\\"
+		static std::vector<std::string> symbols = {
+			"|",
+			"/",
+			"-",
+			"\\"
 		};
 
 		while (!shouldClose) {
@@ -251,7 +256,7 @@ namespace Dynamik {
 
 	void Application::gameObjectInitialization() {
 		getObjectPaths();
-		initAudioControllers();
+		//initAudioControllers();
 		//loadObjectData();
 		initRendererFormats();
 	}
@@ -272,16 +277,16 @@ namespace Dynamik {
 
 				fileManager.open(gameObject->myProperties.location + (
 					(gameObject->myProperties.location[gameObject->myProperties.location.size() - 1] == '/')
-					? L"modelData.dai" : L"/modelData.dai"));
+					? "modelData.dai" : "/modelData.dai"));
 
 				if (!fileManager.isOpen())
 					DMK_CORE_FATAL("modelData.dai file not found --> " + gameObject->myProperties.location);
 
-				std::wstring basePath = L"";
+				std::string basePath = "";
 				if (gameObject->myProperties.location[gameObject->myProperties.location.size() - 1] == '/')
 					basePath = gameObject->myProperties.location;
 				else
-					basePath = gameObject->myProperties.location + (wchar_t)'/';
+					basePath = gameObject->myProperties.location + (CHR)'/';
 
 				// get model paths
 				for (auto modelPath : fileManager.getData(utils::DMK_DAI_FILE_DATA_TYPE_MODEL))
@@ -294,19 +299,19 @@ namespace Dynamik {
 				// get shader paths
 				gameObject->myProperties.renderableObjectProperties.vertexShaderPath = (
 					(fileManager.getData(utils::DMK_DAI_FILE_DATA_TYPE_VERTEX).size() > 0) ?
-					basePath + fileManager.getData(utils::DMK_DAI_FILE_DATA_TYPE_VERTEX)[0] : L"NONE"
+					basePath + fileManager.getData(utils::DMK_DAI_FILE_DATA_TYPE_VERTEX)[0] : "NONE"
 					);	// vertex shader
 				gameObject->myProperties.renderableObjectProperties.tessellationShaderPath = (
 					(fileManager.getData(utils::DMK_DAI_FILE_DATA_TYPE_TESSELLATION).size() > 0) ?
-					basePath + fileManager.getData(utils::DMK_DAI_FILE_DATA_TYPE_TESSELLATION)[0] : L"NONE"
+					basePath + fileManager.getData(utils::DMK_DAI_FILE_DATA_TYPE_TESSELLATION)[0] : "NONE"
 					);	// tessellation shader
 				gameObject->myProperties.renderableObjectProperties.geometryShaderPath = (
 					(fileManager.getData(utils::DMK_DAI_FILE_DATA_TYPE_GEOMETRY).size() > 0) ?
-					basePath + fileManager.getData(utils::DMK_DAI_FILE_DATA_TYPE_GEOMETRY)[0] : L"NONE"
+					basePath + fileManager.getData(utils::DMK_DAI_FILE_DATA_TYPE_GEOMETRY)[0] : "NONE"
 					);	// geometry shader
 				gameObject->myProperties.renderableObjectProperties.fragmentShaderPath = (
 					(fileManager.getData(utils::DMK_DAI_FILE_DATA_TYPE_FRAGMENT).size() > 0) ?
-					basePath + fileManager.getData(utils::DMK_DAI_FILE_DATA_TYPE_FRAGMENT)[0] : L"NONE"
+					basePath + fileManager.getData(utils::DMK_DAI_FILE_DATA_TYPE_FRAGMENT)[0] : "NONE"
 					);	// fragment shader
 			}
 
@@ -328,16 +333,16 @@ namespace Dynamik {
 			utils::daiManager fileManager;
 			fileManager.open(gameObject->myProperties.location + (
 				(gameObject->myProperties.location[gameObject->myProperties.location.size() - 1] == '/')
-				? L"modelData.dai" : L"/modelData.dai"));
+				? "modelData.dai" : "/modelData.dai"));
 
 			if (!fileManager.isOpen())
 				DMK_CORE_FATAL("modelData.dai file not found --> " + gameObject->myProperties.location);
 
-			std::wstring basePath = L"";
+			std::string basePath = "";
 			if (gameObject->myProperties.location[gameObject->myProperties.location.size() - 1] == '/')
 				basePath = gameObject->myProperties.location;
 			else
-				basePath = gameObject->myProperties.location + L'/';
+				basePath = gameObject->myProperties.location + '/';
 
 			// get model paths
 			for (auto modelPath : fileManager.getData(utils::DMK_DAI_FILE_DATA_TYPE_MODEL))
@@ -350,19 +355,19 @@ namespace Dynamik {
 			// get shader paths
 			gameObject->myProperties.renderableObjectProperties.vertexShaderPath = (
 				(fileManager.getData(utils::DMK_DAI_FILE_DATA_TYPE_VERTEX).size() > 0) ?
-				basePath + fileManager.getData(utils::DMK_DAI_FILE_DATA_TYPE_VERTEX)[0] : L"NONE"
+				basePath + fileManager.getData(utils::DMK_DAI_FILE_DATA_TYPE_VERTEX)[0] : "NONE"
 				);	// vertex shader
 			gameObject->myProperties.renderableObjectProperties.tessellationShaderPath = (
 				(fileManager.getData(utils::DMK_DAI_FILE_DATA_TYPE_TESSELLATION).size() > 0) ?
-				basePath + fileManager.getData(utils::DMK_DAI_FILE_DATA_TYPE_TESSELLATION)[0] : L"NONE"
+				basePath + fileManager.getData(utils::DMK_DAI_FILE_DATA_TYPE_TESSELLATION)[0] : "NONE"
 				);	// tessellation shader
 			gameObject->myProperties.renderableObjectProperties.geometryShaderPath = (
 				(fileManager.getData(utils::DMK_DAI_FILE_DATA_TYPE_GEOMETRY).size() > 0) ?
-				basePath + fileManager.getData(utils::DMK_DAI_FILE_DATA_TYPE_GEOMETRY)[0] : L"NONE"
+				basePath + fileManager.getData(utils::DMK_DAI_FILE_DATA_TYPE_GEOMETRY)[0] : "NONE"
 				);	// geometry shader
 			gameObject->myProperties.renderableObjectProperties.fragmentShaderPath = (
 				(fileManager.getData(utils::DMK_DAI_FILE_DATA_TYPE_FRAGMENT).size() > 0) ?
-				basePath + fileManager.getData(utils::DMK_DAI_FILE_DATA_TYPE_FRAGMENT)[0] : L"NONE"
+				basePath + fileManager.getData(utils::DMK_DAI_FILE_DATA_TYPE_FRAGMENT)[0] : "NONE"
 				);	// fragment shader
 		}
 
@@ -431,12 +436,12 @@ namespace Dynamik {
 	void Application::initAudioControllers() {
 		for (int itr = 0; itr < gameObjects.size(); itr++)
 			if (gameObjects[itr]->myProperties.type == DMKObjectType::DMK_OBJECT_TYPE_AUDIO)
-				audioControllers.push_back(Audio::BasicAudioController(WSTRtoCSTR(gameObjects[itr]->myProperties.objectPath[0])));
+				audioControllers.push_back(Audio::BasicAudioController((gameObjects[itr]->myProperties.objectPath[0])));
 	}
 
 	void Application::initAudioControllers(GameObject* object) {
 		if (object->myProperties.type == DMKObjectType::DMK_OBJECT_TYPE_AUDIO)
-			audioControllers.push_back(Audio::BasicAudioController(WSTRtoCSTR(object->myProperties.objectPath[0])));
+			audioControllers.push_back(Audio::BasicAudioController((object->myProperties.objectPath[0])));
 	}
 
 	bool Application::renderableObjectCheck(internalFormat format) {

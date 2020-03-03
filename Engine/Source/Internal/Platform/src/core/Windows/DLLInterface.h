@@ -8,6 +8,9 @@
 
 #define DMK_CORE
 
+#elif defined(DMK_BUILD_LIB)
+#define DMK_API
+
 #else
 #define DMK_API __declspec(dllimport)
 

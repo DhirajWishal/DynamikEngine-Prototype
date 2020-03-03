@@ -6,8 +6,8 @@ using namespace Dynamik;
 class moon : public GameObject {
 public:
 	moon(GameObjectProperties& props) :GameObject(props) {
-		myProperties.name = L"Moon";
-		myProperties.location = L"E:/Projects/Dynamik Engine/Game Repository/assets/assets/moon";
+		myProperties.name = "Moon";
+		myProperties.location = "E:/Projects/Dynamik Engine/Game Repository/assets/assets/moon";
 		myProperties.transformProperties.location = { 0.0f,	0.0f,	0.0f };
 	}
 
@@ -46,8 +46,8 @@ class mars : public GameObject {
 public:
 	mars();
 	mars(GameObjectProperties& props) : GameObject(props) {
-		myProperties.location = L"E:/Projects/Dynamik Engine/Game Repository/assets/assets/mars";
-		myProperties.name = L"Mars";
+		myProperties.location = "E:/Projects/Dynamik Engine/Game Repository/assets/assets/mars";
+		myProperties.name = "Mars";
 	}
 
 	DMKUpdateInfo draw(std::deque<DMKEventContainer>& eventContainers) override;

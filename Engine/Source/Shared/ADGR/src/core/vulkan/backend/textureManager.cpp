@@ -99,9 +99,9 @@ namespace Dynamik {
 				unsigned char* pixels = nullptr;
 
 				if (initInfo.textureImageFormat == VK_FORMAT_R8G8B8A8_UNORM)
-					pixels = texData.loadTexture(CSTRtoWSTR(initInfo.path), resource::TEXTURE_TYPE_RGBA);
+					pixels = texData.loadTexture((initInfo.path), resource::TEXTURE_TYPE_RGBA);
 				else if (initInfo.textureImageFormat == VK_FORMAT_R8G8B8_UNORM)
-					pixels = texData.loadTexture(CSTRtoWSTR(initInfo.path), resource::TEXTURE_TYPE_RGB);
+					pixels = texData.loadTexture((initInfo.path), resource::TEXTURE_TYPE_RGB);
 				else
 					DMK_CORE_FATAL("Invalid texture format!");
 

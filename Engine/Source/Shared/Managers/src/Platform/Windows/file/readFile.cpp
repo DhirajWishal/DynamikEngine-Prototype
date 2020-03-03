@@ -12,7 +12,7 @@
 
 namespace Dynamik {
 	namespace utils {
-		std::vector<char> readFile(const std::wstring& filePath) {
+		std::vector<char> readFile(const std::string& filePath) {
 			std::ifstream file(filePath, std::ios::ate | std::ios::binary);
 
 			if (!file.is_open())

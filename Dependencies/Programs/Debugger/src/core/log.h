@@ -16,12 +16,12 @@ namespace Dynamik {
 		CORE_INFO_L
 	};
 
-	void LOG(int, std::wstring);
-	void INFO_LOG(std::wstring);
-	void WARN_LOG(std::wstring);
-	void ERROR_LOG(std::wstring);
-	void FATAL_LOG(std::wstring, std::string, int);
-	void CORE_LOG(std::wstring);
+	void LOG(int, std::string);
+	void INFO_LOG(std::string);
+	void WARN_LOG(std::string);
+	void ERROR_LOG(std::string);
+	void FATAL_LOG(std::string, std::string, int);
+	void CORE_LOG(std::string);
 }
 
 #ifdef DMK_DEBUG
@@ -30,26 +30,26 @@ namespace Dynamik {
 /* CLIENT LOG MACROS */
 #define DMK_FATAL_FORMAT()
 
-#define DMK_INFO(...) ::Dynamik::INFO_LOG(L##__VA_ARGS__)
-#define DMK_WARN(...) ::Dynamik::WARN_LOG(L##__VA_ARGS__)
-#define DMK_ERROR(...) ::Dynamik::ERROR_LOG(L##__VA_ARGS__)
+#define DMK_INFO(...) ::Dynamik::INFO_LOG(##__VA_ARGS__)
+#define DMK_WARN(...) ::Dynamik::WARN_LOG(##__VA_ARGS__)
+#define DMK_ERROR(...) ::Dynamik::ERROR_LOG(##__VA_ARGS__)
 #define DMK_FATAL(...) {															\
-							::Dynamik::FATAL_LOG(L##__VA_ARGS__, __FILE__, __LINE__); \
+							::Dynamik::FATAL_LOG(##__VA_ARGS__, __FILE__, __LINE__); \
 							__debugbreak();											\
 						}
 
 #define DMK_LOGGER(...)
 
 /* CORE LOG MACROS */
-#define DMK_CORE_INFO(...) ::Dynamik::INFO_LOG(L##__VA_ARGS__)
-#define DMK_CORE_WARN(...) ::Dynamik::WARN_LOG(L##__VA_ARGS__)
-#define DMK_CORE_ERROR(...) ::Dynamik::ERROR_LOG(L##__VA_ARGS__)
+#define DMK_CORE_INFO(...) ::Dynamik::INFO_LOG(##__VA_ARGS__)
+#define DMK_CORE_WARN(...) ::Dynamik::WARN_LOG(##__VA_ARGS__)
+#define DMK_CORE_ERROR(...) ::Dynamik::ERROR_LOG(##__VA_ARGS__)
 #define DMK_CORE_FATAL(...) {															\
-								::Dynamik::FATAL_LOG(L##__VA_ARGS__, __FILE__, __LINE__); \
+								::Dynamik::FATAL_LOG(##__VA_ARGS__, __FILE__, __LINE__); \
 								__debugbreak();											\
 							}
 
-#define DMK_CORE_MSG(...) ::Dynamik::CORE_LOG(L##__VA_ARGS__)
+#define DMK_CORE_MSG(...) ::Dynamik::CORE_LOG(##__VA_ARGS__)
 
 // assertions
 #define DMK_CORE_ASSERT(x, ...)		{										\

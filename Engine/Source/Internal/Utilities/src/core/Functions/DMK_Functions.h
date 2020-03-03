@@ -48,7 +48,7 @@ namespace Dynamik {
 		void swap(float* first, float* second);
 		void swap(char* first, char* second);
 		void swap(CCPTR* first, CCPTR* second);
-		void swap(std::wstring* first, std::wstring* second);
+		void swap(std::string* first, std::string* second);
 
 		// var = utils::factorial(value);
 		long double factorial(long double value);
@@ -60,7 +60,7 @@ namespace Dynamik {
 		long double square(double base);
 
 		// var = utils::splitLine(line, character);
-		std::vector<std::wstring> splitLine(std::wstring_view line, char splitBy);
+		std::vector<std::string> splitLine(std::string_view line, char splitBy);
 
 		// var = rand();
 		uint32_t rand(uint32_t from = 0, uint32_t to = 100);

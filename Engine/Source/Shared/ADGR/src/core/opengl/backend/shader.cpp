@@ -7,21 +7,21 @@ namespace Dynamik {
 		namespace core {
 			void shaderManager::init(unsigned I32* ID, const std::string& path, DMKOpengGLShaderType shaderType) {
 				std::string shaderCode;
-				std::wifstream shaderFile;
+				std::ifstream shaderFile;
 				// ensure ifstream objects can throw exceptions:
-				shaderFile.exceptions(std::wifstream::failbit | std::wifstream::badbit);
+				shaderFile.exceptions(std::ifstream::failbit | std::ifstream::badbit);
 
 				try {
 					// open files
 					shaderFile.open(path);
 
-					std::wstringstream shaderStream;
+					std::stringstream shaderStream;
 					shaderStream << shaderFile.rdbuf();
 
 					shaderFile.close();
 					shaderCode = shaderStream.str();
 				}
-				catch (std::wifstream::failure e) {
+				catch (std::ifstream::failure e) {
 					DMK_CORE_FATAL("Shader file coulf not be opened!")
 				}
 

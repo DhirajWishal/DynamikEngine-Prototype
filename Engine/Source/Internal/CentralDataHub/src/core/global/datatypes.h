@@ -84,7 +84,7 @@ namespace Dynamik {
 #define DMK_BYTE_PTR			::Dynamik::BPTR
 
 #ifdef _UNICODE
-#define DMK_TEXT(...)			L##__VA_ARGS__
+#define DMK_TEXT(...)			__VA_ARGS__
 
 #else
 #define DMK_TEXT(...)			__VA_ARGS__

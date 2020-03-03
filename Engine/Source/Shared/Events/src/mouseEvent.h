@@ -15,7 +15,7 @@ namespace Dynamik {
 		inline float getMouseX() { return m_MouseX; }
 		inline float getMouseY() { return m_MouseY; }
 
-		std::wstring toString() const override;
+		std::string toString() const override;
 
 		EVENT_CLASS_TYPE(mouseMoved) EVENT_CLASS_CATEGORY(eventCategoryMouse | eventCategoryInput)
 
@@ -32,7 +32,7 @@ namespace Dynamik {
 		inline float getMouseOffsetX() { return m_XOffset; }
 		inline float getMouseOffsetY() { return m_YOffset; }
 
-		std::wstring toString() const override;
+		std::string toString() const override;
 
 		EVENT_CLASS_TYPE(mouseScrolled) EVENT_CLASS_CATEGORY(eventCategoryMouse | eventCategoryInput)
 	private:
@@ -60,7 +60,7 @@ namespace Dynamik {
 		MouseButtonPressedEvent(int button)
 			: MouseButtonEvent(button) {}
 
-		std::wstring toString() const override;
+		std::string toString() const override;
 
 		EVENT_CLASS_TYPE(mouseButtonPressed)
 	};
@@ -72,7 +72,7 @@ namespace Dynamik {
 		MouseButtonReleasedEvent(int button)
 			: MouseButtonEvent(button) {}
 
-		std::wstring toString() const override;
+		std::string toString() const override;
 
 		EVENT_CLASS_TYPE(mouseButtonReleased)
 	};

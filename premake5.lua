@@ -42,6 +42,23 @@ IncludeLib["irrKlang"] = "$(SolutionDir)Dependencies/Libraries/Binaries/irrKlang
 IncludeLib["boostD"] = "E:/Programming/Modules and Runtime/boost_1_70_0/bin/Dependencies/iostreams/build/msvc-14.2/debug/address-model-64/link-static/threading-multi"
 IncludeLib["boostR"] = "E:/Programming/Modules and Runtime/boost_1_70_0/bin/Dependencies/iostreams/build/msvc-14.2/release/address-model-64/link-static/threading-multi"
 
+--Dynamik Shared Library Includes
+DynamikSharedLibs = {}
+DynamikSharedLibs["ADGR"] =				"$(SolutionDir)Engine/Source/Shared/ADGR/src"
+DynamikSharedLibs["Audio"] =			"$(SolutionDir)Engine/Source/Shared/Audio/src"
+DynamikSharedLibs["Events"] =			"$(SolutionDir)Engine/Source/Shared/Events/src"
+DynamikSharedLibs["Intellect"] =		"$(SolutionDir)Engine/Source/Shared/Intellect/src"
+DynamikSharedLibs["Managers"] =			"$(SolutionDir)Engine/Source/Shared/Managers/src"
+DynamikSharedLibs["Networking"] =		"$(SolutionDir)Engine/Source/Shared/Networking/src"
+--Dynamik Shared Library Binaries
+DynamikSharedIncludes = {}
+DynamikSharedIncludes["ADGR"] =			"$(SolutionDir)Builds/Engine/$(Configuration)-$(Platform)"
+DynamikSharedIncludes["Audio"] =		"$(SolutionDir)Builds/Engine/$(Configuration)-$(Platform)"
+DynamikSharedIncludes["Events"] =		"$(SolutionDir)Builds/Engine/$(Configuration)-$(Platform)"
+DynamikSharedIncludes["Intellect"] =	"$(SolutionDir)Builds/Engine/$(Configuration)-$(Platform)"
+DynamikSharedIncludes["Managers"] =		"$(SolutionDir)Builds/Engine/$(Configuration)-$(Platform)"
+DynamikSharedIncludes["Networking"] =	"$(SolutionDir)Builds/Engine/$(Configuration)-$(Platform)"
+
 include "Dependencies/Programs/Debugger/Debugger.lua"
 include "Dependencies/Programs/DevConsole/DevCon.lua"
 

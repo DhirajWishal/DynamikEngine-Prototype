@@ -383,17 +383,17 @@ namespace Dynamik {
 				_SET_VECTOR(std::string) scriptsPaths = {};
 				_SET_VECTOR(std::string) assetIndexPaths = {};
 
-				_SET_VECTOR(std::wstring) typeNames = {
-					L"ADGRVulkanDataContainer",
-					L"VkDevice",
-					L"VkPhysicalDevice",
-					L"GLFWwindow*",
-					L"VkSurfaceKHR",
-					L"VkDebugUtilsMessengerEXT",
-					L"VkSwapchainKHR",
-					L"VkImage",
-					L"VkFormat",
-					L"VkExtent2D",
+				_SET_VECTOR(std::string) typeNames = {
+					"ADGRVulkanDataContainer",
+					"VkDevice",
+					"VkPhysicalDevice",
+					"GLFWwindow*",
+					"VkSurfaceKHR",
+					"VkDebugUtilsMessengerEXT",
+					"VkSwapchainKHR",
+					"VkImage",
+					"VkFormat",
+					"VkExtent2D",
 				};
 			};
 		}

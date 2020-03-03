@@ -24,6 +24,12 @@ project "Studio"
 		"$(SolutionDir)Dependencies/Libraries/Local",
 		"$(SolutionDir)Dependencies/Libraries/Local",
 		"$(SolutionDir)Studio/Source/Runtime/src",
+		"%{DynamikSharedLibs.ADGR}",
+		"%{DynamikSharedLibs.Audio}",
+		"%{DynamikSharedLibs.Events}",
+		"%{DynamikSharedLibs.Intellect}",
+		"%{DynamikSharedLibs.Managers}",
+		"%{DynamikSharedLibs.Networking}",
 		"%{IncludeDir.GLFW}",
 		"%{IncludeDir.GLEW}",
 		"%{IncludeDir.glm}",
@@ -35,6 +41,13 @@ project "Studio"
 	}
 
 	libdirs {
+		"%{DynamikSharedIncludes.ADGR}",
+		"%{DynamikSharedIncludes.Audio}",
+		"%{DynamikSharedIncludes.Events}",
+		"%{DynamikSharedIncludes.Intellect}",
+		"%{DynamikSharedIncludes.Managers}",
+		"%{DynamikSharedIncludes.Networking}",
+
 		"%{IncludeLib.GLFW}",
 		"%{IncludeLib.GLEW}",
 		"%{IncludeLib.Vulkan}"

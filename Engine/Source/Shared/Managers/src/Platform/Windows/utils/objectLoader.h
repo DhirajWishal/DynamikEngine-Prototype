@@ -30,7 +30,7 @@ namespace Dynamik {
 			std::vector<std::vector<float>> myNormals = {};
 			std::vector<std::vector<float>> myParameterSpaces = {};
 			std::vector<std::vector<uint32_t>> myLineElements = {};
-			std::vector<std::wstring> myMTLFile = {};
+			std::vector<std::string> myMTLFile = {};
 
 			std::vector<uint32_t> myVertexIndex = {};
 			std::vector<uint32_t> myTextureCoordinateIndex = {};
@@ -39,7 +39,7 @@ namespace Dynamik {
 		};
 
 		// obj file loader
-		//std::vector<DMKObjectDataContainer> loadObjFileData(std::wstring_view path);
+		//std::vector<DMKObjectDataContainer> loadObjFileData(std::string_view path);
 		DMK_API void loadObjFileData(InternalFormat* myInternalFormat = nullptr);
 	}
 }

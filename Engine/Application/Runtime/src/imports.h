@@ -16,7 +16,7 @@ public:
 	~charlet() {}
 };
 
-std::vector<char> readFile(const std::wstring& filePath) {
+std::vector<char> readFile(const std::string& filePath) {
 	std::ifstream file(filePath, std::ios::ate | std::ios::binary);
 
 	if (!file.is_open())
@@ -32,22 +32,22 @@ std::vector<char> readFile(const std::wstring& filePath) {
 	return buffer;
 }
 
-std::vector<std::wstring> getTexturePath(std::vector<char>& file) {
-	std::vector<std::wstring> paths;
-	std::wstring path;
+std::vector<std::string> getTexturePath(std::vector<char>& file) {
+	std::vector<std::string> paths;
+	std::string path;
 
 	for (auto i : file)
 		path.push_back(i);
 
-	std::wistringstream iss;
+	std::istringstream iss;
 	iss.str(path);
 
-	for (std::wstring i; iss.getline(i.data(), '\n');) {
+	for (std::string i; iss.getline(i.data(), '\n');) {
 		std::replace(i.begin(), i.end(), '\r', ' ');
 		std::replace(i.begin(), i.end(), (char)'\"', ' ');
 
-		if (i[0] == ' ') i.replace(0, 1, L"");
-		if (i[i.size() - 1] == ' ') i.replace(i.size() - 1, 1, L"");
+		if (i[0] == ' ') i.replace(0, 1, "");
+		if (i[i.size() - 1] == ' ') i.replace(i.size() - 1, 1, "");
 
 		paths.push_back(i);
 	}

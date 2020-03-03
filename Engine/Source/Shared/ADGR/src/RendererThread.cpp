@@ -7,13 +7,27 @@
 namespace Dynamik {
 	void RendererThread::init()
 	{
+		myRenderer.initRenderer();
 	}
 
 	void RendererThread::mainLoop()
 	{
+		myRenderer.draw();
 	}
 
 	void RendererThread::shutdown()
 	{
+		myRenderer.idleCall();
+		myRenderer.end();
+	}
+	
+	void RendererThread::addProgress(UI32* progress)
+	{
+		myRenderer.setProgress(progress);
+	}
+	
+	void RendererThread::addInternalFormats(std::vector<InternalFormat*> formats)
+	{
+		myRenderer.setRendererFormats(formats);
 	}
 }

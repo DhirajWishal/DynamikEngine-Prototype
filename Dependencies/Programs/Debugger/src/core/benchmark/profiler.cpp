@@ -18,7 +18,7 @@ namespace Dynamik {
 					endSession();
 			}
 
-			void Profiler::beginSession(const std::wstring& filepath) {
+			void Profiler::beginSession(const std::string& filepath) {
 				outputFile.open(filepath);
 				writeHeader();
 			}
@@ -27,7 +27,7 @@ namespace Dynamik {
 				if (profileCount++ > 0)
 					outputFile << ",";
 
-				std::wstring name = result.name;
+				std::string name = result.name;
 				std::replace(name.begin(), name.end(), '"', '\'');
 
 				outputFile << DMK_TEXT("{");
@@ -68,11 +68,11 @@ namespace Dynamik {
 			}
 
 			/* PROFILE TIMER */
-			ProfileTimer::ProfileTimer(std::wstring name) : myName(name) {
+			ProfileTimer::ProfileTimer(std::string name) : myName(name) {
 				startTimer();
 			}
 
-			ProfileTimer::ProfileTimer(std::wstring name, Profiler* profiler) :
+			ProfileTimer::ProfileTimer(std::string name, Profiler* profiler) :
 				myName(name), myProfiler(profiler) {
 				startTimer();
 			}
@@ -120,7 +120,7 @@ namespace Dynamik {
 			static std::ofstream profilerOutputFile;
 			static int profileCount = 0;
 
-			void beginProfiler(std::wstring fileName) {
+			void beginProfiler(std::string fileName) {
 				profilerOutputFile.open(fileName);
 
 				profilerOutputFile << "{\"otherData\": {},\"traceEvents\":[";
@@ -131,7 +131,7 @@ namespace Dynamik {
 				if (profileCount++ > 0)
 					profilerOutputFile << ",";
 
-				std::wstring name = result.name;
+				std::string name = result.name;
 				std::replace(name.begin(), name.end(), '"', '\'');
 
 				profilerOutputFile << DMK_TEXT("{");

@@ -3,13 +3,14 @@
 #define _DYNAMIK_ADGR_RENDERER_THREAD_H
 
 #include "Managers.h"
+#include "Renderer.h"
 
 namespace Dynamik {
-	struct RendererThreadDataContianer : public ThreadDataContainer {
+	struct DMK_API RendererThreadDataContianer : public ThreadDataContainer {
 
 	};
 
-	class RendererThread : public Thread {
+	class DMK_API RendererThread : public Thread {
 	public:
 		RendererThread() {}
 		~RendererThread() {}
@@ -17,6 +18,11 @@ namespace Dynamik {
 		void init() override;
 		void mainLoop() override;
 		void shutdown() override;
+
+		void addProgress(UI32* progress);
+		void addInternalFormats(std::vector<InternalFormat*> formats);
+
+		ADGR::Renderer myRenderer;
 	};
 }
 

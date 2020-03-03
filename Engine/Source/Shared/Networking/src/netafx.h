@@ -4,6 +4,7 @@
 #define _DYNAMIK_NETWORKING_PCH
 
 #include "CentralDataHub.h"
+#include "Managers.h"
 #include "Utilities.h"
 #include "Platform.h"
 

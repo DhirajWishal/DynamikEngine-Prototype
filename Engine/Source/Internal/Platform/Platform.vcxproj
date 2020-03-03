@@ -75,7 +75,7 @@
     <ClCompile>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>DMK_PLATFORM_WINDOWS;GLFW_INCLUDE_VULKAN;DMK_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>DMK_PLATFORM_WINDOWS;DMK_BUILD_LIB;GLFW_INCLUDE_VULKAN;DMK_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\Libraries\Local;$(SolutionDir)Engine\Source\Runtime\src;$(SolutionDir)Engine\Source\Runtime\GameLibraries;$(SolutionDir)Engine\Source\Shared\ADGR\src;$(SolutionDir)Engine\Source\Shared\Audio\src;$(SolutionDir)Engine\Source\Shared\Intellect\src;$(SolutionDir)Engine\Source\Shared\Events\src;$(SolutionDir)Engine\Source\Shared\Managers\src;$(SolutionDir)Engine\Source\Shared\Networking\src;$(SolutionDir)Dependencies\Programs\DevConsole\src;$(SolutionDir)Dependencies\Programs\Debugger\src;$(SolutionDir)Engine\Source\Internal\Platform\src;$(SolutionDir)Engine\Source\Internal\Utilities\src;$(SolutionDir)Engine\Source\Internal\CentralDataHub\src;$(SolutionDir)Dependencies\Libraries\External\glfw\include;$(SolutionDir)Dependencies\GLEW\include;$(SolutionDir)Dependencies\Libraries\External\glm;$(SolutionDir)Dependencies\Libraries\External\stb;$(SolutionDir)Dependencies\Libraries\External\tinyobjloader;$(SolutionDir)Dependencies\Libraries\Local\irrKlang\include;$(SolutionDir)Dependencies\Libraries\Local\assimp;$(SolutionDir)Dependencies\Libraries\External\Vulkan\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
@@ -95,7 +95,7 @@
     <ClCompile>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>DMK_PLATFORM_WINDOWS;GLFW_INCLUDE_VULKAN;DMK_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>DMK_PLATFORM_WINDOWS;DMK_BUILD_LIB;GLFW_INCLUDE_VULKAN;DMK_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\Libraries\Local;$(SolutionDir)Engine\Source\Runtime\src;$(SolutionDir)Engine\Source\Runtime\GameLibraries;$(SolutionDir)Engine\Source\Shared\ADGR\src;$(SolutionDir)Engine\Source\Shared\Audio\src;$(SolutionDir)Engine\Source\Shared\Intellect\src;$(SolutionDir)Engine\Source\Shared\Events\src;$(SolutionDir)Engine\Source\Shared\Managers\src;$(SolutionDir)Engine\Source\Shared\Networking\src;$(SolutionDir)Dependencies\Programs\DevConsole\src;$(SolutionDir)Dependencies\Programs\Debugger\src;$(SolutionDir)Engine\Source\Internal\Platform\src;$(SolutionDir)Engine\Source\Internal\Utilities\src;$(SolutionDir)Engine\Source\Internal\CentralDataHub\src;$(SolutionDir)Dependencies\Libraries\External\glfw\include;$(SolutionDir)Dependencies\GLEW\include;$(SolutionDir)Dependencies\Libraries\External\glm;$(SolutionDir)Dependencies\Libraries\External\stb;$(SolutionDir)Dependencies\Libraries\External\tinyobjloader;$(SolutionDir)Dependencies\Libraries\Local\irrKlang\include;$(SolutionDir)Dependencies\Libraries\Local\assimp;$(SolutionDir)Dependencies\Libraries\External\Vulkan\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -119,7 +119,7 @@
     <ClCompile>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>DMK_PLATFORM_WINDOWS;GLFW_INCLUDE_VULKAN;DMK_DISTRIBUTION;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>DMK_PLATFORM_WINDOWS;DMK_BUILD_LIB;GLFW_INCLUDE_VULKAN;DMK_DISTRIBUTION;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\Libraries\Local;$(SolutionDir)Engine\Source\Runtime\src;$(SolutionDir)Engine\Source\Runtime\GameLibraries;$(SolutionDir)Engine\Source\Shared\ADGR\src;$(SolutionDir)Engine\Source\Shared\Audio\src;$(SolutionDir)Engine\Source\Shared\Intellect\src;$(SolutionDir)Engine\Source\Shared\Events\src;$(SolutionDir)Engine\Source\Shared\Managers\src;$(SolutionDir)Engine\Source\Shared\Networking\src;$(SolutionDir)Dependencies\Programs\DevConsole\src;$(SolutionDir)Dependencies\Programs\Debugger\src;$(SolutionDir)Engine\Source\Internal\Platform\src;$(SolutionDir)Engine\Source\Internal\Utilities\src;$(SolutionDir)Engine\Source\Internal\CentralDataHub\src;$(SolutionDir)Dependencies\Libraries\External\glfw\include;$(SolutionDir)Dependencies\GLEW\include;$(SolutionDir)Dependencies\Libraries\External\glm;$(SolutionDir)Dependencies\Libraries\External\stb;$(SolutionDir)Dependencies\Libraries\External\tinyobjloader;$(SolutionDir)Dependencies\Libraries\Local\irrKlang\include;$(SolutionDir)Dependencies\Libraries\Local\assimp;$(SolutionDir)Dependencies\Libraries\External\Vulkan\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>

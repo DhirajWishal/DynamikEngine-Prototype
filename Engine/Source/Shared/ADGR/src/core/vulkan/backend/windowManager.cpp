@@ -146,7 +146,7 @@ namespace Dynamik {
 				for (UI32 i = 0; i < _imageCount; i++) {
 					std::string_view path = paths[i];
 					GLFWimage icon;
-					auto pixels = texDatas[i].loadTexture(CSTRtoWSTR(path.data()), resource::TEXTURE_TYPE_RGBA);
+					auto pixels = texDatas[i].loadTexture((path.data()), resource::TEXTURE_TYPE_RGBA);
 
 					if (!pixels)
 						DMK_CORE_ERROR("Icon not Loaded!");

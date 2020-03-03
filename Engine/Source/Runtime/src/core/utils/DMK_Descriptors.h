@@ -9,12 +9,12 @@
 namespace Dynamik {
 	namespace initInfo {
 		struct ADGR {
-			std::wstring basePath = L"";
+			std::string basePath = "";
 
 			float baseMipLevel = 1.0f;
 
-			std::vector<std::wstring>& modelPaths;
-			std::vector<std::vector<std::wstring>>& texturePaths;
+			std::vector<std::string>& modelPaths;
+			std::vector<std::vector<std::string>>& texturePaths;
 
 			uint32_t* progress = nullptr;
 		};

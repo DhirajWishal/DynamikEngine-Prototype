@@ -26,7 +26,7 @@ namespace Dynamik {
 		std::vector<tinyobj::material_t> materials;
 		std::string warn, err;
 
-		if (!tinyobj::LoadObj(&attributes, &shapes, &materials, &warn, &err, WSTRtoCSTR(info.path).c_str()))
+		if (!tinyobj::LoadObj(&attributes, &shapes, &materials, &warn, &err, (info.path).c_str()))
 			//DMK_CORE_FATAL((warn + err).c_str());
 			;
 

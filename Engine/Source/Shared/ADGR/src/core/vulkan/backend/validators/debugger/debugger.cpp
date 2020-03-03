@@ -43,13 +43,13 @@ namespace Dynamik {
 					std::cerr << myMessageStatement << myMessagePreStatement << pCallbackData->pMessage << std::endl;
 					break;
 				case VK_DEBUG_UTILS_MESSAGE_SEVERITY_INFO_BIT_EXT:
-					DMK_CORE_INFO("" + CSTRtoWSTR(myMessageStatement + myMessagePreStatement + std::string(pCallbackData->pMessage)));
+					DMK_CORE_INFO("" + (myMessageStatement + myMessagePreStatement + std::string(pCallbackData->pMessage)));
 					break;
 				case VK_DEBUG_UTILS_MESSAGE_SEVERITY_WARNING_BIT_EXT:
-					DMK_CORE_WARN("" + CSTRtoWSTR(myMessageStatement + myMessagePreStatement + std::string(pCallbackData->pMessage)));
+					DMK_CORE_WARN("" + (myMessageStatement + myMessagePreStatement + std::string(pCallbackData->pMessage)));
 					break;
 				case VK_DEBUG_UTILS_MESSAGE_SEVERITY_ERROR_BIT_EXT:
-					DMK_CORE_ERROR("" + CSTRtoWSTR(myMessageStatement + myMessagePreStatement + std::string(pCallbackData->pMessage)));
+					DMK_CORE_ERROR("" + (myMessageStatement + myMessagePreStatement + std::string(pCallbackData->pMessage)));
 					break;
 				default:
 					std::cerr << myMessageStatement << myMessagePreStatement << pCallbackData->pMessage << std::endl;

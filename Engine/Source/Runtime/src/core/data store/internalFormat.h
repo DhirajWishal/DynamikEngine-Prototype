@@ -25,9 +25,9 @@ namespace Dynamik {
 		}
 
 		// Paths
-		std::vector<std::wstring> myModelPaths = {};
-		std::vector<std::wstring> myTexturePaths = {};
-		std::vector<std::wstring> myShaderPaths = {};
+		std::vector<std::string> myModelPaths = {};
+		std::vector<std::string> myTexturePaths = {};
+		std::vector<std::string> myShaderPaths = {};
 
 		// Textures
 		uint32_t myMipLevel = 1.0f;

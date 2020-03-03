@@ -23,7 +23,7 @@ namespace Dynamik {
 			server() {}
 			~server() {}
 
-			void init(std::wstring& ipAddress, int portNumber) override;
+			void init(std::string& ipAddress, int portNumber) override;
 			int setSocket() override;
 			void startListning() override;
 

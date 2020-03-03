@@ -17,7 +17,7 @@ namespace Dynamik {
 			Server() {}
 			virtual ~Server() {}
 
-			virtual void init(std::wstring& ipAddress, int portNumber) {}
+			virtual void init(std::string& ipAddress, int portNumber) {}
 			virtual int setSocket() { return 0; }
 			virtual void handleRequests() {}
 			virtual void startListning() {}
@@ -28,7 +28,7 @@ namespace Dynamik {
 			virtual void closeSocket(SOCKET& socket) {}
 			virtual void cleanUp() {}
 
-			std::wstring myIPAddress = L"";
+			std::string myIPAddress = "";
 			int myPort = 0000;
 
 			int iResult = 0;

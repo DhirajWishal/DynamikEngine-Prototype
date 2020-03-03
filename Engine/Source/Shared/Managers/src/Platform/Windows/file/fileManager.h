@@ -17,7 +17,7 @@ namespace Dynamik {
 				RW
 			};
 
-			explicit file(std::wstring path, mode myMode);
+			explicit file(std::string path, mode myMode);
 			~file();
 
 			void open();
@@ -32,7 +32,7 @@ namespace Dynamik {
 			std::fstream* myFile = nullptr;
 			std::fstream* backup = nullptr;
 
-			std::wstring myPath = L"";
+			std::string myPath = "";
 			UI8 myMode = 0;
 		};
 	}

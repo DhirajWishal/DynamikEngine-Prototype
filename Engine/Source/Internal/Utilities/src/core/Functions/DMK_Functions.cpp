@@ -140,9 +140,9 @@ namespace Dynamik {
 		}
 
 		// var = utils::swap(&first, &secons);
-		void swap(std::wstring* first, std::wstring* second)
+		void swap(std::string* first, std::string* second)
 		{
-			std::wstring* temp = first;
+			std::string* temp = first;
 			first = second;
 			second = temp;
 		}
@@ -182,12 +182,12 @@ namespace Dynamik {
 		}
 
 		// var = utils::splitLine(line, character);
-		std::vector<std::wstring> splitLine(std::wstring_view line, char splitBy)
+		std::vector<std::string> splitLine(std::string_view line, char splitBy)
 		{
-			if (line.find(splitBy) != std::wstring::npos)
+			if (line.find(splitBy) != std::string::npos)
 			{
-				std::vector<std::wstring> _splits = {};
-				std::wstring _split = DMK_TEXT("");
+				std::vector<std::string> _splits = {};
+				std::string _split = DMK_TEXT("");
 				uint32_t _lineSize = line.size();
 				uint32_t _index = 0;
 
@@ -215,7 +215,7 @@ namespace Dynamik {
 				return _splits;
 			}
 
-			return std::vector<std::wstring>();
+			return std::vector<std::string>();
 		}
 
 		// var = rand();

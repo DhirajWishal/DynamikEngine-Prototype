@@ -10,12 +10,12 @@ namespace Dynamik {
 			Console();
 			~Console();
 
-			void write(std::wstring command);
+			void write(std::string command);
 
 		private:
 			void print();
 
-			std::vector<std::wstring> myCommand = { {}, {}, {}, {} };
+			std::vector<std::string> myCommand = { {}, {}, {}, {} };
 			int location = 0;
 
 			enum format {
@@ -31,7 +31,7 @@ namespace Dynamik {
 				SYSTEM
 			};
 
-			const std::vector<std::wstring> commands = {
+			const std::vector<std::string> commands = {
 				"help", "set", "clear", "back",
 				"get", "print", "system"
 			};
@@ -41,7 +41,7 @@ namespace Dynamik {
 				CORE_PRINT
 			};
 
-			const std::vector<std::vector<std::wstring>> subCommands = {
+			const std::vector<std::vector<std::string>> subCommands = {
 				{"info", "warn", "error", "fatal"},
 				{"corelog"},
 			};

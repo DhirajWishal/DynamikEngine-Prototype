@@ -63,31 +63,31 @@ namespace Dynamik {
 		class DMK_API daiManager {
 		public:
 			daiManager();
-			daiManager(std::wstring& path);
+			daiManager(std::string& path);
 			~daiManager();
 
-			void open(std::wstring path);
+			void open(std::string path);
 
 			bool isOpen();
-			std::wstring getLine();
-			std::wistream& getLine(std::wstring*);
+			std::string getLine();
+			std::istream& getLine(std::string*);
 
-			std::wfstream& getFile();
+			std::fstream& getFile();
 
 			void close();
 
-			std::vector<std::wstring> getData(DMKDaiFileDataType type);
-			std::vector<std::vector<std::wstring>> getAllData();
+			std::vector<std::string> getData(DMKDaiFileDataType type);
+			std::vector<std::vector<std::string>> getAllData();
 			std::vector<float> getLocationData();
 			std::vector<float> getRotationData();
 
 		private:
 			void initDataStore();
 
-			std::wstring myPath = DMK_TEXT("");
-			std::wfstream file = {};
+			std::string myPath = DMK_TEXT("");
+			std::fstream file = {};
 
-			std::vector<std::vector<std::wstring>> dataStore = {};
+			std::vector<std::vector<std::string>> dataStore = {};
 			std::vector<float> locationData = {};
 			std::vector<float> rotationData = {};
 			bool isDataStoreInit = false;

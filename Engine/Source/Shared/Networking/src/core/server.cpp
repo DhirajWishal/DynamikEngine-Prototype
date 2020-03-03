@@ -5,7 +5,7 @@
 
 namespace Dynamik {
 	namespace Networking {
-		void server::init(std::wstring& ipAddress, int portNumber) {
+		void server::init(std::string& ipAddress, int portNumber) {
 			myIPAddress = ipAddress;
 			myPort = portNumber;
 		}
@@ -13,7 +13,7 @@ namespace Dynamik {
 		int server::setSocket() {
 			iResult = WSAStartup(MAKEWORD(2, 2), &wsaData);
 			if (iResult != 0) {
-				DMK_CORE_FATAL("WSAStartup failed with error: " + std::to_wstring(iResult));
+				DMK_CORE_FATAL("WSAStartup failed with error: " + std::to_string(iResult));
 				return DMK_RESULT_UNSUCCESSFUL;
 			}
 
@@ -27,14 +27,14 @@ namespace Dynamik {
 
 			iResult = getaddrinfo(NULL, port, hints, &result);
 			if (iResult != 0) {
-				DMK_CORE_FATAL("getaddrinfo failed with error: " + std::to_wstring(iResult));
+				DMK_CORE_FATAL("getaddrinfo failed with error: " + std::to_string(iResult));
 				cleanUp();
 				return DMK_RESULT_UNSUCCESSFUL;
 			}
 
 			listenSocket = socket(result->ai_family, result->ai_socktype, result->ai_protocol);
 			if (listenSocket == INVALID_SOCKET) {
-				DMK_CORE_FATAL("socket failed with error: " + std::to_wstring(WSAGetLastError()));
+				DMK_CORE_FATAL("socket failed with error: " + std::to_string(WSAGetLastError()));
 				freeaddrinfo(result);
 				cleanUp();
 				return DMK_RESULT_UNSUCCESSFUL;
@@ -42,7 +42,7 @@ namespace Dynamik {
 
 			iResult = bind(listenSocket, result->ai_addr, (int)result->ai_addrlen);
 			if (iResult == SOCKET_ERROR) {
-				DMK_CORE_FATAL("bind failed with error: " + std::to_wstring(WSAGetLastError()));
+				DMK_CORE_FATAL("bind failed with error: " + std::to_string(WSAGetLastError()));
 				freeaddrinfo(result);
 				closeSocket(listenSocket);
 				cleanUp();
@@ -53,7 +53,7 @@ namespace Dynamik {
 
 			iResult = listen(listenSocket, SOMAXCONN);
 			if (iResult == SOCKET_ERROR) {
-				DMK_CORE_FATAL("listen failed with error: " + std::to_wstring(WSAGetLastError()));
+				DMK_CORE_FATAL("listen failed with error: " + std::to_string(WSAGetLastError()));
 				closeSocket(listenSocket);
 				cleanUp();
 				return 1;
@@ -64,7 +64,7 @@ namespace Dynamik {
 			// Accept a client socket
 			clientSocket = accept(listenSocket, (sockaddr*)NULL, (int)NULL);
 			if (clientSocket == INVALID_SOCKET) {
-				DMK_CORE_FATAL("accept failed with error: " + std::to_wstring(WSAGetLastError()));
+				DMK_CORE_FATAL("accept failed with error: " + std::to_string(WSAGetLastError()));
 				closeSocket(listenSocket);
 				cleanUp();
 				return 1;
@@ -81,21 +81,21 @@ namespace Dynamik {
 			do {
 				iResult = recv(clientSocket, recvbuf, recvbuflen, 0);
 				if (iResult > 0) {
-					DMK_CORE_INFO("Bytes received: " + std::to_wstring(iResult));
+					DMK_CORE_INFO("Bytes received: " + std::to_string(iResult));
 
 					// Echo the buffer back to the sender
 					iSendResult = send(clientSocket, recvbuf, iResult, 0);
 					if (iSendResult == SOCKET_ERROR) {
-						DMK_CORE_FATAL("send failed with error: " + std::to_wstring(WSAGetLastError()));
+						DMK_CORE_FATAL("send failed with error: " + std::to_string(WSAGetLastError()));
 						closeSocket(clientSocket);
 						cleanUp();
 					}
-					DMK_CORE_INFO("Bytes sent: " + std::to_wstring(iSendResult));
+					DMK_CORE_INFO("Bytes sent: " + std::to_string(iSendResult));
 				}
 				else if (iResult == 0)
 					DMK_CORE_INFO("Connection closing...");
 				else {
-					DMK_CORE_FATAL("recv failed with error: " + std::to_wstring(WSAGetLastError()));
+					DMK_CORE_FATAL("recv failed with error: " + std::to_string(WSAGetLastError()));
 					closeSocket(clientSocket);
 					cleanUp();
 				}
@@ -105,7 +105,7 @@ namespace Dynamik {
 		void server::shutDown() {
 			iResult = shutdown(clientSocket, SD_SEND);
 			if (iResult == SOCKET_ERROR) {
-				DMK_CORE_FATAL("shutdown failed with error: " + std::to_wstring(WSAGetLastError()));
+				DMK_CORE_FATAL("shutdown failed with error: " + std::to_string(WSAGetLastError()));
 				closeSocket(clientSocket);
 				cleanUp();
 			}

@@ -64,7 +64,7 @@ project "CentralDataHub"
 
 		defines {
 			"DMK_PLATFORM_WINDOWS",
-			"DMK_BUILD_DLL",
+			"DMK_BUILD_LIB",
 			"GLFW_INCLUDE_VULKAN"
 		}
 

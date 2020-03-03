@@ -13,6 +13,7 @@
 #define _DYNAMIK_ADGR_PCH
 
 #include "CentralDataHub.h"
+#include "Managers.h"
 #include "Utilities.h"
 #include "Platform.h"
 

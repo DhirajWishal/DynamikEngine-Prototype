@@ -12,7 +12,7 @@ namespace Dynamik {
 			client() {}
 			~client() {}
 
-			int connect(std::wstring& ipAddress, int portNumber) override;
+			int connect(std::string& ipAddress, int portNumber) override;
 
 		private:
 		};

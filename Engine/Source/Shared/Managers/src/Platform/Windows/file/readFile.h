@@ -19,7 +19,7 @@
 
 namespace Dynamik {
 	namespace utils {
-		DMK_API std::vector<char> readFile(const std::wstring& filePath);
+		DMK_API std::vector<char> readFile(const std::string& filePath);
 	}
 }
 

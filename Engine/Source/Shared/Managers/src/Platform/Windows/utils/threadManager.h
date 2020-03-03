@@ -69,19 +69,33 @@ namespace Dynamik {
 	*/
 	class DMK_API ThreadManager {
 	public:
-		ThreadManager() {}	// default constructor
+		ThreadManager();	// default constructor
 		~ThreadManager() {}	// default destructor
 
 		void add(Thread* myThread);	// add a thread
 		void run(UI32 index = 0);	// run a thread with index
 		void runAll();	// run all threads
 
+		void update(UI32 index, ThreadDataContainer container);
+
 	private:
 		static void runThread(Thread* thread);
+		static void internalThread();
 
 		std::vector<Thread*> myThreadContainer;
-		std::vector<ExecutionHandle> myThreadHandles;
-		UI32 myThreadCount = 0;
+		UI32 myThreadCount = 1;
+
+		/* 
+		 INTERNAL THREAD HANDLER CLASS
+		 This operates on another thread and manages all the other threads.
+		*/
+		class InternalThreadHandler : public Thread {
+		public:
+			InternalThreadHandler() {}
+			~InternalThreadHandler() {}
+
+		private:
+		} internalThreadHandle;
 	};
 }
 

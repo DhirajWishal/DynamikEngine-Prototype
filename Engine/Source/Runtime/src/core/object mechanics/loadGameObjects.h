@@ -14,8 +14,8 @@ namespace Dynamik {
 		std::vector<GameObject*> textureObjects = {};
 	public:
 		std::vector<GameObject*> run();
-		std::vector<std::wstring> getModelPaths();
-		std::vector<std::vector<std::wstring>> getTexturePaths();
+		std::vector<std::string> getModelPaths();
+		std::vector<std::vector<std::string>> getTexturePaths();
 
 		std::vector<GameObject*> getRenderableGameObjects();
 	};

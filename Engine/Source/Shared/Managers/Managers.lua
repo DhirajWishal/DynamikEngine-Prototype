@@ -1,7 +1,7 @@
 ---------- Managers library ----------
 
 project "Managers"
-	kind "SharedLib"
+	kind "StaticLib"
 	language "C++"
 	cppdialect "c++17"
 	staticruntime "On"
@@ -57,7 +57,7 @@ project "Managers"
 
 		defines {
 			"DMK_PLATFORM_WINDOWS",
-			"DMK_BUILD_DLL",
+			"DMK_BUILD_LIB",
 		}
 
 	filter "configurations:Debug"

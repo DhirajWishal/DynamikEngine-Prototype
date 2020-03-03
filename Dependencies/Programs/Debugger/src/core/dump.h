@@ -5,7 +5,7 @@
 
 namespace Dynamik {
 	// debugger: dump a log message to the "debugger_dump.txt" file
-	void dumpData(std::wstring msg);
+	void dumpData(std::string msg);
 }
 
 #endif	// !_DYNAMIK_DEBUGGER_DUMP_H

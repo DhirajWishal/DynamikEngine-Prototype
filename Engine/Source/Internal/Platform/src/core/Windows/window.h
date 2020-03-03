@@ -23,14 +23,14 @@
 
 namespace Dynamik {
 	struct windowProperties {
-		std::wstring title = {};
+		std::string title = {};
 		unsigned int width = 0;
 		unsigned int height = 0;
 
 		bool vSync = false;
 
 		windowProperties(
-			const std::wstring& title = DMK_TEXT("Dynamik Engine"),
+			const std::string& title = DMK_TEXT("Dynamik Engine"),
 			unsigned int width = 1280,
 			unsigned int height = 720
 		) : title(title), width(width), height(height) {

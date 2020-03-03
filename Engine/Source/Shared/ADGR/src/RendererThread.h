@@ -16,7 +16,7 @@ namespace Dynamik {
 		~RendererThread() {}
 
 		void init() override;
-		void mainLoop() override;
+		void loop() override;
 		void shutdown() override;
 
 		void addProgress(UI32* progress);

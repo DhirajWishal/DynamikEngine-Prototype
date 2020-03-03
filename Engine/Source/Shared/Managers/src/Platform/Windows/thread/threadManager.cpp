@@ -1,5 +1,6 @@
 #include "mngafx.h"
 #include "threadManager.h"
+#include "ExecutionHandle.h"
 
 /*
  Each thread consists of,
@@ -10,13 +11,14 @@
 
 namespace Dynamik {
 	ThreadManager::ThreadManager() {
-		myThreadContainer.push_back(&internalThreadHandle);
+		myInternalThreadHandler.setIndex(myThreadCount++);
+		ExecutionHandle _mainInternalThreadHandle(internalThread, &myInternalThreadHandler);
 	}
 
 	void ThreadManager::add(Thread* myThread)
 	{
+		myThread->setIndex(myThreadCount++);
 		myThreadContainer.push_back(myThread);
-		myThreadCount++;
 	}
 
 	void ThreadManager::run(UI32 index)
@@ -42,26 +44,14 @@ namespace Dynamik {
 	void ThreadManager::runThread(Thread* thread)
 	{
 		thread->init();
-		while (!thread->loopEndCommand())thread->mainLoop();
+		while (!thread->loopEndCommand())thread->loop();
 		thread->shutdown();
 	}
 
-	/* EXECUTION HANDLE CLASS */
-	ExecutionHandle::ExecutionHandle(Thread* thread)
+	void ThreadManager::internalThread(InternalThreadHandler* handler)
 	{
-		myThread.swap(std::thread([](Thread* _thr) {
-			_thr->init();
-			while (!_thr->loopEndCommand())_thr->mainLoop();
-			_thr->shutdown(); }, thread));
-	}
-
-	ExecutionHandle::ExecutionHandle(std::thread thread)
-	{
-		myThread.swap(thread);
-	}
-
-	ExecutionHandle::~ExecutionHandle()
-	{
-		myThread.join();
+		handler->init();
+		while (!handler->loopEndCommand()) handler->loop();
+		handler->shutdown();
 	}
 }

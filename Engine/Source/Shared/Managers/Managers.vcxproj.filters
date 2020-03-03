@@ -60,15 +60,18 @@
     <ClInclude Include="src\Platform\Windows\utils\objectLoader.h">
       <Filter>src\Platform\Windows\utils</Filter>
     </ClInclude>
-    <ClInclude Include="src\Platform\Windows\utils\threadManager.h">
-      <Filter>src\Platform\Windows\utils</Filter>
-    </ClInclude>
     <ClInclude Include="src\Platform\Windows\window.h">
       <Filter>src\Platform\Windows</Filter>
     </ClInclude>
     <ClInclude Include="src\mngafx.h">
       <Filter>src</Filter>
     </ClInclude>
+    <ClInclude Include="src\Platform\Windows\Thread\threadManager.h">
+      <Filter>src\Platform\Windows\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\Windows\Thread\Thread.h" />
+    <ClInclude Include="src\Platform\Windows\Thread\ExecutionHandle.h" />
+    <ClInclude Include="src\Platform\Windows\Thread\InternalThread.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Platform\Windows\file\fileManager.cpp">
@@ -101,15 +104,17 @@
     <ClCompile Include="src\Platform\Windows\utils\objectLoader.cpp">
       <Filter>src\Platform\Windows\utils</Filter>
     </ClCompile>
-    <ClCompile Include="src\Platform\Windows\utils\threadManager.cpp">
-      <Filter>src\Platform\Windows\utils</Filter>
-    </ClCompile>
     <ClCompile Include="src\Platform\Windows\window.cpp">
       <Filter>src\Platform\Windows</Filter>
     </ClCompile>
     <ClCompile Include="src\mngafx.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="src\Platform\Windows\Thread\threadManager.cpp">
+      <Filter>src\Platform\Windows\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\Windows\Thread\InternalThread.cpp" />
+    <ClCompile Include="src\Platform\Windows\Thread\ExecutionHandle.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Managers.lua" />

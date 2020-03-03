@@ -51,7 +51,7 @@ namespace Dynamik {
 			std::cout << "Init Stage\n";
 		}
 
-		void mainLoop() override {
+		void loop() override {
 			std::cout << "Running in Main Loop\n";
 
 			if (count == 100000)

@@ -10,7 +10,7 @@ namespace Dynamik {
 		myRenderer.initRenderer();
 	}
 
-	void RendererThread::mainLoop()
+	void RendererThread::loop()
 	{
 		myRenderer.draw();
 	}

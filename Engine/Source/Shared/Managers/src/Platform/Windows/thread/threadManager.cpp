@@ -11,8 +11,6 @@
 
 namespace Dynamik {
 	ThreadManager::ThreadManager() {
-		myInternalThreadHandler.setIndex(myThreadCount++);
-		ExecutionHandle _mainInternalThreadHandle(internalThread, &myInternalThreadHandler);
 	}
 
 	void ThreadManager::add(Thread* myThread)
@@ -32,6 +30,7 @@ namespace Dynamik {
 	void ThreadManager::runAll()
 	{
 		std::vector<ExecutionHandle*> _handles;
+		_handles.push_back(&ExecutionHandle(internalThread, &myInternalThreadHandler));
 		for (Thread* thread : myThreadContainer)
 			_handles.push_back(&ExecutionHandle(runThread, thread));
 	}

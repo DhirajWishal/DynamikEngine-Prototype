@@ -7,11 +7,13 @@
 namespace Dynamik {
 	void RendererThread::init()
 	{
+		myRenderer.setRendererFormats(_internalFormats);
 		myRenderer.initRenderer();
 	}
 
 	void RendererThread::loop()
 	{
+		myRenderer.getEvents();
 		myRenderer.draw();
 	}
 
@@ -19,6 +21,11 @@ namespace Dynamik {
 	{
 		myRenderer.idleCall();
 		myRenderer.end();
+	}
+
+	B1 RendererThread::loopEndCommand()
+	{
+		return myRenderer.getWindowCloseEvent();;
 	}
 	
 	void RendererThread::addProgress(UI32* progress)
@@ -28,6 +35,6 @@ namespace Dynamik {
 	
 	void RendererThread::addInternalFormats(std::vector<InternalFormat*> formats)
 	{
-		myRenderer.setRendererFormats(formats);
+		_internalFormats = formats;
 	}
 }

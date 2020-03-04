@@ -18,11 +18,13 @@ namespace Dynamik {
 		void init() override;
 		void loop() override;
 		void shutdown() override;
+		B1 loopEndCommand() override;
 
 		void addProgress(UI32* progress);
 		void addInternalFormats(std::vector<InternalFormat*> formats);
 
 		ADGR::Renderer myRenderer;
+		std::vector<InternalFormat*> _internalFormats;
 	};
 }
 

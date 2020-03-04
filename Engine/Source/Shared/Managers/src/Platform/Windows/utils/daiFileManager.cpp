@@ -33,7 +33,7 @@ namespace Dynamik {
 		}
 
 		std::istream& daiManager::getLine(std::string* line) {
-			return file.getline(line->data(), '\n');
+			return std::getline(file, *line, '\n');
 		}
 
 		std::fstream& daiManager::getFile() {

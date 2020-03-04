@@ -42,15 +42,13 @@ std::vector<std::string> getTexturePath(std::vector<char>& file) {
 	std::istringstream iss;
 	iss.str(path);
 
-	for (std::string i; iss.getline(i.data(), '\n');) {
-		std::replace(i.begin(), i.end(), '\r', ' ');
-		std::replace(i.begin(), i.end(), (char)'\"', ' ');
+	std::replace(path.begin(), path.end(), '\r', ' ');
+	std::replace(path.begin(), path.end(), (char)'\"', ' ');
 
-		if (i[0] == ' ') i.replace(0, 1, "");
-		if (i[i.size() - 1] == ' ') i.replace(i.size() - 1, 1, "");
+	if (path[0] == ' ') path.replace(0, 1, "");
+	if (path[path.size() - 1] == ' ') path.replace(path.size() - 1, 1, "");
 
-		paths.push_back(i);
-	}
+	paths.push_back(path);
 
 	return paths;
 }

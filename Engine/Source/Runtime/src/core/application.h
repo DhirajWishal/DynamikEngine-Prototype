@@ -165,6 +165,9 @@ namespace Dynamik {
 
 		/* MANAGERS */
 		utils::daiManager fileManager;
+
+		/* THREADS */
+
 	};
 
 	// Defined by the Client

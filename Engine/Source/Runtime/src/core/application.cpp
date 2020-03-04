@@ -49,11 +49,10 @@ namespace Dynamik {
 
 		void init() override {
 			std::cout << "Init Stage\n";
+			std::cout << "Running in Main Loop\n";
 		}
 
 		void loop() override {
-			std::cout << "Running in Main Loop\n";
-
 			if (count == 100000)
 				terminate = true;
 			count++;
@@ -66,6 +65,9 @@ namespace Dynamik {
 
 	uint32_t progress = 0;
 	static bool shouldClose = false;
+	// threads
+	SampleThread thr;
+	RendererThread rendererThread;
 
 	Application::Application(std::vector<Scene*>& _scenes) : scenes(_scenes) {
 		if (_scenes[sceneCount]->myGameObjects.size() < 1) {
@@ -83,13 +85,10 @@ namespace Dynamik {
 		//myRenderingEngine.setRendererFormats(internalFormatsBase);
 		//myRenderingEngine.initRenderer();
 
-		SampleThread thr;
-		RendererThread rendererThread;
 		rendererThread.addProgress(&progress);
 		rendererThread.addInternalFormats(internalFormatsBase);
 		myThreadManager.add(&thr);
 		myThreadManager.add(&rendererThread);
-		myThreadManager.runAll();
 
 		shouldClose = true;
 
@@ -104,19 +103,20 @@ namespace Dynamik {
 
 	DMK_API void Application::run() {
 		if (initSuccessful) {
-			while (!myRenderingEngine.getWindowCloseEvent()) {
-				auto events = myRenderingEngine.getEvents();
-
-				myRenderingEngine.draw();
-				myEngine.update();
-				if (events->size())
-					onEvent(events);
-
-				for (auto layer : layerStack)
-					layer->update();
-			}
-
-			myRenderingEngine.idleCall();
+			myThreadManager.runAll();
+			//while (!myRenderingEngine.getWindowCloseEvent()) {
+			//	auto events = myRenderingEngine.getEvents();
+			//
+			//	myRenderingEngine.draw();
+			//	myEngine.update();
+			//	if (events->size())
+			//		onEvent(events);
+			//
+			//	for (auto layer : layerStack)
+			//		layer->update();
+			//}
+			//
+			//myRenderingEngine.idleCall();
 		}
 	}
 

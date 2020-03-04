@@ -20,7 +20,7 @@
 /* ---------- ########## ////////// MAIN LOOP \\\\\\\\\\ ########## ---------- */
 int main(int argc, char** argv) {
 	try {
-		auto paths = getTexturePath(readFile("E:/Projects/Dynamik Engine/Versions/Dynamik (Prototype)/Engine/Application/Runtime/paths.txt"));
+		auto paths = getTexturePath(readFile("E:\\Projects\\Dynamik Engine\\Versions\\Dynamik (Prototype)\\Engine\\Application\\Runtime\\paths.txt"));
 
 		std::vector<std::vector<float>> locations = {
 			{0.0f,	0.0f,	0.0f},

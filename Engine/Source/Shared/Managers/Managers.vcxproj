@@ -144,6 +144,7 @@
     <ClInclude Include="src\Platform\Windows\memory\memoryManager.h" />
     <ClInclude Include="src\Platform\Windows\memory\oneTimeAllocator.h" />
     <ClInclude Include="src\Platform\Windows\memory\poolAllocator.h" />
+    <ClInclude Include="src\Platform\Windows\memory\stackAllocator.h" />
     <ClInclude Include="src\Platform\Windows\resource\imageLoader.h" />
     <ClInclude Include="src\Platform\Windows\resource\loadIcon.h" />
     <ClInclude Include="src\Platform\Windows\resource\modelManager.h" />
@@ -167,6 +168,7 @@
     <ClCompile Include="src\Platform\Windows\memory\memoryManager.cpp" />
     <ClCompile Include="src\Platform\Windows\memory\oneTimeAllocator.cpp" />
     <ClCompile Include="src\Platform\Windows\memory\poolAllocator.cpp" />
+    <ClCompile Include="src\Platform\Windows\memory\stackAllocator.cpp" />
     <ClCompile Include="src\Platform\Windows\resource\imageLoader.cpp" />
     <ClCompile Include="src\Platform\Windows\resource\loadIcon.cpp" />
     <ClCompile Include="src\Platform\Windows\resource\modelManager.cpp" />

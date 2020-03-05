@@ -2,7 +2,7 @@
 #include "doubleBufferedPoolAllocator.h"
 
 namespace Dynamik {
-	doubleBufferedPoolAllocator::doubleBufferedPoolAllocator(UI32 size)
+	doubleBufferedPoolAllocator::doubleBufferedPoolAllocator(UI32 size) : DoubleBufferedAllocator(size)
 	{
 	}
 	

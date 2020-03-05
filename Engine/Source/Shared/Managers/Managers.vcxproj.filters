@@ -81,6 +81,7 @@
     <ClInclude Include="src\Platform\Windows\memory\poolAllocator.h" />
     <ClInclude Include="src\Platform\Windows\memory\doubleBufferedStackAllocator.h" />
     <ClInclude Include="src\Platform\Windows\memory\doubleBufferedPoolAllocator.h" />
+    <ClInclude Include="src\Platform\Windows\memory\stackAllocator.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Platform\Windows\file\daiFileManager.cpp">
@@ -131,6 +132,7 @@
     <ClCompile Include="src\Platform\Windows\memory\poolAllocator.cpp" />
     <ClCompile Include="src\Platform\Windows\memory\doubleBufferedPoolAllocator.cpp" />
     <ClCompile Include="src\Platform\Windows\memory\doubleBufferedStackAllocator.cpp" />
+    <ClCompile Include="src\Platform\Windows\memory\stackAllocator.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Managers.lua" />

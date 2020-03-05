@@ -17,7 +17,6 @@
 
 #include "engineControlUnit.h"
 
-
 /*
  TODO:
 	Dynamik scripting support library

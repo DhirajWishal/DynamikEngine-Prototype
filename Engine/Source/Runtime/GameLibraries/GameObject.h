@@ -34,7 +34,6 @@
 // Dynamik namespace
 namespace Dynamik {
 	struct VertexContainer {
-
 	};
 
 	// Renderable object properties
@@ -263,7 +262,7 @@ namespace Dynamik {
 		VertexDataContainer myVertexDataContainer = {};
 		Uniform* uniformDataType = nullptr;
 
-		//typeid(uniformDataType) == 
+		//typeid(uniformDataType) ==
 	};
 }
 

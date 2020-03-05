@@ -31,4 +31,3 @@ namespace Dynamik {
 #endif // DMK_USE_OPENGL
 
 #endif // _DYNAMIK_ADGR_OPENGL_FORMAT_H
-

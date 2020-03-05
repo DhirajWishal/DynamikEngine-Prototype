@@ -17,4 +17,3 @@ namespace Dynamik {
 }
 
 #endif // !_DYNAMIK_ADGR_DIRECT_X_12_RENDERER_H
-

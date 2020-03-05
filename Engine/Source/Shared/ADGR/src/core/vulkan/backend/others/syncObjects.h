@@ -22,5 +22,5 @@ namespace Dynamik {
 	}
 }
 
-#endif 
+#endif
 #endif // !_DYNAMIK_ADGR_VULKAN_SYNC_OBJECTS_H

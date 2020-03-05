@@ -2,11 +2,11 @@
 #include "stackAllocator.h"
 
 namespace Dynamik {
-	stackAllocator::stackAllocator(UI32 size) : Allocator(size)
+	StackAllocator::StackAllocator(UI32 size) : Allocator(size)
 	{
 	}
-	
-	VPTR stackAllocator::allocate(UI32 size, UI32 align, UI32 offset)
+
+	VPTR StackAllocator::allocate(UI32 size, UI32 align, UI32 offset)
 	{
 		if (memorySize < size)
 			return nullptr;
@@ -16,8 +16,8 @@ namespace Dynamik {
 
 		return endPointer;
 	}
-	
-	void stackAllocator::deAllocate(VPTR data, UI32 size, UI32 offset)
+
+	void StackAllocator::deAllocate(VPTR data, UI32 size, UI32 offset)
 	{
 	}
 }

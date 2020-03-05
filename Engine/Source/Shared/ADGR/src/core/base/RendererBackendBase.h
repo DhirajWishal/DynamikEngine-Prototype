@@ -101,4 +101,3 @@ namespace Dynamik {
 }
 
 #endif // !_DYNAMIK_ADGR_RENDERER_BASE_H
-

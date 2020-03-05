@@ -8,16 +8,16 @@ namespace Dynamik {
 		DMK_CORE_INFO("Internal Thread Handler Initiated!");
 		DMK_CORE_INFO("Internal Thread Handler Main Loop!");
 	}
-	
+
 	void InternalThreadHandler::loop()
 	{
 	}
-	
+
 	B1 InternalThreadHandler::loopEndCommand()
 	{
 		return false;
 	}
-	
+
 	void InternalThreadHandler::shutdown()
 	{
 		DMK_CORE_INFO("Internal Thread Handler Shutdowns!");

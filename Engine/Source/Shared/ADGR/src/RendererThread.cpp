@@ -27,12 +27,12 @@ namespace Dynamik {
 	{
 		return myRenderer.getWindowCloseEvent();;
 	}
-	
+
 	void RendererThread::addProgress(UI32* progress)
 	{
 		myRenderer.setProgress(progress);
 	}
-	
+
 	void RendererThread::addInternalFormats(std::vector<InternalFormat*> formats)
 	{
 		_internalFormats = formats;

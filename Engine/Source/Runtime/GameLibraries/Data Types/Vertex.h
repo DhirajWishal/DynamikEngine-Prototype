@@ -14,7 +14,6 @@
 #include "core/data store/objectSpecifications.h"
 
 namespace Dynamik {
-
 }
 
 #endif

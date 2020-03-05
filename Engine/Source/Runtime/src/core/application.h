@@ -137,7 +137,7 @@ namespace Dynamik {
 		void initAudioControllers(GameObject* object);
 
 		bool renderableObjectCheck(internalFormat format);
-	
+
 	private:
 		bool initSuccessful = false;
 		bool canDeleteController = false;
@@ -167,7 +167,6 @@ namespace Dynamik {
 		utils::daiManager fileManager;
 
 		/* THREADS */
-
 	};
 
 	// Defined by the Client

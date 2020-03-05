@@ -33,7 +33,7 @@ namespace Dynamik {
 			UI32 myIndex = 0;	// neuron index
 			UI32 myLayerNumber = 0;	// neuron layer number
 
-			F32 myActivation = 0.0f;	// neuron activation 
+			F32 myActivation = 0.0f;	// neuron activation
 			F32 myWeight = 0.0f;	// neuron activation weight
 			F32 myBias = 0.0f;	// neuron activation bias
 		};

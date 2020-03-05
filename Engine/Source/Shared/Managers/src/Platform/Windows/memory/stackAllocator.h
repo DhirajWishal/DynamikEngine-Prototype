@@ -6,11 +6,11 @@
 
 namespace Dynamik {
 	/* Stack ALLOCATOR CLASS */
-	class DMK_API stackAllocator : public Allocator {
+	class DMK_API StackAllocator : public Allocator {
 	public:
-		stackAllocator() {}
-		stackAllocator(UI32 size);
-		~stackAllocator() {}
+		StackAllocator() {}
+		StackAllocator(UI32 size);
+		~StackAllocator() {}
 
 		VPTR allocate(UI32 size, UI32 align, UI32 offset) override;
 		void deAllocate(VPTR data, UI32 size, UI32 offset) override;

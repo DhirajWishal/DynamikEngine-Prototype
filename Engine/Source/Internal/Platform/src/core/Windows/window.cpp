@@ -11,5 +11,4 @@
 #include <stdio.h>
 
 namespace Dynamik {
-
 }

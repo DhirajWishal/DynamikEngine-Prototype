@@ -16,4 +16,3 @@ namespace Dynamik {
 }
 
 #endif // !_DYNAMIK_ADGR_OPENGL_OPENGL_H
-

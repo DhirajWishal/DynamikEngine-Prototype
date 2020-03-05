@@ -2,5 +2,4 @@
 #include "Array.h"
 
 namespace Dynamik {
-
 }

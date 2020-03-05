@@ -10,7 +10,7 @@ void processInput(GLFWwindow* window) {
 }
 
 void framebuffer_size_callback(GLFWwindow* window, I32 width, I32 height) {
-	// make sure the viewport matches the new window dimensions; note that width and 
+	// make sure the viewport matches the new window dimensions; note that width and
 	// height will be significantly larger than specified on retina displays.
 	glViewport(0, 0, width, height);
 }
@@ -26,7 +26,6 @@ namespace Dynamik {
 		}
 
 		void openglRenderer::init() {
-
 		}
 
 		void openglRenderer::initStageOne() {
@@ -91,7 +90,7 @@ namespace Dynamik {
 				myVertexAndIndexBufferManager.bind(_localFormat);
 				myVertexAndIndexBufferManager.draw(_localFormat);
 			}
-			// glBindVertexArray(0); // no need to unbind it every time 
+			// glBindVertexArray(0); // no need to unbind it every time
 
 			// glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
 			// -------------------------------------------------------------------------------

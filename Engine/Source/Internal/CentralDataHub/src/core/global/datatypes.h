@@ -29,7 +29,7 @@ namespace Dynamik {
 	typedef int I32;					// 32 bit integer
 	typedef long long I64;				// 64 bit integer
 
-	typedef bool B1;					// bool 
+	typedef bool B1;					// bool
 	typedef float F32;					// float
 	typedef double D64;					// double
 	typedef long double LD64;			// long double
@@ -48,7 +48,6 @@ namespace Dynamik {
 
 	typedef UI8 BYTE;					// byte of data
 	typedef BYTE* BPTR;					// byte pointer
-
 }
 
 #define DMK_UINT_8				::Dynamik::UI8

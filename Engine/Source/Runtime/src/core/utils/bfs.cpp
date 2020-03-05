@@ -2,5 +2,4 @@
 #include "bfs.h"
 
 namespace Dynamik {
-
 }

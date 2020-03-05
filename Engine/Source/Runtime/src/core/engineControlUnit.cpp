@@ -9,7 +9,6 @@ namespace Dynamik {
 	void EngineControlUnit::mainLoop()
 	{
 		while (true) {
-
 		}
 	}
 

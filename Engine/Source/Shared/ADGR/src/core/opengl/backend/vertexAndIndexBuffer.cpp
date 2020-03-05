@@ -54,7 +54,7 @@ namespace Dynamik {
 			void vertexAndIndexBufferManager::draw(const openglFormat* format) {
 				glDrawElements(GL_TRIANGLES, format->myRendererFormat->myInternalFormat->myIndexCounts[0], GL_UNSIGNED_INT, nullptr);
 			}
-			
+
 			void vertexAndIndexBufferManager::clear(const openglFormat* format) {
 				glDeleteVertexArrays(1, &format->vertexArrayObject);
 				glDeleteBuffers(1, &format->vertexBufferObject);
@@ -64,4 +64,3 @@ namespace Dynamik {
 	}
 }
 #endif // DMK_USE_OPENGL
-

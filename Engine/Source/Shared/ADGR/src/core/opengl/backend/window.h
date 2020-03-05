@@ -97,4 +97,3 @@ namespace Dynamik {
 #endif // DMK_USE_OPENGL
 
 #endif // !_DYNAMIK_ADGR_OPENGL_WINDOW_H
-

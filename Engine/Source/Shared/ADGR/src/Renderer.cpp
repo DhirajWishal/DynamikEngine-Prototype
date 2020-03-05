@@ -36,7 +36,6 @@
 
 namespace Dynamik {
 	namespace ADGR {
-
 #if defined(DMK_USE_VULKAN)
 		vulkanRenderer rendererCore;
 

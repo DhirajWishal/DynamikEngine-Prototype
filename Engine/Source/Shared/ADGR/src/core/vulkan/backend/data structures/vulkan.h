@@ -392,5 +392,5 @@ namespace Dynamik {
 	}
 }
 
-#endif	
+#endif
 #endif	// !_DYNAMIK_ADGR_VULKAN_H

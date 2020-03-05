@@ -7,7 +7,6 @@
 
 namespace Dynamik {
 	struct DMK_API RendererThreadDataContianer : public ThreadDataContainer {
-
 	};
 
 	class DMK_API RendererThread : public Thread {

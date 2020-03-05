@@ -25,7 +25,7 @@ namespace Dynamik {
 		void loadObject(std::string& path, std::vector<Alloc>* vertices, std::vector<uint32_t>* indices);
 	}
 	namespace utils {
-		// Object data container 
+		// Object data container
 		struct DMK_API DMKObjectDataContainer {
 			std::vector<std::vector<float>> myVertices = {};
 			std::vector<std::vector<float>> myTextureCoordinates = {};

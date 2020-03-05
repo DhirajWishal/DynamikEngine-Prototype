@@ -21,11 +21,11 @@
  * text - renderable text
  * align - align the element
  * action - to-do when an action is done
-    * action:clicked - mouse clicked
-    * action:scrolled - mouse scrolled
-    * action:hover - mouse hovering
-    * action:released - mouse button released
-    ** returns a bool (true/ false) value
+	* action:clicked - mouse clicked
+	* action:scrolled - mouse scrolled
+	* action:hover - mouse hovering
+	* action:released - mouse button released
+	** returns a bool (true/ false) value
  * jump - render a specific file
 */
 
@@ -44,4 +44,3 @@ namespace Dynamik {
 }
 
 #endif // !_DYNAMIK_PLATFORM_WINDOWS_DUI_FILE_MANAGER_H
-

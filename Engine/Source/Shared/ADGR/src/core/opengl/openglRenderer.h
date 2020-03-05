@@ -28,7 +28,6 @@ namespace Dynamik {
 			void drawFrame() override;
 			void shutDown() override;
 
-
 			std::deque<DMKEventContainer>* events() override;
 			inline B1 closeEvent() override { return myWindowManager.closeEvent(&myOpenGLDataContainers[openGLDataContainerIndex]); }
 
@@ -57,4 +56,3 @@ namespace Dynamik {
 #endif // DMK_USE_OPENGL
 
 #endif // !_DYNAMIK_ADGR_OPENGL_RENDERER_H
-

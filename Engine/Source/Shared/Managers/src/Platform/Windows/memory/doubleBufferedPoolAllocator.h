@@ -6,11 +6,11 @@
 
 namespace Dynamik {
 	/* DOUBLE BUFFERED POOL ALLOCATOR CLASS */
-	class DMK_API doubleBufferedPoolAllocator : public DoubleBufferedAllocator {
+	class DMK_API DoubleBufferedPoolAllocator : public DoubleBufferedAllocator {
 	public:
-		doubleBufferedPoolAllocator() {}
-		doubleBufferedPoolAllocator(UI32 size);
-		~doubleBufferedPoolAllocator();
+		DoubleBufferedPoolAllocator() {}
+		DoubleBufferedPoolAllocator(UI32 size);
+		~DoubleBufferedPoolAllocator();
 
 		template<typename T>
 		T* allocate(UI32 size, UI32 align, UI32 offset) {

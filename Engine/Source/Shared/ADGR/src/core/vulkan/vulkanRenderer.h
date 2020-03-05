@@ -32,7 +32,7 @@ namespace Dynamik {
 		public:
 			vulkanRenderer() {}
 			vulkanRenderer(DMKRendererSettings settings) : RendererBackend(settings) {}
-			~vulkanRenderer(){}
+			~vulkanRenderer() {}
 
 			void init() override;
 			void initStageOne() override;
@@ -45,7 +45,6 @@ namespace Dynamik {
 			void shutDownStageOne() override;
 			void shutDownStageTwo() override;
 			void shutDownStageThree() override;
-
 
 			std::deque<DMKEventContainer>* events() override;
 			inline B1 closeEvent() override { return myWindowManager.closeEvent(&myVulkanDataContainers[vulkanContainerIndex]); }

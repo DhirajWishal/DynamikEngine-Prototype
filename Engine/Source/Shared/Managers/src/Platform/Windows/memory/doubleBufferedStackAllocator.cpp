@@ -2,15 +2,14 @@
 #include "doubleBufferedStackAllocator.h"
 
 namespace Dynamik {
-	doubleBufferedStackAllocator::doubleBufferedStackAllocator(UI32 size) : DoubleBufferedAllocator(size) {
-
+	DoubleBufferedStackAllocator::DoubleBufferedStackAllocator(UI32 size) : DoubleBufferedAllocator(size) {
 	}
-	
-	doubleBufferedStackAllocator::~doubleBufferedStackAllocator()
+
+	DoubleBufferedStackAllocator::~DoubleBufferedStackAllocator()
 	{
 	}
-	
-	void doubleBufferedStackAllocator::deAllocate()
+
+	void DoubleBufferedStackAllocator::deAllocate()
 	{
 	}
 }

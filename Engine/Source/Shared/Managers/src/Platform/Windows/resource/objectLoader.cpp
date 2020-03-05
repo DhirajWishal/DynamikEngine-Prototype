@@ -188,7 +188,6 @@ namespace Dynamik {
 			return _containers;
 		}
 
-
 		void loadObjFileData(InternalFormat* myInternalFormat) {
 			uint32_t _objectCount = myInternalFormat->myGameObject->myProperties.objectPath.size();
 			myInternalFormat->myVertexBufferObjects.resize(_objectCount);

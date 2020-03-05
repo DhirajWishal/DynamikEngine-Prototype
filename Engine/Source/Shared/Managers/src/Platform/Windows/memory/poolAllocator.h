@@ -6,11 +6,11 @@
 
 namespace Dynamik {
 	/* POOL ALLOCATOR CLASS */
-	class DMK_API poolAllocator : public Allocator {
+	class DMK_API PoolAllocator : public Allocator {
 	public:
-		poolAllocator() {}
-		poolAllocator(UI32 size);
-		~poolAllocator() {}
+		PoolAllocator() {}
+		PoolAllocator(UI32 size);
+		~PoolAllocator() {}
 
 		VPTR allocate(UI32 size, UI32 align, UI32 offset) override;
 		void deAllocate(VPTR data, UI32 size, UI32 offset) override;

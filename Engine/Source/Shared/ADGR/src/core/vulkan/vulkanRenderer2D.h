@@ -22,7 +22,6 @@ namespace Dynamik {
 			void drawFrame() override;
 			void shutDown() override;
 
-
 			std::deque<DMKEventContainer>* events() override;
 			inline B1 closeEvent() override { return true; }
 
@@ -33,6 +32,4 @@ namespace Dynamik {
 }
 #endif // DMK_USE_VULKAN
 
-
 #endif // !_DYNAMIK_ADGR_VULKAN_RENDERER_2D_H
-

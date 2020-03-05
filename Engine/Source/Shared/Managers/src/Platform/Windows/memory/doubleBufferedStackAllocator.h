@@ -6,11 +6,11 @@
 
 namespace Dynamik {
 	/* DOUBLE BUFFERED STACK ALLOCATOR CLASS */
-	class DMK_API doubleBufferedStackAllocator : public DoubleBufferedAllocator {
+	class DMK_API DoubleBufferedStackAllocator : public DoubleBufferedAllocator {
 	public:
-		doubleBufferedStackAllocator() {}
-		doubleBufferedStackAllocator(UI32 size);
-		~doubleBufferedStackAllocator();
+		DoubleBufferedStackAllocator() {}
+		DoubleBufferedStackAllocator(UI32 size);
+		~DoubleBufferedStackAllocator();
 
 		template<typename T>
 		T* allocate(UI32 size, UI32 align, UI32 offset) {

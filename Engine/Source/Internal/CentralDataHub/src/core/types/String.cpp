@@ -2,7 +2,7 @@
 #include "String.h"
 #include "core/log.h"
 
-#include "Platform/Windows/memory/memoryManager.h"
+#include "Platform/Windows/memory/oneTimeAllocator.h"
 
 namespace Dynamik {
 	CCPTR String::c_str()
@@ -19,7 +19,7 @@ namespace Dynamik {
 		const UI32 _size = 1;
 		UI32* _cont = (UI32*)&_size;
 		*_cont = myStringSize + 1;
-		manager::OneTimeAllocator once(_size);
+		OneTimeAllocator once(_size);
 		CPTR _buffer = (CPTR)once.getAddress();
 
 		//memset(_buffer, ' ', _size);

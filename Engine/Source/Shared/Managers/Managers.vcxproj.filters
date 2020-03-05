@@ -45,21 +45,6 @@
     <ClInclude Include="src\Platform\Windows\resource\objectLoader.h">
       <Filter>src\Platform\Windows\resource</Filter>
     </ClInclude>
-    <ClInclude Include="src\Platform\Windows\utils\daiFileManager.h">
-      <Filter>src\Platform\Windows\utils</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Platform\Windows\utils\duiFileManager.h">
-      <Filter>src\Platform\Windows\utils</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Platform\Windows\utils\loadIcon.h">
-      <Filter>src\Platform\Windows\utils</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Platform\Windows\utils\modelManager.h">
-      <Filter>src\Platform\Windows\utils</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Platform\Windows\utils\objectLoader.h">
-      <Filter>src\Platform\Windows\utils</Filter>
-    </ClInclude>
     <ClInclude Include="src\Platform\Windows\window.h">
       <Filter>src\Platform\Windows</Filter>
     </ClInclude>
@@ -72,6 +57,18 @@
     <ClInclude Include="src\Platform\Windows\Thread\Thread.h" />
     <ClInclude Include="src\Platform\Windows\Thread\ExecutionHandle.h" />
     <ClInclude Include="src\Platform\Windows\Thread\InternalThread.h" />
+    <ClInclude Include="src\Platform\Windows\file\daiFileManager.h">
+      <Filter>src\Platform\Windows\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\Windows\file\duiFileManager.h">
+      <Filter>src\Platform\Windows\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\Windows\resource\modelManager.h">
+      <Filter>src\Platform\Windows\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\Windows\resource\loadIcon.h">
+      <Filter>src\Platform\Windows\utils</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Platform\Windows\file\fileManager.cpp">
@@ -89,21 +86,6 @@
     <ClCompile Include="src\Platform\Windows\resource\objectLoader.cpp">
       <Filter>src\Platform\Windows\resource</Filter>
     </ClCompile>
-    <ClCompile Include="src\Platform\Windows\utils\daiFileManager.cpp">
-      <Filter>src\Platform\Windows\utils</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Platform\Windows\utils\duiFileManager.cpp">
-      <Filter>src\Platform\Windows\utils</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Platform\Windows\utils\loadIcon.cpp">
-      <Filter>src\Platform\Windows\utils</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Platform\Windows\utils\modelManager.cpp">
-      <Filter>src\Platform\Windows\utils</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Platform\Windows\utils\objectLoader.cpp">
-      <Filter>src\Platform\Windows\utils</Filter>
-    </ClCompile>
     <ClCompile Include="src\Platform\Windows\window.cpp">
       <Filter>src\Platform\Windows</Filter>
     </ClCompile>
@@ -115,6 +97,18 @@
     </ClCompile>
     <ClCompile Include="src\Platform\Windows\Thread\InternalThread.cpp" />
     <ClCompile Include="src\Platform\Windows\Thread\ExecutionHandle.cpp" />
+    <ClCompile Include="src\Platform\Windows\file\daiFileManager.cpp">
+      <Filter>src\Platform\Windows\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\Windows\file\duiFileManager.cpp">
+      <Filter>src\Platform\Windows\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\Windows\resource\modelManager.cpp">
+      <Filter>src\Platform\Windows\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\Windows\resource\loadIcon.cpp">
+      <Filter>src\Platform\Windows\utils</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Managers.lua" />

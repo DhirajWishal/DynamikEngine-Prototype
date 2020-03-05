@@ -141,11 +141,10 @@
     <ClInclude Include="src\Platform\Windows\Thread\ExecutionHandle.h" />
     <ClInclude Include="src\Platform\Windows\Thread\InternalThread.h" />
     <ClInclude Include="src\Platform\Windows\Thread\Thread.h" />
-    <ClInclude Include="src\Platform\Windows\utils\daiFileManager.h" />
-    <ClInclude Include="src\Platform\Windows\utils\duiFileManager.h" />
-    <ClInclude Include="src\Platform\Windows\utils\loadIcon.h" />
-    <ClInclude Include="src\Platform\Windows\utils\modelManager.h" />
-    <ClInclude Include="src\Platform\Windows\utils\objectLoader.h" />
+    <ClInclude Include="src\Platform\Windows\file\daiFileManager.h" />
+    <ClInclude Include="src\Platform\Windows\file\duiFileManager.h" />
+    <ClInclude Include="src\Platform\Windows\resource\loadIcon.h" />
+    <ClInclude Include="src\Platform\Windows\resource\modelManager.h" />
     <ClInclude Include="src\Platform\Windows\Thread\threadManager.h" />
     <ClInclude Include="src\Platform\Windows\window.h" />
     <ClInclude Include="src\mngafx.h" />
@@ -158,13 +157,10 @@
     <ClCompile Include="src\Platform\Windows\resource\objectLoader.cpp" />
     <ClCompile Include="src\Platform\Windows\Thread\ExecutionHandle.cpp" />
     <ClCompile Include="src\Platform\Windows\Thread\InternalThread.cpp" />
-    <ClCompile Include="src\Platform\Windows\utils\daiFileManager.cpp" />
-    <ClCompile Include="src\Platform\Windows\utils\duiFileManager.cpp" />
-    <ClCompile Include="src\Platform\Windows\utils\loadIcon.cpp" />
-    <ClCompile Include="src\Platform\Windows\utils\modelManager.cpp" />
-    <ClCompile Include="src\Platform\Windows\utils\objectLoader.cpp">
-      <ObjectFileName>$(IntDir)\objectLoader1.obj</ObjectFileName>
-    </ClCompile>
+    <ClCompile Include="src\Platform\Windows\file\daiFileManager.cpp" />
+    <ClCompile Include="src\Platform\Windows\file\duiFileManager.cpp" />
+    <ClCompile Include="src\Platform\Windows\resource\loadIcon.cpp" />
+    <ClCompile Include="src\Platform\Windows\resource\modelManager.cpp" />
     <ClCompile Include="src\Platform\Windows\Thread\threadManager.cpp" />
     <ClCompile Include="src\Platform\Windows\window.cpp" />
     <ClCompile Include="src\mngafx.cpp">

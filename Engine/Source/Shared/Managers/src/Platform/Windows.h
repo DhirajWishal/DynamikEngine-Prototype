@@ -15,14 +15,17 @@
 #ifdef DMK_PLATFORM_WINDOWS
 #include "Windows/window.h"
 
-#include "Windows/file/readFile.h"
+#include "Windows/file/daiFileManager.h"
+#include "Windows/file/duiFileManager.h"
 #include "Windows/file/fileManager.h"
+#include "Windows/file/readFile.h"
+
 #include "Windows/memory/memoryManager.h"
 
-#include "Windows/utils/loadIcon.h"
-#include "Windows/utils/daiFileManager.h"
-#include "Windows/utils/objectLoader.h"
-#include "Windows/utils/modelManager.h"
+#include "Windows/resource/imageLoader.h"
+#include "Windows/resource/loadIcon.h"
+#include "Windows/resource/modelManager.h"
+#include "Windows/resource/objectLoader.h"
 
 #include "Windows/thread/Thread.h"
 #include "Windows/thread/threadManager.h"

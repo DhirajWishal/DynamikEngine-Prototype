@@ -59,6 +59,7 @@ project "Dynamik"
 		"ADGR",
 		"Audio",
 		"Events",
+		"Intellect",
 		"Platform",
 		"glfw3dll",
 		"opengl32",

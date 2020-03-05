@@ -19,8 +19,8 @@
     <Filter Include="src\Platform\Windows\resource">
       <UniqueIdentifier>{F2B9BB8F-5ED2-A2B9-277F-325393563753}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\Platform\Windows\utils">
-      <UniqueIdentifier>{1B6F5118-077F-FDE8-7038-62075C67EC81}</UniqueIdentifier>
+    <Filter Include="src\Platform\Windows\thread">
+      <UniqueIdentifier>{82D3551F-EEE0-8305-77C7-7FF0E3D34FBC}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -29,6 +29,12 @@
     </ClInclude>
     <ClInclude Include="src\Platform\Windows.h">
       <Filter>src\Platform</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\Windows\file\daiFileManager.h">
+      <Filter>src\Platform\Windows\file</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\Windows\file\duiFileManager.h">
+      <Filter>src\Platform\Windows\file</Filter>
     </ClInclude>
     <ClInclude Include="src\Platform\Windows\file\fileManager.h">
       <Filter>src\Platform\Windows\file</Filter>
@@ -42,8 +48,26 @@
     <ClInclude Include="src\Platform\Windows\resource\imageLoader.h">
       <Filter>src\Platform\Windows\resource</Filter>
     </ClInclude>
+    <ClInclude Include="src\Platform\Windows\resource\loadIcon.h">
+      <Filter>src\Platform\Windows\resource</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\Windows\resource\modelManager.h">
+      <Filter>src\Platform\Windows\resource</Filter>
+    </ClInclude>
     <ClInclude Include="src\Platform\Windows\resource\objectLoader.h">
       <Filter>src\Platform\Windows\resource</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\Windows\thread\ExecutionHandle.h">
+      <Filter>src\Platform\Windows\thread</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\Windows\thread\InternalThread.h">
+      <Filter>src\Platform\Windows\thread</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\Windows\thread\Thread.h">
+      <Filter>src\Platform\Windows\thread</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\Windows\thread\threadManager.h">
+      <Filter>src\Platform\Windows\thread</Filter>
     </ClInclude>
     <ClInclude Include="src\Platform\Windows\window.h">
       <Filter>src\Platform\Windows</Filter>
@@ -51,26 +75,20 @@
     <ClInclude Include="src\mngafx.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="src\Platform\Windows\Thread\threadManager.h">
-      <Filter>src\Platform\Windows\utils</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Platform\Windows\Thread\Thread.h" />
-    <ClInclude Include="src\Platform\Windows\Thread\ExecutionHandle.h" />
-    <ClInclude Include="src\Platform\Windows\Thread\InternalThread.h" />
-    <ClInclude Include="src\Platform\Windows\file\daiFileManager.h">
-      <Filter>src\Platform\Windows\utils</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Platform\Windows\file\duiFileManager.h">
-      <Filter>src\Platform\Windows\utils</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Platform\Windows\resource\modelManager.h">
-      <Filter>src\Platform\Windows\utils</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Platform\Windows\resource\loadIcon.h">
-      <Filter>src\Platform\Windows\utils</Filter>
-    </ClInclude>
+    <ClInclude Include="src\Platform\Windows\memory\Allocator.h" />
+    <ClInclude Include="src\Platform\Windows\memory\oneTimeAllocator.h" />
+    <ClInclude Include="src\Platform\Windows\memory\doubleBufferedAllocator.h" />
+    <ClInclude Include="src\Platform\Windows\memory\poolAllocator.h" />
+    <ClInclude Include="src\Platform\Windows\memory\doubleBufferedStackAllocator.h" />
+    <ClInclude Include="src\Platform\Windows\memory\doubleBufferedPoolAllocator.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Platform\Windows\file\daiFileManager.cpp">
+      <Filter>src\Platform\Windows\file</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\Windows\file\duiFileManager.cpp">
+      <Filter>src\Platform\Windows\file</Filter>
+    </ClCompile>
     <ClCompile Include="src\Platform\Windows\file\fileManager.cpp">
       <Filter>src\Platform\Windows\file</Filter>
     </ClCompile>
@@ -83,8 +101,23 @@
     <ClCompile Include="src\Platform\Windows\resource\imageLoader.cpp">
       <Filter>src\Platform\Windows\resource</Filter>
     </ClCompile>
+    <ClCompile Include="src\Platform\Windows\resource\loadIcon.cpp">
+      <Filter>src\Platform\Windows\resource</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\Windows\resource\modelManager.cpp">
+      <Filter>src\Platform\Windows\resource</Filter>
+    </ClCompile>
     <ClCompile Include="src\Platform\Windows\resource\objectLoader.cpp">
       <Filter>src\Platform\Windows\resource</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\Windows\thread\ExecutionHandle.cpp">
+      <Filter>src\Platform\Windows\thread</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\Windows\thread\InternalThread.cpp">
+      <Filter>src\Platform\Windows\thread</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\Windows\thread\threadManager.cpp">
+      <Filter>src\Platform\Windows\thread</Filter>
     </ClCompile>
     <ClCompile Include="src\Platform\Windows\window.cpp">
       <Filter>src\Platform\Windows</Filter>
@@ -92,23 +125,12 @@
     <ClCompile Include="src\mngafx.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="src\Platform\Windows\Thread\threadManager.cpp">
-      <Filter>src\Platform\Windows\utils</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Platform\Windows\Thread\InternalThread.cpp" />
-    <ClCompile Include="src\Platform\Windows\Thread\ExecutionHandle.cpp" />
-    <ClCompile Include="src\Platform\Windows\file\daiFileManager.cpp">
-      <Filter>src\Platform\Windows\utils</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Platform\Windows\file\duiFileManager.cpp">
-      <Filter>src\Platform\Windows\utils</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Platform\Windows\resource\modelManager.cpp">
-      <Filter>src\Platform\Windows\utils</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Platform\Windows\resource\loadIcon.cpp">
-      <Filter>src\Platform\Windows\utils</Filter>
-    </ClCompile>
+    <ClCompile Include="src\Platform\Windows\memory\Allocator.cpp" />
+    <ClCompile Include="src\Platform\Windows\memory\oneTimeAllocator.cpp" />
+    <ClCompile Include="src\Platform\Windows\memory\doubleBufferedAllocator.cpp" />
+    <ClCompile Include="src\Platform\Windows\memory\poolAllocator.cpp" />
+    <ClCompile Include="src\Platform\Windows\memory\doubleBufferedPoolAllocator.cpp" />
+    <ClCompile Include="src\Platform\Windows\memory\doubleBufferedStackAllocator.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Managers.lua" />

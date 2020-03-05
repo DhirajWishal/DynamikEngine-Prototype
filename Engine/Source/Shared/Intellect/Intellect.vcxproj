@@ -143,13 +143,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="src\core\Intellect\Neuron.h" />
     <ClInclude Include="src\Intellect.h" />
+    <ClInclude Include="src\core\Intellect\Neuron.h" />
     <ClInclude Include="src\core\Intellect\neuralNetwork.h" />
+    <ClInclude Include="src\core\Maths\Sigmoid.h" />
     <ClInclude Include="src\intafx.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\core\Intellect\neuralNetwork.cpp" />
+    <ClCompile Include="src\core\Maths\mathDefinitions.cpp" />
     <ClCompile Include="src\intafx.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>

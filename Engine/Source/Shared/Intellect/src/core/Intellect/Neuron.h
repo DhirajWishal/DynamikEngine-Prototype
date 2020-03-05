@@ -24,18 +24,18 @@ namespace Dynamik {
 		*/
 		class DMK_API Neuron {
 		public:
-			Neuron() {}
-			Neuron(UI32 index) : myIndex(index) {}
-			virtual ~Neuron() {}
+			Neuron() {}	// default constructor
+			Neuron(UI32 index) : myIndex(index) {}	// default constructor
+			virtual ~Neuron() {}	// default virtual destructor
 
-			virtual F32 process(std::vector<Neuron*> neurons) { return myActivation; }
+			virtual F32 process(std::vector<Neuron*> neurons) { return myActivation; }	// virtual process function
 
-			UI32 myIndex = 0;
-			UI32 myLayerNumber = 0;
+			UI32 myIndex = 0;	// neuron index
+			UI32 myLayerNumber = 0;	// neuron layer number
 
-			F32 myActivation = 0.0f;
-			F32 myWeight = 0.0f;
-			F32 myBias = 0.0f;
+			F32 myActivation = 0.0f;	// neuron activation 
+			F32 myWeight = 0.0f;	// neuron activation weight
+			F32 myBias = 0.0f;	// neuron activation bias
 		};
 	}
 }

@@ -198,6 +198,9 @@
     <ProjectReference Include="..\Shared\Events\Events.vcxproj">
       <Project>{3A8963B1-262B-8E87-0FE6-A1DBFB2615D8}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\Shared\Intellect\Intellect.vcxproj">
+      <Project>{C915BE82-3580-72F9-7EBE-239FEA67504E}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\Internal\Platform\Platform.vcxproj">
       <Project>{2AC788B4-1694-E3BF-3FAD-D1672BD9184E}</Project>
     </ProjectReference>

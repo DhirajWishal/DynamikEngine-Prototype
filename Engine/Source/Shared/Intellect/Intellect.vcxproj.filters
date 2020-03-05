@@ -21,6 +21,7 @@
     <ClInclude Include="src\intafx.h">
       <Filter>src</Filter>
     </ClInclude>
+    <ClInclude Include="src\core\Intellect\Neuron.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\core\Intellect\neuralNetwork.cpp">

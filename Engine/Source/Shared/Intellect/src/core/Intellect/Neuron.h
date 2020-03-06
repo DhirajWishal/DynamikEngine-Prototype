@@ -20,22 +20,36 @@
 namespace Dynamik {
 	namespace Intellect {
 		/*
+		 MAIN NEURAL CONNECTION STRUCTURE
+		 This structure contains the necessary data needed for a connection between two or more
+		 neurons.
+		*/
+		struct DMK_API NeuralConnection {
+			Neuron* myNeuron = nullptr;	// neuron 
+			F32 myWeight = 0.0f;	// neuron activation weight
+			F32 myBias = 0.0f;	// neuron activation bias
+		};
+
+		/*
 		 BASE NEURON CLASS FOR THE INTELLECT NEURAL NETWORK
 		*/
 		class DMK_API Neuron {
 		public:
 			Neuron() {}	// default constructor
-			Neuron(UI32 index) : myIndex(index) {}	// default constructor
+			Neuron(UI32 layer, UI32 index) : myLayerNumber(layer), myIndex(index) {}	// default constructor
 			virtual ~Neuron() {}	// default virtual destructor
 
-			virtual F32 process(std::vector<Neuron*> neurons) { return myActivation; }	// virtual process function
+			virtual F32 process(std::vector<NeuralConnection*> connections)	// virtual process function
+			{
+				myConnections = connections;
+				return myActivation;
+			}
 
 			UI32 myIndex = 0;	// neuron index
 			UI32 myLayerNumber = 0;	// neuron layer number
 
 			F32 myActivation = 0.0f;	// neuron activation
-			F32 myWeight = 0.0f;	// neuron activation weight
-			F32 myBias = 0.0f;	// neuron activation bias
+			std::vector<NeuralConnection*> myConnections = {};
 		};
 	}
 }

@@ -13,8 +13,8 @@ namespace Dynamik {
 		Allocator(UI32 size);
 		virtual ~Allocator();
 
-		virtual VPTR allocate(UI32 size, UI32 align, UI32 offset) { return nullptr; }
-		virtual void deAllocate(VPTR data, UI32 size, UI32 offset) {}
+		virtual VPTR allocate(UI32 size = 0, UI32 align = 0, UI32 offset = 0) { return nullptr; }
+		virtual void deAllocate(VPTR data = nullptr, UI32 size = 0, UI32 offset = 0) {}
 
 		virtual void pack() {}
 

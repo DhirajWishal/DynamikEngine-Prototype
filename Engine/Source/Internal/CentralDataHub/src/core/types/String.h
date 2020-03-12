@@ -3,7 +3,7 @@
 #define _DYNAMIK_CENTRAL_DATA_HUB_STRING_H
 
 #include "core/global/datatypes.h"
-#include "core/types/Array.h"
+#include "Array.h"
 #include <string>
 
 #define DMK_STRING_MATCH_NOT_FOUND	-1
@@ -13,28 +13,28 @@ namespace Dynamik {
 	/*
 	 Private String datatype for the Dynamik Engine.
 	*/
-	class String {
+	class STRING {
 	public:
-		String() {}
-		String(std::string string) : myStringData(string.data()), myStringSize(string.size()) {}
-		String(CCPTR string) : myStringData((CPTR)string), myStringSize(_getCCPTRSize(string)) {}
-		String(CPTR string) : myStringData(string), myStringSize(_getCCPTRSize(string)) {}
-		~String() { myStringData = nullptr; myStringSize = 0; }
+		STRING() {}
+		STRING(std::string string) : myStringData(string.data()), myStringSize(string.size()) {}
+		STRING(CCPTR string) : myStringData((CPTR)string), myStringSize(_getCCPTRSize(string)) {}
+		STRING(CPTR string) : myStringData(string), myStringSize(_getCCPTRSize(string)) {}
+		~STRING() { myStringData = nullptr; myStringSize = 0; }
 
 		/* FUNCTIONS */
 		CCPTR c_str();
 		UI32 size();
 		void add(CHR chr);
-		void append(String string);
+		void append(STRING string);
 
 		/* OPERATOR OVERLOADING */
-		String operator=(String& string);
-		String operator=(CPTR& string);
-		bool operator==(String& string);
+		STRING operator=(STRING& string);
+		STRING operator=(CPTR& string);
+		bool operator==(STRING& string);
 		CHR operator[](UI32 index);
 
-		String operator+(String string);
-		String operator+(CCPTR string);
+		STRING operator+(STRING string);
+		STRING operator+(CCPTR string);
 
 	private:
 		UI32 _getCCPTRSize(CCPTR string);

@@ -26,7 +26,7 @@ namespace Dynamik {
 	}
 	namespace utils {
 		// Object data container
-		struct DMK_API DMKObjectDataContainer {
+		struct  DMKObjectDataContainer {
 			std::vector<std::vector<float>> myVertices = {};
 			std::vector<std::vector<float>> myTextureCoordinates = {};
 			std::vector<std::vector<float>> myNormals = {};
@@ -42,7 +42,7 @@ namespace Dynamik {
 
 		// obj file loader
 		//std::vector<DMKObjectDataContainer> loadObjFileData(std::string_view path);
-		DMK_API void loadObjFileData(InternalFormat* myInternalFormat = nullptr);
+		 void loadObjFileData(InternalFormat* myInternalFormat = nullptr);
 	}
 }
 

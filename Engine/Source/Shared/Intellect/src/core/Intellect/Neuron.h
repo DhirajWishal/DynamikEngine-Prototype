@@ -19,6 +19,8 @@
 
 namespace Dynamik {
 	namespace Intellect {
+		class Neuron;
+
 		/*
 		 MAIN NEURAL CONNECTION STRUCTURE
 		 This structure contains the necessary data needed for a connection between two or more

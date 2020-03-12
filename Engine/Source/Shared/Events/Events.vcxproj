@@ -161,6 +161,9 @@
     <ProjectReference Include="..\..\Internal\Utilities\Utilities.vcxproj">
       <Project>{010A8043-6D74-34BA-B6B2-E55F225C120F}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\..\Internal\Platform\Platform.vcxproj">
+      <Project>{2AC788B4-1694-E3BF-3FAD-D1672BD9184E}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\..\Internal\CentralDataHub\CentralDataHub.vcxproj">
       <Project>{27660F4E-1334-0354-FCC7-737AE834DFB8}</Project>
     </ProjectReference>

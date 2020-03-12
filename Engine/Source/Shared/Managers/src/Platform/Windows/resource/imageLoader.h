@@ -12,7 +12,7 @@ namespace Dynamik {
 			TEXTURE_TYPE_RGBA
 		};
 
-		struct DMK_API TextureData {
+		struct  TextureData {
 			UI64 size = 0;
 
 			I32 texWidth = 0, texHeight = 0, texChannels = 0;

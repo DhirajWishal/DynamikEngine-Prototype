@@ -74,9 +74,30 @@ namespace Dynamik {
 			return;
 		}
 
-		//FastString fstr = "Hello World";
+		//FSTR fstr = "Hello World";
 
 		gameObjectInitialization();
+
+		int var = 0;
+
+		{
+			Debugger::benchmark::Benchmark myBenchmarkOne;
+			ARRAY<UI32> myArray1;
+			for (UI32 i = 0; i < 100; i++)
+				myArray1.pushBack(i);
+			var = myArray1[59];
+
+			ARRAY<UI32>::ITERATOR itr;
+			for (itr = myArray1.begin(); itr != myArray1.end(); itr++)
+				std::cout << *itr << "\n";
+		}
+		{
+			Debugger::benchmark::Benchmark myBenchmarkTwo;
+			std::vector<UI32> myArray2;
+		}
+		//for (UI32 i = 0; i < 100; i++)
+		//	myArray2.push_back(i);
+		//var = myArray2[0];
 
 		std::thread myThread(Application::showProgress);
 

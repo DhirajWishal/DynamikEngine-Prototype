@@ -45,6 +45,7 @@ project "Events"
 	links {
 		"Debugger",
 		"Utilities",
+		"Platform",
 		"CentralDataHub"
 	}
 

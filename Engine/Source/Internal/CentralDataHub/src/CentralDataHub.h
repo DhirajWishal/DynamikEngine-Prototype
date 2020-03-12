@@ -18,6 +18,6 @@
 #include "core/types/DynamicPointer.h"
 #include "core/types/FastString.h"
 #include "core/types/Pair.h"
-#include "core/types/String.h"
+#include "core/types/STRING.h"
 
 #endif	// !_DYNAMIK_CENTRAL_DATA_HUB_H

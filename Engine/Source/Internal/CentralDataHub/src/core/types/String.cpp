@@ -5,16 +5,16 @@
 #include "Platform/Windows/memory/oneTimeAllocator.h"
 
 namespace Dynamik {
-	CCPTR String::c_str()
+	CCPTR STRING::c_str()
 	{
 		return myStringData;
 	}
-	UI32 String::size()
+	UI32 STRING::size()
 	{
 		return this->myStringSize;
 	}
 
-	void String::add(CHR chr)
+	void STRING::add(CHR chr)
 	{
 		const UI32 _size = 1;
 		UI32* _cont = (UI32*)&_size;
@@ -33,7 +33,7 @@ namespace Dynamik {
 		delete _buffer;
 	}
 
-	void String::append(String string)
+	void STRING::append(STRING string)
 	{
 		const UI32 _size = 1;
 		UI32* _cont = (UI32*)&_size;
@@ -49,48 +49,48 @@ namespace Dynamik {
 		myStringData = _buffer;
 	}
 
-	CHR String::operator[](UI32 index)
+	CHR STRING::operator[](UI32 index)
 	{
 		if (index > this->myStringSize - 1)
-			DMK_CORE_FATAL("String Index Out Of Range!");
+			DMK_CORE_FATAL("STRING Index Out Of Range!");
 
 		return this->myStringData[index];
 	}
 
-	String String::operator+(String string)
+	STRING STRING::operator+(STRING string)
 	{
 		this->append(string);
 		return *this;
 	}
 
-	String String::operator+(CCPTR string)
+	STRING STRING::operator+(CCPTR string)
 	{
 		this->append(string);
 		return *this;
 	}
 
-	UI32 String::_getCCPTRSize(CCPTR string)
+	UI32 STRING::_getCCPTRSize(CCPTR string)
 	{
 		UI32 _size = 0;
 		while (string[_size] != '\0') _size++;
 		return _size;
 	}
 
-	String String::operator=(String& string)
+	STRING STRING::operator=(STRING& string)
 	{
 		this->myStringData = string.myStringData;
 		this->myStringSize = string.size();
 		return *this;
 	}
 
-	String String::operator=(CPTR& string)
+	STRING STRING::operator=(CPTR& string)
 	{
 		this->myStringData = string;
 		this->myStringSize = this->_getCCPTRSize(string);
 		return *this;
 	}
 
-	bool String::operator==(String& string)
+	bool STRING::operator==(STRING& string)
 	{
 		if (string.size() != this->myStringSize)
 			return false;

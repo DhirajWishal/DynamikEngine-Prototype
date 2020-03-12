@@ -6,7 +6,7 @@
 
 namespace Dynamik {
 	/* Stack ALLOCATOR CLASS */
-	class DMK_API StackAllocator : public Allocator {
+	class  StackAllocator : public Allocator {
 	public:
 		StackAllocator() {}
 		StackAllocator(UI32 size);

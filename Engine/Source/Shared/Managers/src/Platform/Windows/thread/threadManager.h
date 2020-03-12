@@ -11,7 +11,7 @@ namespace Dynamik {
 	/*
 	 THREAD MANAGER
 	*/
-	class DMK_API ThreadManager {
+	class  ThreadManager {
 	public:
 		ThreadManager();	// default constructor
 		~ThreadManager() {}	// default destructor

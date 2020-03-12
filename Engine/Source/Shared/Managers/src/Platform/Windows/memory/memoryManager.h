@@ -15,7 +15,7 @@
 
 namespace Dynamik {
 	/* MEMORY MANAGER - Manage a set amount of memory */
-	class DMK_API MemoryManager {
+	class  MemoryManager {
 	public:
 		MemoryManager() {}
 		MemoryManager(UI32 size) : mySize(size) {}

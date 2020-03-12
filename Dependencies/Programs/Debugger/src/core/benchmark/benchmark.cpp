@@ -21,9 +21,9 @@ namespace Dynamik {
 					(endTimePoint).time_since_epoch().count();
 
 				auto duration = stop - start;
-				double microSeconds = duration * .001;
+				double milSeconds = duration * .001;
 
-				printf("Timer ended. Results: %lld us ( %f ms)\n", duration, microSeconds);
+				printf("Timer ended. Results: %lld us ( %f ms)\n", duration, milSeconds);
 			}
 		}
 	}

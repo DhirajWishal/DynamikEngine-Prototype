@@ -36,7 +36,7 @@
 
 namespace Dynamik {
 	namespace utils {
-		class DMK_API duiFileManager {
+		class  duiFileManager {
 			duiFileManager() {}
 			~duiFileManager() {}
 		};

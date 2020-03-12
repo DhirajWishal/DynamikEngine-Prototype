@@ -6,7 +6,7 @@
 
 namespace Dynamik {
 	/* DOUBLE BUFFERED POOL ALLOCATOR CLASS */
-	class DMK_API DoubleBufferedPoolAllocator : public DoubleBufferedAllocator {
+	class  DoubleBufferedPoolAllocator : public DoubleBufferedAllocator {
 	public:
 		DoubleBufferedPoolAllocator() {}
 		DoubleBufferedPoolAllocator(UI32 size);

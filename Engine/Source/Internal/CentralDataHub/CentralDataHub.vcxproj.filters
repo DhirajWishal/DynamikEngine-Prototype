@@ -69,6 +69,8 @@
     <ClInclude Include="src\core\types\String.h">
       <Filter>src\core\types</Filter>
     </ClInclude>
+    <ClInclude Include="src\core\types\Iterator.h" />
+    <ClInclude Include="src\core\types\Dynamic.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\cdhafx.cpp">

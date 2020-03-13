@@ -12,13 +12,31 @@ namespace Dynamik {
 		Allocator::basicDeAlloc(memoryPool);
 	}
 
-	VPTR Allocator::basicAlloc(UI32 size, UI32 align, UI32 offset)
+	VPTR Allocator::basicAlloc(UI32 size, UI32 offset)
 	{
-		return new VPTR[size];
+		return malloc(size);
+	}
+
+	VPTR Allocator::basicAllignedAlloc(UI32 size, UI32 align)
+	{
+		//return operator new (size, std::align_val_t{ (size_t)align });
+		return nullptr;
 	}
 
 	void Allocator::basicDeAlloc(VPTR data, UI32 size, UI32 offset)
 	{
-		delete[] data;
+		free(data);
+	}
+
+	void Allocator::basicAllignedDeAlloc(VPTR data, UI32 size, UI32 align)
+	{
+		//operator delete[](data, size, std::align_val_t{ (size_t)align });
+		basicDeAlloc(data);
+	}
+
+	void Allocator::clearRange(VPTR begin, VPTR end)
+	{
+		while (begin != end) {
+		}
 	}
 }

@@ -154,8 +154,10 @@
     <ClInclude Include="src\core\renderer\typenames.h" />
     <ClInclude Include="src\core\renderer\vertex.h" />
     <ClInclude Include="src\core\types\Array.h" />
+    <ClInclude Include="src\core\types\Dynamic.h" />
     <ClInclude Include="src\core\types\DynamicPointer.h" />
     <ClInclude Include="src\core\types\FastString.h" />
+    <ClInclude Include="src\core\types\Iterator.h" />
     <ClInclude Include="src\core\types\Pair.h" />
     <ClInclude Include="src\core\types\String.h" />
   </ItemGroup>

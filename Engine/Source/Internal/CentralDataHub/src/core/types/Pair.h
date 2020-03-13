@@ -4,13 +4,13 @@
 
 namespace Dynamik {
 	template<class TYPE_1, class TYPE_2>
-	class Pair {
+	class PAIR {
 	public:
 		TYPE_1 first;
 		TYPE_2 second;
 
-		Pair() {}
-		~Pair() {}
+		PAIR() {}
+		~PAIR() {}
 
 		TYPE_1 getFirst() {
 			return first;

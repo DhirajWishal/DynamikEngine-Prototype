@@ -145,6 +145,7 @@
     <ClInclude Include="src\Platform\Windows\memory\oneTimeAllocator.h" />
     <ClInclude Include="src\Platform\Windows\memory\poolAllocator.h" />
     <ClInclude Include="src\Platform\Windows\memory\stackAllocator.h" />
+    <ClInclude Include="src\Platform\Windows\memory\StaticAllocator.h" />
     <ClInclude Include="src\Platform\Windows\resource\imageLoader.h" />
     <ClInclude Include="src\Platform\Windows\resource\loadIcon.h" />
     <ClInclude Include="src\Platform\Windows\resource\modelManager.h" />
@@ -201,4 +202,4 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
-</Project> 
+</Project>

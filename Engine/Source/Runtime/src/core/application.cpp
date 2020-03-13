@@ -74,30 +74,73 @@ namespace Dynamik {
 			return;
 		}
 
-		//FSTR fstr = "Hello World";
+		FSTR fstr = std::string("Hello World").c_str();
 
 		gameObjectInitialization();
 
+		{
+			std::vector<int> nums = {
+				9,9,6,7,5,3,8,1,2
+			};
+			int cLen = 0;
+			int size = nums.size();
+			int index;
+			int i = 0;
+			while (cLen < (size - 1)) {
+				index = 0;
+				i = 1;
+				while (i < (size - cLen)) {
+					if (nums[index] > nums[i]) {
+						std::swap(nums[index], nums[i]);
+					}
+					index++;
+					i++;
+				}
+				cLen++;
+			}
+
+			for (int num : nums)
+				printf("%d, ", num);
+		}
+
 		int var = 0;
+		std::cout << sizeof(ARRAY<UI32>) << "\n";
+		std::cout << sizeof(std::vector<UI32>) << "\n";
+
+		ARRAY<long double> myArray3(10, 1.0f);
 
 		{
 			Debugger::benchmark::Benchmark myBenchmarkOne;
-			ARRAY<UI32> myArray1;
-			for (UI32 i = 0; i < 100; i++)
-				myArray1.pushBack(i);
-			var = myArray1[59];
-
-			ARRAY<UI32>::ITERATOR itr;
-			for (itr = myArray1.begin(); itr != myArray1.end(); itr++)
-				std::cout << *itr << "\n";
-		}
-		{
-			Debugger::benchmark::Benchmark myBenchmarkTwo;
-			std::vector<UI32> myArray2;
+			ARRAY<ARRAY<UI32>> myArray1;
+			VPTR data = myArray1.data();
+			for (UI32 itr = 0; itr < 128; itr++) {
+				ARRAY<UI32> temp;
+				for (UI32 x = 0; x < 12800; x++)
+					temp.push_back(x);
+				myArray1.push_back(temp);
+			}
+			var;
 		}
 		//for (UI32 i = 0; i < 100; i++)
-		//	myArray2.push_back(i);
-		//var = myArray2[0];
+		//	myArray1.pushBack(i);
+		//
+		//var = myArray1[59];
+		//
+		//ARRAY<UI32>::ITERATOR itr;
+		//for (itr = myArray1.begin(); itr != myArray1.end(); itr++)
+		//	std::cout << *itr << "\n";
+		{
+			Debugger::benchmark::Benchmark myBenchmarkOne;
+			std::vector<std::vector<UI32>> myArray1;
+			for (UI32 itr = 0; itr < 128; itr++) {
+				std::vector<UI32> temp;
+				for (UI32 x = 0; x < 12800; x++)
+					temp.push_back(x);
+				myArray1.push_back(temp);
+				VPTR data = myArray1.data();
+			}
+			var;
+		}
 
 		std::thread myThread(Application::showProgress);
 

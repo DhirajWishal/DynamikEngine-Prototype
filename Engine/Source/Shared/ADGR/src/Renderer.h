@@ -28,6 +28,10 @@
 
 namespace Dynamik {
 	namespace ADGR {
+
+		/* RENDERER ABSTRACTION LAYER
+		 *
+		 */
 		class ADGR_API Renderer {
 		public:
 			Renderer();

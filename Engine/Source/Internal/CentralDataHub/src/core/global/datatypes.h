@@ -3,7 +3,6 @@
 #ifndef _DYNAMIK_CENTRAL_DATA_HUB_DATATYPES_H
 #define _DYNAMIK_CENTRAL_DATA_HUB_DATATYPES_H
 
-#include <any>
 #include <codecvt>
 
 namespace Dynamik {
@@ -43,8 +42,6 @@ namespace Dynamik {
 
 	typedef char CHR;					// char (ASCII)
 	typedef wchar_t WCHR;				// wide char (UTF-8)
-
-	typedef std::any ANY;				// any data type
 
 	typedef UI8 BYTE;					// byte of data
 	typedef BYTE* BPTR;					// byte pointer

@@ -3,6 +3,7 @@
 #define _DYNAMIK_CENTRAL_DATA_HUB_STRING_H
 
 #include "core/global/datatypes.h"
+#include "Platform/Windows/memory/oneTimeAllocator.h"
 #include "Array.h"
 #include <string>
 

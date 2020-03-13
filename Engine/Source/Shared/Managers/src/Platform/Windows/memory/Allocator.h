@@ -2,7 +2,6 @@
 #ifndef _DYNAMIK_MANAGERS_MEMORY_ALLOCATOR_H
 #define _DYNAMIK_MANAGERS_MEMORY_ALLOCATOR_H
 
-#include <memory>
 #include "CentralDataHub.h"
 #include "Platform.h"
 
@@ -14,14 +13,29 @@ namespace Dynamik {
 		Allocator(UI32 size);
 		virtual ~Allocator();
 
-		virtual VPTR allocate(UI32 size = 0, UI32 align = 0, UI32 offset = 0) { return nullptr; }
+		virtual VPTR allocate(UI32 size = 0, UI32 align = DMK_MEMORY_ALIGN, UI32 offset = 0) { return nullptr; }
 		virtual void deAllocate(VPTR data = nullptr, UI32 size = 0, UI32 offset = 0) {}
 		virtual void extend(UI32 size = 0, UI32 offset = 0) {}
 
 		virtual void pack() {}
 
-		static VPTR basicAlloc(UI32 size = 0, UI32 align = 0, UI32 offset = 0);
+		_declspec(allocator) static VPTR basicAlloc(UI32 size = 0, UI32 offset = 0);
+		_declspec(allocator) static VPTR basicAllignedAlloc(UI32 size = 0, UI32 align = DMK_MEMORY_ALIGN);
 		static void basicDeAlloc(VPTR data = nullptr, UI32 size = 0, UI32 offset = 0);
+		static void basicAllignedDeAlloc(VPTR data, UI32 size = 0, UI32 align = DMK_MEMORY_ALIGN);
+
+		static void clearRange(VPTR begin, VPTR end);
+
+		// set memory of a given pointer to a given value
+		template<class TYPE>
+		static void setAddress(TYPE* pointer, TYPE value, UI32 count)
+		{
+			while (count--)
+			{
+				*pointer = value;
+				pointer++;
+			}
+		}
 
 	protected:
 		template<typename T>

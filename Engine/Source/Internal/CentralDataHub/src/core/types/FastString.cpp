@@ -13,41 +13,36 @@ namespace Dynamik {
 		return _findChr(chr);
 	}
 
-	//I32 FSTR::find(STRING string)
-	//{
-	//	B1 _found = false;
-	//	UI32 _itr = 0;
-	//	while ((_itr < mySize)) {
-	//		if (myString[_itr] == string[0]) {
-	//			if (mySize - _itr < string.size())
-	//				break;
-	//			for (UI32 _i = 0; _i < string.size(); _i++) {
-	//				if (myString[_itr + _i] != string[_i]) {
-	//					_found = false;
-	//					break;
-	//				}
-	//				else {
-	//					_found = true;
-	//				}
-	//			}
-	//
-	//			if (_found)
-	//				return _itr;
-	//		}
-	//	}
-	//
-	//	return DMK_STRING_MATCH_NOT_FOUND;
-	//}
+	I32 FSTR::find(FSTR string)
+	{
+		B1 _found = false;
+		UI32 _itr = 0;
+		while ((_itr < mySize)) {
+			if (myString[_itr] == string[0]) {
+				if (mySize - _itr < string.size())
+					break;
+				for (UI32 _i = 0; _i < string.size(); _i++) {
+					if (myString[_itr + _i] != string[_i]) {
+						_found = false;
+						break;
+					}
+					else {
+						_found = true;
+					}
+				}
+
+				if (_found)
+					return _itr;
+			}
+		}
+
+		return DMK_STRING_MATCH_NOT_FOUND;
+	}
 
 	CCPTR& FSTR::c_str()
 	{
 		return (CCPTR&)myString;
 	}
-
-	//STRING& FSTR::s_str()
-	//{
-	//	return STRING(myString);
-	//}
 
 	std::string& FSTR::str()
 	{
@@ -80,13 +75,6 @@ namespace Dynamik {
 		this->mySize = string.size();
 		return *this;
 	}
-
-	//FSTR FSTR::operator=(STRING string)
-	//{
-	//	this->myString = (CPTR)string.c_str();
-	//	this->mySize = string.size();
-	//	return *this;
-	//}
 
 	FSTR FSTR::operator=(CPTR string)
 	{

@@ -2,28 +2,37 @@
 #ifndef _DYNAMIK_CENTRAL_DATA_HUB_FAST_STRING_H
 #define _DYNAMIK_CENTRAL_DATA_HUB_FAST_STRING_H
 
-#include "String.h"
+#include "core/global/datatypes.h"
+
+#define DMK_STRING_MATCH_NOT_FOUND	-1
+#define DMK_STRING_INVALID_INDEX	'\0'
 
 namespace Dynamik {
 	class FWSTR;
 
 	/*
-	 Fast String datatype for the Dynamik Engine
-	*/
+	 * Fast String datatype for the Dynamik Engine
+	 */
 	class FSTR {
 	public:
-		FSTR() {}	// default constructor
-		FSTR(CPTR string) : myString(string), mySize(_getSizeCPTR(string)) {}	// default constructor
-		//FSTR(STRING string) : myString((CPTR)string.c_str()), mySize(string.size()) {}	// default constructor
-		~FSTR() {}	// default destructor
+		// default constructor
+		FSTR() {}
+		// default constructor
+		FSTR(CPTR string) : myString(string), mySize(_getSizeCPTR(string)) {}
+		// default constructor
+		FSTR(CCPTR string) : myString((CPTR)string), mySize(_getSizeCPTR((CPTR)string)) {}
+		// default destructor
+		~FSTR() {}
 
-		UI32 size();	// return the size of the string
+		// return the size of the string
+		UI32 size();
 
-		I32 find(CHR chr);	// find a character
-		//I32 find(STRING string);	// find a string
+		// find a character
+		I32 find(CHR chr);
+		// find a string
+		I32 find(FSTR string);
 
 		CCPTR& c_str();	// convert to const char*
-		//STRING& s_str();	// convert to STRING
 		std::string& str();	// convert to std::string
 
 		VPTR data();	// return the address of the data stored
@@ -32,7 +41,6 @@ namespace Dynamik {
 		void replace(UI32 index, CHR chr);	// replace a character
 
 		FSTR operator=(std::string string);	// = operator overload
-		//FSTR operator=(STRING string);	// = operator overload
 		FSTR operator=(CPTR string);	// = operator overload
 		FSTR operator=(FWSTR wstring);	// = operator overload (for wide string)
 		bool operator==(FSTR string);	// == operator overload

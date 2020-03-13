@@ -28,30 +28,106 @@ namespace Dynamik {
 	namespace ADGR {
 		using namespace core;
 
+		/* RENDERER BACKEND LAYER
+		 * Vulkan Backend API.
+		 * Derived from the RendererBackend super class.
+		 * This class contains all the necessary functions, data types and objects to correctly
+		  handle all Vulkan-based rendering tasks.
+		  *
+		  * @warn: Only one instance should be created.
+		 */
 		class vulkanRenderer : public RendererBackend {
+			/* DEFAULTS */
 		public:
+			/* CONSTRUCTOR
+			 * Default constructor of the Vulkan Renderer.
+			 */
 			vulkanRenderer() {}
+
+			/* CONSTRUCTOR
+			 * Default constructor of the Vulkan Renderer.
+			 *
+			 * @param settings: Renderer Backend settings container.
+			 */
 			vulkanRenderer(DMKRendererSettings settings) : RendererBackend(settings) {}
+
+			/* DESTRUCTOR
+			 * Default destructor of the Vulkan Renderer.
+			 */
 			~vulkanRenderer() {}
 
+			/* PUBLIC FUNCTIONS */
+		public:
+			/* FUNCTION
+			 * Full initialization function.
+			 */
 			void init() override;
+
+			/* FUNCTION
+			 * Stage One initialization.
+			 */
 			void initStageOne() override;
+
+			/* FUNCTION
+			 * Stage Two initialization.
+			 */
 			void initStageTwo() override;
+
+			/* FUNCTION
+			 * Stage Three initialization.
+			 */
 			void initStageThree() override;
 
+			/* FUNCTION
+			 * Draw frame function.
+			 */
 			void drawFrame() override;
 
+			/* FUNCTION
+			 * Full Shut down function.
+			 */
 			void shutDown() override;
+
+			/* FUNCTION
+			 * Shut down stage one.
+			 */
 			void shutDownStageOne() override;
+
+			/* FUNCTION
+			 * Shut down stage two.
+			 */
 			void shutDownStageTwo() override;
+
+			/* FUNCTION
+			 * Shut down stage three.
+			 */
 			void shutDownStageThree() override;
 
+			/* FUNCTION
+			 * Get events.
+			 */
 			std::deque<DMKEventContainer>* events() override;
+
+			/* FUNCTION
+			 * Check for window close event.
+			 */
 			inline B1 closeEvent() override { return myWindowManager.closeEvent(&myVulkanDataContainers[vulkanContainerIndex]); }
 
+			/* FUNCTION
+			 * Set Renderer formats to the renderer.
+			 *
+			 * @param rendererFormats: An Array of renderer formats.
+			 */
 			void setFormats(std::vector<RendererFormat>& rendererFormats) override;
+
+			/* FUNCTION
+			 * Update the renderer formats.
+			 *
+			 * @param rendererFormats: An Array of renderer formats.
+			 */
 			void updateFormats(std::vector<RendererFormat>& rendererFormats) override;
 
+			/* PRIVATE FUNCTIONS */
 		private:
 			void recreateSwapChain();
 			void setVertices(std::vector<Vertex>& vertices) { myVertices = vertices; }
@@ -93,6 +169,8 @@ namespace Dynamik {
 
 			void _addVulkanFormatsToManager(std::vector<RendererFormat>& rendererFormats);
 
+			/* PRIVATE VARIABLES AND CONSTANTS */
+		private:
 			// renderer core classes
 			core::windowManager myWindowManager{};
 			core::instanceManager myInstanceManager{};

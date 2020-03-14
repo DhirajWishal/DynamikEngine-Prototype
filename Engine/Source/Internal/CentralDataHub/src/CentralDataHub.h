@@ -20,6 +20,7 @@
 #include "core/types/Dynamic.h"
 #include "core/types/DynamicPointer.h"
 #include "core/types/FastString.h"
+#include "core/types/Matrix.h"
 #include "core/types/Pair.h"
 #include "core/types/STRING.h"
 

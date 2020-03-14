@@ -158,6 +158,7 @@
     <ClInclude Include="src\core\types\DynamicPointer.h" />
     <ClInclude Include="src\core\types\FastString.h" />
     <ClInclude Include="src\core\types\Iterator.h" />
+    <ClInclude Include="src\core\types\Matrix.h" />
     <ClInclude Include="src\core\types\Pair.h" />
     <ClInclude Include="src\core\types\Pointer.h" />
     <ClInclude Include="src\core\types\String.h" />

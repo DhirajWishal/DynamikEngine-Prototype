@@ -8,6 +8,7 @@ namespace Dynamik {
 	/* TEMPLATED
 	 * Pointer class for the Dynamik Engine.
 	 * This class stores a pointer and supports address manipulation.
+	 * POINTER basically acts as '*' and '&' in C++ with added functionalities.
 	 *
 	 * @warn: TYPE should not be void (any half type). void* is accepted.
 	 */
@@ -55,6 +56,15 @@ namespace Dynamik {
 		void set(const TYPE& value) { *myPointer = value; }
 
 		/* FUNCTION
+		 * Set a value to the pointer at a given index.
+		 *
+		 * @param index: Index to be updated.
+		 * @param value: Value to be set.
+		 * @warn: Index is not validated before or after assignment.
+		 */
+		void setIndexed(const UI32& index, const TYPE& value) { myPointer[index] = value; }
+
+		/* FUNCTION
 		 * Set a value to the pointer using an index.
 		 *
 		 * @param value: The value to be stored.
@@ -100,6 +110,14 @@ namespace Dynamik {
 		{
 			return (this->myPointer = (TYPE*)(((UI64)this->myPointer) - (value * myTypeSize)));
 		}
+
+		/* FUNCTION
+		 * Return the data stored at a given index in the pointer.
+		 *
+		 * @param index: INdex to be accessed.
+		 * @warn: Index is not validated before or after indexing.
+		 */
+		TYPE& at(const UI32& index) { return myPointer[index]; }
 
 		/* PUBLIC OPERATORS */
 	public:
@@ -211,7 +229,7 @@ namespace Dynamik {
 		 * @param index: Index of the data to be retrieved.
 		 * @warn: Does not validate the index before retrieving.
 		 */
-		TYPE operator[](const UI32 index) const { return myPointer[index]; }
+		TYPE& operator[](const UI32& index) const { return this->myPointer[index]; }
 
 		/* PRIVATE VARIABLES AND CONSTANTS */
 	private:

@@ -56,7 +56,7 @@ namespace Dynamik {
 		/* FUNCTION
 		 * Returns the address of the data store.
 		 */
-		POINTER<TYPE**> getAddressOfStore() { return myPointer.getAddress(); }
+		POINTER<TYPE*> getAddressOfStore() { return (POINTER<TYPE*>)myPointer.getAddress(); }
 
 		/* FUNCTION
 		 * Return the allocated size of the data.
@@ -65,7 +65,14 @@ namespace Dynamik {
 
 		/* PUBLIC OPERATORS */
 	public:
-		
+		/* OPERATOR
+		 * Assign the pointer of the other Dynamic Pointer to this.
+		 */
+		DPTR operator()(const DPTR& ptr)
+		{
+			this->myPointer = ptr.myPointer;
+			return *this;
+		}
 
 		/* PRIVATE VARIABLES AND CONSTANTS */
 	private:

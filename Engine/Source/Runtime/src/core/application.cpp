@@ -81,12 +81,8 @@ namespace Dynamik {
 		int var = 0;
 
 		{
-			DYNAMIC myAnyType;
-			myAnyType = 0;
-			myAnyType = "HELLO WORLD";
-			UI32 val[2] = { 0 };
-			POINTER<UI32> valPtr = val;
-			valPtr++;
+			MATRIX<UI32> myMat(3, 3);
+			//myMat.set({ {0, 1, 2} });
 		}
 
 		{

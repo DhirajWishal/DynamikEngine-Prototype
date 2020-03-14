@@ -72,6 +72,7 @@
     <ClInclude Include="src\core\types\Iterator.h" />
     <ClInclude Include="src\core\types\Dynamic.h" />
     <ClInclude Include="src\core\types\Pointer.h" />
+    <ClInclude Include="src\core\types\Matrix.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\cdhafx.cpp">

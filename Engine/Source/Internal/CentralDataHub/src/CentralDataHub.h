@@ -14,7 +14,10 @@
 #include "core/renderer/vertex.h"
 #include "core/renderer/typenames.h"
 
+#include"core/types/Iterator.h"
 #include "core/types/Array.h"
+#include "core/types/Pointer.h"
+#include "core/types/Dynamic.h"
 #include "core/types/DynamicPointer.h"
 #include "core/types/FastString.h"
 #include "core/types/Pair.h"

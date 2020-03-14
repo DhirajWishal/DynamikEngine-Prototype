@@ -78,36 +78,16 @@ namespace Dynamik {
 
 		gameObjectInitialization();
 
-		{
-			std::vector<int> nums = {
-				9,9,6,7,5,3,8,1,2
-			};
-			int cLen = 0;
-			int size = nums.size();
-			int index;
-			int i = 0;
-			while (cLen < (size - 1)) {
-				index = 0;
-				i = 1;
-				while (i < (size - cLen)) {
-					if (nums[index] > nums[i]) {
-						std::swap(nums[index], nums[i]);
-					}
-					index++;
-					i++;
-				}
-				cLen++;
-			}
-
-			for (int num : nums)
-				printf("%d, ", num);
-		}
-
 		int var = 0;
-		std::cout << sizeof(ARRAY<UI32>) << "\n";
-		std::cout << sizeof(std::vector<UI32>) << "\n";
 
-		ARRAY<long double> myArray3(10, 1.0f);
+		{
+			DYNAMIC myAnyType;
+			myAnyType = 0;
+			myAnyType = "HELLO WORLD";
+			UI32 val[2] = { 0 };
+			POINTER<UI32> valPtr = val;
+			valPtr++;
+		}
 
 		{
 			Debugger::benchmark::Benchmark myBenchmarkOne;

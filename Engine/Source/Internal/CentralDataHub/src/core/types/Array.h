@@ -3,12 +3,16 @@
 #define _DYNAMIK_CENTRAL_DATA_HUB_ARRAY_H
 
 #include "core/global/datatypes.h"
-#include "Platform/Windows/memory/oneTimeAllocator.h"
+#include "Pointer.h"
+#include "Platform/Windows/memory/StaticAllocator.h"
 
 namespace Dynamik {
-	class OneTimeAllocator;
+	template<class TYPE>
+	class StaticAllocator;
+	template<class TYPE>
+	class POINTER;
 
-	/*
+	/* TEMPLATED
 	 * Dynamic Array datatype for the Dynamik Engine
 	 * This array can store any data defined in the datatype TYPE and supports multiple dimentions.
 	 * Tested to be faster than the std::vector<TYPE> library/ datatype.
@@ -24,9 +28,6 @@ namespace Dynamik {
 		ARRAY()
 			: myTypeSize(sizeof(TYPE))
 		{
-			myAllocationSize = _getNextSize();
-			myData = (TYPE*)myAllocator.allocate(myAllocationSize);
-
 			myElementPointer = myData;
 			myBeginAddr = myData;
 		}
@@ -42,7 +43,8 @@ namespace Dynamik {
 			: myTypeSize(sizeof(TYPE))
 		{
 			myAllocationSize = size * myTypeSize;
-			myData = (TYPE*)myAllocator.allocate(myAllocationSize);
+			myData = StaticAllocator<TYPE>::allocate(myAllocationSize);
+			setData(myData.get(), 0, myAllocationSize);
 
 			isStaticallyAllocated = true;
 			myElementPointer = myData;
@@ -61,10 +63,11 @@ namespace Dynamik {
 			: myTypeSize(sizeof(TYPE))
 		{
 			myAllocationSize = size * myTypeSize;
-			myData = (TYPE*)myAllocator.allocate(myAllocationSize);
+			myData = StaticAllocator<TYPE>::allocate(myAllocationSize);
+			setData(myData.get(), 0, myAllocationSize);
 
 			myElementPointer = myData;
-			ITERATOR _localIter = myData;
+			ITERATOR _localIter = myData.get();
 			while (size--) { *_localIter = value, _localIter++; }
 
 			isStaticallyAllocated = true;
@@ -72,15 +75,20 @@ namespace Dynamik {
 		}
 
 		ARRAY(const TYPE* arr)
-			: myTypeSize(sizeof(TYPE)), 
+			: myTypeSize(sizeof(TYPE))
 		{
-
+			myAllocationSize = _getNextSizeToFit(_getSizeOfRawArray(arr));
+			myData = StaticAllocator<TYPE>::allocate(myAllocationSize);
+			setData(myData.get(), 0, myAllocationSize);
 		}
 
 		/* DESTRUCTOR
 		 * Default Destructor.
 		 */
-		~ARRAY() {}
+		~ARRAY()
+		{
+			StaticAllocator<TYPE>::deAllocate(myData.get());
+		}
 
 		/* PRIVATE DATA TYPES */
 	public:
@@ -98,25 +106,20 @@ namespace Dynamik {
 		 */
 		void pushBack(const TYPE& data)
 		{
-			if (myDataCount == myAllocationSize)
+			if (myDataCount < myAllocationSize)
+			{
+				myElementPointer = data;
+
+				myElementPointer += 1;
+				myDataCount++;
+			}
+			else
 			{
 				if (isStaticallyAllocated)
 					return;
 
-				UI32 _newSize = _getNextSize();
-				myAllocationSize += _newSize;
-				myAllocator.extend(_newSize);
-				//_basicInitialization((TYPE*)myAllocator.getAddress(), myDataCount);
-
-#ifdef DMK_DEBUG
-				myAllocationCount++;
-#endif
+				_reAllocateAndPushBack(_getNextSize(), data);
 			}
-
-			*myElementPointer = data;
-
-			myElementPointer++;
-			myDataCount++;
 		}
 
 		/* FUNCTION
@@ -170,8 +173,8 @@ namespace Dynamik {
 		 */
 		void clear()
 		{
-			myAllocator.deAllocate();
-			myData = (TYPE*)myAllocator.allocate(myAllocationSize);
+			StaticAllocator<TYPE>::deAllocate(myData.get(), myAllocationSize);
+			myData = StaticAllocator<TYPE>::allocate(myAllocationSize);
 			myDataCount = 0;
 		}
 
@@ -183,8 +186,8 @@ namespace Dynamik {
 		void resize(UI32 size)
 		{
 			myAllocationSize = size;
-			myAllocator.deAllocate();
-			myData = (TYPE*)myAllocator.allocate(myAllocationSize);
+			StaticAllocator<TYPE>::deAllocate(myData.get(), myAllocationSize);
+			myData = StaticAllocator<TYPE>::allocate(myAllocationSize);
 			myDataCount = 0;
 		}
 
@@ -197,8 +200,8 @@ namespace Dynamik {
 		void resize(UI32 size, const TYPE& value)
 		{
 			myAllocationSize = size;
-			myAllocator.deAllocate();
-			myData = (TYPE*)myAllocator.allocate(myAllocationSize);
+			StaticAllocator<TYPE>::deAllocate(myData.get(), myAllocationSize);
+			myData = StaticAllocator<TYPE>::allocate(myAllocationSize);
 			_setValue(value, myAllocationSize);
 			myDataCount = (myAllocationSize - 1);
 		}
@@ -240,24 +243,24 @@ namespace Dynamik {
 		/* FUNCTION
 		 * Get data pointer of the Array.
 		 */
-		VPTR data() { return myData; }
+		VPTR data() { return myData.get(); }
 
 		/* FUNCTION
 		 * Begin iterator of the Array.
 		 */
-		ITERATOR begin() { return myBeginAddr; }
+		ITERATOR begin() { return myBeginAddr.get(); }
 
 		/* FUNCTION
 		 * End iterator of the Array.
 		 */
-		ITERATOR end() { return myElementPointer; }
+		ITERATOR end() { return myElementPointer.get(); }
 
 		/* FUNCTION
 		 * Insert the content of another Array to the current Array.
 		 *
 		 * @param arr: Array with the same type to be concatted.
 		 */
-		void insert(const ARRAY<TYPE>& arr)
+		void insert(ARRAY<TYPE> arr)
 		{
 			ITERATOR _iterator = arr.begin();
 			while (_iterator != arr.end())
@@ -292,7 +295,7 @@ namespace Dynamik {
 		{
 			if (index >= myDataCount); // TODO: error handling
 
-			myData[index] = value;
+			myData.setIndexed(value, index);
 		}
 
 		/* FUNCTION
@@ -333,13 +336,21 @@ namespace Dynamik {
 				{
 					if (isAsc)
 					{
-						if (data[_index] > data[_itr])
-							_swap<TYPE>(&data[_index], &data[_itr]);
+						if (_localArray->at(_index) > _localArray->at(_itr))
+						{
+							TYPE _temp = _localArray->at(_index);
+							_localArray->update(_localArray->at(_itr), _index);
+							_localArray->update(_temp, _itr);
+						}
 					}
 					else
 					{
-						if (data[_index] < data[_itr])
-							_swap<TYPE>(&data[_index], &data[_itr]);
+						if (_localArray->at(_index) < _localArray->at(_itr))
+						{
+							TYPE _temp = _localArray->at(_index);
+							_localArray->update(_localArray->at(_itr), _index);
+							_localArray->update(_temp, _itr);
+						}
 					}
 					_index++;
 					_itr++;
@@ -348,6 +359,8 @@ namespace Dynamik {
 			}
 		}
 
+		/* PUBLIC OPERATORS */
+	public:
 		/* OPERATOR
 		 * [] operator overload.
 		 * Return the value at the given index.
@@ -366,7 +379,7 @@ namespace Dynamik {
 		 *
 		 * @param data: Array to be checked with.
 		 */
-		B1 operator==(const ARRAY<TYPE>& data)
+		B1 operator==(ARRAY<TYPE>& data)
 		{
 			if (this->myDataCount != data.size())
 				return false;
@@ -401,12 +414,47 @@ namespace Dynamik {
 			*destination = *source;
 		}
 
+		/* STATIC
+		 * Move a data from one location to another.
+		 *
+		 * @param destination: Where to place the data.
+		 * @param source: Where to move the data from.
+		 * @param size: number of bytes to move.
+		 */
+		template<class SUB_TYPE>
+		static void moveBytes(SUB_TYPE* destination, SUB_TYPE* source, UI32 size = 0)
+		{
+			SUB_TYPE* _sourceIterator = (SUB_TYPE*)source;
+			SUB_TYPE* _destinationIterator = destination;
+			while (size--) {
+				*_destinationIterator = *_sourceIterator;
+				_destinationIterator++, _sourceIterator++;
+			}
+		}
+
+		/* STATIC
+		 * Fill a given address with a given data value.
+		 *
+		 * @param address: Where to place the data.
+		 * @param value: Value to be filled with
+		 * @param size: number of bytes to fill.
+		 */
+		template<class SUB_TYPE>
+		static void setData(SUB_TYPE* address, const I32 value, UI32 size = 0)
+		{
+			SUB_TYPE* _iterator = address;
+			while (size--) {
+				*_iterator = value;
+				_iterator++;
+			}
+		}
+
 		/* PRIVATE FUNCTIONS */
 	private:
 		/* PRIVATE
 		 * Basic initializings.
 		 */
-		void _basicInitialization(TYPE* dataStore, UI32 updatedSize = 0;)
+		void _basicInitialization(TYPE* dataStore, UI32 updatedSize = 0)
 		{
 			myData = dataStore;
 			myElementPointer = dataStore;
@@ -462,11 +510,7 @@ namespace Dynamik {
 		 */
 		inline void _moveData(VPTR newSpace, UI32 newSpaceSize)
 		{
-			memcpy(newSpace, myData, myAllocationSize);
-			//_copyData(newSpace, myData, newSpaceSize);
-			myAllocator.extend(newSpaceSize);
-			myData = (TYPE*)myAllocator.getAddress();
-			memcpy(myData, newSpace, newSpaceSize);
+			moveBytes(myData.get(), (TYPE*)newSpace, newSpaceSize);
 		}
 
 		/* PRIVATE
@@ -476,8 +520,8 @@ namespace Dynamik {
 		 */
 		inline TYPE* _getPointer(UI32 index = 0)
 		{
-			TYPE* _localPointer = myData;
-			while (index--)_localPointer++;
+			TYPE* _localPointer = myData.get();
+			(UI32)_localPointer + (index * myTypeSize);
 			return _localPointer;
 		}
 
@@ -494,21 +538,6 @@ namespace Dynamik {
 		}
 
 		/* PRIVATE
-		 * Extend the capacity to fit new size.
-		 *
-		 * @param size: Size to be extended by.
-		 */
-		inline void _extendDataToFitNewSize(UI32 size)
-		{
-			if (size > (mySize - myDataCount))
-			{
-				UI32 _newSize = _getNextSizeToFit(size - (mySize - myDataCount));
-				myAllocationSize += _newSize;
-				myAllocator.extend(_newSize);
-			}
-		}
-
-		/* PRIVATE
 		 * Swap two elements.
 		 *
 		 * @param first: First element.
@@ -522,20 +551,49 @@ namespace Dynamik {
 		}
 
 		/* PRIVATE
-		 * Get the size of a raw Array. 
+		 * Get the size of a raw Array.
 		 *
 		 * @param arr: Raw Array.
 		 */
 		inline UI32 _getSizeOfRawArray(const TYPE* arr)
 		{
-			return sizeof(arr) / sizeof(arr[0]);
+			return sizeof(arr) / sizeof(TYPE);
+		}
+
+		/* PRIVATE
+		 * Resize the data store.
+		 *
+		 * @param newSize: New size added to the pre-allocated size to be re-allocated.
+		 */
+		inline void _reAllocateAndPushBack(UI32 newSize, const TYPE& data)
+		{
+			POINTER<TYPE> _newArray = StaticAllocator<TYPE>::allocate(newSize + myAllocationSize);
+			POINTER<TYPE> _nextElement = _newArray + myDataCount;
+			POINTER<TYPE> _localData = myData;
+			memcpy(_newArray.get(), myData.get(), myDataCount * myTypeSize);
+			_nextElement = data;
+
+			myData = _newArray;
+			myBeginAddr = myData;
+			myElementPointer = _nextElement + (UI32)1;
+
+			myDataCount++;
+			_newArray.turnNull();
+			_nextElement.turnNull();
+
+			if (_localData.isValid()) 
+			{
+				StaticAllocator<TYPE>::deAllocate(_localData, myAllocationSize);
+			}
+
+			myAllocationSize += newSize;
 		}
 
 		/* PRIVATE VARIABLES AND CONSTANTS */
 	private:
-		TYPE* myData = nullptr;		// main data store
-		ITERATOR myBeginAddr = nullptr;	// array begin iterator
-		ITERATOR myElementPointer = nullptr;	// pointer to the element
+		POINTER<TYPE> myData;		// main data store
+		POINTER<TYPE> myBeginAddr;	// array begin iterator
+		POINTER<TYPE> myElementPointer;	// pointer to the element
 
 		UI32 myDataCount = 0;		// number of elements stored
 		UI32 myAllocationSize = 0;	// allocation size
@@ -543,11 +601,9 @@ namespace Dynamik {
 
 		B1 isStaticallyAllocated = false;	// check if the array is initialized to a pre defined size
 
-		OneTimeAllocator myAllocator = {};	// dynamic memory allocator
+		struct AllocationDataContainer {
 
-#ifdef DMK_DEBUG
-		UI32 myAllocationCount = 0;	// for debug purposes
-#endif
+		};
 	};
 }
 

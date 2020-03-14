@@ -71,6 +71,7 @@
     </ClInclude>
     <ClInclude Include="src\core\types\Iterator.h" />
     <ClInclude Include="src\core\types\Dynamic.h" />
+    <ClInclude Include="src\core\types\Pointer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\cdhafx.cpp">
@@ -84,9 +85,6 @@
     </ClCompile>
     <ClCompile Include="src\core\renderer\vertex.cpp">
       <Filter>src\core\renderer</Filter>
-    </ClCompile>
-    <ClCompile Include="src\core\types\Array.cpp">
-      <Filter>src\core\types</Filter>
     </ClCompile>
     <ClCompile Include="src\core\types\DynamicPointer.cpp">
       <Filter>src\core\types</Filter>

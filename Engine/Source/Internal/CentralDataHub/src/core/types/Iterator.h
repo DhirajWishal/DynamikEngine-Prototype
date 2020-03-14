@@ -2,17 +2,19 @@
 #ifndef _DYNAMIK_CENTRAL_DATA_HUB_ITERATOR_H
 #define _DYNAMIK_CENTRAL_DATA_HUB_ITERATOR_H
 
+#include "Pointer.h"
+
 namespace Dynamik {
 	template<class TYPE>
-	class Iterator {
+	class ITERATOR {
 	public:
-		Iterator() {}
-		Iterator(TYPE* address) : data(address) {}
-		~Iterator() {}
+		ITERATOR() {}
+		ITERATOR(TYPE* address) : data(address) {}
+		~ITERATOR() {}
 
-		Iterator next() { return ++Iterator.data; }
+		ITERATOR next() { return ++ITERATOR.data; }
 
-		TYPE* data = nullptr;
+		POINTER<TYPE> data = nullptr;
 	};
 }
 

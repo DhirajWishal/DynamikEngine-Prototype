@@ -159,6 +159,7 @@
     <ClInclude Include="src\core\types\FastString.h" />
     <ClInclude Include="src\core\types\Iterator.h" />
     <ClInclude Include="src\core\types\Pair.h" />
+    <ClInclude Include="src\core\types\Pointer.h" />
     <ClInclude Include="src\core\types\String.h" />
   </ItemGroup>
   <ItemGroup>
@@ -168,7 +169,6 @@
     <ClCompile Include="src\core\dataPipeline.cpp" />
     <ClCompile Include="src\core\network\messageData.cpp" />
     <ClCompile Include="src\core\renderer\vertex.cpp" />
-    <ClCompile Include="src\core\types\Array.cpp" />
     <ClCompile Include="src\core\types\DynamicPointer.cpp" />
     <ClCompile Include="src\core\types\FastString.cpp" />
     <ClCompile Include="src\core\types\String.cpp" />

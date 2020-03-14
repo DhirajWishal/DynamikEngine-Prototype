@@ -6,11 +6,22 @@
 
 namespace Dynamik {
 	/*
-	 Dynamic Data Type for the Dynamik Engine
-	 This datatype can hold any type of data.
-	*/
+	 * Dynamic Data Type for the Dynamik Engine
+	 * This datatype can hold any type of data.
+	 */
 	class DYNAMIC {
+	public:
+		DYNAMIC() {}
+		template<class TYPE>
+		DYNAMIC(const TYPE& data) : myData((VPTR)&data) {}
+		~DYNAMIC() {}
 
+	public:
+		template<class TYPE>
+		TYPE getCast() { return (TYPE)myData; }
+
+	private:
+		VPTR myData;
 	};
 }
 

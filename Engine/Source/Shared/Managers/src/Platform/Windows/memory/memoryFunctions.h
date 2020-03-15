@@ -18,7 +18,7 @@ namespace Dynamik {
 		POINTER<SUB_TYPE> _sourceIterator = (POINTER<SUB_TYPE>)source;
 		POINTER<SUB_TYPE> _destinationIterator = destination;
 		while (size--) {
-			*_destinationIterator = *_sourceIterator;
+			*_destinationIterator.get() = *_sourceIterator.get();
 			_destinationIterator++, _sourceIterator++;
 		}
 	}

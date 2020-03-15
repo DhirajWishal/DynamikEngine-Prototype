@@ -12,15 +12,11 @@ project "Dynamik"
 
 	files {
 		"**.txt",
-		"**.lua",
-		"**.hint",
-		"src/**.h",
-		"src/**.cpp",
-		"src/**.txt",
-		"GameLibraries/**.cpp",
-		"GameLibraries/**.h",
-		"$(SolutionDir)Dependencies/glm/**.hpp",
-		"$(SolutionDir)Dependencies/glm/**.inl",
+		"**.cpp",
+		"**.h",
+		"Private/**.cpp",
+		"Public/**.h",
+		"**.lua"
 	}
 
 	includedirs {

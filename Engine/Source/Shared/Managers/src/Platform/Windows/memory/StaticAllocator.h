@@ -36,20 +36,17 @@ namespace Dynamik {
 
 		static void deAllocate(POINTER<TYPE> data, UI32 size = 0, UI32 align = DMK_MEMORY_ALIGN, UI32 offset = 0)
 		{
-			//#if defined(DMK_MEMORY_USE_MALLOC)
-			//			free((VPTR)data.get());
-			//
-			//#elif defined(DMK_MEMORY_USE_NEW)
-			//			delete[] data.get();
-			//
-			//#endif
-			setData(data, (TYPE)0, size);
 			operator delete[](data.get(), size);
 		}
 
 		static void deAllocate(POINTER<TYPE> first, POINTER<TYPE> last)
 		{
 			operator delete[](first.get(), (size_t)(last - first));
+		}
+
+		static void set(POINTER<TYPE> address, TYPE& value)
+		{
+			new ((VPTR)address.get()) (TYPE)(value);
 		}
 	};
 

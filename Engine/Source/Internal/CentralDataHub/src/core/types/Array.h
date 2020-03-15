@@ -51,7 +51,6 @@ namespace Dynamik {
 		{
 			myAllocationSize = size * myTypeSize;
 			myData = Allocator::allocate(myAllocationSize);
-			setData(myData, (TYPE)0, myAllocationSize);
 
 			isStaticallyAllocated = true;
 			myElementPointer = myData;
@@ -92,6 +91,7 @@ namespace Dynamik {
 		~ARRAY()
 		{
 			setData(myData, (TYPE)0, myAllocationSize);	// set all pre existed values to 0.
+			_cleanAllPointers();
 			Allocator::deAllocate(myData.get());
 		}
 
@@ -129,17 +129,17 @@ namespace Dynamik {
 			if (myDataCount < myAllocationSize)
 			{
 				myElementPointer = data;
-
 				myElementPointer += 1;
-				myDataCount++;
 			}
 			else
 			{
 				if (isStaticallyAllocated)
 					return;
 
-				_reAllocateAndPushBack(_getNextSize(), data);
+				_reAllocateAndPushBack(_getNextSize(), (TYPE)data);
 			}
+
+			myDataCount++;
 		}
 
 		/* FUNCTION
@@ -575,31 +575,40 @@ namespace Dynamik {
 		}
 
 		/* PRIVATE
+		 * Destroy all the pointers that contained the heap data.
+		 * Calls the destructor.
+		 */
+		inline void _cleanAllPointers()
+		{
+			myData.~POINTER();
+			myElementPointer.~POINTER();
+			myBeginAddr.~POINTER();
+		}
+
+		/* PRIVATE
 		 * Resize the data store.
 		 *
 		 * @param newSize: New size added to the pre-allocated size to be re-allocated.
 		 */
-		inline void _reAllocateAndPushBack(UI32 newSize, const TYPE& data)
+		inline void _reAllocateAndPushBack(UI32 newSize, TYPE& data)
 		{
-			POINTER<TYPE> _newArray = Allocator::allocate(newSize + myAllocationSize);
-			POINTER<TYPE> _nextElement = _newArray + myDataCount;
-			POINTER<TYPE> _localData = myData;
-			memcpy(_newArray.get(), myData.get(), myDataCount * myTypeSize);
-			_nextElement = data;
+			POINTER<TYPE> _newStore = Allocator::allocate(newSize + myAllocationSize);
+			POINTER<TYPE> _elementPointer = _newStore;
+			_elementPointer += myAllocationSize;
+			Allocator::set(_elementPointer, data);
 
-			myData = _newArray;
-			myBeginAddr = myData;
-			myElementPointer = _nextElement + (UI32)1;
-
-			myDataCount++;
-			_newArray.turnNull();
-			_nextElement.turnNull();
-
-			if (_localData.isValid())
+			if (myData.isValid())
 			{
-				Allocator::deAllocate(_localData, myAllocationSize);
+				moveBytes(_newStore, myData, myAllocationSize);
+				_cleanAllPointers();
+
+				Allocator::deAllocate(myData, myAllocationSize);
 			}
 
+			myData(_newStore);
+			myBeginAddr(_newStore);
+			myElementPointer(_elementPointer);
+			myElementPointer++;
 			myAllocationSize += newSize;
 		}
 
@@ -614,10 +623,6 @@ namespace Dynamik {
 		UI32 myTypeSize = 0;		// size of the datatype in bytes
 
 		B1 isStaticallyAllocated = false;	// check if the array is initialized to a pre defined size
-
-		struct AllocationDataContainer {
-
-		};
 	};
 }
 

@@ -80,11 +80,11 @@ namespace Dynamik {
 
 		int var = 0;
 
-		{
-			std::cout << sizeof(POINTER<UI32>) << "\n";
-			MATRIX<UI32, 3, 3> myMat;
-			//myMat.set({ {0, 1, 2} });
-		}
+		//{
+		//	std::cout << sizeof(POINTER<UI32>) << "\n";
+		//	MATRIX<UI32, 3, 3> myMat;
+		//	//myMat.set({ {0, 1, 2} });
+		//}
 
 		{
 			Debugger::benchmark::Benchmark myBenchmarkOne;

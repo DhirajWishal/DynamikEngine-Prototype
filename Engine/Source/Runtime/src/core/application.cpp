@@ -82,9 +82,7 @@ namespace Dynamik {
 
 		{
 			std::cout << sizeof(POINTER<UI32>) << "\n";
-			//VPTR lol = nullptr;
-			POINTER<void> lol;
-			MATRIX<UI32> myMat(3, 3);
+			MATRIX<UI32, 3, 3> myMat;
 			//myMat.set({ {0, 1, 2} });
 		}
 

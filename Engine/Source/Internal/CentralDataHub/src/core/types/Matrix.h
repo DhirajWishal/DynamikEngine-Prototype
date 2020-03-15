@@ -8,13 +8,20 @@
 namespace Dynamik {
 	/* TEMPLATED
 	 * Matrix class for the Dynamik Engine.
+	 *
+	 * @template param TYPE: Type of the data to be stored.
+	 * @template param RowCount: Number of rows in the matrix.
+	 * @template param ColumnCount: Number of columns in the matrix.
 	 */
-	template<class TYPE>
+	template<class TYPE, UI32 RowCount = 1, UI32 ColumnCount = 1>
 	class MATRIX {
 	public:
-		MATRIX(const UI32& row, const UI32 column) 
-			: myRowCount(row), myColumnCount(column)
+		MATRIX() {}
+		MATRIX(const UI32& row, const UI32& column)
 		{
+			if (myRowCount <= row || myColumnCount <= column)
+				myRowCount = row, myColumnCount = column;
+
 			myMatrix.setSizeAndValue(myRowCount, ARRAY<TYPE>(myColumnCount, 0));
 		}
 		~MATRIX() {}
@@ -32,8 +39,8 @@ namespace Dynamik {
 
 	private:
 		ARRAY<ARRAY<TYPE>> myMatrix;
-		UI32 myRowCount = 0;
-		UI32 myColumnCount = 0;
+		UI32 myRowCount = RowCount;
+		UI32 myColumnCount = ColumnCount;
 	};
 }
 

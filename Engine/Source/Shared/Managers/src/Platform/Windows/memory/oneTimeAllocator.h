@@ -5,6 +5,8 @@
 #include "Allocator.h"
 
 namespace Dynamik {
+	class Allocator;
+
 	/* ONE TIME HEAP ALLOCATOR */
 	class OneTimeAllocator : public Allocator {
 	public:

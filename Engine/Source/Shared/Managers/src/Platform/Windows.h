@@ -24,6 +24,7 @@
 #include "Windows/memory/doubleBufferedAllocator.h"
 #include "Windows/memory/doubleBufferedPoolAllocator.h"
 #include "Windows/memory/doubleBufferedStackAllocator.h"
+#include "Windows/memory/memoryFunctions.h"
 #include "Windows/memory/memoryManager.h"
 #include "Windows/memory/oneTimeAllocator.h"
 #include "Windows/memory/poolAllocator.h"

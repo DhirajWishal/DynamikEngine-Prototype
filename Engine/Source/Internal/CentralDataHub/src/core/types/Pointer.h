@@ -5,8 +5,6 @@
 #include "core/global/datatypes.h"
 #include "core/global/typecheck.h"
 
-#include <type_traits>
-
 namespace Dynamik {
 	/* TEMPLATED
 	 * Pointer class for the Dynamik Engine.
@@ -21,9 +19,9 @@ namespace Dynamik {
 
 		/* STATIC ASSERT
 		 * Check if the Template argument is not void.
+		 * Compile time check.
 		 */
-		//static_assert(Constant<B1, (typeid(TYPE) == typeid(void))>::isValue, "POINTER<TYPE> Does not support void!");
-		DMK_STATIC_TYPE_CHECK(TYPE, void, "POINTER<TYPE> Does not support void!");
+		static_assert(!isType<TYPE, void>::result, "POINTER<TYPE> Does not support void!");
 
 	public:
 		/* CONSTRUCTOR
@@ -149,15 +147,6 @@ namespace Dynamik {
 		 */
 		TYPE& at(const UI32& index) { return myPointer[index]; }
 
-		/* FUNCTION
-		 * Return the data stored at a given index in the pointer.
-		 * Indexed value cannot be modified in the pointer.
-		 *
-		 * @param index: INdex to be accessed.
-		 * @warn: Index is not validated before or after indexing.
-		 */
-		TYPE at(const UI32& index) const { return myPointer[index]; }
-
 		/* PUBLIC OPERATORS */
 	public:
 		/* OPERATOR
@@ -278,15 +267,6 @@ namespace Dynamik {
 		 * @warn: Does not validate the index before retrieving.
 		 */
 		TYPE& operator[](const UI32& index) { return this->myPointer[index]; }
-
-		/* OPERATOR
-		 * Access data at a given index in the pointer.
-		 * Indexed value cannot be modified in the pointer.
-		 *
-		 * @param index: Index of the data to be retrieved.
-		 * @warn: Does not validate the index before retrieving.
-		 */
-		TYPE operator[](const UI32& index) const { return this->myPointer[index]; }
 
 		/* PRIVATE VARIABLES AND CONSTANTS */
 	private:

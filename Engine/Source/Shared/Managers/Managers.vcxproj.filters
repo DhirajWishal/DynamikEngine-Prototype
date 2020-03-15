@@ -97,6 +97,7 @@
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="src\Platform\Windows\memory\StaticAllocator.h" />
+    <ClInclude Include="src\Platform\Windows\memory\memoryFunctions.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Platform\Windows\file\daiFileManager.cpp">

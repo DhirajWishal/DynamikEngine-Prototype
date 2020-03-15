@@ -2,6 +2,7 @@
 #ifndef _DYNAMIK_MANAGERS_STATIC_ALLOCATOR_H
 #define _DYNAMIK_MANAGERS_STATIC_ALLOCATOR_H
 
+#include "memoryFunctions.h"
 #include "core/global/constants.h"
 #include "core/global/datatypes.h"
 #include "core/types/Pointer.h"
@@ -12,12 +13,13 @@
 
 namespace Dynamik {
 	/* TEMPLATED
+	 * BASE: Allocator
 	 * Static Allocator for the Dynamik Engine.
 	 * This allocator is used for manual heap allocation and deletion.
 	 * This class is used as the default memory allocator for the ARRAY<TYPE> object.
 	 */
 	template<class TYPE>
-	class StaticAllocator {
+	class StaticAllocator : public Allocator {
 	public:
 		StaticAllocator() {}
 		~StaticAllocator() {}
@@ -34,13 +36,14 @@ namespace Dynamik {
 
 		static void deAllocate(POINTER<TYPE> data, UI32 size = 0, UI32 align = DMK_MEMORY_ALIGN, UI32 offset = 0)
 		{
-//#if defined(DMK_MEMORY_USE_MALLOC)
-//			free((VPTR)data.get());
-//
-//#elif defined(DMK_MEMORY_USE_NEW)
-//			delete[] data.get();
-//
-//#endif
+			//#if defined(DMK_MEMORY_USE_MALLOC)
+			//			free((VPTR)data.get());
+			//
+			//#elif defined(DMK_MEMORY_USE_NEW)
+			//			delete[] data.get();
+			//
+			//#endif
+			setData(data, (TYPE)0, size);
 			operator delete[](data.get(), size);
 		}
 

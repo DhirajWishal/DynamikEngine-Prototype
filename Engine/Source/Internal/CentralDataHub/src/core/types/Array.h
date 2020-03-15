@@ -18,9 +18,16 @@ namespace Dynamik {
 	 * Tested to be faster than the std::vector<TYPE> library/ datatype.
 	 * This also contains utility functions related to array and pointer manipulation.
 	 */
-	template<class TYPE>
+	template<class TYPE, class Allocator = StaticAllocator<TYPE>>
 	class ARRAY {
 		/* DEFAULTS */
+
+		/* STATIC ASSERT
+		 * Check if the Template argument is not void.
+		 * Compile time check.
+		 */
+		static_assert(!isType<TYPE, Allocator>::result, "Invalid Template Arguments! ARRAY<TYPE, Allocator>");
+
 	public:
 		/* CONSTRUCTOR
 		 * Default Constructor.
@@ -43,7 +50,7 @@ namespace Dynamik {
 			: myTypeSize(sizeof(TYPE))
 		{
 			myAllocationSize = size * myTypeSize;
-			myData = StaticAllocator<TYPE>::allocate(myAllocationSize);
+			myData = Allocator::allocate(myAllocationSize);
 			setData(myData, (TYPE)0, myAllocationSize);
 
 			isStaticallyAllocated = true;
@@ -63,7 +70,7 @@ namespace Dynamik {
 			: myTypeSize(sizeof(TYPE))
 		{
 			myAllocationSize = size * myTypeSize;
-			myData = StaticAllocator<TYPE>::allocate(myAllocationSize);
+			myData = Allocator::allocate(myAllocationSize);
 			setData(myData, value, myAllocationSize);
 
 			isStaticallyAllocated = true;
@@ -75,7 +82,7 @@ namespace Dynamik {
 			: myTypeSize(sizeof(TYPE))
 		{
 			myAllocationSize = _getNextSizeToFit(_getSizeOfRawArray(arr));
-			myData = StaticAllocator<TYPE>::allocate(myAllocationSize);
+			myData = Allocator::allocate(myAllocationSize);
 			setData(myData, (TYPE)0, myAllocationSize);
 		}
 
@@ -84,7 +91,8 @@ namespace Dynamik {
 		 */
 		~ARRAY()
 		{
-			StaticAllocator<TYPE>::deAllocate(myData.get());
+			setData(myData, (TYPE)0, myAllocationSize);	// set all pre existed values to 0.
+			Allocator::deAllocate(myData.get());
 		}
 
 		/* PRIVATE DATA TYPES */
@@ -104,10 +112,10 @@ namespace Dynamik {
 		void set(const POINTER<TYPE> arr)
 		{
 			if (isStaticallyAllocated || myData.isValid())
-				StaticAllocator<TYPE>::deAllocate(myData.get(), myAllocationSize);
+				Allocator::deAllocate(myData.get(), myAllocationSize);
 
 			myAllocationSize = _getNextSizeToFit(_getSizeOfRawArray(arr));
-			myData = StaticAllocator<TYPE>::allocate(myAllocationSize);
+			myData = Allocator::allocate(myAllocationSize);
 			moveBytes(myData, arr, myAllocationSize);
 		}
 
@@ -168,10 +176,10 @@ namespace Dynamik {
 		 */
 		void setSize(const UI32 size) {
 			if (myData.isValid())
-				StaticAllocator<TYPE>::deAllocate(myData, myAllocationSize);
+				Allocator::deAllocate(myData, myAllocationSize);
 
 			myAllocationSize = size * myTypeSize;
-			myData = StaticAllocator<TYPE>::allocate(myAllocationSize);
+			myData = Allocator::allocate(myAllocationSize);
 		}
 
 		/* FUNCTION
@@ -204,31 +212,12 @@ namespace Dynamik {
 		}
 
 		/* FUNCTION
-		 * Return the value at the given index.
-		 * Flags an error if the given index is invalid.
-		 *
-		 * @param index: Index to be accessed.
-		 */
-		TYPE& at(I32 index = 0) const
-		{
-			if (index >= myDataCount || (index <= (0 - myDataCount))); // TODO: error handling
-
-			if (index < 0)
-			{
-				index *= (-1);
-				index = (myDataCount - index);
-			}
-
-			return myData[index];
-		}
-
-		/* FUNCTION
 		 * Clear the whole Array.
 		 */
 		void clear()
 		{
-			StaticAllocator<TYPE>::deAllocate(myData.get(), myAllocationSize);
-			myData = StaticAllocator<TYPE>::allocate(myAllocationSize);
+			Allocator::deAllocate(myData.get(), myAllocationSize);
+			myData = Allocator::allocate(myAllocationSize);
 			myDataCount = 0;
 		}
 
@@ -240,8 +229,8 @@ namespace Dynamik {
 		void resize(UI32 size)
 		{
 			myAllocationSize = size;
-			StaticAllocator<TYPE>::deAllocate(myData.get(), myAllocationSize);
-			myData = StaticAllocator<TYPE>::allocate(myAllocationSize);
+			Allocator::deAllocate(myData.get(), myAllocationSize);
+			myData = Allocator::allocate(myAllocationSize);
 			myDataCount = 0;
 		}
 
@@ -254,8 +243,8 @@ namespace Dynamik {
 		void resize(UI32 size, const TYPE& value)
 		{
 			myAllocationSize = size;
-			StaticAllocator<TYPE>::deAllocate(myData.get(), myAllocationSize);
-			myData = StaticAllocator<TYPE>::allocate(myAllocationSize);
+			Allocator::deAllocate(myData.get(), myAllocationSize);
+			myData = Allocator::allocate(myAllocationSize);
 			_setValue(value, myAllocationSize);
 			myDataCount = (myAllocationSize - 1);
 		}
@@ -428,18 +417,6 @@ namespace Dynamik {
 		}
 
 		/* OPERATOR
-		 * [] operator overload.
-		 * Return the value at the given index.
-		 * Raises a flag if the index is invalid.
-		 *
-		 * @param index: Index to be returned.
-		 */
-		TYPE& operator[](I32 index) const
-		{
-			return at(index);
-		}
-
-		/* OPERATOR
 		 * == operator overload.
 		 * Check if the arrays are similar.
 		 *
@@ -484,43 +461,6 @@ namespace Dynamik {
 		static void copy(ARRAY<SUB_TYPE>* source, ARRAY<SUB_TYPE>* destination)
 		{
 			*destination = *source;
-		}
-
-		/* STATIC
-		 * Move a data from one location to another.
-		 *
-		 * @param destination: Where to place the data.
-		 * @param source: Where to move the data from.
-		 * @param size: number of bytes to move.
-		 */
-		template<class SUB_TYPE>
-		static void moveBytes(POINTER<SUB_TYPE> destination, const POINTER<SUB_TYPE> source, UI32 size = 0)
-		{
-			POINTER<SUB_TYPE> _sourceIterator = (POINTER<SUB_TYPE>)source;
-			POINTER<SUB_TYPE> _destinationIterator = destination;
-			while (size--) {
-				*_destinationIterator = *_sourceIterator;
-				_destinationIterator++, _sourceIterator++;
-			}
-		}
-
-		/* STATIC
-		 * Fill a given address with a given data value.
-		 *
-		 * @param address: Where to place the data.
-		 * @param value: Value to be filled with
-		 * @param size: number of bytes to fill.
-		 */
-		template<class SUB_TYPE>
-		static void setData(POINTER<SUB_TYPE> address, const SUB_TYPE value, UI32 size = 0, const UI32 typeSize = 1)
-		{
-			POINTER<SUB_TYPE> _iterator = address;
-			UI32 _runSize = size / typeSize;
-			do {
-				_iterator = value;
-				_iterator++;
-			} while (--_runSize);
-			_iterator--;
 		}
 
 		/* PRIVATE FUNCTIONS */
@@ -641,7 +581,7 @@ namespace Dynamik {
 		 */
 		inline void _reAllocateAndPushBack(UI32 newSize, const TYPE& data)
 		{
-			POINTER<TYPE> _newArray = StaticAllocator<TYPE>::allocate(newSize + myAllocationSize);
+			POINTER<TYPE> _newArray = Allocator::allocate(newSize + myAllocationSize);
 			POINTER<TYPE> _nextElement = _newArray + myDataCount;
 			POINTER<TYPE> _localData = myData;
 			memcpy(_newArray.get(), myData.get(), myDataCount * myTypeSize);
@@ -657,7 +597,7 @@ namespace Dynamik {
 
 			if (_localData.isValid())
 			{
-				StaticAllocator<TYPE>::deAllocate(_localData, myAllocationSize);
+				Allocator::deAllocate(_localData, myAllocationSize);
 			}
 
 			myAllocationSize += newSize;

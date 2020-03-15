@@ -141,6 +141,7 @@
     <ClInclude Include="src\Platform\Windows\memory\doubleBufferedAllocator.h" />
     <ClInclude Include="src\Platform\Windows\memory\doubleBufferedPoolAllocator.h" />
     <ClInclude Include="src\Platform\Windows\memory\doubleBufferedStackAllocator.h" />
+    <ClInclude Include="src\Platform\Windows\memory\memoryFunctions.h" />
     <ClInclude Include="src\Platform\Windows\memory\memoryManager.h" />
     <ClInclude Include="src\Platform\Windows\memory\oneTimeAllocator.h" />
     <ClInclude Include="src\Platform\Windows\memory\poolAllocator.h" />

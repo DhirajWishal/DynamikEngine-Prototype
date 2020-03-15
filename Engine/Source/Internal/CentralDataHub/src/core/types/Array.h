@@ -44,7 +44,7 @@ namespace Dynamik {
 		{
 			myAllocationSize = size * myTypeSize;
 			myData = StaticAllocator<TYPE>::allocate(myAllocationSize);
-			setData(myData.get(), (TYPE)0, myAllocationSize);
+			setData(myData, (TYPE)0, myAllocationSize);
 
 			isStaticallyAllocated = true;
 			myElementPointer = myData;
@@ -64,19 +64,19 @@ namespace Dynamik {
 		{
 			myAllocationSize = size * myTypeSize;
 			myData = StaticAllocator<TYPE>::allocate(myAllocationSize);
-			setData(myData.get(), value, myAllocationSize);
+			setData(myData, value, myAllocationSize);
 
 			isStaticallyAllocated = true;
 			myElementPointer = myData;
 			myBeginAddr = myData;
 		}
 
-		ARRAY(const TYPE* arr)
+		ARRAY(const POINTER<TYPE> arr)
 			: myTypeSize(sizeof(TYPE))
 		{
 			myAllocationSize = _getNextSizeToFit(_getSizeOfRawArray(arr));
 			myData = StaticAllocator<TYPE>::allocate(myAllocationSize);
-			setData(myData.get(), (TYPE)0, myAllocationSize);
+			setData(myData, (TYPE)0, myAllocationSize);
 		}
 
 		/* DESTRUCTOR
@@ -96,14 +96,19 @@ namespace Dynamik {
 
 		/* PRIVATE FUNCTIONS */
 	public:
-		void set(const TYPE* arr)
+		/* FUNCTION
+		 * Set the Array to a pre defined one.
+		 *
+		 * @param arr: Array to assign this with.
+		 */
+		void set(const POINTER<TYPE> arr)
 		{
 			if (isStaticallyAllocated || myData.isValid())
 				StaticAllocator<TYPE>::deAllocate(myData.get(), myAllocationSize);
 
 			myAllocationSize = _getNextSizeToFit(_getSizeOfRawArray(arr));
 			myData = StaticAllocator<TYPE>::allocate(myAllocationSize);
-			moveBytes(myData.get(), arr, myAllocationSize);
+			moveBytes(myData, arr, myAllocationSize);
 		}
 
 		/* FUNCTION
@@ -463,7 +468,7 @@ namespace Dynamik {
 			return *this;
 		}
 
-		ARRAY<TYPE> operator=(const TYPE* arr)
+		ARRAY<TYPE> operator=(const POINTER<TYPE> arr)
 		{
 			this->set(arr);
 			return *this;
@@ -489,10 +494,10 @@ namespace Dynamik {
 		 * @param size: number of bytes to move.
 		 */
 		template<class SUB_TYPE>
-		static void moveBytes(SUB_TYPE* destination, const SUB_TYPE* source, UI32 size = 0)
+		static void moveBytes(POINTER<SUB_TYPE> destination, const POINTER<SUB_TYPE> source, UI32 size = 0)
 		{
-			SUB_TYPE* _sourceIterator = (SUB_TYPE*)source;
-			SUB_TYPE* _destinationIterator = destination;
+			POINTER<SUB_TYPE> _sourceIterator = (POINTER<SUB_TYPE>)source;
+			POINTER<SUB_TYPE> _destinationIterator = destination;
 			while (size--) {
 				*_destinationIterator = *_sourceIterator;
 				_destinationIterator++, _sourceIterator++;
@@ -507,7 +512,7 @@ namespace Dynamik {
 		 * @param size: number of bytes to fill.
 		 */
 		template<class SUB_TYPE>
-		static void setData(SUB_TYPE* address, const SUB_TYPE value, UI32 size = 0, const UI32 typeSize = 1)
+		static void setData(POINTER<SUB_TYPE> address, const SUB_TYPE value, UI32 size = 0, const UI32 typeSize = 1)
 		{
 			POINTER<SUB_TYPE> _iterator = address;
 			UI32 _runSize = size / typeSize;
@@ -579,7 +584,7 @@ namespace Dynamik {
 		 */
 		inline void _moveData(VPTR newSpace, UI32 newSpaceSize)
 		{
-			moveBytes(myData.get(), (TYPE*)newSpace, newSpaceSize);
+			moveBytes(myData, (POINTER<TYPE>)newSpace, newSpaceSize);
 		}
 
 		/* PRIVATE
@@ -624,9 +629,9 @@ namespace Dynamik {
 		 *
 		 * @param arr: Raw Array.
 		 */
-		inline UI32 _getSizeOfRawArray(const TYPE* arr)
+		inline UI32 _getSizeOfRawArray(const POINTER<TYPE> arr)
 		{
-			return sizeof(arr) / sizeof(TYPE);
+			return sizeof(arr.get()) / sizeof(TYPE);
 		}
 
 		/* PRIVATE

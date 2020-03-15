@@ -13,7 +13,7 @@ namespace Dynamik {
 	ThreadManager::ThreadManager() {
 	}
 
-	void ThreadManager::add(Thread* myThread)
+	void ThreadManager::add(POINTER<Thread> myThread)
 	{
 		myThread->setIndex(myThreadCount++);
 		myThreadContainer.push_back(myThread);
@@ -29,10 +29,10 @@ namespace Dynamik {
 
 	void ThreadManager::runAll()
 	{
-		std::vector<ExecutionHandle*> _handles;
-		_handles.push_back(&ExecutionHandle(internalThread, &myInternalThreadHandler));
-		for (Thread* thread : myThreadContainer)
-			_handles.push_back(&ExecutionHandle(runThread, thread));
+	//	std::vector<ExecutionHandle> _handles;
+	//	_handles.push_back(&ExecutionHandle(internalThread, &myInternalThreadHandler));
+	//	for (POINTER<Thread> thread : myThreadContainer)
+	//		_handles.push_back(&ExecutionHandle(runThread, thread.get()));
 	}
 
 	void ThreadManager::update(UI32 index, ThreadDataContainer container) {
@@ -40,14 +40,14 @@ namespace Dynamik {
 			return;
 	}
 
-	void ThreadManager::runThread(Thread* thread)
+	void ThreadManager::runThread(POINTER<Thread> thread)
 	{
 		thread->init();
 		while (!thread->loopEndCommand())thread->loop();
 		thread->shutdown();
 	}
 
-	void ThreadManager::internalThread(InternalThreadHandler* handler)
+	void ThreadManager::internalThread(POINTER<InternalThreadHandler> handler)
 	{
 		handler->init();
 		while (!handler->loopEndCommand()) handler->loop();

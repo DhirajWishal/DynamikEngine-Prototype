@@ -31,16 +31,16 @@ namespace Dynamik {
 		void setIndex(UI32 index) { myThreadIndex = index; }	// set index
 		UI32 getIndex() { return myThreadIndex; }	// get current index
 		UI32 getID() { return myThreadID; }	// get the thread ID
-		void setDataContainer(ThreadDataContainer* container) { myDataContainer = container; } // set data container
+		void setDataContainer(POINTER<ThreadDataContainer> container) { myDataContainer = container; } // set data container
 
 	protected:
-		virtual void update(ThreadDataContainer* container) {}	// update data container
+		virtual void update(POINTER<ThreadDataContainer> container) {}	// update data container
 
 		UI32 myThreadID = 0;	// thread ID
 		UI32 myThreadIndex = 0;	// thread index
 		B1 terminate = false;	// terminate command
 
-		ThreadDataContainer* myDataContainer = nullptr;	// data container
+		POINTER<ThreadDataContainer> myDataContainer;	// data container
 	};
 }
 

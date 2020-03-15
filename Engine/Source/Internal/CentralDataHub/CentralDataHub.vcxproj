@@ -149,6 +149,7 @@
     <ClInclude Include="src\core\dataPipeline.h" />
     <ClInclude Include="src\core\global\constants.h" />
     <ClInclude Include="src\core\global\datatypes.h" />
+    <ClInclude Include="src\core\global\typecheck.h" />
     <ClInclude Include="src\core\network\messageData.h" />
     <ClInclude Include="src\core\network\messageType.h" />
     <ClInclude Include="src\core\renderer\typenames.h" />

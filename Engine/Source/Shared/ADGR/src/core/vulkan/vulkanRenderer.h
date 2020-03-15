@@ -29,6 +29,7 @@ namespace Dynamik {
 		using namespace core;
 
 		/* RENDERER BACKEND LAYER
+		 * BASE: RendererBackend
 		 * Vulkan Backend API.
 		 * Derived from the RendererBackend super class.
 		 * This class contains all the necessary functions, data types and objects to correctly

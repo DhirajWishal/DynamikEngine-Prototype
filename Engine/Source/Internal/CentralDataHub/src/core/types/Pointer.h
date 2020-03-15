@@ -3,6 +3,9 @@
 #define _DYNAMIK_CENTRAL_DATA_HUB_POINTER_H
 
 #include "core/global/datatypes.h"
+#include "core/global/typecheck.h"
+
+#include <type_traits>
 
 namespace Dynamik {
 	/* TEMPLATED
@@ -15,23 +18,37 @@ namespace Dynamik {
 	template<class TYPE>
 	class POINTER {
 		/* DEFAULTS */
+
+		/* STATIC ASSERT
+		 * Check if the Template argument is not void.
+		 */
+		//static_assert(Constant<B1, (typeid(TYPE) == typeid(void))>::isValue, "POINTER<TYPE> Does not support void!");
+		DMK_STATIC_TYPE_CHECK(TYPE, void, "POINTER<TYPE> Does not support void!");
+
 	public:
 		/* CONSTRUCTOR
 		 * Default constructor.
 		 */
-		POINTER() : myPointer(nullptr), myTypeSize(sizeof(TYPE)) {}
+		POINTER() : myPointer(nullptr) {}
 
 		/* CONSTRUCTOR
 		 * Default constructor.
 		 *
 		 * @param address: address of the data to be stored.
 		 */
-		POINTER(TYPE* address) : myPointer(address), myTypeSize(sizeof(TYPE)) {}
+		POINTER(const TYPE* address) : myPointer((TYPE*)address) {}
+
+		/* CONSTRUCTOR
+		 * Default constructor.
+		 *
+		 * @param address: address of the data to be stored.
+		 */
+		POINTER(const VPTR address) : myPointer((TYPE*)address) {}
 
 		/* DESTRUCTOR
 		 * Default destructor.
 		 */
-		~POINTER() {}
+		~POINTER() { myPointer = nullptr; }
 
 		/* PUBLIC FUNCTIONS */
 	public:
@@ -46,14 +63,26 @@ namespace Dynamik {
 		TYPE** getAddress() const { return &(TYPE*)myPointer; }
 
 		/* FUNCTION
+		 * Get the pointer as a UI64 value.
+		 * Converts the address sotred in the pointer to a unsigned 64bit integer.
+		 */
+		UI64 getPointerAsInteger() const { return (UI64)myPointer; }
+
+		/* FUNCTION
+		 * Get the pointer address as a UI64 value.
+		 * Converts the pointer address to a unsigned 64bit integer.
+		 */
+		UI64 getAddressAsInteger() const { return (UI64)&myPointer; }
+
+		/* FUNCTION
 		 * Get the type size of the pointer.
 		 */
-		UI32 getTypeSize() const { return myTypeSize; }
+		UI32 getTypeSize() const { return sizeof(TYPE); }
 
 		/* FUNCTION
 		 * Set a value to the pointer.
 		 */
-		void set(const TYPE& value) { *myPointer = value; }
+		void set(const TYPE value) { *myPointer = value; }
 
 		/* FUNCTION
 		 * Set a value to the pointer at a given index.
@@ -98,7 +127,7 @@ namespace Dynamik {
 		 */
 		TYPE* increment(UI32 value)
 		{
-			return (this->myPointer = (TYPE*)(((UI64)this->myPointer) + (value * myTypeSize)));
+			return (this->myPointer = (TYPE*)(((UI64)this->myPointer) + (value * sizeof(TYPE))));
 		}
 
 		/* FUNCTION
@@ -108,54 +137,64 @@ namespace Dynamik {
 		 */
 		TYPE* decrement(UI32 value)
 		{
-			return (this->myPointer = (TYPE*)(((UI64)this->myPointer) - (value * myTypeSize)));
+			return (this->myPointer = (TYPE*)(((UI64)this->myPointer) - (value * sizeof(TYPE))));
 		}
 
 		/* FUNCTION
 		 * Return the data stored at a given index in the pointer.
+		 * Indexed value can be modified in the pointer.
 		 *
 		 * @param index: INdex to be accessed.
 		 * @warn: Index is not validated before or after indexing.
 		 */
 		TYPE& at(const UI32& index) { return myPointer[index]; }
 
+		/* FUNCTION
+		 * Return the data stored at a given index in the pointer.
+		 * Indexed value cannot be modified in the pointer.
+		 *
+		 * @param index: INdex to be accessed.
+		 * @warn: Index is not validated before or after indexing.
+		 */
+		TYPE at(const UI32& index) const { return myPointer[index]; }
+
 		/* PUBLIC OPERATORS */
 	public:
 		/* OPERATOR
 		 * Return the de-referenced pointer.
 		 */
-		operator TYPE() { return *myPointer; }
+		operator TYPE() { return *this->myPointer; }
 
 		/* OPERATOR
 		 * Return the pointer.
 		 */
-		operator TYPE* () { return myPointer; }
+		operator TYPE* () { return this->myPointer; }
 
 		/* OPERATOR
 		 * Return the pointer.
 		 */
-		operator const TYPE* () { return myPointer; }
+		operator const TYPE* () { return this->myPointer; }
 
 		/* OPERATOR
 		 * Return the casted pointer.
 		 */
-		operator VPTR() { return myPointer; }
+		operator VPTR() { return this->myPointer; }
 
 		/* OPERATOR
 		 * Return the casted pointer.
 		 */
 		template<class SUB_TYPE>
-		operator SUB_TYPE() { return (SUB_TYPE)myPointer; }
+		operator SUB_TYPE() { return (SUB_TYPE)this->myPointer; }
 
 		/* OPERATOR
 		 * Return the de-referenced pointer.
 		 */
-		TYPE operator*() { return *myPointer; }
+		TYPE operator*() { return *this->myPointer; }
 
 		/* OPERATOR
 		 * Return the de-referenced pointer.
 		 */
-		TYPE operator->() { return *myPointer; }
+		TYPE* operator->() { return this->myPointer; }
 
 		/* OPERATOR
 		 * Increment the address of the pointer by a value.
@@ -210,11 +249,19 @@ namespace Dynamik {
 		void operator()(const POINTER<TYPE>& ptr) { this->myPointer = ptr.get(); }
 
 		/* OPERATOR
+		 * Asign an address to the pointer.
+		 * Accepts void pointers.
+		 *
+		 * @param value: Value to be assigned to the pointer.
+		 */
+		void operator=(const VPTR address) { this->myPointer = (TYPE*)address; }
+
+		/* OPERATOR
 		 * Asign a value to the pointer.
 		 *
 		 * @param value: Value to be assigned to the pointer.
 		 */
-		void operator=(const TYPE& value) { *myPointer = value; }
+		void operator=(const TYPE& value) { this->set(value); }
 
 		/* OPERATOR
 		 * Asign a value to the pointer.
@@ -225,16 +272,25 @@ namespace Dynamik {
 
 		/* OPERATOR
 		 * Access data at a given index in the pointer.
+		 * Indexed value can be modified in the pointer.
 		 *
 		 * @param index: Index of the data to be retrieved.
 		 * @warn: Does not validate the index before retrieving.
 		 */
-		TYPE& operator[](const UI32& index) const { return this->myPointer[index]; }
+		TYPE& operator[](const UI32& index) { return this->myPointer[index]; }
+
+		/* OPERATOR
+		 * Access data at a given index in the pointer.
+		 * Indexed value cannot be modified in the pointer.
+		 *
+		 * @param index: Index of the data to be retrieved.
+		 * @warn: Does not validate the index before retrieving.
+		 */
+		TYPE operator[](const UI32& index) const { return this->myPointer[index]; }
 
 		/* PRIVATE VARIABLES AND CONSTANTS */
 	private:
 		TYPE* myPointer = nullptr;	// pointer data store
-		UI32 myTypeSize = 0;	// size of the type
 	};
 }
 

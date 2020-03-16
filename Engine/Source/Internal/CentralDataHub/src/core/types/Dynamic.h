@@ -23,12 +23,12 @@ namespace Dynamik {
 		 * @param data: Data to be added to the store.
 		 */
 		template<class TYPE>
-		DYNAMIC(const TYPE& data) : myData((VPTR)&data) {}
+		DYNAMIC(TYPE data) : myTypeName(typeid(TYPE).name()) {}
 
 		/* DESTRUCTOR
 		 * Default destructor.
 		 */
-		~DYNAMIC() {}
+		~DYNAMIC() { myData = nullptr; }
 
 		/* PUBLIC FUNCTIONS */
 	public:
@@ -54,17 +54,23 @@ namespace Dynamik {
 		 */
 		void clear() { myData = nullptr; }
 
+		/* FUNCTION
+		 * Return the type name of the data stored.
+		 */
+		FSTR getTypeName() { return myTypeName; }
+
 		/* PUBLIC OPERATORS */
 	public:
-		DYNAMIC operator=(const DYNAMIC& data)
-		{
-			this->myData = data.myData;
-			return *this;
-		}
+		//DYNAMIC& operator=(const DYNAMIC& data)
+		//{
+		//	this->myData = data.myData;
+		//	return *this;
+		//}
 
 		/* PRIVATE VARIABLES AND CONSTANTS */
 	private:
 		VPTR myData = nullptr;	// data container
+		FSTR myTypeName;
 	};
 }
 

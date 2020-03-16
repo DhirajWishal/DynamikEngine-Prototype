@@ -13,7 +13,7 @@ namespace Dynamik {
 	class POINTER;
 
 	/* TEMPLATED
-	 * Dynamic Array datatype for the Dynamik Engine
+	 * Dynamic Array datatype for the Dynamik Engine.
 	 * This array can store any data defined in the datatype TYPE and supports multiple dimentions.
 	 * Tested to be faster than the std::vector<TYPE> library/ datatype.
 	 * This also contains utility functions related to array and pointer manipulation.
@@ -35,8 +35,7 @@ namespace Dynamik {
 		ARRAY()
 			: myTypeSize(sizeof(TYPE))
 		{
-			myElementPointer = myData;
-			myBeginAddr = myData;
+			_reAllocate(_getNextSize());
 		}
 
 		/* CONSTRUCTOR
@@ -90,8 +89,7 @@ namespace Dynamik {
 		 */
 		~ARRAY()
 		{
-			setData(myData, (TYPE)0, myAllocationSize);	// set all pre existed values to 0.
-			_cleanAllPointers();
+			_cleanAndDestroyPointers();
 			Allocator::deAllocate(myData.get());
 		}
 
@@ -127,10 +125,7 @@ namespace Dynamik {
 		void pushBack(const TYPE& data)
 		{
 			if (myDataCount < myAllocationSize)
-			{
-				myElementPointer = data;
-				myElementPointer += 1;
-			}
+				myElementPointer.set(data);
 			else
 			{
 				if (isStaticallyAllocated)
@@ -139,6 +134,7 @@ namespace Dynamik {
 				_reAllocateAndPushBack(_getNextSize(), (TYPE)data);
 			}
 
+			myElementPointer++;
 			myDataCount++;
 		}
 
@@ -151,6 +147,26 @@ namespace Dynamik {
 		void push_back(const TYPE& value)
 		{
 			pushBack(value);
+		}
+
+		/* FUNCTION
+		 * Get the first element of the Array.
+		 */
+		TYPE front()
+		{
+			return myData[0];
+		}
+
+		/* FUNCTION
+		 * Get the first element in the Array and remove it.
+		 */
+		TYPE popFront()
+		{
+			TYPE _data = front();
+
+			/* LOGIC */
+
+			return _data;
 		}
 
 		/* FUNCTION
@@ -578,8 +594,9 @@ namespace Dynamik {
 		 * Destroy all the pointers that contained the heap data.
 		 * Calls the destructor.
 		 */
-		inline void _cleanAllPointers()
+		inline void _cleanAndDestroyPointers()
 		{
+			setData(myData, (TYPE)0, myAllocationSize);
 			myData.~POINTER();
 			myElementPointer.~POINTER();
 			myBeginAddr.~POINTER();
@@ -590,17 +607,16 @@ namespace Dynamik {
 		 *
 		 * @param newSize: New size added to the pre-allocated size to be re-allocated.
 		 */
-		inline void _reAllocateAndPushBack(UI32 newSize, TYPE& data)
+		inline void _reAllocate(UI32 newSize)
 		{
 			POINTER<TYPE> _newStore = Allocator::allocate(newSize + myAllocationSize);
 			POINTER<TYPE> _elementPointer = _newStore;
 			_elementPointer += myAllocationSize;
-			Allocator::set(_elementPointer, data);
 
 			if (myData.isValid())
 			{
 				moveBytes(_newStore, myData, myAllocationSize);
-				_cleanAllPointers();
+				_cleanAndDestroyPointers();
 
 				Allocator::deAllocate(myData, myAllocationSize);
 			}
@@ -608,8 +624,19 @@ namespace Dynamik {
 			myData(_newStore);
 			myBeginAddr(_newStore);
 			myElementPointer(_elementPointer);
-			myElementPointer++;
 			myAllocationSize += newSize;
+		}
+
+		/* PRIVATE
+		 * Resize the data store and add a value to the end.
+		 *
+		 * @param newSize: New size added to the pre-allocated size to be re-allocated.
+		 * @param data: Data to be inserted to the end.
+		 */
+		inline void _reAllocateAndPushBack(UI32 newSize, TYPE& data)
+		{
+			_reAllocate(newSize);
+			myElementPointer = data;
 		}
 
 		/* PRIVATE VARIABLES AND CONSTANTS */

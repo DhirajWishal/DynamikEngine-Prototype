@@ -3,12 +3,14 @@
 #define _DYNAMIK_CENTRAL_DATA_HUB_FAST_STRING_H
 
 #include "core/global/datatypes.h"
+#include "String.h"
 
 #define DMK_STRING_MATCH_NOT_FOUND	-1
 #define DMK_STRING_INVALID_INDEX	'\0'
 
 namespace Dynamik {
 	class FWSTR;
+	class STRING;
 
 	/*
 	 * Fast String datatype for the Dynamik Engine
@@ -31,6 +33,8 @@ namespace Dynamik {
 		I32 find(CHR chr);
 		// find a string
 		I32 find(FSTR string);
+
+		STRING s_str() { return myString; }
 
 		CCPTR& c_str();	// convert to const char*
 		std::string& str();	// convert to std::string

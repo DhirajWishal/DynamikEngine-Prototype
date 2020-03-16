@@ -30,13 +30,24 @@ namespace Dynamik {
 			return (TYPE*)malloc(size);
 
 #elif defined(DMK_MEMORY_USE_NEW)
-			return (TYPE*)operator new[](size, std::align_val_t{ (size_t)align });
+			//return (TYPE*)operator new[](size, std::align_val_t{ (size_t)align });
+			return (TYPE*)operator new(size);
 #endif
 		}
 
 		static void deAllocate(POINTER<TYPE> data, UI32 size = 0, UI32 align = DMK_MEMORY_ALIGN, UI32 offset = 0)
 		{
-			operator delete[](data.get(), size);
+			//#if defined(DMK_MEMORY_USE_MALLOC)
+			//			free((VPTR)data.get());
+			//
+			//#elif defined(DMK_MEMORY_USE_NEW)
+			//			delete[] data.get();
+			//
+			//#endif
+			if (size)
+				operator delete[](data.get(), size);
+			else
+				operator delete[](data.get());
 		}
 
 		static void deAllocate(POINTER<TYPE> first, POINTER<TYPE> last)

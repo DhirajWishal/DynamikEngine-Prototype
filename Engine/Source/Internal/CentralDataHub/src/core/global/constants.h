@@ -14,7 +14,7 @@
 
 #endif
 
-#define DMK_MEMORY_USE_MALLOC
-//#define DMK_MEMORY_USE_NEW
+//#define DMK_MEMORY_USE_MALLOC
+#define DMK_MEMORY_USE_NEW
 
 #endif

@@ -147,6 +147,11 @@ namespace Dynamik {
 		 */
 		TYPE& at(const UI32& index) { return myPointer[index]; }
 
+		/* FUNCTION
+		 * Get the dereferenced value behind the pointer.
+		 */
+		TYPE& dereference() const { return *myPointer; }
+
 		/* PUBLIC OPERATORS */
 	public:
 		/* OPERATOR
@@ -190,7 +195,7 @@ namespace Dynamik {
 		 *
 		 * @param increment: Value that is added to the pointer.
 		 */
-		TYPE* operator+(const UI32 increment) { return this->increment(increment); }
+		TYPE* operator+(UI32& increment) { return this->increment(increment); }
 
 		/* OPERATOR
 		 * Increment the address of the pointer by a value and assign it to this.
@@ -219,9 +224,19 @@ namespace Dynamik {
 		TYPE* operator++(I32) { return this->increment(1); }
 
 		/* OPERATOR
+		 * Increment the address of the pointer by one.
+		 */
+		TYPE* operator++() { return this->increment(1); }
+
+		/* OPERATOR
 		 * Decrement the address of the pointer by one.
 		 */
 		TYPE* operator--(I32) { return this->decrement(1); }
+
+		/* OPERATOR
+		 * Decrement the address of the pointer by one.
+		 */
+		TYPE* operator--() { return this->decrement(1); }
 
 		/* OPERATOR
 		 * Check if the pointer is equal to this pointer.
@@ -258,6 +273,13 @@ namespace Dynamik {
 		 * @param ptr: Pointer to be copied to the pointer.
 		 */
 		void operator=(const POINTER<TYPE>& ptr) { this->myPointer = ptr.myPointer; }
+
+		/* OPERATOR
+		 * Check if a pointer is not equal to this.
+		 *
+		 * @param ptr: Pointer to be checked with this.
+		 */
+		B1 operator!=(const POINTER<TYPE>& ptr) { return this->myPointer != ptr.get(); }
 
 		/* OPERATOR
 		 * Access data at a given index in the pointer.

@@ -80,6 +80,9 @@ namespace Dynamik {
 
 		int var = 0;
 
+		FSTR myString = "Hello World";
+		STRING myString2 = "Henloo";
+
 		//{
 		//	std::cout << sizeof(POINTER<UI32>) << "\n";
 		//	MATRIX<UI32, 3, 3> myMat;

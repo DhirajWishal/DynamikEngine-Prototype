@@ -64,6 +64,11 @@ namespace Dynamik {
 		}
 	};
 
+	struct sample {
+		sample() { DMK_CORE_INFO("Constructor caled"); }
+		~sample() { DMK_CORE_INFO("Destructor caled"); }
+	};
+
 	uint32_t progress = 0;
 	static bool shouldClose = false;
 	// threads
@@ -81,25 +86,31 @@ namespace Dynamik {
 		gameObjectInitialization();
 
 		int var = 0;
+		std::cout << sizeof(ARRAY<UI32>) << "\n";
 
-		//{
-		//	std::cout << sizeof(POINTER<UI32>) << "\n";
-		//	MATRIX<UI32, 3, 3> myMat;
-		//	//myMat.set({ {0, 1, 2} });
-		//}
+		//ARRAY<UI32> _test;
+		//for (UI32 i = 0; i < 1000; i++)
+		//	_test.pushBack(i);
 
-		//{
-		//	Debugger::benchmark::Benchmark myBenchmarkOne;
-		//	ARRAY<ARRAY<UI32>> myArray1;
-		//	VPTR data = myArray1.data();
-		//	for (UI32 itr = 0; itr < 128; itr++) {
-		//		ARRAY<UI32> temp;
-		//		for (UI32 x = 0; x < 12800; x++)
-		//			temp.push_back(x);
-		//		myArray1.push_back(temp);
-		//	}
-		//	var;
-		//}
+		{
+			ARRAY<sample> _sample;
+			for (UI32 i = 0; i < 1000; i++) {
+				sample s;
+				_sample.pushBack(s);
+			}
+		}
+
+		{
+			Debugger::benchmark::Benchmark myBenchmarkOne;
+			ARRAY<ARRAY<UI32>> myArray1;
+			VPTR data = myArray1.data();
+			for (UI32 itr = 0; itr < 128; itr++) {
+				ARRAY<UI32> temp;
+				for (UI32 x = 0; x < 12800; x++)
+					temp.push_back(x);
+				myArray1.push_back(temp);
+			}
+		}
 		//for (UI32 i = 0; i < 100; i++)
 		//	myArray1.pushBack(i);
 		//
@@ -108,18 +119,17 @@ namespace Dynamik {
 		//ARRAY<UI32>::ITERATOR itr;
 		//for (itr = myArray1.begin(); itr != myArray1.end(); itr++)
 		//	std::cout << *itr << "\n";
-		//{
-		//	Debugger::benchmark::Benchmark myBenchmarkOne;
-		//	std::vector<std::vector<UI32>> myArray1;
-		//	for (UI32 itr = 0; itr < 128; itr++) {
-		//		std::vector<UI32> temp;
-		//		for (UI32 x = 0; x < 12800; x++)
-		//			temp.push_back(x);
-		//		myArray1.push_back(temp);
-		//		VPTR data = myArray1.data();
-		//	}
-		//	var;
-		//}
+		{
+			Debugger::benchmark::Benchmark myBenchmarkOne;
+			std::vector<std::vector<UI32>> myArray1;
+			for (UI32 itr = 0; itr < 128; itr++) {
+				std::vector<UI32> temp;
+				for (UI32 x = 0; x < 12800; x++)
+					temp.push_back(x);
+				myArray1.push_back(temp);
+				VPTR data = myArray1.data();
+			}
+		}
 
 		std::thread myThread(Application::showProgress);
 

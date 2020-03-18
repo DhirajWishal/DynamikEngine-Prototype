@@ -196,7 +196,7 @@ namespace Dynamik {
 		 *
 		 * @param increment: Value that is added to the pointer.
 		 */
-		TYPE* operator+(UI32& increment) { return this->increment(increment); }
+		TYPE* operator+(UI32& increment) { return (TYPE*)this->getAddressAsInteger() + increment; }
 
 		/* OPERATOR
 		 * Increment the address of the pointer by a value and assign it to this.
@@ -210,7 +210,7 @@ namespace Dynamik {
 		 *
 		 * @param decrement: Value to be subtracted to the pointer.
 		 */
-		TYPE* operator-(const UI32 decrement) { return this->decrement(decrement); }
+		TYPE* operator-(const UI32& decrement) { return (TYPE*)this->getAddressAsInteger() - decrement; }
 
 		/* OPERATOR
 		 * Decrement the address of the pointer by a value and assign to this.

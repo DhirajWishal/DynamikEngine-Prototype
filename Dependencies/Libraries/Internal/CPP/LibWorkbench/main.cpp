@@ -47,11 +47,34 @@ struct Types {
 	}
 };
 
+struct destructorTest {
+	destructorTest() {}
+	~destructorTest() 
+	{
+		std::cout << "Destructing index: " << index << std::endl;
+	}
+
+
+	UI32 index;
+};
+
 int main() {
-	SimpleNode<UI32> myNode;
-	SimpleNode<UI32> myNode2;
-	myNode.myData = 100;
-	myNode2.myData = 69;
+	UI32 inde;
+
+	{
+		ARRAY<ARRAY<destructorTest>> myArray1;
+		VPTR data = myArray1.data();
+		for (UI32 itr = 0; itr < 128; itr++) {
+			ARRAY<destructorTest> temp;
+			for (UI32 x = 0; x < 128; x++) {
+				std::cout << "Im in: " << itr << " :: " << x << "\n";
+				destructorTest _t;
+				_t.index = x;
+				temp.push_back(_t);
+			}
+			myArray1.push_back(temp);
+		}
+	}
 
 	SimpleLinkedList<UI32> list;
 	//list.push(myNode);

@@ -13,7 +13,7 @@ namespace Dynamik {
 	 * @param size: number of bytes to move.
 	 */
 	template<class SUB_TYPE>
-	void moveBytes(POINTER<SUB_TYPE> destination, const POINTER<SUB_TYPE> source, UI32 size = 0)
+	void moveBytes(POINTER<SUB_TYPE> destination, const POINTER<SUB_TYPE> source, UI32 size = 1)
 	{
 		UI32 _itrCount = size * source.getTypeSize();
 		POINTER<BYTE> _sourceIterator = (POINTER<SUB_TYPE>)source;

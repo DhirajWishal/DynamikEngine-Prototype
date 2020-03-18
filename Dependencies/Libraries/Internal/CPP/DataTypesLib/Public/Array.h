@@ -14,7 +14,7 @@ namespace Dynamik {
 	class POINTER;
 
 	/* TEMPLATED
-	 * Dynamic Array data structure.
+	 * Dynamic Array data structure for the Dynamik Engine.
 	 * This array can store any data defined in the datatype TYPE and supports multiple dimentions.
 	 * Tested to be faster than the std::vector<TYPE> library/ datatype.
 	 * This also contains utility functions related to array and pointer manipulation.
@@ -27,6 +27,12 @@ namespace Dynamik {
 		 * Check if the Template argument is not void.
 		 * Compile time check.
 		 */
+		static_assert(!isType<TYPE, void>::result, "void Is Not Accepted As A Template Argument! ARRAY<TYPE, Allocator>");
+
+		/* STATIC ASSERT
+		 * Check if both the template arguments are same.
+		 * Compile time check.
+		 */
 		static_assert(!isType<TYPE, Allocator>::result, "Invalid Template Arguments! ARRAY<TYPE, Allocator>");
 
 		/* PRIVATE DATATYPE
@@ -34,12 +40,16 @@ namespace Dynamik {
 		 */
 		using PTR = POINTER<TYPE>;
 
+		/* PRIVATE DATATYPE
+		 * Used as a raw pointer.
+		 */
+		using RPTR = TYPE*;
+
 	public:
 		/* CONSTRUCTOR
 		 * Default Constructor.
 		 */
 		ARRAY()
-			: myTypeSize(sizeof(TYPE))
 		{
 			_reAllocate(_getNextSize());
 		}
@@ -52,14 +62,15 @@ namespace Dynamik {
 		 * @param size: Size to be allocated.
 		 */
 		ARRAY(UI32 size)
-			: myTypeSize(sizeof(TYPE))
 		{
-			myAllocationSize = size * myTypeSize;
-			myData = Allocator::allocate(myAllocationSize);
+			myAllocationSize = size * sizeof(TYPE);
 
-			isStaticallyAllocated = true;
-			myElementPointer = myData;
-			myBeginAddr = myData;
+			if ((size + myAllocationSize) > maxSize()) return; /* TODO: Error Flagging */
+
+			myBeginPtr = Allocator::allocate(myAllocationSize);
+			myNextPtr = myBeginPtr;
+			myEndPtr = myBeginPtr;
+			myEndPtr += capacity();
 		}
 
 		/* CONSTRUCTOR
@@ -71,15 +82,16 @@ namespace Dynamik {
 		 * @param value: Value to initialize the Array with.
 		 */
 		ARRAY(UI32 size, const TYPE& value)
-			: myTypeSize(sizeof(TYPE))
 		{
-			myAllocationSize = size * myTypeSize;
-			myData = Allocator::allocate(myAllocationSize);
-			setData(myData, value, myAllocationSize);
+			myAllocationSize = size * sizeof(TYPE);
 
-			isStaticallyAllocated = true;
-			myElementPointer = myData;
-			myBeginAddr = myData;
+			if ((size + myAllocationSize) > maxSize()) return; /* TODO: Error Flagging */
+
+			myBeginPtr = Allocator::allocate(myAllocationSize);
+			setData(myBeginPtr, value, capacity());
+
+			myEndPtr = myBeginPtr + size;
+			myNextPtr += size;
 		}
 
 		/* CONSTRUCTOR
@@ -88,11 +100,17 @@ namespace Dynamik {
 		 * @param arr: Array used to initialize this.
 		 */
 		ARRAY(const POINTER<TYPE> arr)
-			: myTypeSize(sizeof(TYPE))
 		{
 			myAllocationSize = _getNextSizeToFit(_getSizeOfRawArray(arr));
-			myData = Allocator::allocate(myAllocationSize);
-			setData(myData, (TYPE)0, myAllocationSize);
+
+			if (myAllocationSize > maxSize()) return; /* TODO: Error Flagging */
+
+			myBeginPtr = Allocator::allocate(myAllocationSize);
+			setData(myBeginPtr, 0, capacity());
+
+			myNextPtr = myBeginPtr;
+			myEndPtr = myBeginPtr;
+			myEndPtr += capacity();
 		}
 
 		/* CONSTRUCTOR
@@ -101,8 +119,9 @@ namespace Dynamik {
 		 * @param list: Initializer list used to initialize this.
 		 */
 		ARRAY(InitialzerList<TYPE> list)
-			: myTypeSize(sizeof(TYPE))
 		{
+			if (list.size() > maxSize()); /* TODO: Error Flagging */
+
 			_reAllocate(list.size());
 			for (InitialzerList<TYPE>::ITERATOR _itr = list.begin(); _itr != list.end(); ++_itr)
 				pushBack(*_itr);
@@ -113,13 +132,9 @@ namespace Dynamik {
 		 */
 		~ARRAY()
 		{
-			_destroyRange(myBeginAddr, myElementPointer);
-			_cleanAndDestroyPointers();
-			Allocator::deAllocate(myData.get(), myAllocationSize);
-
-			myData = POINTER<TYPE>();
-			myBeginAddr = POINTER<TYPE>();
-			myElementPointer = POINTER<TYPE>();
+			_destroyRange(myBeginPtr, myEndPtr);
+			_destroyPointers();
+			Allocator::deAllocate(myBeginPtr, myEndPtr);
 		}
 
 		/* PRIVATE DATA TYPES */
@@ -138,12 +153,15 @@ namespace Dynamik {
 		 */
 		void set(const PTR arr)
 		{
-			if (isStaticallyAllocated || myData.isValid())
-				Allocator::deAllocate(myData.get(), myAllocationSize);
-
 			myAllocationSize = _getNextSizeToFit(_getSizeOfRawArray(arr));
-			myData = Allocator::allocate(myAllocationSize);
-			moveBytes(myData, arr, myAllocationSize);
+
+			if (myAllocationSize > maxSize()) return; /* TODO: Error Flagging */
+
+			if (myBeginPtr.isValid())
+				Allocator::deAllocate(myBeginPtr, myEndPtr);
+
+			myBeginPtr = Allocator::allocate(myAllocationSize);
+			moveBytes(myBeginPtr, arr, myAllocationSize);
 		}
 
 		/* FUNCTION
@@ -153,18 +171,12 @@ namespace Dynamik {
 		 */
 		void pushBack(const TYPE& data)
 		{
-			if (myDataCount < myAllocationSize) {
-				myElementPointer.set((TYPE&&)data);
+			if (myDataCount == capacity()) {
+				_reAllocateAndPushBack(_getNextSize(), data);
 			}
 			else
-			{
-				if (isStaticallyAllocated)
-					return;
+				_addData(data);
 
-				_reAllocateAndPushBack(_getNextSize(), (TYPE&)data);
-			}
-
-			myElementPointer++;
 			myDataCount++;
 		}
 
@@ -194,7 +206,7 @@ namespace Dynamik {
 		 */
 		TYPE front()
 		{
-			return myData[0];
+			return myBeginPtr[0];
 		}
 
 		/* FUNCTION
@@ -210,32 +222,19 @@ namespace Dynamik {
 		}
 
 		/* FUNCTION
-		 * Return the size of the Array.
-		 */
-		UI32 size() { return myDataCount; }
-
-		/* FUNCTION
-		 * Return the size of TYPE.
-		 */
-		UI32 sizeOfType() { return myTypeSize; }
-
-		/* FUNCTION
-		 * Return the current allocation size.
-		 * This size is the size available till the next allocation.
-		 */
-		UI32 allocationSize() { return myAllocationSize; }
-
-		/* FUNCTION
 		 * Resize the Array to a set size which cannot be resized.
 		 *
 		 * @param size: The size to be allocated to (number of data to hold).
 		 */
-		void setSize(const UI32 size) {
-			if (myData.isValid())
-				Allocator::deAllocate(myData, myAllocationSize);
+		void setSize(const UI32 size)
+		{
+			if (size > maxSize()) return; /* TODO: Error Flagging */
 
-			myAllocationSize = size * myTypeSize;
-			myData = Allocator::allocate(myAllocationSize);
+			if (myBeginPtr.isValid())
+				Allocator::deAllocate(myBeginPtr, myAllocationSize);
+
+			myAllocationSize = size * sizeof(TYPE);
+			myBeginPtr = Allocator::allocate(myAllocationSize);
 		}
 
 		/* FUNCTION
@@ -264,7 +263,7 @@ namespace Dynamik {
 				index = (myDataCount - index);
 			}
 
-			return myData[index];
+			return myBeginPtr[index];
 		}
 
 		/* FUNCTION
@@ -272,8 +271,9 @@ namespace Dynamik {
 		 */
 		void clear()
 		{
-			Allocator::deAllocate(myData.get(), myAllocationSize);
-			myData = Allocator::allocate(myAllocationSize);
+			Allocator::deAllocate(myBeginPtr.get(), myAllocationSize);
+			myBeginPtr = Allocator::allocate(myAllocationSize);
+
 			myDataCount = 0;
 		}
 
@@ -284,9 +284,12 @@ namespace Dynamik {
 		 */
 		void resize(UI32 size)
 		{
+			if (size > maxSize()) return; /* TODO: Error Flagging */
+
 			myAllocationSize = size;
-			Allocator::deAllocate(myData.get(), myAllocationSize);
-			myData = Allocator::allocate(myAllocationSize);
+			Allocator::deAllocate(myBeginPtr.get(), myAllocationSize);
+			myBeginPtr = Allocator::allocate(myAllocationSize);
+
 			myDataCount = 0;
 		}
 
@@ -298,9 +301,12 @@ namespace Dynamik {
 		 */
 		void resize(UI32 size, const TYPE& value)
 		{
+			if (size > maxSize()) return; /* TODO: Error Flagging */
+
 			myAllocationSize = size;
-			Allocator::deAllocate(myData.get(), myAllocationSize);
-			myData = Allocator::allocate(myAllocationSize);
+			Allocator::deAllocate(myBeginPtr.get(), myAllocationSize);
+			myBeginPtr = Allocator::allocate(myAllocationSize);
+
 			_setValue(value, myAllocationSize);
 			myDataCount = (myAllocationSize - 1);
 		}
@@ -338,21 +344,6 @@ namespace Dynamik {
 
 			*_getPointer(index) = value;
 		}
-
-		/* FUNCTION
-		 * Get data pointer of the Array.
-		 */
-		VPTR data() { return myData.get(); }
-
-		/* FUNCTION
-		 * Begin iterator of the Array.
-		 */
-		ITERATOR begin() { return myBeginAddr.get(); }
-
-		/* FUNCTION
-		 * End iterator of the Array.
-		 */
-		ITERATOR end() { return myElementPointer.get(); }
 
 		/* FUNCTION
 		 * Insert the content of another Array to the current Array.
@@ -394,8 +385,7 @@ namespace Dynamik {
 		{
 			if (index >= myDataCount); // TODO: error handling
 
-			//myData.setIndexed(value, index);
-			myData.at(index) = value;
+			myBeginPtr[index] = value;
 		}
 
 		/* FUNCTION
@@ -459,6 +449,64 @@ namespace Dynamik {
 			}
 		}
 
+		/* FUNCTION
+		 * Return the size of the Array.
+		 *
+		 * @return: Element count.
+		 */
+		UI32 size() { return myDataCount; }
+
+		/* FUNCTION
+		 * Return the maximum size allocatable in an Array.
+		 *
+		 * @return: Element count.
+		 */
+		UI32 maxSize() { return ((UI32)-1) / sizeof(TYPE); }
+
+		/* FUNCTION
+		 * Return the number of elements that can be stored before the next allocation.
+		 *
+		 * @return: Element count.
+		 */
+		UI32 capacity() { return myAllocationSize / sizeof(TYPE); }
+
+		/* FUNCTION
+		 * Return the size of TYPE.
+		 */
+		UI32 sizeOfType() { return sizeof(TYPE); }
+
+		/* FUNCTION
+		 * Return the current allocation size.
+		 * This size is the size available till the next allocation.
+		 *
+		 * @return: Byte count.
+		 */
+		UI32 allocationSize() { return myAllocationSize; }
+
+		/* FUNCTION
+		 * Get data pointer of the Array.
+		 */
+		VPTR data()
+		{
+			return myBeginPtr;
+		}
+
+		/* FUNCTION
+		 * Begin iterator of the Array.
+		 */
+		ITERATOR begin()
+		{
+			return myBeginPtr;
+		}
+
+		/* FUNCTION
+		 * End iterator of the Array.
+		 */
+		ITERATOR end()
+		{
+			return myNextPtr;
+		}
+
 		/* PUBLIC OPERATORS */
 	public:
 		/* OPERATOR
@@ -502,6 +550,12 @@ namespace Dynamik {
 			return *this;
 		}
 
+		/* OPERATOR
+		 * = operator overload.
+		 * Get data from a raw array and initialize it to this.
+		 *
+		 * @para arr: Raw array to be initialized to this.
+		 */
 		ARRAY<TYPE> operator=(const PTR arr)
 		{
 			this->set(arr);
@@ -527,9 +581,9 @@ namespace Dynamik {
 		 */
 		void _basicInitialization(TYPE* dataStore, UI32 updatedSize = 0)
 		{
-			myData = dataStore;
-			myElementPointer = dataStore;
-			while (updatedSize--) myElementPointer++;
+			myBeginPtr = dataStore;
+			myEndPtr = dataStore;
+			myEndPtr += updatedSize;
 		}
 
 		/* PRIVATE
@@ -537,7 +591,17 @@ namespace Dynamik {
 		 */
 		inline UI32 _getNextSize()
 		{
-			return DMK_MEMORY_ALIGN * myTypeSize;
+			UI32 _oldCapacity = capacity();
+
+			if (_oldCapacity > (maxSize() - _oldCapacity / 2))
+				return DMK_MEMORY_ALIGN * sizeof(TYPE);
+
+			UI32 _nextCapacity = _oldCapacity + _oldCapacity / 2;
+
+			if (_nextCapacity < DMK_MEMORY_ALIGN * sizeof(TYPE))
+				return DMK_MEMORY_ALIGN * sizeof(TYPE);
+
+			return _nextCapacity;
 		}
 
 		/* PRIVATE
@@ -581,7 +645,7 @@ namespace Dynamik {
 		 */
 		inline void _moveData(VPTR newSpace, UI32 newSpaceSize)
 		{
-			moveBytes(myData, (PTR)newSpace, newSpaceSize);
+			moveBytes(myBeginPtr, (PTR)newSpace, newSpaceSize);
 		}
 
 		/* PRIVATE
@@ -591,8 +655,8 @@ namespace Dynamik {
 		 */
 		inline TYPE* _getPointer(UI32 index = 0)
 		{
-			TYPE* _localPointer = myData.get();
-			(UI32)_localPointer + (index * myTypeSize);
+			RPTR _localPointer = myBeginPtr;
+			(UI32)_localPointer + (index * sizeof(TYPE));
 			return _localPointer;
 		}
 
@@ -640,19 +704,34 @@ namespace Dynamik {
 		 */
 		inline void _destroyRange(PTR first, PTR last)
 		{
-			for (; first != last; ++first)
-				first.dereference().~TYPE();
+			TYPE* _data = nullptr;
+			while (first != last)
+			{
+				_singleDestruct(first);
+				++first;
+			}
 		}
 
 		/* PRIVATE
 		 * Destroy all the pointers that contained the heap data.
 		 * Calls the destructor.
 		 */
-		inline void _cleanAndDestroyPointers()
+		inline void _destroyPointers()
 		{
-			myData.~POINTER();
-			myElementPointer.~POINTER();
-			myBeginAddr.~POINTER();
+			myBeginPtr.~POINTER();
+			myEndPtr.~POINTER();
+			myNextPtr.~POINTER();
+		}
+
+		/* FUNCTION
+		 * Add data to the end of the Array.
+		 *
+		 * @param data: Data to be emplaced.
+		 */
+		inline void _addData(const TYPE& data)
+		{
+			Allocator::set(&myBeginPtr[myDataCount], (TYPE&&)data);
+			myNextPtr++;
 		}
 
 		/* PRIVATE
@@ -662,26 +741,31 @@ namespace Dynamik {
 		 */
 		inline void _reAllocate(UI32 newSize)
 		{
-			PTR _newStore = Allocator::allocate(newSize + myAllocationSize);
-			PTR _elementPointer = _newStore;
-			_elementPointer += myAllocationSize;
+			PTR _newAlloc = Allocator::allocate(newSize + myAllocationSize);
+			myAllocationSize += newSize;
+			PTR _endPtr = _newAlloc;
+			_endPtr += myAllocationSize;
 
-			if (myData.isValid())
+			try
 			{
-				moveBytes(_newStore, myData, myAllocationSize);
-				//_cleanAndDestroyPointers();
+				if (myBeginPtr.isValid())
+				{
+					moveBytes(_newAlloc, myBeginPtr, myDataCount);
+					Allocator::deAllocate(myBeginPtr, myEndPtr);
+				}
+			}
+			catch (...)
+			{
+				_destroyRange(_newAlloc, _endPtr);
+				Allocator::deAllocate(_newAlloc, _endPtr);
 
-				setData(myBeginAddr, 0, myAllocationSize);
-				myBeginAddr.~POINTER();
-				myElementPointer.~POINTER();
-
-				Allocator::deAllocate(myBeginAddr, myElementPointer);
+				throw;
 			}
 
-			myData(_newStore);
-			myBeginAddr(_newStore);
-			myElementPointer(_elementPointer);
-			myAllocationSize += newSize;
+			myBeginPtr(_newAlloc);
+			myEndPtr(_endPtr);
+			myNextPtr = myBeginPtr;
+			myNextPtr += myDataCount;
 		}
 
 		/* PRIVATE
@@ -692,21 +776,32 @@ namespace Dynamik {
 		 */
 		inline void _reAllocateAndPushBack(UI32 newSize, const TYPE& data)
 		{
+			if ((newSize + myAllocationSize) > maxSize()) return; /* TODO: Error Flagging */
+
 			_reAllocate(newSize);
-			myElementPointer = data;
+
+			Allocator::set(&myBeginPtr[myDataCount], (TYPE&&)data);
+			myNextPtr++;
+		}
+
+		/* PRIVATE
+		 * Call the destructor of a given destructor.
+		 *
+		 * @param data: Data to call the destructor.
+		 */
+		inline void _singleDestruct(RPTR data)
+		{
+			data->~TYPE();
 		}
 
 		/* PRIVATE VARIABLES AND CONSTANTS */
 	private:
-		PTR myData;		// main data store
-		PTR myBeginAddr;	// array begin iterator
-		PTR myElementPointer;	// pointer to the element
+		PTR myBeginPtr;
+		PTR myEndPtr;
+		PTR myNextPtr;
 
 		UI32 myDataCount = 0;		// number of elements stored
 		UI32 myAllocationSize = 0;	// allocation size
-		UI32 myTypeSize = 0;		// size of the datatype in bytes
-
-		B1 isStaticallyAllocated = false;	// check if the array is initialized to a pre defined size
 	};
 }
 #endif // !_DATA_TYPES_ARRAY_H

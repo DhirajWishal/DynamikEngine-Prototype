@@ -141,6 +141,7 @@
     <ClInclude Include="Public\Matrix.h" />
     <ClInclude Include="Public\Pair.h" />
     <ClInclude Include="Public\Pointer.h" />
+    <ClInclude Include="Public\Queue.h" />
     <ClInclude Include="Public\SimpleLinkedList.h" />
     <ClInclude Include="Public\Stack.h" />
     <ClInclude Include="Public\StaticArray.h" />

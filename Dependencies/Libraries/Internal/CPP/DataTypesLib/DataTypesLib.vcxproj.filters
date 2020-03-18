@@ -67,6 +67,7 @@
     <ClInclude Include="Public\typecheck.h">
       <Filter>Public</Filter>
     </ClInclude>
+    <ClInclude Include="Public\Queue.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Private\DynamicPointer.cpp">

@@ -31,18 +31,18 @@ namespace Dynamik {
 		StaticAllocator() {}
 		~StaticAllocator() {}
 
-		static TYPE* allocate(UI32 size = 0, UI32 align = DMK_MEMORY_ALIGN, UI32 offset = 0)
+		static TYPE* allocate(UI32 size = 1, UI32 align = DMK_MEMORY_ALIGN, UI32 offset = 0)
 		{
 #if defined(DMK_MEMORY_USE_MALLOC)
 			return (TYPE*)malloc(size);
 
 #elif defined(DMK_MEMORY_USE_NEW)
 			//return (TYPE*)operator new[](size, std::align_val_t{ (size_t)align });
-			return (TYPE*)operator new(size);
+			return (TYPE*)operator new[](size);
 #endif
 		}
 
-		static void deAllocate(POINTER<TYPE> data, UI32 size = 0, UI32 align = DMK_MEMORY_ALIGN, UI32 offset = 0)
+		static void deAllocate(POINTER<TYPE> data, UI32 size = 1, UI32 align = DMK_MEMORY_ALIGN, UI32 offset = 0)
 		{
 			//#if defined(DMK_DYNAMIK_MEMORY_USE_MALLOC)
 			//			free((VPTR)data.get());
@@ -51,8 +51,7 @@ namespace Dynamik {
 			//			delete[] data.get();
 			//
 			//#endif
-			data.~POINTER();
-			if (size)
+			if (size > 1)
 				operator delete[](data.get(), size);
 			else
 				operator delete[](data.get());
@@ -60,12 +59,18 @@ namespace Dynamik {
 
 		static void deAllocate(POINTER<TYPE> first, POINTER<TYPE> last)
 		{
-			operator delete[](first.get(), (size_t)(last.getAddressAsInteger() - first.getAddressAsInteger()));
+			operator delete[](first.get(), last.get());
 		}
 
 		static void set(POINTER<TYPE> address, TYPE&& value)
 		{
 			new ((VPTR)address.get()) TYPE(removeReference<TYPE&&>(value));
+		}
+
+		template<class SUB_TYPE = TYPE>
+		static SUB_TYPE* castedAllocate(UI32 size = 1, UI32 align = DMK_MEMORY_ALIGN, UI32 offset = 0)
+		{
+			return new SUB_TYPE(size);
 		}
 	};
 

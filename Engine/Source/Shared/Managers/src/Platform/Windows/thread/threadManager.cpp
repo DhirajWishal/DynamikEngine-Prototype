@@ -10,7 +10,7 @@
 */
 
 namespace Dynamik {
-	ThreadManager::ThreadManager() 
+	ThreadManager::ThreadManager()
 	{
 	}
 
@@ -36,7 +36,7 @@ namespace Dynamik {
 			_handles.push_back(std::async(std::launch::async, internalThread, thread.get()));
 	}
 
-	void ThreadManager::update(UI32 index, ThreadDataContainer container) 
+	void ThreadManager::update(UI32 index, ThreadDataContainer container)
 	{
 		if (index >= myThreadCount)
 			return;
@@ -55,7 +55,7 @@ namespace Dynamik {
 		while (!handler->loopEndCommand()) handler->loop();
 		handler->shutdown();
 	}
-	
+
 	bool ThreadManager::evaluateShutdown(ThreadTreminateReason reason)
 	{
 		return false;

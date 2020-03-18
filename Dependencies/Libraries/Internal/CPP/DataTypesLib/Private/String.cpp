@@ -164,7 +164,7 @@ namespace Dynamik {
 	// Return the character at a given index
 	CHR& STRING::operator[](I32 index)
 	{
-		// Calls the at(UI32) function to return the value 
+		// Calls the at(UI32) function to return the value
 		return this->at(index);
 	}
 

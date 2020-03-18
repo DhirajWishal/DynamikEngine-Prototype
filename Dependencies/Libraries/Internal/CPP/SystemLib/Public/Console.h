@@ -59,7 +59,6 @@ namespace Dynamik {
 					while (format[++_itr] != ']')
 						_myFormatString.push_back(format[_itr]);
 
-
 					if (_myFormatString == "UI8")
 						_myFinalString.append("%u ");
 					else if (_myFormatString == "UI16")

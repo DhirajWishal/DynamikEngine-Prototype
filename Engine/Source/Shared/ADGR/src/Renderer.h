@@ -28,7 +28,6 @@
 
 namespace Dynamik {
 	namespace ADGR {
-
 		/* RENDERER ABSTRACTION LAYER
 		 *
 		 */

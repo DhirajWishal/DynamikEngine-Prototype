@@ -48,7 +48,6 @@ namespace Dynamik {
 			_nodeAllocation->myPreviousNode = myLastNode;
 
 			if (myFirstNode.isValid()) {
-
 				myLastNode->myNextNode = _nodeAllocation;
 			}
 			else

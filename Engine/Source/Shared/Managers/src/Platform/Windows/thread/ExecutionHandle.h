@@ -22,7 +22,7 @@ namespace Dynamik {
 		ExecutionHandle(FUNC function, ARGS arguments) // default constructor
 		{
 			myThread.swap(std::thread(function, arguments));
-		}	
+		}
 		ExecutionHandle(POINTER<Thread> thread);	// default constructor
 		ExecutionHandle(std::thread thread);	// default constructor
 		ExecutionHandle(ExecutionHandle& myHandle);

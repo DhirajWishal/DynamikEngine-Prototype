@@ -27,7 +27,7 @@ namespace Dynamik {
 		 neurons.
 		*/
 		struct DMK_API NeuralConnection {
-			Neuron* myNeuron = nullptr;	// neuron 
+			Neuron* myNeuron = nullptr;	// neuron
 			F32 myWeight = 0.0f;	// neuron activation weight
 			F32 myBias = 0.0f;	// neuron activation bias
 		};

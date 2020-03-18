@@ -42,7 +42,7 @@ namespace Dynamik {
 
 		// obj file loader
 		//std::vector<DMKObjectDataContainer> loadObjFileData(std::string_view path);
-		 void loadObjFileData(InternalFormat* myInternalFormat = nullptr);
+		void loadObjFileData(InternalFormat* myInternalFormat = nullptr);
 	}
 }
 

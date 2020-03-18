@@ -43,7 +43,6 @@ namespace Dynamik {
 
 	typedef UI8 BYTE;					// byte of data
 	typedef BYTE* BPTR;					// byte pointer
-
 }
 #define DMK_UINT_8				::UI8
 #define DMK_UINT_16				::UI16

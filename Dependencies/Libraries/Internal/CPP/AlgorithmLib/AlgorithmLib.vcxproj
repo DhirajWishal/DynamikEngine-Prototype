@@ -15,10 +15,10 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{6141F30B-CDAB-A782-16EA-5828829385D7}</ProjectGuid>
+    <ProjectGuid>{8380E009-6FE3-6FAE-1869-A86404AB3B31}</ProjectGuid>
     <IgnoreWarnCompileDuplicatedFilename>true</IgnoreWarnCompileDuplicatedFilename>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>SystemLib</RootNamespace>
+    <RootNamespace>AlgorithmLib</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -55,20 +55,20 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <OutDir>$(SolutionDir)Builds\Dependencies\Libraries\Internal\CPP\Binaries\$(Configuration)-$(Platform)\</OutDir>
-    <IntDir>$(SolutionDir)Builds\Dependencies\Libraries\Internal\CPP\Intermediate\$(Configuration)-$(Platform)\$(ProjectName)\Debug\SystemLib\</IntDir>
-    <TargetName>SystemLib</TargetName>
+    <IntDir>$(SolutionDir)Builds\Dependencies\Libraries\Internal\CPP\Intermediate\$(Configuration)-$(Platform)\$(ProjectName)\Debug\AlgorithmLib\</IntDir>
+    <TargetName>AlgorithmLib</TargetName>
     <TargetExt>.lib</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>$(SolutionDir)Builds\Dependencies\Libraries\Internal\CPP\Binaries\$(Configuration)-$(Platform)\</OutDir>
-    <IntDir>$(SolutionDir)Builds\Dependencies\Libraries\Internal\CPP\Intermediate\$(Configuration)-$(Platform)\$(ProjectName)\Release\SystemLib\</IntDir>
-    <TargetName>SystemLib</TargetName>
+    <IntDir>$(SolutionDir)Builds\Dependencies\Libraries\Internal\CPP\Intermediate\$(Configuration)-$(Platform)\$(ProjectName)\Release\AlgorithmLib\</IntDir>
+    <TargetName>AlgorithmLib</TargetName>
     <TargetExt>.lib</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Distribution|x64'">
     <OutDir>$(SolutionDir)Builds\Dependencies\Libraries\Internal\CPP\Binaries\$(Configuration)-$(Platform)\</OutDir>
-    <IntDir>$(SolutionDir)Builds\Dependencies\Libraries\Internal\CPP\Intermediate\$(Configuration)-$(Platform)\$(ProjectName)\Distribution\SystemLib\</IntDir>
-    <TargetName>SystemLib</TargetName>
+    <IntDir>$(SolutionDir)Builds\Dependencies\Libraries\Internal\CPP\Intermediate\$(Configuration)-$(Platform)\$(ProjectName)\Distribution\AlgorithmLib\</IntDir>
+    <TargetName>AlgorithmLib</TargetName>
     <TargetExt>.lib</TargetExt>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -128,16 +128,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Public\Console.h" />
-    <ClInclude Include="Public\ErrorFlag.h" />
-    <ClInclude Include="SystemLib.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="Private\Console.cpp" />
-    <ClCompile Include="Private\ErrorFlag.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="SystemLib.lua" />
+    <None Include="AlgorithmLib.lua" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MemoryLib\MemoryLib.vcxproj">
@@ -146,6 +137,11 @@
     <ProjectReference Include="..\DataTypesLib\DataTypesLib.vcxproj">
       <Project>{6B37DFCD-579A-6E72-0020-A728EC613AF5}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="AlgorithmLib.h" />
+    <ClInclude Include="Public\Sort.h" />
+    <ClInclude Include="Public\Swap.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

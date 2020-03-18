@@ -158,6 +158,14 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Audio.lua" />
+    <None Include="media\MF-3DAYS.S3M" />
+    <None Include="media\MF-PANTS.MOD" />
+    <None Include="media\MF-W-90.XM" />
+    <None Include="media\bell.wav" />
+    <None Include="media\explosion.wav" />
+    <None Include="media\getout.ogg" />
+    <None Include="media\license.txt" />
+    <None Include="media\ophelia.mp3" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Events\Events.vcxproj">

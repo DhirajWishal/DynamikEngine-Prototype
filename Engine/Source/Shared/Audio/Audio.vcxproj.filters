@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
+    <Filter Include="media">
+      <UniqueIdentifier>{A588EC0F-119D-14C1-DA1E-B82046F210F2}</UniqueIdentifier>
+    </Filter>
     <Filter Include="src">
       <UniqueIdentifier>{2DAB880B-99B4-887C-2230-9F7C8E38947C}</UniqueIdentifier>
     </Filter>
@@ -54,5 +57,29 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Audio.lua" />
+    <None Include="media\MF-3DAYS.S3M">
+      <Filter>media</Filter>
+    </None>
+    <None Include="media\MF-PANTS.MOD">
+      <Filter>media</Filter>
+    </None>
+    <None Include="media\MF-W-90.XM">
+      <Filter>media</Filter>
+    </None>
+    <None Include="media\bell.wav">
+      <Filter>media</Filter>
+    </None>
+    <None Include="media\explosion.wav">
+      <Filter>media</Filter>
+    </None>
+    <None Include="media\getout.ogg">
+      <Filter>media</Filter>
+    </None>
+    <None Include="media\license.txt">
+      <Filter>media</Filter>
+    </None>
+    <None Include="media\ophelia.mp3">
+      <Filter>media</Filter>
+    </None>
   </ItemGroup>
 </Project>

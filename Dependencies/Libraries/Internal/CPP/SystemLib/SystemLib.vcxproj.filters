@@ -15,9 +15,6 @@
     <ClInclude Include="Public\ErrorFlag.h">
       <Filter>Public</Filter>
     </ClInclude>
-    <ClInclude Include="Public\Sort.h">
-      <Filter>Public</Filter>
-    </ClInclude>
     <ClInclude Include="SystemLib.h" />
   </ItemGroup>
   <ItemGroup>

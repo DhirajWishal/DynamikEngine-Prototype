@@ -1,6 +1,6 @@
 #pragma once
-#ifndef _DYNAMIK_SYSTEM_SORT_H
-#define _DYNAMIK_SYSTEM_SORT_H
+#ifndef _DYNAMIK_ALGORITHM_SORT_H
+#define _DYNAMIK_ALGORITHM_SORT_H
 
 #include "DataTypesLib/Public/datatypes.h"
 #include "DataTypesLib/Public/Array.h"

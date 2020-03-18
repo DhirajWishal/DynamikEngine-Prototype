@@ -1,28 +1,26 @@
----------- LibWorkbench project description ----------
+---------- AlgorithmLib project description ----------
 
-project "LibWorkbench"
-	kind "ConsoleApp"
+project "AlgorithmLib"
+	kind "StaticLib"
 	cppdialect "C++17"
 	language "C++"
+	staticruntime "On"
 
 	targetdir "$(SolutionDir)Builds/Dependencies/Libraries/Internal/CPP/Binaries/$(Configuration)-$(Platform)"
 	objdir "$(SolutionDir)Builds/Dependencies/Libraries/Internal/CPP/Intermediate/$(Configuration)-$(Platform)/$(ProjectName)"
-
-	pchheader "wbafx.h"
-	pchsource "wbafx.cpp"
 
 	files {
 		"**.txt",
 		"**.cpp",
 		"**.h",
+		"Private/**.cpp",
+		"Public/**.h",
 		"**.lua"
 	}
 
 	links {
 		"MemoryLib",
 		"DataTypesLib",
-		"SystemLib",
-		"AlgorithmLib",
 	}
 
 	includedirs {
@@ -33,7 +31,8 @@ project "LibWorkbench"
 		systemversion "latest"
 
 		defines {
-			"DMK_PLATFORM_WINDOWS"
+			"DMK_PLATFORM_WINDOWS",
+			"DMK_BUILD_LIB",
 		}
 
 	filter "configurations:Debug"

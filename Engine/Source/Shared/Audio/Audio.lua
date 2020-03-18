@@ -9,11 +9,14 @@ project "Audio"
 	targetdir "$(SolutionDir)Builds/Engine/Binaries/$(Configuration)-$(Platform)"
 	objdir "$(SolutionDir)Builds/Engine/Intermediate/$(Configuration)-$(Platform)/$(ProjectName)"
 
-	--pchheader "adgrafx.h"
-	--pchsource "src/adgrafx.cpp"
-
 	files {
-		"**.h",
+		"**.wav",
+		"**.ogg",
+		"**.txt",
+		"**.S3M",
+		"**.MOD",
+		"**.XM",
+		"**.mp3",
 		"**.hh",
 		"**.cpp",
 		"src/**.h",

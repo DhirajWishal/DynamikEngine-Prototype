@@ -42,7 +42,12 @@ project "Networking"
 		"%{IncludeDir.tol}",
 		"%{IncludeDir.irrKlang}",
 		"%{IncludeDir.assimp}",
-		"%{IncludeDir.Vulkan}"
+		"%{IncludeDir.Vulkan}",
+		DynamikInternalLibsPath
+	}
+
+	libdirs {
+		DynamikInternalBinaries
 	}
 
 	links { 
@@ -50,7 +55,11 @@ project "Networking"
 		"Platform",
 		"Managers",
 		"CentralDataHub",
-		"Debugger"
+		"Debugger",
+
+		"DataTypesLib",
+		"MemoryLib",
+		"SystemLib",
 	}
 
 	filter "system:windows"

@@ -59,6 +59,12 @@ DynamikSharedIncludes["Intellect"] =	"$(SolutionDir)Builds/Engine/$(Configuratio
 DynamikSharedIncludes["Managers"] =		"$(SolutionDir)Builds/Engine/$(Configuration)-$(Platform)"
 DynamikSharedIncludes["Networking"] =	"$(SolutionDir)Builds/Engine/$(Configuration)-$(Platform)"
 
+--Dynamik Internal Library Paths
+DynamikInternalLibsPath = "$(SolutionDir)Dependencies/Libraries/Internal/CPP"
+DynamikInternalBinaries = "$(SolutionDir)Builds/Dependencies/Libraries/Internal/CPP/Binaries"
+
+include "Dependencies/Libraries/Internal/Internal.lua"
+
 include "Dependencies/Programs/Debugger/Debugger.lua"
 include "Dependencies/Programs/DevConsole/DevCon.lua"
 

@@ -1,0 +1,23 @@
+#pragma once
+
+#ifndef _DYNAMIK_DATA_TYPES_CONSTANTS_H
+#define _DYNAMIK_DATA_TYPES_CONSTANTS_H
+
+#define DMK_RESULT_SUCCESSFUL		1
+#define DMK_RESULT_UNSUCCESSFUL		0
+
+#define DMK_STRING_MATCH_NOT_FOUND	-1
+#define DMK_STRING_INVALID_INDEX	'\0'
+
+#ifdef DMK_FULL_MEMORY_ALIGN
+#define DMK_MEMORY_ALIGN			8	// 8 bytes (64 bit)
+
+#else
+#define DMK_MEMORY_ALIGN			4	// 4 bytes (32 bit)
+
+#endif
+
+#define DMK_MEMORY_USE_MALLOC
+//#define DMK_MEMORY_USE_NEW
+
+#endif

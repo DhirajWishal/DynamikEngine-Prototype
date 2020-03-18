@@ -20,15 +20,7 @@
 #include "Windows/file/fileManager.h"
 #include "Windows/file/readFile.h"
 
-#include "Windows/memory/Allocator.h"
-#include "Windows/memory/doubleBufferedAllocator.h"
-#include "Windows/memory/doubleBufferedPoolAllocator.h"
-#include "Windows/memory/doubleBufferedStackAllocator.h"
-#include "Windows/memory/memoryFunctions.h"
-#include "Windows/memory/memoryManager.h"
-#include "Windows/memory/oneTimeAllocator.h"
-#include "Windows/memory/poolAllocator.h"
-#include "Windows/memory/stackAllocator.h"
+#include "MemoryLib/MemoryLib.h"
 
 #include "Windows/resource/imageLoader.h"
 #include "Windows/resource/loadIcon.h"

@@ -15,6 +15,11 @@ namespace Dynamik {
 		myThread.swap(thread);
 	}
 
+	ExecutionHandle::ExecutionHandle(ExecutionHandle& myHandle)
+	{
+		myThread.swap(myHandle.myThread);
+	}
+
 	ExecutionHandle::~ExecutionHandle()
 	{
 		myThread.join();

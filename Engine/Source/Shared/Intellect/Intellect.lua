@@ -42,13 +42,15 @@ project "Intellect"
 		"%{IncludeDir.tol}",
 		"%{IncludeDir.irrKlang}",
 		"%{IncludeDir.assimp}",
-		"%{IncludeDir.Vulkan}"
+		"%{IncludeDir.Vulkan}",
+		DynamikInternalLibsPath
 	}
 
 	libdirs {
 		"%{IncludeLib.GLFW}",
 		"%{IncludeLib.GLEW}",
-		"%{IncludeLib.Vulkan}"
+		"%{IncludeLib.Vulkan}",
+		DynamikInternalBinaries
 	}
 
 	links { 
@@ -61,7 +63,11 @@ project "Intellect"
 		"Managers",
 		"CentralDataHub",
 		"Utilities",
-		"Debugger"
+		"Debugger",
+
+		"DataTypesLib",
+		"MemoryLib",
+		"SystemLib",
 	}
 
 	filter "system:windows"

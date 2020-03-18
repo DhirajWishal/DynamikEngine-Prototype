@@ -27,7 +27,7 @@ namespace Dynamik {
 		void init() override;
 		void loop() override;
 		B1 loopEndCommand() override;
-		void shutdown() override;
+		ThreadTreminateReason shutdown() override;
 
 	private:
 		InternalThreadDataContainer myDataContainer;

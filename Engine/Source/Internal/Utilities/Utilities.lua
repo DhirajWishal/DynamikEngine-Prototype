@@ -39,21 +39,27 @@ project "Utilities"
 		"%{IncludeDir.tol}",
 		"%{IncludeDir.irrKlang}",
 		"%{IncludeDir.assimp}",
-		"%{IncludeDir.Vulkan}"
+		"%{IncludeDir.Vulkan}",
+		DynamikInternalLibsPath
 	}
 
 	libdirs {
 		"%{IncludeLib.irrKlang}",
 		"%{IncludeLib.GLFW}",
 		"%{IncludeLib.GLEW}",
-		"%{IncludeLib.Vulkan}"
+		"%{IncludeLib.Vulkan}",
+		DynamikInternalBinaries
 	}
 
 	links { 
 		"glfw3dll",
 		"opengl32",
 		"vulkan-1",
-		"Debugger"
+		"Debugger",
+
+		"DataTypesLib",
+		"MemoryLib",
+		"SystemLib",
 	}
 
 	filter "system:windows"

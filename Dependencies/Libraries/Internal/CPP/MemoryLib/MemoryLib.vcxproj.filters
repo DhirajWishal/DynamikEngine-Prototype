@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Private">
+      <UniqueIdentifier>{001F8D23-6CFE-0BBF-7516-9795E1747220}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Public">
+      <UniqueIdentifier>{8480F8CA-7022-23A1-59DD-36F5451EAAF1}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="MemoryLib.h" />
+    <ClInclude Include="Public\Allocator.h">
+      <Filter>Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Public\StaticAllocator.h">
+      <Filter>Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Public\doubleBufferedAllocator.h">
+      <Filter>Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Public\doubleBufferedPoolAllocator.h">
+      <Filter>Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Public\doubleBufferedStackAllocator.h">
+      <Filter>Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Public\memoryFunctions.h">
+      <Filter>Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Public\memoryManager.h">
+      <Filter>Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Public\oneTimeAllocator.h">
+      <Filter>Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Public\poolAllocator.h">
+      <Filter>Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Public\stackAllocator.h">
+      <Filter>Public</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Private\Allocator.cpp">
+      <Filter>Private</Filter>
+    </ClCompile>
+    <ClCompile Include="Private\doubleBufferedAllocator.cpp">
+      <Filter>Private</Filter>
+    </ClCompile>
+    <ClCompile Include="Private\doubleBufferedPoolAllocator.cpp">
+      <Filter>Private</Filter>
+    </ClCompile>
+    <ClCompile Include="Private\doubleBufferedStackAllocator.cpp">
+      <Filter>Private</Filter>
+    </ClCompile>
+    <ClCompile Include="Private\memoryManager.cpp">
+      <Filter>Private</Filter>
+    </ClCompile>
+    <ClCompile Include="Private\oneTimeAllocator.cpp">
+      <Filter>Private</Filter>
+    </ClCompile>
+    <ClCompile Include="Private\poolAllocator.cpp">
+      <Filter>Private</Filter>
+    </ClCompile>
+    <ClCompile Include="Private\stackAllocator.cpp">
+      <Filter>Private</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="MemoryLib.lua" />
+  </ItemGroup>
+</Project>

@@ -41,14 +41,16 @@ project "Dynamik"
 		"%{IncludeDir.tol}",
 		"%{IncludeDir.irrKlang}",
 		"%{IncludeDir.assimp}",
-		"%{IncludeDir.Vulkan}"
+		"%{IncludeDir.Vulkan}",
+		DynamikInternalLibsPath
 	}
 
 	libdirs {
 		"%{IncludeLib.irrKlang}",
 		"%{IncludeLib.GLFW}",
 		"%{IncludeLib.GLEW}",
-		"%{IncludeLib.Vulkan}"
+		"%{IncludeLib.Vulkan}",
+		DynamikInternalBinaries
 	}
 
 	links { 
@@ -64,7 +66,11 @@ project "Dynamik"
 		"CentralDataHub",
 		"Managers",
 		"Utilities",
-		"Networking"
+		"Networking",
+
+		"DataTypesLib",
+		"MemoryLib",
+		"SystemLib",
 	}
 
 	filter "system:windows"

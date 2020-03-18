@@ -79,7 +79,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>DMK_PLATFORM_WINDOWS;DMK_BUILD_DLL;DMK_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\Libraries\Local;$(SolutionDir)Engine\Source\Runtime\src;$(SolutionDir)Engine\Source\Runtime\GameLibraries;$(SolutionDir)Engine\Source\Shared\ADGR\src;$(SolutionDir)Engine\Source\Shared\Audio\src;$(SolutionDir)Engine\Source\Shared\Intellect\src;$(SolutionDir)Engine\Source\Shared\Events\src;$(SolutionDir)Engine\Source\Shared\Managers\src;$(SolutionDir)Engine\Source\Shared\Networking\src;$(SolutionDir)Dependencies\Programs\DevConsole\src;$(SolutionDir)Dependencies\Programs\Debugger\src;$(SolutionDir)Engine\Source\Internal\Platform\src;$(SolutionDir)Engine\Source\Internal\Utilities\src;$(SolutionDir)Engine\Source\Internal\CentralDataHub\src;$(SolutionDir)Dependencies\Libraries\External\glfw\include;$(SolutionDir)Dependencies\GLEW\include;$(SolutionDir)Dependencies\Libraries\External\glm;$(SolutionDir)Dependencies\Libraries\External\stb;$(SolutionDir)Dependencies\Libraries\External\tinyobjloader;$(SolutionDir)Dependencies\Libraries\Local\irrKlang\include;$(SolutionDir)Dependencies\Libraries\Local\assimp;$(SolutionDir)Dependencies\Libraries\External\Vulkan\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\Libraries\Local;$(SolutionDir)Engine\Source\Runtime\src;$(SolutionDir)Engine\Source\Runtime\GameLibraries;$(SolutionDir)Engine\Source\Shared\ADGR\src;$(SolutionDir)Engine\Source\Shared\Audio\src;$(SolutionDir)Engine\Source\Shared\Intellect\src;$(SolutionDir)Engine\Source\Shared\Events\src;$(SolutionDir)Engine\Source\Shared\Managers\src;$(SolutionDir)Engine\Source\Shared\Networking\src;$(SolutionDir)Dependencies\Programs\DevConsole\src;$(SolutionDir)Dependencies\Programs\Debugger\src;$(SolutionDir)Engine\Source\Internal\Platform\src;$(SolutionDir)Engine\Source\Internal\Utilities\src;$(SolutionDir)Engine\Source\Internal\CentralDataHub\src;$(SolutionDir)Dependencies\Libraries\External\glfw\include;$(SolutionDir)Dependencies\GLEW\include;$(SolutionDir)Dependencies\Libraries\External\glm;$(SolutionDir)Dependencies\Libraries\External\stb;$(SolutionDir)Dependencies\Libraries\External\tinyobjloader;$(SolutionDir)Dependencies\Libraries\Local\irrKlang\include;$(SolutionDir)Dependencies\Libraries\Local\assimp;$(SolutionDir)Dependencies\Libraries\External\Vulkan\include;$(SolutionDir)Dependencies\Libraries\Internal\CPP;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
@@ -89,7 +89,7 @@
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>irrKlang.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)Dependencies\Libraries\Binaries\irrKlang;$(SolutionDir)Dependencies\Libraries\Binaries\GLFW\lib-vc2019;$(SolutionDir)Dependencies\Libraries\Binaries\GLEW\Release\x64;$(SolutionDir)Dependencies\Libraries\Binaries\Vulkan;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)Dependencies\Libraries\Binaries\irrKlang;$(SolutionDir)Dependencies\Libraries\Binaries\GLFW\lib-vc2019;$(SolutionDir)Dependencies\Libraries\Binaries\GLEW\Release\x64;$(SolutionDir)Dependencies\Libraries\Binaries\Vulkan;$(SolutionDir)Builds\Dependencies\Libraries\Internal\CPP\Binaries;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ImportLibrary>$(SolutionDir)Builds\Engine\Binaries\$(Configuration)-$(Platform)\Audio.lib</ImportLibrary>
     </Link>
   </ItemDefinitionGroup>
@@ -98,7 +98,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>DMK_PLATFORM_WINDOWS;DMK_BUILD_DLL;DMK_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\Libraries\Local;$(SolutionDir)Engine\Source\Runtime\src;$(SolutionDir)Engine\Source\Runtime\GameLibraries;$(SolutionDir)Engine\Source\Shared\ADGR\src;$(SolutionDir)Engine\Source\Shared\Audio\src;$(SolutionDir)Engine\Source\Shared\Intellect\src;$(SolutionDir)Engine\Source\Shared\Events\src;$(SolutionDir)Engine\Source\Shared\Managers\src;$(SolutionDir)Engine\Source\Shared\Networking\src;$(SolutionDir)Dependencies\Programs\DevConsole\src;$(SolutionDir)Dependencies\Programs\Debugger\src;$(SolutionDir)Engine\Source\Internal\Platform\src;$(SolutionDir)Engine\Source\Internal\Utilities\src;$(SolutionDir)Engine\Source\Internal\CentralDataHub\src;$(SolutionDir)Dependencies\Libraries\External\glfw\include;$(SolutionDir)Dependencies\GLEW\include;$(SolutionDir)Dependencies\Libraries\External\glm;$(SolutionDir)Dependencies\Libraries\External\stb;$(SolutionDir)Dependencies\Libraries\External\tinyobjloader;$(SolutionDir)Dependencies\Libraries\Local\irrKlang\include;$(SolutionDir)Dependencies\Libraries\Local\assimp;$(SolutionDir)Dependencies\Libraries\External\Vulkan\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\Libraries\Local;$(SolutionDir)Engine\Source\Runtime\src;$(SolutionDir)Engine\Source\Runtime\GameLibraries;$(SolutionDir)Engine\Source\Shared\ADGR\src;$(SolutionDir)Engine\Source\Shared\Audio\src;$(SolutionDir)Engine\Source\Shared\Intellect\src;$(SolutionDir)Engine\Source\Shared\Events\src;$(SolutionDir)Engine\Source\Shared\Managers\src;$(SolutionDir)Engine\Source\Shared\Networking\src;$(SolutionDir)Dependencies\Programs\DevConsole\src;$(SolutionDir)Dependencies\Programs\Debugger\src;$(SolutionDir)Engine\Source\Internal\Platform\src;$(SolutionDir)Engine\Source\Internal\Utilities\src;$(SolutionDir)Engine\Source\Internal\CentralDataHub\src;$(SolutionDir)Dependencies\Libraries\External\glfw\include;$(SolutionDir)Dependencies\GLEW\include;$(SolutionDir)Dependencies\Libraries\External\glm;$(SolutionDir)Dependencies\Libraries\External\stb;$(SolutionDir)Dependencies\Libraries\External\tinyobjloader;$(SolutionDir)Dependencies\Libraries\Local\irrKlang\include;$(SolutionDir)Dependencies\Libraries\Local\assimp;$(SolutionDir)Dependencies\Libraries\External\Vulkan\include;$(SolutionDir)Dependencies\Libraries\Internal\CPP;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -112,7 +112,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalDependencies>irrKlang.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)Dependencies\Libraries\Binaries\irrKlang;$(SolutionDir)Dependencies\Libraries\Binaries\GLFW\lib-vc2019;$(SolutionDir)Dependencies\Libraries\Binaries\GLEW\Release\x64;$(SolutionDir)Dependencies\Libraries\Binaries\Vulkan;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)Dependencies\Libraries\Binaries\irrKlang;$(SolutionDir)Dependencies\Libraries\Binaries\GLFW\lib-vc2019;$(SolutionDir)Dependencies\Libraries\Binaries\GLEW\Release\x64;$(SolutionDir)Dependencies\Libraries\Binaries\Vulkan;$(SolutionDir)Builds\Dependencies\Libraries\Internal\CPP\Binaries;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ImportLibrary>$(SolutionDir)Builds\Engine\Binaries\$(Configuration)-$(Platform)\Audio.lib</ImportLibrary>
     </Link>
   </ItemDefinitionGroup>
@@ -121,7 +121,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>DMK_PLATFORM_WINDOWS;DMK_BUILD_DLL;DMK_DISTRIBUTION;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\Libraries\Local;$(SolutionDir)Engine\Source\Runtime\src;$(SolutionDir)Engine\Source\Runtime\GameLibraries;$(SolutionDir)Engine\Source\Shared\ADGR\src;$(SolutionDir)Engine\Source\Shared\Audio\src;$(SolutionDir)Engine\Source\Shared\Intellect\src;$(SolutionDir)Engine\Source\Shared\Events\src;$(SolutionDir)Engine\Source\Shared\Managers\src;$(SolutionDir)Engine\Source\Shared\Networking\src;$(SolutionDir)Dependencies\Programs\DevConsole\src;$(SolutionDir)Dependencies\Programs\Debugger\src;$(SolutionDir)Engine\Source\Internal\Platform\src;$(SolutionDir)Engine\Source\Internal\Utilities\src;$(SolutionDir)Engine\Source\Internal\CentralDataHub\src;$(SolutionDir)Dependencies\Libraries\External\glfw\include;$(SolutionDir)Dependencies\GLEW\include;$(SolutionDir)Dependencies\Libraries\External\glm;$(SolutionDir)Dependencies\Libraries\External\stb;$(SolutionDir)Dependencies\Libraries\External\tinyobjloader;$(SolutionDir)Dependencies\Libraries\Local\irrKlang\include;$(SolutionDir)Dependencies\Libraries\Local\assimp;$(SolutionDir)Dependencies\Libraries\External\Vulkan\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\Libraries\Local;$(SolutionDir)Engine\Source\Runtime\src;$(SolutionDir)Engine\Source\Runtime\GameLibraries;$(SolutionDir)Engine\Source\Shared\ADGR\src;$(SolutionDir)Engine\Source\Shared\Audio\src;$(SolutionDir)Engine\Source\Shared\Intellect\src;$(SolutionDir)Engine\Source\Shared\Events\src;$(SolutionDir)Engine\Source\Shared\Managers\src;$(SolutionDir)Engine\Source\Shared\Networking\src;$(SolutionDir)Dependencies\Programs\DevConsole\src;$(SolutionDir)Dependencies\Programs\Debugger\src;$(SolutionDir)Engine\Source\Internal\Platform\src;$(SolutionDir)Engine\Source\Internal\Utilities\src;$(SolutionDir)Engine\Source\Internal\CentralDataHub\src;$(SolutionDir)Dependencies\Libraries\External\glfw\include;$(SolutionDir)Dependencies\GLEW\include;$(SolutionDir)Dependencies\Libraries\External\glm;$(SolutionDir)Dependencies\Libraries\External\stb;$(SolutionDir)Dependencies\Libraries\External\tinyobjloader;$(SolutionDir)Dependencies\Libraries\Local\irrKlang\include;$(SolutionDir)Dependencies\Libraries\Local\assimp;$(SolutionDir)Dependencies\Libraries\External\Vulkan\include;$(SolutionDir)Dependencies\Libraries\Internal\CPP;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -135,7 +135,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalDependencies>irrKlang.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)Dependencies\Libraries\Binaries\irrKlang;$(SolutionDir)Dependencies\Libraries\Binaries\GLFW\lib-vc2019;$(SolutionDir)Dependencies\Libraries\Binaries\GLEW\Release\x64;$(SolutionDir)Dependencies\Libraries\Binaries\Vulkan;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)Dependencies\Libraries\Binaries\irrKlang;$(SolutionDir)Dependencies\Libraries\Binaries\GLFW\lib-vc2019;$(SolutionDir)Dependencies\Libraries\Binaries\GLEW\Release\x64;$(SolutionDir)Dependencies\Libraries\Binaries\Vulkan;$(SolutionDir)Builds\Dependencies\Libraries\Internal\CPP\Binaries;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ImportLibrary>$(SolutionDir)Builds\Engine\Binaries\$(Configuration)-$(Platform)\Audio.lib</ImportLibrary>
     </Link>
   </ItemDefinitionGroup>
@@ -168,6 +168,15 @@
     </ProjectReference>
     <ProjectReference Include="..\..\..\..\Dependencies\Programs\Debugger\Debugger.vcxproj">
       <Project>{2ACD0289-169A-5D94-3FB3-4B3C2BDF9222}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\Dependencies\Libraries\Internal\CPP\DataTypesLib\DataTypesLib.vcxproj">
+      <Project>{6B37DFCD-579A-6E72-0020-A728EC613AF5}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\Dependencies\Libraries\Internal\CPP\MemoryLib\MemoryLib.vcxproj">
+      <Project>{35954E03-A1FF-027A-EA3D-B41F56E7E0CE}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\Dependencies\Libraries\Internal\CPP\SystemLib\SystemLib.vcxproj">
+      <Project>{6141F30B-CDAB-A782-16EA-5828829385D7}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

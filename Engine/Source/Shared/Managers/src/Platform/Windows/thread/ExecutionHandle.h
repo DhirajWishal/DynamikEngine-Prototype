@@ -14,11 +14,18 @@ namespace Dynamik {
 	class ExecutionHandle {
 	public:
 		template<class FUNC>
-		ExecutionHandle(FUNC function) : myThread(std::thread(function)) {}	// default constructor
+		ExecutionHandle(FUNC function)	// default constructor
+		{
+			myThread.swap(std::thread(function));
+		}
 		template<class FUNC, class ARGS>
-		ExecutionHandle(FUNC function, ARGS arguments) : myThread(std::thread(function, arguments)) {}	// default constructor
+		ExecutionHandle(FUNC function, ARGS arguments) // default constructor
+		{
+			myThread.swap(std::thread(function, arguments));
+		}	
 		ExecutionHandle(POINTER<Thread> thread);	// default constructor
 		ExecutionHandle(std::thread thread);	// default constructor
+		ExecutionHandle(ExecutionHandle& myHandle);
 		~ExecutionHandle();	// default destructor
 
 		POINTER<std::thread> getThreadAddr() { return &myThread; }	// return the address of the thread

@@ -13,9 +13,6 @@
     <Filter Include="src\Platform\Windows\file">
       <UniqueIdentifier>{8AD10137-F693-35C1-3F44-C44DAB450E9F}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\Platform\Windows\memory">
-      <UniqueIdentifier>{83DCC80E-EFE9-F6F4-78D0-F2DFE4DCC2AB}</UniqueIdentifier>
-    </Filter>
     <Filter Include="src\Platform\Windows\resource">
       <UniqueIdentifier>{F2B9BB8F-5ED2-A2B9-277F-325393563753}</UniqueIdentifier>
     </Filter>
@@ -41,30 +38,6 @@
     </ClInclude>
     <ClInclude Include="src\Platform\Windows\file\readFile.h">
       <Filter>src\Platform\Windows\file</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Platform\Windows\memory\Allocator.h">
-      <Filter>src\Platform\Windows\memory</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Platform\Windows\memory\doubleBufferedAllocator.h">
-      <Filter>src\Platform\Windows\memory</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Platform\Windows\memory\doubleBufferedPoolAllocator.h">
-      <Filter>src\Platform\Windows\memory</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Platform\Windows\memory\doubleBufferedStackAllocator.h">
-      <Filter>src\Platform\Windows\memory</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Platform\Windows\memory\memoryManager.h">
-      <Filter>src\Platform\Windows\memory</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Platform\Windows\memory\oneTimeAllocator.h">
-      <Filter>src\Platform\Windows\memory</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Platform\Windows\memory\poolAllocator.h">
-      <Filter>src\Platform\Windows\memory</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Platform\Windows\memory\stackAllocator.h">
-      <Filter>src\Platform\Windows\memory</Filter>
     </ClInclude>
     <ClInclude Include="src\Platform\Windows\resource\imageLoader.h">
       <Filter>src\Platform\Windows\resource</Filter>
@@ -96,8 +69,6 @@
     <ClInclude Include="src\mngafx.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="src\Platform\Windows\memory\StaticAllocator.h" />
-    <ClInclude Include="src\Platform\Windows\memory\memoryFunctions.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Platform\Windows\file\daiFileManager.cpp">
@@ -111,30 +82,6 @@
     </ClCompile>
     <ClCompile Include="src\Platform\Windows\file\readFile.cpp">
       <Filter>src\Platform\Windows\file</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Platform\Windows\memory\Allocator.cpp">
-      <Filter>src\Platform\Windows\memory</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Platform\Windows\memory\doubleBufferedAllocator.cpp">
-      <Filter>src\Platform\Windows\memory</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Platform\Windows\memory\doubleBufferedPoolAllocator.cpp">
-      <Filter>src\Platform\Windows\memory</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Platform\Windows\memory\doubleBufferedStackAllocator.cpp">
-      <Filter>src\Platform\Windows\memory</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Platform\Windows\memory\memoryManager.cpp">
-      <Filter>src\Platform\Windows\memory</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Platform\Windows\memory\oneTimeAllocator.cpp">
-      <Filter>src\Platform\Windows\memory</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Platform\Windows\memory\poolAllocator.cpp">
-      <Filter>src\Platform\Windows\memory</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Platform\Windows\memory\stackAllocator.cpp">
-      <Filter>src\Platform\Windows\memory</Filter>
     </ClCompile>
     <ClCompile Include="src\Platform\Windows\resource\imageLoader.cpp">
       <Filter>src\Platform\Windows\resource</Filter>

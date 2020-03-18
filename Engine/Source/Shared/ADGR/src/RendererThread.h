@@ -9,6 +9,9 @@ namespace Dynamik {
 	struct DMK_API RendererThreadDataContianer : public ThreadDataContainer {
 	};
 
+	/* BASE: Thread
+	 * Rendering engine thread.
+	 */
 	class DMK_API RendererThread : public Thread {
 	public:
 		RendererThread() {}
@@ -16,7 +19,7 @@ namespace Dynamik {
 
 		void init() override;
 		void loop() override;
-		void shutdown() override;
+		ThreadTreminateReason shutdown() override;
 		B1 loopEndCommand() override;
 
 		void addProgress(UI32* progress);

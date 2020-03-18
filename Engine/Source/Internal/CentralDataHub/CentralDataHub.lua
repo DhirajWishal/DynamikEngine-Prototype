@@ -42,21 +42,28 @@ project "CentralDataHub"
 		"%{IncludeDir.tol}",
 		"%{IncludeDir.irrKlang}",
 		"%{IncludeDir.assimp}",
-		"%{IncludeDir.Vulkan}"
+		"%{IncludeDir.Vulkan}",
+		DynamikInternalLibsPath
 	}
 
 	libdirs {
 		"%{IncludeLib.irrKlang}",
 		"%{IncludeLib.GLFW}",
 		"%{IncludeLib.GLEW}",
-		"%{IncludeLib.Vulkan}"
+		"%{IncludeLib.Vulkan}",
+		DynamikInternalBinaries
 	}
 
 	links { 
 		"Utilities",
+		"Managers",
 		"glfw3dll",
 		"opengl32",
-		"vulkan-1"
+		"vulkan-1",
+
+		"DataTypesLib",
+		"MemoryLib",
+		"SystemLib",
 	}
 
 	filter "system:windows"

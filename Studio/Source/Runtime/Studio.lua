@@ -37,7 +37,8 @@ project "Studio"
 		"%{IncludeDir.tol}",
 		"%{IncludeDir.irrKlang}",
 		"%{IncludeDir.assimp}",
-		"%{IncludeDir.Vulkan}"
+		"%{IncludeDir.Vulkan}",
+		DynamikInternalLibsPath
 	}
 
 	libdirs {
@@ -50,7 +51,8 @@ project "Studio"
 
 		"%{IncludeLib.GLFW}",
 		"%{IncludeLib.GLEW}",
-		"%{IncludeLib.Vulkan}"
+		"%{IncludeLib.Vulkan}",
+		DynamikInternalBinaries
 	}
 
 	links { 
@@ -58,6 +60,10 @@ project "Studio"
 		"glew32s",
 		"opengl32",
 		"vulkan-1",
+
+		"DataTypesLib",
+		"MemoryLib",
+		"SystemLib",
 	}
 
 	filter "system:windows"

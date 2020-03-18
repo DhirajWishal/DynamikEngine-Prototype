@@ -6,6 +6,14 @@
 #include "Platform.h"
 
 namespace Dynamik {
+	enum class DMK_API ThreadTreminateReason {
+		NORMAL_TERMINATION,
+		TIMEOUT,
+		INETERUPT,
+		IO_REQUEST,
+		CLOSE_EVENT
+	};
+
 	/*
 	 THREAD DATA CONTAINER (SUPER/ BASE/ PARENT CLASS)
 	*/
@@ -26,7 +34,7 @@ namespace Dynamik {
 		virtual void init() {}	// virtual init function
 		virtual void loop() {}	// virtual main loop function
 		virtual B1 loopEndCommand() { return terminate; }	// virtual end loop command
-		virtual void shutdown() {}	// virtual shutdown function
+		virtual ThreadTreminateReason shutdown() { return ThreadTreminateReason::NORMAL_TERMINATION; }	// virtual shutdown function
 
 		void setIndex(UI32 index) { myThreadIndex = index; }	// set index
 		UI32 getIndex() { return myThreadIndex; }	// get current index

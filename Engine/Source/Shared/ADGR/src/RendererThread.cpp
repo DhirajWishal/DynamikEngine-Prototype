@@ -17,15 +17,18 @@ namespace Dynamik {
 		myRenderer.draw();
 	}
 
-	void RendererThread::shutdown()
+	ThreadTreminateReason RendererThread::shutdown()
 	{
 		myRenderer.idleCall();
 		myRenderer.end();
+
+		return ThreadTreminateReason::NORMAL_TERMINATION;
 	}
 
 	B1 RendererThread::loopEndCommand()
 	{
-		return myRenderer.getWindowCloseEvent();;
+		terminate = myRenderer.getWindowCloseEvent();
+		return terminate;
 	}
 
 	void RendererThread::addProgress(UI32* progress)

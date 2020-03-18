@@ -10,7 +10,8 @@
 */
 
 namespace Dynamik {
-	ThreadManager::ThreadManager() {
+	ThreadManager::ThreadManager() 
+	{
 	}
 
 	void ThreadManager::add(POINTER<Thread> myThread)
@@ -29,13 +30,14 @@ namespace Dynamik {
 
 	void ThreadManager::runAll()
 	{
-	//	std::vector<ExecutionHandle> _handles;
-	//	_handles.push_back(&ExecutionHandle(internalThread, &myInternalThreadHandler));
-	//	for (POINTER<Thread> thread : myThreadContainer)
-	//		_handles.push_back(&ExecutionHandle(runThread, thread.get()));
+		ARRAY<std::future<void>> _handles(myThreadContainer.size() + 1);
+		_handles.push_back(std::async(std::launch::async, internalThread, &myInternalThreadHandler));
+		for (POINTER<Thread> thread : myThreadContainer)
+			_handles.push_back(std::async(std::launch::async, internalThread, thread.get()));
 	}
 
-	void ThreadManager::update(UI32 index, ThreadDataContainer container) {
+	void ThreadManager::update(UI32 index, ThreadDataContainer container) 
+	{
 		if (index >= myThreadCount)
 			return;
 	}
@@ -52,5 +54,10 @@ namespace Dynamik {
 		handler->init();
 		while (!handler->loopEndCommand()) handler->loop();
 		handler->shutdown();
+	}
+	
+	bool ThreadManager::evaluateShutdown(ThreadTreminateReason reason)
+	{
+		return false;
 	}
 }

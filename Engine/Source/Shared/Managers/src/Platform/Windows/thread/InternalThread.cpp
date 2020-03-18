@@ -18,8 +18,9 @@ namespace Dynamik {
 		return false;
 	}
 
-	void InternalThreadHandler::shutdown()
+	ThreadTreminateReason InternalThreadHandler::shutdown()
 	{
 		DMK_CORE_INFO("Internal Thread Handler Shutdowns!");
+		return ThreadTreminateReason::NORMAL_TERMINATION;
 	}
 }

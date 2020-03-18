@@ -10,6 +10,7 @@
 */
 
 #include "DMK_Functions.h"
+#include <codecvt>
 
 namespace Dynamik {
 	namespace utils {

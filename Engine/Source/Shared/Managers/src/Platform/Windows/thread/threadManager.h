@@ -6,7 +6,7 @@
 
 #include "Thread.h"
 #include "InternalThread.h"
-#include "core/types/Pointer.h"
+#include "DataTypesLib/Public/Pointer.h"
 
 namespace Dynamik {
 	/*
@@ -26,6 +26,7 @@ namespace Dynamik {
 	private:
 		static void runThread(POINTER<Thread> thread);	// internal run thread function
 		static void internalThread(POINTER<InternalThreadHandler> handler);	// internal thread function
+		static bool evaluateShutdown(ThreadTreminateReason reason);	// evaluate why the process terminated.
 
 		std::vector<POINTER<Thread>> myThreadContainer;	// thread container
 		UI32 myThreadCount = 0;	// thread count

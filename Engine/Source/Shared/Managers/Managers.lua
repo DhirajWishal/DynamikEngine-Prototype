@@ -42,14 +42,22 @@ project "Managers"
 		"%{IncludeDir.tol}",
 		"%{IncludeDir.irrKlang}",
 		"%{IncludeDir.assimp}",
-		"%{IncludeDir.Vulkan}"
+		"%{IncludeDir.Vulkan}",
+		DynamikInternalLibsPath
+	}
+
+	libdirs {
+		DynamikInternalBinaries
 	}
 
 	links { 
 		"Events",
 		"Debugger",
 		"Utilities",
-		"CentralDataHub"
+
+		"DataTypesLib",
+		"MemoryLib",
+		"SystemLib",
 	}
 
 	filter "system:windows"

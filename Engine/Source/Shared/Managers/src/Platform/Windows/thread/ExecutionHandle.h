@@ -4,7 +4,7 @@
 
 #include "CentralDataHub.h"
 #include "Platform.h"
-#include "Thread.h"
+#include "DataTypesLib/Public/Thread.h"
 
 namespace Dynamik {
 	/*

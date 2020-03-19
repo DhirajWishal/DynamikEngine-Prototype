@@ -12,15 +12,34 @@ namespace Dynamik {
 	 * @param source: Where to move the data from.
 	 * @param size: number of bytes to move.
 	 */
-	template<class SUB_TYPE>
-	void moveBytes(POINTER<SUB_TYPE> destination, const POINTER<SUB_TYPE> source, UI32 size = 1)
+	template<class TYPE>
+	void moveBytes(POINTER<TYPE> destination, const POINTER<TYPE> source, UI32 size = 1)
 	{
 		UI32 _itrCount = size * source.getTypeSize();
-		POINTER<BYTE> _sourceIterator = (POINTER<SUB_TYPE>)source;
+		POINTER<BYTE> _sourceIterator = (POINTER<TYPE>)source;
 		POINTER<BYTE> _destinationIterator = destination;
 		while (_itrCount--) {
 			_destinationIterator.dereference() = _sourceIterator.dereference();
 			_destinationIterator++, _sourceIterator++;
+		}
+	}
+
+	/* FUNCTION
+	 * Move data from one location to another.
+	 *
+	 * @param destination: Where to place the data.
+	 * @param first: First pointer to data.
+	 * @param last: Last pointer to data.
+	 */
+	template<class TYPE>
+	void moveBytes(POINTER<TYPE> destination, const POINTER<TYPE> first, const POINTER<TYPE> last)
+	{
+		POINTER<BYTE> _destinationIterator = destination;
+		POINTER<BYTE> _itr = (POINTER<TYPE>) first;
+		while (_itr != (POINTER<TYPE>)last)
+		{
+			_destinationIterator.dereference() = _itr.dereference();
+			_itr++, _destinationIterator++;
 		}
 	}
 
@@ -31,11 +50,11 @@ namespace Dynamik {
 	 * @param value: Value to be filled with
 	 * @param size: number of bytes to fill.
 	 */
-	template<class SUB_TYPE>
-	void setData(POINTER<SUB_TYPE> address, I32 value, UI32 size = 0, const UI32 typeSize = 1)
+	template<class TYPE>
+	void setData(POINTER<TYPE> address, I32 value, UI32 size = 0, const UI32 typeSize = 1)
 	{
 		POINTER<UI8> _iterator = address;
-		UI32 _runSize = sizeof(POINTER<SUB_TYPE>);
+		UI32 _runSize = sizeof(POINTER<TYPE>);
 		if (size > 1)
 			UI32 _runSize = size - 1;
 		do {

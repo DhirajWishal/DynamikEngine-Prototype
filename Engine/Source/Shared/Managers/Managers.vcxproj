@@ -152,7 +152,6 @@
     <ClInclude Include="src\Platform\Windows\resource\objectLoader.h" />
     <ClInclude Include="src\Platform\Windows\thread\ExecutionHandle.h" />
     <ClInclude Include="src\Platform\Windows\thread\InternalThread.h" />
-    <ClInclude Include="src\Platform\Windows\thread\Thread.h" />
     <ClInclude Include="src\Platform\Windows\thread\threadManager.h" />
     <ClInclude Include="src\Platform\Windows\window.h" />
     <ClInclude Include="src\mngafx.h" />

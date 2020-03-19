@@ -2,7 +2,7 @@
 #ifndef _DYNAMIK_MANAGERS_THREAD_INTERNAL_H
 #define _DYNAMIK_MANAGERS_THREAD_INTERNAL_H
 
-#include "Thread.h"
+#include "DataTypesLib/Public/Thread.h"
 
 namespace Dynamik {
 	/*
@@ -27,7 +27,7 @@ namespace Dynamik {
 		void init() override;
 		void loop() override;
 		B1 loopEndCommand() override;
-		ThreadTreminateReason shutdown() override;
+		DMKThreadTreminateReason shutdown() override;
 
 	private:
 		InternalThreadDataContainer myDataContainer;

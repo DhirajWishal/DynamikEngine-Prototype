@@ -19,7 +19,7 @@ namespace Dynamik {
 
 		void init() override;
 		void loop() override;
-		ThreadTreminateReason shutdown() override;
+		DMKThreadTreminateReason shutdown() override;
 		B1 loopEndCommand() override;
 
 		void addProgress(UI32* progress);

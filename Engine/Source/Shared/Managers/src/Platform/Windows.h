@@ -27,7 +27,7 @@
 #include "Windows/resource/modelManager.h"
 #include "Windows/resource/objectLoader.h"
 
-#include "Windows/thread/Thread.h"
+#include "DataTypesLib/Public/Thread.h"
 #include "Windows/thread/threadManager.h"
 
 #endif

@@ -6,12 +6,30 @@
 #include "Pointer.h"
 #include "MemoryLib/Public/StaticAllocator.h"
 #include "InitializerList.h"
+#include "Thread.h"
+
+#include <future>	/* REMOVE AFTER ADDING THE THREAD MANAGER */
+#include <functional>
 
 namespace Dynamik {
 	template<class TYPE>
-	class StaticAllocator;
+	class StaticAllocator;	// Static Allocator declaration
 	template<class TYPE>
-	class POINTER;
+	class POINTER;			// Pointer declaration
+	template<class TYPE>
+	class InitializerList;	// Initializer List declaration
+	class Thread;			// Thread declaration
+
+	/* PUBLIC ENUM
+	 * Dynamik Array Destructor Call Modes.
+	 * This either allows the destructor to call all the destructors of stored variables or orphan them all.
+	 */
+	enum class DMKArrayDestructorCallMode {
+		DMK_ARRAY_DESTRUCTOR_CALL_MODE_DESTRUCT_NONE,	// Does not call the distructor in data. Execution speed is high.
+		DMK_ARRAY_DESTRUCTOR_CALL_MODE_DESTRUCT_ALL,	// Calls destructor in all elements. Execution speed depends on the time taken to destroy.
+		DMK_ARRAY_DESTRUCTOR_CALL_MODE_DESTRUCT_ALL_THREADED,	// Calls the destructor for each element in a thread.
+		DMK_ARRAY_DESTRUCTOR_CALL_MODE_DESTRUCT_UNDEFINED	// Undefined
+	};
 
 	/* TEMPLATED
 	 * Dynamic Array data structure for the Dynamik Engine.
@@ -19,7 +37,7 @@ namespace Dynamik {
 	 * Tested to be faster than the std::vector<TYPE> library/ datatype.
 	 * This also contains utility functions related to array and pointer manipulation.
 	 */
-	template<class TYPE, class Allocator = StaticAllocator<TYPE>>
+	template<class TYPE, DMKArrayDestructorCallMode DestructorCallMode = DMKArrayDestructorCallMode::DMK_ARRAY_DESTRUCTOR_CALL_MODE_DESTRUCT_UNDEFINED, class Allocator = StaticAllocator<TYPE>>
 	class ARRAY {
 		/* DEFAULTS */
 
@@ -45,6 +63,42 @@ namespace Dynamik {
 		 */
 		using RPTR = TYPE*;
 
+		/* HELPER STRUCTURE
+		 * Store pointer data temporarily.
+		 */
+		struct _pointerContainer {
+			_pointerContainer() {}	// default constructor
+			~_pointerContainer() {}	// default destructor
+
+			PTR _beginPtr;	// begin pointer
+			PTR _endPtr;	// end pointer
+			PTR _nextPtr;	// next pointer
+		};
+
+		/* HELPER CLASS
+		 * BASE: Thread
+		 * Thread class to call the destructor for all the elements stored within.
+		 * This is handled by the thread manager.
+		 */
+		class _internalThread : public Thread {
+		public:
+			_internalThread() {} // default constructor
+			_internalThread(PTR _first, PTR _last) : _firstPtr(_first), _lastPtr(_last) {}	// default constructor
+			~_internalThread() {} // default destructor
+
+			void _destroy() {	// main _destroy function
+				while (_firstPtr.getPointerAsInteger() <= _lastPtr.getPointerAsInteger())	// call the destructor for each address
+				{
+					_firstPtr.dereference().~TYPE();
+					_firstPtr++;
+				}
+			}
+
+		private:
+			PTR _firstPtr;	// first pointer
+			PTR _lastPtr;	// last pointer
+		};
+
 	public:
 		/* CONSTRUCTOR
 		 * Default Constructor.
@@ -63,7 +117,7 @@ namespace Dynamik {
 		 */
 		ARRAY(UI32 size)
 		{
-			myAllocationSize = size * sizeof(TYPE);
+			myAllocationSize = size * typeSize();
 
 			if ((size + myAllocationSize) > maxSize()) return; /* TODO: Error Flagging */
 
@@ -83,7 +137,7 @@ namespace Dynamik {
 		 */
 		ARRAY(UI32 size, const TYPE& value)
 		{
-			myAllocationSize = size * sizeof(TYPE);
+			myAllocationSize = size * typeSize();
 
 			if ((size + myAllocationSize) > maxSize()) return; /* TODO: Error Flagging */
 
@@ -118,13 +172,12 @@ namespace Dynamik {
 		 *
 		 * @param list: Initializer list used to initialize this.
 		 */
-		ARRAY(InitialzerList<TYPE> list)
+		ARRAY(InitializerList<TYPE> list)
 		{
 			if (list.size() > maxSize()); /* TODO: Error Flagging */
 
 			_reAllocate(list.size());
-			for (InitialzerList<TYPE>::ITERATOR _itr = list.begin(); _itr != list.end(); ++_itr)
-				pushBack(*_itr);
+			moveBytes(myBeginPtr, list.begin(), list.end());
 		}
 
 		/* DESTRUCTOR
@@ -132,8 +185,11 @@ namespace Dynamik {
 		 */
 		~ARRAY()
 		{
-			_destroyRange(myBeginPtr, myEndPtr);
-			_destroyPointers();
+			if (DestructorCallMode == DMKArrayDestructorCallMode::DMK_ARRAY_DESTRUCTOR_CALL_MODE_DESTRUCT_ALL)
+				_destroyRange(myBeginPtr, myEndPtr);
+			else if (DestructorCallMode == DMKArrayDestructorCallMode::DMK_ARRAY_DESTRUCTOR_CALL_MODE_DESTRUCT_ALL_THREADED)
+				_destroyRangeInThreads(myBeginPtr, myEndPtr);
+
 			Allocator::deAllocate(myBeginPtr, myEndPtr);
 		}
 
@@ -165,15 +221,51 @@ namespace Dynamik {
 		}
 
 		/* FUNCTION
+		 * Set a value to a given index.
+		 *
+		 * @param index: Index where to set the value.
+		 * @param value: Value to be updated.
+		 */
+		void set(UI32 index, const TYPE& value)
+		{
+			if (!isValidIndex(index)) return; /* TODO: Error Flagging */
+
+			myBeginPtr[_getProcessedIndex(index)] = (TYPE)value;
+		}
+
+		/* FUNCTION
+		 * Set the values from an interator to this.
+		 *
+		 * @param first: First iterator.
+		 * @param last: Last iterator.
+		 */
+		void set(ITERATOR first, ITERATOR last)
+		{
+			if ((last.getPointerAsInteger() - first.getPointerAsInteger()) > myAllocationSize)
+				_reAllocateAssign(last.getPointerAsInteger() - first.getPointerAsInteger());
+
+			moveBytes(myBeginPtr, first, last);
+		}
+
+		void set(InitializerList<TYPE> list)
+		{
+			if (list.size() > maxSize()); /* TODO: Error Flagging */
+
+			if (list.size > capacity())
+				_reAllocateAssign(list.size() * typeSize());
+
+			moveBytes(myBeginPtr, list.begin(), list.end());
+		}
+
+		/* FUNCTION
 		 * Push Elements to the Array.
 		 *
 		 * @param data: Data to be added to the Array.
 		 */
 		void pushBack(const TYPE& data)
 		{
-			if (myDataCount == capacity()) {
+			if (myDataCount == capacity())
 				_reAllocateAndPushBack(_getNextSize(), data);
-			}
 			else
 				_addData(data);
 
@@ -206,7 +298,10 @@ namespace Dynamik {
 		 */
 		TYPE front()
 		{
-			return myBeginPtr[0];
+			if (myBeginPtr.isValid())
+				return myBeginPtr[0];
+
+			return TYPE();
 		}
 
 		/* FUNCTION
@@ -214,11 +309,36 @@ namespace Dynamik {
 		 */
 		TYPE popFront()
 		{
-			TYPE _data = front();
+			return _popFrontReallocate();
+		}
 
-			/* LOGIC */
+		/* FUNCTION
+		 * Get the last element in the Array.
+		 */
+		TYPE back()
+		{
+			return myBeginPtr[myDataCount - 1];
+		}
 
-			return _data;
+		/* FUNCTION
+		 * Get the last element in the Array and remove it.
+		 */
+		TYPE popBack()
+		{
+			return myBeginPtr[--myDataCount];
+		}
+
+		/* FUNCTION
+		 * Remove an element at a given index.
+		 *
+		 * @param index: The element index to be removed.
+		 */
+		void remove(UI32 index = 0)
+		{
+			if (!isValidIndex(index)) return; /* TODO: Error Flagging. */
+
+			myBeginPtr[_getProcessedIndex(index)] = (TYPE)0;
+			_compactAfterRemove(index);
 		}
 
 		/* FUNCTION
@@ -257,13 +377,7 @@ namespace Dynamik {
 		{
 			if (index >= myDataCount || (index <= (0 - myDataCount))); // TODO: error handling
 
-			if (index < 0)
-			{
-				index *= (-1);
-				index = (myDataCount - index);
-			}
-
-			return myBeginPtr[index];
+			return myBeginPtr[_getProcessedIndex(index)];
 		}
 
 		/* FUNCTION
@@ -323,11 +437,10 @@ namespace Dynamik {
 		{
 			if ((endIndex >= myDataCount) || (startIndex < endIndex)); // TODO:: error handling
 
-			UI32 _itr = startIndex;
-			while (_itr <= endIndex)
+			while (startIndex <= endIndex)
 			{
-				*_getPointer(_itr) = value;
-				_itr++;
+				*_getPointer(startIndex) = value;
+				startIndex++;
 			}
 		}
 
@@ -352,12 +465,10 @@ namespace Dynamik {
 		 */
 		void insert(ARRAY<TYPE> arr)
 		{
-			ITERATOR _iterator = arr.begin();
-			while (_iterator != arr.end())
-			{
-				pushBack(*_iterator);
-				_iterator++;
-			}
+			if (arr.size() > capacity())
+				_reAllocateAssign(arr.size());
+
+			moveBytes(myBeginPtr, arr.begin(), arr.end());
 		}
 
 		/* FUNCTION
@@ -368,10 +479,10 @@ namespace Dynamik {
 		 */
 		ITERATOR insert(ITERATOR first, ITERATOR last)
 		{
-			while (first != last) {
-				pushBack(*first);
-				first++;
-			}
+			if ((UI64)(last - first) > myAllocationSize)
+				_reAllocateAssign(last.getPointerAsInteger() - first.getPointerAsInteger());
+
+			moveBytes(myBeginPtr, first, last);
 		}
 
 		/* FUNCTION
@@ -394,17 +505,30 @@ namespace Dynamik {
 		 * @param index: Index to be checked.
 		 */
 		B1 isValidIndex(I32 index) {
-			if (index > 0) {
+			if (index > 0)
+			{
 				if (index < myDataCount)
 					return true;
 			}
-			else {
+			else
+			{
 				index *= (-1);
 				if (index > (myDataCount * (-1)))
 					return true;
 			}
 
 			return false;
+		}
+
+		/* FUNCTION
+		 * Check if a given index range is valid.
+		 *
+		 * @param first: First index.
+		 * @param last: Last index.
+		 */
+		B1 isValidIndexRange(I32 first, I32 last)
+		{
+			return isValidIndex(first) && isValidIndex(last);
 		}
 
 		/* FUNCTION
@@ -450,30 +574,72 @@ namespace Dynamik {
 		}
 
 		/* FUNCTION
+		 * Get a sub Array from this.
+		 *
+		 * @param from: First index.
+		 * @param toWhere: Last index.
+		 */
+		ARRAY<TYPE> subArray(UI32 from, UI32 toWhere)
+		{
+			if (!isValidIndexRange(from, toWhere)) return; /* TODO: Error Flagging */
+
+			ARRAY<TYPE> _local(toWhere - from);
+
+			for (; from <= toWhere; from++)
+				_local.pushBack(at(from));
+
+			return _local;
+		}
+
+		/* FUNCTION
+		 * Get a sub Array from this.
+		 *
+		 * @param from: First index.
+		 * @param toWhere: Last index.
+		 */
+		ARRAY<TYPE> subArray(SI32 from, SI32 toWhere)
+		{
+			if (!isValidIndexRange(from, toWhere)) return; /* TODO: Error Flagging */
+
+			ARRAY<TYPE> _local((from - toWhere) * -1);
+
+			for (; from <= toWhere; from++)
+				_local.pushBack(at(from));
+
+			return _local;
+		}
+
+		/* FUNCTION
 		 * Return the size of the Array.
 		 *
 		 * @return: Element count.
 		 */
-		UI32 size() { return myDataCount; }
+		UI32 size() const noexcept { return myDataCount; }
 
 		/* FUNCTION
 		 * Return the maximum size allocatable in an Array.
 		 *
 		 * @return: Element count.
 		 */
-		UI32 maxSize() { return ((UI32)-1) / sizeof(TYPE); }
+		UI32 maxSize() const noexcept { return ((UI32)-1) / sizeof(TYPE); }
 
 		/* FUNCTION
 		 * Return the number of elements that can be stored before the next allocation.
 		 *
 		 * @return: Element count.
 		 */
-		UI32 capacity() { return myAllocationSize / sizeof(TYPE); }
+		UI32 capacity() const noexcept
+		{
+			if (myAllocationSize == 0 || sizeof(TYPE) == 0)
+				return 0;
+
+			return myAllocationSize / sizeof(TYPE);
+		}
 
 		/* FUNCTION
 		 * Return the size of TYPE.
 		 */
-		UI32 sizeOfType() { return sizeof(TYPE); }
+		UI32 typeSize() const noexcept { return sizeof(TYPE); }
 
 		/* FUNCTION
 		 * Return the current allocation size.
@@ -481,31 +647,27 @@ namespace Dynamik {
 		 *
 		 * @return: Byte count.
 		 */
-		UI32 allocationSize() { return myAllocationSize; }
+		UI32 allocationSize() const noexcept { return myAllocationSize; }
+
+		/* FUNCTION
+		 * Check if the Array is empty.
+		 */
+		B1 empty() const noexcept { return myDataCount == 0; }
 
 		/* FUNCTION
 		 * Get data pointer of the Array.
 		 */
-		VPTR data()
-		{
-			return myBeginPtr;
-		}
+		VPTR data() const noexcept { return myBeginPtr.get(); }
 
 		/* FUNCTION
 		 * Begin iterator of the Array.
 		 */
-		ITERATOR begin()
-		{
-			return myBeginPtr;
-		}
+		ITERATOR begin() const noexcept { return myBeginPtr; }
 
 		/* FUNCTION
 		 * End iterator of the Array.
 		 */
-		ITERATOR end()
-		{
-			return myNextPtr;
-		}
+		ITERATOR end() const noexcept { return myNextPtr; }
 
 		/* PUBLIC OPERATORS */
 	public:
@@ -562,7 +724,19 @@ namespace Dynamik {
 			return *this;
 		}
 
-		/* STATIC
+		/* OPERATOR
+		 * = operator overload.
+		 * Get data from an initializer list and initialize it to this.
+		 *
+		 * @para arr: Initlaizer list to be initialized to this.
+		 */
+		ARRAY<TYPE> operator=(InitializerList<TYPE> list)
+		{
+			this->_initializeInitializerList(list);
+			return *this;
+		}
+
+		/* STATIC FUNCTION
 		 * Copy contents from one Array to another.
 		 *
 		 * @param source: Source Array.
@@ -574,156 +748,23 @@ namespace Dynamik {
 			*destination = *source;
 		}
 
-		/* PRIVATE FUNCTIONS */
+		/* ARRAY MANIPULATION FUNCTIONS */
 	private:
-		/* PRIVATE
-		 * Basic initializings.
-		 */
-		void _basicInitialization(TYPE* dataStore, UI32 updatedSize = 0)
-		{
-			myBeginPtr = dataStore;
-			myEndPtr = dataStore;
-			myEndPtr += updatedSize;
-		}
-
-		/* PRIVATE
-		 * Get the next allocatable size.
-		 */
-		inline UI32 _getNextSize()
-		{
-			UI32 _oldCapacity = capacity();
-
-			if (_oldCapacity > (maxSize() - _oldCapacity / 2))
-				return DMK_MEMORY_ALIGN * sizeof(TYPE);
-
-			UI32 _nextCapacity = _oldCapacity + _oldCapacity / 2;
-
-			if (_nextCapacity < DMK_MEMORY_ALIGN * sizeof(TYPE))
-				return DMK_MEMORY_ALIGN * sizeof(TYPE);
-
-			return _nextCapacity;
-		}
-
-		/* PRIVATE
-		 * Get the next allocatable size to fit a given size.
+		/* PRIVATE FUNCTION
+		 * Initialize this with an initializer list.
 		 *
-		 * @param basicSize: Size to be filled with.
+		 * @param list: Initializer list to initialize this.
 		 */
-		inline UI32 _getNextSizeToFit(UI32 basicSize)
+		inline void _initializeInitializerList(const InitializerList<TYPE>& list)
 		{
-			UI32 _nextSize = _getNextSize();
-			if ((basicSize % _nextSize))
-				return (((basicSize / _nextSize) * _nextSize) + _nextSize);
+			if (list.size() > maxSize()); /* TODO: Error Flagging */
 
-			return (basicSize / _nextSize) * _nextSize;
-		}
-
-		/* PRIVATE
-		 * Copy data from one location to another.
-		 *
-		 * @param source: Source address.
-		 * @param destination: Destination address.
-		 * @param size: Number of bytes to be copied.
-		 */
-		inline void _copyData(VPTR source, VPTR destination, UI32 size)
-		{
-			VPTR _sourceDataPointer = source;
-			VPTR _destinationDataPointer = destination;
-
-			UI32 _itr = size;
-			while (--_itr)
-			{
-				//*_sourceDataPointer = *_destinationDataPointer;
-			}
-		}
-
-		/* PRIVATE
-		 * Move data from one location to another.
-		 *
-		 * @param newSpace: Source address.
-		 * @param newSpaceSize: Number of bytes to be moved.
-		 */
-		inline void _moveData(VPTR newSpace, UI32 newSpaceSize)
-		{
-			moveBytes(myBeginPtr, (PTR)newSpace, newSpaceSize);
-		}
-
-		/* PRIVATE
-		 * Get the next pointer to data from a given index.
-		 *
-		 * @param index: Index of the pointer to retrieve.
-		 */
-		inline TYPE* _getPointer(UI32 index = 0)
-		{
-			RPTR _localPointer = myBeginPtr;
-			(UI32)_localPointer + (index * sizeof(TYPE));
-			return _localPointer;
-		}
-
-		/* PRIVATE
-		 * Set a value to a number of elements.
-		 *
-		 * @param value: Value to be filled with.
-		 * @param count: Number of elements to be filled with.
-		 */
-		inline void _setValue(TYPE value, UI32 count)
-		{
-			UI32 _itr = (count - 1);
-			while (--_itr) *_getPointer(_itr) = value;
-		}
-
-		/* PRIVATE
-		 * Swap two elements.
-		 *
-		 * @param first: First element.
-		 * @param second: Second element;
-		 */
-		inline void _swap(TYPE* first, TYPE* second)
-		{
-			TYPE _temp = *first;
-			*first = *second;
-			*second = _temp;
-		}
-
-		/* PRIVATE
-		 * Get the size of a raw Array.
-		 *
-		 * @param arr: Raw Array.
-		 */
-		inline UI32 _getSizeOfRawArray(const PTR arr)
-		{
-			return sizeof(arr.get()) / sizeof(TYPE);
+			_reAllocate(list.size());
+			for (InitializerList<TYPE>::ITERATOR _itr = list.begin(); _itr != list.end(); ++_itr)
+				pushBack(*_itr);
 		}
 
 		/* PRIVATE FUNCTION
-		 * Destroy all the data stored in a given range.
-		 * Calls the destructor for all the data stored.
-		 *
-		 * @param first: Pointer to the first element.
-		 * @param last: Pointer to the last element.
-		 */
-		inline void _destroyRange(PTR first, PTR last)
-		{
-			TYPE* _data = nullptr;
-			while (first != last)
-			{
-				_singleDestruct(first);
-				++first;
-			}
-		}
-
-		/* PRIVATE
-		 * Destroy all the pointers that contained the heap data.
-		 * Calls the destructor.
-		 */
-		inline void _destroyPointers()
-		{
-			myBeginPtr.~POINTER();
-			myEndPtr.~POINTER();
-			myNextPtr.~POINTER();
-		}
-
-		/* FUNCTION
 		 * Add data to the end of the Array.
 		 *
 		 * @param data: Data to be emplaced.
@@ -734,41 +775,106 @@ namespace Dynamik {
 			myNextPtr++;
 		}
 
-		/* PRIVATE
+		/* PRIVATE FUNCTION
+		 * Allocate a fresh buffer with a given size.
+		 *
+		 * @param size: Size of the buffer to be allocated.
+		 */
+		inline PTR _allocateBuffer(UI32 size)
+		{
+			return Allocator::allocate(size);
+		}
+
+		/* PRIVATE FUNCTION
 		 * Resize the data store.
 		 *
 		 * @param newSize: New size added to the pre-allocated size to be re-allocated.
 		 */
 		inline void _reAllocate(UI32 newSize)
 		{
-			PTR _newAlloc = Allocator::allocate(newSize + myAllocationSize);
+			_pointerContainer _container;
+			_container._beginPtr = Allocator::allocate(newSize + myAllocationSize);
 			myAllocationSize += newSize;
-			PTR _endPtr = _newAlloc;
-			_endPtr += myAllocationSize;
+			_container._endPtr = _container._beginPtr;
+			_container._endPtr += myAllocationSize;
 
 			try
 			{
-				if (myBeginPtr.isValid())
+				if (_container._beginPtr.isValid())
 				{
-					moveBytes(_newAlloc, myBeginPtr, myDataCount);
+					_moveFromThis(_container._beginPtr, myDataCount);
 					Allocator::deAllocate(myBeginPtr, myEndPtr);
 				}
 			}
 			catch (...)
 			{
-				_destroyRange(_newAlloc, _endPtr);
-				Allocator::deAllocate(_newAlloc, _endPtr);
+				_destroyRange(_container._beginPtr, _container._endPtr);
+				Allocator::deAllocate(_container._beginPtr, _container._endPtr);
+
+				_container._beginPtr.turnNull();
+				_container._endPtr.turnNull();
 
 				throw;
 			}
 
-			myBeginPtr(_newAlloc);
-			myEndPtr(_endPtr);
-			myNextPtr = myBeginPtr;
-			myNextPtr += myDataCount;
+			_basicInitialization(_container._beginPtr, myAllocationSize, myDataCount);
 		}
 
-		/* PRIVATE
+		/* PRIVATE FUNCTION
+		 * Re allocate memory and assign the size as the allocation size.
+		 *
+		 * @param size: The size to be allocated.
+		 */
+		inline void _reAllocateAssign(UI32 size)
+		{
+			_pointerContainer _container;
+			_container._beginPtr = Allocator::allocate(size);
+			myAllocationSize = size;
+			_container._endPtr = _container._beginPtr;
+			_container._endPtr += myAllocationSize;
+
+			try
+			{
+				if (_container._beginPtr.isValid())
+				{
+					_moveFromThis(_container._beginPtr, myDataCount);
+					Allocator::deAllocate(myBeginPtr, myEndPtr);
+				}
+			}
+			catch (...)
+			{
+				_destroyRange(_container._beginPtr, _container._endPtr);
+				Allocator::deAllocate(_container._beginPtr, _container._endPtr);
+
+				_container._beginPtr.turnNull();
+				_container._endPtr.turnNull();
+
+				throw;
+			}
+
+			_basicInitialization(_container._beginPtr, myAllocationSize, myDataCount);
+		}
+
+		/* PRIVATE FUNCTION
+		 * Create a new array and return it.
+		 *
+		 * @param newSize: New size added to the pre-allocated size to be re-allocated.
+		 */
+		inline _pointerContainer _reAllocateGetRaw(UI32 newSize)
+		{
+			myAllocationSize += newSize;
+
+			_pointerContainer _container;
+			_container._beginPtr = Allocator::allocate(myAllocationSize);
+			_container._endPtr = _container._beginPtr;
+			_container._endPtr += myAllocationSize;
+			_container._nextPtr = _container._beginPtr;
+			_container._nextPtr += myDataCount;
+
+			return _container;
+		}
+
+		/* PRIVATE FUNCTION
 		 * Resize the data store and add a value to the end.
 		 *
 		 * @param newSize: New size added to the pre-allocated size to be re-allocated.
@@ -784,7 +890,155 @@ namespace Dynamik {
 			myNextPtr++;
 		}
 
-		/* PRIVATE
+		/* PRIVATE FUNCTION
+		 * Get the first value from the array and remove it.
+		 * Then re allocate a new array to fit the size and move the old content to it.
+		 */
+		inline const TYPE& _popFrontReallocate()
+		{
+			if (!myBeginPtr.isValid())
+				return TYPE();
+
+			TYPE _data = front();
+			setData((PTR)&myBeginPtr[0], 0, sizeof(TYPE));
+
+			_pointerContainer _container = _reAllocateGetRaw(_getNextSize());
+
+			PTR _localVec = &myBeginPtr[0];
+			moveBytes(_localVec, (PTR)&myBeginPtr[0], myDataCount - 1);
+
+			try
+			{
+				if (_container._beginPtr.isValid())
+				{
+					moveBytes(_container._beginPtr, _localVec, myDataCount);
+					_localVec.turnNull();
+					Allocator::deAllocate(myBeginPtr, myEndPtr);
+				}
+			}
+			catch (...)
+			{
+				_destroyRange(_container._beginPtr, _container._endPtr);
+				Allocator::deAllocate(_container._beginPtr, _container._endPtr);
+
+				_container._beginPtr.turnNull();
+				_container._endPtr.turnNull();
+
+				throw;
+			}
+
+			_basicInitialization(_container._beginPtr, myAllocationSize, myDataCount);
+			return _data;
+		}
+
+		/* PRIVATE FUNCTION
+		 * Remove the additional space after removal.
+		 *
+		 * @param removedIndex: Index where the data was removed.
+		 */
+		inline void _compactAfterRemove(UI32 removedIndex)
+		{
+			PTR _newArr = _allocateBuffer(myAllocationSize);
+			moveBytes(_newArr, (PTR)&myBeginPtr[removedIndex - 1], removedIndex);
+			moveBytes((PTR)&_newArr[removedIndex], (PTR)&myBeginPtr[removedIndex + 1], myEndPtr);
+
+			try
+			{
+				if (myBeginPtr.isValid())
+					Allocator::deAllocate(myBeginPtr, myEndPtr);
+			}
+			catch (...)
+			{
+				_destroyRange(_newArr, (RPTR)(_newArr.getPointerAsInteger() + myAllocationSize));
+				Allocator::deAllocate(_newArr, (RPTR)(_newArr.getPointerAsInteger() + myAllocationSize));
+
+				_newArr.turnNull();
+
+				throw;
+			}
+
+			_basicInitialization(_newArr, myAllocationSize, myDataCount);
+		}
+
+		/* POINTER MANIPULATION FUNCTIONS */
+	private:
+		/* PRIVATE FUNCTION
+		 * Destroy all the data stored in a given range.
+		 * Calls the destructor for all the data stored.
+		 *
+		 * @param first: Pointer to the first element.
+		 * @param last: Pointer to the last element.
+		 */
+		inline void _destroyRange(PTR first, PTR last)
+		{
+			while (first.getPointerAsInteger() <= last.getPointerAsInteger())
+			{
+				_singleDestruct(first);
+				++first;
+			}
+		}
+
+		/* PRIVATE STATIC
+		 * Internal thread execution function.
+		 *
+		 * @param _thread: A n_internalThread instance.
+		 */
+		static void __internalThreadFunction(POINTER<_internalThread> _thread)
+		{
+			_thread->_destroy();
+		}
+
+		/* PRIVATE FUNCTION
+		 * Destroy all the data stored in a given range.
+		 * Calls the destructor for all the data stored giving a thread for each.
+		 *
+		 * Number of threads equal to the number of logical cores in the CPU - 1.
+		 * Each element is assigned to a chunk which is calculated based on the thread count.
+		 * Each chunk is filled with elements and passed in to the _internalThread class.
+		 * The _internalThread class executes in a single thread and calls the destructor of each element.
+		 * A lock guard is placed so that memory corruption will not take place
+		 *
+		 * @param first: Pointer to the first element.
+		 * @param last: Pointer to the last element.
+		 */
+		inline void _destroyRangeInThreads(PTR first, PTR last)
+		{
+			UI32 _passes = std::thread::hardware_concurrency() - 1;	// number of threads
+			UI32 _chunks = size() / std::thread::hardware_concurrency();	// number of elements thats given for each thread
+			ARRAY<std::future<void>> _threads(_passes);		// threads 
+			PTR _first;
+			_internalThread _localThread;
+
+			while (--_passes)
+			{
+				_first = first;
+				first += _chunks;
+
+				_localThread = _internalThread(_first, first);
+				//add each destructor array to threads
+				_threads.pushBack(std::async(std::launch::async, __internalThreadFunction, &_localThread));
+			}
+
+			// if elements are not destroyed fully, destroy them manually (in this thread)
+			while (first.getPointerAsInteger() < last.getPointerAsInteger())
+			{
+				first.dereference().~TYPE();
+				first++;
+			}
+		}
+
+		/* PRIVATE FUNCTION
+		 * Destroy all the pointers that contained the heap data.
+		 * Calls the destructor.
+		 */
+		inline void _destroyPointers()
+		{
+			myBeginPtr.~POINTER();
+			myEndPtr.~POINTER();
+			myNextPtr.~POINTER();
+		}
+
+		/* PRIVATE FUNCTION
 		 * Call the destructor of a given destructor.
 		 *
 		 * @param data: Data to call the destructor.
@@ -794,14 +1048,160 @@ namespace Dynamik {
 			data->~TYPE();
 		}
 
+		/* UTILITY FUNCTIONS */
+	private:
+		/* PRIVATE FUNCTION
+		 * Basic initializings.
+		 */
+		void _basicInitialization(TYPE* dataStore, UI32 updatedSize = 0, UI32 dataCount = 0)
+		{
+			myBeginPtr = dataStore;
+
+			myEndPtr = dataStore;
+			myEndPtr += updatedSize;
+
+			myNextPtr = dataStore;
+			myNextPtr += dataCount;
+		}
+
+		/* PRIVATE FUNCTION
+		 * Get the next allocatable size.
+		 */
+		inline UI32 _getNextSize()
+		{
+			UI32 _oldCapacity = capacity();
+
+			if (_oldCapacity > (maxSize() - _oldCapacity / 2))
+				return DMK_MEMORY_ALIGN * sizeof(TYPE);
+
+			UI32 _nextCapacity = _oldCapacity + (_oldCapacity / 2);
+
+			if (_nextCapacity < (DMK_MEMORY_ALIGN * sizeof(TYPE)))
+				return DMK_MEMORY_ALIGN * sizeof(TYPE);
+
+			return _nextCapacity;
+		}
+
+		/* PRIVATE FUNCTION
+		 * Get the next allocatable size to fit a given size.
+		 *
+		 * @param basicSize: Size to be filled with.
+		 */
+		inline UI32 _getNextSizeToFit(UI32 basicSize)
+		{
+			UI32 _nextSize = _getNextSize();
+			if ((basicSize % _nextSize))
+				return (((basicSize / _nextSize) * _nextSize) + _nextSize);
+
+			return (basicSize / _nextSize) * _nextSize;
+		}
+
+		/* PRIVATE FUNCTION
+		 * Copy data from one location to another.
+		 *
+		 * @param source: Source address.
+		 * @param destination: Destination address.
+		 * @param size: Number of bytes to be copied.
+		 */
+		inline void _copyData(VPTR source, VPTR destination, UI32 size)
+		{
+			while (--size) *(TYPE*)source = *(TYPE*)destination;
+		}
+
+		/* PRIVATE FUNCTION
+		 * Move data from this to another.
+		 *
+		 * @param newSpace: Source address.
+		 * @param newSpaceSize: Number of bytes to be moved.
+		 */
+		inline void _moveToThis(VPTR newSpace, UI32 newSpaceSize)
+		{
+			moveBytes(myBeginPtr, (PTR)newSpace, newSpaceSize);
+		}
+
+		/* PRIVATE FUNCTION
+		 * Move data from this to another.
+		 *
+		 * @param newSpace: Source address.
+		 * @param newSpaceSize: Number of bytes to be moved.
+		 */
+		inline void _moveFromThis(VPTR newSpace, UI32 count)
+		{
+			moveBytes((PTR)newSpace, myBeginPtr, count);
+		}
+
+		/* PRIVATE FUNCTION
+		 * Get the next pointer to data from a given index.
+		 *
+		 * @param index: Index of the pointer to retrieve.
+		 */
+		inline RPTR _getPointer(UI32 index = 0)
+		{
+			PTR _localPointer = myBeginPtr;
+			_localPointer += index;
+			return _localPointer;
+		}
+
+		/* PRIVATE FUNCTION
+		 * Set a value to a number of elements.
+		 *
+		 * @param value: Value to be filled with.
+		 * @param count: Number of elements to be filled with.
+		 */
+		inline void _setValue(TYPE value, UI32 count)
+		{
+			UI32 _itr = (count - 1);
+			while (--_itr) *_getPointer(_itr) = value;
+		}
+
+		/* PRIVATE FUNCTION
+		 * Swap two elements.
+		 *
+		 * @param first: First element.
+		 * @param second: Second element;
+		 */
+		inline void _swap(TYPE* first, TYPE* second)
+		{
+			TYPE _temp = *first;
+			*first = *second;
+			*second = _temp;
+		}
+
+		/* PRIVATE FUNCTION
+		 * Get the size of a raw Array.
+		 *
+		 * @param arr: Raw Array.
+		 */
+		inline UI32 _getSizeOfRawArray(const PTR arr)
+		{
+			return sizeof(arr.get()) / sizeof(TYPE);
+		}
+
+		/* PRIVATE FUNCTION
+		 * Process the index so that it always produce a indexable value.
+		 *
+		 * @param index: Index to be processed.
+		 */
+		inline UI32 _getProcessedIndex(UI32 index)
+		{
+			if (index < 0)
+			{
+				index *= (-1);
+				index = (myDataCount - index);
+			}
+
+			return index;
+		}
+
 		/* PRIVATE VARIABLES AND CONSTANTS */
 	private:
-		PTR myBeginPtr;
-		PTR myEndPtr;
-		PTR myNextPtr;
+		PTR myBeginPtr;		// begin pointer
+		PTR myEndPtr;		// end pointer
+		PTR myNextPtr;		// next pointer
 
 		UI32 myDataCount = 0;		// number of elements stored
 		UI32 myAllocationSize = 0;	// allocation size
 	};
 }
+
 #endif // !_DATA_TYPES_ARRAY_H

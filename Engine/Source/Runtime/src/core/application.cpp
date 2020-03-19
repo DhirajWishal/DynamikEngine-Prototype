@@ -57,16 +57,15 @@ namespace Dynamik {
 			count++;
 		}
 
-		ThreadTreminateReason shutdown() override {
+		DMKThreadTreminateReason shutdown() override {
 			std::cout << "Shuting Down\n";
 
-			return ThreadTreminateReason::NORMAL_TERMINATION;
+			return DMKThreadTreminateReason::DMK_THREAD_TERMINATION_REASON_NORMAL_TERMINATION;
 		}
 	};
 
 	struct sample {
-		sample() { DMK_CORE_INFO("Constructor caled"); }
-		~sample() { DMK_CORE_INFO("Destructor caled"); }
+		sample() { DMK_CORE_INFO("Bye!"); }
 	};
 
 	uint32_t progress = 0;
@@ -84,6 +83,7 @@ namespace Dynamik {
 		FSTR fstr = std::string("Hello World").c_str();
 
 		gameObjectInitialization();
+		//ARRAY<UI32>::
 
 		int var = 0;
 		std::cout << sizeof(ARRAY<UI32>) << "\n";
@@ -93,10 +93,20 @@ namespace Dynamik {
 		//	_test.pushBack(i);
 
 		{
+			Debugger::benchmark::Benchmark myBenchmarkOne;
 			ARRAY<sample> _sample;
 			for (UI32 i = 0; i < 1000; i++) {
 				sample s;
 				_sample.pushBack(s);
+			}
+		}
+
+		{
+			Debugger::benchmark::Benchmark myBenchmarkOne;
+			std::vector<sample> _sample;
+			for (UI32 i = 0; i < 1000; i++) {
+				sample s;
+				_sample.push_back(s);
 			}
 		}
 

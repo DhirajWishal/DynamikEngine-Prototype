@@ -68,6 +68,7 @@
       <Filter>Public</Filter>
     </ClInclude>
     <ClInclude Include="Public\Queue.h" />
+    <ClInclude Include="Public\Thread.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Private\DynamicPointer.cpp">

@@ -1,17 +1,16 @@
 #pragma once
-#ifndef _DYNAMIK_MANAGERS_THREAD_H
-#define _DYNAMIK_MANAGERS_THREAD_H
+#ifndef _DYNAMIK_DATA_TYPES_THREAD_BASE_H
+#define _DYNAMIK_DATA_TYPES_THREAD_BASE_H
 
-#include "CentralDataHub.h"
-#include "Platform.h"
+#include "Pointer.h"
 
 namespace Dynamik {
-	enum class DMK_API ThreadTreminateReason {
-		NORMAL_TERMINATION,
-		TIMEOUT,
-		INETERUPT,
-		IO_REQUEST,
-		CLOSE_EVENT
+	enum class DMKThreadTreminateReason {
+		DMK_THREAD_TERMINATION_REASON_NORMAL_TERMINATION,
+		DMK_THREAD_TERMINATION_REASON_TIMEOUT,
+		DMK_THREAD_TERMINATION_REASON_INETERUPT,
+		DMK_THREAD_TERMINATION_REASON_IO_REQUEST,
+		DMK_THREAD_TERMINATION_REASON_CLOSE_EVENT
 	};
 
 	/*
@@ -34,7 +33,7 @@ namespace Dynamik {
 		virtual void init() {}	// virtual init function
 		virtual void loop() {}	// virtual main loop function
 		virtual B1 loopEndCommand() { return terminate; }	// virtual end loop command
-		virtual ThreadTreminateReason shutdown() { return ThreadTreminateReason::NORMAL_TERMINATION; }	// virtual shutdown function
+		virtual DMKThreadTreminateReason shutdown() { return DMKThreadTreminateReason::DMK_THREAD_TERMINATION_REASON_NORMAL_TERMINATION; }	// virtual shutdown function
 
 		void setIndex(UI32 index) { myThreadIndex = index; }	// set index
 		UI32 getIndex() { return myThreadIndex; }	// get current index

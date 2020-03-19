@@ -9,8 +9,8 @@ namespace Dynamik {
 	 * Wrapper class for the ARRAY data structure.
 	 * This must have a preddefined size and will not be extended.
 	 */
-	template<class TYPE, class Allocator = StaticAllocator<TYPE>>
-	class STATIC_ARRAY : public ARRAY<TYPE, Allocator> {
+	template<class TYPE,DMKArrayDestructorCallMode DestructorCallMode = DMKArrayDestructorCallMode::DMK_ARRAY_DESTRUCTOR_CALL_MODE_DESTRUCT_UNDEFINED, class Allocator = StaticAllocator<TYPE>>
+	class STATIC_ARRAY : public ARRAY<TYPE, DestructorCallMode, Allocator> {
 	public:
 		STATIC_ARRAY(UI32 size) : ARRAY<TYPE, Allocator>(size) {}
 		STATIC_ARRAY(UI32 size, const TYPE& value) : ARRAY<TYPE, Allocator>(size, value) {}

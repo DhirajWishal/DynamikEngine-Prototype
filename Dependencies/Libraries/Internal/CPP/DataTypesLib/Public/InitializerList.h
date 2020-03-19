@@ -9,7 +9,7 @@ namespace Dynamik {
 	 * Initializer list data structure for the Dynamik Engine.
 	 */
 	template<class TYPE>
-	class InitialzerList {
+	class InitializerList {
 		/* DEFAULTS */
 	public:
 		/* PUBLIC DATATYPE
@@ -21,7 +21,7 @@ namespace Dynamik {
 		/* CONSTRUCTOR
 		 * Default constructor.
 		 */
-		constexpr InitialzerList() noexcept {}
+		constexpr InitializerList() noexcept {}
 
 		/* CONSTRUCTOR
 		 * Default constructor.
@@ -29,13 +29,13 @@ namespace Dynamik {
 		 * @param first: First address of the data.
 		 * @param last: Last address of the data.
 		 */
-		constexpr InitialzerList(const POINTER<TYPE> first, const POINTER<TYPE> last)
+		constexpr InitializerList(const POINTER<TYPE> first, const POINTER<TYPE> last)
 			noexcept : myFirst(first), myLast(last) {}
 
 		/* DESTRUCTOR
 		 * Default destructor.
 		 */
-		~InitialzerList() {}
+		~InitializerList() {}
 
 		/* PUBLIC FUNCTION */
 	public:

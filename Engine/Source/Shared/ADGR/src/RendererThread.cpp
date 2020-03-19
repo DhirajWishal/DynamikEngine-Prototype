@@ -17,12 +17,12 @@ namespace Dynamik {
 		myRenderer.draw();
 	}
 
-	ThreadTreminateReason RendererThread::shutdown()
+	DMKThreadTreminateReason RendererThread::shutdown()
 	{
 		myRenderer.idleCall();
 		myRenderer.end();
 
-		return ThreadTreminateReason::NORMAL_TERMINATION;
+		return DMKThreadTreminateReason::DMK_THREAD_TERMINATION_REASON_NORMAL_TERMINATION;
 	}
 
 	B1 RendererThread::loopEndCommand()

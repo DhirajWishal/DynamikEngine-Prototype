@@ -62,7 +62,7 @@ namespace Dynamik {
 				void copyData() {
 				}
 
-				VkFormat findSupportedFormat(const std::vector<VkFormat>& candidates,
+				VkFormat findSupportedFormat(const ARRAY<VkFormat>& candidates,
 					VkImageTiling tiling, VkFormatFeatureFlags features, VkPhysicalDevice physicalDevice) {
 					for (VkFormat format : candidates) {
 						VkFormatProperties props;

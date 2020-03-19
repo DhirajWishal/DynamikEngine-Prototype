@@ -13,9 +13,9 @@
 
 class Engine : public Dynamik::Application {
 public:
-	Engine(std::vector<Dynamik::Scene*>& scene);
+	Engine(Dynamik::ARRAY<Dynamik::Scene*>& scene);
 
 	~Engine();
 };
 
-Dynamik::Application* Dynamik::createApplication(std::vector<Dynamik::Scene*>& scene);
+Dynamik::Application* Dynamik::createApplication(Dynamik::ARRAY<Dynamik::Scene*>& scene);

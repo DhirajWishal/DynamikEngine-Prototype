@@ -18,8 +18,8 @@
 namespace Dynamik {
 	namespace ADGR {
 		namespace core {
-			void initSyncObjects(VkDevice device, std::vector<VkSemaphore>* imageAvailableSemaphores,
-				std::vector<VkSemaphore>* renderFinishedSemaphores, std::vector<VkFence>* inFlightFences) {
+			void initSyncObjects(VkDevice device, ARRAY<VkSemaphore>* imageAvailableSemaphores,
+				ARRAY<VkSemaphore>* renderFinishedSemaphores, ARRAY<VkFence>* inFlightFences) {
 				imageAvailableSemaphores->resize(MAX_FRAMES_IN_FLIGHT);
 				renderFinishedSemaphores->resize(MAX_FRAMES_IN_FLIGHT);
 				inFlightFences->resize(MAX_FRAMES_IN_FLIGHT);

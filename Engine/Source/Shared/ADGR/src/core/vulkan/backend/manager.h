@@ -45,7 +45,7 @@ namespace Dynamik {
 				// Add a resource to the manager
 				template<typename _Type>
 				void addResource(_Type& data, DMKManagerResourceType type = DMK_CDH_MANAGER_RESOURCE_TYPE_UNKNOWN) {
-					((std::vector<_Type>*)_resource(type))->push_back(data);
+					((ARRAY<_Type>*)_resource(type))->push_back(data);
 				}
 
 				// Set a resource to the manager
@@ -57,65 +57,65 @@ namespace Dynamik {
 				// Clear resource store from the manager
 				template<typename _Type>
 				void clearResource(DMKManagerResourceType type = DMK_CDH_MANAGER_RESOURCE_TYPE_UNKNOWN) {
-					(std::vector<_Type>*)_resource(type)->clear();
+					(ARRAY<_Type>*)_resource(type)->clear();
 				}
 
 				// Clear a sub resource from the manager
 				template<typename _Type>
 				void clearResource(I32 index, DMKManagerResourceType type = DMK_CDH_MANAGER_RESOURCE_TYPE_UNKNOWN) {
-					(std::vector<_Type>*)_resource(type)->at(index).clear();
+					(ARRAY<_Type>*)_resource(type)->at(index).clear();
 				}
 
 				// Allocate a size to a perticular store
 				template<typename _Type>
 				void allocate(DMKManagerResourceType type = DMK_CDH_MANAGER_RESOURCE_TYPE_UNKNOWN, I32 size = 1) {
-					((std::vector<_Type>*)_resource(type))->resize(size);
+					((ARRAY<_Type>*)_resource(type))->resize(size);
 				}
 
 				// Get full resource from the manager
 				template<typename _Type>
-				std::vector<_Type>& getFullResource(DMKManagerResourceType type = DMK_CDH_MANAGER_RESOURCE_TYPE_UNKNOWN) {
-					return *((std::vector<_Type>*)_resource(type));
+				ARRAY<_Type>& getFullResource(DMKManagerResourceType type = DMK_CDH_MANAGER_RESOURCE_TYPE_UNKNOWN) {
+					return *((ARRAY<_Type>*)_resource(type));
 				}
 
 				// Get full resource address from the manager
 				template<typename _Type>
-				std::vector<_Type>* getFullResourceAddr(DMKManagerResourceType type = DMK_CDH_MANAGER_RESOURCE_TYPE_UNKNOWN) {
-					return ((std::vector<_Type>*)_resource(type));
+				ARRAY<_Type>* getFullResourceAddr(DMKManagerResourceType type = DMK_CDH_MANAGER_RESOURCE_TYPE_UNKNOWN) {
+					return ((ARRAY<_Type>*)_resource(type));
 				}
 
 				// Get a resource from the manager
 				template<typename _Type>
 				_Type& getResource(DMKManagerResourceType type = DMK_CDH_MANAGER_RESOURCE_TYPE_UNKNOWN, I32 index = 0) {
-					I32 _resourceSize = ((std::vector<_Type>*)_resource(type))->size();
+					I32 _resourceSize = ((ARRAY<_Type>*)_resource(type))->size();
 
 					if (index > _resourceSize)
 						DMK_CORE_FATAL("Invalid resource index!");
 
-					return ((std::vector<_Type>*)_resource(type))->at(index);
+					return ((ARRAY<_Type>*)_resource(type))->at(index);
 				}
 
 				// Get a resource address from the manager
 				template<typename _Type>
 				_Type* getResourceAddr(DMKManagerResourceType type = DMK_CDH_MANAGER_RESOURCE_TYPE_UNKNOWN, I32 index = 0) {
-					I32 _resourceSize = ((std::vector<_Type>*)_resource(type))->size();
+					I32 _resourceSize = ((ARRAY<_Type>*)_resource(type))->size();
 
 					if (index > _resourceSize)
 						DMK_CORE_FATAL("Invalid resource index!");
 
-					return &((std::vector<_Type>*)_resource(type))->at(index);
+					return &((ARRAY<_Type>*)_resource(type))->at(index);
 				}
 
 				// Get resource size (array size)
 				template<typename _Type>
 				I32 getResourceSize(DMKManagerResourceType type = DMK_CDH_MANAGER_RESOURCE_TYPE_UNKNOWN) const {
-					return ((std::vector<_Type>*)_resource(type))->size();
+					return ((ARRAY<_Type>*)_resource(type))->size();
 				}
 
 				// Get resource size (array size) with an index
 				template<typename _Type>
 				I32 getResourceSize(DMKManagerResourceType type = DMK_CDH_MANAGER_RESOURCE_TYPE_UNKNOWN, I32 index = 0) {
-					return ((std::vector<_Type>*)_resource(type))->at(index).size();
+					return ((ARRAY<_Type>*)_resource(type))->at(index).size();
 				}
 
 			private:

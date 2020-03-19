@@ -2,8 +2,8 @@
 #include "vertex.h"
 
 namespace Dynamik {
-	std::vector<VkVertexInputBindingDescription> Vertex::getBindingDescription(int bindCount) {
-		std::vector<VkVertexInputBindingDescription> bindingDescription(bindCount);
+	ARRAY<VkVertexInputBindingDescription> Vertex::getBindingDescription(int bindCount) {
+		ARRAY<VkVertexInputBindingDescription> bindingDescription(bindCount);
 
 		for (int i = 0; i < bindCount; i++) {
 			bindingDescription[i].binding = i;
@@ -14,8 +14,8 @@ namespace Dynamik {
 		return bindingDescription;
 	}
 
-	std::vector<VkVertexInputAttributeDescription> Vertex::getAttributeDescriptions(int bindCount) {
-		std::vector<VkVertexInputAttributeDescription> attributeDescriptions(3);
+	ARRAY<VkVertexInputAttributeDescription> Vertex::getAttributeDescriptions(int bindCount) {
+		ARRAY<VkVertexInputAttributeDescription> attributeDescriptions(3);
 
 		attributeDescriptions[0].binding = 0;
 		attributeDescriptions[0].location = 0;

@@ -44,28 +44,28 @@ namespace Dynamik {
 
 				// Textures
 				UI32 myMipLevel = 1.0f;
-				std::vector<VkImage> myTextureImages = {};
-				std::vector<VkDeviceMemory> myTextureImageMemories = {};
-				std::vector<VkSampler> myTextureImageSamplers = {};
-				std::vector<VkImageView> myTextureImageViews = {};
+				ARRAY<VkImage> myTextureImages = {};
+				ARRAY<VkDeviceMemory> myTextureImageMemories = {};
+				ARRAY<VkSampler> myTextureImageSamplers = {};
+				ARRAY<VkImageView> myTextureImageViews = {};
 				DMKFormat myTextureFormat = DMKFormat::DMK_FORMAT_R8G8B8A8_UNORM;
 
 				// Vertex buffers
-				std::vector<VkBuffer> myVertexBuffers = {};
-				std::vector<VkDeviceMemory> myVertexBufferMemories = {};
+				ARRAY<VkBuffer> myVertexBuffers = {};
+				ARRAY<VkDeviceMemory> myVertexBufferMemories = {};
 
 				// Index buffers
-				std::vector<VkBuffer> myIndexBuffers = {};
-				std::vector<VkDeviceMemory> myIndexBufferMemories = {};
+				ARRAY<VkBuffer> myIndexBuffers = {};
+				ARRAY<VkDeviceMemory> myIndexBufferMemories = {};
 
 				// Descriptor Sets
 				VkDescriptorSetLayout myDescriptorSetLayout = VK_NULL_HANDLE;
-				std::vector<VkDescriptorPool> myDescriptorPools = {};
-				std::vector<std::vector<VkDescriptorSet>> myDescriptorSets = {};
+				ARRAY<VkDescriptorPool> myDescriptorPools = {};
+				ARRAY<ARRAY<VkDescriptorSet>> myDescriptorSets = {};
 
 				// Uniform buffers
-				std::vector<VkBuffer> myUniformBuffers = {};
-				std::vector<VkDeviceMemory> myUniformBufferMemories = {};
+				ARRAY<VkBuffer> myUniformBuffers = {};
+				ARRAY<VkDeviceMemory> myUniformBufferMemories = {};
 
 				B1 isInitialized = false;
 			};

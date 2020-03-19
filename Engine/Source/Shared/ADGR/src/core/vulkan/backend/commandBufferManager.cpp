@@ -20,7 +20,7 @@ namespace Dynamik {
 					DMK_CORE_FATAL("failed to create command pool!");
 			}
 
-			void commandBufferManager::bindCommands(ADGRVulkanDataContainer* container, std::vector<vulkanFormat>* formats) {
+			void commandBufferManager::bindCommands(ADGRVulkanDataContainer* container, ARRAY<vulkanFormat>* formats) {
 				container->commandBufferContainer.buffers.resize(container->frameBufferContainer.buffers.size());
 
 				VkCommandBufferAllocateInfo allocInfo = {};
@@ -263,7 +263,7 @@ namespace Dynamik {
 				isDestroyed = true;
 			}
 
-			std::vector<VkCommandBuffer> oneTimeCommandBufferManager::getCommandBuffers() {
+			ARRAY<VkCommandBuffer> oneTimeCommandBufferManager::getCommandBuffers() {
 				return myCommandBuffers;
 			}
 		}

@@ -16,7 +16,7 @@ namespace Dynamik {
 		void deleteData(UI32 index);
 
 	private:
-		std::vector<VPTR> dataAddresses = {};
+		ARRAY<VPTR> dataAddresses = {};
 		UI32 dataAddressesSize = 0;
 	};
 }

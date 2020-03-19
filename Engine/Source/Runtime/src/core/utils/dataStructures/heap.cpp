@@ -55,9 +55,9 @@ namespace Dynamik {
 		}
 
 		template<class Alloc>
-		std::vector<Alloc> minHeap<Alloc>::sort() {
+		ARRAY<Alloc> minHeap<Alloc>::sort() {
 			std::deque<Alloc> q;
-			std::vector<Alloc> end;
+			ARRAY<Alloc> end;
 
 			for (auto e : arr)
 				q.push(e);

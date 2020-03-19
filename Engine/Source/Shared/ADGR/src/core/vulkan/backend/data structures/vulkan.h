@@ -51,26 +51,26 @@ namespace Dynamik {
 					VK_NULL_HANDLE,	// width
 					VK_NULL_HANDLE	// height
 				};
-				std::vector<VkImageView> swapchainImageViews = {};					// Vulkan swapchain image views
-				std::vector<VkImage> swapChainImages = {};							// Vulkan swapchain images
+				ARRAY<VkImageView> swapchainImageViews = {};					// Vulkan swapchain image views
+				ARRAY<VkImage> swapChainImages = {};							// Vulkan swapchain images
 				VkSwapchainKHR swapchain = VK_NULL_HANDLE;							// Vulkan swapchain
 			};
 
 			/* PIPELINE DATA CONTAINER */
 			struct ADGRVulkanPipelineDataContainer {
-				std::vector<DMK_ShaderCode> shaderCodes = {							// Vulkan shader codes
+				ARRAY<DMK_ShaderCode> shaderCodes = {							// Vulkan shader codes
 					{},	// vertex shader
 					{},	// tessellation shader
 					{},	// geometry shader
 					{}	// fragment shader
 				};
-				std::vector<VkShaderModule> shaderModules = {						// Vulkan shader modules
+				ARRAY<VkShaderModule> shaderModules = {						// Vulkan shader modules
 					VK_NULL_HANDLE,	// vertex shader
 					VK_NULL_HANDLE,	// tessellation shader
 					VK_NULL_HANDLE,	// geometry shader
 					VK_NULL_HANDLE	// fragment shader
 				};
-				std::vector<VkPipelineShaderStageCreateInfo> shaderStageInfo = {	// Vulkan shader stage create info
+				ARRAY<VkPipelineShaderStageCreateInfo> shaderStageInfo = {	// Vulkan shader stage create info
 					{},	// vertex shader
 					{},	// tessellation shader
 					{},	// geometry shader
@@ -82,19 +82,19 @@ namespace Dynamik {
 
 			// Shader data
 			struct ADGRVulkanShaderDataContainer {
-				std::vector<DMK_ShaderCode> shaderCodes = {							// Vulkan shader codes
+				ARRAY<DMK_ShaderCode> shaderCodes = {							// Vulkan shader codes
 					{},	// vertex shader
 					{},	// tessellation shader
 					{},	// geometry shader
 					{}	// fragment shader
 				};
-				std::vector<VkShaderModule> shaderModules = {						// Vulkan shader modules
+				ARRAY<VkShaderModule> shaderModules = {						// Vulkan shader modules
 					VK_NULL_HANDLE,	// vertex shader
 					VK_NULL_HANDLE,	// tessellation shader
 					VK_NULL_HANDLE,	// geometry shader
 					VK_NULL_HANDLE	// fragment shader
 				};
-				std::vector<VkPipelineShaderStageCreateInfo> shaderStageInfo = {	// Vulkan shader stage create info
+				ARRAY<VkPipelineShaderStageCreateInfo> shaderStageInfo = {	// Vulkan shader stage create info
 					{},	// vertex shader
 					{},	// tessellation shader
 					{},	// geometry shader
@@ -107,7 +107,7 @@ namespace Dynamik {
 				ADGRVulkanShaderDataContainer shaderDataContainer = {};				// Vulkan shader data container
 				VkRenderPass renderPass = VK_NULL_HANDLE;							// Vulkan render pass
 
-				std::vector<VkDescriptorSetLayout_T*> layouts = {};					// Vulkan descriptor set layouts
+				ARRAY<VkDescriptorSetLayout_T*> layouts = {};					// Vulkan descriptor set layouts
 
 				// primitive assembly info
 				VkPrimitiveTopology inputAssemblyTopology = VkPrimitiveTopology::VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST;	// Vulkan input assembler topologies
@@ -118,7 +118,7 @@ namespace Dynamik {
 
 				// scissor info
 				UI32 scissorCount = 1;											// Vulkan scissor count
-				std::vector<VkOffset2D> offsets = { { 0, 0 } };						// Vulkan scissor offsets
+				ARRAY<VkOffset2D> offsets = { { 0, 0 } };						// Vulkan scissor offsets
 
 				// rasterizer info
 				VkBool32 rasterizerDepthClampEnable = VK_FALSE;						// Vulkan rasterizer depth clamp enable
@@ -142,18 +142,18 @@ namespace Dynamik {
 				VkBool32 depthStencilTestEnable = VK_FALSE;							// Vulkan depth stencil test enable
 
 				// color blender info
-				std::vector<VkColorComponentFlags> colorBlenderColorWriteMasks = {	// Vulkan color blend write masks
+				ARRAY<VkColorComponentFlags> colorBlenderColorWriteMasks = {	// Vulkan color blend write masks
 					VK_COLOR_COMPONENT_R_BIT	// Red
 					| VK_COLOR_COMPONENT_G_BIT	// Green
 					| VK_COLOR_COMPONENT_B_BIT	// Blue
 					| VK_COLOR_COMPONENT_A_BIT	// Alpha
 				};
-				std::vector<VkBool32> colorBlenderBlendEnables = { VK_FALSE };		// Vulkan color blend blend enables
+				ARRAY<VkBool32> colorBlenderBlendEnables = { VK_FALSE };		// Vulkan color blend blend enables
 
 				VkBool32 colorBlendingLogicOpEnable = VK_FALSE;						// Vulkan color blend blending logical op enable
 				VkLogicOp colorBlendingLogicOp = VkLogicOp::VK_LOGIC_OP_COPY;		// Vulkan color blend blending logical op
 				UI32 colorBlendingColorBlendCount = 1;							// Vulkan color blend blending count
-				std::vector<F32> colorBlendingBlendConstants = {					// Vulkan color blend constants
+				ARRAY<F32> colorBlendingBlendConstants = {					// Vulkan color blend constants
 					0.0f,	// Red
 					0.0f,	// Green
 					0.0f,	// Blue
@@ -179,7 +179,7 @@ namespace Dynamik {
 			/* COMMAND BUFFER CONTAINER */
 			struct ADGRVulkanCommandBufferDataContainer {
 				VkCommandPool commandPool = VK_NULL_HANDLE;							// Vulkan command pool
-				std::vector<VkCommandBuffer> buffers = {};							// Vulkan command buffers
+				ARRAY<VkCommandBuffer> buffers = {};							// Vulkan command buffers
 			};
 
 			/* COLOR BUFFER CONTAINER */
@@ -198,21 +198,21 @@ namespace Dynamik {
 
 			/* FRAME BUFFER CONTAINER */
 			struct ADGRVulkanFrameBufferDataContainer {
-				std::vector<VkFramebuffer> buffers = {};							// Vulkan frame buffers
+				ARRAY<VkFramebuffer> buffers = {};							// Vulkan frame buffers
 			};
 
 			/* DESCRIPTOR SETS CONATAINER */
 			struct ADGRVulkanDescriptorSetsDataContainer {
 				VkDescriptorSetLayout descriptorSetLayout = VK_NULL_HANDLE;			// Vulkan descriptor set layout
 				VkDescriptorPool descriptorPool = VK_NULL_HANDLE;					// Vulkan descriptor pool
-				std::vector<VkDescriptorSet> descriptorSets = {};					// Vulkan descriptor sets
+				ARRAY<VkDescriptorSet> descriptorSets = {};					// Vulkan descriptor sets
 			};
 
 			/* SEMAPHORES AND FENCES CONTAINER */
 			struct ADGRVulkanSemaphoresAndFencesDataContainer {
-				std::vector<VkSemaphore> imageAvailableSemaphore = {};				// Vulkan image available semaphores
-				std::vector<VkSemaphore> renderFinishedSemaphore = {};				// Vulkan render finished semaphores
-				std::vector<VkFence> inFlightFence = {};							// Vulkan in-flight fences
+				ARRAY<VkSemaphore> imageAvailableSemaphore = {};				// Vulkan image available semaphores
+				ARRAY<VkSemaphore> renderFinishedSemaphore = {};				// Vulkan render finished semaphores
+				ARRAY<VkFence> inFlightFence = {};							// Vulkan in-flight fences
 			};
 
 			/* DATA CONTAINER */
@@ -232,7 +232,7 @@ namespace Dynamik {
 				ADGRVulkanSwapchainDataContainer swapchainContainer = {};			// ADGR swapchain container
 
 				/* PIPELINE */
-				std::vector<ADGRVulkanPipelineDataContainer> pipelineContainers = {};	// ADGR pipeline containers
+				ARRAY<ADGRVulkanPipelineDataContainer> pipelineContainers = {};	// ADGR pipeline containers
 				VkRenderPass renderPass = VK_NULL_HANDLE;							// Vulkan render pass
 
 				/* COMMAND BUFFER */
@@ -248,13 +248,13 @@ namespace Dynamik {
 				ADGRVulkanFrameBufferDataContainer frameBufferContainer = {};		// ADGR frame buffer container
 
 				/* DESCRIPTOR SETS */
-				std::vector<ADGRVulkanDescriptorSetsDataContainer> descriptorSetsContainers = {};	// ADGR descriptor set container
+				ARRAY<ADGRVulkanDescriptorSetsDataContainer> descriptorSetsContainers = {};	// ADGR descriptor set container
 
 				/* SEMAPHORES AND FENCES */
 				ADGRVulkanSemaphoresAndFencesDataContainer semaphoresAndFencesContainer = {};	// ADGR semaphores and fences container
 
 				/* BLANK SCREEN BACKGROUND COLOR */
-				std::vector<F32> clearScreenValues = {							// Vulkan clear screen values
+				ARRAY<F32> clearScreenValues = {							// Vulkan clear screen values
 					(2.0f / 256.0f),		// Red
 					(8.0f / 256.0f),		// Green
 					(32.0f / 256.0f),		// Blue
@@ -282,13 +282,13 @@ namespace Dynamik {
 
 			struct DMKObjectData {
 				std::string path = "";
-				std::vector<F32> offsets = { 0.0f, 0.0f, 0.0f };
+				ARRAY<F32> offsets = { 0.0f, 0.0f, 0.0f };
 
-				std::vector<Vertex>* vertexBufferObject = {};
-				std::vector<VkBuffer>* vertexBuffers = {};
-				std::vector<VkDeviceMemory>* vertexBufferMemories = {};
+				ARRAY<Vertex>* vertexBufferObject = {};
+				ARRAY<VkBuffer>* vertexBuffers = {};
+				ARRAY<VkDeviceMemory>* vertexBufferMemories = {};
 
-				std::vector<UI32>* indexBufferObject = {};
+				ARRAY<UI32>* indexBufferObject = {};
 				VkBuffer* indexBuffer = VK_NULL_HANDLE;
 				VkDeviceMemory* indexBufferMemory = VK_NULL_HANDLE;
 
@@ -309,30 +309,30 @@ namespace Dynamik {
 				VkBuffer* buffer = VK_NULL_HANDLE;
 				VkDeviceMemory* bufferMemory = VK_NULL_HANDLE;
 
-				std::vector<Vertex>* vertexBufferObject = {};
+				ARRAY<Vertex>* vertexBufferObject = {};
 			};
 
 			struct DMKVulkanRendererCreateIndexBufferInfo {
 				VkBuffer* buffer = VK_NULL_HANDLE;
 				VkDeviceMemory* bufferMemory = VK_NULL_HANDLE;
 
-				std::vector<UI32>* indexBufferObject = {};
+				ARRAY<UI32>* indexBufferObject = {};
 			};
 
 			struct DMKVulkanRendererCreateUniformBufferInfo {
-				std::vector<VkBuffer>* buffer = {};
-				std::vector<VkDeviceMemory>* bufferMemory = {};
+				ARRAY<VkBuffer>* buffer = {};
+				ARRAY<VkDeviceMemory>* bufferMemory = {};
 			};
 
 			struct DMKVulkanRendereCreateDescriptorSetsInfo {
-				std::vector<VkBuffer>* uniformBuffers = {};
+				ARRAY<VkBuffer>* uniformBuffers = {};
 				VkImageView textureImageView = VK_NULL_HANDLE;
 				VkSampler textureSampler = VK_NULL_HANDLE;
 
-				std::vector<VkDescriptorSet>* descriptorSets = {};
+				ARRAY<VkDescriptorSet>* descriptorSets = {};
 				VkDescriptorPool descriptorPool = VK_NULL_HANDLE;
 				VkDescriptorSetLayout* layout = VK_NULL_HANDLE;
-				std::vector<uint8_t> bindIndexes = { 0, 1 };
+				ARRAY<uint8_t> bindIndexes = { 0, 1 };
 			};
 
 			struct DMKVulkanBuffer {
@@ -350,14 +350,14 @@ namespace Dynamik {
 			};
 
 			struct DMKVulkanVertexBuffer {
-				std::vector<Vertex> vertexBuffers = {};
+				ARRAY<Vertex> vertexBuffers = {};
 
 				VkBuffer buffer = VK_NULL_HANDLE;
 				VkDeviceMemory bufferMemory = VK_NULL_HANDLE;
 			};
 
 			struct DMKVulkanIndexBuffer {
-				std::vector<UI32> indexBuffers = {};
+				ARRAY<UI32> indexBuffers = {};
 
 				VkBuffer buffer = VK_NULL_HANDLE;
 				VkDeviceMemory bufferMemory = VK_NULL_HANDLE;
@@ -366,7 +366,7 @@ namespace Dynamik {
 			struct DMKVulkanSkyboxCommandBufferBindData {
 				VkBuffer vertexBuffer = VK_NULL_HANDLE;
 				VkBuffer indexBuffer = VK_NULL_HANDLE;
-				std::vector<UI32> indexes = {};
+				ARRAY<UI32> indexes = {};
 
 				VkPipeline pipeline = VK_NULL_HANDLE;
 				VkDescriptorSet descriptorSet = VK_NULL_HANDLE;

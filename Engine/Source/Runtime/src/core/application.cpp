@@ -74,7 +74,7 @@ namespace Dynamik {
 	SampleThread thr;
 	RendererThread rendererThread;
 
-	Application::Application(std::vector<Scene*>& _scenes) : scenes(_scenes) {
+	Application::Application(ARRAY<Scene*>& _scenes) : scenes(_scenes) {
 		if (_scenes[sceneCount]->myGameObjects.size() < 1) {
 			DMK_CORE_ERROR("No Game Objects found!");
 			return;
@@ -83,63 +83,6 @@ namespace Dynamik {
 		FSTR fstr = std::string("Hello World").c_str();
 
 		gameObjectInitialization();
-		//ARRAY<UI32>::
-
-		int var = 0;
-		std::cout << sizeof(ARRAY<UI32>) << "\n";
-
-		//ARRAY<UI32> _test;
-		//for (UI32 i = 0; i < 1000; i++)
-		//	_test.pushBack(i);
-
-		{
-			Debugger::benchmark::Benchmark myBenchmarkOne;
-			ARRAY<sample> _sample;
-			for (UI32 i = 0; i < 1000; i++) {
-				sample s;
-				_sample.pushBack(s);
-			}
-		}
-
-		{
-			Debugger::benchmark::Benchmark myBenchmarkOne;
-			std::vector<sample> _sample;
-			for (UI32 i = 0; i < 1000; i++) {
-				sample s;
-				_sample.push_back(s);
-			}
-		}
-
-		{
-			Debugger::benchmark::Benchmark myBenchmarkOne;
-			ARRAY<ARRAY<UI32>> myArray1;
-			VPTR data = myArray1.data();
-			for (UI32 itr = 0; itr < 128; itr++) {
-				ARRAY<UI32> temp;
-				for (UI32 x = 0; x < 12800; x++)
-					temp.push_back(x);
-				myArray1.push_back(temp);
-			}
-		}
-		//for (UI32 i = 0; i < 100; i++)
-		//	myArray1.pushBack(i);
-		//
-		//var = myArray1[59];
-		//
-		//ARRAY<UI32>::ITERATOR itr;
-		//for (itr = myArray1.begin(); itr != myArray1.end(); itr++)
-		//	std::cout << *itr << "\n";
-		{
-			Debugger::benchmark::Benchmark myBenchmarkOne;
-			std::vector<std::vector<UI32>> myArray1;
-			for (UI32 itr = 0; itr < 128; itr++) {
-				std::vector<UI32> temp;
-				for (UI32 x = 0; x < 12800; x++)
-					temp.push_back(x);
-				myArray1.push_back(temp);
-				VPTR data = myArray1.data();
-			}
-		}
 
 		std::thread myThread(Application::showProgress);
 
@@ -237,7 +180,7 @@ namespace Dynamik {
 
 					getObjectPaths(&myObject);
 					initAudioControllers(&myObject);
-					std::vector<InternalFormat*> _localInternalFormatBases;
+					ARRAY<InternalFormat*> _localInternalFormatBases;
 					initRendererFormats(&_localInternalFormatBases);
 					myRenderingEngine.loadDataToUpdate(_localInternalFormatBases);
 					canFinish = true;
@@ -248,7 +191,7 @@ namespace Dynamik {
 					//std::thread _threadOne([](Application* application, GameObject* myObject, bool* canFinish) {
 					//	application->getObjectPaths(myObject);
 					//	application->initAudioControllers(myObject);
-					//	std::vector<InternalFormat*> _localInternalFormatBases;
+					//	ARRAY<InternalFormat*> _localInternalFormatBases;
 					//	application->initRendererFormats(&_localInternalFormatBases);
 					//	application->myRenderingEngine.loadDataToUpdate(_localInternalFormatBases);
 					//	application->myRenderingEngine.updateRendererFormats();
@@ -291,7 +234,7 @@ namespace Dynamik {
 		static uint8_t count = 0;
 		static float percentage = 0.0f;
 
-		static std::vector<std::string> symbols = {
+		static ARRAY<std::string> symbols = {
 			"|",
 			"/",
 			"-",
@@ -335,7 +278,7 @@ namespace Dynamik {
 				|| (gameObjects[itr]->myProperties.type == DMKObjectType::DMK_OBJECT_TYPE_NPC)
 				|| (gameObjects[itr]->myProperties.type == DMKObjectType::DMK_OBJECT_TYPE_CUSTOM)
 				) {
-				GameObject* gameObject = gameObjects[itr];
+				GameObject* gameObject = gameObjects[itr];	// inner array initialization
 
 				fileManager.open(gameObject->myProperties.location + (
 					(gameObject->myProperties.location[gameObject->myProperties.location.size() - 1] == '/')
@@ -438,7 +381,7 @@ namespace Dynamik {
 
 	void Application::loadObjectData() {
 		{
-			std::vector<std::future<void>> threads = {};
+			ARRAY<std::future<void>, DMKArrayDestructorCallMode::DMK_ARRAY_DESTRUCTOR_CALL_MODE_DESTRUCT_ALL> threads = {};
 			for (int i = 0; i < internalFormats.size(); i++) {
 				if (renderableObjectCheck(internalFormats[i])) {
 					internalFormats[i].myVertexBufferObjects.resize(1);
@@ -487,7 +430,7 @@ namespace Dynamik {
 			}
 	}
 
-	void Application::initRendererFormats(std::vector<InternalFormat*>* formats) {
+	void Application::initRendererFormats(ARRAY<InternalFormat*>* formats) {
 		for (int i = 0; i < internalFormats.size(); i++)
 			if (renderableObjectCheck(internalFormats[i])) {
 				internalFormats[i].isInitializedPrimary = true;

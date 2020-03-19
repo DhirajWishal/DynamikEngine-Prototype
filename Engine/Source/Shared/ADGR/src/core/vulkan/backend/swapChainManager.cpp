@@ -126,16 +126,16 @@ namespace Dynamik {
 				return details;
 			}
 
-			VkSurfaceFormatKHR swapChainManager::chooseSwapSurfaceFormat(const std::vector<VkSurfaceFormatKHR>& availableFormats) {
+			VkSurfaceFormatKHR swapChainManager::chooseSwapSurfaceFormat(const ARRAY<VkSurfaceFormatKHR>& availableFormats) {
 				for (const auto& availableFormat : availableFormats)
 					if (availableFormat.format == VK_FORMAT_B8G8R8A8_UNORM
 						&& availableFormat.colorSpace == VK_COLOR_SPACE_SRGB_NONLINEAR_KHR)
 						return availableFormat;
 
-				return availableFormats[0];
+				return ((ARRAY<VkSurfaceFormatKHR>)availableFormats)[0];
 			}
 
-			VkPresentModeKHR swapChainManager::chooseSwapPresentMode(const std::vector<VkPresentModeKHR>& availablePresentModes) {
+			VkPresentModeKHR swapChainManager::chooseSwapPresentMode(const ARRAY<VkPresentModeKHR>& availablePresentModes) {
 				VkPresentModeKHR bestMode = VK_PRESENT_MODE_FIFO_KHR;
 
 				for (const auto& availablePresentMode : availablePresentModes) {

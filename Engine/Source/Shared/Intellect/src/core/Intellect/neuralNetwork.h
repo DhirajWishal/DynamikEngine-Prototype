@@ -24,19 +24,19 @@ namespace Dynamik {
 		class DMK_API NeuralNetwork {
 		public:
 			NeuralNetwork();
-			NeuralNetwork(std::vector<std::vector<Neuron*>> neuralLayers);
+			NeuralNetwork(ARRAY<ARRAY<Neuron*>> neuralLayers);
 			~NeuralNetwork();
 
 			void addNeuron(Neuron* neuron, UI32 layerNumber = 0);
-			void addNeurons(std::vector<Neuron*> neurons, UI32 layerNumber = 0);
-			void setNeurons(std::vector<Neuron*> neurons, UI32 layerNumber = 0);
-			void addNeuronLayer(std::vector<Neuron*> neurons);
-			void setNeuronLayers(std::vector<std::vector<Neuron*>> neuralLayers);
+			void addNeurons(ARRAY<Neuron*> neurons, UI32 layerNumber = 0);
+			void setNeurons(ARRAY<Neuron*> neurons, UI32 layerNumber = 0);
+			void addNeuronLayer(ARRAY<Neuron*> neurons);
+			void setNeuronLayers(ARRAY<ARRAY<Neuron*>> neuralLayers);
 
-			NeuralNetwork& operator=(std::vector<std::vector<Neuron*>> neuralLayers);
+			NeuralNetwork& operator=(ARRAY<ARRAY<Neuron*>> neuralLayers);
 
 		private:
-			std::vector<std::vector<Neuron*>> myNeuralLayers = {};
+			ARRAY<ARRAY<Neuron*>> myNeuralLayers = {};
 			F32 myActivationRangeMin = 0.0f;
 			F32 myActivationRangeMax = 1.0f;
 			UI32 myNeuronCount = 0;

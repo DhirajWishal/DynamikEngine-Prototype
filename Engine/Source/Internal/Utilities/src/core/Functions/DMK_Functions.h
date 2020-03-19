@@ -60,12 +60,12 @@ namespace Dynamik {
 		long double square(double base);
 
 		// var = utils::splitLine(line, character);
-		std::vector<std::string> splitLine(std::string_view line, char splitBy);
+		ARRAY<std::string> splitLine(std::string_view line, char splitBy);
 
 		// var = rand();
 		uint32_t rand(uint32_t from = 0, uint32_t to = 100);
 
-		std::vector<UI32> bubbleSort(std::vector<UI32> data);
+		ARRAY<UI32> bubbleSort(ARRAY<UI32> data);
 	}
 
 	std::string WSTRtoCSTR(std::wstring string);

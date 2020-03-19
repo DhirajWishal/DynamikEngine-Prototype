@@ -49,7 +49,7 @@ namespace Dynamik {
 
 				void onwindowResizeEvent(ADGROpenGLDataContainer* container);
 
-				void setwindowIcon(ADGROpenGLDataContainer* container, std::vector<std::string> paths);
+				void setwindowIcon(ADGROpenGLDataContainer* container, ARRAY<std::string> paths);
 
 				B1 isFrameBufferResized() { return frameBufferResized; }
 				void frameBufferResizedUpdate(B1 state) { frameBufferResized = state; }

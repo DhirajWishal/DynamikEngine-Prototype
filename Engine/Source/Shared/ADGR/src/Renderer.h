@@ -38,17 +38,17 @@ namespace Dynamik {
 
 			void setProgress(UI32* progress);
 			void initRenderer();
-			void setRendererFormats(std::vector<InternalFormat*>& internalFormats);
+			void setRendererFormats(ARRAY<InternalFormat*>& internalFormats);
 			void draw();
 
-			void setVertices(std::vector<Vertex>* vertices);
+			void setVertices(ARRAY<Vertex>* vertices);
 
 			void addCommand(RendererCommandQueue commandQueue);
 
 			void run();
-			void loadDataToUpdate(std::vector<InternalFormat*>& internalFormats);
+			void loadDataToUpdate(ARRAY<InternalFormat*>& internalFormats);
 			void updateRendererFormats();
-			void loadData(std::vector<InternalFormat*>& internalFormats, std::vector<RendererFormat>* formats);
+			void loadData(ARRAY<InternalFormat*>& internalFormats, ARRAY<RendererFormat>* formats);
 
 			void end();
 
@@ -60,10 +60,10 @@ namespace Dynamik {
 			B1 getWindowCloseEvent();
 			void idleCall();
 
-			std::vector<RendererFormat> myRendererFormats = {};
-			std::vector<RendererFormat> myTemporaryFormats;
+			ARRAY<RendererFormat> myRendererFormats = {};
+			ARRAY<RendererFormat> myTemporaryFormats;
 
-			std::vector<Vertex> localContainer;
+			ARRAY<Vertex> localContainer;
 			RendererCommandQueue myCommandQueue;
 		};
 	}

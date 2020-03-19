@@ -25,20 +25,20 @@ namespace Dynamik {
 		}
 
 		// Paths
-		std::vector<std::string> myModelPaths = {};
-		std::vector<std::string> myTexturePaths = {};
-		std::vector<std::string> myShaderPaths = {};
+		ARRAY<std::string> myModelPaths = {};
+		ARRAY<std::string> myTexturePaths = {};
+		ARRAY<std::string> myShaderPaths = {};
 
 		// Textures
 		uint32_t myMipLevel = 1.0f;
 
 		// Vertex buffers
-		std::vector<std::vector<Vertex>> myVertexBufferObjects = {};
-		std::vector<uint32_t> myVertexCounts;
+		ARRAY<ARRAY<Vertex>> myVertexBufferObjects = {};
+		ARRAY<uint32_t> myVertexCounts;
 
 		// Index buffers
-		std::vector<std::vector<uint32_t>> myIndexBufferObjects = {};
-		std::vector<uint32_t> myIndexCounts;
+		ARRAY<ARRAY<uint32_t>> myIndexBufferObjects = {};
+		ARRAY<uint32_t> myIndexCounts;
 
 		bool isInitializedPrimary = false;
 	};

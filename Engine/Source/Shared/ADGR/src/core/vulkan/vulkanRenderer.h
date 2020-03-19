@@ -119,19 +119,19 @@ namespace Dynamik {
 			 *
 			 * @param rendererFormats: An Array of renderer formats.
 			 */
-			void setFormats(std::vector<RendererFormat>& rendererFormats) override;
+			void setFormats(ARRAY<RendererFormat>& rendererFormats) override;
 
 			/* FUNCTION
 			 * Update the renderer formats.
 			 *
 			 * @param rendererFormats: An Array of renderer formats.
 			 */
-			void updateFormats(std::vector<RendererFormat>& rendererFormats) override;
+			void updateFormats(ARRAY<RendererFormat>& rendererFormats) override;
 
 			/* PRIVATE FUNCTIONS */
 		private:
 			void recreateSwapChain();
-			void setVertices(std::vector<Vertex>& vertices) { myVertices = vertices; }
+			void setVertices(ARRAY<Vertex>& vertices) { myVertices = vertices; }
 
 			inline VkDevice getDevice() { return myVulkanDataContainers[vulkanContainerIndex].device; }
 
@@ -156,19 +156,19 @@ namespace Dynamik {
 			void initVertexAndIndexBuffers(vulkanFormat* myVulkanFormat);
 			void initUniformBuffers(vulkanFormat* myVulkanFormat);
 			void initDescriptorPoolsAndSets(vulkanFormat* myVulkanFormat);
-			void initCommandBuffers(std::vector<vulkanFormat>* myVulkanFormats);
+			void initCommandBuffers(ARRAY<vulkanFormat>* myVulkanFormats);
 
 			void initSemaphoresAndFences();
 
-			void initObjectBasedFunctions(std::vector<vulkanFormat>* myVulkanFormats);
+			void initObjectBasedFunctions(ARRAY<vulkanFormat>* myVulkanFormats);
 
 			/* STAGE BASED SHUTDOWN */
 			void rendererWait();
 
-			void initModels(std::vector<DMKObjectData> data);
+			void initModels(ARRAY<DMKObjectData> data);
 			void initCubemap(DMKObjectData* data);
 
-			void _addVulkanFormatsToManager(std::vector<RendererFormat>& rendererFormats);
+			void _addVulkanFormatsToManager(ARRAY<RendererFormat>& rendererFormats);
 
 			/* PRIVATE VARIABLES AND CONSTANTS */
 		private:
@@ -196,20 +196,20 @@ namespace Dynamik {
 
 			B1 enableVertexAndIndexClear = true;
 
-			std::vector<Vertex> myVertices = {};
-			std::vector<std::future<void>> myThreads = {};
+			ARRAY<Vertex> myVertices = {};
+			ARRAY<std::future<void>, DMKArrayDestructorCallMode::DMK_ARRAY_DESTRUCTOR_CALL_MODE_DESTRUCT_ALL> myThreads = {};
 
 			/* DATA STORE */
-			std::vector<ADGRVulkanDataContainer> myVulkanDataContainers = {};
-			std::vector<vulkanFormat> myVulkanFormats = {};
+			ARRAY<ADGRVulkanDataContainer> myVulkanDataContainers = {};
+			ARRAY<vulkanFormat> myVulkanFormats = {};
 
-			std::vector<VkSemaphore> myImageAvailableSemaphores = {};
-			std::vector<VkSemaphore> myRenderFinishedSemaphores = {};
-			std::vector<VkFence> myFencesInFlight = {};
+			ARRAY<VkSemaphore> myImageAvailableSemaphores = {};
+			ARRAY<VkSemaphore> myRenderFinishedSemaphores = {};
+			ARRAY<VkFence> myFencesInFlight = {};
 
 			VkDescriptorSetLayout myTerrainDescriptorSetLayout;
-			std::vector<VkBuffer> myTerrainUniformBuffers;
-			std::vector<VkDeviceMemory> myTerrainUniformBufferMamories;
+			ARRAY<VkBuffer> myTerrainUniformBuffers;
+			ARRAY<VkDeviceMemory> myTerrainUniformBufferMamories;
 
 			VkResult result;
 			VkSubmitInfo submitInfo = {};

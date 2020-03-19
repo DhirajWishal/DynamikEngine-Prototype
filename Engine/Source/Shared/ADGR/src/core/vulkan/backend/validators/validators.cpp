@@ -19,7 +19,7 @@ namespace Dynamik {
 				UI32 layerCount = 0;
 				vkEnumerateInstanceLayerProperties(&layerCount, nullptr);
 
-				std::vector<VkLayerProperties> availableLayers(layerCount);
+				ARRAY<VkLayerProperties> availableLayers(layerCount);
 				vkEnumerateInstanceLayerProperties(&layerCount, availableLayers.data());
 
 				for (const char* layerName : validationLayer) {

@@ -17,7 +17,7 @@
 namespace Dynamik {
 	namespace ADGR {
 		namespace core {
-			std::vector<CCPTR> getRequiredExtentions(B1 vaidationLayer) {
+			ARRAY<CCPTR> getRequiredExtentions(B1 vaidationLayer) {
 				UI32 glfwExtentionCount = 0;
 				CCPTR* glfwExtentions;
 				glfwExtentions = glfwGetRequiredInstanceExtensions(&glfwExtentionCount);

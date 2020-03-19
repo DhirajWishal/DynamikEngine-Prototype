@@ -11,15 +11,15 @@ namespace Dynamik {
 	namespace ADGR {
 		namespace core {
 			struct DMKUniformBufferUpdateInfo {
-				std::vector<VkDeviceMemory> bufferMemory = {};
+				ARRAY<VkDeviceMemory> bufferMemory = {};
 
 				I32 currentImage = 0;
 
-				std::vector<B1> move = { false, false };
-				std::vector<B1> turn = { false, false };
-				std::vector<B1> upDown = { false, false };
-				std::vector<B1> rotation = { false, false };
-				std::vector<F32> cPos = { 0.0f, 0.0f };
+				ARRAY<B1> move = { false, false };
+				ARRAY<B1> turn = { false, false };
+				ARRAY<B1> upDown = { false, false };
+				ARRAY<B1> rotation = { false, false };
+				ARRAY<F32> cPos = { 0.0f, 0.0f };
 
 				F32 movementBias = 0.0075f;
 				F32 upDownBias = 0.015f;
@@ -48,7 +48,7 @@ namespace Dynamik {
 
 				void createUniformBuffers(ADGRVulkanDataContainer* container, vulkanFormat* format);
 				void createUniformBuffers(ADGRVulkanDataContainer* container,
-					std::vector<VkBuffer>* uniformBuffers, std::vector<VkDeviceMemory>* uniformBufferMemories);
+					ARRAY<VkBuffer>* uniformBuffers, ARRAY<VkDeviceMemory>* uniformBufferMemories);
 
 				void updateBuffer3D(ADGRVulkanDataContainer* container, std::deque<DMKEventContainer> eventContainers, vulkanFormat* gameObject, UI32 currentImage = 0);
 

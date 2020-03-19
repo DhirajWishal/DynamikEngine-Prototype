@@ -19,7 +19,7 @@ namespace Dynamik {
 				UI32 extensionCount = 0;
 				vkEnumerateDeviceExtensionProperties(device, nullptr, &extensionCount, nullptr);
 
-				std::vector<VkExtensionProperties> availableExtensions(extensionCount);
+				ARRAY<VkExtensionProperties> availableExtensions(extensionCount);
 				vkEnumerateDeviceExtensionProperties(device, nullptr, &extensionCount, availableExtensions.data());
 
 				std::set<std::string> requiredExtensions(deviceExtensions.begin(), deviceExtensions.end());
@@ -59,7 +59,7 @@ namespace Dynamik {
 			void deviceManager::initLogicalDevice(ADGRVulkanDataContainer* container) {
 				queueFamilyindices indices = findQueueFamilies(container->physicalDevice, container->surface);
 
-				std::vector<VkDeviceQueueCreateInfo> queueCreateInfos;
+				ARRAY<VkDeviceQueueCreateInfo> queueCreateInfos;
 				std::set<UI32> uniqueQueueFamilies = {
 					indices.graphicsFamily.value(),
 					indices.presentFamily.value()
@@ -109,7 +109,7 @@ namespace Dynamik {
 				if (deviceCount == 0)
 					DMK_CORE_FATAL("Failed to find GPUs with Vulkan support!");
 
-				std::vector<VkPhysicalDevice> devices(deviceCount);
+				ARRAY<VkPhysicalDevice> devices(deviceCount);
 				vkEnumeratePhysicalDevices(container->instance, &deviceCount, devices.data());
 
 				//std::multimap<I32, VkPhysicalDevice> candidates;

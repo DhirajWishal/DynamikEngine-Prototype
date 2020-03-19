@@ -30,14 +30,14 @@ namespace Dynamik {
 			void pop();
 
 			Alloc getValue(UI32 index);
-			std::vector<Alloc> sort();
+			ARRAY<Alloc> sort();
 
 		private:
 			inline UI32 getLeft(UI32 parent);
 			inline UI32 getRight(UI32 parent);
 			inline UI32 getParent(UI32 child);
 
-			std::vector<Alloc> arr;
+			ARRAY<Alloc> arr;
 			UI32 myIndex = 0;
 		};
 
@@ -58,7 +58,7 @@ namespace Dynamik {
 			inline UI32 getRight(UI32 parent);
 			inline UI32 getParent(UI32 child);
 
-			std::vector<Alloc> arr;
+			ARRAY<Alloc> arr;
 			UI32 myIndex;
 		};
 

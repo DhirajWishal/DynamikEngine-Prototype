@@ -7,7 +7,7 @@ namespace Dynamik {
 		{
 		}
 
-		NeuralNetwork::NeuralNetwork(std::vector<std::vector<Neuron*>> neuralLayers)
+		NeuralNetwork::NeuralNetwork(ARRAY<ARRAY<Neuron*>> neuralLayers)
 		{
 			setNeuronLayers(neuralLayers);
 		}
@@ -24,7 +24,7 @@ namespace Dynamik {
 			myNeuralLayers[layerNumber].push_back(neuron);
 		}
 
-		void NeuralNetwork::addNeurons(std::vector<Neuron*> neurons, UI32 layerNumber)
+		void NeuralNetwork::addNeurons(ARRAY<Neuron*> neurons, UI32 layerNumber)
 		{
 			if (layerNumber >= myLayerCount)
 				return;
@@ -36,7 +36,7 @@ namespace Dynamik {
 			}
 		}
 
-		void NeuralNetwork::setNeurons(std::vector<Neuron*> neurons, UI32 layerNumber)
+		void NeuralNetwork::setNeurons(ARRAY<Neuron*> neurons, UI32 layerNumber)
 		{
 			if (layerNumber >= myLayerCount)
 				return;
@@ -49,12 +49,12 @@ namespace Dynamik {
 			}
 		}
 
-		void NeuralNetwork::addNeuronLayer(std::vector<Neuron*> neurons)
+		void NeuralNetwork::addNeuronLayer(ARRAY<Neuron*> neurons)
 		{
 			myNeuralLayers.push_back(neurons);
 		}
 
-		void NeuralNetwork::setNeuronLayers(std::vector<std::vector<Neuron*>> neuralLayers)
+		void NeuralNetwork::setNeuronLayers(ARRAY<ARRAY<Neuron*>> neuralLayers)
 		{
 			Neuron* _tempNeuron = nullptr;
 			myNeuralLayers.resize(neuralLayers.size());
@@ -68,7 +68,7 @@ namespace Dynamik {
 			}
 		}
 
-		NeuralNetwork& NeuralNetwork::operator=(std::vector<std::vector<Neuron*>> neuralLayers)
+		NeuralNetwork& NeuralNetwork::operator=(ARRAY<ARRAY<Neuron*>> neuralLayers)
 		{
 			this->setNeuronLayers(neuralLayers);
 			return *this;

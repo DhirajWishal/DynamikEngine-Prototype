@@ -10,12 +10,12 @@
 namespace Dynamik {
 	class Scene {
 	public:
-		Scene(std::vector<GameObject*>& objects) : myGameObjects(objects) {}
+		Scene(ARRAY<GameObject*>& objects) : myGameObjects(objects) {}
 		virtual ~Scene() {}
 
 		std::string name = "";
 		uint32_t number = 0;
-		std::vector<GameObject*> myGameObjects;
+		ARRAY<GameObject*> myGameObjects;
 
 		float progress = 0.0f;
 	};

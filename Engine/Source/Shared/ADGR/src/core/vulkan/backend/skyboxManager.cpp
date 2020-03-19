@@ -100,7 +100,7 @@ namespace Dynamik {
 				oneTimeCommandBufferManager oneTimeCommandBuffer(container->device, container->commandBufferContainer.commandPool, container->graphicsQueue);
 				VkCommandBuffer commandBuffer = oneTimeCommandBuffer.getCommandBuffers()[0];
 
-				std::vector<VkBufferImageCopy> bufferCopyRegions;
+				ARRAY<VkBufferImageCopy> bufferCopyRegions;
 				UI32 offset = 0;
 
 				for (UI32 face = 0; face < 6; face++) {

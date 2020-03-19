@@ -58,8 +58,22 @@ struct destructorTest {
 	UI32 index;
 };
 
+ARRAY<UI32> myArr2 = {};
+
 int main() {
 	UI32 inde;
+
+	ARRAY<UI32> myArr = {
+		1, 2, 3, 6, 3, 5
+	};
+
+	UI32 num = 0;
+	POINTER<UI32> ptr = &num;
+	ptr += 1;
+
+	auto check = myArr2.size();
+
+	std::initializer_list<UI32> lol = {};
 
 	{
 		ARRAY<ARRAY<destructorTest>> myArray1;
@@ -87,7 +101,7 @@ int main() {
 		list.push(node);
 	}
 
-	std::vector<UI32> nums;
+	ARRAY<UI32> nums;
 
 	UI32 myNum;
 	for (UI32 i = 0; i < 128000; i++) {

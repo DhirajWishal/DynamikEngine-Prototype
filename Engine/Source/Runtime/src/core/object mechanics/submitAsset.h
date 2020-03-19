@@ -9,7 +9,7 @@
 
 namespace Dynamik {
 	struct InputContainer {
-		std::vector<GameObject*> assets;
+		ARRAY<GameObject*> assets;
 		KeyBindings keyBindings;
 
 		void addToAssetsQueue(GameObject obj) {

@@ -21,7 +21,7 @@ namespace Dynamik {
 				UI32 queueFamilyCount = 0;
 				vkGetPhysicalDeviceQueueFamilyProperties(device, &queueFamilyCount, nullptr);
 
-				std::vector<VkQueueFamilyProperties> queueFamilies(queueFamilyCount);
+				ARRAY<VkQueueFamilyProperties> queueFamilies(queueFamilyCount);
 				vkGetPhysicalDeviceQueueFamilyProperties(device, &queueFamilyCount, queueFamilies.data());
 
 				I32 i = 0;

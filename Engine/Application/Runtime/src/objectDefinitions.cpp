@@ -14,7 +14,7 @@ mars::mars() {
 
 DMKUpdateInfo mars::draw(std::deque<DMKEventContainer>& eventContainers) {
 	{
-		std::vector<std::future<void>> threads;
+		Dynamik::ARRAY<std::future<void>, DMKArrayDestructorCallMode::DMK_ARRAY_DESTRUCTOR_CALL_MODE_DESTRUCT_ALL> threads;
 
 		for (int i = 0; i < eventContainers.size(); i++) {
 			DMKEventContainer eventContainer = eventContainers.back();
@@ -93,7 +93,7 @@ void mars::init() {
 	myVertexDataContainer = vertexDataContainer();
 }
 
-void vertexDataContainer::setVertexData(DMKObjectVertexDataType dataType, std::vector<float> data) {
+void vertexDataContainer::setVertexData(DMKObjectVertexDataType dataType, Dynamik::ARRAY<float> data) {
 	switch (dataType) {
 	case Dynamik::DMKObjectVertexDataType::DMK_VERTEX_DATA_POSITION:
 		vertexData.Position = { data[0], data[1], data[2] };
@@ -128,8 +128,8 @@ void vertexDataContainer::setVertexData(DMKObjectVertexDataType dataType, std::v
 	}
 }
 
-std::vector<DMKVertexInputBindingDescription> vertexDataContainer::getVertexInputBindingDescription(int bindCount) {
-	std::vector<DMKVertexInputBindingDescription> descriptions = {};
+Dynamik::ARRAY<DMKVertexInputBindingDescription> vertexDataContainer::getVertexInputBindingDescription(int bindCount) {
+	Dynamik::ARRAY<DMKVertexInputBindingDescription> descriptions = {};
 
 	for (int i = 0; i < bindCount; i++) {
 		DMKVertexInputBindingDescription description = {};
@@ -141,8 +141,8 @@ std::vector<DMKVertexInputBindingDescription> vertexDataContainer::getVertexInpu
 	return descriptions;
 }
 
-std::vector<DMKVertexInputAttributeDescription> vertexDataContainer::getVertexInputAttributeDescription() {
-	std::vector<DMKVertexInputAttributeDescription> descriptions = {};
+Dynamik::ARRAY<DMKVertexInputAttributeDescription> vertexDataContainer::getVertexInputAttributeDescription() {
+	Dynamik::ARRAY<DMKVertexInputAttributeDescription> descriptions = {};
 
 	descriptions[0].binding = 0;
 	descriptions[0].location = 0;

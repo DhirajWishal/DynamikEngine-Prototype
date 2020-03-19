@@ -49,9 +49,9 @@ namespace Dynamik {
 
 	// Transform
 	struct TransformProperties {
-		std::vector<float> location = { 0.0f, 0.0f, 0.0f };
-		std::vector<float> rotation = { 0.0f, 0.0f, 0.0f };
-		std::vector<float> scale = { 1.0f, 1.0f, 1.0f };
+		ARRAY<float> location = { 0.0f, 0.0f, 0.0f };
+		ARRAY<float> rotation = { 0.0f, 0.0f, 0.0f };
+		ARRAY<float> scale = { 1.0f, 1.0f, 1.0f };
 		float movementSpeed = 1.0f;
 		float rotationSpeed = 2.5f;
 	};
@@ -95,7 +95,7 @@ namespace Dynamik {
 	// Lighting
 	struct LightingProperties {
 		DMKLightingType type = DMKLightingType::DMK_LIGHTING_TYPE_SPECULAR;
-		std::vector<float> color = { 0.0f, 0.0f, 0.0f, 1.0f };	// r, g, b, a
+		ARRAY<float> color = { 0.0f, 0.0f, 0.0f, 1.0f };	// r, g, b, a
 	};
 
 	// Game Object Properties
@@ -111,8 +111,8 @@ namespace Dynamik {
 		// Location data:
 		std::string location = "";
 
-		std::vector<std::string> objectPath = {};
-		std::vector<std::string> texturePaths = {};
+		ARRAY<std::string> objectPath = {};
+		ARRAY<std::string> texturePaths = {};
 #ifdef DMK_BEHAVIOUR_SCRIPTING
 		std::string behaviourPath = "";
 #endif
@@ -164,16 +164,16 @@ namespace Dynamik {
 	public:
 		struct Vertex {};
 
-		virtual void setVertexData(DMKObjectVertexDataType dataType, std::vector<float> data) {}
-		virtual void setVertexDataF(DMKObjectVertexDataType& dataType, std::vector<float>& data) {}
-		virtual void setVertexDataI(DMKObjectVertexDataType& dataType, std::vector<int32_t>& data) {}
-		virtual void setVertexDataUI(DMKObjectVertexDataType& dataType, std::vector<uint32_t>& data) {}
+		virtual void setVertexData(DMKObjectVertexDataType dataType, ARRAY<float> data) {}
+		virtual void setVertexDataF(DMKObjectVertexDataType& dataType, ARRAY<float>& data) {}
+		virtual void setVertexDataI(DMKObjectVertexDataType& dataType, ARRAY<int32_t>& data) {}
+		virtual void setVertexDataUI(DMKObjectVertexDataType& dataType, ARRAY<uint32_t>& data) {}
 
-		virtual std::vector<DMKVertexInputBindingDescription> getVertexInputBindingDescription(int bindCount) {
-			return std::vector<DMKVertexInputBindingDescription>();
+		virtual ARRAY<DMKVertexInputBindingDescription> getVertexInputBindingDescription(int bindCount) {
+			return ARRAY<DMKVertexInputBindingDescription>();
 		}
-		virtual std::vector<DMKVertexInputAttributeDescription> getVertexInputAttributeDescription() {
-			return std::vector<DMKVertexInputAttributeDescription>();
+		virtual ARRAY<DMKVertexInputAttributeDescription> getVertexInputAttributeDescription() {
+			return ARRAY<DMKVertexInputAttributeDescription>();
 		}
 	};
 

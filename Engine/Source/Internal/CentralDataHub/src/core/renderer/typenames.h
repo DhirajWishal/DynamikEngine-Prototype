@@ -3,12 +3,12 @@
 #ifndef _DYNAMIK_ADGR_VULKAN_TYPENAMES_H
 #define _DYNAMIK_ADGR_VULKAN_TYPENAMES_H
 
-#include <vector>
+#include "DataTypesLib/Public/Array.h"
 
 namespace Dynamik {
 	namespace ADGR {
 		namespace core {
-			typedef std::vector<char> DMK_ShaderCode;
+			typedef ARRAY<char> DMK_ShaderCode;
 		}
 	}
 }

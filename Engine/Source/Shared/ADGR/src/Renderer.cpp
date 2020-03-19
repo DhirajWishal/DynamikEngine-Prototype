@@ -63,7 +63,7 @@ namespace Dynamik {
 			rendererCore.initStageThree();
 		}
 
-		void Renderer::setRendererFormats(std::vector<InternalFormat*>& internalFormats) {
+		void Renderer::setRendererFormats(ARRAY<InternalFormat*>& internalFormats) {
 			loadData(internalFormats, &myRendererFormats);
 			rendererCore.setFormats(myRendererFormats);
 		}
@@ -72,7 +72,7 @@ namespace Dynamik {
 			rendererCore.drawFrame();
 		}
 
-		void Renderer::setVertices(std::vector<Vertex>* vertices) {
+		void Renderer::setVertices(ARRAY<Vertex>* vertices) {
 			vertices;
 		}
 
@@ -85,7 +85,7 @@ namespace Dynamik {
 			draw();
 		}
 
-		void Renderer::loadDataToUpdate(std::vector<InternalFormat*>& internalFormats) {
+		void Renderer::loadDataToUpdate(ARRAY<InternalFormat*>& internalFormats) {
 			loadData(internalFormats, &myTemporaryFormats);
 		}
 
@@ -95,12 +95,12 @@ namespace Dynamik {
 			myTemporaryFormats.clear();
 		}
 
-		void Renderer::loadData(std::vector<InternalFormat*>& internalFormats, std::vector<RendererFormat>* formats) {
+		void Renderer::loadData(ARRAY<InternalFormat*>& internalFormats, ARRAY<RendererFormat>* formats) {
 			for (auto format : internalFormats)
 				formats->push_back(RendererFormat(format));
 
 			{
-				std::vector<std::future<void>> threads = {};
+				ARRAY<std::future<void>, DMKArrayDestructorCallMode::DMK_ARRAY_DESTRUCTOR_CALL_MODE_DESTRUCT_ALL> threads = {};
 				for (I32 i = 0; i < internalFormats.size(); i++) {
 					B1 isInitiated = false;
 					RendererFormat* _localFormat = &formats->at(i);

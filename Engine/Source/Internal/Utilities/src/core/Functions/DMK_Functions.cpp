@@ -183,11 +183,11 @@ namespace Dynamik {
 		}
 
 		// var = utils::splitLine(line, character);
-		std::vector<std::string> splitLine(std::string_view line, char splitBy)
+		ARRAY<std::string> splitLine(std::string_view line, char splitBy)
 		{
 			if (line.find(splitBy) != std::string::npos)
 			{
-				std::vector<std::string> _splits = {};
+				ARRAY<std::string> _splits = {};
 				std::string _split = DMK_TEXT("");
 				uint32_t _lineSize = line.size();
 				uint32_t _index = 0;
@@ -216,7 +216,7 @@ namespace Dynamik {
 				return _splits;
 			}
 
-			return std::vector<std::string>();
+			return ARRAY<std::string>();
 		}
 
 		// var = rand();
@@ -225,7 +225,7 @@ namespace Dynamik {
 			return std::rand();
 		}
 
-		std::vector<UI32> bubbleSort(std::vector<UI32> data)
+		ARRAY<UI32> bubbleSort(ARRAY<UI32> data)
 		{
 			UI32 _indexCount = 0;
 			UI32 _index, _itr;

@@ -18,7 +18,7 @@ namespace Dynamik {
 				~commandBufferManager() {}
 
 				void initCommandPool(ADGRVulkanDataContainer* container);
-				void bindCommands(ADGRVulkanDataContainer* container, std::vector<vulkanFormat>* formats);
+				void bindCommands(ADGRVulkanDataContainer* container, ARRAY<vulkanFormat>* formats);
 				void clear(ADGRVulkanDataContainer* container);
 
 			private:
@@ -33,7 +33,7 @@ namespace Dynamik {
 				~oneTimeCommandBufferManager();
 
 				void destroyBuffers();
-				std::vector<VkCommandBuffer> getCommandBuffers();
+				ARRAY<VkCommandBuffer> getCommandBuffers();
 
 			private:
 				UI32 myCount = 0;
@@ -42,7 +42,7 @@ namespace Dynamik {
 				VkCommandPool myCommandPool = VK_NULL_HANDLE;
 				VkQueue myGraphicsQueue = VK_NULL_HANDLE;
 
-				std::vector<VkCommandBuffer> myCommandBuffers = {};
+				ARRAY<VkCommandBuffer> myCommandBuffers = {};
 
 				B1 isDestroyed = false;
 			};

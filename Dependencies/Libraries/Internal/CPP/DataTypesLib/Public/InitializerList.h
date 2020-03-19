@@ -21,7 +21,7 @@ namespace Dynamik {
 		/* CONSTRUCTOR
 		 * Default constructor.
 		 */
-		constexpr InitializerList() noexcept {}
+		constexpr InitializerList() noexcept : myFirst(nullptr), myLast(nullptr) {}
 
 		/* CONSTRUCTOR
 		 * Default constructor.
@@ -29,13 +29,31 @@ namespace Dynamik {
 		 * @param first: First address of the data.
 		 * @param last: Last address of the data.
 		 */
-		constexpr InitializerList(const POINTER<TYPE> first, const POINTER<TYPE> last)
+		constexpr InitializerList(const TYPE* first, const TYPE* last)
 			noexcept : myFirst(first), myLast(last) {}
+
+		/* CONSTRUCTOR
+		 * Default constructor.
+		 *
+		 * @param first: First address of the data.
+		 * @param last: Last address of the data.
+		 */
+		constexpr InitializerList(const InitializerList<TYPE>& list)
+			noexcept : myFirst(list.begin()), myLast(list.end()) {}
+
+		/* CONSTRUCTOR
+		 * Default constructor.
+		 *
+		 * @param first: First address of the data.
+		 * @param last: Last address of the data.
+		 */
+		constexpr InitializerList(InitializerList<TYPE>&&)
+			noexcept : myFirst(list.begin()), myLast(list.end()) {}
 
 		/* DESTRUCTOR
 		 * Default destructor.
 		 */
-		~InitializerList() {}
+		//~InitializerList() {}
 
 		/* PUBLIC FUNCTION */
 	public:

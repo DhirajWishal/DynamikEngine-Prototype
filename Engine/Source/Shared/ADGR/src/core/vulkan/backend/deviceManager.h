@@ -24,7 +24,7 @@ namespace Dynamik {
 				B1 checkDeviceExtensionSupport(VkPhysicalDevice device);
 				B1 isDeviceSuitable(VkPhysicalDevice device, VkSurfaceKHR* surface);
 
-				const std::vector<CCPTR> deviceExtensions = {
+				const ARRAY<CCPTR> deviceExtensions = {
 					VK_KHR_SWAPCHAIN_EXTENSION_NAME
 				};
 			};

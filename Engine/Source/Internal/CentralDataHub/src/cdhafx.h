@@ -3,6 +3,11 @@
 #ifndef _DYNAMIK_CENTRAL_DATA_HUB_PCH
 #define _DYNAMIK_CENTRAL_DATA_HUB_PCH
 
+#include "DataTypesLib/DataTypesLib.h"
+#include "MemoryLib/MemoryLib.h"
+#include "SystemLib/SystemLib.h"
+#include "AlgorithmLib/AlgorithmLib.h"
+
 #include <GLFW/glfw3.h>
 
 #define GLM_FORCE_RADIANS

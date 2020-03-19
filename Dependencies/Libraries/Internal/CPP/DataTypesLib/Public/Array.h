@@ -8,6 +8,8 @@
 #include "InitializerList.h"
 #include "Thread.h"
 
+#include <vector>
+
 #include <future>	/* REMOVE AFTER ADDING THE THREAD MANAGER */
 #include <functional>
 
@@ -34,10 +36,10 @@ namespace Dynamik {
 	/* TEMPLATED
 	 * Dynamic Array data structure for the Dynamik Engine.
 	 * This array can store any data defined in the datatype TYPE and supports multiple dimentions.
-	 * Tested to be faster than the std::vector<TYPE> library/ datatype.
+	 * Tested to be faster than the ARRAY<TYPE> library/ datatype.
 	 * This also contains utility functions related to array and pointer manipulation.
 	 */
-	template<class TYPE, DMKArrayDestructorCallMode DestructorCallMode = DMKArrayDestructorCallMode::DMK_ARRAY_DESTRUCTOR_CALL_MODE_DESTRUCT_UNDEFINED, class Allocator = StaticAllocator<TYPE>>
+	template<class TYPE, DMKArrayDestructorCallMode DestructorCallMode = DMKArrayDestructorCallMode::DMK_ARRAY_DESTRUCTOR_CALL_MODE_DESTRUCT_NONE, class Allocator = StaticAllocator<TYPE>>
 	class ARRAY {
 		/* DEFAULTS */
 
@@ -87,7 +89,7 @@ namespace Dynamik {
 			~_internalThread() {} // default destructor
 
 			void _destroy() {	// main _destroy function
-				while (_firstPtr.getPointerAsInteger() <= _lastPtr.getPointerAsInteger())	// call the destructor for each address
+				while (_firstPtr != _lastPtr)	// call the destructor for each address
 				{
 					_firstPtr.dereference().~TYPE();
 					_firstPtr++;
@@ -106,6 +108,7 @@ namespace Dynamik {
 		ARRAY()
 		{
 			_reAllocate(_getNextSize());
+			myDataCount = 0;
 		}
 
 		/* CONSTRUCTOR
@@ -125,6 +128,8 @@ namespace Dynamik {
 			myNextPtr = myBeginPtr;
 			myEndPtr = myBeginPtr;
 			myEndPtr += capacity();
+			_setValue(TYPE(), capacity());
+			myDataCount = 0;
 		}
 
 		/* CONSTRUCTOR
@@ -142,10 +147,11 @@ namespace Dynamik {
 			if ((size + myAllocationSize) > maxSize()) return; /* TODO: Error Flagging */
 
 			myBeginPtr = Allocator::allocate(myAllocationSize);
-			setData(myBeginPtr, value, capacity());
+			setData(myBeginPtr, (UI32)value, capacity());
 
 			myEndPtr = myBeginPtr + size;
 			myNextPtr += size;
+			myDataCount = 0;
 		}
 
 		/* CONSTRUCTOR
@@ -163,8 +169,10 @@ namespace Dynamik {
 			setData(myBeginPtr, 0, capacity());
 
 			myNextPtr = myBeginPtr;
+			myNextPtr += _getSizeOfRawArray(arr);
 			myEndPtr = myBeginPtr;
 			myEndPtr += capacity();
+			myDataCount = 0;
 		}
 
 		/* CONSTRUCTOR
@@ -172,12 +180,84 @@ namespace Dynamik {
 		 *
 		 * @param list: Initializer list used to initialize this.
 		 */
-		ARRAY(InitializerList<TYPE> list)
+		ARRAY(InitializerList<TYPE> list, UI32 size = 1)
 		{
 			if (list.size() > maxSize()); /* TODO: Error Flagging */
 
-			_reAllocate(list.size());
-			moveBytes(myBeginPtr, list.begin(), list.end());
+			if (list.size() <= 1)
+			{
+				myAllocationSize = _getNextSizeToFit(list.size() * typeSize());
+
+				if ((list.size() + myAllocationSize) > maxSize()) return; /* TODO: Error Flagging */
+
+				myBeginPtr = Allocator::allocate(myAllocationSize);
+				myNextPtr = myBeginPtr;
+				myEndPtr = myBeginPtr;
+				myEndPtr += capacity();
+
+				if (list.size())
+					moveBytes(myBeginPtr, (PTR)list.begin(), (PTR)list.end());
+
+				myNextPtr += list.size();
+			}
+			else
+			{
+				_reAllocate(list.size());
+				moveBytes(myBeginPtr, (PTR)list.begin(), (PTR)list.end());
+				myNextPtr += list.size();
+			}
+
+			myDataCount = list.size();
+		}
+
+		/* CONSTRUCTOR
+		 * Constructs the Array by initializing the data in an initializer list.
+		 *
+		 * @param list: Initializer list used to initialize this.
+		 */
+		ARRAY(std::initializer_list<TYPE> list, UI32 size = 1)
+		{
+			if (list.size() > maxSize()); /* TODO: Error Flagging */
+
+			if (list.size() <= 1)
+			{
+				myAllocationSize = _getNextSizeToFit(list.size() * typeSize());
+
+				if ((list.size() + myAllocationSize) > maxSize()) return; /* TODO: Error Flagging */
+
+				myBeginPtr = Allocator::allocate(myAllocationSize);
+				myNextPtr = myBeginPtr;
+				myEndPtr = myBeginPtr;
+				myEndPtr += capacity();
+
+				if (list.size())
+					moveBytes(myBeginPtr, (PTR)list.begin(), (PTR)list.end());
+				myNextPtr += list.size();
+			}
+			else
+			{
+				_reAllocate(_getNextSizeToFit(list.size() * typeSize()));
+				moveBytes(myBeginPtr, (PTR)list.begin(), (PTR)list.end());
+				myNextPtr += list.size();
+			}
+
+			myDataCount = list.size();
+		}
+
+		/* CONSTRUCTOR
+		 * Constructs the Array by initializing the data in an initializer list.
+		 *
+		 * @param list: Initializer list used to initialize this.
+		 */
+		ARRAY(std::vector<TYPE> vector)
+		{
+			if (vector.size() > maxSize()); /* TODO: Error Flagging */
+
+			_reAllocate(vector.size());
+			moveBytes(myBeginPtr, (PTR)vector.begin()._Unwrapped(), (PTR)vector.end()._Unwrapped());
+			myNextPtr += vector.size();
+
+			myDataCount = vector.size();
 		}
 
 		/* DESTRUCTOR
@@ -186,9 +266,9 @@ namespace Dynamik {
 		~ARRAY()
 		{
 			if (DestructorCallMode == DMKArrayDestructorCallMode::DMK_ARRAY_DESTRUCTOR_CALL_MODE_DESTRUCT_ALL)
-				_destroyRange(myBeginPtr, myEndPtr);
+				_destroyRange(myBeginPtr, myNextPtr);
 			else if (DestructorCallMode == DMKArrayDestructorCallMode::DMK_ARRAY_DESTRUCTOR_CALL_MODE_DESTRUCT_ALL_THREADED)
-				_destroyRangeInThreads(myBeginPtr, myEndPtr);
+				_destroyRangeInThreads(myBeginPtr, myNextPtr);
 
 			Allocator::deAllocate(myBeginPtr, myEndPtr);
 		}
@@ -199,6 +279,7 @@ namespace Dynamik {
 		 * Iterator of the Array.
 		 */
 		typedef PTR ITERATOR;
+		typedef ITERATOR iterator;	// for vector class compatibility
 
 		/* PRIVATE FUNCTIONS */
 	public:
@@ -264,7 +345,7 @@ namespace Dynamik {
 		 */
 		void pushBack(const TYPE& data)
 		{
-			if (myDataCount == capacity())
+			if (myDataCount >= capacity())
 				_reAllocateAndPushBack(_getNextSize(), data);
 			else
 				_addData(data);
@@ -284,7 +365,7 @@ namespace Dynamik {
 
 		/* FUNCTION
 		 * Push Elements to the Array.
-		 * Compatibility with the 'std::vector<TYPE>::push_back(const TYPE&)' function.
+		 * Compatibility with the 'ARRAY<TYPE>::push_back(const TYPE&)' function.
 		 *
 		 * @param data: Data to be added to the Array.
 		 */
@@ -292,6 +373,8 @@ namespace Dynamik {
 		{
 			pushBack(value);
 		}
+
+		//void emplace_back(const TYPE& value)
 
 		/* FUNCTION
 		 * Get the first element of the Array.
@@ -386,7 +469,7 @@ namespace Dynamik {
 		void clear()
 		{
 			Allocator::deAllocate(myBeginPtr.get(), myAllocationSize);
-			myBeginPtr = Allocator::allocate(myAllocationSize);
+			_reAllocateAssign(_getNextSize());
 
 			myDataCount = 0;
 		}
@@ -403,6 +486,7 @@ namespace Dynamik {
 			myAllocationSize = size;
 			Allocator::deAllocate(myBeginPtr.get(), myAllocationSize);
 			myBeginPtr = Allocator::allocate(myAllocationSize);
+			_setValue(TYPE(), myAllocationSize / typeSize());
 
 			myDataCount = 0;
 		}
@@ -539,7 +623,7 @@ namespace Dynamik {
 		 */
 		void bubbleSort(bool isAsc = true)
 		{
-			ARRAY<TYPE>* _localArray = this;
+			ARRAY<TYPE> _localArray = this;
 			UI32 _indexCount = 0;
 			UI32 _index, _itr;
 			while (_indexCount < (myDataCount - 1))
@@ -550,20 +634,20 @@ namespace Dynamik {
 				{
 					if (isAsc)
 					{
-						if (_localArray->at(_index) > _localArray->at(_itr))
+						if (_localArray.at(_index) > _localArray.at(_itr))
 						{
-							TYPE _temp = _localArray->at(_index);
-							_localArray->update(_localArray->at(_itr), _index);
-							_localArray->update(_temp, _itr);
+							TYPE _temp = _localArray.at(_index);
+							_localArray.update(_localArray.at(_itr), _index);
+							_localArray.update(_temp, _itr);
 						}
 					}
 					else
 					{
-						if (_localArray->at(_index) < _localArray->at(_itr))
+						if (_localArray.at(_index) < _localArray.at(_itr))
 						{
-							TYPE _temp = _localArray->at(_index);
-							_localArray->update(_localArray->at(_itr), _index);
-							_localArray->update(_temp, _itr);
+							TYPE _temp = _localArray.at(_index);
+							_localArray.update(_localArray.at(_itr), _index);
+							_localArray.update(_temp, _itr);
 						}
 					}
 					_index++;
@@ -610,11 +694,26 @@ namespace Dynamik {
 		}
 
 		/* FUNCTION
+		 * Convert this to a std::vector<TYPE>.
+		 */
+		std::vector<TYPE> toVector() 
+		{ 
+			std::vector<TYPE> _localVector;
+			for (ITERATOR _itr = begin(); _itr != end(); _itr++)
+				_localVector.push_back(*_itr);
+
+			return _localVector;
+		}
+
+		/* FUNCTION
 		 * Return the size of the Array.
 		 *
 		 * @return: Element count.
 		 */
-		UI32 size() const noexcept { return myDataCount; }
+		UI32 size() const noexcept
+		{
+			return ((myDataCount) ? myDataCount : myAllocationSize / typeSize());
+		}
 
 		/* FUNCTION
 		 * Return the maximum size allocatable in an Array.
@@ -657,7 +756,7 @@ namespace Dynamik {
 		/* FUNCTION
 		 * Get data pointer of the Array.
 		 */
-		VPTR data() const noexcept { return myBeginPtr.get(); }
+		RPTR data() const noexcept { return myBeginPtr.get(); }
 
 		/* FUNCTION
 		 * Begin iterator of the Array.
@@ -679,6 +778,18 @@ namespace Dynamik {
 		 * @param index: Index to be returned.
 		 */
 		TYPE& operator[](I32 index)
+		{
+			return this->at(index);
+		}
+
+		/* OPERATOR
+		 * [] operator overload.
+		 * Return the value at the given index.
+		 * Raises a flag if the index is invalid.
+		 *
+		 * @param index: Index to be returned.
+		 */
+		const TYPE& operator[](I32 index) const
 		{
 			return this->at(index);
 		}
@@ -706,7 +817,7 @@ namespace Dynamik {
 		 *
 		 * @param data: Array to be concatted with.
 		 */
-		ARRAY<TYPE> operator+(const ARRAY<TYPE>& data)
+		ARRAY<TYPE>& operator+(const ARRAY<TYPE>& data)
 		{
 			this->insert(data);
 			return *this;
@@ -718,9 +829,25 @@ namespace Dynamik {
 		 *
 		 * @para arr: Raw array to be initialized to this.
 		 */
-		ARRAY<TYPE> operator=(const PTR arr)
+		ARRAY<TYPE>& operator=(const PTR arr)
 		{
 			this->set(arr);
+			return *this;
+		}
+
+
+		/* OPERATOR
+		 * = operator overload.
+		 * Get data from a initializer list and initialize it to this.
+		 *
+		 * @para list: Raw array to be initialized to this.
+		 */
+		ARRAY<TYPE>& operator=(std::initializer_list<TYPE> list)
+		{
+			if (list.size() > this->maxSize()); /* TODO: Error Flagging */
+
+			this->_reAllocate(list.size());
+			moveBytes(this->myBeginPtr, (PTR)list.begin(), (PTR)list.end());
 			return *this;
 		}
 
@@ -730,7 +857,7 @@ namespace Dynamik {
 		 *
 		 * @para arr: Initlaizer list to be initialized to this.
 		 */
-		ARRAY<TYPE> operator=(InitializerList<TYPE> list)
+		ARRAY<TYPE>& operator=(InitializerList<TYPE> list)
 		{
 			this->_initializeInitializerList(list);
 			return *this;
@@ -771,7 +898,7 @@ namespace Dynamik {
 		 */
 		inline void _addData(const TYPE& data)
 		{
-			Allocator::set(&myBeginPtr[myDataCount], (TYPE&&)data);
+			Allocator::set(myNextPtr, (TYPE&&)data);
 			myNextPtr++;
 		}
 
@@ -792,32 +919,28 @@ namespace Dynamik {
 		 */
 		inline void _reAllocate(UI32 newSize)
 		{
-			_pointerContainer _container;
-			_container._beginPtr = Allocator::allocate(newSize + myAllocationSize);
+			PTR _newArr = Allocator::allocate(newSize);
 			myAllocationSize += newSize;
-			_container._endPtr = _container._beginPtr;
-			_container._endPtr += myAllocationSize;
 
 			try
 			{
-				if (_container._beginPtr.isValid())
+				if (myBeginPtr.isValid())
 				{
-					_moveFromThis(_container._beginPtr, myDataCount);
+					_moveFromThis(_newArr, myDataCount);
 					Allocator::deAllocate(myBeginPtr, myEndPtr);
 				}
 			}
 			catch (...)
 			{
-				_destroyRange(_container._beginPtr, _container._endPtr);
-				Allocator::deAllocate(_container._beginPtr, _container._endPtr);
+				_destroyRange(_newArr, (PTR)(_newArr + myAllocationSize));
+				Allocator::deAllocate(_newArr, myAllocationSize);
 
-				_container._beginPtr.turnNull();
-				_container._endPtr.turnNull();
+				_newArr.turnNull();
 
 				throw;
 			}
 
-			_basicInitialization(_container._beginPtr, myAllocationSize, myDataCount);
+			_basicInitialization(_newArr, capacity(), myDataCount);
 		}
 
 		/* PRIVATE FUNCTION
@@ -827,32 +950,28 @@ namespace Dynamik {
 		 */
 		inline void _reAllocateAssign(UI32 size)
 		{
-			_pointerContainer _container;
-			_container._beginPtr = Allocator::allocate(size);
 			myAllocationSize = size;
-			_container._endPtr = _container._beginPtr;
-			_container._endPtr += myAllocationSize;
+			PTR _newArr = Allocator::allocate(myAllocationSize);
 
 			try
 			{
-				if (_container._beginPtr.isValid())
+				if (myBeginPtr.isValid())
 				{
-					_moveFromThis(_container._beginPtr, myDataCount);
+					_moveFromThis(_newArr, myDataCount);
 					Allocator::deAllocate(myBeginPtr, myEndPtr);
 				}
 			}
 			catch (...)
 			{
-				_destroyRange(_container._beginPtr, _container._endPtr);
-				Allocator::deAllocate(_container._beginPtr, _container._endPtr);
+				_destroyRange(_newArr, (PTR)(_newArr + myAllocationSize));
+				Allocator::deAllocate(_newArr, myAllocationSize);
 
-				_container._beginPtr.turnNull();
-				_container._endPtr.turnNull();
+				_newArr.turnNull();
 
 				throw;
 			}
 
-			_basicInitialization(_container._beginPtr, myAllocationSize, myDataCount);
+			_basicInitialization(_newArr, capacity(), myDataCount);
 		}
 
 		/* PRIVATE FUNCTION
@@ -867,7 +986,7 @@ namespace Dynamik {
 			_pointerContainer _container;
 			_container._beginPtr = Allocator::allocate(myAllocationSize);
 			_container._endPtr = _container._beginPtr;
-			_container._endPtr += myAllocationSize;
+			_container._endPtr += capacity();
 			_container._nextPtr = _container._beginPtr;
 			_container._nextPtr += myDataCount;
 
@@ -883,7 +1002,6 @@ namespace Dynamik {
 		inline void _reAllocateAndPushBack(UI32 newSize, const TYPE& data)
 		{
 			if ((newSize + myAllocationSize) > maxSize()) return; /* TODO: Error Flagging */
-
 			_reAllocate(newSize);
 
 			Allocator::set(&myBeginPtr[myDataCount], (TYPE&&)data);
@@ -971,7 +1089,7 @@ namespace Dynamik {
 		 */
 		inline void _destroyRange(PTR first, PTR last)
 		{
-			while (first.getPointerAsInteger() <= last.getPointerAsInteger())
+			while (first.getPointerAsInteger() < last.getPointerAsInteger())
 			{
 				_singleDestruct(first);
 				++first;
@@ -1005,7 +1123,7 @@ namespace Dynamik {
 		{
 			UI32 _passes = std::thread::hardware_concurrency() - 1;	// number of threads
 			UI32 _chunks = size() / std::thread::hardware_concurrency();	// number of elements thats given for each thread
-			ARRAY<std::future<void>> _threads(_passes);		// threads 
+			ARRAY<std::future<void>, DMKArrayDestructorCallMode::DMK_ARRAY_DESTRUCTOR_CALL_MODE_DESTRUCT_ALL> _threads(_passes);		// threads 
 			PTR _first;
 			_internalThread _localThread;
 
@@ -1020,7 +1138,7 @@ namespace Dynamik {
 			}
 
 			// if elements are not destroyed fully, destroy them manually (in this thread)
-			while (first.getPointerAsInteger() < last.getPointerAsInteger())
+			while (first != last)
 			{
 				first.dereference().~TYPE();
 				first++;
@@ -1052,15 +1170,19 @@ namespace Dynamik {
 	private:
 		/* PRIVATE FUNCTION
 		 * Basic initializings.
+		 *
+		 * @param dataStore: Begin address of the new Array.
+		 * @param capacity: Capacity of the new allocation.
+		 * @param dataCount: Number of data currently stored in the new Array.
 		 */
-		void _basicInitialization(TYPE* dataStore, UI32 updatedSize = 0, UI32 dataCount = 0)
+		void _basicInitialization(TYPE* dataStore, UI32 capacity = 0, UI32 dataCount = 0)
 		{
-			myBeginPtr = dataStore;
+			myBeginPtr(dataStore);
 
-			myEndPtr = dataStore;
-			myEndPtr += updatedSize;
+			myEndPtr(dataStore);
+			myEndPtr += capacity;
 
-			myNextPtr = dataStore;
+			myNextPtr(dataStore);
 			myNextPtr += dataCount;
 		}
 
@@ -1150,8 +1272,12 @@ namespace Dynamik {
 		 */
 		inline void _setValue(TYPE value, UI32 count)
 		{
-			UI32 _itr = (count - 1);
-			while (--_itr) *_getPointer(_itr) = value;
+			PTR _temp = myBeginPtr;
+			while (_temp != myEndPtr)
+			{
+				_temp.set((TYPE&&)value);
+				_temp++;
+			}
 		}
 
 		/* PRIVATE FUNCTION

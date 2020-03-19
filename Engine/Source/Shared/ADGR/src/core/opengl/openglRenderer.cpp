@@ -111,15 +111,15 @@ namespace Dynamik {
 			myEventContainers = myWindowManager.getEventContainer();
 			return &myEventContainers;
 		}
-		void openglRenderer::setFormats(std::vector<RendererFormat>& rendererFormats) {
+		void openglRenderer::setFormats(ARRAY<RendererFormat>& rendererFormats) {
 			_addFormats(rendererFormats);
 		}
 
-		void openglRenderer::updateFormats(std::vector<RendererFormat>& rendererFormats) {
+		void openglRenderer::updateFormats(ARRAY<RendererFormat>& rendererFormats) {
 			_addFormats(rendererFormats);
 		}
 
-		void openglRenderer::_addFormats(std::vector<RendererFormat>& rendererFormats) {
+		void openglRenderer::_addFormats(ARRAY<RendererFormat>& rendererFormats) {
 			myFormatsCount = rendererFormats.size();
 			for (I32 i = 0; i < myFormatsCount; i++)
 				myOpenglFormats.push_back(openglFormat(&rendererFormats[i]));

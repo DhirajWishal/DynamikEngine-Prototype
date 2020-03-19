@@ -36,7 +36,7 @@ namespace Dynamik {
 	{
 		POINTER<BYTE> _destinationIterator = destination;
 		POINTER<BYTE> _itr = (POINTER<TYPE>) first;
-		while (_itr != (POINTER<TYPE>)last)
+		while (_itr.getPointerAsInteger() < last.getPointerAsInteger())
 		{
 			_destinationIterator.dereference() = _itr.dereference();
 			_itr++, _destinationIterator++;

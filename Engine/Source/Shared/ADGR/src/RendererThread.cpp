@@ -36,7 +36,7 @@ namespace Dynamik {
 		myRenderer.setProgress(progress);
 	}
 
-	void RendererThread::addInternalFormats(std::vector<InternalFormat*> formats)
+	void RendererThread::addInternalFormats(ARRAY<InternalFormat*> formats)
 	{
 		_internalFormats = formats;
 	}

@@ -36,10 +36,10 @@ namespace Dynamik {
 		//}
 
 		template<typename Alloc>
-		void loadObject(std::string& path, std::vector<Alloc>* vertices, std::vector<uint32_t>* indices) {
+		void loadObject(std::string& path, ARRAY<Alloc>* vertices, ARRAY<uint32_t>* indices) {
 			tinyobj::attrib_t attrib;
-			std::vector<tinyobj::shape_t> shapes;
-			std::vector<tinyobj::material_t> materials;
+			ARRAY<tinyobj::shape_t> shapes;
+			ARRAY<tinyobj::material_t> materials;
 			std::string warn, err;
 
 			if (!tinyobj::LoadObj(&attrib, &shapes, &materials, &warn, &err, path.c_str()))
@@ -76,20 +76,20 @@ namespace Dynamik {
 	}
 	namespace utils {
 		// Object load function
-		std::vector<DMKObjectDataContainer> loadObjFileData(std::string_view path) {
+		ARRAY<DMKObjectDataContainer> loadObjFileData(std::string_view path) {
 			std::ifstream myObjectFile(path.data());
 			if (!myObjectFile)
-				return std::vector<DMKObjectDataContainer>();
+				return ARRAY<DMKObjectDataContainer>();
 
-			std::vector<DMKObjectDataContainer> _containers = {};
+			ARRAY<DMKObjectDataContainer> _containers = {};
 			uint32_t _objectIndex = 0;
-			std::vector<float> _positionData = {};
-			std::vector<float> _texData = {};
-			std::vector<float> _normalData = {};
-			std::vector<float> _PSData = {};
-			std::vector<uint32_t> _lineElementsData = {};
-			std::vector<std::string> _splits = {};
-			std::vector<std::string> _subSplits = {};
+			ARRAY<float> _positionData = {};
+			ARRAY<float> _texData = {};
+			ARRAY<float> _normalData = {};
+			ARRAY<float> _PSData = {};
+			ARRAY<uint32_t> _lineElementsData = {};
+			ARRAY<std::string> _splits = {};
+			ARRAY<std::string> _subSplits = {};
 
 			bool _singePass = true;
 			uint32_t _vertexTotalCount = 0;
@@ -200,16 +200,16 @@ namespace Dynamik {
 				if (!_objectFile)
 					continue;
 
-				std::vector<DMKObjectDataContainer> _containers = {};
+				ARRAY<DMKObjectDataContainer> _containers = {};
 				uint32_t _localIndex = 0;
 				uint32_t _objectIndex = 0;
-				std::vector<float> _positionData = {};
-				std::vector<float> _texData = {};
-				std::vector<float> _normalData = {};
-				std::vector<float> _PSData = {};
-				std::vector<uint32_t> _lineElementsData = {};
-				std::vector<std::string> _splits = {};
-				std::vector<std::string> _subSplits = {};
+				ARRAY<float> _positionData = {};
+				ARRAY<float> _texData = {};
+				ARRAY<float> _normalData = {};
+				ARRAY<float> _PSData = {};
+				ARRAY<uint32_t> _lineElementsData = {};
+				ARRAY<std::string> _splits = {};
+				ARRAY<std::string> _subSplits = {};
 
 				bool _singePass = true;
 				uint32_t _vertexTotalCount = 0;

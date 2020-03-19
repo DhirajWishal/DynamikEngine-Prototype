@@ -13,18 +13,18 @@ namespace Dynamik {
 		}
 
 		void layerStack::pushLayer(Layer* layer) {
-			layerInsert = layers.emplace(layerInsert, layer);
+			layers.emplace(layerInsert, (POINTER<Layer>)layer);
 		}
 
 		void layerStack::pushOverLay(Layer* overlay) {
-			layers.emplace_back(overlay);
+			layers.pushBack(overlay);
 		}
 
 		void layerStack::popLayer(Layer* layer) {
 			auto it = std::find(layers.begin(), layers.end(), layer);
 
 			if (it != layers.end()) {
-				layers.erase(it);
+				layers.remove(it);
 				layerInsert--;
 			}
 		}
@@ -33,7 +33,7 @@ namespace Dynamik {
 			auto it = std::find(layers.begin(), layers.end(), overlay);
 
 			if (it != layers.end())
-				layers.erase(it);
+				layers.remove(it);
 		}
 	}
 }

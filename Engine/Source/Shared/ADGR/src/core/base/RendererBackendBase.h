@@ -39,9 +39,9 @@ namespace Dynamik {
 			std::string myWindowTitle = ("Dynamik Engine");
 			UI32 myWindowWidth = 720;
 			UI32 myWindowHeight = 480;
-			std::vector<std::string> myWindowIconPaths = { ("E:/Projects/Dynamik Engine/Dynamik/core assets/icons/Dynamik.jpg") };
+			ARRAY<std::string> myWindowIconPaths = { ("E:/Projects/Dynamik Engine/Dynamik/core assets/icons/Dynamik.jpg") };
 
-			std::vector<F32> clearScreenValues = {							// Vulkan clear screen values
+			ARRAY<F32> clearScreenValues = {							// Vulkan clear screen values
 				(2.0f / 256.0f),		// Red
 				(8.0f / 256.0f),		// Green
 				(32.0f / 256.0f),		// Blue
@@ -68,11 +68,11 @@ namespace Dynamik {
 			virtual void shutDownStageTwo() {}	// shut down stage two
 			virtual void shutDownStageThree() {}	// shut down stage three
 
-			virtual void setFormats(std::vector<RendererFormat>& formats) {}	// set formats to the renderer
-			virtual void updateFormats(std::vector<RendererFormat>& formats) {}	// update formats in the renderer
+			virtual void setFormats(ARRAY<RendererFormat>& formats) {}	// set formats to the renderer
+			virtual void updateFormats(ARRAY<RendererFormat>& formats) {}	// update formats in the renderer
 
-			void setShaderPaths(std::vector<std::string> paths) { myShaderPaths = paths; }	// set shader paths
-			void setObjectAndTexturePaths(std::vector<std::string>& object, std::vector<std::vector<std::string>>& texture) {	// set object and texture paths
+			void setShaderPaths(ARRAY<std::string> paths) { myShaderPaths = paths; }	// set shader paths
+			void setObjectAndTexturePaths(ARRAY<std::string>& object, ARRAY<ARRAY<std::string>>& texture) {	// set object and texture paths
 				myModelPaths = object;
 				myTexturePaths = texture;
 			}
@@ -89,9 +89,9 @@ namespace Dynamik {
 
 			std::deque<DMKEventContainer> myEventContainers = {};	// event containers
 
-			std::vector<std::string> myModelPaths = {};	// model paths
-			std::vector<std::vector<std::string>> myTexturePaths = {};	// texture paths
-			std::vector<std::string> myShaderPaths = {};	// shader paths
+			ARRAY<std::string> myModelPaths = {};	// model paths
+			ARRAY<ARRAY<std::string>> myTexturePaths = {};	// texture paths
+			ARRAY<std::string> myShaderPaths = {};	// shader paths
 
 			UI32* myProgress = 0;	// progress counter
 			B1 compileShaders = false;	// compile shaders command

@@ -39,7 +39,7 @@ namespace Dynamik {
 		}
 	}
 
-	std::vector<FSTR> LOG_INFO = {
+	ARRAY<FSTR> LOG_INFO = {
 		"LOG-> ",
 		"CORE INFO-> ",
 		"CORE WARN-> ",

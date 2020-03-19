@@ -137,10 +137,10 @@ namespace Dynamik {
 				}
 			}
 
-			void windowManager::setWindowIcon(ADGRVulkanDataContainer* container, std::vector<std::string> paths) {
+			void windowManager::setWindowIcon(ADGRVulkanDataContainer* container, ARRAY<std::string> paths) {
 				UI32 _imageCount = paths.size();
-				std::vector<GLFWimage> icons;
-				std::vector<resource::TextureData> texDatas;
+				ARRAY<GLFWimage> icons;
+				ARRAY<resource::TextureData> texDatas;
 				texDatas.resize(_imageCount);
 
 				for (UI32 i = 0; i < _imageCount; i++) {

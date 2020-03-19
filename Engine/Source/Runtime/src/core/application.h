@@ -115,7 +115,7 @@ namespace Dynamik {
 
 	class DMK_API Application {
 	public:
-		Application(std::vector<Scene*>& gameObjects);
+		Application(ARRAY<Scene*>& gameObjects);
 		virtual ~Application();
 
 		void run();
@@ -132,7 +132,7 @@ namespace Dynamik {
 		void getObjectPaths(GameObject* object);
 		void loadObjectData();
 		void initRendererFormats();
-		void initRendererFormats(std::vector<InternalFormat*>* formats);
+		void initRendererFormats(ARRAY<InternalFormat*>* formats);
 		void initAudioControllers();
 		void initAudioControllers(GameObject* object);
 
@@ -145,17 +145,17 @@ namespace Dynamik {
 		ADGR::Renderer myRenderingEngine;
 		ThreadManager myThreadManager;
 
-		std::vector<internalFormat> internalFormats = {};
-		std::vector<InternalFormat*> internalFormatsBase = {};
+		ARRAY<internalFormat> internalFormats = {};
+		ARRAY<InternalFormat*> internalFormatsBase = {};
 
-		std::vector<const void*> references = {};
+		ARRAY<const void*> references = {};
 
-		std::vector<Level*> levels = {};
-		std::vector<Scene*> scenes = {};
-		std::vector<GameObject*> gameObjects = {};
+		ARRAY<Level*> levels = {};
+		ARRAY<Scene*> scenes = {};
+		ARRAY<GameObject*> gameObjects = {};
 		DebugObject myObject;
-		std::vector<ADGR::RendererFormat*> rendererFormats = {};
-		std::vector<Audio::BasicAudioController> audioControllers = {};
+		ARRAY<ADGR::RendererFormat*> rendererFormats = {};
+		ARRAY<Audio::BasicAudioController> audioControllers = {};
 
 		ADGR::layerStack layerStack;
 
@@ -171,7 +171,7 @@ namespace Dynamik {
 
 	// Defined by the Client
 	//Application* createApplication();
-	Application* createApplication(std::vector<Dynamik::Scene*>& gameObjects);
+	Application* createApplication(ARRAY<Dynamik::Scene*>& gameObjects);
 }
 
 #define DYNAMIK_ENGINE_MAIN()																				\
@@ -179,9 +179,9 @@ int main(int argc, char** argv) {																			\
 	try {																									\
 		auto paths = getTexturePath(readFile("E:/Projects/Dynamik Engine/Dynamik/Application/paths.txt"));	\
 																											\
-		std::vector<Dynamik::GameObject*> gameObjects = {};													\
+		ARRAY<Dynamik::GameObject*> gameObjects = {};													\
 																											\
-		std::vector<std::vector<float>> locations = {														\
+		ARRAY<ARRAY<float>> locations = {														\
 			{0.0f,	0.0f,	0.0f},																			\
 			{0.0f,	5.0f,	0.0f},																			\
 			{0.0f,	-5.0f,	0.0f},																			\
@@ -213,7 +213,7 @@ int main(int argc, char** argv) {																			\
 			{-10.0f,	-10.0f,	0.0f},																		\
 		};																									\
 																											\
-		std::vector<Dynamik::DMKObjectType> objTypes = {													\
+		ARRAY<Dynamik::DMKObjectType> objTypes = {													\
 			Dynamik::DMKObjectType::DMK_OBJECT_TYPE_INTERACTIVE_OBJECT,										\			\
 			Dynamik::DMKObjectType::DMK_OBJECT_TYPE_INTERACTIVE_OBJECT,										\			\
 			Dynamik::DMKObjectType::DMK_OBJECT_TYPE_STATIC_OBJECT,											\				\

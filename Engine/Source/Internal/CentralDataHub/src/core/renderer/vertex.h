@@ -15,6 +15,7 @@
 #include <glm/gtx/hash.hpp>
 
 #include <vulkan/vulkan.h>
+#include "DataTypesLib/Public/Array.h"
 
 namespace Dynamik {
 	struct Vertex {
@@ -22,8 +23,8 @@ namespace Dynamik {
 		glm::vec3 Color;
 		glm::vec2 TexCoordinates;
 
-		static std::vector<VkVertexInputBindingDescription> getBindingDescription(int bindCount);
-		static std::vector<VkVertexInputAttributeDescription> getAttributeDescriptions(int bindCount);
+		static ARRAY<VkVertexInputBindingDescription> getBindingDescription(int bindCount);
+		static ARRAY<VkVertexInputAttributeDescription> getAttributeDescriptions(int bindCount);
 
 		bool operator==(const Vertex& other) const {
 			return Position == other.Position && Color == other.Color && TexCoordinates == other.TexCoordinates;

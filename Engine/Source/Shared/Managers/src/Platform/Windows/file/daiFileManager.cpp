@@ -44,31 +44,31 @@ namespace Dynamik {
 			file.close();
 		}
 
-		std::vector<std::string> daiManager::getData(DMKDaiFileDataType type) {
+		ARRAY<std::string> daiManager::getData(DMKDaiFileDataType type) {
 			if (!isDataStoreInit)
 				initDataStore();
 
 			if (type > DMK_DAI_FILE_DATA_TYPE_CODE)
-				return std::vector<std::string>();
+				return ARRAY<std::string>();
 
 			return dataStore[type];
 		}
 
-		std::vector<std::vector<std::string>> daiManager::getAllData() {
+		ARRAY<ARRAY<std::string>> daiManager::getAllData() {
 			if (!isDataStoreInit)
 				initDataStore();
 
 			return dataStore;
 		}
 
-		std::vector<float> daiManager::getLocationData() {
+		ARRAY<float> daiManager::getLocationData() {
 			if (!isDataStoreInit)
 				initDataStore();
 
 			return locationData;
 		}
 
-		std::vector<float> daiManager::getRotationData() {
+		ARRAY<float> daiManager::getRotationData() {
 			if (!isDataStoreInit)
 				initDataStore();
 

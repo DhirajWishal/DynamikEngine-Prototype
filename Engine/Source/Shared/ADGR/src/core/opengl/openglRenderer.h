@@ -31,11 +31,11 @@ namespace Dynamik {
 			std::deque<DMKEventContainer>* events() override;
 			inline B1 closeEvent() override { return myWindowManager.closeEvent(&myOpenGLDataContainers[openGLDataContainerIndex]); }
 
-			void setFormats(std::vector<RendererFormat>& rendererFormats) override;
-			void updateFormats(std::vector<RendererFormat>& rendererFormats) override;
+			void setFormats(ARRAY<RendererFormat>& rendererFormats) override;
+			void updateFormats(ARRAY<RendererFormat>& rendererFormats) override;
 
 		private:
-			void _addFormats(std::vector<RendererFormat>& rendererFormats);
+			void _addFormats(ARRAY<RendererFormat>& rendererFormats);
 
 			core::windowManagerGL myWindowManager;
 			core::shaderManager myShaderManager;
@@ -43,8 +43,8 @@ namespace Dynamik {
 			core::vertexAndIndexBufferManager myVertexAndIndexBufferManager;
 
 			UI32 openGLDataContainerIndex = 0;
-			std::vector<core::ADGROpenGLDataContainer> myOpenGLDataContainers = {};
-			std::vector<core::openglFormat> myOpenglFormats = {};
+			ARRAY<core::ADGROpenGLDataContainer> myOpenGLDataContainers = {};
+			ARRAY<core::openglFormat> myOpenglFormats = {};
 
 			unsigned I32 VBO = 0, VAO = 0, EBO = 0;
 			I32 shaderProgram = 0;

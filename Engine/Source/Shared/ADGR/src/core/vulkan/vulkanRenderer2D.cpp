@@ -25,10 +25,10 @@ namespace Dynamik {
 		std::deque<DMKEventContainer>* vulkanRenderer2D::events() {
 			return nullptr;
 		}
-		void vulkanRenderer2D::setFormats(std::vector<RendererFormat>& rendererFormats) {
+		void vulkanRenderer2D::setFormats(ARRAY<RendererFormat>& rendererFormats) {
 		}
 
-		void vulkanRenderer2D::updateFormats(std::vector<RendererFormat>& rendererFormats) {
+		void vulkanRenderer2D::updateFormats(ARRAY<RendererFormat>& rendererFormats) {
 		}
 	}
 }

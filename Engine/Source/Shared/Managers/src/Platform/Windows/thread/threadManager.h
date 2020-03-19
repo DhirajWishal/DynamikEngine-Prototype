@@ -28,7 +28,7 @@ namespace Dynamik {
 		static void internalThread(POINTER<InternalThreadHandler> handler);	// internal thread function
 		static bool evaluateShutdown(DMKThreadTreminateReason reason);	// evaluate why the process terminated.
 
-		std::vector<POINTER<Thread>> myThreadContainer;	// thread container
+		ARRAY<POINTER<Thread>> myThreadContainer;	// thread container
 		UI32 myThreadCount = 0;	// thread count
 		InternalThreadHandler myInternalThreadHandler;	// internal thread handle
 	};

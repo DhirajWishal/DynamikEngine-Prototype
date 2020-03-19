@@ -31,7 +31,7 @@ namespace Dynamik {
 				inputAssembly.primitiveRestartEnable = info.inputAssemblyPrimitiveRestartEnable;
 
 				// initialize the viewport(s)
-				std::vector<VkViewport> viewports;
+				ARRAY<VkViewport> viewports;
 				for (I32 i = 0; i < info.viweportCount; i++) {
 					VkViewport viewport = {};
 					viewport.x = 0.0f;
@@ -45,7 +45,7 @@ namespace Dynamik {
 				}
 
 				// initialize the scissor(s)
-				std::vector<VkRect2D> scissors;
+				ARRAY<VkRect2D> scissors;
 				for (I32 i = 0; i < info.scissorCount; i++) {
 					VkRect2D scissor = {};
 					scissor.offset = info.offsets[0];
@@ -88,7 +88,7 @@ namespace Dynamik {
 				depthStencil.depthBoundsTestEnable = info.depthStencilBoundsTestEnable;
 				depthStencil.stencilTestEnable = info.depthStencilTestEnable;
 
-				std::vector<VkPipelineColorBlendAttachmentState> colorBlendAttachments;
+				ARRAY<VkPipelineColorBlendAttachmentState> colorBlendAttachments;
 
 				// initialize the color blender(s)
 				for (I32 i = 0; i < info.colorBlendingColorBlendCount; i++) {
@@ -118,7 +118,7 @@ namespace Dynamik {
 				pipelineLayoutInfo.pSetLayouts = info.layouts.data();
 
 				if (info.pushConstantsEnable) {
-					std::vector<VkPushConstantRange> pushConstantInfos;
+					ARRAY<VkPushConstantRange> pushConstantInfos;
 
 					// initialize push constants
 					for (I32 i = 0; i <= info.pushConstantCount; i++) {
@@ -141,7 +141,7 @@ namespace Dynamik {
 				// initialize dynamic state
 				VkPipelineDynamicStateCreateInfo dynamicStateInfo = {};
 				if (info.dynamicStateEnable) {
-					std::vector<VkDynamicState> dynamicState = {
+					ARRAY<VkDynamicState> dynamicState = {
 						VK_DYNAMIC_STATE_VIEWPORT,
 						VK_DYNAMIC_STATE_SCISSOR
 					};
@@ -153,7 +153,7 @@ namespace Dynamik {
 				}
 
 				// shader stages
-				std::vector<VkPipelineShaderStageCreateInfo> ShaderStages = {};
+				ARRAY<VkPipelineShaderStageCreateInfo> ShaderStages = {};
 				for (I32 i = 0; i < 4; i++)
 					if (info.shaderDataContainer.shaderCodes[i].size())
 						ShaderStages.push_back(info.shaderDataContainer.shaderStageInfo[i]);

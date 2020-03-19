@@ -12,10 +12,10 @@ namespace Dynamik {
 	struct  DMKModelLoadInfo {
 		std::string path = "";
 
-		std::vector<Vertex>* vertices = {};
-		std::vector<uint32_t>* indices = {};
+		ARRAY<Vertex>* vertices = {};
+		ARRAY<uint32_t>* indices = {};
 
-		std::vector<float> vertexOffset = { 0.0f, 0.0f, 0.0f };	// x, y, z
+		ARRAY<float> vertexOffset = { 0.0f, 0.0f, 0.0f };	// x, y, z
 	};
 
 	void loadModel(DMKModelLoadInfo info);

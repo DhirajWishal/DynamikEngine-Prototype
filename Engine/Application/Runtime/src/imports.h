@@ -2,7 +2,7 @@
 
 #ifndef _DYNAMIK_APPLICATION_IMPORTS_H
 #define _DYNAMIK_APPLICATION_IMPORTS_H
-
+#include "DataTypesLib/Public/String.h"
 #include "Dynamik.h"
 
 Dynamik::I32 Dynamik::utils::max(Dynamik::I32, Dynamik::I32);
@@ -32,8 +32,8 @@ std::vector<char> readFile(const std::string& filePath) {
 	return buffer;
 }
 
-std::vector<std::string> getTexturePath(std::vector<char>& file) {
-	std::vector<std::string> paths;
+Dynamik::ARRAY<std::string> getTexturePath(std::vector<char>& file) {
+	Dynamik::ARRAY<std::string> paths;
 	std::string path;
 
 	for (auto i : file)

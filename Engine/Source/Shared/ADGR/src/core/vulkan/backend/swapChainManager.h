@@ -11,8 +11,8 @@ namespace Dynamik {
 		namespace core {
 			struct swapChainSupportDetails {
 				VkSurfaceCapabilitiesKHR capabilities = {};
-				std::vector<VkSurfaceFormatKHR> formats = {};
-				std::vector<VkPresentModeKHR> presentModes = {};
+				ARRAY<VkSurfaceFormatKHR> formats = {};
+				ARRAY<VkPresentModeKHR> presentModes = {};
 			};
 
 			class swapChainManager {
@@ -26,11 +26,11 @@ namespace Dynamik {
 				void initImageViews(ADGRVulkanDataContainer* container);
 
 			private:
-				VkSurfaceFormatKHR chooseSwapSurfaceFormat(const std::vector<VkSurfaceFormatKHR>& availableFormats);
+				VkSurfaceFormatKHR chooseSwapSurfaceFormat(const ARRAY<VkSurfaceFormatKHR>& availableFormats);
 				swapChainSupportDetails querySwapChainSupport(VkPhysicalDevice* device, VkSurfaceKHR* surface);
 				VkExtent2D chooseSwapExtent(ADGRVulkanDataContainer* container, const VkSurfaceCapabilitiesKHR& capabilities);
 				VkExtent2D chooseSwapExtent(GLFWwindow& window, const VkSurfaceCapabilitiesKHR& capabilities);
-				VkPresentModeKHR chooseSwapPresentMode(const std::vector<VkPresentModeKHR>& availablePresentModes);
+				VkPresentModeKHR chooseSwapPresentMode(const ARRAY<VkPresentModeKHR>& availablePresentModes);
 			};
 
 			swapChainSupportDetails querySwapChainSupport(VkPhysicalDevice* device, VkSurfaceKHR* surface);

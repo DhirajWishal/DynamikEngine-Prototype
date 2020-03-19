@@ -16,7 +16,7 @@ public:
 
 class sceneOne : public Scene {
 public:
-	sceneOne(std::vector<GameObject*> objects) : Scene(objects) {}
+	sceneOne(Dynamik::ARRAY<GameObject*> objects) : Scene(objects) {}
 	~sceneOne() {}
 };
 
@@ -28,11 +28,11 @@ class vertexDataContainer : public Dynamik::VertexDataContainer {
 		glm::vec2 TexCoordinates;
 	} vertexData;
 
-	void setVertexData(DMKObjectVertexDataType dataType, std::vector<float> data) override;
+	void setVertexData(DMKObjectVertexDataType dataType, Dynamik::ARRAY<float> data) override;
 
-	std::vector<DMKVertexInputBindingDescription> getVertexInputBindingDescription(int bindCount) override;
+	Dynamik::ARRAY<DMKVertexInputBindingDescription> getVertexInputBindingDescription(int bindCount) override;
 
-	std::vector<DMKVertexInputAttributeDescription> getVertexInputAttributeDescription() override;
+	Dynamik::ARRAY<DMKVertexInputAttributeDescription> getVertexInputAttributeDescription() override;
 };
 
 struct uniformBufferObject : public Uniform {

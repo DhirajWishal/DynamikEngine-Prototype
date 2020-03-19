@@ -8,12 +8,12 @@ namespace Dynamik {
 	//	myContainerTmp = (*Function)();
 	//}
 
-	std::vector<GameObject*> InputLoader::run() {
-		return std::vector<GameObject*>();
+	ARRAY<GameObject*> InputLoader::run() {
+		return ARRAY<GameObject*>();
 	}
 
-	std::vector<std::vector<std::string>> InputLoader::getTexturePaths() {
-		std::vector<std::vector<std::string>> path;
+	ARRAY<ARRAY<std::string>> InputLoader::getTexturePaths() {
+		ARRAY<ARRAY<std::string>> path;
 		for (auto i : myContainer.assets) {
 			path.push_back(i->getProperties().texturePaths);
 		}
@@ -21,7 +21,7 @@ namespace Dynamik {
 		return path;
 	}
 
-	std::vector<GameObject*> InputLoader::getRenderableGameObjects() {
+	ARRAY<GameObject*> InputLoader::getRenderableGameObjects() {
 		for (auto object : myContainer.assets)
 			if (object->myProperties.type == DMKObjectType::DMK_OBJECT_TYPE_STATIC_OBJECT ||
 				object->myProperties.type == DMKObjectType::DMK_OBJECT_TYPE_INTERACTIVE_OBJECT)
@@ -30,8 +30,8 @@ namespace Dynamik {
 		return renderObjects;
 	}
 
-	std::vector<std::string> InputLoader::getModelPaths() {
-		std::vector<std::string> path;
+	ARRAY<std::string> InputLoader::getModelPaths() {
+		ARRAY<std::string> path;
 		for (auto i : myContainer.assets) {
 			//path.push_back(i.getProperties().objectPath);
 		}

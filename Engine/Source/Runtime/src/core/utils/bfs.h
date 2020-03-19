@@ -12,7 +12,7 @@ namespace Dynamik {
 	public:
 		BFS() {}
 		BFS(UI32 size) : mySize(size) {}
-		BFS(std::vector<std::list<T>> adj) : myList(adj), mySize(adj.size()) {}
+		BFS(ARRAY<std::list<T>> adj) : myList(adj), mySize(adj.size()) {}
 		~BFS() {}
 
 		void add(T vertex, T edge) {
@@ -23,7 +23,7 @@ namespace Dynamik {
 		}
 
 	private:
-		std::vector<std::list<T>> myList = {};
+		ARRAY<std::list<T>> myList = {};
 		UI32 mySize = 0;
 	};
 }

@@ -10,14 +10,14 @@ namespace Dynamik {
 	class InputLoader {
 		InputContainer myContainer;
 
-		std::vector<GameObject*> renderObjects = {};
-		std::vector<GameObject*> textureObjects = {};
+		ARRAY<GameObject*> renderObjects = {};
+		ARRAY<GameObject*> textureObjects = {};
 	public:
-		std::vector<GameObject*> run();
-		std::vector<std::string> getModelPaths();
-		std::vector<std::vector<std::string>> getTexturePaths();
+		ARRAY<GameObject*> run();
+		ARRAY<std::string> getModelPaths();
+		ARRAY<ARRAY<std::string>> getTexturePaths();
 
-		std::vector<GameObject*> getRenderableGameObjects();
+		ARRAY<GameObject*> getRenderableGameObjects();
 	};
 }
 

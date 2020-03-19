@@ -1,12 +1,12 @@
 #include "engineInstance.h"
 
-Engine::Engine(std::vector<Dynamik::Scene*>& scene) : Application(scene) {
+Engine::Engine(Dynamik::ARRAY<Dynamik::Scene*>& scene) : Application(scene) {
 	//pushLayer(new layer);
 }
 
 Engine::~Engine() {
 }
 
-Dynamik::Application* Dynamik::createApplication(std::vector<Dynamik::Scene*>& scene) {
+Dynamik::Application* Dynamik::createApplication(Dynamik::ARRAY<Dynamik::Scene*>& scene) {
 	return new Engine(scene);
 }

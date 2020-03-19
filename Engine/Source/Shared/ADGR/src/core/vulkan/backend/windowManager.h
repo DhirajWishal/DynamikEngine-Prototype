@@ -31,7 +31,7 @@ namespace Dynamik {
 
 				void onWindowResizeEvent(ADGRVulkanDataContainer* container);
 
-				void setWindowIcon(ADGRVulkanDataContainer* container, std::vector<std::string> paths);
+				void setWindowIcon(ADGRVulkanDataContainer* container, ARRAY<std::string> paths);
 
 				B1 isFrameBufferResized() { return frameBufferResized; }
 				void frameBufferResizedUpdate(B1 state) { frameBufferResized = state; }

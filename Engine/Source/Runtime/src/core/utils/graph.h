@@ -24,18 +24,18 @@ namespace Dynamik {
 	class graph2D : public Graph<TYPE> {
 	public:
 		graph2D() {}
-		graph2D(std::vector<std::vector<TYPE>> graph) : myGraph(graph) { mySize = myGraph.size(); }
+		graph2D(ARRAY<ARRAY<TYPE>> graph) : myGraph(graph) { mySize = myGraph.size(); }
 		~graph2D() {}
 
-		std::vector<TYPE> BFS(TYPE start) {
-			std::vector<TYPE> finals = {};
+		ARRAY<TYPE> BFS(TYPE start) {
+			ARRAY<TYPE> finals = {};
 			visited.resize(mySize, false);
 			visited[start] = true;
 
 			std::list<TYPE> queue = {};
 			queue.push_back(start);
 
-			std::vector<TYPE>::iterator itr;
+			ARRAY<TYPE>::iterator itr;
 
 			while (!queue.empty()) {
 				start = queue.front();
@@ -55,8 +55,8 @@ namespace Dynamik {
 		std::list<TYPE> DFS(TYPE start) override { return std::list<TYPE>(); }
 
 	private:
-		std::vector<std::vector<TYPE>> myGraph = { {} };
-		std::vector<B1> visited = {};
+		ARRAY<ARRAY<TYPE>> myGraph = { {} };
+		ARRAY<B1> visited = {};
 	};
 }
 

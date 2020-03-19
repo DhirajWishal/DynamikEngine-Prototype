@@ -336,20 +336,20 @@ namespace Dynamik {
 			return &myEventContainers;
 		}
 
-		void vulkanRenderer::setFormats(std::vector<RendererFormat>& rendererFormats) {
+		void vulkanRenderer::setFormats(ARRAY<RendererFormat>& rendererFormats) {
 			_addVulkanFormatsToManager(rendererFormats);
 		}
 
-		void vulkanRenderer::updateFormats(std::vector<RendererFormat>& rendererFormats) {
+		void vulkanRenderer::updateFormats(ARRAY<RendererFormat>& rendererFormats) {
 			_addVulkanFormatsToManager(rendererFormats);
 
 			initObjectBasedFunctions(&myVulkanFormats);
 		}
 
 		// initialize models
-		void vulkanRenderer::initModels(std::vector<DMKObjectData> data) {
+		void vulkanRenderer::initModels(ARRAY<DMKObjectData> data) {
 			{
-				std::vector<std::future<void>> futures;
+				ARRAY<std::future<void>, DMKArrayDestructorCallMode::DMK_ARRAY_DESTRUCTOR_CALL_MODE_DESTRUCT_ALL> futures;
 
 				for (auto i = 0; i < data.size(); i++) {
 					DMKVulkanRendererLoadObjectInfo loadModelInfo;
@@ -385,11 +385,11 @@ namespace Dynamik {
 
 		// initialize the skybox
 		void vulkanRenderer::initCubemap(DMKObjectData* data) {
-			std::vector<Vertex> _localVertexBufferObject = {};
+			ARRAY<Vertex> _localVertexBufferObject = {};
 
 			F32 S_SIZE = 2048.0f;
 
-			std::vector<std::vector<F32>> locations =
+			ARRAY<ARRAY<F32>> locations =
 			{
 				{-S_SIZE, S_SIZE, -S_SIZE},
 				{-S_SIZE, -S_SIZE, -S_SIZE},
@@ -454,7 +454,7 @@ namespace Dynamik {
 			}
 		}
 
-		void vulkanRenderer::_addVulkanFormatsToManager(std::vector<RendererFormat>& rendererFormats) {
+		void vulkanRenderer::_addVulkanFormatsToManager(ARRAY<RendererFormat>& rendererFormats) {
 			myFormatsCount = rendererFormats.size();
 			myVulkanFormats.clear();
 			for (I32 i = 0; i < myFormatsCount; i++)
@@ -596,7 +596,7 @@ namespace Dynamik {
 
 		// initialize skyboxes and textures
 		void vulkanRenderer::initSkyboxsAndTextures(vulkanFormat* myVulkanFormat) {
-			std::vector<B1> invert = {
+			ARRAY<B1> invert = {
 				false,
 				false,
 				false,
@@ -692,7 +692,7 @@ namespace Dynamik {
 		}
 
 		// initialize command pool and buffers
-		void vulkanRenderer::initCommandBuffers(std::vector<vulkanFormat>* myVulkanFormats) {
+		void vulkanRenderer::initCommandBuffers(ARRAY<vulkanFormat>* myVulkanFormats) {
 			myCommandBufferManager.bindCommands(&myVulkanDataContainers[vulkanContainerIndex], myVulkanFormats);
 		}
 
@@ -702,7 +702,7 @@ namespace Dynamik {
 		}
 
 		// initialize individual objects
-		void vulkanRenderer::initObjectBasedFunctions(std::vector<vulkanFormat>* myVulkanFormats) {
+		void vulkanRenderer::initObjectBasedFunctions(ARRAY<vulkanFormat>* myVulkanFormats) {
 			for (UI32 _itr = 0; _itr < myVulkanFormats->size(); _itr++) {
 				vulkanFormat* _localVulkanFormat = &myVulkanFormats->at(_itr);
 				if (_localVulkanFormat->isInitialized)

@@ -29,6 +29,11 @@
 #include "GameObject.h"
 #include "KeyBingings.h"
 
+#include "DataTypesLib/DataTypesLib.h"
+#include "MemoryLib/MemoryLib.h"
+#include "SystemLib/SystemLib.h"
+#include "AlgorithmLib/AlgorithmLib.h"
+
 #include "CentralDataHub.h"
 #include "Utilities.h"
 #include "Platform.h"

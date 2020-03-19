@@ -18,7 +18,7 @@
 namespace Dynamik {
 	namespace ADGR {
 		namespace core {
-			std::vector<CCPTR> getRequiredExtentions(B1);
+			ARRAY<CCPTR> getRequiredExtentions(B1);
 		}
 	}
 }

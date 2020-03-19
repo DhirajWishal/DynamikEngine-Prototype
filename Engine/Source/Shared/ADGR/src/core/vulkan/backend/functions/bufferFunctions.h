@@ -32,7 +32,7 @@ namespace Dynamik {
 
 				B1 hasStencilComponent(VkFormat format);
 
-				VkFormat findSupportedFormat(const std::vector<VkFormat>& candidates,
+				VkFormat findSupportedFormat(const ARRAY<VkFormat>& candidates,
 					VkImageTiling tiling, VkFormatFeatureFlags features, VkPhysicalDevice physicalDevice);
 
 				VkFormat findDepthFormat(VkPhysicalDevice physicalDevice);

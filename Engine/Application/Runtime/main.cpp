@@ -16,13 +16,15 @@
 
 /* -----||||| MAIN LAUNCH SYSTEM |||||----- */
 
+UI32 index = 0;
+
 #ifdef DMK_PLATFORM_WINDOWS
 /* ---------- ########## ////////// MAIN LOOP \\\\\\\\\\ ########## ---------- */
 int main(int argc, char** argv) {
 	try {
 		auto paths = getTexturePath(readFile("E:\\Projects\\Dynamik Engine\\Versions\\Dynamik (Prototype)\\Engine\\Application\\Runtime\\paths.txt"));
 
-		std::vector<std::vector<float>> locations = {
+		Dynamik::ARRAY<Dynamik::ARRAY<float>> locations = {
 			{0.0f,	0.0f,	0.0f},
 			{-0.5f,	1.5f,	0.0f},
 			{1.7f,	-2.0f,	0.0f},
@@ -54,7 +56,7 @@ int main(int argc, char** argv) {
 			{-10.0f,	-10.0f,	0.0f},
 		};
 
-		std::vector<Dynamik::DMKObjectType> objTypes = {
+		Dynamik::ARRAY<Dynamik::DMKObjectType> objTypes = {
 			Dynamik::DMKObjectType::DMK_OBJECT_TYPE_INTERACTIVE_OBJECT,
 			Dynamik::DMKObjectType::DMK_OBJECT_TYPE_INTERACTIVE_OBJECT,
 			Dynamik::DMKObjectType::DMK_OBJECT_TYPE_STATIC_OBJECT,
@@ -62,8 +64,8 @@ int main(int argc, char** argv) {
 			Dynamik::DMKObjectType::DMK_OBJECT_TYPE_STATIC_OBJECT,
 		};
 
-		std::vector<mars> marses(paths.size());
-		std::vector<GameObject*> objects = {};
+		Dynamik::ARRAY<mars> marses(paths.size());
+		Dynamik::ARRAY<GameObject*> objects = {};
 
 		for (int i = 0; i < paths.size(); i++) {
 			Dynamik::GameObjectProperties props;
@@ -79,13 +81,13 @@ int main(int argc, char** argv) {
 		_localProps.type = DMKObjectType::DMK_OBJECT_TYPE_AUDIO;
 		_localProps.objectPath = { "E:/Projects/Dynamik Engine/Dynamik/components/Audio/media/explosion.wav" };
 		explosion exp(_localProps);
-		objects.push_back(&exp);
+		objects.pushBack(&exp);
 
 		for (int i = 0; i < marses.size(); i++)
 			objects.push_back(&marses[i]);
 
 		sceneOne scene(objects);
-		std::vector<Scene*> scenes = { &scene };
+		Dynamik::ARRAY<Scene*> scenes = { &scene };
 
 		Engine myEngine(scenes);
 		myEngine.run();

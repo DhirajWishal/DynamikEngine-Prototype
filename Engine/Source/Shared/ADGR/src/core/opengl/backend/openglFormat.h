@@ -23,7 +23,7 @@ namespace Dynamik {
 				unsigned I32 vertexBufferObject = 0;
 				unsigned I32 indexBufferObject = 0;	// elementBufferObject
 
-				std::vector<unsigned I32> myTextureIDs = {};
+				ARRAY<unsigned I32> myTextureIDs = {};
 			};
 		}
 	}

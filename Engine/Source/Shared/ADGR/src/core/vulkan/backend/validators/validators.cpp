@@ -25,7 +25,7 @@ namespace Dynamik {
 				for (const char* layerName : validationLayer) {
 					B1 layerFound = false;
 
-					for (const auto& layerProperties : availableLayers) {
+					for (auto layerProperties : availableLayers) {
 						if (strcmp(layerName, layerProperties.layerName) == 0) {
 							layerFound = true;
 							break;

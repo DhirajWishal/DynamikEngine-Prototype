@@ -7,6 +7,10 @@
 namespace Dynamik {
 	namespace Audio {
 		AudioEngine::AudioEngine() {
+		}
+
+		void AudioEngine::Initialize()
+		{
 			irrklangEngine = irrklang::createIrrKlangDevice();
 
 			//TODO

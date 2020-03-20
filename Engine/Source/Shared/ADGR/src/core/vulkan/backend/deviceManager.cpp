@@ -35,11 +35,12 @@ namespace Dynamik {
 
 				B1 extensionsSupported = checkDeviceExtensionSupport(device);
 
-				B1 swapChainAdequate = false;
+				B1 swapChainAdequate = true;
+				//B1 swapChainAdequate = false;
 				if (extensionsSupported) {
 					swapChainSupportDetails swapChainSupport = querySwapChainSupport(&device, surface);
-					swapChainAdequate = !swapChainSupport.formats.empty()
-						&& !swapChainSupport.presentModes.empty();
+					//swapChainAdequate = !swapChainSupport.formats.empty()
+					//	&& !swapChainSupport.presentModes.empty();
 				}
 
 				VkPhysicalDeviceFeatures supportedFeatures;

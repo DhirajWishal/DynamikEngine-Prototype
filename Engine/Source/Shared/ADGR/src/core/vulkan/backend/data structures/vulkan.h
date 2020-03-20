@@ -44,6 +44,12 @@ namespace Dynamik {
 				DMK_ADGR_VULKAN_SHADER_STAGE_FRAGMENT = 3							// fragment shader
 			};
 
+			/* SHADER CODE CONTAINER */
+			struct DMKShaderCodeContaiener {
+				ARRAY<char> shaderCode;
+				DMK_ADGR_VULKAN_SHADER_STAGE_INFO shaderType;
+			};
+
 			/* SWAPCHAIN DATA CONTAINER */
 			struct ADGRVulkanSwapchainDataContainer {
 				VkFormat swapchainImageFormat = VkFormat::VK_FORMAT_UNDEFINED;		// Vulkan swapchain image format
@@ -58,7 +64,7 @@ namespace Dynamik {
 
 			/* PIPELINE DATA CONTAINER */
 			struct ADGRVulkanPipelineDataContainer {
-				ARRAY<DMK_ShaderCode> shaderCodes = {							// Vulkan shader codes
+				ARRAY<DMKShaderCodeContaiener> shaderCodes = {							// Vulkan shader codes
 					{},	// vertex shader
 					{},	// tessellation shader
 					{},	// geometry shader
@@ -82,24 +88,9 @@ namespace Dynamik {
 
 			// Shader data
 			struct ADGRVulkanShaderDataContainer {
-				ARRAY<DMK_ShaderCode> shaderCodes = {							// Vulkan shader codes
-					{},	// vertex shader
-					{},	// tessellation shader
-					{},	// geometry shader
-					{}	// fragment shader
-				};
-				ARRAY<VkShaderModule> shaderModules = {						// Vulkan shader modules
-					VK_NULL_HANDLE,	// vertex shader
-					VK_NULL_HANDLE,	// tessellation shader
-					VK_NULL_HANDLE,	// geometry shader
-					VK_NULL_HANDLE	// fragment shader
-				};
-				ARRAY<VkPipelineShaderStageCreateInfo> shaderStageInfo = {	// Vulkan shader stage create info
-					{},	// vertex shader
-					{},	// tessellation shader
-					{},	// geometry shader
-					{}	// fragment shader
-				};
+				ARRAY<DMKShaderCodeContaiener> shaderCodes = {};							// Vulkan shader codes
+				ARRAY<VkShaderModule> shaderModules = {};						// Vulkan shader modules
+				ARRAY<VkPipelineShaderStageCreateInfo> shaderStageInfo = {};	// Vulkan shader stage create info
 			};
 
 			// Pipeline creation info

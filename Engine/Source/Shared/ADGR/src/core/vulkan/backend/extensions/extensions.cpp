@@ -19,7 +19,7 @@ namespace Dynamik {
 		namespace core {
 			ARRAY<CCPTR> getRequiredExtentions(B1 vaidationLayer) {
 				UI32 glfwExtentionCount = 0;
-				CCPTR* glfwExtentions;
+				const char** glfwExtentions;
 				glfwExtentions = glfwGetRequiredInstanceExtensions(&glfwExtentionCount);
 
 				std::vector<CCPTR> extentions(glfwExtentions, glfwExtentions + glfwExtentionCount);

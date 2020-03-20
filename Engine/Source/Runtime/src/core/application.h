@@ -158,7 +158,6 @@ namespace Dynamik {
 		ARRAY<Audio::BasicAudioController> audioControllers = {};
 
 		ADGR::layerStack layerStack;
-
 		Audio::AudioEngine myEngine;
 
 		uint32_t sceneCount = 0;

@@ -80,6 +80,8 @@ namespace Dynamik {
 			return;
 		}
 
+		myEngine.Initialize();
+
 		FSTR fstr = std::string("Hello World").c_str();
 
 		gameObjectInitialization();
@@ -108,7 +110,10 @@ namespace Dynamik {
 
 	DMK_API void Application::run() {
 		if (initSuccessful) {
-			myThreadManager.runAll();
+			//myThreadManager.runAll();
+
+			myThreadManager.run(1);
+
 			//while (!myRenderingEngine.getWindowCloseEvent()) {
 			//	auto events = myRenderingEngine.getEvents();
 			//

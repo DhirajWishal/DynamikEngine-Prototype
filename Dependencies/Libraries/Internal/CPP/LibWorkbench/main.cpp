@@ -63,9 +63,18 @@ ARRAY<UI32> myArr2 = {};
 int main() {
 	UI32 inde;
 
-	ARRAY<UI32> myArr = {
-		1, 2, 3, 6, 3, 5
-	};
+	ARRAY<CHR> myArr;
+
+	std::string _str = "Hello World";
+
+	for (CHR c : _str)
+		myArr.pushBack(c);
+
+	auto _debug = myArr[2];
+	myArr[1];
+
+	for (auto elem : myArr)
+		std::cout << elem << std::endl;
 
 	UI32 num = 0;
 	POINTER<UI32> ptr = &num;

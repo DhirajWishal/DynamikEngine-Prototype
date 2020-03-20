@@ -20,7 +20,6 @@ namespace Dynamik {
 
 			size_t fileSize = (size_t)file.tellg();
 			ARRAY<char> buffer(fileSize);
-
 			file.seekg(0);
 			file.read(buffer.data(), fileSize);
 

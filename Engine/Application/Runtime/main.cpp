@@ -64,7 +64,7 @@ int main(int argc, char** argv) {
 			Dynamik::DMKObjectType::DMK_OBJECT_TYPE_STATIC_OBJECT,
 		};
 
-		Dynamik::ARRAY<mars> marses(paths.size());
+		Dynamik::ARRAY<mars> marses;
 		Dynamik::ARRAY<GameObject*> objects = {};
 
 		for (int i = 0; i < paths.size(); i++) {
@@ -73,8 +73,9 @@ int main(int argc, char** argv) {
 			props.ID = std::to_string(i);
 			props.location = paths[i];
 			props.transformProperties.location = locations[i];
-
-			marses[i].myProperties = props;
+			mars _local;
+			_local.myProperties = props;
+			marses.pushBack(_local);
 		}
 
 		Dynamik::GameObjectProperties _localProps;

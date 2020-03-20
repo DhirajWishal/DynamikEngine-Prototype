@@ -18,6 +18,8 @@ namespace Dynamik {
 
 		public:
 			AudioEngine();
+			void Initialize();
+
 			bool addAudioController(AudioObjectController& controller);
 			void update();
 		};

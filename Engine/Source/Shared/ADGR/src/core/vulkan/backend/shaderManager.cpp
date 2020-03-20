@@ -13,46 +13,54 @@ namespace Dynamik {
 			void shaderManager::init(ADGRVulkanDataContainer* container, ADGRVulkanShaderDataContainer* shaderDataContainer) {
 				ADGRVulkanPipelineDataContainer pipelineContainer = {};
 
-				// initialize the shader modules
-				if (shaderDataContainer->shaderCodes[DMK_ADGR_VULKAN_SHADER_STAGE_VERTEX].size()) {
-					VkShaderModule vertexShaderModule = createShaderModule(container->device, shaderDataContainer->shaderCodes[DMK_ADGR_VULKAN_SHADER_STAGE_VERTEX]);
-					shaderDataContainer->shaderStageInfo[DMK_ADGR_VULKAN_SHADER_STAGE_VERTEX].sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
-					shaderDataContainer->shaderStageInfo[DMK_ADGR_VULKAN_SHADER_STAGE_VERTEX].stage = VK_SHADER_STAGE_VERTEX_BIT;
-					shaderDataContainer->shaderStageInfo[DMK_ADGR_VULKAN_SHADER_STAGE_VERTEX].module = vertexShaderModule;
-					shaderDataContainer->shaderStageInfo[DMK_ADGR_VULKAN_SHADER_STAGE_VERTEX].pName = "main";
+				VkPipelineShaderStageCreateInfo _shaderStageCreateInfo;
+				VkShaderModule _shaderModule;
 
-					shaderDataContainer->shaderModules[DMK_ADGR_VULKAN_SHADER_STAGE_VERTEX] = vertexShaderModule;
-				}
-				if (shaderDataContainer->shaderCodes[DMK_ADGR_VULKAN_SHADER_STAGE_TESSELLATION].size()) {
-					VkShaderModule tessellationShaderModule = createShaderModule(container->device, shaderDataContainer->shaderCodes[DMK_ADGR_VULKAN_SHADER_STAGE_TESSELLATION]);
-					shaderDataContainer->shaderStageInfo[DMK_ADGR_VULKAN_SHADER_STAGE_TESSELLATION].sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
-					shaderDataContainer->shaderStageInfo[DMK_ADGR_VULKAN_SHADER_STAGE_TESSELLATION].stage = VK_SHADER_STAGE_TESSELLATION_CONTROL_BIT;
-					shaderDataContainer->shaderStageInfo[DMK_ADGR_VULKAN_SHADER_STAGE_TESSELLATION].module = tessellationShaderModule;
-					shaderDataContainer->shaderStageInfo[DMK_ADGR_VULKAN_SHADER_STAGE_TESSELLATION].pName = "main";
+				for (auto shaderCode : shaderDataContainer->shaderCodes) {
+					// initialize the shader modules
+					if (shaderCode.shaderType == DMK_ADGR_VULKAN_SHADER_STAGE_VERTEX) {
+						VkShaderModule vertexShaderModule = createShaderModule(container->device, shaderCode.shaderCode);
+						_shaderStageCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
+						_shaderStageCreateInfo.stage = VK_SHADER_STAGE_VERTEX_BIT;
+						_shaderStageCreateInfo.module = vertexShaderModule;
+						_shaderStageCreateInfo.pName = "main";
 
-					shaderDataContainer->shaderModules[DMK_ADGR_VULKAN_SHADER_STAGE_TESSELLATION] = tessellationShaderModule;
-				}
-				if (shaderDataContainer->shaderCodes[DMK_ADGR_VULKAN_SHADER_STAGE_GEOMETRY].size()) {
-					VkShaderModule geometryShaderModule = createShaderModule(container->device, shaderDataContainer->shaderCodes[DMK_ADGR_VULKAN_SHADER_STAGE_GEOMETRY]);
-					shaderDataContainer->shaderStageInfo[DMK_ADGR_VULKAN_SHADER_STAGE_GEOMETRY].sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
-					shaderDataContainer->shaderStageInfo[DMK_ADGR_VULKAN_SHADER_STAGE_GEOMETRY].stage = VK_SHADER_STAGE_GEOMETRY_BIT;
-					shaderDataContainer->shaderStageInfo[DMK_ADGR_VULKAN_SHADER_STAGE_GEOMETRY].module = geometryShaderModule;
-					shaderDataContainer->shaderStageInfo[DMK_ADGR_VULKAN_SHADER_STAGE_GEOMETRY].pName = "main";
+						_shaderModule = vertexShaderModule;
+					}
+					else if (shaderCode.shaderType == DMK_ADGR_VULKAN_SHADER_STAGE_TESSELLATION) {
+						VkShaderModule tessellationShaderModule = createShaderModule(container->device, shaderCode.shaderCode);
+						_shaderStageCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
+						_shaderStageCreateInfo.stage = VK_SHADER_STAGE_TESSELLATION_CONTROL_BIT;
+						_shaderStageCreateInfo.module = tessellationShaderModule;
+						_shaderStageCreateInfo.pName = "main";
 
-					shaderDataContainer->shaderModules[DMK_ADGR_VULKAN_SHADER_STAGE_GEOMETRY] = geometryShaderModule;
-				}
-				if (shaderDataContainer->shaderCodes[DMK_ADGR_VULKAN_SHADER_STAGE_FRAGMENT].size()) {
-					VkShaderModule fragmentShaderModule = createShaderModule(container->device, shaderDataContainer->shaderCodes[DMK_ADGR_VULKAN_SHADER_STAGE_FRAGMENT]);
-					shaderDataContainer->shaderStageInfo[DMK_ADGR_VULKAN_SHADER_STAGE_FRAGMENT].sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
-					shaderDataContainer->shaderStageInfo[DMK_ADGR_VULKAN_SHADER_STAGE_FRAGMENT].stage = VK_SHADER_STAGE_FRAGMENT_BIT;
-					shaderDataContainer->shaderStageInfo[DMK_ADGR_VULKAN_SHADER_STAGE_FRAGMENT].module = fragmentShaderModule;
-					shaderDataContainer->shaderStageInfo[DMK_ADGR_VULKAN_SHADER_STAGE_FRAGMENT].pName = "main";
+						_shaderModule = tessellationShaderModule;
+					}
+					else if (shaderCode.shaderType == DMK_ADGR_VULKAN_SHADER_STAGE_GEOMETRY) {
+						VkShaderModule geometryShaderModule = createShaderModule(container->device, shaderCode.shaderCode);
+						_shaderStageCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
+						_shaderStageCreateInfo.stage = VK_SHADER_STAGE_GEOMETRY_BIT;
+						_shaderStageCreateInfo.module = geometryShaderModule;
+						_shaderStageCreateInfo.pName = "main";
 
-					shaderDataContainer->shaderModules[DMK_ADGR_VULKAN_SHADER_STAGE_FRAGMENT] = fragmentShaderModule;
+						_shaderModule = geometryShaderModule;
+					}
+					else if (shaderCode.shaderType == DMK_ADGR_VULKAN_SHADER_STAGE_FRAGMENT) {
+						VkShaderModule fragmentShaderModule = createShaderModule(container->device, shaderCode.shaderCode);
+						_shaderStageCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
+						_shaderStageCreateInfo.stage = VK_SHADER_STAGE_FRAGMENT_BIT;
+						_shaderStageCreateInfo.module = fragmentShaderModule;
+						_shaderStageCreateInfo.pName = "main";
+
+						_shaderModule = fragmentShaderModule;
+					}
+
+					shaderDataContainer->shaderStageInfo.pushBack(_shaderStageCreateInfo);
+					shaderDataContainer->shaderModules.pushBack(_shaderModule);
 				}
 			}
 
-			VkShaderModule shaderManager::createShaderModule(VkDevice device, DMK_ShaderCode& code) {
+			VkShaderModule shaderManager::createShaderModule(VkDevice device, ARRAY<CHR>& code) {
 				VkShaderModuleCreateInfo createInfo = {};
 				createInfo.sType = VK_STRUCTURE_TYPE_SHADER_MODULE_CREATE_INFO;
 				createInfo.codeSize = code.size();

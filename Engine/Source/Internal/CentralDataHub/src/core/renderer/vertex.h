@@ -22,6 +22,7 @@ namespace Dynamik {
 		glm::vec3 Position;
 		glm::vec3 Color;
 		glm::vec2 TexCoordinates;
+		float Integrity = 1.0f;
 
 		static ARRAY<VkVertexInputBindingDescription> getBindingDescription(int bindCount);
 		static ARRAY<VkVertexInputAttributeDescription> getAttributeDescriptions(int bindCount);

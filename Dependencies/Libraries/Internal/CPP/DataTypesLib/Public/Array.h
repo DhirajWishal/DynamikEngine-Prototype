@@ -332,11 +332,29 @@ namespace Dynamik {
 		{
 			if (list.size() > maxSize()); /* TODO: Error Flagging */
 
-			if (list.size > capacity())
+			if (list.size() > capacity())
 				_reAllocateAssign(_getAllocatableSize(list.size()));
 
 			moveBytes(myBeginPtr, list.begin(), list.end());
-			myNextPtr += list.size();
+			myDataCount = list.size();
+			myNextPtr += myDataCount;
+		}
+
+		/* FUNCTION
+		 * Set values to this using an initializer list.
+		 *
+		 * @param list: List to be used to initialize this.
+		 */
+		void set(std::initializer_list<TYPE> list)
+		{
+			if (list.size() > maxSize()); /* TODO: Error Flagging */
+
+			if (list.size() > capacity())
+				_reAllocateAssign(_getAllocatableSize(list.size()));
+
+			moveBytes(myBeginPtr, (PTR)list.begin(), (PTR)list.end());
+			myDataCount = list.size();
+			myNextPtr += myDataCount;
 		}
 
 		/* CONSTRUCTOR
@@ -892,10 +910,7 @@ namespace Dynamik {
 		 */
 		ARRAY<TYPE>& operator=(std::initializer_list<TYPE> list)
 		{
-			if (list.size() > this->maxSize()); /* TODO: Error Flagging */
-
-			this->_reAllocate(_getAllocatableSize(list.size()));
-			moveBytes(this->myBeginPtr, (PTR)list.begin(), (PTR)list.end());
+			this->set(list);
 			return *this;
 		}
 

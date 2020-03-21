@@ -146,9 +146,9 @@
     <ClInclude Include="Public\Stack.h" />
     <ClInclude Include="Public\StaticArray.h" />
     <ClInclude Include="Public\String.h" />
+    <ClInclude Include="Public\Thread.h" />
     <ClInclude Include="Public\constants.h" />
     <ClInclude Include="Public\datatypes.h" />
-    <ClInclude Include="Public\Thread.h" />
     <ClInclude Include="Public\typecheck.h" />
   </ItemGroup>
   <ItemGroup>

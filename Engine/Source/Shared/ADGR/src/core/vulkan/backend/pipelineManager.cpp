@@ -15,7 +15,7 @@ namespace Dynamik {
 					initRenderPass(container);
 
 				auto bindingDescription = Vertex::getBindingDescription(1);
-				auto attributeDescriptions = Vertex::getAttributeDescriptions(1);
+				auto attributeDescriptions = Vertex::getAttributeDescriptions(4);
 
 				VkPipelineVertexInputStateCreateInfo vertexInputInfo = {};
 				vertexInputInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO;
@@ -161,7 +161,8 @@ namespace Dynamik {
 				// initialize the pipeline
 				VkGraphicsPipelineCreateInfo pipelineInfo = {};
 				pipelineInfo.sType = VK_STRUCTURE_TYPE_GRAPHICS_PIPELINE_CREATE_INFO;
-				pipelineInfo.stageCount = info.pipelineStageCount;
+				pipelineInfo.pNext = nullptr;
+				pipelineInfo.stageCount = ShaderStages.size();
 				pipelineInfo.pStages = ShaderStages.data();
 				pipelineInfo.pVertexInputState = &vertexInputInfo;
 				pipelineInfo.pInputAssemblyState = &inputAssembly;
@@ -175,6 +176,7 @@ namespace Dynamik {
 				pipelineInfo.subpass = info.pipelineSubPass;
 				pipelineInfo.basePipelineHandle = info.pipelineBasePipelineHandle;
 				pipelineInfo.basePipelineIndex = info.pipelineBasePipelineIndex;
+				pipelineInfo.pTessellationState = nullptr;
 
 				if (info.dynamicStateEnable)
 					pipelineInfo.pDynamicState = &dynamicStateInfo;

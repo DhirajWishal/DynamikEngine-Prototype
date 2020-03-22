@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="src">
+      <UniqueIdentifier>{2DAB880B-99B4-887C-2230-9F7C8E38947C}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\core">
+      <UniqueIdentifier>{C55F2ECF-B12C-89DA-DA45-7782C671BE68}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\core\Integrity Based">
+      <UniqueIdentifier>{321432CD-1E39-814D-4784-66DD3308806B}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\DDE.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Integrity Based\DestructionEntity.h">
+      <Filter>src\core\Integrity Based</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Integrity Based\ObjectDestructionProperties.h">
+      <Filter>src\core\Integrity Based</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Integrity Based\SolidDestruction.h">
+      <Filter>src\core\Integrity Based</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ddeafx.h">
+      <Filter>src</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\ddeafx.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="DDE.lua" />
+  </ItemGroup>
+</Project>

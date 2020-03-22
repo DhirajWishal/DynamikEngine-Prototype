@@ -349,7 +349,7 @@ namespace Dynamik {
 		// initialize models
 		void vulkanRenderer::initModels(ARRAY<DMKObjectData> data) {
 			{
-				ARRAY<std::future<void>, DMKArrayDestructorCallMode::DMK_ARRAY_DESTRUCTOR_CALL_MODE_DESTRUCT_ALL> futures;
+				ARRAY<std::future<void>> futures;
 
 				for (auto i = 0; i < data.size(); i++) {
 					DMKVulkanRendererLoadObjectInfo loadModelInfo;
@@ -532,32 +532,32 @@ namespace Dynamik {
 			{
 				DMKShaderCodeContaiener _container;
 				_container.shaderType = DMK_ADGR_VULKAN_SHADER_STAGE_VERTEX;
-				_container.shaderCode = utils::readFile(myVulkanFormat->myRendererFormat->myInternalFormat->myGameObject->myProperties.renderableObjectProperties.vertexShaderPath);
-				shaderContainer.shaderCodes.pushBack(_container);
+				_container.shaderCode = utils::readFile(myVulkanFormat->myRendererFormat->myInternalFormat->myGameObject->myProperties.renderableObjectProperties.vertexShaderPath).toVector();
+				shaderContainer.shaderCodes.push_back(_container);
 			}
 			// tessellation shader
 			if (myVulkanFormat->myRendererFormat->myInternalFormat->myGameObject->myProperties.renderableObjectProperties.tessellationShaderPath != "NONE")
 			{
 				DMKShaderCodeContaiener _container;
 				_container.shaderType = DMK_ADGR_VULKAN_SHADER_STAGE_TESSELLATION;
-				_container.shaderCode = utils::readFile(myVulkanFormat->myRendererFormat->myInternalFormat->myGameObject->myProperties.renderableObjectProperties.tessellationShaderPath);
-				shaderContainer.shaderCodes.pushBack(_container);
+				_container.shaderCode = utils::readFile(myVulkanFormat->myRendererFormat->myInternalFormat->myGameObject->myProperties.renderableObjectProperties.tessellationShaderPath).toVector();
+				shaderContainer.shaderCodes.push_back(_container);
 			}
 			// geometry shader
 			if (myVulkanFormat->myRendererFormat->myInternalFormat->myGameObject->myProperties.renderableObjectProperties.geometryShaderPath != "NONE")
 			{
 				DMKShaderCodeContaiener _container;
 				_container.shaderType = DMK_ADGR_VULKAN_SHADER_STAGE_GEOMETRY;
-				_container.shaderCode = utils::readFile(myVulkanFormat->myRendererFormat->myInternalFormat->myGameObject->myProperties.renderableObjectProperties.geometryShaderPath);
-				shaderContainer.shaderCodes.pushBack(_container);
+				_container.shaderCode = utils::readFile(myVulkanFormat->myRendererFormat->myInternalFormat->myGameObject->myProperties.renderableObjectProperties.geometryShaderPath).toVector();
+				shaderContainer.shaderCodes.push_back(_container);
 			}
 			// fragment shader
 			if (myVulkanFormat->myRendererFormat->myInternalFormat->myGameObject->myProperties.renderableObjectProperties.fragmentShaderPath != "NONE")
 			{
 				DMKShaderCodeContaiener _container;
 				_container.shaderType = DMK_ADGR_VULKAN_SHADER_STAGE_FRAGMENT;
-				_container.shaderCode = utils::readFile(myVulkanFormat->myRendererFormat->myInternalFormat->myGameObject->myProperties.renderableObjectProperties.fragmentShaderPath);
-				shaderContainer.shaderCodes.pushBack(_container);
+				_container.shaderCode = utils::readFile(myVulkanFormat->myRendererFormat->myInternalFormat->myGameObject->myProperties.renderableObjectProperties.fragmentShaderPath).toVector();
+				shaderContainer.shaderCodes.push_back(_container);
 			}
 
 			// init shaders

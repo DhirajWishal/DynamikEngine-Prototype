@@ -202,7 +202,7 @@ namespace Dynamik {
 				view.format = info.format;
 				view.components = { VK_COMPONENT_SWIZZLE_R, VK_COMPONENT_SWIZZLE_G, VK_COMPONENT_SWIZZLE_B, VK_COMPONENT_SWIZZLE_A };
 				view.subresourceRange = { VK_IMAGE_ASPECT_COLOR_BIT, 0, 1, 0, 1 };
-				// 6 array layers (faces)
+				// 6 ARRAY layers (faces)
 				view.subresourceRange.layerCount = layerCount;
 				// Set number of mip levels
 				view.subresourceRange.levelCount = info.mipLevels;

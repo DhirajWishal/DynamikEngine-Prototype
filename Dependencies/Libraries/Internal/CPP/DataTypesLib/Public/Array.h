@@ -2,6 +2,15 @@
 #ifndef _DYNAMIK_DATA_TYPES_ARRAY_H
 #define _DYNAMIK_DATA_TYPES_ARRAY_H
 
+/*
+ Dynamic Array for the Dynamik Engine.
+
+ Author:	Dhiraj Wishal
+ Project:	Dynamik Engine
+ Date:		22/03/2020
+ IDE:		MS Visual Studio 2019
+*/
+
 #include "datatypes.h"
 #include "Pointer.h"
 #include "MemoryLib/Public/StaticAllocator.h"
@@ -136,9 +145,15 @@ namespace Dynamik {
 		 */
 		ARRAY(UI32 size)
 		{
-			if ((size + _getAllocatableSize(size)) > maxSize()) return; /* TODO: Error Flagging */
+			if (size)
+			{
+				if ((size + _getAllocatableSize(size)) > maxSize()) return; /* TODO: Error Flagging */
 
-			_reAllocate(_getAllocatableSize(size));
+				_reAllocate(_getAllocatableSize(size));
+			}
+			else
+				_reAllocate(_getNextSize());
+
 			myDataCount = size;
 		}
 
@@ -152,10 +167,16 @@ namespace Dynamik {
 		 */
 		ARRAY(UI32 size, const TYPE& value)
 		{
-			if ((size + _getAllocatableSize(size)) > maxSize()) return; /* TODO: Error Flagging */
+			if (size)
+			{
+				if ((size + _getAllocatableSize(size)) > maxSize()) return; /* TODO: Error Flagging */
 
-			_reAllocate(_getAllocatableSize(size));
-			setData(myBeginPtr, (UI32)value, capacity());
+				_reAllocate(_getAllocatableSize(size));
+				setData(myBeginPtr, (UI32)value, capacity());
+			}
+			else
+				_reAllocate(_getNextSize());
+
 			myDataCount = size;
 		}
 
@@ -231,8 +252,8 @@ namespace Dynamik {
 				moveBytes(myBeginPtr, (PTR)list.begin(), (PTR)list.end());
 			}
 
-				myDataCount = list.size();
-				myNextPtr += myDataCount;
+			myDataCount = list.size();
+			myNextPtr += myDataCount;
 		}
 
 		/* CONSTRUCTOR
@@ -249,6 +270,18 @@ namespace Dynamik {
 
 			myDataCount = vector.size();
 			myNextPtr += myDataCount;
+		}
+
+		ARRAY(const ARRAY<TYPE>& arr)
+		{
+			if (arr.size())
+			{
+				_reAllocate(_getAllocatableSize(arr.capacity()));
+
+				set(arr.begin(), arr.end());
+			}
+			else
+				_reAllocate(_getNextSize());
 		}
 
 		/* DESTRUCTOR
@@ -315,12 +348,21 @@ namespace Dynamik {
 		 */
 		void set(ITERATOR first, ITERATOR last)
 		{
-			if ((last.getPointerAsInteger() - first.getPointerAsInteger()) > _getAllocationSize())
-				_reAllocateAssign(_getAllocatableSize(last.getPointerAsInteger() - first.getPointerAsInteger()));
+			UI32 _byteSize = last.getPointerAsInteger() - first.getPointerAsInteger();
+			if (_byteSize)
+			{
+				myDataCount = (_byteSize) / typeSize();
+				if (_byteSize > _getAllocationSize())
+					_reAllocateAssign(_getAllocatableSize(_byteSize));
 
-			moveBytes(myBeginPtr, first, last);
-			myDataCount = last.getPointerAsInteger() - first.getPointerAsInteger();
-			myNextPtr += myDataCount;
+				moveBytes(myBeginPtr, first, last);
+				myNextPtr += myDataCount;
+			}
+			else
+			{
+				if (!myBeginPtr.isValid())
+					_reAllocate(_getNextSize());
+			}
 		}
 
 		/* FUNCTION
@@ -364,11 +406,7 @@ namespace Dynamik {
 		 */
 		void set(const ARRAY<TYPE>& array)
 		{
-			if (array.size() > maxSize()); /* TODO: Error Flagging */
-
-			_reAllocate(_getAllocatableSize(array.size()));
-			moveBytes(myBeginPtr, (PTR)array.begin(), (PTR)array.end());
-			myNextPtr += array.size();
+			set(array.begin(), array.end());
 		}
 
 		/* FUNCTION
@@ -500,13 +538,6 @@ namespace Dynamik {
 
 			UI32 _processedIndex = _getProcessedIndex(index);
 
-			if (((PTR)&myBeginPtr[_processedIndex]).getPointerAsInteger() > myNextPtr.getPointerAsInteger())
-			{
-				myNextPtr(&myBeginPtr[_processedIndex]);
-				myNextPtr++;
-				myDataCount++;
-			}
-
 			return myBeginPtr[_processedIndex];
 		}
 
@@ -526,12 +557,17 @@ namespace Dynamik {
 		 */
 		void resize(UI32 size)
 		{
-			if (size > maxSize()) return; /* TODO: Error Flagging */
+			if (size)
+			{
+				if (size > maxSize()) return; /* TODO: Error Flagging */
 
-			if (myBeginPtr.getPointerAsInteger() != myEndPtr.getPointerAsInteger())
-				Allocator::deAllocate(myBeginPtr.get(), _getAllocationSize());
+				if (myBeginPtr.getPointerAsInteger() != myEndPtr.getPointerAsInteger())
+					Allocator::deAllocate(myBeginPtr.get(), _getAllocationSize());
 
-			_reAllocateAssign(_getAllocatableSize(size));
+				_reAllocateAssign(_getAllocatableSize(size));
+
+				myDataCount = size;
+			}
 		}
 
 		/* FUNCTION
@@ -610,7 +646,9 @@ namespace Dynamik {
 				_reAllocateAssign(last.getPointerAsInteger() - first.getPointerAsInteger());
 
 			moveBytes(myBeginPtr, first, last);
-			myNextPtr += (UI64)(last - first);
+			UI32 _size = (UI64)(last - first);
+			myDataCount += _size;
+			myNextPtr += _size;
 			return myNextPtr;
 		}
 
@@ -793,12 +831,7 @@ namespace Dynamik {
 		/* FUNCTION
 		 * Check if the Array is empty.
 		 */
-		const B1 empty() const noexcept
-		{
-			auto _debug = (_getSizeOfThis()) == 0;
-
-			return _debug;
-		}
+		const B1 empty() const noexcept { return (_getSizeOfThis()) != 0; }
 
 		/* FUNCTION
 		 * Get data pointer of the Array.
@@ -817,6 +850,12 @@ namespace Dynamik {
 		{
 			if (myNextPtr.getPointerAsInteger() > myBeginPtr.getPointerAsInteger())
 				return myNextPtr;
+
+			if (myDataCount)
+				return (PTR)(myBeginPtr.get() + myDataCount);
+
+			if (myDataCount == 0)
+				return myBeginPtr;
 
 			return myEndPtr;
 		}
@@ -882,25 +921,35 @@ namespace Dynamik {
 		 *
 		 * @para arr: Array to be initialized to this.
 		 */
-		 //ARRAY<TYPE>& operator=(const ARRAY<TYPE>& arr)
-		 //{
-		 //	//this->insert(arr.begin(), arr.end());
-		 //	return (ARRAY<TYPE>&)arr;
-		 //	//return *this;
-		 //}
+		ARRAY<TYPE>& operator=(const ARRAY<TYPE>& arr)
+		{
+			this->set(arr.begin(), arr.end());
+			return *this;
+		}
 
-		 /* OPERATOR
-		  * = operator overload.
-		  * Get data from a raw array and initialize it to this.
-		  *
-		  * @para arr: Raw array to be initialized to this.
-		  */
+		/* OPERATOR
+		 * = operator overload.
+		 * Get data from an array and initialize it to this.
+		 *
+		 * @para arr: Array to be initialized to this.
+		 */
+		ARRAY<TYPE>& operator=(ARRAY<TYPE>&& arr)
+		{
+			this->set(arr.begin(), arr.end());
+			return *this;
+		}
+
+		/* OPERATOR
+		 * = operator overload.
+		 * Get data from a raw array and initialize it to this.
+		 *
+		 * @para arr: Raw array to be initialized to this.
+		 */
 		ARRAY<TYPE>& operator=(const PTR arr)
 		{
 			this->set(arr);
 			return *this;
 		}
-
 
 		/* OPERATOR
 		 * = operator overload.

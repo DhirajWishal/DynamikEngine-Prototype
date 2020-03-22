@@ -90,7 +90,7 @@ namespace Dynamik {
 				myVertexAndIndexBufferManager.bind(_localFormat);
 				myVertexAndIndexBufferManager.draw(_localFormat);
 			}
-			// glBindVertexArray(0); // no need to unbind it every time
+			// glBindVertexstd::vector(0); // no need to unbind it every time
 
 			// glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
 			// -------------------------------------------------------------------------------

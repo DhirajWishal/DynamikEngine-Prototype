@@ -113,9 +113,9 @@ namespace Dynamik {
 
 				//std::multimap<I32, VkPhysicalDevice> candidates;
 
+				auto props = VkPhysicalDeviceProperties{};
 				for (const auto& device : devices) {
 					if (isDeviceSuitable(device, &container->surface)) {
-						auto props = VkPhysicalDeviceProperties{};
 						vkGetPhysicalDeviceProperties(device, &props);
 
 						if (props.deviceType == VkPhysicalDeviceType::VK_PHYSICAL_DEVICE_TYPE_DISCRETE_GPU)
@@ -132,9 +132,6 @@ namespace Dynamik {
 
 				if (container->physicalDevice == VK_NULL_HANDLE)
 					DMK_CORE_FATAL("Failed to find a suitable GPU!");
-
-				auto props = VkPhysicalDeviceProperties{};
-				vkGetPhysicalDeviceProperties(container->physicalDevice, &props);
 
 #if defined(DMK_DEBUG)
 				printf("\n\t---------- VULKAN PHYSICAL DEVICE INFO ----------\n");

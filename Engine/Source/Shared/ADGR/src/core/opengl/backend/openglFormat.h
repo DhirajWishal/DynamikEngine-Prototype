@@ -19,7 +19,7 @@ namespace Dynamik {
 
 				unsigned I32 myShaderID = 0;
 
-				unsigned I32 vertexArrayObject = 0;
+				unsigned I32 vertexstd::vectorObject = 0;
 				unsigned I32 vertexBufferObject = 0;
 				unsigned I32 indexBufferObject = 0;	// elementBufferObject
 

@@ -17,7 +17,7 @@ namespace Dynamik {
 		}
 
 		void layerStack::pushOverLay(Layer* overlay) {
-			layers.pushBack(overlay);
+			layers.push_back(overlay);
 		}
 
 		void layerStack::popLayer(Layer* layer) {

@@ -55,12 +55,12 @@ namespace Dynamik {
 						_shaderModule = fragmentShaderModule;
 					}
 
-					shaderDataContainer->shaderStageInfo.pushBack(_shaderStageCreateInfo);
-					shaderDataContainer->shaderModules.pushBack(_shaderModule);
+					shaderDataContainer->shaderStageInfo.push_back(_shaderStageCreateInfo);
+					shaderDataContainer->shaderModules.push_back(_shaderModule);
 				}
 			}
 
-			VkShaderModule shaderManager::createShaderModule(VkDevice device, ARRAY<CHR>& code) {
+			VkShaderModule shaderManager::createShaderModule(VkDevice device, DMK_ShaderCode& code) {
 				VkShaderModuleCreateInfo createInfo = {};
 				createInfo.sType = VK_STRUCTURE_TYPE_SHADER_MODULE_CREATE_INFO;
 				createInfo.codeSize = code.size();

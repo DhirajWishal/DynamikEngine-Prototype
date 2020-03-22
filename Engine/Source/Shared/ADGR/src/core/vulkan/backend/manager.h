@@ -106,13 +106,13 @@ namespace Dynamik {
 					return &((ARRAY<_Type>*)_resource(type))->at(index);
 				}
 
-				// Get resource size (array size)
+				// Get resource size (ARRAY size)
 				template<typename _Type>
 				I32 getResourceSize(DMKManagerResourceType type = DMK_CDH_MANAGER_RESOURCE_TYPE_UNKNOWN) const {
 					return ((ARRAY<_Type>*)_resource(type))->size();
 				}
 
-				// Get resource size (array size) with an index
+				// Get resource size (ARRAY size) with an index
 				template<typename _Type>
 				I32 getResourceSize(DMKManagerResourceType type = DMK_CDH_MANAGER_RESOURCE_TYPE_UNKNOWN, I32 index = 0) {
 					return ((ARRAY<_Type>*)_resource(type))->at(index).size();

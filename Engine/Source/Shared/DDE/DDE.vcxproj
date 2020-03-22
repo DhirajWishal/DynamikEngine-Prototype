@@ -80,7 +80,7 @@
       <PrecompiledHeaderFile>ddeafx.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>DMK_PLATFORM_WINDOWS;DMK_BUILD_DLL;DMK_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\Libraries\Local;$(SolutionDir)Engine\Source\Runtime\src;$(SolutionDir)Engine\Source\Runtime\GameLibraries;$(SolutionDir)Engine\Source\Shared\ADGR\src;$(SolutionDir)Engine\Source\Shared\Audio\src;$(SolutionDir)Engine\Source\Shared\DDE\src;$(SolutionDir)Engine\Source\Shared\Intellect\src;$(SolutionDir)Engine\Source\Shared\Events\src;$(SolutionDir)Engine\Source\Shared\Managers\src;$(SolutionDir)Engine\Source\Shared\Networking\src;$(SolutionDir)Dependencies\Programs\DevConsole\src;$(SolutionDir)Dependencies\Programs\Debugger\src;$(SolutionDir)Engine\Source\Internal\Platform\src;$(SolutionDir)Engine\Source\Internal\Utilities\src;$(SolutionDir)Engine\Source\Internal\CentralDataHub\src;$(SolutionDir)Dependencies\Libraries\External\glfw\include;$(SolutionDir)Dependencies\GLEW\include;$(SolutionDir)Dependencies\Libraries\External\glm;$(SolutionDir)Dependencies\Libraries\External\stb;$(SolutionDir)Dependencies\Libraries\External\tinyobjloader;$(SolutionDir)Dependencies\Libraries\Local\irrKlang\include;$(SolutionDir)Dependencies\Libraries\Local\assimp;E:\Programming\SDKs\Vulkan\1.2.131.2\Include;$(SolutionDir)Dependencies\Libraries\Internal\CPP;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\Libraries\Local;$(SolutionDir)Engine\Source\Runtime\src;$(SolutionDir)Engine\Source\Runtime\GameLibraries;$(SolutionDir)Engine\Source\Shared\ADGR\src;$(SolutionDir)Engine\Source\Shared\Audio\src;$(SolutionDir)Engine\Source\Shared\DDE\src;$(SolutionDir)Engine\Source\Shared\Intellect\src;$(SolutionDir)Engine\Source\Shared\Events\src;$(SolutionDir)Engine\Source\Shared\Managers\src;$(SolutionDir)Engine\Source\Shared\Networking\src;$(SolutionDir)Dependencies\Programs\DevConsole\src;$(SolutionDir)Dependencies\Programs\Debugger\src;$(SolutionDir)Engine\Source\Internal\Platform\src;$(SolutionDir)Engine\Source\Internal\Utilities\src;$(SolutionDir)Engine\Source\Internal\CentralDataHub\src;$(SolutionDir)Dependencies\Libraries\External\glfw\include;$(SolutionDir)Dependencies\GLEW\include;$(SolutionDir)Dependencies\Libraries\External\glm;$(SolutionDir)Dependencies\Libraries\External\stb;$(SolutionDir)Dependencies\Libraries\External\tinyobjloader;$(SolutionDir)Dependencies\Libraries\Local\irrKlang\include;$(SolutionDir)Dependencies\Libraries\Local\assimp;$(SolutionDir)Dependencies\Libraries\External\Vulkan\include;$(SolutionDir)Dependencies\Libraries\Internal\CPP;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
@@ -100,7 +100,7 @@
       <PrecompiledHeaderFile>ddeafx.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>DMK_PLATFORM_WINDOWS;DMK_BUILD_DLL;DMK_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\Libraries\Local;$(SolutionDir)Engine\Source\Runtime\src;$(SolutionDir)Engine\Source\Runtime\GameLibraries;$(SolutionDir)Engine\Source\Shared\ADGR\src;$(SolutionDir)Engine\Source\Shared\Audio\src;$(SolutionDir)Engine\Source\Shared\DDE\src;$(SolutionDir)Engine\Source\Shared\Intellect\src;$(SolutionDir)Engine\Source\Shared\Events\src;$(SolutionDir)Engine\Source\Shared\Managers\src;$(SolutionDir)Engine\Source\Shared\Networking\src;$(SolutionDir)Dependencies\Programs\DevConsole\src;$(SolutionDir)Dependencies\Programs\Debugger\src;$(SolutionDir)Engine\Source\Internal\Platform\src;$(SolutionDir)Engine\Source\Internal\Utilities\src;$(SolutionDir)Engine\Source\Internal\CentralDataHub\src;$(SolutionDir)Dependencies\Libraries\External\glfw\include;$(SolutionDir)Dependencies\GLEW\include;$(SolutionDir)Dependencies\Libraries\External\glm;$(SolutionDir)Dependencies\Libraries\External\stb;$(SolutionDir)Dependencies\Libraries\External\tinyobjloader;$(SolutionDir)Dependencies\Libraries\Local\irrKlang\include;$(SolutionDir)Dependencies\Libraries\Local\assimp;E:\Programming\SDKs\Vulkan\1.2.131.2\Include;$(SolutionDir)Dependencies\Libraries\Internal\CPP;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\Libraries\Local;$(SolutionDir)Engine\Source\Runtime\src;$(SolutionDir)Engine\Source\Runtime\GameLibraries;$(SolutionDir)Engine\Source\Shared\ADGR\src;$(SolutionDir)Engine\Source\Shared\Audio\src;$(SolutionDir)Engine\Source\Shared\DDE\src;$(SolutionDir)Engine\Source\Shared\Intellect\src;$(SolutionDir)Engine\Source\Shared\Events\src;$(SolutionDir)Engine\Source\Shared\Managers\src;$(SolutionDir)Engine\Source\Shared\Networking\src;$(SolutionDir)Dependencies\Programs\DevConsole\src;$(SolutionDir)Dependencies\Programs\Debugger\src;$(SolutionDir)Engine\Source\Internal\Platform\src;$(SolutionDir)Engine\Source\Internal\Utilities\src;$(SolutionDir)Engine\Source\Internal\CentralDataHub\src;$(SolutionDir)Dependencies\Libraries\External\glfw\include;$(SolutionDir)Dependencies\GLEW\include;$(SolutionDir)Dependencies\Libraries\External\glm;$(SolutionDir)Dependencies\Libraries\External\stb;$(SolutionDir)Dependencies\Libraries\External\tinyobjloader;$(SolutionDir)Dependencies\Libraries\Local\irrKlang\include;$(SolutionDir)Dependencies\Libraries\Local\assimp;$(SolutionDir)Dependencies\Libraries\External\Vulkan\include;$(SolutionDir)Dependencies\Libraries\Internal\CPP;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -124,7 +124,7 @@
       <PrecompiledHeaderFile>ddeafx.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>DMK_PLATFORM_WINDOWS;DMK_BUILD_DLL;DMK_DISTRIBUTION;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\Libraries\Local;$(SolutionDir)Engine\Source\Runtime\src;$(SolutionDir)Engine\Source\Runtime\GameLibraries;$(SolutionDir)Engine\Source\Shared\ADGR\src;$(SolutionDir)Engine\Source\Shared\Audio\src;$(SolutionDir)Engine\Source\Shared\DDE\src;$(SolutionDir)Engine\Source\Shared\Intellect\src;$(SolutionDir)Engine\Source\Shared\Events\src;$(SolutionDir)Engine\Source\Shared\Managers\src;$(SolutionDir)Engine\Source\Shared\Networking\src;$(SolutionDir)Dependencies\Programs\DevConsole\src;$(SolutionDir)Dependencies\Programs\Debugger\src;$(SolutionDir)Engine\Source\Internal\Platform\src;$(SolutionDir)Engine\Source\Internal\Utilities\src;$(SolutionDir)Engine\Source\Internal\CentralDataHub\src;$(SolutionDir)Dependencies\Libraries\External\glfw\include;$(SolutionDir)Dependencies\GLEW\include;$(SolutionDir)Dependencies\Libraries\External\glm;$(SolutionDir)Dependencies\Libraries\External\stb;$(SolutionDir)Dependencies\Libraries\External\tinyobjloader;$(SolutionDir)Dependencies\Libraries\Local\irrKlang\include;$(SolutionDir)Dependencies\Libraries\Local\assimp;E:\Programming\SDKs\Vulkan\1.2.131.2\Include;$(SolutionDir)Dependencies\Libraries\Internal\CPP;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\Libraries\Local;$(SolutionDir)Engine\Source\Runtime\src;$(SolutionDir)Engine\Source\Runtime\GameLibraries;$(SolutionDir)Engine\Source\Shared\ADGR\src;$(SolutionDir)Engine\Source\Shared\Audio\src;$(SolutionDir)Engine\Source\Shared\DDE\src;$(SolutionDir)Engine\Source\Shared\Intellect\src;$(SolutionDir)Engine\Source\Shared\Events\src;$(SolutionDir)Engine\Source\Shared\Managers\src;$(SolutionDir)Engine\Source\Shared\Networking\src;$(SolutionDir)Dependencies\Programs\DevConsole\src;$(SolutionDir)Dependencies\Programs\Debugger\src;$(SolutionDir)Engine\Source\Internal\Platform\src;$(SolutionDir)Engine\Source\Internal\Utilities\src;$(SolutionDir)Engine\Source\Internal\CentralDataHub\src;$(SolutionDir)Dependencies\Libraries\External\glfw\include;$(SolutionDir)Dependencies\GLEW\include;$(SolutionDir)Dependencies\Libraries\External\glm;$(SolutionDir)Dependencies\Libraries\External\stb;$(SolutionDir)Dependencies\Libraries\External\tinyobjloader;$(SolutionDir)Dependencies\Libraries\Local\irrKlang\include;$(SolutionDir)Dependencies\Libraries\Local\assimp;$(SolutionDir)Dependencies\Libraries\External\Vulkan\include;$(SolutionDir)Dependencies\Libraries\Internal\CPP;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -142,6 +142,18 @@
       <ImportLibrary>$(SolutionDir)Builds\Engine\Binaries\$(Configuration)-$(Platform)\DDE.lib</ImportLibrary>
     </Link>
   </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="src\DDE.h" />
+    <ClInclude Include="src\core\Integrity Based\DestructionEntity.h" />
+    <ClInclude Include="src\core\Integrity Based\ObjectDestructionProperties.h" />
+    <ClInclude Include="src\core\Integrity Based\SolidDestruction.h" />
+    <ClInclude Include="src\ddeafx.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\ddeafx.cpp">
+      <PrecompiledHeader>Create</PrecompiledHeader>
+    </ClCompile>
+  </ItemGroup>
   <ItemGroup>
     <None Include="DDE.lua" />
   </ItemGroup>
@@ -173,16 +185,6 @@
     <ProjectReference Include="..\..\..\..\Dependencies\Libraries\Internal\CPP\SystemLib\SystemLib.vcxproj">
       <Project>{6141F30B-CDAB-A782-16EA-5828829385D7}</Project>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="src\ddeafx.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="src\core\Integrity Based\DestructionEntity.h" />
-    <ClInclude Include="src\core\Integrity Based\ObjectDestructionProperties.h" />
-    <ClInclude Include="src\core\Integrity Based\SolidDestruction.h" />
-    <ClInclude Include="src\DDE.h" />
-    <ClInclude Include="src\ddeafx.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

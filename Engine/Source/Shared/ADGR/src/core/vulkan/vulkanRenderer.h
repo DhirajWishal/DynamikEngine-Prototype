@@ -117,14 +117,14 @@ namespace Dynamik {
 			/* FUNCTION
 			 * Set Renderer formats to the renderer.
 			 *
-			 * @param rendererFormats: An Array of renderer formats.
+			 * @param rendererFormats: An ARRAY of renderer formats.
 			 */
 			void setFormats(ARRAY<RendererFormat>& rendererFormats) override;
 
 			/* FUNCTION
 			 * Update the renderer formats.
 			 *
-			 * @param rendererFormats: An Array of renderer formats.
+			 * @param rendererFormats: An ARRAY of renderer formats.
 			 */
 			void updateFormats(ARRAY<RendererFormat>& rendererFormats) override;
 
@@ -197,7 +197,7 @@ namespace Dynamik {
 			B1 enableVertexAndIndexClear = true;
 
 			ARRAY<Vertex> myVertices = {};
-			ARRAY<std::future<void>, DMKArrayDestructorCallMode::DMK_ARRAY_DESTRUCTOR_CALL_MODE_DESTRUCT_ALL> myThreads = {};
+			ARRAY<std::future<void>> myThreads = {};
 
 			/* DATA STORE */
 			ARRAY<ADGRVulkanDataContainer> myVulkanDataContainers = {};

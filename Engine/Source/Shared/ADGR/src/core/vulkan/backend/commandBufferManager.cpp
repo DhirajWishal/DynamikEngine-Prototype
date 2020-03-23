@@ -47,12 +47,26 @@ namespace Dynamik {
 					renderPassInfo.renderArea.offset = { 0, 0 };
 					renderPassInfo.renderArea.extent = container->swapchainContainer.swapchainExtent;
 
+					/*
+					 (2.0f / 256.0f),	
+					 (8.0f / 256.0f),	
+					 (32.0f / 256.0f),	
+					 (1.00000000f)		
+					*/
+
 					std::array<VkClearValue, 2> clearValues = {};
+					//clearValues[0].color = {
+					//	container->clearScreenValues[0],	// Red
+					//	container->clearScreenValues[1],	// Green
+					//	container->clearScreenValues[2],	// Blue
+					//	container->clearScreenValues[3]		// Alpha
+					//};
+
 					clearValues[0].color = {
-						container->clearScreenValues[0],	// Red
-						container->clearScreenValues[1],	// Green
-						container->clearScreenValues[2],	// Blue
-						container->clearScreenValues[3]		// Alpha
+					 (2.0f / 256.0f),
+					 (8.0f / 256.0f),
+					 (32.0f / 256.0f),
+					 (1.00000000f)
 					};
 					clearValues[1].depthStencil = { 1.0f, 0 };
 
@@ -68,7 +82,7 @@ namespace Dynamik {
 					// pushConstants[0] = ...
 					// vkCmdPushConstants(commandBuffers[i], &pipelineLayout, VK_SHADER_STAGE_VERTEX_BIT,
 					//		0, pushConstants.size(), pushConstants.data());
-
+					//
 					// Update light positions
 					// w component = light radius scale
 
@@ -78,17 +92,17 @@ namespace Dynamik {
 #define sin_t sin(glm::radians(1.5f * 360))
 #define cos_t cos(glm::radians(1.5f * 360))
 #define y -4.0f
-						//container->pushConstants[0] = glm::vec4(r * 1.1 * sin_t, y, r * 1.1 * cos_t, 1.0f);
-						//container->pushConstants[1] = glm::vec4(-r * sin_t, y, -r * cos_t, 1.0f);
-						//container->pushConstants[2] = glm::vec4(r * 0.85f * sin_t, y, -sin_t * 2.5f, 1.5f);
-						//container->pushConstants[3] = glm::vec4(0.0f, y, r * 1.25f * cos_t, 1.5f);
-						//container->pushConstants[4] = glm::vec4(r * 2.25f * cos_t, y, 0.0f, 1.25f);
-						//container->pushConstants[5] = glm::vec4(r * 2.5f * cos_t, y, r * 2.5f * sin_t, 1.25f);
+						container->pushConstants[0] = glm::vec4(r * 1.1 * sin_t, y, r * 1.1 * cos_t, 1.0f);
+						container->pushConstants[1] = glm::vec4(-r * sin_t, y, -r * cos_t, 1.0f);
+						container->pushConstants[2] = glm::vec4(r * 0.85f * sin_t, y, -sin_t * 2.5f, 1.5f);
+						container->pushConstants[3] = glm::vec4(0.0f, y, r * 1.25f * cos_t, 1.5f);
+						container->pushConstants[4] = glm::vec4(r * 2.25f * cos_t, y, 0.0f, 1.25f);
+						container->pushConstants[5] = glm::vec4(r * 2.5f * cos_t, y, r * 2.5f * sin_t, 1.25f);
 #undef r
 #undef y
 #undef sin_t
 #undef cos_t
-						//vkCmdPushConstants(container->commandBufferContainer.buffers[i], formats->at(_itr).myPipelineLayout, VK_SHADER_STAGE_VERTEX_BIT, 0, sizeof(container->pushConstants), container->pushConstants.data());
+						vkCmdPushConstants(container->commandBufferContainer.buffers[i], formats->at(_itr).myPipelineLayout, VK_SHADER_STAGE_VERTEX_BIT, 0, sizeof(container->pushConstants), container->pushConstants.data());
 
 						// Render type selection
 						if (formats->at(_itr).myRendererFormat->myRenderTechnology == DMK_ADGR_RENDERING_TECHNOLOGY::DMK_ADGR_RENDER_VERTEX) 		// Render as individual vertexes
@@ -179,7 +193,7 @@ namespace Dynamik {
 
 			// if drawing in vertex
 			void commandBufferManager::drawVertex(VkCommandBuffer buffer, I32 index, vulkanFormat* format, VkDeviceSize* offsets) {
-				for (I32 i = 0; i < format->myVertexBuffers.size(); i++) {
+				for (UI32 i = 0; i < format->myVertexBuffers.size(); i++) {
 					// bind pipeline
 					vkCmdBindPipeline(buffer, VK_PIPELINE_BIND_POINT_GRAPHICS, format->myPipeline);
 
@@ -197,7 +211,7 @@ namespace Dynamik {
 
 			// if drawing in indexed
 			void commandBufferManager::drawIndexed(VkCommandBuffer buffer, I32 index, vulkanFormat* format, VkDeviceSize* offsets) {
-				for (I32 i = 0; i < format->myVertexBuffers.size(); i++) {
+				for (UI32 i = 0; i < format->myVertexBuffers.size(); i++) {
 					// bind pipeline
 					vkCmdBindPipeline(buffer, VK_PIPELINE_BIND_POINT_GRAPHICS, format->myPipeline);
 

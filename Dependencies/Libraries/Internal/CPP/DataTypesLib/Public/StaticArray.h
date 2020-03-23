@@ -5,18 +5,18 @@
 #include "Array.h"
 
 namespace Dynamik {
-	/* WRAPPER CLASS
-	 * Wrapper class for the ARRAY data structure.
-	 * This must have a preddefined size and will not be extended.
+	/* TEMPLATED
+	 * Static Array Datastructure for the Dynamik Engine.
 	 */
-	template<class TYPE,DMKArrayDestructorCallMode DestructorCallMode = DMKArrayDestructorCallMode::DMK_ARRAY_DESTRUCTOR_CALL_MODE_DESTRUCT_UNDEFINED, class Allocator = StaticAllocator<TYPE>>
-	class STATIC_ARRAY : public ARRAY<TYPE, DestructorCallMode, Allocator> {
+	template<class TYPE, UI32 Size, DMKArrayDestructorCallMode DestructorCallMode = DMKArrayDestructorCallMode::DMK_ARRAY_DESTRUCTOR_CALL_MODE_DESTRUCT_NONE>
+	class StaticArray {
 	public:
-		STATIC_ARRAY(UI32 size) : ARRAY<TYPE, Allocator>(size) {}
-		STATIC_ARRAY(UI32 size, const TYPE& value) : ARRAY<TYPE, Allocator>(size, value) {}
-		~STATIC_ARRAY() {}
+		StaticArray() {}
+		~StaticArray() {}
 
 	private:
+		TYPE myData[Size];
+		POINTER<TYPE> myNextPointer = myData;
 	};
 }
 

@@ -100,7 +100,7 @@ namespace Dynamik {
 				formats->push_back(RendererFormat(format));
 
 			{
-				ARRAY<std::future<void>> threads = {};
+				ARRAY<std::future<void>, DMKArrayDestructorCallMode::DMK_ARRAY_DESTRUCTOR_CALL_MODE_DESTRUCT_ALL> threads = {};
 				for (I32 i = 0; i < internalFormats.size(); i++) {
 					B1 isInitiated = false;
 					RendererFormat* _localFormat = &formats->at(i);

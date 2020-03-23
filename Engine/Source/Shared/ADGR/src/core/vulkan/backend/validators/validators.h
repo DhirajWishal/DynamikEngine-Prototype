@@ -22,8 +22,8 @@ namespace Dynamik {
 		namespace core {
 			const ARRAY<const char*> validationLayer = {
 				"VK_LAYER_KHRONOS_validation",
-				"VK_LAYER_LUNARG_api_dump",
-				"VK_LAYER_LUNARG_screenshot"
+				//"VK_LAYER_LUNARG_api_dump",
+				//"VK_LAYER_LUNARG_screenshot"
 			};
 
 #if defined(DMK_DEBUG)

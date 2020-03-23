@@ -2,6 +2,8 @@
 #include "modelManager.h"
 #include <tiny_obj_loader.h>
 
+#include <cstdlib>
+
 namespace std {
 	using Dynamik::Vertex;
 
@@ -17,6 +19,13 @@ namespace std {
 				(hash<glm::vec2>()(vertexs.TexCoordinates) << 1);
 		}
 	};
+}
+
+float RandomFloat(float a, float b) {
+	float random = ((float)rand()) / (float)RAND_MAX;
+	float diff = b - a;
+	float r = random * diff;
+	return a + r;
 }
 
 namespace Dynamik {
@@ -57,6 +66,8 @@ namespace Dynamik {
 					attributes.colors[1],
 					attributes.colors[2]
 				};
+
+				vertices.Integrity = RandomFloat(0.f, 1.0f);
 
 				//vertices.Normals = {
 				//	attributes.normals[index.normal_index + 0],

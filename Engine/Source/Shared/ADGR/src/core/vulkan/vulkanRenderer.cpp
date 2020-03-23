@@ -524,59 +524,16 @@ namespace Dynamik {
 				for (I32 itr = 0; itr < myShaderPaths.size(); itr++)
 					myShaderManager.compileShaders(myShaderPaths[itr], true);
 
-			// load shaders
-			ADGRVulkanShaderDataContainer shaderContainer = {};
-
-			// vertex shader
-			if (myVulkanFormat->myRendererFormat->myInternalFormat->myGameObject->myProperties.renderableObjectProperties.vertexShaderPath != "NONE")
-			{
-				DMKShaderCodeContaiener _container;
-				_container.shaderType = DMK_ADGR_VULKAN_SHADER_STAGE_VERTEX;
-				_container.shaderCode = utils::readFile(myVulkanFormat->myRendererFormat->myInternalFormat->myGameObject->myProperties.renderableObjectProperties.vertexShaderPath).toVector();
-				shaderContainer.shaderCodes.push_back(_container);
-			}
-			// tessellation shader
-			if (myVulkanFormat->myRendererFormat->myInternalFormat->myGameObject->myProperties.renderableObjectProperties.tessellationShaderPath != "NONE")
-			{
-				DMKShaderCodeContaiener _container;
-				_container.shaderType = DMK_ADGR_VULKAN_SHADER_STAGE_TESSELLATION;
-				_container.shaderCode = utils::readFile(myVulkanFormat->myRendererFormat->myInternalFormat->myGameObject->myProperties.renderableObjectProperties.tessellationShaderPath).toVector();
-				shaderContainer.shaderCodes.push_back(_container);
-			}
-			// geometry shader
-			if (myVulkanFormat->myRendererFormat->myInternalFormat->myGameObject->myProperties.renderableObjectProperties.geometryShaderPath != "NONE")
-			{
-				DMKShaderCodeContaiener _container;
-				_container.shaderType = DMK_ADGR_VULKAN_SHADER_STAGE_GEOMETRY;
-				_container.shaderCode = utils::readFile(myVulkanFormat->myRendererFormat->myInternalFormat->myGameObject->myProperties.renderableObjectProperties.geometryShaderPath).toVector();
-				shaderContainer.shaderCodes.push_back(_container);
-			}
-			// fragment shader
-			if (myVulkanFormat->myRendererFormat->myInternalFormat->myGameObject->myProperties.renderableObjectProperties.fragmentShaderPath != "NONE")
-			{
-				DMKShaderCodeContaiener _container;
-				_container.shaderType = DMK_ADGR_VULKAN_SHADER_STAGE_FRAGMENT;
-				_container.shaderCode = utils::readFile(myVulkanFormat->myRendererFormat->myInternalFormat->myGameObject->myProperties.renderableObjectProperties.fragmentShaderPath).toVector();
-				shaderContainer.shaderCodes.push_back(_container);
-			}
-
-			// init shaders
-			myShaderManager.init(&myVulkanDataContainers[vulkanContainerIndex], &shaderContainer);
-
 			// init pipeline
 			DMKPipelineInitInfo initInfo;
 			initInfo.layouts = { myVulkanFormat->myDescriptorSetLayout };
-			initInfo.shaderDataContainer = shaderContainer;
-			auto [_localPipeline, _localPipelineLayout] = myPipelineManager.init(&myVulkanDataContainers[vulkanContainerIndex], initInfo);
+			initInfo.pushConstantsEnable = true;
+			initInfo.pushConstantCount = 6;
+			auto [_localPipeline, _localPipelineLayout] = myPipelineManager.init(&myVulkanDataContainers[vulkanContainerIndex], initInfo, myVulkanFormat);
 
 			// add pipelines and pipelineLayouts
 			myVulkanFormat->myPipeline = _localPipeline;
 			myVulkanFormat->myPipelineLayout = _localPipelineLayout;
-
-			// delete shaders
-			ADGRVulkanPipelineDataContainer containerData = {};
-			containerData.shaderModules = shaderContainer.shaderModules;
-			myShaderManager.deleteShaders(myVulkanDataContainers[vulkanContainerIndex], containerData);
 		}
 
 		// initialize the command pool

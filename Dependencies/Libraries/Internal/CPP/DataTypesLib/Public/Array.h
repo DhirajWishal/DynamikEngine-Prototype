@@ -47,6 +47,9 @@ namespace Dynamik {
 	 * This array can store any data defined in the datatype TYPE and supports multiple dimentions.
 	 * Tested to be faster than the ARRAY<TYPE> library/ datatype.
 	 * This also contains utility functions related to array and pointer manipulation.
+	 * 
+	 * @warn: The Dynamic Array does not call the destructor for all the stored elements at default.
+				If needed to call, DestructorCallMode must be set to either ALL or ALL THREADED.
 	 */
 	template<class TYPE, DMKArrayDestructorCallMode DestructorCallMode = DMKArrayDestructorCallMode::DMK_ARRAY_DESTRUCTOR_CALL_MODE_DESTRUCT_NONE, class Allocator = StaticAllocator<TYPE>>
 	class ARRAY {
@@ -110,22 +113,6 @@ namespace Dynamik {
 			PTR _lastPtr;	// last pointer
 		};
 
-		class _operatorProxy {
-		public:
-			_operatorProxy(ARRAY<TYPE, DestructorCallMode, Allocator>* arr, I32 index) : _array(arr), _index(index) {}
-			~_operatorProxy() {}
-
-			void operator=(I32 index)
-			{
-				_array->myDataCount++;
-				_array->myNextPtr++;
-			}
-
-
-			ARRAY<TYPE, DestructorCallMode, Allocator>* _array;
-			I32 _index = 0;
-		};
-
 	public:
 		/* CONSTRUCTOR
 		 * Default Constructor.
@@ -178,6 +165,7 @@ namespace Dynamik {
 				_reAllocate(_getNextSize());
 
 			myDataCount = size;
+			myNextPtr += size;
 		}
 
 		/* CONSTRUCTOR

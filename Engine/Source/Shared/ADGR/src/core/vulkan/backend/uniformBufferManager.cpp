@@ -184,7 +184,7 @@ namespace Dynamik {
 			}
 
 			void uniformBufferManager::initDescriptorSets(ADGRVulkanDataContainer* container, vulkanFormat* format) {
-				ARRAY<VkDescriptorSetLayout> layouts(container->swapchainContainer.swapChainImages.size(), format->myDescriptorSetLayout);
+				std::vector<VkDescriptorSetLayout> layouts(container->swapchainContainer.swapChainImages.size(), format->myDescriptorSetLayout);
 				format->myDescriptorSets.resize(format->myTextureImages.size());
 
 				for (UI32 itr = 0; itr < format->myTextureImages.size(); itr++) {

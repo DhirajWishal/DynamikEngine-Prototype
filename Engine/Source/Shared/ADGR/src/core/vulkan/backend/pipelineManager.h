@@ -17,7 +17,7 @@ namespace Dynamik {
 				pipelineManager() {}
 				~pipelineManager() {}
 
-				std::pair<VkPipeline, VkPipelineLayout> init(ADGRVulkanDataContainer* container, DMKPipelineInitInfo info);
+				std::pair<VkPipeline, VkPipelineLayout> init(ADGRVulkanDataContainer* container, DMKPipelineInitInfo info, vulkanFormat* format);
 				void initRenderPass(ADGRVulkanDataContainer* container);
 
 				void clear(ADGRVulkanDataContainer* container, vulkanFormat* format);

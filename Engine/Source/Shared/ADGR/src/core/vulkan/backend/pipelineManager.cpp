@@ -1,6 +1,9 @@
 #include "adgrafx.h"
 #include "pipelineManager.h"
 
+#include "Managers.h"
+#include "shaderManager.h"
+
 #include "functions/bufferFunctions.h"
 
 #ifdef DMK_USE_VULKAN
@@ -9,10 +12,76 @@ namespace Dynamik {
 		namespace core {
 			using namespace functions;
 
-			std::pair<VkPipeline, VkPipelineLayout> pipelineManager::init(ADGRVulkanDataContainer* container, DMKPipelineInitInfo info) {
+			std::pair<VkPipeline, VkPipelineLayout> pipelineManager::init(ADGRVulkanDataContainer* container, DMKPipelineInitInfo info, vulkanFormat* format) {
 				// init render pass if not created
 				if (container->renderPass == VK_NULL_HANDLE)
 					initRenderPass(container);
+
+				DMK_ShaderCode vertexShaderCode, tessellationShaderCode, geometryShaderCode, fragmentShaderCode;
+
+				if (format->myRendererFormat->myInternalFormat->myGameObject->myProperties.renderableObjectProperties.vertexShaderPath != "NONE")
+					vertexShaderCode = utils::readFile(format->myRendererFormat->myInternalFormat->myGameObject->myProperties.renderableObjectProperties.vertexShaderPath).toVector();
+				// tessellation shader
+				if (format->myRendererFormat->myInternalFormat->myGameObject->myProperties.renderableObjectProperties.tessellationShaderPath != "NONE")
+					tessellationShaderCode = utils::readFile(format->myRendererFormat->myInternalFormat->myGameObject->myProperties.renderableObjectProperties.tessellationShaderPath).toVector();
+				// geometry shader
+				if (format->myRendererFormat->myInternalFormat->myGameObject->myProperties.renderableObjectProperties.geometryShaderPath != "NONE")
+					geometryShaderCode = utils::readFile(format->myRendererFormat->myInternalFormat->myGameObject->myProperties.renderableObjectProperties.geometryShaderPath).toVector();
+				// fragment shader
+				if (format->myRendererFormat->myInternalFormat->myGameObject->myProperties.renderableObjectProperties.fragmentShaderPath != "NONE")
+					fragmentShaderCode = utils::readFile(format->myRendererFormat->myInternalFormat->myGameObject->myProperties.renderableObjectProperties.fragmentShaderPath).toVector();
+
+				shaderManager _shaderManager;
+				ARRAY<VkPipelineShaderStageCreateInfo> shaderStages;
+				VkShaderModule vertShaderModule = VK_NULL_HANDLE,
+					tessShaderModule = VK_NULL_HANDLE,
+					geoShaderModule = VK_NULL_HANDLE,
+					fragShaderModule = VK_NULL_HANDLE;
+
+				if (vertexShaderCode.size())
+				{
+					VkPipelineShaderStageCreateInfo vertShaderStageInfo = {};
+					vertShaderModule = _shaderManager.createShaderModule(container->device, vertexShaderCode);
+					vertShaderStageInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
+					vertShaderStageInfo.stage = VK_SHADER_STAGE_VERTEX_BIT;
+					vertShaderStageInfo.module = vertShaderModule;
+					vertShaderStageInfo.pName = "main";
+
+					shaderStages.pushBack(vertShaderStageInfo);
+				}
+				if (tessellationShaderCode.size())
+				{
+					VkPipelineShaderStageCreateInfo tessShaderStageInfo = {};
+					tessShaderModule = _shaderManager.createShaderModule(container->device, tessellationShaderCode);
+					tessShaderStageInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
+					tessShaderStageInfo.stage = VK_SHADER_STAGE_VERTEX_BIT;
+					tessShaderStageInfo.module = tessShaderModule;
+					tessShaderStageInfo.pName = "main";
+
+					shaderStages.pushBack(tessShaderStageInfo);
+				}
+				if (geometryShaderCode.size())
+				{
+					VkPipelineShaderStageCreateInfo geoShaderStageInfo = {};
+					geoShaderModule = _shaderManager.createShaderModule(container->device, geometryShaderCode);
+					geoShaderStageInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
+					geoShaderStageInfo.stage = VK_SHADER_STAGE_VERTEX_BIT;
+					geoShaderStageInfo.module = geoShaderModule;
+					geoShaderStageInfo.pName = "main";
+
+					shaderStages.pushBack(geoShaderStageInfo);
+				}
+				if (fragmentShaderCode.size())
+				{
+					VkPipelineShaderStageCreateInfo fragShaderStageInfo = {};
+					fragShaderModule = _shaderManager.createShaderModule(container->device, fragmentShaderCode);
+					fragShaderStageInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
+					fragShaderStageInfo.stage = VK_SHADER_STAGE_FRAGMENT_BIT;
+					fragShaderStageInfo.module = fragShaderModule;
+					fragShaderStageInfo.pName = "main";
+
+					shaderStages.pushBack(fragShaderStageInfo);
+				}
 
 				auto bindingDescription = Vertex::getBindingDescription(1);
 				auto attributeDescriptions = Vertex::getAttributeDescriptions(4);
@@ -152,18 +221,12 @@ namespace Dynamik {
 					dynamicStateInfo.flags = info.dynamicStateFlags;
 				}
 
-				// shader stages
-				ARRAY<VkPipelineShaderStageCreateInfo> ShaderStages = {};
-				for (I32 i = 0; i < info.shaderDataContainer.shaderCodes.size(); i++)
-					if (info.shaderDataContainer.shaderCodes[i].shaderCode.size())
-						ShaderStages.push_back(info.shaderDataContainer.shaderStageInfo[i]);
-
 				// initialize the pipeline
 				VkGraphicsPipelineCreateInfo pipelineInfo = {};
 				pipelineInfo.sType = VK_STRUCTURE_TYPE_GRAPHICS_PIPELINE_CREATE_INFO;
 				pipelineInfo.pNext = nullptr;
-				pipelineInfo.stageCount = ShaderStages.size();
-				pipelineInfo.pStages = ShaderStages.data();
+				pipelineInfo.stageCount = shaderStages.size();
+				pipelineInfo.pStages = shaderStages.data();
 				pipelineInfo.pVertexInputState = &vertexInputInfo;
 				pipelineInfo.pInputAssemblyState = &inputAssembly;
 				pipelineInfo.pViewportState = &viewportState;
@@ -185,6 +248,15 @@ namespace Dynamik {
 				VkPipeline pipeline = VK_NULL_HANDLE;
 				if (vkCreateGraphicsPipelines(container->device, VK_NULL_HANDLE, 1, &pipelineInfo, nullptr, &pipeline) != VK_SUCCESS)
 					DMK_CORE_FATAL("failed to create graphics pipeline!");
+
+				if (vertShaderModule != VK_NULL_HANDLE)
+					vkDestroyShaderModule(container->device, vertShaderModule, nullptr);
+				if (tessShaderModule != VK_NULL_HANDLE)
+					vkDestroyShaderModule(container->device, tessShaderModule, nullptr);
+				if (geoShaderModule != VK_NULL_HANDLE)
+					vkDestroyShaderModule(container->device, geoShaderModule, nullptr);
+				if (fragShaderModule != VK_NULL_HANDLE)
+					vkDestroyShaderModule(container->device, fragShaderModule, nullptr);
 
 				return { pipeline, pipelineLayout };
 			}

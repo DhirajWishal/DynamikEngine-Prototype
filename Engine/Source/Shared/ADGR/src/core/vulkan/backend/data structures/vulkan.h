@@ -32,6 +32,7 @@
 #include <glm/gtx/hash.hpp>
 
 #include "CentralDataHub.h"
+#include "core/vulkan/backend/pushConstant.h"
 
 namespace Dynamik {
 	namespace ADGR {
@@ -268,7 +269,7 @@ namespace Dynamik {
 				F32 minMipLevel = 0.0f;											// Vulkan minimum mipmap level
 				F32 maxMipLevel = 0.0f;											// Vulkan maximum mipmap level
 
-				std::array<glm::vec4, 6> pushConstants;								// Vulkan push constants
+				ARRAY<PushConstant*> pushConstants;								// Vulkan push constants
 			};
 
 			struct DMKObjectData {

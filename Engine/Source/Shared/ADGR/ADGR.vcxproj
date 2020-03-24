@@ -144,6 +144,16 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="src\ADGR.h" />
+    <ClInclude Include="src\core\vulkan\backend\Objects\VulkanCommandBuffer.h" />
+    <ClInclude Include="src\core\vulkan\backend\Objects\VulkanDebugger.h" />
+    <ClInclude Include="src\core\vulkan\backend\Objects\VulkanDevice.h" />
+    <ClInclude Include="src\core\vulkan\backend\Objects\VulkanGlobalVariables.h" />
+    <ClInclude Include="src\core\vulkan\backend\Objects\VulkanInstance.h" />
+    <ClInclude Include="src\core\vulkan\backend\Objects\VulkanObjectsContainer.h" />
+    <ClInclude Include="src\core\vulkan\backend\Objects\VulkanOneTimeCommandBuffer.h" />
+    <ClInclude Include="src\core\vulkan\backend\Objects\VulkanQueue.h" />
+    <ClInclude Include="src\core\vulkan\backend\Objects\VulkanSwapChain.h" />
+    <ClInclude Include="src\core\vulkan\backend\pushConstant.h" />
     <ClInclude Include="src\Layers\layer.h" />
     <ClInclude Include="src\Layers\layerStack.h" />
     <ClInclude Include="src\Renderer.h" />
@@ -198,6 +208,13 @@
     <ClInclude Include="src\rendererFormat.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\core\vulkan\backend\Objects\VulkanCommandBuffer.cpp" />
+    <ClCompile Include="src\core\vulkan\backend\Objects\VulkanDebugger.cpp" />
+    <ClCompile Include="src\core\vulkan\backend\Objects\VulkanDevice.cpp" />
+    <ClCompile Include="src\core\vulkan\backend\Objects\VulkanInstance.cpp" />
+    <ClCompile Include="src\core\vulkan\backend\Objects\VulkanOneTimeCommandBuffer.cpp" />
+    <ClCompile Include="src\core\vulkan\backend\Objects\VulkanQueue.cpp" />
+    <ClCompile Include="src\core\vulkan\backend\Objects\VulkanSwapChain.cpp" />
     <ClCompile Include="src\Layers\layer.cpp" />
     <ClCompile Include="src\Layers\layerStack.cpp" />
     <ClCompile Include="src\Renderer.cpp" />

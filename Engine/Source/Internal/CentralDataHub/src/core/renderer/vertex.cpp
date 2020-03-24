@@ -38,6 +38,12 @@ namespace Dynamik {
 
 		_description.binding = 0;
 		_description.location = 3;
+		_description.format = VK_FORMAT_R32G32_SFLOAT;
+		_description.offset = offsetof(Vertex, Normals);
+		attributeDescriptions.pushBack(_description);
+
+		_description.binding = 0;
+		_description.location = 4;
 		_description.format = VK_FORMAT_R32_SFLOAT;
 		_description.offset = offsetof(Vertex, Integrity);
 		attributeDescriptions.pushBack(_description);

@@ -69,11 +69,11 @@ namespace Dynamik {
 
 				vertices.Integrity = RandomFloat(0.f, 1.0f);
 
-				//vertices.Normals = {
-				//	attributes.normals[index.normal_index + 0],
-				//	attributes.normals[index.normal_index + 1],
-				//	attributes.normals[index.normal_index + 2]
-				//};
+				vertices.Normals = {
+					attributes.normals[index.normal_index + 0],
+					attributes.normals[index.normal_index + 1],
+					attributes.normals[index.normal_index + 2]
+				};
 
 				if (uniqueVertices.count(vertices) == 0) {
 					uniqueVertices[vertices] = static_cast<uint32_t>(info.vertices->size());

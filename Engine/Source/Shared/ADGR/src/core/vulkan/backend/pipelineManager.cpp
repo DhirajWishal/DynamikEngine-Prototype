@@ -189,16 +189,34 @@ namespace Dynamik {
 				if (info.pushConstantsEnable) {
 					ARRAY<VkPushConstantRange> pushConstantInfos;
 
+					container->pushConstants.resize(6);
+
+#define r 7.5f
+#define sin_t sin(glm::radians(1.5f * 360))
+#define cos_t cos(glm::radians(1.5f * 360))
+#define y -4.0f
+
+					container->pushConstants[0]->myVecData = glm::vec4(r * 1.1 * sin_t, y, r * 1.1 * cos_t, 1.0f);
+					container->pushConstants[1]->myVecData = glm::vec4(-r * sin_t, y, -r * cos_t, 1.0f);
+					container->pushConstants[2]->myVecData = glm::vec4(r * 0.85f * sin_t, y, -sin_t * 2.5f, 1.5f);
+					container->pushConstants[3]->myVecData = glm::vec4(0.0f, y, r * 1.25f * cos_t, 1.5f);
+					container->pushConstants[4]->myVecData = glm::vec4(r * 2.25f * cos_t, y, 0.0f, 1.25f);
+					container->pushConstants[5]->myVecData = glm::vec4(r * 2.5f * cos_t, y, r * 2.5f * sin_t, 1.25f);
+#undef r
+#undef y
+#undef sin_t
+#undef cos_t
+
 					// initialize push constants
-					for (I32 i = 0; i <= info.pushConstantCount; i++) {
+					for (I32 i = 0; i <= container->pushConstants.size(); i++) {
 						VkPushConstantRange pushConsInfo = {};
-						pushConsInfo.stageFlags = VK_SHADER_STAGE_VERTEX_BIT;
-						pushConsInfo.size = sizeof(container->pushConstants);
+						pushConsInfo.stageFlags = container->pushConstants[i]->getMyStageFlag();
+						pushConsInfo.size = container->pushConstants.size();
 						pushConsInfo.offset = info.pushConstantOffset;
 
 						pushConstantInfos.push_back(pushConsInfo);
 					}
-					pipelineLayoutInfo.pushConstantRangeCount = info.pushConstantCount;	// make support for multiple
+					pipelineLayoutInfo.pushConstantRangeCount = info.pushConstantCount;
 					pipelineLayoutInfo.pPushConstantRanges = pushConstantInfos.data();
 				}
 

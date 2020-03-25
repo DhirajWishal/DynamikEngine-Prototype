@@ -1,5 +1,6 @@
 #include "adgrafx.h"
 #include "VulkanDepthBuffer.h"
+
 #include "VulkanFunctions.h"
 
 namespace Dynamik {
@@ -45,7 +46,7 @@ namespace Dynamik {
 
 				VulkanFunctions::transitionImageLayout(transitionInfo);
 			}
-			
+
 			void VulkanDepthBuffer::terminate(VulkanDevice device)
 			{
 				vkDestroyImageView(device.logicalDevice, imageView, nullptr);

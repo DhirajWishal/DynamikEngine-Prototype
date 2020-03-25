@@ -2,7 +2,6 @@
 #ifndef _DYNAMIK_ADGR_VULKAN_UNIFORM_BUFFER_H
 #define _DYNAMIK_ADGR_VULKAN_UNIFORM_BUFFER_H
 
-#include "VulkanDevice.h"
 #include "VulkanSwapChain.h"
 #include "UniformBufferObject.h"
 

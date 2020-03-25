@@ -18,6 +18,8 @@ namespace Dynamik {
 
 				VkDebugUtilsMessengerEXT myDebugMessenger = VK_NULL_HANDLE;
 
+				static void populateDebugMessegerCreateInfo(VkDebugUtilsMessengerCreateInfoEXT& createInfo);
+
 			private:
 				VkResult createDebugUtilsMessengerEXT(const VkDebugUtilsMessengerCreateInfoEXT* pCreateInfo, const VkAllocationCallbacks* pAllocator, VkDebugUtilsMessengerEXT* pDebugMessenger);
 				void destroyDebugUtilsMessengerEXT(const VkAllocationCallbacks* pAllocator);

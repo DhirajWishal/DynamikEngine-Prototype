@@ -1,23 +1,12 @@
-/*
- Core objects and functions of the Advanced Dynamic Graphics Renderer
-
- Author:	Dhiraj Wishal
- Project:	Dynamik
- Date:		30/07/2019
- IDE:		MS Visual Studio Community 2019
-*/
-
 #include "adgrafx.h"
-#if defined(DMK_USE_VULKAN)
-
-#include "extensions.h"
-
-#include "core/vulkan/backend/controlHeader.h"
+#include "VulkanExtensions.h"
+#include "VulkanControlHeader.h"
 
 namespace Dynamik {
 	namespace ADGR {
-		namespace core {
-			ARRAY<CCPTR> getRequiredExtentions(B1 vaidationLayer) {
+		namespace Backend {
+			ARRAY<CCPTR> VulkanExtensions::getRequiredExtentions(B1 validationLayer)
+			{
 				UI32 glfwExtentionCount = 0;
 				const char** glfwExtentions;
 				glfwExtentions = glfwGetRequiredInstanceExtensions(&glfwExtentionCount);
@@ -33,7 +22,7 @@ namespace Dynamik {
 				if (meshShadingSupported)
 					extentions.push_back(VK_NV_MESH_SHADER_EXTENSION_NAME);
 
-				if (vaidationLayer)
+				if (validationLayer)
 					extentions.push_back(VK_EXT_DEBUG_UTILS_EXTENSION_NAME);
 
 				return extentions;
@@ -41,5 +30,3 @@ namespace Dynamik {
 		}
 	}
 }
-
-#endif

@@ -2,7 +2,6 @@
 #ifndef _DYNAMIK_ADGR_VULKAN_FRAME_BUFFER_H
 #define _DYNAMIK_ADGR_VULKAN_FRAME_BUFFER_H
 
-#include "VulkanDevice.h"
 #include "VulkanSwapChain.h"
 #include "VulkanRenderPass.h"
 

@@ -1,21 +1,11 @@
-/*
- Core objects and functions of the Advanced Dynamic Graphics Renderer
-
- Author:	Dhiraj Wishal
- Project:	Dynamik
- Date:		30/07/2019
- IDE:		MS Visual Studio Community 2019
-*/
-
 #include "adgrafx.h"
-#ifdef DMK_USE_VULKAN
-
-#include "validators.h"
+#include "VulkanValidator.h"
 
 namespace Dynamik {
 	namespace ADGR {
-		namespace core {
-			B1 checkValidationLayerSupport() {
+		namespace Backend {
+			B1 VulkanValidator::checkValidationLayerSupport()
+			{
 				UI32 layerCount = 0;
 				vkEnumerateInstanceLayerProperties(&layerCount, nullptr);
 
@@ -38,7 +28,12 @@ namespace Dynamik {
 
 				return true;
 			}
+
+			ARRAY<const char*> VulkanValidator::validationLayer = {
+				"VK_LAYER_KHRONOS_validation",
+				//"VK_LAYER_LUNARG_api_dump",
+				//"VK_LAYER_LUNARG_screenshot"
+			};
 		}
 	}
 }
-#endif // DMK_USE_VULKAN

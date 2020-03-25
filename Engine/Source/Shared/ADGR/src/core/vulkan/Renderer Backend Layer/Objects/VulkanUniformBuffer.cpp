@@ -1,5 +1,6 @@
 #include "adgrafx.h"
 #include "VulkanUniformBuffer.h"
+
 #include "VulkanFunctions.h"
 
 namespace Dynamik {
@@ -32,7 +33,7 @@ namespace Dynamik {
 				memcpy(data, &uniformBuferObject, sizeof(uniformBuferObject));
 				vkUnmapMemory(device.logicalDevice, bufferMemories[currentImage]);
 			}
-			
+
 			void VulkanUniformBuffer::terminate(VulkanDevice device)
 			{
 				for (I32 x = 0; x < buffers.size(); x++) {

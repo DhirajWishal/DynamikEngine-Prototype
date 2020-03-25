@@ -2,13 +2,14 @@
 #ifndef _DYNAMIK_ADGR_VULKAN_INDEX_BUFFER_H
 #define _DYNAMIK_ADGR_VULKAN_INDEX_BUFFER_H
 
-#include "VulkanDevice.h"
 #include "VulkanCommandBuffer.h"
 #include "VulkanQueue.h"
 
 namespace Dynamik {
 	namespace ADGR {
 		namespace Backend {
+			class VulkanCommandBuffer;
+
 			class VulkanIndexBuffer {
 			public:
 				VulkanIndexBuffer() {}

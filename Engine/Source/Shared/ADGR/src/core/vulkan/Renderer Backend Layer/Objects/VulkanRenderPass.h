@@ -2,7 +2,6 @@
 #ifndef _DYNAMIK_ADGR_VULKAN_RENDER_PASS_H
 #define _DYNAMIK_ADGR_VULKAN_RENDER_PASS_H
 
-#include "VulkanDevice.h"
 #include "VulkanSwapChain.h"
 #include "VulkanGlobalVariables.h"
 

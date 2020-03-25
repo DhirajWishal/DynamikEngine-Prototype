@@ -53,7 +53,7 @@ namespace Dynamik {
 			{
 				vkDestroyShaderModule(device.logicalDevice, shaderModule, nullptr);
 			}
-			
+
 			ARRAY<CHR> VulkanShader::getCode(std::string path)
 			{
 				std::ifstream file(path, std::ios::ate | std::ios::binary);

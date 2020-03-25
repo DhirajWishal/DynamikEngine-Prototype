@@ -1,5 +1,6 @@
 #include "adgrafx.h"
 #include "VulkanVertexBuffer.h"
+
 #include "VulkanFunctions.h"
 
 namespace Dynamik {
@@ -44,7 +45,7 @@ namespace Dynamik {
 				vkDestroyBuffer(device.logicalDevice, stagingBuffer, nullptr);
 				vkFreeMemory(device.logicalDevice, stagingBufferMemory, nullptr);
 			}
-			
+
 			void VulkanVertexBuffer::terminate(VulkanDevice device)
 			{
 				vkDestroyBuffer(device.logicalDevice, buffer, nullptr);

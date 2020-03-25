@@ -6,7 +6,7 @@
 #include "VulkanCommandBuffer.h"
 #include "VulkanDebugger.h"
 #include "VulkanDepthBuffer.h"
-#include "VulkanDescriptorSet.h"
+#include "VulkanDescriptors.h"
 #include "VulkanDevice.h"
 #include "VulkanFrameBuffer.h"
 #include "VulkanFunctions.h"

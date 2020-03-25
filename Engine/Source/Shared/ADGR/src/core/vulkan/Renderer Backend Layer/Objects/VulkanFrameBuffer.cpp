@@ -27,7 +27,7 @@ namespace Dynamik {
 						DMK_CORE_FATAL("failed to create framebuffer!");
 				}
 			}
-			
+
 			void VulkanFrameBuffer::terminate(VulkanDevice device)
 			{
 				for (VkFramebuffer buffer : frameBuffers)

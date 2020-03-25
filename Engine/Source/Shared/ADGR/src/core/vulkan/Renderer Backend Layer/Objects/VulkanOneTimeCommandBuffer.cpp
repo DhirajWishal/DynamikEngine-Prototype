@@ -10,11 +10,11 @@ namespace Dynamik {
 				VkCommandBufferAllocateInfo allocInfo = {};
 				allocInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO;
 				allocInfo.level = VK_COMMAND_BUFFER_LEVEL_PRIMARY;
-				allocInfo.commandPool = commandBuffer.getCommandPool();
+				allocInfo.commandPool = commandBuffer.myCommandPool;
 				allocInfo.commandBufferCount = count;
 
 				myCommandBuffers.resize(count);
-				vkAllocateCommandBuffers(device.getLogicalDevice(), &allocInfo, myCommandBuffers.data());
+				vkAllocateCommandBuffers(device.logicalDevice, &allocInfo, myCommandBuffers.data());
 
 				for (I32 i = 0; i < count; i++) {
 					VkCommandBufferBeginInfo beginInfo = {};
@@ -24,7 +24,7 @@ namespace Dynamik {
 					vkBeginCommandBuffer(myCommandBuffers[i], &beginInfo);
 				}
 			}
-			
+
 			VulkanOneTimeCommandBuffer::~VulkanOneTimeCommandBuffer()
 			{
 				for (I32 i = 0; i < myCount; i++)
@@ -38,7 +38,7 @@ namespace Dynamik {
 				vkQueueSubmit(myQueue.graphicsQueue, 1, &submitInfo, VK_NULL_HANDLE);
 				vkQueueWaitIdle(myQueue.presentQueue);
 
-				vkFreeCommandBuffers(myDevice.getLogicalDevice(), myCommandBuffer.getCommandPool(), myCount, myCommandBuffers.data());
+				vkFreeCommandBuffers(myDevice.logicalDevice, myCommandBuffer.myCommandPool, myCount, myCommandBuffers.data());
 			}
 		}
 	}

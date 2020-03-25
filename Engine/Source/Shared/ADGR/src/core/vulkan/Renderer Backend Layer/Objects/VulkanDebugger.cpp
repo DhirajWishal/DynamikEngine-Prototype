@@ -1,8 +1,6 @@
 #include "adgrafx.h"
 #include "VulkanDebugger.h"
-
-#include "core/vulkan/backend/validators/validators.h"
-using namespace Dynamik::ADGR::core;
+#include "VulkanValidator.h"
 
 namespace Dynamik {
 	namespace ADGR {
@@ -68,7 +66,7 @@ namespace Dynamik {
 					func(myInstance.instance, myDebugMessenger, pAllocator);
 			}
 
-			void populateDebugMessegerCreateInfo(VkDebugUtilsMessengerCreateInfoEXT& createInfo) {
+			void VulkanDebugger::populateDebugMessegerCreateInfo(VkDebugUtilsMessengerCreateInfoEXT& createInfo) {
 				createInfo = {};
 				createInfo.sType = VK_STRUCTURE_TYPE_DEBUG_UTILS_MESSENGER_CREATE_INFO_EXT;
 				createInfo.messageSeverity = VK_DEBUG_UTILS_MESSAGE_SEVERITY_VERBOSE_BIT_EXT
@@ -84,7 +82,7 @@ namespace Dynamik {
 			{
 				myInstance = instance;
 
-				if (!enableValidationLayers)
+				if (!VulkanValidator::enableValidationLayers)
 					return;
 
 				VkDebugUtilsMessengerCreateInfoEXT createInfo;
@@ -93,10 +91,10 @@ namespace Dynamik {
 				if (createDebugUtilsMessengerEXT(&createInfo, nullptr, &myDebugMessenger) != VK_SUCCESS)
 					DMK_CORE_FATAL("Failed to set up debug messenger!");
 			}
-			
+
 			void VulkanDebugger::terminate()
 			{
-				if (enableValidationLayers)
+				if (VulkanValidator::enableValidationLayers)
 					destroyDebugUtilsMessengerEXT(nullptr);
 			}
 		}

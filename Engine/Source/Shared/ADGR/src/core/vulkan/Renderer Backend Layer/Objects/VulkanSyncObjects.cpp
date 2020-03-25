@@ -1,5 +1,6 @@
 #include "adgrafx.h"
 #include "VulkanSyncObjects.h"
+
 #include "defines.h"
 
 namespace Dynamik {
@@ -25,7 +26,7 @@ namespace Dynamik {
 						DMK_CORE_FATAL("failed to create synchronization objects for a frame!");
 				}
 			}
-			
+
 			void VulkanSyncObjects::terminate(VulkanDevice device)
 			{
 				for (size_t i = 0; i < MAX_FRAMES_IN_FLIGHT; i++) {

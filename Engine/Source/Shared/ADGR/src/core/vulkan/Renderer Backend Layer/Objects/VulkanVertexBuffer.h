@@ -3,13 +3,13 @@
 #define _DYNAMIK_ADGR_VULKAN_VERTEX_BUFFER_H
 
 #include "CentralDataHub.h"
-#include "VulkanDevice.h"
 #include "VulkanCommandBuffer.h"
-#include "VulkanQueue.h"
 
 namespace Dynamik {
 	namespace ADGR {
 		namespace Backend {
+			class VulkanCommandBuffer;
+
 			class VulkanVertexBuffer {
 			public:
 				VulkanVertexBuffer() {}

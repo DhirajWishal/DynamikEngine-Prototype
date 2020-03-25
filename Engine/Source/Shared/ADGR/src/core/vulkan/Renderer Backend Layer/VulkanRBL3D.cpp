@@ -12,6 +12,10 @@ namespace Dynamik {
 		
 		void VulkanRBL3D::initStageOne()
 		{
+			DMKWindowManagerInitInfo windowInitInfo;
+			windowInitInfo.iconPaths = { "E:/Projects/Dynamik Engine/Versions/Dynamik (Prototype)/Dependencies/Assets/icons/Dynamik.jpg" };
+			myWindowManager.initialize(windowInitInfo);
+
 			ADGRVulkanInstanceInitInfo instanceInitInfo;
 			instanceInitInfo.applicationName = "Dynamik Engine";
 			instanceInitInfo.engineName = "Dynamik";
@@ -19,11 +23,11 @@ namespace Dynamik {
 
 			myDebugger.initialize(myInstance);
 
-			// TODO: surface initialization
+			myWindowManager.createWindowSurface(&myInstance);
 
 			myDevice.initialize(myInstance, &myQueue, &myGlobals);
 
-			mySwapChain.initialize(myInstance, myDevice, 720, 480);	// TODO::
+			mySwapChain.initialize(myInstance, myDevice, myWindowManager.windowWidth, myWindowManager.windowHeight);	// TODO::
 
 			myCommandBuffer.initializeCommandPool(myInstance, myDevice);
 

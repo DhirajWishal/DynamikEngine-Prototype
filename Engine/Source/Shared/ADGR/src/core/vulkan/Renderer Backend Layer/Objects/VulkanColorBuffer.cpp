@@ -1,5 +1,6 @@
 #include "adgrafx.h"
 #include "VulkanColorBuffer.h"
+
 #include "VulkanFunctions.h"
 
 namespace Dynamik {
@@ -47,7 +48,7 @@ namespace Dynamik {
 
 				VulkanFunctions::transitionImageLayout(transitionInfo);
 			}
-			
+
 			void VulkanColorBuffer::terminate(VulkanDevice device)
 			{
 				vkDestroyImageView(device.logicalDevice, imageView, nullptr);

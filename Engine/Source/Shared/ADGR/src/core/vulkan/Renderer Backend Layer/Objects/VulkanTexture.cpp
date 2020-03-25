@@ -1,5 +1,6 @@
 #include "adgrafx.h"
 #include "VulkanTexture.h"
+
 #include "VulkanFunctions.h"
 #include "VulkanOneTimeCommandBuffer.h"
 
@@ -137,7 +138,7 @@ namespace Dynamik {
 				vkDestroyImage(device.logicalDevice, image, nullptr);
 				vkFreeMemory(device.logicalDevice, imageMemory, nullptr);
 			}
-			
+
 			void VulkanTexture::generateMipMaps(VulkanDevice device, VulkanCommandBuffer commandBuffer, VulkanQueue queue)
 			{
 				UI32 _width = width, _height = height;
@@ -176,13 +177,13 @@ namespace Dynamik {
 
 					VkImageBlit blit = {};
 					blit.srcOffsets[0] = { 0, 0, 0 };
-					blit.srcOffsets[1] = { _width, _height, 1 };
+					blit.srcOffsets[1] = { (I32)_width, (I32)_height, 1 };
 					blit.srcSubresource.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
 					blit.srcSubresource.mipLevel = i - 1;
 					blit.srcSubresource.baseArrayLayer = 0;
 					blit.srcSubresource.layerCount = 1;
 					blit.dstOffsets[0] = { 0, 0, 0 };
-					blit.dstOffsets[1] = { _width > 1 ? _width / 2 : 1, _height > 1 ? _height / 2 : 1, 1 };
+					blit.dstOffsets[1] = { (I32)_width > 1 ? (I32)_width / 2 : 1, (I32)_height > 1 ? (I32)_height / 2 : 1, 1 };
 					blit.dstSubresource.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
 					blit.dstSubresource.mipLevel = i;
 					blit.dstSubresource.baseArrayLayer = 0;
@@ -207,6 +208,7 @@ namespace Dynamik {
 
 					if (_width > 1) _width /= 2;
 					if (_height > 1) _height /= 2;
+				}
 			}
 		}
 	}

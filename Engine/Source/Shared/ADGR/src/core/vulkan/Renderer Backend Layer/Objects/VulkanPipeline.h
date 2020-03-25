@@ -2,12 +2,10 @@
 #ifndef _DYNAMIK_ADGR_VULKAN_PIPELINE_H
 #define _DYNAMIK_ADGR_VULKAN_PIPELINE_H
 
-#include "VulkanDevice.h"
 #include "VulkanRenderPass.h"
-#include "VulkanDescriptorSet.h"
+#include "VulkanDescriptors.h"
 #include "VulkanShader.h"
 #include "VulkanSwapChain.h"
-#include "VulkanGlobalVariables.h"
 
 namespace Dynamik {
 	namespace ADGR {
@@ -15,7 +13,7 @@ namespace Dynamik {
 			struct ADGRVulkanPipelineInitInfo {
 				VulkanDevice device;
 				VulkanRenderPass renderPass;							// Vulkan render pass
-				ARRAY<VulkanDescriptorSet> layouts;					// Vulkan descriptor set layouts
+				ARRAY<VulkanDescriptors> layouts;					// Vulkan descriptor set layouts
 				ARRAY<VulkanShader> shaders;
 				VulkanSwapChain swapChain;
 				VulkanGlobalVariables* global;

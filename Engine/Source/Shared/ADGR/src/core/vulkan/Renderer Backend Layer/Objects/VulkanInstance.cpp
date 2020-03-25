@@ -1,16 +1,16 @@
 #include "adgrafx.h"
 #include "VulkanInstance.h"
 
-#include "core/vulkan/backend/validators/validators.h"
-#include "core/vulkan/backend/extensions/extensions.h"
-using namespace Dynamik::ADGR::core;
+#include "VulkanValidator.h"
+#include "VulkanExtensions.h"
+#include "VulkanDebugger.h"
 
 namespace Dynamik {
 	namespace ADGR {
 		namespace Backend {
 			void VulkanInstance::initialize(ADGRVulkanInstanceInitInfo info)
 			{
-				if (enableValidationLayers && !checkValidationLayerSupport())
+				if (VulkanValidator::enableValidationLayers && !VulkanValidator::checkValidationLayerSupport())
 					DMK_CORE_FATAL("validation layers requested, but not available!");
 
 				// instance info
@@ -26,17 +26,17 @@ namespace Dynamik {
 				createInfo.sType = VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO;
 				createInfo.pApplicationInfo = &appInfo;
 
-				auto extentions = getRequiredExtentions(enableValidationLayers);
+				auto extentions = VulkanExtensions::getRequiredExtentions(VulkanValidator::enableValidationLayers);
 				createInfo.enabledExtensionCount = static_cast<UI32>(extentions.size());
 				createInfo.ppEnabledExtensionNames = extentions.data();
 
 				VkDebugUtilsMessengerCreateInfoEXT debugCreateInfo;
-				if (enableValidationLayers) {
-					createInfo.enabledLayerCount = static_cast<UI32>(validationLayer.size());
-					createInfo.ppEnabledLayerNames = validationLayer.data();
+				if (VulkanValidator::enableValidationLayers) {
+					createInfo.enabledLayerCount = static_cast<UI32>(VulkanValidator::validationLayer.size());
+					createInfo.ppEnabledLayerNames = VulkanValidator::validationLayer.data();
 
-					debugger _localDebugger = {};
-					_localDebugger.populateDebugMessegerCreateInfo(debugCreateInfo);
+					VulkanDebugger _localDebugger;
+					VulkanDebugger::populateDebugMessegerCreateInfo(debugCreateInfo);
 					createInfo.pNext = (VkDebugUtilsMessengerCreateInfoEXT*)&debugCreateInfo;
 				}
 				else {
@@ -48,7 +48,7 @@ namespace Dynamik {
 				if (vkCreateInstance(&createInfo, nullptr, &instance) != VK_SUCCESS)
 					DMK_CORE_FATAL("Failed to create instance!");
 			}
-			
+
 			void VulkanInstance::terminate()
 			{
 				vkDestroySurfaceKHR(instance, surface, nullptr);

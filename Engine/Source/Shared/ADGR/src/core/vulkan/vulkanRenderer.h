@@ -16,8 +16,6 @@
 
 #include "core/base/RendererBackendBase.h"
 
-#include "backend/backend.h"
-
 #include "GameObject.h"
 #include "debugger.h"
 
@@ -112,7 +110,7 @@ namespace Dynamik {
 			/* FUNCTION
 			 * Check for window close event.
 			 */
-			inline B1 closeEvent() override { return myWindowManager.closeEvent(&myVulkanDataContainers[vulkanContainerIndex]); }
+			inline B1 closeEvent() override { return false; }
 
 			/* FUNCTION
 			 * Set Renderer formats to the renderer.
@@ -131,93 +129,6 @@ namespace Dynamik {
 			/* PRIVATE FUNCTIONS */
 		private:
 			void recreateSwapChain();
-			void setVertices(ARRAY<Vertex>& vertices) { myVertices = vertices; }
-
-			inline VkDevice getDevice() { return myVulkanDataContainers[vulkanContainerIndex].device; }
-
-			/* STAGE BASED INITIALIZATION(STARTUP) */
-			void initManagerFunctions();
-			void initWindow();
-			void initInstance();
-			void initDebugger();
-			void initWindowSurface();
-			void initDevice();
-			void initSwapChain();
-			void initCommandPool();
-			void initColorBuffer();
-			void initDepthBuffer();
-			void initRenderPass();
-			void initFrameBuffers();
-			void otherInitFunctions();
-
-			void initDescriptorSetLayout(vulkanFormat* myVulkanFormat);
-			void initPipelines(vulkanFormat* myVulkanFormat);
-			void initSkyboxsAndTextures(vulkanFormat* myVulkanFormat);
-			void initVertexAndIndexBuffers(vulkanFormat* myVulkanFormat);
-			void initUniformBuffers(vulkanFormat* myVulkanFormat);
-			void initDescriptorPoolsAndSets(vulkanFormat* myVulkanFormat);
-			void initCommandBuffers(ARRAY<vulkanFormat>* myVulkanFormats);
-
-			void initSemaphoresAndFences();
-
-			void initObjectBasedFunctions(ARRAY<vulkanFormat>* myVulkanFormats);
-
-			/* STAGE BASED SHUTDOWN */
-			void rendererWait();
-
-			void initModels(ARRAY<DMKObjectData> data);
-			void initCubemap(DMKObjectData* data);
-
-			void _addVulkanFormatsToManager(ARRAY<RendererFormat>& rendererFormats);
-
-			/* PRIVATE VARIABLES AND CONSTANTS */
-		private:
-			// renderer core classes
-			core::windowManager myWindowManager{};
-			core::instanceManager myInstanceManager{};
-			core::deviceManager myDeviceManager{};
-			core::swapChainManager mySwapChainManager{};
-			core::pipelineManager myPipelineManager{};
-			core::uniformBufferManager myUniformBufferManager{};
-			core::commandBufferManager myCommandBufferManager{};
-			core::colorBufferManager myColorBufferManager{};
-			core::depthBufferManager myDepthBufferManager{};
-			core::frameBufferManager myFrameBufferManager{};
-			core::textureManager myTextureManager{};
-			core::vertexBufferManager myVertexBufferManager{};
-			core::indexBufferManager myIndexBufferManager{};
-			core::skyboxManager mySkyboxManager{};
-			core::shaderManager myShaderManager{};
-			core::debugger myDebugger{};
-
-			UI32 imageIndex = 0;
-			UI32 currentFrame = 0;
-			UI32 vulkanContainerIndex = 0;
-
-			B1 enableVertexAndIndexClear = true;
-
-			ARRAY<Vertex> myVertices = {};
-			ARRAY<std::future<void>> myThreads = {};
-
-			/* DATA STORE */
-			ARRAY<ADGRVulkanDataContainer> myVulkanDataContainers = {};
-			ARRAY<vulkanFormat> myVulkanFormats = {};
-
-			ARRAY<VkSemaphore> myImageAvailableSemaphores = {};
-			ARRAY<VkSemaphore> myRenderFinishedSemaphores = {};
-			ARRAY<VkFence> myFencesInFlight = {};
-
-			VkDescriptorSetLayout myTerrainDescriptorSetLayout;
-			ARRAY<VkBuffer> myTerrainUniformBuffers;
-			ARRAY<VkDeviceMemory> myTerrainUniformBufferMamories;
-
-			VkResult result;
-			VkSubmitInfo submitInfo = {};
-			VkPresentInfoKHR presentInfo = {};
-			VkSemaphore waitSemaphores[1];
-			VkPipelineStageFlags waitStages[1];
-			VkSemaphore signalSemaphores[1];
-			VkSwapchainKHR swapChains[1];
 		};
 	}
 }

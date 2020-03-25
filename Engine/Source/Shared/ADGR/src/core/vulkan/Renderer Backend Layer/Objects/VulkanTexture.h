@@ -4,13 +4,13 @@
 
 #include <string>
 #include "VulkanDevice.h"
-#include "VulkanGlobalVariables.h"
 #include "VulkanCommandBuffer.h"
-#include "VulkanQueue.h"
 
 namespace Dynamik {
 	namespace ADGR {
 		namespace Backend {
+			class VulkanCommandBuffer;
+
 			struct ADGRVulkanTextureInitInfo {
 				VulkanDevice device;
 				VulkanGlobalVariables global;

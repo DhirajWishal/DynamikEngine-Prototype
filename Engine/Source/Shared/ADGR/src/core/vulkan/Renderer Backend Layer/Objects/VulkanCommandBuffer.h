@@ -2,10 +2,7 @@
 #ifndef _DYNAMIK_ADGR_VULKAN_COMMAND_BUFFER_H
 #define _DYNAMIK_ADGR_VULKAN_COMMAND_BUFFER_H
 
-#include "VulkanInstance.h"
-#include "VulkanDevice.h"
 #include "VulkanSwapChain.h"
-#include "VulkanQueue.h"
 #include "VulkanFrameBuffer.h"
 #include "VulkanRenderPass.h"
 #include "VulkanRenderObject.h"

@@ -4,6 +4,7 @@
 
 #include "Objects/VulkanRBLIndex.h"
 #include "core/base/RendererBackendBase.h"
+#include "core/Window/Windows/WindowManager.h"
 
 namespace Dynamik {
 	namespace ADGR {
@@ -27,6 +28,8 @@ namespace Dynamik {
 			void shutDownStageThree() override;
 
 		private:
+			WindowManager myWindowManager;
+
 			VulkanInstance myInstance;
 			VulkanDebugger myDebugger;
 			VulkanDevice myDevice;

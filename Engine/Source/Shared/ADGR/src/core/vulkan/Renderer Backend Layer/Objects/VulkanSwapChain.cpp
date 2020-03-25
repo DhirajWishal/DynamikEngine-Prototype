@@ -1,6 +1,6 @@
 #include "adgrafx.h"
 #include "VulkanSwapChain.h"
-#include "VulkanQueue.h"
+
 #include "VulkanFunctions.h"
 
 namespace Dynamik {
@@ -139,7 +139,7 @@ namespace Dynamik {
 
 				initializeImageViews(device);
 			}
-			
+
 			void VulkanSwapChain::terminate(VulkanDevice device)
 			{
 				// destroy swapchain image views
@@ -149,7 +149,7 @@ namespace Dynamik {
 				// destroy swapchain
 				vkDestroySwapchainKHR(device.logicalDevice, mySwapChain, nullptr);
 			}
-			
+
 			void VulkanSwapChain::initializeImageViews(VulkanDevice device)
 			{
 				mySwapChainImageViews.resize(mySwapChainImages.size());

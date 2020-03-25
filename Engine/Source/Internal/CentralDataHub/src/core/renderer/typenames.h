@@ -5,7 +5,6 @@
 
 #include "DataTypesLib/Public/Array.h"
 #include <vector>
-#include "core/vulkan/backend/data structures/vulkan.h"
 
 namespace Dynamik {
 	namespace ADGR {

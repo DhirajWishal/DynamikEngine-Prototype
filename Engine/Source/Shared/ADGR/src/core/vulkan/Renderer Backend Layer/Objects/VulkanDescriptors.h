@@ -1,8 +1,7 @@
 #pragma once
-#ifndef _DYNAMIK_ADGR_VULKAN_DESCRIPTOR_SET_H
-#define _DYNAMIK_ADGR_VULKAN_DESCRIPTOR_SET_H
+#ifndef _DYNAMIK_ADGR_VULKAN_DESCRIPTORS_H
+#define _DYNAMIK_ADGR_VULKAN_DESCRIPTORS_H
 
-#include "VulkanDevice.h"
 #include "VulkanSwapChain.h"
 #include "VulkanTexture.h"
 #include "VulkanUniformBuffer.h"
@@ -33,10 +32,10 @@ namespace Dynamik {
 				ARRAY<VkWriteDescriptorSet> additionalWrites;
 			};
 
-			class VulkanDescriptorSet {
+			class VulkanDescriptors {
 			public:
-				VulkanDescriptorSet() {}
-				~VulkanDescriptorSet() {}
+				VulkanDescriptors() {}
+				~VulkanDescriptors() {}
 
 				void initializeLayout(ADGRVulkanDescriptorSetLayoutInitInfo info);
 				void terminateLayout(VulkanDevice device);

@@ -3,7 +3,6 @@
 #define _DYNAMIK_ADGR_VULKAN_DEPTH_BUFFER_H
 
 #include "VulkanDevice.h"
-#include "VulkanQueue.h"
 #include "VulkanCommandBuffer.h"
 #include "VulkanSwapChain.h"
 #include "VulkanGlobalVariables.h"

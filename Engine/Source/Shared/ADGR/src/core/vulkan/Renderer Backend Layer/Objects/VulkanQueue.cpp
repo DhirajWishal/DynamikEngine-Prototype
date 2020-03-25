@@ -8,16 +8,16 @@ namespace Dynamik {
 			{
 				return graphicsFamily.has_value() && presentFamily.has_value();
 			}
-			
+
 			VulkanQueue VulkanQueue::findQueueFamilies(VulkanDevice device, VulkanInstance instance)
 			{
 				VulkanQueue indices;
 
 				UI32 queueFamilyCount = 0;
-				vkGetPhysicalDeviceQueueFamilyProperties(device.getPhysicalDevice(), &queueFamilyCount, nullptr);
+				vkGetPhysicalDeviceQueueFamilyProperties(device.physicalDevice, &queueFamilyCount, nullptr);
 
 				ARRAY<VkQueueFamilyProperties> queueFamilies(queueFamilyCount);
-				vkGetPhysicalDeviceQueueFamilyProperties(device.getPhysicalDevice(), &queueFamilyCount, queueFamilies.data());
+				vkGetPhysicalDeviceQueueFamilyProperties(device.physicalDevice, &queueFamilyCount, queueFamilies.data());
 
 				I32 i = 0;
 				for (const auto& queueFamily : queueFamilies) {
@@ -26,7 +26,7 @@ namespace Dynamik {
 					}
 
 					VkBool32 presentSupport = false;
-					vkGetPhysicalDeviceSurfaceSupportKHR(device.getPhysicalDevice(), i, instance.getSurface(), &presentSupport);
+					vkGetPhysicalDeviceSurfaceSupportKHR(device.physicalDevice, i, instance.surface, &presentSupport);
 
 					if (queueFamily.queueCount > 0 && presentSupport)
 						indices.presentFamily = i;

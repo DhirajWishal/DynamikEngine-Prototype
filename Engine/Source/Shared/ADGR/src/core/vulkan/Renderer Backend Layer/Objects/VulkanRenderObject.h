@@ -8,12 +8,20 @@
 #include "VulkanIndexBuffer.h"
 #include "VulkanTexture.h"
 #include "VulkanUniformBuffer.h"
-#include "VulkanDescriptorSet.h"
 #include "CentralDataHub.h"
 
 namespace Dynamik {
 	namespace ADGR {
 		namespace Backend {
+			class VulkanDescriptors;
+			class VulkanUniformBuffer;
+			class VulkanPipeline;
+
+			class VulkanVertexBuffer;
+			class VulkanIndexBuffer;
+			class VulkanTexture;
+			class VulkanPushConstant;
+
 			class VulkanRenderObject {
 			public:
 				VulkanRenderObject() {}
@@ -30,7 +38,7 @@ namespace Dynamik {
 				ARRAY<VulkanPushConstant> pushConstants;
 
 				VulkanUniformBuffer uniformBuffer;
-				VulkanDescriptorSet descriptorSet;
+				VulkanDescriptors descriptorSet;
 			};
 		}
 	}

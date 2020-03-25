@@ -1,12 +1,9 @@
 #include "adgrafx.h"
 #include "VulkanDevice.h"
-#include "VulkanQueue.h"
-#include "VulkanSwapChain.h"
 
-#include "core/vulkan/backend/functions/bufferFunctions.h"
-#include "core/vulkan/backend/validators/validators.h"
-using namespace Dynamik::ADGR::core;
-using namespace Dynamik::ADGR::core::functions;
+#include "VulkanSwapChain.h"
+#include "VulkanValidator.h"
+#include "VulkanFunctions.h"
 
 namespace Dynamik {
 	namespace ADGR {
@@ -90,7 +87,7 @@ namespace Dynamik {
 						else
 							physicalDevice = device;
 
-						global->msaaSamples = getMaxUsableSampleCount(physicalDevice);
+						global->msaaSamples = VulkanFunctions::getMaxUsableSampleCount(physicalDevice);
 						break;
 					}
 				}
@@ -162,9 +159,9 @@ namespace Dynamik {
 				createInfo.enabledExtensionCount = static_cast<UI32>(deviceExtensions.size());
 				createInfo.ppEnabledExtensionNames = deviceExtensions.data();
 
-				if (enableValidationLayers) {
-					createInfo.enabledLayerCount = static_cast<UI32>(validationLayer.size());
-					createInfo.ppEnabledLayerNames = validationLayer.data();
+				if (VulkanValidator::enableValidationLayers) {
+					createInfo.enabledLayerCount = static_cast<UI32>(VulkanValidator::validationLayer.size());
+					createInfo.ppEnabledLayerNames = VulkanValidator::validationLayer.data();
 				}
 				else {
 					createInfo.enabledLayerCount = 0;

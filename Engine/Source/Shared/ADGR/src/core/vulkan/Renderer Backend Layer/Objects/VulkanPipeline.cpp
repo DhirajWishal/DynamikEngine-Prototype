@@ -105,7 +105,7 @@ namespace Dynamik {
 
 				// initialize the pipeline layout
 				ARRAY<VkDescriptorSetLayout> layouts;
-				for (VulkanDescriptorSet _sets : info.layouts)
+				for (VulkanDescriptors _sets : info.layouts)
 					layouts.pushBack(_sets.layout);
 
 				VkPipelineLayoutCreateInfo pipelineLayoutInfo = {};
@@ -198,7 +198,7 @@ namespace Dynamik {
 				if (vkCreateGraphicsPipelines(info.device.logicalDevice, VK_NULL_HANDLE, 1, &pipelineInfo, nullptr, &pipeline) != VK_SUCCESS)
 					DMK_CORE_FATAL("failed to create graphics pipeline!");
 			}
-			
+
 			void VulkanPipeline::terminate(VulkanDevice device)
 			{
 				vkDestroyPipeline(device.logicalDevice, pipeline, nullptr);

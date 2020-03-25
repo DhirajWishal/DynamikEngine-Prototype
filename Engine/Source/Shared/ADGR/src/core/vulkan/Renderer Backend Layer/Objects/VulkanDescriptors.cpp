@@ -1,10 +1,10 @@
 #include "adgrafx.h"
-#include "VulkanDescriptorSet.h"
+#include "VulkanDescriptors.h"
 
 namespace Dynamik {
 	namespace ADGR {
 		namespace Backend {
-			void VulkanDescriptorSet::initializeLayout(ADGRVulkanDescriptorSetLayoutInitInfo info)
+			void VulkanDescriptors::initializeLayout(ADGRVulkanDescriptorSetLayoutInitInfo info)
 			{
 				VkDescriptorSetLayoutBinding uboLayoutBinding = {};
 				uboLayoutBinding.binding = 0; // info.bindIndex;
@@ -35,13 +35,13 @@ namespace Dynamik {
 				if (vkCreateDescriptorSetLayout(info.device.logicalDevice, &layoutInfo, nullptr, &layout) != VK_SUCCESS)
 					DMK_CORE_FATAL("failed to create descriptor set layout!");
 			}
-			
-			void VulkanDescriptorSet::terminateLayout(VulkanDevice device)
+
+			void VulkanDescriptors::terminateLayout(VulkanDevice device)
 			{
 				vkDestroyDescriptorSetLayout(device.logicalDevice, layout, nullptr);
 			}
-			
-			void VulkanDescriptorSet::initializeDescriptorPool(ADGRVulkanDescriptorPoolInitInfo info)
+
+			void VulkanDescriptors::initializeDescriptorPool(ADGRVulkanDescriptorPoolInitInfo info)
 			{
 				for (UI32 itr = 0; itr < info.poolCount; itr++) {
 					ARRAY<VkDescriptorPoolSize> poolSizes = {};
@@ -73,14 +73,14 @@ namespace Dynamik {
 					descriptorPools.push_back(_localDescriptorPool);
 				}
 			}
-			
-			void VulkanDescriptorSet::terminateDescriptorPool(VulkanDevice device)
+
+			void VulkanDescriptors::terminateDescriptorPool(VulkanDevice device)
 			{
 				for (VkDescriptorPool descriptorPool : descriptorPools)
 					vkDestroyDescriptorPool(device.logicalDevice, descriptorPool, nullptr);
 			}
-			
-			void VulkanDescriptorSet::initializeDescriptorSets(ADGRVulkanDescriptorSetsInitInfo info)
+
+			void VulkanDescriptors::initializeDescriptorSets(ADGRVulkanDescriptorSetsInitInfo info)
 			{
 				std::vector<VkDescriptorSetLayout> layouts(info.swapChain.mySwapChainImages.size(), layout);
 				descriptorSets.resize(info.textures.size());
@@ -138,8 +138,8 @@ namespace Dynamik {
 					} // make two descriptor layouts for each descriptor set
 				}
 			}
-			
-			void VulkanDescriptorSet::terminateDescriptorSets(VulkanDevice device)
+
+			void VulkanDescriptors::terminateDescriptorSets(VulkanDevice device)
 			{
 			}
 		}

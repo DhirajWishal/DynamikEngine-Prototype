@@ -1,7 +1,7 @@
 #include "adgrafx.h"
 #include "VulkanSwapChain.h"
-
 #include "VulkanQueue.h"
+#include "VulkanFunctions.h"
 
 namespace Dynamik {
 	namespace ADGR {
@@ -73,18 +73,18 @@ namespace Dynamik {
 
 			void VulkanSwapChain::initialize(VulkanInstance instance, VulkanDevice device, UI32 width, UI32 height)
 			{
-				VulkanSwapChainSupportDetails swapChainSupport = querySwapChainSupport(device.getLogicalDeviceAddress(), instance.getSurfaceAddress());
+				VulkanSwapChainSupportDetails swapChainSupport = querySwapChainSupport(&device.physicalDevice, &instance.surface);
 
 				VkSurfaceFormatKHR surfaceFormat = chooseSwapSurfaceFormat(swapChainSupport.formats);
 				VkPresentModeKHR presentMode = chooseSwapPresentMode(swapChainSupport.presentModes);
 				VkExtent2D extent = chooseSwapExtent(swapChainSupport.capabilities, width, height);
 
 				VkCompositeAlphaFlagBitsKHR surfaceComposite =
-					(instance.getSurfaceCapabilities().supportedCompositeAlpha & VK_COMPOSITE_ALPHA_OPAQUE_BIT_KHR)
+					(instance.surfaceCapabilities.supportedCompositeAlpha & VK_COMPOSITE_ALPHA_OPAQUE_BIT_KHR)
 					? VK_COMPOSITE_ALPHA_OPAQUE_BIT_KHR
-					: (instance.getSurfaceCapabilities().supportedCompositeAlpha & VK_COMPOSITE_ALPHA_PRE_MULTIPLIED_BIT_KHR)
+					: (instance.surfaceCapabilities.supportedCompositeAlpha & VK_COMPOSITE_ALPHA_PRE_MULTIPLIED_BIT_KHR)
 					? VK_COMPOSITE_ALPHA_PRE_MULTIPLIED_BIT_KHR
-					: (instance.getSurfaceCapabilities().supportedCompositeAlpha & VK_COMPOSITE_ALPHA_POST_MULTIPLIED_BIT_KHR)
+					: (instance.surfaceCapabilities.supportedCompositeAlpha & VK_COMPOSITE_ALPHA_POST_MULTIPLIED_BIT_KHR)
 					? VK_COMPOSITE_ALPHA_POST_MULTIPLIED_BIT_KHR
 					: VK_COMPOSITE_ALPHA_INHERIT_BIT_KHR;
 
@@ -95,7 +95,7 @@ namespace Dynamik {
 
 				VkSwapchainCreateInfoKHR createInfo = {};
 				createInfo.sType = VK_STRUCTURE_TYPE_SWAPCHAIN_CREATE_INFO_KHR;
-				createInfo.surface = instance.getSurface();
+				createInfo.surface = instance.surface;
 				createInfo.minImageCount = imageCount;
 				createInfo.imageFormat = surfaceFormat.format;
 				createInfo.imageColorSpace = surfaceFormat.colorSpace;
@@ -127,12 +127,12 @@ namespace Dynamik {
 				createInfo.clipped = VK_TRUE;
 				createInfo.oldSwapchain = VK_NULL_HANDLE;
 
-				if (vkCreateSwapchainKHR(device.getLogicalDevice(), &createInfo, nullptr, &mySwapChain))
+				if (vkCreateSwapchainKHR(device.logicalDevice, &createInfo, nullptr, &mySwapChain))
 					DMK_CORE_FATAL("Failed to create Swap Chain!");
 
-				vkGetSwapchainImagesKHR(device.getLogicalDevice(), mySwapChain, &imageCount, nullptr);
+				vkGetSwapchainImagesKHR(device.logicalDevice, mySwapChain, &imageCount, nullptr);
 				mySwapChainImages.resize(imageCount);
-				vkGetSwapchainImagesKHR(device.getLogicalDevice(), mySwapChain, &imageCount, mySwapChainImages.data());
+				vkGetSwapchainImagesKHR(device.logicalDevice, mySwapChain, &imageCount, mySwapChainImages.data());
 
 				mySwapChainImageFormat = surfaceFormat.format;
 				mySwapChainExtent = extent;
@@ -144,10 +144,10 @@ namespace Dynamik {
 			{
 				// destroy swapchain image views
 				for (size_t i = 0; i < mySwapChainImageViews.size(); i++)
-					vkDestroyImageView(device.getLogicalDevice(), mySwapChainImageViews[i], nullptr);
+					vkDestroyImageView(device.logicalDevice, mySwapChainImageViews[i], nullptr);
 
 				// destroy swapchain
-				vkDestroySwapchainKHR(device.getLogicalDevice(), mySwapChain, nullptr);
+				vkDestroySwapchainKHR(device.logicalDevice, mySwapChain, nullptr);
 			}
 			
 			void VulkanSwapChain::initializeImageViews(VulkanDevice device)
@@ -155,14 +155,14 @@ namespace Dynamik {
 				mySwapChainImageViews.resize(mySwapChainImages.size());
 
 				for (UI32 i = 0; i < mySwapChainImages.size(); i++) {
-					DMKCreateImageViewInfo info;
-					info.device = device.getLogicalDevice();
+					ADGRCreateImageViewInfo info;
+					info.device = device;
 					info.image = mySwapChainImages[i];
 					info.format = mySwapChainImageFormat;
 					info.aspectFlags = VK_IMAGE_ASPECT_COLOR_BIT;
 					info.mipLevels = 1;
 
-					mySwapChainImageViews.at(i) = createImageView(info);
+					mySwapChainImageViews.at(i) = VulkanFunctions::createImageView(info);
 				}
 			}
 		}

@@ -16,14 +16,12 @@ namespace Dynamik {
 				void initialize(VulkanInstance instance);
 				void terminate();
 
-				VkDebugUtilsMessengerEXT get() { return myDebugMessenger; }
-				POINTER<VkDebugUtilsMessengerEXT> getAddress() { return &myDebugMessenger; }
+				VkDebugUtilsMessengerEXT myDebugMessenger = VK_NULL_HANDLE;
 
 			private:
 				VkResult createDebugUtilsMessengerEXT(const VkDebugUtilsMessengerCreateInfoEXT* pCreateInfo, const VkAllocationCallbacks* pAllocator, VkDebugUtilsMessengerEXT* pDebugMessenger);
 				void destroyDebugUtilsMessengerEXT(const VkAllocationCallbacks* pAllocator);
 
-				VkDebugUtilsMessengerEXT myDebugMessenger = VK_NULL_HANDLE;
 				VulkanInstance myInstance;
 			};
 		}

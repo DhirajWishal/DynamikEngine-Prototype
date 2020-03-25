@@ -32,9 +32,9 @@ namespace Dynamik {
 
 			B1 isDeviceSuitable(VkPhysicalDevice device, VkSurfaceKHR* surface) {
 				VulkanDevice _device;
-				_device.getPhysicalDeviceAddress() = device;
+				_device.physicalDevice = device;
 				VulkanInstance _instance;
-				_instance.getSurfaceAddress() = surface;
+				_instance.surface = *surface;
 				VulkanQueue indices = VulkanQueue::findQueueFamilies(_device, _instance);
 
 				B1 extensionsSupported = checkDeviceExtensionSupport(device);
@@ -54,47 +54,48 @@ namespace Dynamik {
 					&& supportedFeatures.samplerAnisotropy;
 			}
 
-			void VulkanDevice::initialize(VulkanInstance instance)
+			void VulkanDevice::initialize(VulkanInstance instance, POINTER<VulkanQueue> queue, POINTER<VulkanGlobalVariables> global)
 			{
-				initPhysicalDevice(instance);
-				initLogicalDevice(instance);
+				initPhysicalDevice(instance, global);
+				initLogicalDevice(instance, queue);
 			}
 
 			void VulkanDevice::terminate()
 			{
+				vkDestroyDevice(logicalDevice, nullptr);
 			}
 
-			void VulkanDevice::initPhysicalDevice(VulkanInstance instance)
+			void VulkanDevice::initPhysicalDevice(VulkanInstance instance, POINTER<VulkanGlobalVariables> global)
 			{
 				UI32 deviceCount = 0;
-				vkEnumeratePhysicalDevices(instance.get(), &deviceCount, nullptr);
+				vkEnumeratePhysicalDevices(instance.instance, &deviceCount, nullptr);
 
 				if (deviceCount == 0)
 					DMK_CORE_FATAL("Failed to find GPUs with Vulkan support!");
 
 				ARRAY<VkPhysicalDevice> devices(deviceCount);
-				vkEnumeratePhysicalDevices(instance.get(), &deviceCount, devices.data());
+				vkEnumeratePhysicalDevices(instance.instance, &deviceCount, devices.data());
 
 				//std::multimap<I32, VkPhysicalDevice> candidates;
 
 				auto props = VkPhysicalDeviceProperties{};
 				for (const auto& device : devices) {
-					if (isDeviceSuitable(device, instance.getSurfaceAddress())) {
+					if (isDeviceSuitable(device, &instance.surface)) {
 						vkGetPhysicalDeviceProperties(device, &props);
 
 						if (props.deviceType == VkPhysicalDeviceType::VK_PHYSICAL_DEVICE_TYPE_DISCRETE_GPU)
-							myPhysicalDevice = device;
+							physicalDevice = device;
 						else if (props.deviceType == VkPhysicalDeviceType::VK_PHYSICAL_DEVICE_TYPE_INTEGRATED_GPU)
-							myPhysicalDevice = device;
+							physicalDevice = device;
 						else
-							myPhysicalDevice = device;
+							physicalDevice = device;
 
-						container->msaaSamples = getMaxUsableSampleCount(myPhysicalDevice);
+						global->msaaSamples = getMaxUsableSampleCount(physicalDevice);
 						break;
 					}
 				}
 
-				if (myPhysicalDevice == VK_NULL_HANDLE)
+				if (physicalDevice == VK_NULL_HANDLE)
 					DMK_CORE_FATAL("Failed to find a suitable GPU!");
 
 #if defined(DMK_DEBUG)
@@ -129,7 +130,7 @@ namespace Dynamik {
 #endif
 			}
 
-			void VulkanDevice::initLogicalDevice(VulkanInstance instance)
+			void VulkanDevice::initLogicalDevice(VulkanInstance instance, POINTER<VulkanQueue> queue)
 			{
 				VulkanQueue indices = VulkanQueue::findQueueFamilies(*this, instance);
 
@@ -169,11 +170,11 @@ namespace Dynamik {
 					createInfo.enabledLayerCount = 0;
 				}
 
-				if (vkCreateDevice(myPhysicalDevice, &createInfo, nullptr, &myLogicalDevice) != VK_SUCCESS)
+				if (vkCreateDevice(physicalDevice, &createInfo, nullptr, &logicalDevice) != VK_SUCCESS)
 					DMK_CORE_FATAL("failed to create logical device!");
 
-				vkGetDeviceQueue(myLogicalDevice, indices.graphicsFamily.value(), 0, &container->graphicsQueue);
-				vkGetDeviceQueue(myLogicalDevice, indices.presentFamily.value(), 0, &container->presentQueue);
+				vkGetDeviceQueue(logicalDevice, indices.graphicsFamily.value(), 0, &queue->graphicsQueue);
+				vkGetDeviceQueue(logicalDevice, indices.presentFamily.value(), 0, &queue->presentQueue);
 			}
 		}
 	}

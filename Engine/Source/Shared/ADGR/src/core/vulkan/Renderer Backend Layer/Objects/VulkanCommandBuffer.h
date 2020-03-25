@@ -6,32 +6,38 @@
 #include "VulkanDevice.h"
 #include "VulkanSwapChain.h"
 #include "VulkanQueue.h"
-
-#include "core/vulkan/backend/vulkanFormat.h"
+#include "VulkanFrameBuffer.h"
+#include "VulkanRenderPass.h"
+#include "VulkanRenderObject.h"
+#include "VulkanPushConstant.h"
 
 namespace Dynamik {
 	namespace ADGR {
 		namespace Backend {
+			struct ADGRVulkanCommandBufferInitInfo {
+				VulkanDevice device;
+				VulkanFrameBuffer frameBuffer;
+				VulkanRenderPass renderPass;
+				VulkanSwapChain swapChain;
+
+				ARRAY<VulkanRenderObject>* objects;
+			};
+
 			class VulkanCommandBuffer {
 			public:
 				VulkanCommandBuffer() {}
 				~VulkanCommandBuffer() {}
 
 				void initializeCommandPool(VulkanInstance instance, VulkanDevice device);
-				void initialize(VulkanDevice device, ARRAY<core::vulkanFormat>* formats);
+				void initialize(ADGRVulkanCommandBufferInitInfo info);
 				void terminate(VulkanDevice device);
-
-				VkCommandPool getCommandPool() { return myCommandPool; }
-				POINTER<VkCommandPool> getCommandPoolAddress() { return &myCommandPool; }
-
-				ARRAY<VkCommandBuffer> getBuffers() { return myCommandBuffers; }
-
-			private:
-				void drawVertex(VkCommandBuffer buffer, I32 index, core::vulkanFormat* format, VkDeviceSize* offsets);
-				void drawIndexed(VkCommandBuffer buffer, I32 index, core::vulkanFormat* format, VkDeviceSize* offsets);
 
 				VkCommandPool myCommandPool = VK_NULL_HANDLE;
 				ARRAY<VkCommandBuffer> myCommandBuffers;
+
+			private:
+				void drawVertex(VkCommandBuffer buffer, I32 index, VulkanRenderObject* object, VkDeviceSize* offsets);
+				void drawIndexed(VkCommandBuffer buffer, I32 index, VulkanRenderObject* object, VkDeviceSize* offsets);
 			};
 		}
 	}

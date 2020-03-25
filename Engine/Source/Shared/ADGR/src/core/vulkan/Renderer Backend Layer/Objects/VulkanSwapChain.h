@@ -23,14 +23,6 @@ namespace Dynamik {
 
 				void initializeImageViews(VulkanDevice device);
 
-				VkSwapchainKHR get() { return mySwapChain; }
-				POINTER<VkSwapchainKHR> getAddress() { return &mySwapChain; }
-				VkFormat getFormat() { return mySwapChainImageFormat; }
-				VkExtent2D getExtent() { return mySwapChainExtent; }
-				ARRAY<VkImage> getImages() { return mySwapChainImages; }
-				ARRAY<VkImageView> getImageViews() { return mySwapChainImageViews; }
-
-			private:
 				VkSwapchainKHR mySwapChain = VK_NULL_HANDLE;
 				ARRAY<VkImage> mySwapChainImages;
 				ARRAY<VkImageView> mySwapChainImageViews;

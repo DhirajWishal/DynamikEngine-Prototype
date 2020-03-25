@@ -8,7 +8,7 @@ using namespace Dynamik::ADGR::core;
 namespace Dynamik {
 	namespace ADGR {
 		namespace Backend {
-			void VulkanInstance::initialize()
+			void VulkanInstance::initialize(ADGRVulkanInstanceInitInfo info)
 			{
 				if (enableValidationLayers && !checkValidationLayerSupport())
 					DMK_CORE_FATAL("validation layers requested, but not available!");
@@ -16,9 +16,9 @@ namespace Dynamik {
 				// instance info
 				VkApplicationInfo appInfo = {};
 				appInfo.sType = VK_STRUCTURE_TYPE_APPLICATION_INFO;
-				appInfo.pApplicationName = "Dynamik Engine";
+				appInfo.pApplicationName = info.applicationName.c_str();
 				appInfo.applicationVersion = VK_MAKE_VERSION(1, 0, 0);
-				appInfo.pEngineName = "Dynamik";
+				appInfo.pEngineName = info.engineName.c_str();
 				appInfo.engineVersion = VK_MAKE_VERSION(1, 0, 0);
 				appInfo.apiVersion = VK_API_VERSION_1_1;
 
@@ -45,13 +45,14 @@ namespace Dynamik {
 					createInfo.pNext = nullptr;
 				}
 
-				if (vkCreateInstance(&createInfo, nullptr, &myInstance) != VK_SUCCESS)
+				if (vkCreateInstance(&createInfo, nullptr, &instance) != VK_SUCCESS)
 					DMK_CORE_FATAL("Failed to create instance!");
 			}
 			
 			void VulkanInstance::terminate()
 			{
-				vkDestroyInstance(myInstance, nullptr);
+				vkDestroySurfaceKHR(instance, surface, nullptr);
+				vkDestroyInstance(instance, nullptr);
 			}
 		}
 	}

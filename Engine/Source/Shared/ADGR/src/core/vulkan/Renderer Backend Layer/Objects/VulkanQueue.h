@@ -18,6 +18,9 @@ namespace Dynamik {
 				std::optional<UI32> graphicsFamily;
 				std::optional<UI32> presentFamily;
 
+				VkQueue graphicsQueue;
+				VkQueue presentQueue;
+
 				B1 isComplete();
 
 				static VulkanQueue findQueueFamilies(VulkanDevice device, VulkanInstance instance);

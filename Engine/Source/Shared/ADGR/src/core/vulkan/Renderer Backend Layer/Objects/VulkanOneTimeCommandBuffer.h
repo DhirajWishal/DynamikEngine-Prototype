@@ -12,8 +12,11 @@ namespace Dynamik {
 				VulkanOneTimeCommandBuffer(VulkanDevice device, VulkanCommandBuffer commandBuffer, VulkanQueue queue, UI32 count = 1);
 				~VulkanOneTimeCommandBuffer();
 
-			private:
 				ARRAY<VkCommandBuffer> myCommandBuffers;
+			private:
+				VulkanDevice myDevice;
+				VulkanCommandBuffer myCommandBuffer;
+				VulkanQueue myQueue;
 
 				UI32 myCount = 0;
 			};

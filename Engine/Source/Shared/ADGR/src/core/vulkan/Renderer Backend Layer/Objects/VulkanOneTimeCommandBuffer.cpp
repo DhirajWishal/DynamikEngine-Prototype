@@ -5,7 +5,7 @@ namespace Dynamik {
 	namespace ADGR {
 		namespace Backend {
 			VulkanOneTimeCommandBuffer::VulkanOneTimeCommandBuffer(VulkanDevice device, VulkanCommandBuffer commandBuffer, VulkanQueue queue, UI32 count)
-				: myCount(count)
+				: myCount(count), myDevice(device), myQueue(queue), myCommandBuffer(commandBuffer)
 			{
 				VkCommandBufferAllocateInfo allocInfo = {};
 				allocInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO;
@@ -35,12 +35,10 @@ namespace Dynamik {
 				submitInfo.commandBufferCount = myCount;
 				submitInfo.pCommandBuffers = myCommandBuffers.data();
 
-				vkQueueSubmit(myGraphicsQueue, 1, &submitInfo, VK_NULL_HANDLE);
-				vkQueueWaitIdle(myGraphicsQueue);
+				vkQueueSubmit(myQueue.graphicsQueue, 1, &submitInfo, VK_NULL_HANDLE);
+				vkQueueWaitIdle(myQueue.presentQueue);
 
-				vkFreeCommandBuffers(myDevice, myCommandPool, myCount, myCommandBuffers.data());
-
-				isDestroyed = true;
+				vkFreeCommandBuffers(myDevice.getLogicalDevice(), myCommandBuffer.getCommandPool(), myCount, myCommandBuffers.data());
 			}
 		}
 	}

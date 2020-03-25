@@ -49,11 +49,11 @@ namespace Dynamik {
 				const VkAllocationCallbacks* pAllocator,
 				VkDebugUtilsMessengerEXT* pDebugMessenger
 			) {
-				auto func = (PFN_vkCreateDebugUtilsMessengerEXT)vkGetInstanceProcAddr(myInstance.get(),
+				auto func = (PFN_vkCreateDebugUtilsMessengerEXT)vkGetInstanceProcAddr(myInstance.instance,
 					"vkCreateDebugUtilsMessengerEXT");
 
 				if (func != nullptr)
-					return func(myInstance.get(), pCreateInfo, pAllocator, pDebugMessenger);
+					return func(myInstance.instance, pCreateInfo, pAllocator, pDebugMessenger);
 				else
 					return VK_ERROR_EXTENSION_NOT_PRESENT;
 			}
@@ -61,11 +61,11 @@ namespace Dynamik {
 			void VulkanDebugger::destroyDebugUtilsMessengerEXT(
 				const VkAllocationCallbacks* pAllocator
 			) {
-				auto func = (PFN_vkDestroyDebugUtilsMessengerEXT)vkGetInstanceProcAddr(myInstance.get(),
+				auto func = (PFN_vkDestroyDebugUtilsMessengerEXT)vkGetInstanceProcAddr(myInstance.instance,
 					"vkDestroyDebugUtilsMessengerEXT");
 
 				if (func != nullptr)
-					func(myInstance.get(), myInstance.getAddress() , pAllocator);
+					func(myInstance.instance, myDebugMessenger, pAllocator);
 			}
 
 			void populateDebugMessegerCreateInfo(VkDebugUtilsMessengerCreateInfoEXT& createInfo) {

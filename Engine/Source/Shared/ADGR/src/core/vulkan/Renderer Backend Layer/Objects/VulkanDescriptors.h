@@ -3,12 +3,13 @@
 #define _DYNAMIK_ADGR_VULKAN_DESCRIPTORS_H
 
 #include "VulkanSwapChain.h"
-#include "VulkanTexture.h"
 #include "VulkanUniformBuffer.h"
 
 namespace Dynamik {
 	namespace ADGR {
 		namespace Backend {
+			class VulkanTexture;
+
 			struct ADGRVulkanDescriptorSetLayoutInitInfo {
 				VulkanDevice device;
 

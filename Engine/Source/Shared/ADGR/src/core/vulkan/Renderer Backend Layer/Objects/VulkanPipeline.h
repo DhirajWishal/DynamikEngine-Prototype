@@ -3,13 +3,14 @@
 #define _DYNAMIK_ADGR_VULKAN_PIPELINE_H
 
 #include "VulkanRenderPass.h"
-#include "VulkanDescriptors.h"
 #include "VulkanShader.h"
 #include "VulkanSwapChain.h"
 
 namespace Dynamik {
 	namespace ADGR {
 		namespace Backend {
+			class VulkanDescriptors;
+
 			struct ADGRVulkanPipelineInitInfo {
 				VulkanDevice device;
 				VulkanRenderPass renderPass;							// Vulkan render pass

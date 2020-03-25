@@ -5,10 +5,13 @@
 #include <optional>
 #include <DataTypesLib/Public/datatypes.h>
 
+#include "VulkanInstance.h"
+
 namespace Dynamik {
 	namespace ADGR {
 		namespace Backend {
 			class VulkanDevice;
+			class VulkanInstance;
 
 			class VulkanQueue {
 			public:

@@ -34,7 +34,7 @@ namespace Dynamik {
 			ADGRVulkanColorBufferInitInfo colorBufferInitInfo;
 			colorBufferInitInfo.commandBuffer = myCommandBuffer;
 			colorBufferInitInfo.device = myDevice;
-			colorBufferInitInfo.global = myGlobals;
+			colorBufferInitInfo.global = &myGlobals;
 			colorBufferInitInfo.queue = myQueue;
 			colorBufferInitInfo.swapChain = mySwapChain;
 			myColorBuffer.initialize(colorBufferInitInfo);
@@ -42,7 +42,7 @@ namespace Dynamik {
 			ADGRVulkanDepthBufferInitInfo depthBufferInitInfo;
 			depthBufferInitInfo.commandBuffer = myCommandBuffer;
 			depthBufferInitInfo.device = myDevice;
-			depthBufferInitInfo.global = myGlobals;
+			depthBufferInitInfo.global = &myGlobals;
 			depthBufferInitInfo.queue = myQueue;
 			depthBufferInitInfo.swapChain = mySwapChain;
 			myDepthBuffer.initialize(depthBufferInitInfo);

@@ -8,6 +8,7 @@
 #include "VulkanIndexBuffer.h"
 #include "VulkanTexture.h"
 #include "VulkanUniformBuffer.h"
+#include "VulkanDescriptors.h"
 #include "CentralDataHub.h"
 
 namespace Dynamik {

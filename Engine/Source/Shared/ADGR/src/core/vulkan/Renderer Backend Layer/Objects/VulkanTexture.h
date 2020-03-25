@@ -4,17 +4,14 @@
 
 #include <string>
 #include "VulkanDevice.h"
-#include "VulkanCommandBuffer.h"
 
 namespace Dynamik {
 	namespace ADGR {
 		namespace Backend {
-			class VulkanCommandBuffer;
-
 			struct ADGRVulkanTextureInitInfo {
 				VulkanDevice device;
 				VulkanGlobalVariables global;
-				VulkanCommandBuffer commandBuffer;
+				VkCommandPool commandPool;
 				VulkanQueue queue;
 				std::string path;
 
@@ -43,7 +40,7 @@ namespace Dynamik {
 				UI32 width, height;
 
 			private:
-				void generateMipMaps(VulkanDevice device, VulkanCommandBuffer commandBuffer, VulkanQueue queue);
+				void generateMipMaps(VulkanDevice device, VkCommandPool commandPool, VulkanQueue queue);
 			};
 		}
 	}

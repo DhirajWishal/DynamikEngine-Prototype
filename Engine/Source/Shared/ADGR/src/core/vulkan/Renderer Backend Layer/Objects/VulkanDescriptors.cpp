@@ -1,6 +1,8 @@
 #include "adgrafx.h"
 #include "VulkanDescriptors.h"
 
+#include "VulkanTexture.h"
+
 namespace Dynamik {
 	namespace ADGR {
 		namespace Backend {

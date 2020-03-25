@@ -33,17 +33,16 @@ namespace Dynamik {
 
 		// initialize the renderer
 		void vulkanRenderer::init() {	// 14 inc
-			VulkanRBL3D _debug;
-			_debug.init();
-
 			initStageOne();
 			initStageTwo();
 			initStageThree();
 		}
 
 		// Basic one-time initializations
-		void vulkanRenderer::initStageOne() {
-			
+		void vulkanRenderer::initStageOne() 
+		{
+			VulkanRBL3D _debug;
+			_debug.init();
 		}
 
 		// object loading and initialization

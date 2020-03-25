@@ -70,9 +70,12 @@ namespace Dynamik {
 
 				VulkanFunctions::createImage(cinfo);
 
+				VulkanCommandBuffer _commandBuffer;
+				_commandBuffer.myCommandPool = info.commandPool;
+
 				ADGRTransitionImageLayoutInfo transitionInfo;
 				transitionInfo.device = info.device;
-				transitionInfo.commandBuffer = info.commandBuffer;
+				transitionInfo.commandBuffer = _commandBuffer;
 				transitionInfo.image = image;
 				transitionInfo.format = format;
 				transitionInfo.oldLayout = VK_IMAGE_LAYOUT_UNDEFINED;
@@ -85,7 +88,7 @@ namespace Dynamik {
 
 				ADGRCopyBufferToImageInfo cpyInfo;
 				cpyInfo.device = info.device;
-				cpyInfo.commandBuffer = info.commandBuffer;
+				cpyInfo.commandBuffer = _commandBuffer;
 				cpyInfo.buffer = stagingBuffer;
 				cpyInfo.image = image;
 				cpyInfo.width = static_cast<UI32>(texData.texWidth);
@@ -97,7 +100,7 @@ namespace Dynamik {
 				vkDestroyBuffer(info.device.logicalDevice, stagingBuffer, nullptr);
 				vkFreeMemory(info.device.logicalDevice, stagingBufferMemory, nullptr);
 
-				generateMipMaps(info.device, info.commandBuffer, info.queue);
+				generateMipMaps(info.device, info.commandPool, info.queue);
 
 				VkSamplerCreateInfo samplerInfo = {};
 				samplerInfo.sType = VK_STRUCTURE_TYPE_SAMPLER_CREATE_INFO;
@@ -139,7 +142,7 @@ namespace Dynamik {
 				vkFreeMemory(device.logicalDevice, imageMemory, nullptr);
 			}
 
-			void VulkanTexture::generateMipMaps(VulkanDevice device, VulkanCommandBuffer commandBuffer, VulkanQueue queue)
+			void VulkanTexture::generateMipMaps(VulkanDevice device, VkCommandPool commandPool, VulkanQueue queue)
 			{
 				UI32 _width = width, _height = height;
 
@@ -148,6 +151,10 @@ namespace Dynamik {
 
 				if (!(formatProperties.optimalTilingFeatures & VK_FORMAT_FEATURE_SAMPLED_IMAGE_FILTER_LINEAR_BIT))
 					DMK_CORE_FATAL("texture image format does not support linear blitting!");
+
+
+				VulkanCommandBuffer commandBuffer;
+				commandBuffer.myCommandPool = commandPool;
 
 				VulkanOneTimeCommandBuffer oneTimeCommandBuffer(device, commandBuffer, queue);
 				VkCommandBuffer _commandBuffer = oneTimeCommandBuffer.myCommandBuffers[0];

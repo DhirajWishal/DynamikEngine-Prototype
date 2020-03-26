@@ -47,7 +47,7 @@ namespace Dynamik {
 	 * This array can store any data defined in the datatype TYPE and supports multiple dimentions.
 	 * Tested to be faster than the ARRAY<TYPE> library/ datatype.
 	 * This also contains utility functions related to array and pointer manipulation.
-	 * 
+	 *
 	 * @warn: The Dynamic Array does not call the destructor for all the stored elements at default.
 				If needed to call, DestructorCallMode must be set to either ALL or ALL THREADED.
 	 */
@@ -1223,7 +1223,7 @@ namespace Dynamik {
 		{
 			UI32 _passes = std::thread::hardware_concurrency() - 1;	// number of threads
 			UI32 _chunks = size() / std::thread::hardware_concurrency();	// number of elements thats given for each thread
-			ARRAY<std::future<void>, DMKArrayDestructorCallMode::DMK_ARRAY_DESTRUCTOR_CALL_MODE_DESTRUCT_ALL> _threads(_passes);		// threads 
+			ARRAY<std::future<void>, DMKArrayDestructorCallMode::DMK_ARRAY_DESTRUCTOR_CALL_MODE_DESTRUCT_ALL> _threads(_passes);		// threads
 			PTR _first;
 			_internalThread _localThread;
 

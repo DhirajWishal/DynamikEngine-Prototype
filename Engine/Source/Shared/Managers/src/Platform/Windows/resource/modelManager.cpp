@@ -67,7 +67,7 @@ namespace Dynamik {
 					attributes.colors[2]
 				};
 
-				vertices.Integrity = RandomFloat(0.f, 1.0f);
+				//vertices.Integrity = RandomFloat(0.f, 1.0f);
 
 				vertices.Normals = {
 					attributes.normals[index.normal_index + 0],

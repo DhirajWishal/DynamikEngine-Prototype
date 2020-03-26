@@ -14,10 +14,10 @@ namespace Dynamik {
 			struct ADGRVulkanPipelineInitInfo {
 				VulkanDevice device;
 				VulkanRenderPass renderPass;							// Vulkan render pass
-				ARRAY<VulkanDescriptors> layouts;					// Vulkan descriptor set layouts
-				ARRAY<VulkanShader> shaders;
+				ARRAY<POINTER<VulkanDescriptors>> layouts;					// Vulkan descriptor set layouts
 				VulkanSwapChain swapChain;
-				VulkanGlobalVariables* global;
+				POINTER<VulkanGlobalVariables> global;
+				ARRAY<VulkanShader> shaders;
 
 				// primitive assembly info
 				VkPrimitiveTopology inputAssemblyTopology = VkPrimitiveTopology::VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST;	// Vulkan input assembler topologies

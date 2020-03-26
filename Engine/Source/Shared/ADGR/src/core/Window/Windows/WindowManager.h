@@ -19,7 +19,7 @@ namespace Dynamik {
 			UI32 height = 720;
 			std::string title = "Dynamik Engine";
 
-			ARRAY<std::string> iconPaths;
+			std::string iconPaths;
 		};
 
 		class WindowManager {
@@ -46,7 +46,7 @@ namespace Dynamik {
 			void onUpdate();
 
 			B1 createWindowSurface(POINTER<Backend::VulkanInstance> instance);
-			void setIcon(ARRAY<std::string> paths);
+			void setIcon(std::string paths);
 
 			UI32 windowWidth;
 			UI32 windowHeight;

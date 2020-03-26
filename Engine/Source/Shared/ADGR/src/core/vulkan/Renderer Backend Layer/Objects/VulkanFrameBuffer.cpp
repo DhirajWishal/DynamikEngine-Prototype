@@ -8,9 +8,14 @@ namespace Dynamik {
 			{
 				frameBuffers.resize(info.swapChain.mySwapChainImageViews.size());
 
-				for (size_t i = 0; i < info.swapChain.mySwapChainImageViews.size(); i++) {
+				for (size_t i = 0; i < info.swapChain.mySwapChainImageViews.size(); i++)
+				{
 					ARRAY<VkImageView> attachments;
+					for (VkImageView _imageView : info.preAttachments)
+						attachments.pushBack(_imageView);
+
 					attachments.pushBack(info.swapChain.mySwapChainImageViews[i]);
+
 					for (VkImageView _imageView : info.additionalAttachments)
 						attachments.pushBack(_imageView);
 

@@ -15,7 +15,6 @@ namespace Dynamik {
 				VulkanCommandBuffer commandBuffer;
 				VulkanSwapChain swapChain;
 				POINTER<VulkanGlobalVariables> global;
-
 			};
 
 			class VulkanColorBuffer {

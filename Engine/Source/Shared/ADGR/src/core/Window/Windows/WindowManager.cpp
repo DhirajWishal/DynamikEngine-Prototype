@@ -42,7 +42,7 @@ namespace Dynamik {
 
 			setIcon(info.iconPaths);
 		}
-		
+
 		void WindowManager::terminate()
 		{
 			glfwDestroyWindow(window);
@@ -67,28 +67,26 @@ namespace Dynamik {
 			return true;
 		}
 
-		void WindowManager::setIcon(ARRAY<std::string> paths)
+		void WindowManager::setIcon(std::string paths)
 		{
-			UI32 _imageCount = paths.size();
 			ARRAY<GLFWimage> icons;
-			ARRAY<resource::TextureData> texDatas;
-			texDatas.resize(_imageCount);
+			resource::TextureData texDatas;
 
-			for (UI32 i = 0; i < _imageCount; i++) {
-				std::string_view path = paths[i];
+			for (UI32 i = 0; i < 1; i++) {
+				std::string_view path = paths;
 				GLFWimage icon;
-				auto pixels = texDatas[i].loadTexture((path.data()), resource::TEXTURE_TYPE_RGBA);
+				auto pixels = texDatas.loadTexture((path.data()), resource::TEXTURE_TYPE_RGBA);
 
 				if (!pixels)
 					DMK_CORE_ERROR("Icon not Loaded!");
 
 				icon.pixels = pixels;
-				icon.height = texDatas[i].texHeight;
-				icon.width = texDatas[i].texWidth;
+				icon.height = texDatas.texHeight;
+				icon.width = texDatas.texWidth;
 				icons.push_back(icon);
 			}
 
-			glfwSetWindowIcon(window, _imageCount, icons.data());
+			glfwSetWindowIcon(window, 1, icons.data());
 		}
 
 		void WindowManager::keyEventHandler(DMKEventType type, I32 keycode, I32 count) {

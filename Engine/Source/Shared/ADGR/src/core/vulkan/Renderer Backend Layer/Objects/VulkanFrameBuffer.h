@@ -13,6 +13,7 @@ namespace Dynamik {
 				VulkanSwapChain swapChain;
 				VulkanRenderPass renderPass;
 
+				ARRAY<VkImageView> preAttachments;
 				ARRAY<VkImageView> additionalAttachments;
 			};
 

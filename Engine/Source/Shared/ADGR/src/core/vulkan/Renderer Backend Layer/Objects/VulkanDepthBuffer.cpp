@@ -22,6 +22,7 @@ namespace Dynamik {
 				cInfo.imageMemory = &imageMemory;
 				cInfo.mipLevels = 1;
 				cInfo.numSamples = info.global->msaaSamples;
+				cInfo.flags = NULL;
 
 				VulkanFunctions::createImage(cInfo);
 
@@ -43,6 +44,7 @@ namespace Dynamik {
 				transitionInfo.queue = info.queue;
 				transitionInfo.mipLevels = 1;
 				transitionInfo.newLayout = VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL;
+				transitionInfo.layerCount = 2;
 
 				VulkanFunctions::transitionImageLayout(transitionInfo);
 			}

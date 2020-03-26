@@ -10,6 +10,20 @@ namespace Dynamik {
 	namespace ADGR {
 		using namespace Backend;
 
+		struct ADGRVulkan3DObjectData {
+			POINTER<ARRAY<ARRAY<Vertex>>> vertexBufferObjects;
+			POINTER<ARRAY<ARRAY<UI32>>> indexBufferObjects;
+
+			std::string vertexShaderPath = "";
+			std::string tessellationShaderPath = "";
+			std::string geometryShaderPath = "";
+			std::string fragmentShaderPath = "";
+
+			ARRAY<std::string> texturePaths;
+
+			DMK_ADGR_RENDERING_TECHNOLOGY renderTechnology = DMK_ADGR_RENDERING_TECHNOLOGY::DMK_ADGR_RENDER_INDEXED;
+		};
+
 		class VulkanRBL3D : public RendererBackend {
 		public:
 			VulkanRBL3D() {}
@@ -27,7 +41,12 @@ namespace Dynamik {
 			void shutDownStageTwo() override;
 			void shutDownStageThree() override;
 
+			void getObjects(ARRAY<ADGRVulkan3DObjectData> objectDatas);
+			void update();
+
 		private:
+			void initializeObjects();
+
 			WindowManager myWindowManager;
 
 			VulkanInstance myInstance;
@@ -47,6 +66,8 @@ namespace Dynamik {
 
 			ARRAY<VulkanRenderObject> renderableObjects;
 			ARRAY<VulkanRenderObject> internalObjects;
+
+			ARRAY<ADGRVulkan3DObjectData> rawObjectStore;
 		};
 	}
 }

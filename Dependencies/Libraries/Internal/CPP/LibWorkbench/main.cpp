@@ -49,11 +49,10 @@ struct Types {
 
 struct destructorTest {
 	destructorTest() {}
-	~destructorTest() 
+	~destructorTest()
 	{
 		std::cout << "Destructing index: " << index << std::endl;
 	}
-
 
 	UI32 index;
 };

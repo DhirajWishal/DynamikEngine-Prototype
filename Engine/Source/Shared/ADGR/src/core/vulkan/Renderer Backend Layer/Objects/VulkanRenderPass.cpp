@@ -26,17 +26,6 @@ namespace Dynamik {
 				colorAttachmentRef.attachment = 0;
 				colorAttachmentRef.layout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
 
-				VkAttachmentDescription colorAttachmentResolve = {};
-				colorAttachmentResolve.format = info.swapChain.mySwapChainImageFormat;
-				colorAttachmentResolve.samples = VK_SAMPLE_COUNT_1_BIT;
-				colorAttachmentResolve.loadOp = VK_ATTACHMENT_LOAD_OP_DONT_CARE;
-				colorAttachmentResolve.storeOp = VK_ATTACHMENT_STORE_OP_STORE;
-				colorAttachmentResolve.stencilLoadOp = VK_ATTACHMENT_LOAD_OP_DONT_CARE;
-				colorAttachmentResolve.stencilStoreOp = VK_ATTACHMENT_STORE_OP_DONT_CARE;
-				colorAttachmentResolve.initialLayout = VK_IMAGE_LAYOUT_UNDEFINED;
-				colorAttachmentResolve.finalLayout = VK_IMAGE_LAYOUT_PRESENT_SRC_KHR;
-				attachments.pushBack(colorAttachmentResolve);
-
 				VkAttachmentReference colorAttachmentResolveRef = {};
 				colorAttachmentResolveRef.attachment = 2;
 				colorAttachmentResolveRef.layout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
@@ -67,6 +56,17 @@ namespace Dynamik {
 
 					subpass.pDepthStencilAttachment = &depthAttachmentRef;
 				}
+
+				VkAttachmentDescription colorAttachmentResolve = {};
+				colorAttachmentResolve.format = info.swapChain.mySwapChainImageFormat;
+				colorAttachmentResolve.samples = VK_SAMPLE_COUNT_1_BIT;
+				colorAttachmentResolve.loadOp = VK_ATTACHMENT_LOAD_OP_DONT_CARE;
+				colorAttachmentResolve.storeOp = VK_ATTACHMENT_STORE_OP_STORE;
+				colorAttachmentResolve.stencilLoadOp = VK_ATTACHMENT_LOAD_OP_DONT_CARE;
+				colorAttachmentResolve.stencilStoreOp = VK_ATTACHMENT_STORE_OP_DONT_CARE;
+				colorAttachmentResolve.initialLayout = VK_IMAGE_LAYOUT_UNDEFINED;
+				colorAttachmentResolve.finalLayout = VK_IMAGE_LAYOUT_PRESENT_SRC_KHR;
+				attachments.pushBack(colorAttachmentResolve);
 
 				ARRAY<VkSubpassDescription> subPasses;
 				subPasses.pushBack(subpass);

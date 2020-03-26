@@ -10,7 +10,7 @@ namespace Dynamik {
 				VkCommandBufferAllocateInfo allocInfo = {};
 				allocInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO;
 				allocInfo.level = VK_COMMAND_BUFFER_LEVEL_PRIMARY;
-				allocInfo.commandPool = commandBuffer.myCommandPool;
+				allocInfo.commandPool = commandBuffer.commandPool;
 				allocInfo.commandBufferCount = count;
 
 				myCommandBuffers.resize(count);
@@ -38,7 +38,7 @@ namespace Dynamik {
 				vkQueueSubmit(myQueue.graphicsQueue, 1, &submitInfo, VK_NULL_HANDLE);
 				vkQueueWaitIdle(myQueue.presentQueue);
 
-				vkFreeCommandBuffers(myDevice.logicalDevice, myCommandBuffer.myCommandPool, myCount, myCommandBuffers.data());
+				vkFreeCommandBuffers(myDevice.logicalDevice, myCommandBuffer.commandPool, myCount, myCommandBuffers.data());
 			}
 		}
 	}

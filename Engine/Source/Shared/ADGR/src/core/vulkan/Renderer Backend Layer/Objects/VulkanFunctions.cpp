@@ -100,7 +100,7 @@ namespace Dynamik {
 				VulkanDevice _device;
 				_device.logicalDevice = device;
 				VulkanCommandBuffer _commandBuffer;
-				_commandBuffer.myCommandPool = commandPool;
+				_commandBuffer.commandPool = commandPool;
 				VulkanQueue _queue;
 				_queue.graphicsQueue = graphicsQueue;
 				VulkanOneTimeCommandBuffer oneTimeCommandBuffer(_device, _commandBuffer, _queue);
@@ -110,7 +110,7 @@ namespace Dynamik {
 				copyRegion.size = size;
 				vkCmdCopyBuffer(commandBuffer, srcBuffer, dstBuffer, 1, &copyRegion);
 			}
-			
+
 			void VulkanFunctions::createImage(ADGRCreateImageInfo info)
 			{
 				VkImageCreateInfo imageInfo = {};
@@ -147,7 +147,7 @@ namespace Dynamik {
 
 				vkBindImageMemory(info.device.logicalDevice, *info.image, *info.imageMemory, 0);
 			}
-			
+
 			void VulkanFunctions::transitionImageLayout(ADGRTransitionImageLayoutInfo info)
 			{
 				VulkanOneTimeCommandBuffer oneTimeCommandBuffer(info.device, info.commandBuffer, info.queue);
@@ -160,7 +160,6 @@ namespace Dynamik {
 				barrier.srcQueueFamilyIndex = VK_QUEUE_FAMILY_IGNORED;
 				barrier.dstQueueFamilyIndex = VK_QUEUE_FAMILY_IGNORED;
 				barrier.image = info.image;
-				//barrier.subresourceRange.levelCount = mipLevels;
 
 				if (info.newLayout == VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL) {
 					barrier.subresourceRange.aspectMask = VK_IMAGE_ASPECT_DEPTH_BIT;
@@ -223,7 +222,7 @@ namespace Dynamik {
 					1, &barrier
 				);
 			}
-			
+
 			VkImageView VulkanFunctions::createImageView(ADGRCreateImageViewInfo info)
 			{
 				VkImageViewCreateInfo viewInfo = {};
@@ -243,7 +242,7 @@ namespace Dynamik {
 
 				return imageView;
 			}
-			
+
 			void VulkanFunctions::copyBufferToImage(ADGRCopyBufferToImageInfo info)
 			{
 				VulkanOneTimeCommandBuffer oneTimeCommandBuffer(info.device, info.commandBuffer, info.queue);

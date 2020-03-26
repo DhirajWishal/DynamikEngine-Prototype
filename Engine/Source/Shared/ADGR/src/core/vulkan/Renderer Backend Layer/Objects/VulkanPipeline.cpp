@@ -8,8 +8,62 @@ namespace Dynamik {
 		namespace Backend {
 			void VulkanPipeline::initialize(ADGRVulkanPipelineInitInfo info)
 			{
+				// initialize the pipeline layout
+				ARRAY<VkDescriptorSetLayout> layouts;
+				for (auto _sets : info.layouts)
+					layouts.pushBack(_sets->layout);
+
+				VkPipelineLayoutCreateInfo pipelineLayoutInfo = {};
+				pipelineLayoutInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO;
+				pipelineLayoutInfo.setLayoutCount = static_cast<UI32>(info.layouts.size());
+				pipelineLayoutInfo.pSetLayouts = layouts.data();
+
+				if (info.pushConstantsEnable) {
+					ARRAY<VkPushConstantRange> pushConstantInfos;
+
+					info.global->pushConstants.resize(info.pushConstantCount);
+					/*
+
+#define r 7.5f
+#define sin_t sin(glm::radians(1.5f * 360))
+#define cos_t cos(glm::radians(1.5f * 360))
+#define y -4.0f
+
+					info.global->pushConstants[0] = glm::vec4(r * 1.1 * sin_t, y, r * 1.1 * cos_t, 1.0f);
+					info.global->pushConstants[1] = glm::vec4(-r * sin_t, y, -r * cos_t, 1.0f);
+					info.global->pushConstants[2] = glm::vec4(r * 0.85f * sin_t, y, -sin_t * 2.5f, 1.5f);
+					info.global->pushConstants[3] = glm::vec4(0.0f, y, r * 1.25f * cos_t, 1.5f);
+					info.global->pushConstants[4] = glm::vec4(r * 2.25f * cos_t, y, 0.0f, 1.25f);
+					info.global->pushConstants[5] = glm::vec4(r * 2.5f * cos_t, y, r * 2.5f * sin_t, 1.25f);
+#undef r
+#undef y
+#undef sin_t
+#undef cos_t
+*/
+// initialize push constants
+					for (I32 i = 0; i < info.pushConstantCount; i++) {
+						VkPushConstantRange pushConsInfo = {};
+						pushConsInfo.stageFlags = VK_SHADER_STAGE_VERTEX_BIT;// TODO::
+						pushConsInfo.size = sizeof(info.global->pushConstants);
+						pushConsInfo.offset = info.pushConstantOffset;
+
+						pushConstantInfos.push_back(pushConsInfo);
+					}
+					pipelineLayoutInfo.pushConstantRangeCount = info.pushConstantCount;
+					pipelineLayoutInfo.pPushConstantRanges = pushConstantInfos.data();
+				}
+				else
+				{
+					pipelineLayoutInfo.pushConstantRangeCount = 0;
+					pipelineLayoutInfo.pPushConstantRanges = nullptr;
+				}
+
+				// create the pipeline layout
+				if (vkCreatePipelineLayout(info.device.logicalDevice, &pipelineLayoutInfo, nullptr, &pipelineLayout) != VK_SUCCESS)
+					DMK_CORE_FATAL("failed to create pipeline layout!");
+
 				auto bindingDescription = Vertex::getBindingDescription(1);
-				auto attributeDescriptions = Vertex::getAttributeDescriptions(4);
+				auto attributeDescriptions = Vertex::getAttributeDescriptions();
 
 				VkPipelineVertexInputStateCreateInfo vertexInputInfo = {};
 				vertexInputInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO;
@@ -105,79 +159,21 @@ namespace Dynamik {
 				colorBlending.blendConstants[2] = info.colorBlendingBlendConstants[2];
 				colorBlending.blendConstants[3] = info.colorBlendingBlendConstants[3];
 
-				// initialize the pipeline layout
-				ARRAY<VkDescriptorSetLayout> layouts;
-				for (VulkanDescriptors _sets : info.layouts)
-					layouts.pushBack(_sets.layout);
+				//ARRAY<VkPipelineShaderStageCreateInfo> shaderStages;
+				//for (VulkanShader _shader : info.shaders)
+				//	shaderStages.pushBack(_shader.stageCreateInfo);
 
-				VkPipelineLayoutCreateInfo pipelineLayoutInfo = {};
-				pipelineLayoutInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO;
-				pipelineLayoutInfo.setLayoutCount = static_cast<UI32>(layouts.size());
-				pipelineLayoutInfo.pSetLayouts = layouts.data();
-
-				if (info.pushConstantsEnable) {
-					ARRAY<VkPushConstantRange> pushConstantInfos;
-
-					info.global->pushConstants.resize(6);
-
-#define r 7.5f
-#define sin_t sin(glm::radians(1.5f * 360))
-#define cos_t cos(glm::radians(1.5f * 360))
-#define y -4.0f
-
-					info.global->pushConstants[0] = glm::vec4(r * 1.1 * sin_t, y, r * 1.1 * cos_t, 1.0f);
-					info.global->pushConstants[1] = glm::vec4(-r * sin_t, y, -r * cos_t, 1.0f);
-					info.global->pushConstants[2] = glm::vec4(r * 0.85f * sin_t, y, -sin_t * 2.5f, 1.5f);
-					info.global->pushConstants[3] = glm::vec4(0.0f, y, r * 1.25f * cos_t, 1.5f);
-					info.global->pushConstants[4] = glm::vec4(r * 2.25f * cos_t, y, 0.0f, 1.25f);
-					info.global->pushConstants[5] = glm::vec4(r * 2.5f * cos_t, y, r * 2.5f * sin_t, 1.25f);
-#undef r
-#undef y
-#undef sin_t
-#undef cos_t
-
-					// initialize push constants
-					for (I32 i = 0; i <= info.global->pushConstants.size(); i++) {
-						VkPushConstantRange pushConsInfo = {};
-						pushConsInfo.stageFlags = VK_SHADER_STAGE_VERTEX_BIT;// TODO::
-						pushConsInfo.size = info.global->pushConstants.size();
-						pushConsInfo.offset = info.pushConstantOffset;
-
-						pushConstantInfos.push_back(pushConsInfo);
-					}
-					pipelineLayoutInfo.pushConstantRangeCount = info.pushConstantCount;
-					pipelineLayoutInfo.pPushConstantRanges = pushConstantInfos.data();
-				}
-
-				// create the pipeline layout
-				VkPipelineLayout pipelineLayout = VK_NULL_HANDLE;
-				if (vkCreatePipelineLayout(info.device.logicalDevice, &pipelineLayoutInfo, nullptr, &pipelineLayout) != VK_SUCCESS)
-					DMK_CORE_FATAL("failed to create pipeline layout!");
-
-				// initialize dynamic state
-				VkPipelineDynamicStateCreateInfo dynamicStateInfo = {};
-				if (info.dynamicStateEnable) {
-					ARRAY<VkDynamicState> dynamicState = {
-						VK_DYNAMIC_STATE_VIEWPORT,
-						VK_DYNAMIC_STATE_SCISSOR
-					};
-
-					dynamicStateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_DYNAMIC_STATE_CREATE_INFO;
-					dynamicStateInfo.dynamicStateCount = static_cast<UI32>(dynamicState.size());
-					dynamicStateInfo.pDynamicStates = dynamicState.data();
-					dynamicStateInfo.flags = info.dynamicStateFlags;
-				}
-
-				ARRAY<VkPipelineShaderStageCreateInfo> shaderStages;
-				for (VulkanShader _info : info.shaders)
-					shaderStages.pushBack(_info.stageCreateInfo);
+				VkPipelineShaderStageCreateInfo stages[] =
+				{ 
+					info.shaders[0].stageCreateInfo,
+					info.shaders[1].stageCreateInfo 
+				};
 
 				// initialize the pipeline
 				VkGraphicsPipelineCreateInfo pipelineInfo = {};
 				pipelineInfo.sType = VK_STRUCTURE_TYPE_GRAPHICS_PIPELINE_CREATE_INFO;
-				pipelineInfo.pNext = nullptr;
-				pipelineInfo.stageCount = info.shaders.size();
-				pipelineInfo.pStages = shaderStages.data();
+				pipelineInfo.stageCount = 2;
+				pipelineInfo.pStages = stages;
 				pipelineInfo.pVertexInputState = &vertexInputInfo;
 				pipelineInfo.pInputAssemblyState = &inputAssembly;
 				pipelineInfo.pViewportState = &viewportState;
@@ -190,13 +186,23 @@ namespace Dynamik {
 				pipelineInfo.subpass = info.pipelineSubPass;
 				pipelineInfo.basePipelineHandle = info.pipelineBasePipelineHandle;
 				pipelineInfo.basePipelineIndex = info.pipelineBasePipelineIndex;
-				pipelineInfo.pTessellationState = nullptr;
 
-				if (info.dynamicStateEnable)
+				// initialize dynamic state
+				if (info.dynamicStateEnable) {
+					VkPipelineDynamicStateCreateInfo dynamicStateInfo = {};
+					ARRAY<VkDynamicState> dynamicState = {
+						VK_DYNAMIC_STATE_VIEWPORT,
+						VK_DYNAMIC_STATE_SCISSOR
+					};
+
+					dynamicStateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_DYNAMIC_STATE_CREATE_INFO;
+					dynamicStateInfo.dynamicStateCount = static_cast<UI32>(dynamicState.size());
+					dynamicStateInfo.pDynamicStates = dynamicState.data();
+					dynamicStateInfo.flags = info.dynamicStateFlags;
 					pipelineInfo.pDynamicState = &dynamicStateInfo;
+				}
 
 				// create the pipeline
-				VkPipeline pipeline = VK_NULL_HANDLE;
 				if (vkCreateGraphicsPipelines(info.device.logicalDevice, VK_NULL_HANDLE, 1, &pipelineInfo, nullptr, &pipeline) != VK_SUCCESS)
 					DMK_CORE_FATAL("failed to create graphics pipeline!");
 			}

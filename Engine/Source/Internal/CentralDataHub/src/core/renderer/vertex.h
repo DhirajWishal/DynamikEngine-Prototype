@@ -26,10 +26,14 @@ namespace Dynamik {
 		float Integrity = 1.0f;
 
 		static ARRAY<VkVertexInputBindingDescription> getBindingDescription(int bindCount);
-		static ARRAY<VkVertexInputAttributeDescription> getAttributeDescriptions(int bindCount);
+		static ARRAY<VkVertexInputAttributeDescription> getAttributeDescriptions();
 
 		bool operator==(const Vertex& other) const {
-			return Position == other.Position && Color == other.Color && TexCoordinates == other.TexCoordinates;
+			return Position == other.Position
+				&& Color == other.Color
+				&& TexCoordinates == other.TexCoordinates
+				&& Normals == other.Normals
+				&& Integrity == other.Integrity;
 		}
 	};
 }

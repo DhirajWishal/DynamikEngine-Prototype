@@ -17,7 +17,7 @@ namespace Dynamik {
 
 			struct ADGRVulkanShaderInitInfo {
 				VulkanDevice device;
-				
+
 				std::string path;
 				ADGRVulkanShaderType type = ADGRVulkanShaderType::ADGR_VULKAN_SHADER_TYPE_VERTEX;
 			};
@@ -35,8 +35,8 @@ namespace Dynamik {
 				ADGRVulkanShaderType type;
 				VkPipelineShaderStageCreateInfo stageCreateInfo;
 
-			private:
-				ARRAY<CHR> getCode(std::string path);
+				static VkShaderModule createModule(VulkanDevice device, ARRAY<CHR> code);
+				static ARRAY<CHR> getCode(std::string path);
 			};
 		}
 	}

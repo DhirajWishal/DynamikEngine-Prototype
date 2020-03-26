@@ -14,7 +14,7 @@ namespace Dynamik {
 		return bindingDescription;
 	}
 
-	ARRAY<VkVertexInputAttributeDescription> Vertex::getAttributeDescriptions(int bindCount) {
+	ARRAY<VkVertexInputAttributeDescription> Vertex::getAttributeDescriptions() {
 		ARRAY<VkVertexInputAttributeDescription> attributeDescriptions;
 
 		VkVertexInputAttributeDescription _description = {};

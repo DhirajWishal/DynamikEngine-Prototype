@@ -8,9 +8,8 @@
 namespace Dynamik {
 	namespace ADGR {
 		namespace Backend {
-
 			/*
-			 TODO: 
+			 TODO:
 			 * Remove vulkan format and just have a container for index and vertex buffers (vulkan side)
 			 * and render them accordingly.
 			 * Same for uniform buffers.

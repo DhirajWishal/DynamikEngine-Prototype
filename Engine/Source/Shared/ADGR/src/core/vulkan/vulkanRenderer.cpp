@@ -18,8 +18,6 @@
 #include "CentralDataHub.h"
 #include "Platform.h"
 
-#include "Renderer Backend Layer/VulkanRBL3D.h"
-
 #ifdef DMK_USE_VULKAN
 namespace Dynamik {
 	namespace ADGR {
@@ -39,20 +37,19 @@ namespace Dynamik {
 		}
 
 		// Basic one-time initializations
-		void vulkanRenderer::initStageOne() 
+		void vulkanRenderer::initStageOne()
 		{
-			VulkanRBL3D _debug;
-			_debug.init();
+			my3DRenderer.initStageOne();
 		}
 
 		// object loading and initialization
 		void vulkanRenderer::initStageTwo() {
-			
+			my3DRenderer.initStageTwo();
 		}
 
 		// final initialization
 		void vulkanRenderer::initStageThree() {
-			
+			my3DRenderer.initStageThree();
 		}
 
 		// shutdown the renderer
@@ -64,7 +61,6 @@ namespace Dynamik {
 
 		// basic one-time shut down functions
 		void vulkanRenderer::shutDownStageOne() {
-			
 		}
 
 		// per object shut down functions
@@ -266,13 +262,47 @@ namespace Dynamik {
 		}
 
 		void vulkanRenderer::setFormats(ARRAY<RendererFormat>& rendererFormats) {
-			//_addVulkanFormatsToManager(rendererFormats);
+			ARRAY<ADGRVulkan3DObjectData> _objectDatas;
+
+			for (UI32 _itr = 0; _itr < rendererFormats.size(); _itr++)
+			{
+				ADGRVulkan3DObjectData _object;
+				_object.vertexShaderPath = rendererFormats[_itr].myInternalFormat->myGameObject->myProperties.renderableObjectProperties.vertexShaderPath;
+				_object.tessellationShaderPath = rendererFormats[_itr].myInternalFormat->myGameObject->myProperties.renderableObjectProperties.tessellationShaderPath;
+				_object.geometryShaderPath = rendererFormats[_itr].myInternalFormat->myGameObject->myProperties.renderableObjectProperties.geometryShaderPath;
+				_object.fragmentShaderPath = rendererFormats[_itr].myInternalFormat->myGameObject->myProperties.renderableObjectProperties.fragmentShaderPath;
+
+				_object.texturePaths = rendererFormats[_itr].myInternalFormat->myGameObject->myProperties.texturePaths;
+
+				_object.vertexBufferObjects = &rendererFormats[_itr].myInternalFormat->myVertexBufferObjects;
+				_object.indexBufferObjects = &rendererFormats[_itr].myInternalFormat->myIndexBufferObjects;
+
+				_objectDatas.pushBack(_object);
+			}
+
+			my3DRenderer.getObjects(_objectDatas);
 		}
 
 		void vulkanRenderer::updateFormats(ARRAY<RendererFormat>& rendererFormats) {
-			//_addVulkanFormatsToManager(rendererFormats);
+			ARRAY<ADGRVulkan3DObjectData> _objectDatas;
 
-			//initObjectBasedFunctions(&myVulkanFormats);
+			for (UI32 _itr = 0; _itr < rendererFormats.size(); _itr++)
+			{
+				ADGRVulkan3DObjectData _object;
+				_object.vertexShaderPath = rendererFormats[_itr].myInternalFormat->myGameObject->myProperties.renderableObjectProperties.vertexShaderPath;
+				_object.tessellationShaderPath = rendererFormats[_itr].myInternalFormat->myGameObject->myProperties.renderableObjectProperties.tessellationShaderPath;
+				_object.geometryShaderPath = rendererFormats[_itr].myInternalFormat->myGameObject->myProperties.renderableObjectProperties.geometryShaderPath;
+				_object.fragmentShaderPath = rendererFormats[_itr].myInternalFormat->myGameObject->myProperties.renderableObjectProperties.fragmentShaderPath;
+
+				_object.texturePaths = rendererFormats[_itr].myInternalFormat->myGameObject->myProperties.texturePaths;
+
+				_object.vertexBufferObjects = &rendererFormats[_itr].myInternalFormat->myVertexBufferObjects;
+				_object.indexBufferObjects = &rendererFormats[_itr].myInternalFormat->myIndexBufferObjects;
+
+				_objectDatas.pushBack(_object);
+			}
+
+			my3DRenderer.getObjects(_objectDatas);
 		}
 	}
 }

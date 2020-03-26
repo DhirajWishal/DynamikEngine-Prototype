@@ -53,9 +53,9 @@ namespace Dynamik {
 		/* DESTRUCTOR
 		 * Default destructor.
 		 */
-		//~InitializerList() {}
+		 //~InitializerList() {}
 
-		/* PUBLIC FUNCTION */
+		 /* PUBLIC FUNCTION */
 	public:
 		/* PUBLIC FUNCTION
 		 * Return the first address.

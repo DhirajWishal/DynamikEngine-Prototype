@@ -31,7 +31,7 @@ namespace Dynamik {
 	public:
 		DestructionEntity() {}
 		DestructionEntity(DMKDestructionType type, DMKDestructionBehaviour behaviour)
-		: myDestructionType(type), myDestructionBehaviour(behaviour) {}
+			: myDestructionType(type), myDestructionBehaviour(behaviour) {}
 		virtual ~DestructionEntity() {}
 
 		DMKDestructionType getType() { return myDestructionType; }

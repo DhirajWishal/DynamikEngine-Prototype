@@ -17,7 +17,7 @@ namespace Dynamik {
 				VulkanRenderPass renderPass;
 				VulkanSwapChain swapChain;
 
-				ARRAY<VulkanRenderObject>* objects;
+				POINTER<ARRAY<VulkanRenderObject>> objects;
 			};
 
 			class VulkanCommandBuffer {
@@ -29,7 +29,7 @@ namespace Dynamik {
 				void initialize(ADGRVulkanCommandBufferInitInfo info);
 				void terminate(VulkanDevice device);
 
-				VkCommandPool myCommandPool = VK_NULL_HANDLE;
+				VkCommandPool commandPool = VK_NULL_HANDLE;
 				ARRAY<VkCommandBuffer> myCommandBuffers;
 
 			private:

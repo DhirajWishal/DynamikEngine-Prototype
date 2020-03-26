@@ -71,7 +71,7 @@ namespace Dynamik {
 				VulkanFunctions::createImage(cinfo);
 
 				VulkanCommandBuffer _commandBuffer;
-				_commandBuffer.myCommandPool = info.commandPool;
+				_commandBuffer.commandPool = info.commandPool;
 
 				ADGRTransitionImageLayoutInfo transitionInfo;
 				transitionInfo.device = info.device;
@@ -152,9 +152,8 @@ namespace Dynamik {
 				if (!(formatProperties.optimalTilingFeatures & VK_FORMAT_FEATURE_SAMPLED_IMAGE_FILTER_LINEAR_BIT))
 					DMK_CORE_FATAL("texture image format does not support linear blitting!");
 
-
 				VulkanCommandBuffer commandBuffer;
-				commandBuffer.myCommandPool = commandPool;
+				commandBuffer.commandPool = commandPool;
 
 				VulkanOneTimeCommandBuffer oneTimeCommandBuffer(device, commandBuffer, queue);
 				VkCommandBuffer _commandBuffer = oneTimeCommandBuffer.myCommandBuffers[0];

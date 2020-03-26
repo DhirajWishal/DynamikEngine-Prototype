@@ -21,6 +21,8 @@
 
 #include "core/data store/internalFormat.h"
 
+#include "Renderer Backend Layer/VulkanRBL3D.h"
+
 #ifdef DMK_USE_VULKAN
 namespace Dynamik {
 	namespace ADGR {
@@ -129,6 +131,8 @@ namespace Dynamik {
 			/* PRIVATE FUNCTIONS */
 		private:
 			void recreateSwapChain();
+
+			VulkanRBL3D my3DRenderer;
 		};
 	}
 }

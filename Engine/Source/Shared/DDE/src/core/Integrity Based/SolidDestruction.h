@@ -9,7 +9,7 @@ namespace Dynamik {
 	public:
 		SolidDestruction() {}
 		SolidDestruction(DMKDestructionType type)
-		: DestructionEntity(type, DMKDestructionBehaviour::DMK_DESTRUCTION_BEHAVIOUR_SOLID){}
+			: DestructionEntity(type, DMKDestructionBehaviour::DMK_DESTRUCTION_BEHAVIOUR_SOLID) {}
 		virtual ~SolidDestruction() {}
 	};
 }

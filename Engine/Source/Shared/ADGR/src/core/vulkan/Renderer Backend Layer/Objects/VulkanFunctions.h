@@ -84,7 +84,6 @@ namespace Dynamik {
 
 				UI32 baseArrayCount = 0;
 				UI32 layerCount = 1;
-
 			};
 
 			class VulkanFunctions {

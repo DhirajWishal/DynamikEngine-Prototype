@@ -40,7 +40,7 @@ namespace Dynamik {
 
 				VulkanFunctions::createBuffer(vertBufferInfo);
 
-				VulkanFunctions::copyBuffer(device.logicalDevice, stagingBuffer, buffer, bufferSize, commandBuffer.myCommandPool, queue.graphicsQueue);
+				VulkanFunctions::copyBuffer(device.logicalDevice, stagingBuffer, buffer, bufferSize, commandBuffer.commandPool, queue.graphicsQueue);
 
 				vkDestroyBuffer(device.logicalDevice, stagingBuffer, nullptr);
 				vkFreeMemory(device.logicalDevice, stagingBufferMemory, nullptr);

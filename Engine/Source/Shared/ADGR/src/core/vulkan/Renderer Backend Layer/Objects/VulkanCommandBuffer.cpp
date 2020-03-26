@@ -13,7 +13,7 @@ namespace Dynamik {
 				poolInfo.queueFamilyIndex = queueFamilyIndices.graphicsFamily.value();
 				poolInfo.flags = 0;
 
-				if (vkCreateCommandPool(device.logicalDevice, &poolInfo, nullptr, &myCommandPool) != VK_SUCCESS)
+				if (vkCreateCommandPool(device.logicalDevice, &poolInfo, nullptr, &commandPool) != VK_SUCCESS)
 					DMK_CORE_FATAL("failed to create command pool!");
 			}
 
@@ -23,7 +23,7 @@ namespace Dynamik {
 
 				VkCommandBufferAllocateInfo allocInfo = {};
 				allocInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO;
-				allocInfo.commandPool = myCommandPool;
+				allocInfo.commandPool = commandPool;
 				allocInfo.level = VK_COMMAND_BUFFER_LEVEL_PRIMARY;
 				allocInfo.commandBufferCount = static_cast<UI32>(info.frameBuffer.frameBuffers.size());
 
@@ -207,8 +207,8 @@ namespace Dynamik {
 
 			void VulkanCommandBuffer::terminate(VulkanDevice device)
 			{
-				vkFreeCommandBuffers(device.logicalDevice, myCommandPool, static_cast<UI32>(myCommandBuffers.size()), myCommandBuffers.data());
-				vkDestroyCommandPool(device.logicalDevice, myCommandPool, nullptr);
+				vkFreeCommandBuffers(device.logicalDevice, commandPool, static_cast<UI32>(myCommandBuffers.size()), myCommandBuffers.data());
+				vkDestroyCommandPool(device.logicalDevice, commandPool, nullptr);
 			}
 		}
 	}

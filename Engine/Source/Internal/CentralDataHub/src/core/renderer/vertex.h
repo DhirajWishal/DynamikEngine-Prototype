@@ -23,7 +23,7 @@ namespace Dynamik {
 		glm::vec3 Color;
 		glm::vec2 TexCoordinates;
 		glm::vec3 Normals;
-		float Integrity = 1.0f;
+		//float Integrity = 1.0f;
 
 		static ARRAY<VkVertexInputBindingDescription> getBindingDescription(int bindCount);
 		static ARRAY<VkVertexInputAttributeDescription> getAttributeDescriptions();
@@ -32,8 +32,8 @@ namespace Dynamik {
 			return Position == other.Position
 				&& Color == other.Color
 				&& TexCoordinates == other.TexCoordinates
-				&& Normals == other.Normals
-				&& Integrity == other.Integrity;
+				&& Normals == other.Normals;
+				//&& Integrity == other.Integrity;
 		}
 	};
 }

@@ -143,6 +143,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\core\data store\DMKObject.h" />
     <ClInclude Include="GameLibraries\Data Types\Uniform.h" />
     <ClInclude Include="GameLibraries\Data Types\Vertex.h" />
     <ClInclude Include="GameLibraries\GameObject.h" />
@@ -150,6 +151,7 @@
     <ClInclude Include="GameLibraries\Level.h" />
     <ClInclude Include="GameLibraries\Scene.h" />
     <ClInclude Include="src\Dynamik.h" />
+    <ClInclude Include="src\Experimental\Singleton.h" />
     <ClInclude Include="src\core\application.h" />
     <ClInclude Include="src\core\core.h" />
     <ClInclude Include="src\core\data store\containers.h" />
@@ -171,6 +173,7 @@
     <ClInclude Include="src\dmkafx.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Experimental\Singleton.cpp" />
     <ClCompile Include="src\core\application.cpp" />
     <ClCompile Include="src\core\data store\internalFormat.cpp" />
     <ClCompile Include="src\core\engineControlUnit.cpp" />

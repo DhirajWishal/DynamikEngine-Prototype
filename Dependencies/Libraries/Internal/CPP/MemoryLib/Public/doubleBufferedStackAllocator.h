@@ -3,8 +3,18 @@
 #define _DYNAMIK_MEMORY_DOUBLE_BUFFERED_STACK_ALLOCATOR_H
 
 #include "doubleBufferedAllocator.h"
+#include "DataTypesLib/Public/Pointer.h"
 
 namespace Dynamik {
+	struct DBSIndexBlock {
+		POINTER<UI32> address;
+		UI32 size = 0;
+		UI32 offset = 0;
+		UI32 index = 0;
+		POINTER<UI32> indexedAddress;
+		B1 buffer = false;
+	};
+
 	/* DOUBLE BUFFERED STACK ALLOCATOR CLASS */
 	class  DoubleBufferedStackAllocator : public DoubleBufferedAllocator {
 	public:

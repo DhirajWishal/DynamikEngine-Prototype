@@ -9,6 +9,7 @@
 
 #include "src/engineInstance.h"
 #include "src/imports.h"
+#include "Experimental/Singleton.h"
 
 #include "src/objectDefinitions.h"
 #include "Platform.h"

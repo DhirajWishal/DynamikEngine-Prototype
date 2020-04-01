@@ -173,6 +173,9 @@
     <ProjectReference Include="..\..\..\..\Dependencies\Programs\Debugger\Debugger.vcxproj">
       <Project>{2ACD0289-169A-5D94-3FB3-4B3C2BDF9222}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\Events\Events.vcxproj">
+      <Project>{3A8963B1-262B-8E87-0FE6-A1DBFB2615D8}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\..\Dependencies\Libraries\Internal\CPP\DataTypesLib\DataTypesLib.vcxproj">
       <Project>{6B37DFCD-579A-6E72-0020-A728EC613AF5}</Project>
     </ProjectReference>

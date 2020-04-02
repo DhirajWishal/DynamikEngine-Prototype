@@ -1,8 +1,8 @@
 #include "adgrafx.h"
-#include "VulkanTextureManager.h"
+#include "VulkanTextureFunctions.h"
 
-#include "VulkanFunctions.h"
-#include "VulkanOneTimeCommandBufferManager.h"
+#include "core/vulkan/Renderer Backend Layer/Managers/VulkanFunctions.h"
+#include "core/vulkan/Renderer Backend Layer/Managers/VulkanOneTimeCommandBufferManager.h"
 
 #include "Platform/Windows/resource/imageLoader.h"
 using namespace Dynamik::ADGR::core;
@@ -10,10 +10,11 @@ using namespace Dynamik::ADGR::core;
 namespace Dynamik {
 	namespace ADGR {
 		namespace Backend {
-			void VulkanTextureManager::initialize(
-				POINTER<VulkanCoreObject> core,
-				ADGRVulkanTextureInitInfo info,
-				POINTER<VulkanRenderObject> object)
+			/* HELPER FUNCTIONS */
+			
+			/* CLASS DEFINITIONS */
+			/* TEXTURE 2D */
+			void VulkanTextureFunctions::initializeTexture2D(POINTER<VulkanCoreObject> core, ADGRVulkanTextureInitInfo info, POINTER<VulkanRenderObject> object)
 			{
 				ADGRVulkanTextureContainer _container;
 				_container.format = info.format;
@@ -126,8 +127,8 @@ namespace Dynamik {
 
 				object->textures.pushBack(_container);
 			}
-
-			void VulkanTextureManager::terminate(POINTER<VulkanCoreObject> core, ADGRVulkanTextureContainer container)
+			
+			void VulkanTextureFunctions::terminateTexture(POINTER<VulkanCoreObject> core, ADGRVulkanTextureContainer container)
 			{
 				vkDestroySampler(core->logicalDevice, container.imageSampler, nullptr);
 				vkDestroyImageView(core->logicalDevice, container.imageView, nullptr);
@@ -136,7 +137,7 @@ namespace Dynamik {
 				vkFreeMemory(core->logicalDevice, container.imageMemory, nullptr);
 			}
 
-			void VulkanTextureManager::generateMipMaps(POINTER<VulkanCoreObject> core, POINTER<ADGRVulkanTextureContainer> container)
+			void VulkanTextureFunctions::generateMipMaps(POINTER<VulkanCoreObject> core, POINTER<ADGRVulkanTextureContainer> container)
 			{
 				UI32 _width = container->width, _height = container->height;
 

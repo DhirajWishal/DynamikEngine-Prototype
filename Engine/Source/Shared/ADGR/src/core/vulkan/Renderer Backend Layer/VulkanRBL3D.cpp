@@ -21,38 +21,38 @@ namespace Dynamik {
 			ADGRVulkanInstanceInitInfo instanceInitInfo;
 			instanceInitInfo.applicationName = "Dynamik Engine";
 			instanceInitInfo.engineName = "Dynamik";
-			myInstance.initialize(&myCoreObject, instanceInitInfo);
+			VulkanCoreFunctions::initializeInstance(&myCoreObject, instanceInitInfo);
 
 			// initialize debugger
-			myDebugger.initialize(&myCoreObject);
+			VulkanCoreFunctions::initializeDebugger(&myCoreObject);
 
 			// initialize window surface
 			myWindowManager.createWindowSurface(&myCoreObject);
 
 			// initialize devices
-			myDevice.initialize(&myCoreObject);
+			VulkanCoreFunctions::initializeDevice(&myCoreObject);
 
 			// initialize swap chain
-			mySwapChain.initialize(&myCoreObject, myWindowManager.windowWidth, myWindowManager.windowHeight);	// TODO::
+			VulkanCoreFunctions::initializeSwapChain(&myCoreObject, myWindowManager.windowWidth, myWindowManager.windowHeight); // TODO::
 
 			// initialize command pool
-			myCommandBuffer.initializeCommandPool(&myCoreObject);
+			VulkanBufferFunctions::initializeCommandPool(&myCoreObject);
 
 			// initialize color buffer
-			auto attachment1 = myColorBuffer.initialize(&myCoreObject);
+			auto attachment1 = VulkanBufferFunctions::initializeColorBuffer(&myCoreObject);
 
 			// initialize depth buffer
-			auto attachment2 = myDepthBuffer.initialize(&myCoreObject);
+			auto attachment2 = VulkanBufferFunctions::initializeDepthBuffer(&myCoreObject);
 
 			// initialize render pass
 			ADGRVulkanRenderPassInitInfo renderPassInitInfo;
 			renderPassInitInfo.enableDepthAttachment = true;
-			myRenderPass.initialize(&myCoreObject, renderPassInitInfo);
+			VulkanCoreFunctions::initializeRenderPass(&myCoreObject, renderPassInitInfo);
 
 			// initialize frame buffer
 			ADGRVulkanFrameBufferInitInfo frameBufferInitInfo;
 			frameBufferInitInfo.preAttachments = { attachment1.imageView, attachment2.imageView };
-			myFrameBuffer.initialize(&myCoreObject, frameBufferInitInfo);
+			VulkanBufferFunctions::initializeFrameBuffer(&myCoreObject, frameBufferInitInfo);
 		}
 
 		void VulkanRBL3D::initStageTwo()
@@ -63,12 +63,12 @@ namespace Dynamik {
 			// initialize command buffers
 			ADGRVulkanCommandBufferInitInfo commandBufferInitInfo;
 			commandBufferInitInfo.objects = &renderableObjects;
-			myCommandBuffer.initialize(&myCoreObject, commandBufferInitInfo);
+			VulkanBufferFunctions::initializeCommandBuffer(&myCoreObject, commandBufferInitInfo);
 		}
 
 		void VulkanRBL3D::initStageThree()
 		{
-			mySyncObjects.initialize(myCoreObject.logicalDevice);
+			VulkanCoreFunctions::initializeSyncObjects(myCoreObject.logicalDevice, &syncObjectsContainer);
 		}
 
 		void VulkanRBL3D::drawFrame()
@@ -112,7 +112,7 @@ namespace Dynamik {
 
 				// initialize descriptor set layout
 				ADGRVulkanDescriptorSetLayoutInitInfo layoutInitInfo;
-				myDescriptorManager.initializeLayout(&myCoreObject, layoutInitInfo, &_renderObject);
+				VulkanCoreFunctions::initializeDescriptorLayout(&myCoreObject, layoutInitInfo, &_renderObject);
 
 				// initialize shaders
 				/*
@@ -172,7 +172,7 @@ namespace Dynamik {
 				pipelineInitInfo.pushConstantCount = 1;
 				pipelineInitInfo.vertex = _object.vertexShaderPath;
 				pipelineInitInfo.fragment = _object.fragmentShaderPath;
-				myPipelineManager.initialize(&myCoreObject, pipelineInitInfo, &_renderObject);
+				VulkanCoreFunctions::initializePipeline(&myCoreObject, pipelineInitInfo, &_renderObject);
 
 				// terminate shaders
 				//for (VulkanShaderManager _shader : shaders)
@@ -181,34 +181,32 @@ namespace Dynamik {
 				// initialize textures
 				for (UI32 _itr = 0; _itr < _object.texturePaths.size(); _itr++)
 				{
-					VulkanTextureManager _texture;
-
 					ADGRVulkanTextureInitInfo initInfo;
 					initInfo.path = _object.texturePaths[_itr];
 					initInfo.format = VK_FORMAT_R8G8B8A8_UNORM;
 					initInfo.mipLevels = 1;
-					_texture.initialize(&myCoreObject, initInfo, &_renderObject);
+					VulkanTextureFunctions::initializeTexture2D(&myCoreObject, initInfo, &_renderObject);
 				}
 
 				// initialize vertex buffers
 				for (UI32 _itr = 0; _itr < _object.vertexBufferObjects->size(); _itr++)
-					myVertexBufferManager.initialize(&myCoreObject, &_object.vertexBufferObjects->at(_itr), &_renderObject);
+					VulkanBufferFunctions::initializeVertexBuffer(&myCoreObject, &_object.vertexBufferObjects->at(_itr), &_renderObject);
 
 				// initialize index buffers
 				for (UI32 _itr = 0; _itr < _object.indexBufferObjects->size(); _itr++)
-					myIndexBufferManager.initialize(&myCoreObject, &_object.indexBufferObjects->at(_itr), &_renderObject);
+					VulkanBufferFunctions::initializeIndexBufferUI32(&myCoreObject, &_object.indexBufferObjects->at(_itr), &_renderObject);
 
 				// initialize uniform buffers
-				myUniformBufferManager.initialize(&myCoreObject, &_renderObject);
+				VulkanBufferFunctions::initializeUniformBuffer(&myCoreObject, &_renderObject);
 
 				// initialize descriptor pool
 				ADGRVulkanDescriptorPoolInitInfo descriptorPoolInitInfo;
 				descriptorPoolInitInfo.poolCount = _renderObject.textures.size();
-				myDescriptorManager.initializeDescriptorPool(&myCoreObject, descriptorPoolInitInfo, &_renderObject);
+				VulkanCoreFunctions::initializeDescriptorPool(&myCoreObject, descriptorPoolInitInfo, &_renderObject);
 
 				// initialize descriptor sets
 				ADGRVulkanDescriptorSetsInitInfo descriptorSetsInitInfo;
-				myDescriptorManager.initializeDescriptorSets(&myCoreObject, descriptorSetsInitInfo, &_renderObject);
+				VulkanCoreFunctions::initializeDescriptorSets(&myCoreObject, descriptorSetsInitInfo, &_renderObject);
 
 				renderableObjects.push_back(_renderObject);
 			}

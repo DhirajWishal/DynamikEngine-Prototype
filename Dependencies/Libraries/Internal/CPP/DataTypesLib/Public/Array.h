@@ -36,7 +36,7 @@ namespace Dynamik {
 	 * This either allows the destructor to call all the destructors of stored variables or orphan them all.
 	 */
 	enum class DMKArrayDestructorCallMode {
-		DMK_ARRAY_DESTRUCTOR_CALL_MODE_DESTRUCT_NONE,	// Does not call the distructor in data. Execution speed is high.
+		DMK_ARRAY_DESTRUCTOR_CALL_MODE_DESTRUCT_NONE,	// Does not call the destructor in data. Execution speed is high.
 		DMK_ARRAY_DESTRUCTOR_CALL_MODE_DESTRUCT_ALL,	// Calls destructor in all elements. Execution speed depends on the time taken to destroy.
 		DMK_ARRAY_DESTRUCTOR_CALL_MODE_DESTRUCT_ALL_THREADED,	// Calls the destructor for each element in a thread.
 		DMK_ARRAY_DESTRUCTOR_CALL_MODE_DESTRUCT_UNDEFINED	// Undefined
@@ -44,9 +44,15 @@ namespace Dynamik {
 
 	/* TEMPLATED
 	 * Dynamic Array data structure for the Dynamik Engine.
-	 * This array can store any data defined in the datatype TYPE and supports multiple dimentions.
-	 * Tested to be faster than the ARRAY<TYPE> library/ datatype.
+	 * This array can store any data defined in the data type TYPE and supports multiple dimensions.
+	 * Tested to be faster than the ARRAY<TYPE> library/ data type.
 	 * This also contains utility functions related to array and pointer manipulation.
+	 *
+	 * This can also be used as:
+	 *     Dynamic Array
+	 *     Stack
+	 *     Queue
+	 *     Deque (Dequeue)
 	 *
 	 * @warn: The Dynamic Array does not call the destructor for all the stored elements at default.
 				If needed to call, DestructorCallMode must be set to either ALL or ALL THREADED.
@@ -68,7 +74,7 @@ namespace Dynamik {
 		static_assert(!isType<TYPE, Allocator>::result, "Invalid Template Arguments! ARRAY<TYPE, Allocator>");
 
 		/* PRIVATE DATATYPE
-		 * Used as a private datatype.
+		 * Used as a private data type.
 		 */
 		using PTR = POINTER<TYPE>;
 
@@ -119,7 +125,7 @@ namespace Dynamik {
 		 */
 		ARRAY()
 		{
-			_reAllocate(_getNextSize());
+			_reAllocateBack(_getNextSize());
 			myDataCount = 0;
 		}
 
@@ -136,10 +142,10 @@ namespace Dynamik {
 			{
 				if ((size + _getAllocatableSize(size)) > maxSize()) return; /* TODO: Error Flagging */
 
-				_reAllocate(_getAllocatableSize(size));
+				_reAllocateBack(_getAllocatableSize(size));
 			}
 			else
-				_reAllocate(_getNextSize());
+				_reAllocateBack(_getNextSize());
 
 			myDataCount = size;
 		}
@@ -158,11 +164,11 @@ namespace Dynamik {
 			{
 				if ((size + _getAllocatableSize(size)) > maxSize()) return; /* TODO: Error Flagging */
 
-				_reAllocate(_getAllocatableSize(size));
+				_reAllocateBack(_getAllocatableSize(size));
 				setData(myBeginPtr, (UI32)value, capacity());
 			}
 			else
-				_reAllocate(_getNextSize());
+				_reAllocateBack(_getNextSize());
 
 			myDataCount = size;
 			myNextPtr += size;
@@ -178,7 +184,7 @@ namespace Dynamik {
 			if (_getAllocationSize() > maxSize()) return; /* TODO: Error Flagging */
 
 			myDataCount = _getSizeOfRawArray(arr);
-			_reAllocate(_getNextSizeToFit(myDataCount));
+			_reAllocateBack(_getNextSizeToFit(myDataCount));
 			setData(myBeginPtr, 0, capacity());
 		}
 
@@ -196,16 +202,16 @@ namespace Dynamik {
 				if ((list.size() + _getNextSizeToFit(_getAllocatableSize(list.size()))) > maxSize()) return; /* TODO: Error Flagging */
 
 				if (list.size())
-					_reAllocate(_getNextSizeToFit(_getAllocatableSize(list.size())));
+					_reAllocateBack(_getNextSizeToFit(_getAllocatableSize(list.size())));
 				else
-					_reAllocate(_getNextSize());
+					_reAllocateBack(_getNextSize());
 
 				if (list.size())
 					moveBytes(myBeginPtr, (PTR)list.begin(), (PTR)list.end());
 			}
 			else
 			{
-				_reAllocate(_getNextSizeToFit(_getAllocatableSize(list.size())));
+				_reAllocateBack(_getNextSizeToFit(_getAllocatableSize(list.size())));
 				moveBytes(myBeginPtr, (PTR)list.begin(), (PTR)list.end());
 			}
 
@@ -227,16 +233,16 @@ namespace Dynamik {
 				if ((list.size() + _getNextSizeToFit(_getAllocatableSize(list.size()))) > maxSize()) return; /* TODO: Error Flagging */
 
 				if (list.size())
-					_reAllocate(_getNextSizeToFit(_getAllocatableSize(list.size())));
+					_reAllocateBack(_getNextSizeToFit(_getAllocatableSize(list.size())));
 				else
-					_reAllocate(_getNextSize());
+					_reAllocateBack(_getNextSize());
 
 				if (list.size())
 					moveBytes(myBeginPtr, (PTR)list.begin(), (PTR)list.end());
 			}
 			else
 			{
-				_reAllocate(_getNextSizeToFit(_getAllocatableSize(list.size())));
+				_reAllocateBack(_getNextSizeToFit(_getAllocatableSize(list.size())));
 				moveBytes(myBeginPtr, (PTR)list.begin(), (PTR)list.end());
 			}
 
@@ -253,7 +259,7 @@ namespace Dynamik {
 		{
 			if (vector.size() > maxSize()); /* TODO: Error Flagging */
 
-			_reAllocate(_getAllocatableSize(vector.size()));
+			_reAllocateBack(_getAllocatableSize(vector.size()));
 			moveBytes(myBeginPtr, (PTR)vector.begin()._Unwrapped(), (PTR)vector.end()._Unwrapped());
 
 			myDataCount = vector.size();
@@ -264,12 +270,12 @@ namespace Dynamik {
 		{
 			if (arr.size())
 			{
-				_reAllocate(_getAllocatableSize(arr.capacity()));
+				_reAllocateBack(_getAllocatableSize(arr.capacity()));
 
 				set(arr.begin(), arr.end());
 			}
 			else
-				_reAllocate(_getNextSize());
+				_reAllocateBack(_getNextSize());
 		}
 
 		/* DESTRUCTOR
@@ -308,7 +314,7 @@ namespace Dynamik {
 				Allocator::deAllocate(myBeginPtr, myEndPtr);
 
 			myDataCount = _getSizeOfRawArray(arr);
-			_reAllocate(_getNextSizeToFit(myDataCount));
+			_reAllocateBack(_getNextSizeToFit(myDataCount));
 			moveBytes(myBeginPtr, arr, _getAllocationSize());
 		}
 
@@ -329,7 +335,7 @@ namespace Dynamik {
 		}
 
 		/* FUNCTION
-		 * Set the values from an interator to this.
+		 * Set the values from an iterator to this.
 		 *
 		 * @param first: First iterator.
 		 * @param last: Last iterator.
@@ -349,7 +355,7 @@ namespace Dynamik {
 			else
 			{
 				if (!myBeginPtr.isValid())
-					_reAllocate(_getNextSize());
+					_reAllocateBack(_getNextSize());
 			}
 		}
 
@@ -398,9 +404,9 @@ namespace Dynamik {
 		}
 
 		/* FUNCTION
-		 * Push Elements to the Array.
+		 * Push Elements to the end of the Array.
 		 *
-		 * @param data: Data to be added to the Array.
+		 * @param data: Data to be added to the Array (lvalue).
 		 */
 		void pushBack(const TYPE& data)
 		{
@@ -410,15 +416,15 @@ namespace Dynamik {
 			if (myNextPtr.getPointerAsInteger() >= myEndPtr.getPointerAsInteger())
 				_reAllocateAndPushBack(_getNextSize(), data);
 			else
-				_addData(data);
+				_addDataBack(data);
 
 			myDataCount++;
 		}
 
 		/* FUNCTION
-		 * Push Elements to the Array.
+		 * Push Elements to the end of the Array.
 		 *
-		 * @param data: Data to be added to the Array.
+		 * @param data: Data to be added to the Array (rvalue).
 		 */
 		void pushBack(TYPE&& data)
 		{
@@ -426,35 +432,25 @@ namespace Dynamik {
 		}
 
 		/* FUNCTION
-		 * Push Elements to the Array.
+		 * Push Elements to the end of the Array.
 		 * Compatibility with the 'ARRAY<TYPE>::push_back(const TYPE&)' function.
 		 *
-		 * @param data: Data to be added to the Array.
+		 * @param data: Data to be added to the Array (lvalue).
 		 */
 		void push_back(const TYPE& value)
 		{
 			pushBack(value);
 		}
 
-		//void emplace_back(const TYPE& value)
-
 		/* FUNCTION
-		 * Get the first element of the Array.
+		 * Push Elements to the end of the Array.
+		 * Compatibility with the 'ARRAY<TYPE>::push_back(const TYPE&)' function.
+		 *
+		 * @param data: Data to be added to the Array (rvalue).
 		 */
-		TYPE front()
+		void push_back(TYPE&& value)
 		{
-			if (myBeginPtr.isValid())
-				return myBeginPtr[0];
-
-			return TYPE();
-		}
-
-		/* FUNCTION
-		 * Get the first element in the Array and remove it.
-		 */
-		TYPE popFront()
-		{
-			return _popFrontReallocate();
+			pushBack(value);
 		}
 
 		/* FUNCTION
@@ -474,6 +470,53 @@ namespace Dynamik {
 			myNextPtr--;
 			myDataCount--;
 			return _data;
+		}
+
+		/* FUNCTION
+		 * Push Elements to the beginning of the Array.
+		 *
+		 * @param data: Data to be added to the Array (lvalue).
+		 */
+		void pushFront(const TYPE& data)
+		{
+			if (myDataCount > (capacity() * 2))
+				myDataCount = 0;
+
+			if (myNextPtr.getPointerAsInteger() >= myEndPtr.getPointerAsInteger())
+				_reAllocateAndPushFront(_getNextSize(), data);
+			else
+				_addDataBack(data);
+
+			myDataCount++;
+		}
+
+		/* FUNCTION
+		 * Push Elements to the beginning of the Array.
+		 *
+		 * @param data: Data to be added to the Array (rvalue).
+		 */
+		void pushFront(TYPE&& data)
+		{
+			pushFront((TYPE&)data);
+		}
+
+		/* FUNCTION
+		 * Get the first element of the Array.
+		 */
+		TYPE front()
+		{
+			if (myBeginPtr.isValid())
+				return myBeginPtr[0];
+
+			return TYPE();
+		}
+
+		/* FUNCTION
+		 * Get the first element in the Array and remove it.
+		 */
+		TYPE popFront()
+		{
+			return _popFrontReallocate();
 		}
 
 		/* FUNCTION
@@ -501,7 +544,7 @@ namespace Dynamik {
 			if (myBeginPtr.isValid())
 				Allocator::deAllocate(myBeginPtr, _getAllocationSize());
 
-			_reAllocate(_getAllocatableSize(size));
+			_reAllocateBack(_getAllocatableSize(size));
 		}
 
 		/* FUNCTION
@@ -612,7 +655,7 @@ namespace Dynamik {
 		/* FUNCTION
 		 * Insert the content of another Array to the current Array.
 		 *
-		 * @param arr: Array with the same type to be concatted.
+		 * @param arr: Array with the same type to be contacted.
 		 */
 		void insert(ARRAY<TYPE> arr)
 		{
@@ -895,7 +938,7 @@ namespace Dynamik {
 		 * + operator overload.
 		 * Concat another Array with the similar type.
 		 *
-		 * @param data: Array to be concatted with.
+		 * @param data: Array to be contacted with.
 		 */
 		ARRAY<TYPE>& operator+(const ARRAY<TYPE>& data)
 		{
@@ -955,7 +998,7 @@ namespace Dynamik {
 		 * = operator overload.
 		 * Get data from an initializer list and initialize it to this.
 		 *
-		 * @para arr: Initlaizer list to be initialized to this.
+		 * @para arr: Initializer list to be initialized to this.
 		 */
 		ARRAY<TYPE>& operator=(InitializerList<TYPE> list)
 		{
@@ -986,7 +1029,7 @@ namespace Dynamik {
 		{
 			if (list.size() > maxSize()); /* TODO: Error Flagging */
 
-			_reAllocate(list.size());
+			_reAllocateBack(list.size());
 			for (InitializerList<TYPE>::ITERATOR _itr = list.begin(); _itr != list.end(); ++_itr)
 				pushBack(*_itr);
 		}
@@ -996,10 +1039,21 @@ namespace Dynamik {
 		 *
 		 * @param data: Data to be emplaced.
 		 */
-		inline void _addData(const TYPE& data)
+		inline void _addDataBack(const TYPE& data)
 		{
 			Allocator::set(myNextPtr, (TYPE&&)data);
 			myNextPtr++;
+		}
+
+		/* PRIVATE FUNCTION
+		 * Add data to the end of the Array.
+		 *
+		 * @param data: Data to be emplaced.
+		 */
+		inline void _addDataFront(const TYPE& data)
+		{
+			myBeginPtr--;
+			Allocator::set(myBeginPtr, (TYPE&&)data);
 		}
 
 		/* PRIVATE FUNCTION
@@ -1013,11 +1067,11 @@ namespace Dynamik {
 		}
 
 		/* PRIVATE FUNCTION
-		 * Resize the data store.
+		 * Resize the data store and add the new space to the back.
 		 *
 		 * @param newSize: New size added to the pre-allocated size to be re-allocated.
 		 */
-		inline void _reAllocate(UI32 newSize)
+		inline void _reAllocateBack(UI32 newSize)
 		{
 			PTR _newArr = Allocator::allocate(newSize + _getAllocatableSize(capacity()));
 
@@ -1025,7 +1079,6 @@ namespace Dynamik {
 			{
 				if (myBeginPtr.isValid())
 				{
-					//_moveFromThis(_newArr, _getSizeOfThis());
 					moveBytes(_newArr, myBeginPtr, myNextPtr);
 					Allocator::deAllocate(myBeginPtr, myEndPtr);
 				}
@@ -1040,7 +1093,39 @@ namespace Dynamik {
 				throw;
 			}
 
-			_basicInitialization(_newArr, capacity() + _calculateCapacityInSize(newSize), _getSizeOfThis());
+			_basicInitializationBack(_newArr, capacity() + _calculateCapacityInSize(newSize), _getSizeOfThis());
+		}
+
+		/* PRIVATE FUNCTION
+		 * Resize the data store.
+		 *
+		 * @param newSize: New size added to the pre-allocated size to be re-allocated.
+		 */
+		inline void _reAllocateFront(UI32 newSize)
+		{
+			PTR _newArr = Allocator::allocate(newSize + _getAllocatableSize(capacity()));
+			PTR _nxtPtr = _newArr;
+			_nxtPtr += _calculateCapacityInSize(newSize);
+
+			try
+			{
+				if (myBeginPtr.isValid())
+				{
+					moveBytes(_nxtPtr, myBeginPtr, myNextPtr);
+					Allocator::deAllocate(myBeginPtr, myEndPtr);
+				}
+			}
+			catch (...)
+			{
+				_destroyRange(_newArr, (TYPE*)(_newArr.getPointerAsInteger() + _getAllocationSize()));
+				Allocator::deAllocate(_newArr, _getAllocationSize());
+
+				_newArr.turnNull();
+
+				throw;
+			}
+
+			_basicInitializationFront(_newArr, _calculateCapacityInSize(newSize), capacity() + _calculateCapacityInSize(newSize), _getSizeOfThis());
 		}
 
 		/* PRIVATE FUNCTION
@@ -1070,7 +1155,7 @@ namespace Dynamik {
 				throw;
 			}
 
-			_basicInitialization(_newArr, capacity() + _calculateCapacityInSize(size), _getSizeOfThis());
+			_basicInitializationBack(_newArr, capacity() + _calculateCapacityInSize(size), _getSizeOfThis());
 		}
 
 		/* PRIVATE FUNCTION
@@ -1102,10 +1187,26 @@ namespace Dynamik {
 				newSize = _getNextSize();
 
 			if ((newSize + _getAllocationSize()) > maxSize()) return; /* TODO: Error Flagging */
-			_reAllocate(newSize);
+			_reAllocateBack(newSize);
 
-			Allocator::set(myNextPtr, (TYPE&&)data);
-			myNextPtr++;
+			_addDataBack(data);
+		}
+
+		/* PRIVATE FUNCTION
+		 * Resize the data store and add a value to the beginning.
+		 *
+		 * @param newSize: New size added to the pre-allocated size to be re-allocated.
+		 * @param data: Data to be inserted to the end.
+		 */
+		inline void _reAllocateAndPushFront(UI32 newSize, const TYPE& data)
+		{
+			if (_getSizeOfThis() > (capacity() * 2))
+				newSize = _getNextSize();
+
+			if ((newSize + _getAllocationSize()) > maxSize()) return; /* TODO: Error Flagging */
+			_reAllocateFront(newSize);
+
+			_addDataFront(data);
 		}
 
 		/* PRIVATE FUNCTION
@@ -1145,7 +1246,7 @@ namespace Dynamik {
 				throw;
 			}
 
-			_basicInitialization(_container._beginPtr, _getAllocationSize(), _getSizeOfThis());
+			_basicInitializationBack(_container._beginPtr, _getAllocationSize(), _getSizeOfThis());
 			return _data;
 		}
 
@@ -1175,7 +1276,7 @@ namespace Dynamik {
 				throw;
 			}
 
-			_basicInitialization(_newArr, _getAllocationSize(), _getSizeOfThis());
+			_basicInitializationBack(_newArr, _getAllocationSize(), _getSizeOfThis());
 		}
 
 		/* POINTER MANIPULATION FUNCTIONS */
@@ -1311,15 +1412,36 @@ namespace Dynamik {
 		}
 
 		/* PRIVATE FUNCTION
-		 * Basic initializings.
+		 * Basic initializations.
+		 * Set basic initializations for pushBack function.
 		 *
 		 * @param dataStore: Begin address of the new Array.
 		 * @param capacity: Capacity of the new allocation.
 		 * @param dataCount: Number of data currently stored in the new Array.
 		 */
-		void _basicInitialization(TYPE* dataStore, UI32 capacity = 0, UI32 dataCount = 0)
+		void _basicInitializationBack(TYPE* dataStore, UI32 capacity = 0, UI32 dataCount = 0)
 		{
 			myBeginPtr(dataStore);
+
+			myEndPtr(dataStore);
+			myEndPtr += capacity;
+
+			myNextPtr(dataStore);
+			myNextPtr += dataCount;
+		}
+
+		/* PRIVATE FUNCTION
+		 * Basic initializations.
+		 * Set basic initializations for the pushFront function.
+		 *
+		 * @param dataStore: Begin address of the new Array.
+		 * @param capacity: Capacity of the new allocation.
+		 * @param dataCount: Number of data currently stored in the new Array.
+		 */
+		void _basicInitializationFront(TYPE* dataStore, UI32 freeCapacity = 0, UI32 capacity = 0, UI32 dataCount = 0)
+		{
+			myBeginPtr(dataStore);
+			myBeginPtr += freeCapacity;
 
 			myEndPtr(dataStore);
 			myEndPtr += capacity;

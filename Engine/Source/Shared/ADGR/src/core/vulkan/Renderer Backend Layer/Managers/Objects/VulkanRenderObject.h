@@ -5,19 +5,16 @@
 #include "vulkan/vulkan.h"
 #include "CentralDataHub.h"
 
-#include "core/vulkan/Renderer Backend Layer/Managers/VulkanVertexBufferManager.h"
-#include "core/vulkan/Renderer Backend Layer/Managers/VulkanIndexBufferManager.h"
-#include "core/vulkan/Renderer Backend Layer/Managers/VulkanTextureManager.h"
-#include "core/vulkan/Renderer Backend Layer/Managers/VulkanDescriptorManager.h"
+#include "core/vulkan/Renderer Backend Layer/Managers/VulkanBufferFunctions.h"
+#include "core/vulkan/Renderer Backend Layer/Managers/VulkanCoreFunctions.h"
+#include "core/vulkan/Renderer Backend Layer/Managers/VulkanTextureFunctions.h"
 
 namespace Dynamik {
 	namespace ADGR {
 		namespace Backend {
+			struct ADGRVulkanVertexBufferContainer;
 			struct ADGRVulkanIndexBufferContainer;
 			struct ADGRVulkanTextureContainer;
-			struct ADGRVulkanVertexBufferContainer;
-			struct ADGRVulkanDescrpitorContainer;
-			struct ADGRVulkanUniformBufferContainer;
 
 			class VulkanRenderObject {
 			public:

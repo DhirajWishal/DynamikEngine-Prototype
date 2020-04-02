@@ -2,7 +2,7 @@
 #ifndef _DYNAMIK_ADGR_VULKAN_ONE_TIME_COMMAND_BUFFER_MANAGER_H
 #define _DYNAMIK_ADGR_VULKAN_ONE_TIME_COMMAND_BUFFER_MANAGER_H
 
-#include "VulkanCommandBufferManager.h"
+#include "core/vulkan/Renderer Backend Layer/Managers/VulkanBufferFunctions.h"
 
 namespace Dynamik {
 	namespace ADGR {

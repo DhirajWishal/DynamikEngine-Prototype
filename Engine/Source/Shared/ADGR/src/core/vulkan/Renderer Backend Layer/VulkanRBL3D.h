@@ -49,31 +49,15 @@ namespace Dynamik {
 
 			WindowManager myWindowManager;
 
-			VulkanInstanceManager myInstance;
-			VulkanDebuggerManager myDebugger;
-			VulkanDeviceManager myDevice;
-			VulkanSwapChainManager mySwapChain;
-			VulkanCommandBufferManager myCommandBuffer;
-			VulkanColorBufferManager myColorBuffer;
-			VulkanDepthBufferManager myDepthBuffer;
-			VulkanRenderPassManager myRenderPass;
-			VulkanFrameBufferManager myFrameBuffer;
-
-			VulkanDescriptorManager myDescriptorManager;
-			VulkanPipelineManager myPipelineManager;
-			VulkanVertexBufferManager myVertexBufferManager;
-			VulkanIndexBufferManager myIndexBufferManager;
-			VulkanUniformBufferManager myUniformBufferManager;
-
 			VulkanQueueManager myQueue;
 			VulkanCoreObject myCoreObject;
-
-			VulkanSyncObjectsManager mySyncObjects;
 
 			ARRAY<VulkanRenderObject> renderableObjects;
 			ARRAY<VulkanRenderObject> internalObjects;
 
 			ARRAY<ADGRVulkan3DObjectData> rawObjectStore;
+
+			ADGRVulkanSyncObjectsContainer syncObjectsContainer;
 
 			VkDevice device;
 		};

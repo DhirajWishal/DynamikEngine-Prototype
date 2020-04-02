@@ -1,8 +1,6 @@
 #include "adgrafx.h"
 #include "VulkanQueueManager.h"
 
-#include "VulkanDeviceManager.h"
-
 namespace Dynamik {
 	namespace ADGR {
 		namespace Backend {

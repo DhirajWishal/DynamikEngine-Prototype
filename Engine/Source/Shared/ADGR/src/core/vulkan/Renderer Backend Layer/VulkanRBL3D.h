@@ -2,7 +2,7 @@
 #ifndef _DYNAMIK_ADGR_VULKAN_RENDERER_BACKEND_LAYER_3D_H
 #define _DYNAMIK_ADGR_VULKAN_RENDERER_BACKEND_LAYER_3D_H
 
-#include "Objects/VulkanRBLIndex.h"
+#include "Managers/VulkanRBLIndex.h"
 #include "core/base/RendererBackendBase.h"
 #include "core/Window/Windows/WindowManager.h"
 
@@ -49,25 +49,33 @@ namespace Dynamik {
 
 			WindowManager myWindowManager;
 
-			VulkanInstance myInstance;
-			VulkanDebugger myDebugger;
-			VulkanDevice myDevice;
-			VulkanSwapChain mySwapChain;
-			VulkanCommandBuffer myCommandBuffer;
-			VulkanColorBuffer myColorBuffer;
-			VulkanDepthBuffer myDepthBuffer;
-			VulkanRenderPass myRenderPass;
-			VulkanFrameBuffer myFrameBuffer;
+			VulkanInstanceManager myInstance;
+			VulkanDebuggerManager myDebugger;
+			VulkanDeviceManager myDevice;
+			VulkanSwapChainManager mySwapChain;
+			VulkanCommandBufferManager myCommandBuffer;
+			VulkanColorBufferManager myColorBuffer;
+			VulkanDepthBufferManager myDepthBuffer;
+			VulkanRenderPassManager myRenderPass;
+			VulkanFrameBufferManager myFrameBuffer;
 
-			VulkanQueue myQueue;
-			VulkanGlobalVariables myGlobals;
+			VulkanDescriptorManager myDescriptorManager;
+			VulkanPipelineManager myPipelineManager;
+			VulkanVertexBufferManager myVertexBufferManager;
+			VulkanIndexBufferManager myIndexBufferManager;
+			VulkanUniformBufferManager myUniformBufferManager;
 
-			VulkanSyncObjects mySyncObjects;
+			VulkanQueueManager myQueue;
+			VulkanCoreObject myCoreObject;
+
+			VulkanSyncObjectsManager mySyncObjects;
 
 			ARRAY<VulkanRenderObject> renderableObjects;
 			ARRAY<VulkanRenderObject> internalObjects;
 
 			ARRAY<ADGRVulkan3DObjectData> rawObjectStore;
+
+			VkDevice device;
 		};
 	}
 }

@@ -242,7 +242,6 @@ namespace Dynamik {
 		}
 
 		myStringData = _newString;
-		myStringData[_stringSize] = 0;
 		myBeginPtr = _newString;
 		myEndPtr = _elementPointer;
 		myEndPtr += _stringSize;

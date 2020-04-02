@@ -56,7 +56,6 @@ project "Networking"
 		"Managers",
 		"CentralDataHub",
 		"Debugger",
-		"Events",
 
 		"DataTypesLib",
 		"MemoryLib",

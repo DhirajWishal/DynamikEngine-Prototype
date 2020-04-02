@@ -10,9 +10,6 @@
     <Filter Include="src">
       <UniqueIdentifier>{2DAB880B-99B4-887C-2230-9F7C8E38947C}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\Experimental">
-      <UniqueIdentifier>{4A9B20A8-3694-3FFA-5FC6-247F4B1E1F06}</UniqueIdentifier>
-    </Filter>
     <Filter Include="src\core">
       <UniqueIdentifier>{C55F2ECF-B12C-89DA-DA45-7782C671BE68}</UniqueIdentifier>
     </Filter>
@@ -53,9 +50,6 @@
     </ClInclude>
     <ClInclude Include="src\Dynamik.h">
       <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Experimental\Singleton.h">
-      <Filter>src\Experimental</Filter>
     </ClInclude>
     <ClInclude Include="src\core\application.h">
       <Filter>src\core</Filter>
@@ -114,12 +108,8 @@
     <ClInclude Include="src\dmkafx.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="src\core\data store\DMKObject.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Experimental\Singleton.cpp">
-      <Filter>src\Experimental</Filter>
-    </ClCompile>
     <ClCompile Include="src\core\application.cpp">
       <Filter>src\core</Filter>
     </ClCompile>

@@ -93,7 +93,7 @@ namespace Dynamik {
 		//myRenderingEngine.initRenderer();
 
 		rendererThread.addProgress(&progress);
-		rendererThread.addInternalFormats(internalFormatsBase.toVector());
+		rendererThread.addInternalFormats(internalFormatsBase);
 		myThreadManager.add(&thr);
 		myThreadManager.add(&rendererThread);
 

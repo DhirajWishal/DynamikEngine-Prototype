@@ -57,9 +57,9 @@ namespace Dynamik {
 			pollEvents();
 		}
 
-		B1 WindowManager::createWindowSurface(POINTER<Backend::VulkanCoreObject> core)
+		B1 WindowManager::createWindowSurface(POINTER<Backend::VulkanInstance> instance)
 		{
-			if (glfwCreateWindowSurface(core->instance, window, nullptr, &core->surface) != VK_SUCCESS) {
+			if (glfwCreateWindowSurface(instance->instance, window, nullptr, &instance->surface) != VK_SUCCESS) {
 				DMK_CORE_FATAL("Failed to create window surface!");
 				return false;
 			}

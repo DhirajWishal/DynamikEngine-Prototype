@@ -7,9 +7,6 @@
     <Filter Include="Public">
       <UniqueIdentifier>{8480F8CA-7022-23A1-59DD-36F5451EAAF1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Public\Dynamik">
-      <UniqueIdentifier>{00C76E80-EC94-6286-D528-D3ACC1953EEB}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DataTypesLib.h" />

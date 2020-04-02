@@ -10,7 +10,7 @@
 #include "CentralDataHub.h"
 #include "Events.h"
 
-#include "core/vulkan/Renderer Backend Layer/Managers/Objects/VulkanCoreObject.h"
+#include "core/vulkan/Renderer Backend Layer/Objects/VulkanInstance.h"
 
 namespace Dynamik {
 	namespace ADGR {
@@ -45,7 +45,7 @@ namespace Dynamik {
 			void pollEvents();
 			void onUpdate();
 
-			B1 createWindowSurface(POINTER<Backend::VulkanCoreObject> core);
+			B1 createWindowSurface(POINTER<Backend::VulkanInstance> instance);
 			void setIcon(std::string paths);
 
 			UI32 windowWidth;

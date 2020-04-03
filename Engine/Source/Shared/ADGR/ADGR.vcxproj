@@ -148,6 +148,7 @@
     <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Managers\VulkanCore.h" />
     <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Managers\VulkanDepthBuffer.h" />
     <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Managers\VulkanRenderableObject.h" />
+    <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Managers\VulkanShader.h" />
     <ClInclude Include="src\Layers\layer.h" />
     <ClInclude Include="src\Layers\layerStack.h" />
     <ClInclude Include="src\Renderer.h" />
@@ -184,6 +185,7 @@
     <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Managers\VulkanCore.cpp" />
     <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Managers\VulkanDepthBuffer.cpp" />
     <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Managers\VulkanRenderableObject.cpp" />
+    <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Managers\VulkanShader.cpp" />
     <ClCompile Include="src\Layers\layer.cpp" />
     <ClCompile Include="src\Layers\layerStack.cpp" />
     <ClCompile Include="src\Renderer.cpp" />

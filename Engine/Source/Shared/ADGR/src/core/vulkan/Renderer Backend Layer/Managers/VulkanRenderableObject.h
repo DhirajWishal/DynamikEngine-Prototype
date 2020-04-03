@@ -5,6 +5,8 @@
 #include <vulkan/vulkan.h>
 #include "UniformBufferObject.h"
 
+#include "VulkanShader.h"
+
 namespace Dynamik {
 	namespace ADGR {
 		namespace Backend {
@@ -17,13 +19,12 @@ namespace Dynamik {
 				B1 pushConstantsEnable = false;									// Vulkan push constants enable
 				UI32 pushConstantCount = 1;										// Vulkan push constants count
 				I32 pushConstantOffset = 0;										// Vulkan push constants offset
+
+				ARRAY<VkDescriptorSetLayout> additionalLayouts;
 			};
 
 			struct ADGRVulkanPipelineInitInfo {
-				std::string vertex = "";
-				std::string tessellation = "";
-				std::string geometry = "";
-				std::string fragment = "";
+				ARRAY<VulkanShader> shaders;
 
 				// primitive assembly info
 				VkPrimitiveTopology inputAssemblyTopology = VkPrimitiveTopology::VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST;	// Vulkan input assembler topologies
@@ -194,7 +195,7 @@ namespace Dynamik {
 				ARRAY<VkDeviceMemory> uniformBufferMemories;
 
 				//VulkanPushConstantManager pushConstant;
-				ARRAY<glm::vec4> pushConstants;
+				std::array<glm::vec4, 6> pushConstants;
 			};
 		}
 	}

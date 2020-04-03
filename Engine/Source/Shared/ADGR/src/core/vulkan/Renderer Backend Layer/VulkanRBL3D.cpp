@@ -120,17 +120,62 @@ namespace Dynamik {
 				_renderObject.initializeDescriptorSetLayout(layoutInitInfo);
 
 				ADGRVulkanPipelineLayoutInitInfo pipelineLayoutInitInfo;
-				pipelineLayoutInitInfo.pushConstantCount = 1;
+				pipelineLayoutInitInfo.pushConstantCount = 6;
 				pipelineLayoutInitInfo.pushConstantOffset = 0;
 				pipelineLayoutInitInfo.pushConstantsEnable = true;
 				_renderObject.initializePipelineLayout(pipelineLayoutInitInfo);
 
+				ARRAY<VulkanShader> _shaders;
+
+				if (_object.vertexShaderPath.size() && _object.vertexShaderPath != "NONE")
+				{
+					ADGRVulkanShaderInitInfo _initInfo;
+					_initInfo.path = _object.vertexShaderPath;
+					_initInfo.type = ADGRVulkanShaderType::ADGR_VULKAN_SHADER_TYPE_VERTEX;
+
+					VulkanShader _shader;
+					_shader.initialize(myVulkanCore.getLogicalDevice(), _initInfo);
+					_shaders.pushBack(_shader);
+				}
+				if (_object.tessellationShaderPath.size() && _object.tessellationShaderPath != "NONE")
+				{
+					ADGRVulkanShaderInitInfo _initInfo;
+					_initInfo.path = _object.tessellationShaderPath;
+					_initInfo.type = ADGRVulkanShaderType::ADGR_VULKAN_SHADER_TYPE_TESSELLATION;
+
+					VulkanShader _shader;
+					_shader.initialize(myVulkanCore.getLogicalDevice(), _initInfo);
+					_shaders.pushBack(_shader);
+				}
+				if (_object.geometryShaderPath.size() && _object.geometryShaderPath != "NONE")
+				{
+					ADGRVulkanShaderInitInfo _initInfo;
+					_initInfo.path = _object.geometryShaderPath;
+					_initInfo.type = ADGRVulkanShaderType::ADGR_VULKAN_SHADER_TYPE_GEOMETRY;
+
+					VulkanShader _shader;
+					_shader.initialize(myVulkanCore.getLogicalDevice(), _initInfo);
+					_shaders.pushBack(_shader);
+				}
+				if (_object.fragmentShaderPath.size() && _object.fragmentShaderPath != "NONE")
+				{
+					ADGRVulkanShaderInitInfo _initInfo;
+					_initInfo.path = _object.fragmentShaderPath;
+					_initInfo.type = ADGRVulkanShaderType::ADGR_VULKAN_SHADER_TYPE_FRAGMENT;
+
+					VulkanShader _shader;
+					_shader.initialize(myVulkanCore.getLogicalDevice(), _initInfo);
+					_shaders.pushBack(_shader);
+				}
+
 				// initialize pipeline
 				ADGRVulkanPipelineInitInfo pipelineInitInfo;
-				pipelineInitInfo.vertex = _object.vertexShaderPath;
-				pipelineInitInfo.fragment = _object.fragmentShaderPath;
 				pipelineInitInfo.renderPass = myVulkanCore.getRenderPass();
+				pipelineInitInfo.shaders = _shaders;
 				_renderObject.initializePipeline(myVulkanCore.getSwapChainExtent(), pipelineInitInfo);
+
+				for (VulkanShader _shader : _shaders)
+					_shader.terminate(myVulkanCore.getLogicalDevice());
 
 				ARRAY<ADGRVulkanTextureInitInfo> textureInitInfos;
 

@@ -7,6 +7,7 @@
 
 #include "VulkanColorBuffer.h"
 #include "VulkanDepthBuffer.h"
+#include "VulkanShader.h"
 
 #include "VulkanCore.h"
 #include "VulkanRenderableObject.h"

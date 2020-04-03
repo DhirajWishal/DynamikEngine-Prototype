@@ -145,6 +145,7 @@
     <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Managers\VulkanCore.h" />
     <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Managers\VulkanDepthBuffer.h" />
     <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Managers\VulkanColorBuffer.h" />
+    <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Managers\VulkanShader.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Layers\layer.cpp">
@@ -217,6 +218,7 @@
     <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Managers\VulkanCore.cpp" />
     <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Managers\VulkanDepthBuffer.cpp" />
     <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Managers\VulkanColorBuffer.cpp" />
+    <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Managers\VulkanShader.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ADGR.lua" />

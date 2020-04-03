@@ -13,112 +13,6 @@ namespace Dynamik {
 	namespace ADGR {
 		namespace Backend {
 			using namespace core;
-
-			VkShaderModule createShaderModule(VkDevice device, DMK_ShaderCode& code) {
-				VkShaderModuleCreateInfo createInfo = {};
-				createInfo.sType = VK_STRUCTURE_TYPE_SHADER_MODULE_CREATE_INFO;
-				createInfo.codeSize = code.size();
-				createInfo.pCode = reinterpret_cast<const UI32*>(code.data());
-
-				VkShaderModule shaderModule;
-				if (vkCreateShaderModule(device, &createInfo, nullptr, &shaderModule) != VK_SUCCESS)
-					DMK_CORE_FATAL("Failed to create Shader module!");
-
-				return shaderModule;
-			}
-
-			ARRAY<VkPipelineShaderStageCreateInfo> getShaderStages(
-				VkDevice logicalDevice,
-				std::string vertexShaderPath,
-				std::string tessellationShaderPath,
-				std::string geometryShaderPath,
-				std::string fragmentShaderPath)
-			{
-				DMK_ShaderCode vertexShaderCode, tessellationShaderCode, geometryShaderCode, fragmentShaderCode;
-
-				if (vertexShaderPath.size())
-					vertexShaderCode = utils::readFile(vertexShaderPath).toVector();
-				// tessellation shader
-				if (tessellationShaderPath.size())
-					tessellationShaderCode = utils::readFile(tessellationShaderPath).toVector();
-				// geometry shader
-				if (geometryShaderPath.size())
-					geometryShaderCode = utils::readFile(geometryShaderPath).toVector();
-				// fragment shader
-				if (fragmentShaderPath.size())
-					fragmentShaderCode = utils::readFile(fragmentShaderPath).toVector();
-
-				ARRAY<VkPipelineShaderStageCreateInfo> _shaderStages;
-				VkShaderModule _vertShaderModule = VK_NULL_HANDLE,
-					_tessShaderModule = VK_NULL_HANDLE,
-					_geoShaderModule = VK_NULL_HANDLE,
-					_fragShaderModule = VK_NULL_HANDLE;
-
-				if (vertexShaderCode.size())
-				{
-					VkPipelineShaderStageCreateInfo _vertShaderStageInfo = {};
-					_vertShaderModule = createShaderModule(logicalDevice, vertexShaderCode);
-					_vertShaderStageInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
-					_vertShaderStageInfo.stage = VK_SHADER_STAGE_VERTEX_BIT;
-					_vertShaderStageInfo.module = _vertShaderModule;
-					_vertShaderStageInfo.pName = "main";
-
-					_shaderStages.pushBack(_vertShaderStageInfo);
-				}
-				if (tessellationShaderCode.size())
-				{
-					VkPipelineShaderStageCreateInfo _tessShaderStageInfo = {};
-					_tessShaderModule = createShaderModule(logicalDevice, tessellationShaderCode);
-					_tessShaderStageInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
-					_tessShaderStageInfo.stage = VK_SHADER_STAGE_VERTEX_BIT;
-					_tessShaderStageInfo.module = _tessShaderModule;
-					_tessShaderStageInfo.pName = "main";
-
-					_shaderStages.pushBack(_tessShaderStageInfo);
-				}
-				if (geometryShaderCode.size())
-				{
-					VkPipelineShaderStageCreateInfo _geoShaderStageInfo = {};
-					_geoShaderModule = createShaderModule(logicalDevice, geometryShaderCode);
-					_geoShaderStageInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
-					_geoShaderStageInfo.stage = VK_SHADER_STAGE_VERTEX_BIT;
-					_geoShaderStageInfo.module = _geoShaderModule;
-					_geoShaderStageInfo.pName = "main";
-
-					_shaderStages.pushBack(_geoShaderStageInfo);
-				}
-				if (fragmentShaderCode.size())
-				{
-					VkPipelineShaderStageCreateInfo _fragShaderStageInfo = {};
-					_fragShaderModule = createShaderModule(logicalDevice, fragmentShaderCode);
-					_fragShaderStageInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
-					_fragShaderStageInfo.stage = VK_SHADER_STAGE_FRAGMENT_BIT;
-					_fragShaderStageInfo.module = _fragShaderModule;
-					_fragShaderStageInfo.pName = "main";
-
-					_shaderStages.pushBack(_fragShaderStageInfo);
-				}
-
-				return _shaderStages;
-			}
-
-			void destroyShaderModules(
-				VkDevice logicalDevice,
-				VkShaderModule vertex,
-				VkShaderModule tessellation,
-				VkShaderModule geometry,
-				VkShaderModule fragment)
-			{
-				if (vertex != VK_NULL_HANDLE)
-					vkDestroyShaderModule(logicalDevice, vertex, nullptr);
-				if (tessellation != VK_NULL_HANDLE)
-					vkDestroyShaderModule(logicalDevice, tessellation, nullptr);
-				if (geometry != VK_NULL_HANDLE)
-					vkDestroyShaderModule(logicalDevice, geometry, nullptr);
-				if (fragment != VK_NULL_HANDLE)
-					vkDestroyShaderModule(logicalDevice, fragment, nullptr);
-			}
-
 			void VulkanRenderableObject::initializeDescriptorSetLayout(ADGRVulkanDescriptorSetLayoutInitInfo info)
 			{
 				VkDescriptorSetLayoutBinding uboLayoutBinding = {};
@@ -158,11 +52,17 @@ namespace Dynamik {
 
 			void VulkanRenderableObject::initializePipelineLayout(ADGRVulkanPipelineLayoutInitInfo info)
 			{
+				ARRAY<VkDescriptorSetLayout> _layouts;
+				_layouts.pushBack(descriptors.layout);
+
+				for (auto _layout : info.additionalLayouts)
+					_layouts.pushBack(_layout);
+
 				// initialize the pipeline layout
 				VkPipelineLayoutCreateInfo pipelineLayoutInfo = {};
 				pipelineLayoutInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO;
-				pipelineLayoutInfo.setLayoutCount = 1;
-				pipelineLayoutInfo.pSetLayouts = &descriptors.layout;
+				pipelineLayoutInfo.setLayoutCount = _layouts.size();
+				pipelineLayoutInfo.pSetLayouts = _layouts.data();
 
 				if (info.pushConstantsEnable) {
 					ARRAY<VkPushConstantRange> pushConstantInfos;
@@ -303,7 +203,9 @@ namespace Dynamik {
 					dynamicStateInfo.flags = info.dynamicStateFlags;
 				}
 
-				auto shaderStages = getShaderStages(logicalDevice, info.vertex, info.tessellation, info.geometry, info.fragment).toVector();
+				ARRAY<VkPipelineShaderStageCreateInfo> shaderStages;
+				for (VulkanShader shader : info.shaders)
+					shaderStages.pushBack(shader.stageCreateInfo);
 
 				// initialize the pipeline
 				VkGraphicsPipelineCreateInfo pipelineInfo = {};

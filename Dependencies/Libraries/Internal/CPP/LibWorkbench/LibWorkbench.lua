@@ -22,7 +22,6 @@ project "LibWorkbench"
 		"MemoryLib",
 		"DataTypesLib",
 		"SystemLib",
-		"AlgorithmLib",
 	}
 
 	includedirs {

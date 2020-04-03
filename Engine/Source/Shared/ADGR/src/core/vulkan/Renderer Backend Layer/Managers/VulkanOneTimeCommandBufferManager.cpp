@@ -4,9 +4,14 @@
 namespace Dynamik {
 	namespace ADGR {
 		namespace Backend {
-			VulkanOneTimeCommandBufferManager::VulkanOneTimeCommandBufferManager(VulkanCoreObject core, UI32 count)
-				: myCount(count), myDevice(core.logicalDevice), myGraphcisQueue(core.graphicsQueue),
-				myPresentQueue(core.presentQueue), myCommandPool(core.commandPool)
+			VulkanOneTimeCommandBufferManager::VulkanOneTimeCommandBufferManager(
+				VkDevice logicalDevice,
+				VkCommandPool commandPool,
+				VkQueue graphicsQueue,
+				VkQueue presentQueue,
+				UI32 count)
+				: myCount(count), myDevice(logicalDevice), myGraphcisQueue(graphicsQueue),
+				myPresentQueue(presentQueue), myCommandPool(commandPool)
 			{
 				VkCommandBufferAllocateInfo allocInfo = {};
 				allocInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO;
@@ -15,7 +20,7 @@ namespace Dynamik {
 				allocInfo.commandBufferCount = count;
 
 				myCommandBuffers.resize(count);
-				vkAllocateCommandBuffers(core.logicalDevice, &allocInfo, myCommandBuffers.data());
+				vkAllocateCommandBuffers(logicalDevice, &allocInfo, myCommandBuffers.data());
 
 				for (I32 i = 0; i < count; i++) {
 					VkCommandBufferBeginInfo beginInfo = {};

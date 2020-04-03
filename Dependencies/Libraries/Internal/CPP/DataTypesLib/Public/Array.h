@@ -125,8 +125,7 @@ namespace Dynamik {
 		 */
 		ARRAY()
 		{
-			_reAllocateBack(_getNextSize());
-			myDataCount = 0;
+			_setLocalDataToDefault();
 		}
 
 		/* CONSTRUCTOR
@@ -1365,6 +1364,17 @@ namespace Dynamik {
 		inline void _singleDestruct(RPTR data)
 		{
 			data->~TYPE();
+		}
+
+		/* PRIVATE FUNCTION
+		 * Clear all values and sets the local data to its default values.
+		 */
+		inline void _setLocalDataToDefault()
+		{
+			myBeginPtr.turnNull();
+			myEndPtr = myBeginPtr;
+			myNextPtr = myBeginPtr;
+			myDataCount = 0;
 		}
 
 		/* UTILITY FUNCTIONS */

@@ -57,16 +57,6 @@ namespace Dynamik {
 			pollEvents();
 		}
 
-		B1 WindowManager::createWindowSurface(POINTER<Backend::VulkanCoreObject> core)
-		{
-			if (glfwCreateWindowSurface(core->instance, window, nullptr, &core->surface) != VK_SUCCESS) {
-				DMK_CORE_FATAL("Failed to create window surface!");
-				return false;
-			}
-
-			return true;
-		}
-
 		void WindowManager::setIcon(std::string paths)
 		{
 			ARRAY<GLFWimage> icons;

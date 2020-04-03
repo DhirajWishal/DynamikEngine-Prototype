@@ -2,6 +2,9 @@
 using namespace Dynamik;
 #include <vector>
 #include <list>
+
+#include "DataTypesLib/Public/HashMap.h"
+
 /*
  Main entrypoint for the C++ library Workbench.
 
@@ -19,114 +22,17 @@ using namespace Dynamik;
  PROS: indexed allocation (not contigeious)
 */
 
-#define SET_TYPE_NAME(...) #__VA_ARGS__
-#define TYPE_TO_STRING(...) #__VA_ARGS__
-
-struct TypeData {
-	VPTR data = nullptr;
-
-	FSTR myTypeName;
-};
-
-template<class TYPE>
-TypeData func(TYPE value)
-{
-	TypeData myType;
-	myType.myTypeName = TYPE_TO_STRING(TYPE);
-	return myType;
-}
-
-struct Types {
-	VPTR myAddress;
-	FSTR myTypeName;
-
-	template<class TYPE>
-	void setTypeName(TYPE)
-	{
-		myTypeName = typeid(TYPE).name();
-	}
-};
-
-struct destructorTest {
-	destructorTest() {}
-	~destructorTest()
-	{
-		std::cout << "Destructing index: " << index << std::endl;
-	}
-
-	UI32 index;
-};
-
-ARRAY<UI32> myArr2 = {};
-
 int main() {
-	UI32 inde;
+    std::string str = "";
 
-	ARRAY<CHR> myArr;
-
-	std::string _str = "Hello World";
-
-	for (CHR c : _str)
-		myArr.pushBack(c);
-
-	auto _debug = myArr[2];
-	myArr[1];
-
-	for (auto elem : myArr)
-		std::cout << elem << std::endl;
-
-	UI32 num = 0;
-	POINTER<UI32> ptr = &num;
-	ptr += 1;
-
-	auto check = myArr2.size();
-
-	std::initializer_list<UI32> lol = {};
-
-	{
-		ARRAY<ARRAY<destructorTest>> myArray1;
-		VPTR data = myArray1.data();
-		for (UI32 itr = 0; itr < 128; itr++) {
-			ARRAY<destructorTest> temp;
-			for (UI32 x = 0; x < 128; x++) {
-				std::cout << "Im in: " << itr << " :: " << x << "\n";
-				destructorTest _t;
-				_t.index = x;
-				temp.push_back(_t);
-			}
-			myArray1.push_back(temp);
-		}
-	}
-
-	SimpleLinkedList<UI32> list;
-	//list.push(myNode);
-	//list.push(myNode2);
-	//list.push(myNode);
-
-	SimpleNode<UI32> node;
-	for (UI32 i = 0; i < 128000; i++) {
-		node.myData = i;
-		list.push(node);
-	}
-
-	ARRAY<UI32> nums;
-
-	UI32 myNum;
-	for (UI32 i = 0; i < 128000; i++) {
-		myNum = i;
-		nums.push_back(myNum);
-	}
-
-	ARRAY<UI32> nums2;
-
-	UI32 myNum2;
-	for (UI32 i = 0; i < 128000; i++) {
-		myNum2 = i;
-		nums2.push_back(myNum2);
-	}
-
-	SimpleNode<UI32> myNode1 = list.get(1);
-	SimpleNode<UI32> myNode3 = list.pop(1);
+    while (true)
+    {
+        std::cout << "Enter String: ";
+        std::getline(std::cin, str);
+        std::cout << "Generated Hash: "; 
+        getHash(str.c_str());
+        std::cout << "\n\n";
+    }
 
 	return 0;
 }

@@ -105,19 +105,7 @@
     <ClInclude Include="src\core\opengl\openglRenderer.h">
       <Filter>src\core\opengl</Filter>
     </ClInclude>
-    <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Managers\Objects\VulkanCoreObject.h">
-      <Filter>src\core\vulkan\Renderer Backend Layer\Managers\Objects</Filter>
-    </ClInclude>
-    <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Managers\Objects\VulkanRenderObject.h">
-      <Filter>src\core\vulkan\Renderer Backend Layer\Managers\Objects</Filter>
-    </ClInclude>
-    <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Managers\VulkanBufferFunctions.h">
-      <Filter>src\core\vulkan\Renderer Backend Layer\Managers</Filter>
-    </ClInclude>
     <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Managers\VulkanControlHeader.h">
-      <Filter>src\core\vulkan\Renderer Backend Layer\Managers</Filter>
-    </ClInclude>
-    <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Managers\VulkanCoreFunctions.h">
       <Filter>src\core\vulkan\Renderer Backend Layer\Managers</Filter>
     </ClInclude>
     <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Managers\VulkanExtensionsManager.h">
@@ -129,13 +117,7 @@
     <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Managers\VulkanOneTimeCommandBufferManager.h">
       <Filter>src\core\vulkan\Renderer Backend Layer\Managers</Filter>
     </ClInclude>
-    <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Managers\VulkanQueueManager.h">
-      <Filter>src\core\vulkan\Renderer Backend Layer\Managers</Filter>
-    </ClInclude>
     <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Managers\VulkanRBLIndex.h">
-      <Filter>src\core\vulkan\Renderer Backend Layer\Managers</Filter>
-    </ClInclude>
-    <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Managers\VulkanTextureFunctions.h">
       <Filter>src\core\vulkan\Renderer Backend Layer\Managers</Filter>
     </ClInclude>
     <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Managers\VulkanValidator.h">
@@ -159,6 +141,10 @@
     <ClInclude Include="src\rendererFormat.h">
       <Filter>src</Filter>
     </ClInclude>
+    <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Managers\VulkanRenderableObject.h" />
+    <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Managers\VulkanCore.h" />
+    <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Managers\VulkanDepthBuffer.h" />
+    <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Managers\VulkanColorBuffer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Layers\layer.cpp">
@@ -203,12 +189,6 @@
     <ClCompile Include="src\core\opengl\openglRenderer.cpp">
       <Filter>src\core\opengl</Filter>
     </ClCompile>
-    <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Managers\VulkanBufferFunctions.cpp">
-      <Filter>src\core\vulkan\Renderer Backend Layer\Managers</Filter>
-    </ClCompile>
-    <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Managers\VulkanCoreFunctions.cpp">
-      <Filter>src\core\vulkan\Renderer Backend Layer\Managers</Filter>
-    </ClCompile>
     <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Managers\VulkanExtensionsManager.cpp">
       <Filter>src\core\vulkan\Renderer Backend Layer\Managers</Filter>
     </ClCompile>
@@ -216,12 +196,6 @@
       <Filter>src\core\vulkan\Renderer Backend Layer\Managers</Filter>
     </ClCompile>
     <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Managers\VulkanOneTimeCommandBufferManager.cpp">
-      <Filter>src\core\vulkan\Renderer Backend Layer\Managers</Filter>
-    </ClCompile>
-    <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Managers\VulkanQueueManager.cpp">
-      <Filter>src\core\vulkan\Renderer Backend Layer\Managers</Filter>
-    </ClCompile>
-    <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Managers\VulkanTextureFunctions.cpp">
       <Filter>src\core\vulkan\Renderer Backend Layer\Managers</Filter>
     </ClCompile>
     <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Managers\VulkanValidator.cpp">
@@ -239,6 +213,10 @@
     <ClCompile Include="src\rendererFormat.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Managers\VulkanRenderableObject.cpp" />
+    <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Managers\VulkanCore.cpp" />
+    <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Managers\VulkanDepthBuffer.cpp" />
+    <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Managers\VulkanColorBuffer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ADGR.lua" />

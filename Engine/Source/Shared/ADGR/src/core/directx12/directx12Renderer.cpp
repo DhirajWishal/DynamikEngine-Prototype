@@ -3,6 +3,7 @@
 
 namespace Dynamik {
 	namespace ADGR {
+
 		directx12Renderer::directx12Renderer() {
 		}
 		directx12Renderer::~directx12Renderer() {

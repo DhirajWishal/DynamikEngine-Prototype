@@ -88,14 +88,14 @@ namespace Dynamik {
 
 		std::thread myThread(Application::showProgress);
 
-		//myRenderingEngine.setProgress(&progress);
-		//myRenderingEngine.setRendererFormats(internalFormatsBase);
-		//myRenderingEngine.initRenderer();
+		myRenderingEngine.setProgress(&progress);
+		myRenderingEngine.setRendererFormats(internalFormatsBase);
+		myRenderingEngine.initRenderer();
 
-		rendererThread.addProgress(&progress);
-		rendererThread.addInternalFormats(internalFormatsBase);
-		myThreadManager.add(&thr);
-		myThreadManager.add(&rendererThread);
+		//rendererThread.addProgress(&progress);
+		//rendererThread.addInternalFormats(internalFormatsBase);
+		//myThreadManager.add(&thr);
+		//myThreadManager.add(&rendererThread);
 
 		shouldClose = true;
 
@@ -112,21 +112,21 @@ namespace Dynamik {
 		if (initSuccessful) {
 			//myThreadManager.runAll();
 
-			myThreadManager.run(1);
+			//myThreadManager.run(1);
 
-			//while (!myRenderingEngine.getWindowCloseEvent()) {
-			//	auto events = myRenderingEngine.getEvents();
-			//
-			//	myRenderingEngine.draw();
-			//	myEngine.update();
-			//	if (events->size())
-			//		onEvent(events);
-			//
-			//	for (auto layer : layerStack)
-			//		layer->update();
-			//}
-			//
-			//myRenderingEngine.idleCall();
+			while (!myRenderingEngine.getWindowCloseEvent()) {
+				auto events = myRenderingEngine.getEvents();
+			
+				myRenderingEngine.draw();
+				myEngine.update();
+				if (events->size())
+					onEvent(events);
+			
+				for (auto layer : layerStack)
+					layer->update();
+			}
+			
+			myRenderingEngine.idleCall();
 		}
 	}
 

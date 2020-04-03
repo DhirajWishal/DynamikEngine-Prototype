@@ -36,6 +36,40 @@ namespace Dynamik {
 				&& Integrity == other.Integrity;
 		}
 	};
+
+	class DMKVertex {
+	public:
+		DMKVertex() {}
+		virtual ~DMKVertex() {}
+
+		glm::vec3 Position = { 0, 0, 0 };
+
+		virtual ARRAY<VkVertexInputBindingDescription> getBindingDescription(int bindCount)
+		{
+			return ARRAY<VkVertexInputBindingDescription>();
+		}
+		virtual ARRAY<VkVertexInputAttributeDescription> getAttributeDescriptions()
+		{
+			return ARRAY<VkVertexInputAttributeDescription>();
+		}
+
+		virtual bool operator==(const DMKVertex* other) const { return false; }
+	};
+
+	class VertexL3C3T2N3I : public DMKVertex {
+	public:
+		VertexL3C3T2N3I() {}
+		~VertexL3C3T2N3I() {}
+
+		glm::vec3 Color = { 0, 0, 0 };
+		glm::vec3 Normals = { 0, 0, 0 };
+		float Integrity = 1.0f;
+
+		ARRAY<VkVertexInputBindingDescription> getBindingDescription(int bindCount) override;
+		ARRAY<VkVertexInputAttributeDescription> getAttributeDescriptions() override;
+
+		bool operator==(const DMKVertex* other) const override;
+	};
 }
 
 #endif // !_DYNAMIK_ADGR_VULKAN_VERTEX_H

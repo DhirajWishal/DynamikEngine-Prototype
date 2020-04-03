@@ -5,7 +5,7 @@
 namespace Dynamik {
 	namespace ADGR {
 		namespace Backend {
-			void VulkanFunctions::createBuffer(POINTER<VulkanCoreObject> core, ADGRCreateBufferInfo info)
+			void VulkanFunctions::createBuffer(VkDevice logicalDevice, VkPhysicalDevice physicalDevice, ADGRCreateBufferInfo info)
 			{
 				VkBufferCreateInfo bufferInfo = {};
 				bufferInfo.sType = VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO;
@@ -13,22 +13,22 @@ namespace Dynamik {
 				bufferInfo.usage = info.usage;
 				bufferInfo.sharingMode = VK_SHARING_MODE_EXCLUSIVE;
 
-				if (vkCreateBuffer(core->logicalDevice, &bufferInfo, nullptr, info.buffer) != VK_SUCCESS)
+				if (vkCreateBuffer(logicalDevice, &bufferInfo, nullptr, info.buffer) != VK_SUCCESS)
 					DMK_CORE_FATAL("failed to create buffer!");
 
 				VkMemoryRequirements memRequirements;
-				vkGetBufferMemoryRequirements(core->logicalDevice, *info.buffer, &memRequirements);
+				vkGetBufferMemoryRequirements(logicalDevice, *info.buffer, &memRequirements);
 
 				VkMemoryAllocateInfo allocInfo = {};
 				allocInfo.sType = VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO;
 				allocInfo.allocationSize = memRequirements.size;
 				allocInfo.memoryTypeIndex = findMemoryType(memRequirements.memoryTypeBits, info.bufferMemoryPropertyflags,
-					core->physicalDevice);
+					physicalDevice);
 
-				if (vkAllocateMemory(core->logicalDevice, &allocInfo, nullptr, info.bufferMemory) != VK_SUCCESS)
+				if (vkAllocateMemory(logicalDevice, &allocInfo, nullptr, info.bufferMemory) != VK_SUCCESS)
 					DMK_CORE_FATAL("failed to allocate buffer memory!");
 
-				vkBindBufferMemory(core->logicalDevice, *info.buffer, *info.bufferMemory, 0);
+				vkBindBufferMemory(logicalDevice, *info.buffer, *info.bufferMemory, 0);
 			}
 
 			UI32 VulkanFunctions::findMemoryType(UI32 typeFilter, VkMemoryPropertyFlags properties, VkPhysicalDevice physicalDevice)
@@ -95,9 +95,9 @@ namespace Dynamik {
 				);
 			}
 
-			void VulkanFunctions::copyBuffer(POINTER<VulkanCoreObject> core, VkBuffer srcBuffer, VkBuffer dstBuffer, VkDeviceSize size)
+			void VulkanFunctions::copyBuffer(VkDevice logicalDevice, VkCommandPool commandPool, VkQueue graphicsQueue, VkQueue presentQueue, VkBuffer srcBuffer, VkBuffer dstBuffer, VkDeviceSize size)
 			{
-				VulkanOneTimeCommandBufferManager oneTimeCommandBuffer(*core);
+				VulkanOneTimeCommandBufferManager oneTimeCommandBuffer(logicalDevice, commandPool, graphicsQueue, presentQueue);
 				VkCommandBuffer commandBuffer = oneTimeCommandBuffer.myCommandBuffers[0];
 				
 				VkBufferCopy copyRegion = {};
@@ -105,7 +105,7 @@ namespace Dynamik {
 				vkCmdCopyBuffer(commandBuffer, srcBuffer, dstBuffer, 1, &copyRegion);
 			}
 
-			void VulkanFunctions::createImage(POINTER<VulkanCoreObject> core, ADGRCreateImageInfo info)
+			void VulkanFunctions::createImage(VkDevice logicalDevice, VkPhysicalDevice physicalDevice, ADGRCreateImageInfo info)
 			{
 				VkImageCreateInfo imageInfo = {};
 				imageInfo.sType = VK_STRUCTURE_TYPE_IMAGE_CREATE_INFO;
@@ -124,27 +124,27 @@ namespace Dynamik {
 				if (info.flags != NULL)
 					imageInfo.flags = info.flags;
 
-				if (vkCreateImage(core->logicalDevice, &imageInfo, nullptr, info.image) != VK_SUCCESS)
+				if (vkCreateImage(logicalDevice, &imageInfo, nullptr, info.image) != VK_SUCCESS)
 					DMK_CORE_FATAL("failed to create image!");
 
 				VkMemoryRequirements memRequirements;
-				vkGetImageMemoryRequirements(core->logicalDevice, *info.image, &memRequirements);
+				vkGetImageMemoryRequirements(logicalDevice, *info.image, &memRequirements);
 
 				VkMemoryAllocateInfo allocInfo = {};
 				allocInfo.sType = VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO;
 				allocInfo.allocationSize = memRequirements.size;
 				allocInfo.memoryTypeIndex = findMemoryType(memRequirements.memoryTypeBits,
-					VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT, core->physicalDevice);
+					VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT, physicalDevice);
 
-				if (vkAllocateMemory(core->logicalDevice, &allocInfo, nullptr, info.imageMemory) != VK_SUCCESS)
+				if (vkAllocateMemory(logicalDevice, &allocInfo, nullptr, info.imageMemory) != VK_SUCCESS)
 					DMK_CORE_FATAL("failed to allocate image memory!");
 
-				vkBindImageMemory(core->logicalDevice, *info.image, *info.imageMemory, 0);
+				vkBindImageMemory(logicalDevice, *info.image, *info.imageMemory, 0);
 			}
 
-			void VulkanFunctions::transitionImageLayout(POINTER<VulkanCoreObject> core, ADGRTransitionImageLayoutInfo info)
+			void VulkanFunctions::transitionImageLayout(VkDevice logicalDevice, VkCommandPool commandPool, VkQueue graphicsQueue, VkQueue presentQueue, ADGRTransitionImageLayoutInfo info)
 			{
-				VulkanOneTimeCommandBufferManager oneTimeCommandBuffer(*core);
+				VulkanOneTimeCommandBufferManager oneTimeCommandBuffer(logicalDevice, commandPool, graphicsQueue, presentQueue);
 				VkCommandBuffer commandBuffer = oneTimeCommandBuffer.myCommandBuffers[0];
 
 				VkImageMemoryBarrier barrier = {};
@@ -217,7 +217,7 @@ namespace Dynamik {
 				);
 			}
 
-			VkImageView VulkanFunctions::createImageView(POINTER<VulkanCoreObject> core, ADGRCreateImageViewInfo info)
+			VkImageView VulkanFunctions::createImageView(VkDevice device, ADGRCreateImageViewInfo info)
 			{
 				VkImageViewCreateInfo viewInfo = {};
 				viewInfo.sType = VK_STRUCTURE_TYPE_IMAGE_VIEW_CREATE_INFO;
@@ -231,15 +231,15 @@ namespace Dynamik {
 				viewInfo.subresourceRange.layerCount = 1;
 
 				VkImageView imageView;
-				if (vkCreateImageView(core->logicalDevice, &viewInfo, nullptr, &imageView) != VK_SUCCESS)
+				if (vkCreateImageView(device, &viewInfo, nullptr, &imageView) != VK_SUCCESS)
 					DMK_CORE_FATAL("failed to create texture image view!");
 
 				return imageView;
 			}
 
-			void VulkanFunctions::copyBufferToImage(POINTER<VulkanCoreObject> core, ADGRCopyBufferToImageInfo info)
+			void VulkanFunctions::copyBufferToImage(VkDevice logicalDevice, VkCommandPool commandPool, VkQueue graphicsQueue, VkQueue presentQueue, ADGRCopyBufferToImageInfo info)
 			{
-				VulkanOneTimeCommandBufferManager oneTimeCommandBuffer(*core);
+				VulkanOneTimeCommandBufferManager oneTimeCommandBuffer(logicalDevice, commandPool, graphicsQueue, presentQueue);
 				VkCommandBuffer commandBuffer = oneTimeCommandBuffer.myCommandBuffers[0];
 
 				VkBufferImageCopy region = {};

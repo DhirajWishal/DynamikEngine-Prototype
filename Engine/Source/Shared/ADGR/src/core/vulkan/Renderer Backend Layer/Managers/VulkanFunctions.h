@@ -2,8 +2,6 @@
 #ifndef _DYNAMIK_ADGR_VULKAN_FUNCTIONS_H
 #define _DYNAMIK_ADGR_VULKAN_FUNCTIONS_H
 
-#include "Objects/VulkanCoreObject.h"
-
 namespace Dynamik {
 	namespace ADGR {
 		namespace Backend {
@@ -74,19 +72,19 @@ namespace Dynamik {
 				~VulkanFunctions() {}
 
 				/* BUFFER FUNCTIONS */
-				static void createBuffer(POINTER<VulkanCoreObject> core, ADGRCreateBufferInfo info);
+				static void createBuffer(VkDevice logicalDevice, VkPhysicalDevice physicalDevice, ADGRCreateBufferInfo info);
 				static UI32 findMemoryType(UI32 typeFilter, VkMemoryPropertyFlags properties, VkPhysicalDevice physicalDevice);
 				static VkSampleCountFlagBits getMaxUsableSampleCount(VkPhysicalDevice physicalDevice);
 				static B1 hasStencilComponent(VkFormat format);
 				static VkFormat findSupportedFormat(const ARRAY<VkFormat>& candidates, VkImageTiling tiling, VkFormatFeatureFlags features, VkPhysicalDevice physicalDevice);
 				static VkFormat findDepthFormat(VkPhysicalDevice physicalDevice);
-				static void copyBuffer(POINTER<VulkanCoreObject> core, VkBuffer srcBuffer, VkBuffer dstBuffer, VkDeviceSize size);
+				static void copyBuffer(VkDevice logicalDevice, VkCommandPool commandPool, VkQueue graphicsQueue, VkQueue presentQueue, VkBuffer srcBuffer, VkBuffer dstBuffer, VkDeviceSize size);
 
 				/* TEXTURE FUNCTIONS */
-				static void createImage(POINTER<VulkanCoreObject> core, ADGRCreateImageInfo info);
-				static void transitionImageLayout(POINTER<VulkanCoreObject> core, ADGRTransitionImageLayoutInfo info);
-				static VkImageView createImageView(POINTER<VulkanCoreObject> core, ADGRCreateImageViewInfo info);
-				static void copyBufferToImage(POINTER<VulkanCoreObject> core, ADGRCopyBufferToImageInfo info);
+				static void createImage(VkDevice logicalDevice, VkPhysicalDevice physicalDevice, ADGRCreateImageInfo info);
+				static void transitionImageLayout(VkDevice logicalDevice, VkCommandPool commandPool, VkQueue graphicsQueue, VkQueue presentQueue, ADGRTransitionImageLayoutInfo info);
+				static VkImageView createImageView(VkDevice device, ADGRCreateImageViewInfo info);
+				static void copyBufferToImage(VkDevice logicalDevice, VkCommandPool commandPool, VkQueue graphicsQueue, VkQueue presentQueue, ADGRCopyBufferToImageInfo info);
 			};
 		}
 	}

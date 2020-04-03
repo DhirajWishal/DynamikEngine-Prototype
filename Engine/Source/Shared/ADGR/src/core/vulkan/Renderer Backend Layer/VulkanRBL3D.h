@@ -49,15 +49,13 @@ namespace Dynamik {
 
 			WindowManager myWindowManager;
 
-			VulkanQueueManager myQueue;
-			VulkanCoreObject myCoreObject;
+			VulkanCore myVulkanCore;
+			VulkanColorBuffer myColorBuffer;
+			VulkanDepthBuffer myDepthBuffer;
 
-			ARRAY<VulkanRenderObject> renderableObjects;
-			ARRAY<VulkanRenderObject> internalObjects;
+			ARRAY<VulkanRenderableObject> renderableObjects;
 
 			ARRAY<ADGRVulkan3DObjectData> rawObjectStore;
-
-			ADGRVulkanSyncObjectsContainer syncObjectsContainer;
 
 			VkDevice device;
 		};

@@ -89,8 +89,8 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>glfw3dll.lib;glew32s.lib;opengl32.lib;vulkan-1.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)Dependencies\Libraries\Binaries\GLFW\lib-vc2019;$(SolutionDir)Dependencies\Libraries\Binaries\GLEW\Release\x64;$(SolutionDir)Dependencies\Libraries\Binaries\Vulkan;$(SolutionDir)Builds\Dependencies\Libraries\Internal\CPP\Binaries;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>glfw3dll.lib;glew32s.lib;opengl32.lib;vulkan-1.lib;d3dcompiler.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)Dependencies\Libraries\Binaries\GLFW\lib-vc2019;$(SolutionDir)Dependencies\Libraries\Binaries\GLEW\Release\x64;$(SolutionDir)Dependencies\Libraries\Binaries\Vulkan;$(SolutionDir)Dependencies\Libraries\Binaries\DirectX12;$(SolutionDir)Builds\Dependencies\Libraries\Internal\CPP\Binaries;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ImportLibrary>$(SolutionDir)Builds\Engine\Binaries\$(Configuration)-$(Platform)\ADGR.lib</ImportLibrary>
     </Link>
   </ItemDefinitionGroup>
@@ -113,8 +113,8 @@
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>glfw3dll.lib;glew32s.lib;opengl32.lib;vulkan-1.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)Dependencies\Libraries\Binaries\GLFW\lib-vc2019;$(SolutionDir)Dependencies\Libraries\Binaries\GLEW\Release\x64;$(SolutionDir)Dependencies\Libraries\Binaries\Vulkan;$(SolutionDir)Builds\Dependencies\Libraries\Internal\CPP\Binaries;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>glfw3dll.lib;glew32s.lib;opengl32.lib;vulkan-1.lib;d3dcompiler.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)Dependencies\Libraries\Binaries\GLFW\lib-vc2019;$(SolutionDir)Dependencies\Libraries\Binaries\GLEW\Release\x64;$(SolutionDir)Dependencies\Libraries\Binaries\Vulkan;$(SolutionDir)Dependencies\Libraries\Binaries\DirectX12;$(SolutionDir)Builds\Dependencies\Libraries\Internal\CPP\Binaries;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ImportLibrary>$(SolutionDir)Builds\Engine\Binaries\$(Configuration)-$(Platform)\ADGR.lib</ImportLibrary>
     </Link>
   </ItemDefinitionGroup>
@@ -137,13 +137,17 @@
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>glfw3dll.lib;glew32s.lib;opengl32.lib;vulkan-1.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)Dependencies\Libraries\Binaries\GLFW\lib-vc2019;$(SolutionDir)Dependencies\Libraries\Binaries\GLEW\Release\x64;$(SolutionDir)Dependencies\Libraries\Binaries\Vulkan;$(SolutionDir)Builds\Dependencies\Libraries\Internal\CPP\Binaries;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>glfw3dll.lib;glew32s.lib;opengl32.lib;vulkan-1.lib;d3dcompiler.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)Dependencies\Libraries\Binaries\GLFW\lib-vc2019;$(SolutionDir)Dependencies\Libraries\Binaries\GLEW\Release\x64;$(SolutionDir)Dependencies\Libraries\Binaries\Vulkan;$(SolutionDir)Dependencies\Libraries\Binaries\DirectX12;$(SolutionDir)Builds\Dependencies\Libraries\Internal\CPP\Binaries;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ImportLibrary>$(SolutionDir)Builds\Engine\Binaries\$(Configuration)-$(Platform)\ADGR.lib</ImportLibrary>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="src\ADGR.h" />
+    <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Managers\VulkanColorBuffer.h" />
+    <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Managers\VulkanCore.h" />
+    <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Managers\VulkanDepthBuffer.h" />
+    <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Managers\VulkanRenderableObject.h" />
     <ClInclude Include="src\Layers\layer.h" />
     <ClInclude Include="src\Layers\layerStack.h" />
     <ClInclude Include="src\Renderer.h" />
@@ -162,17 +166,11 @@
     <ClInclude Include="src\core\opengl\backend\vertexAndIndexBuffer.h" />
     <ClInclude Include="src\core\opengl\backend\window.h" />
     <ClInclude Include="src\core\opengl\openglRenderer.h" />
-    <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Managers\Objects\VulkanCoreObject.h" />
-    <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Managers\Objects\VulkanRenderObject.h" />
-    <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Managers\VulkanBufferFunctions.h" />
     <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Managers\VulkanControlHeader.h" />
-    <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Managers\VulkanCoreFunctions.h" />
     <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Managers\VulkanExtensionsManager.h" />
     <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Managers\VulkanFunctions.h" />
     <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Managers\VulkanOneTimeCommandBufferManager.h" />
-    <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Managers\VulkanQueueManager.h" />
     <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Managers\VulkanRBLIndex.h" />
-    <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Managers\VulkanTextureFunctions.h" />
     <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Managers\VulkanValidator.h" />
     <ClInclude Include="src\core\vulkan\Renderer Backend Layer\VulkanRBL3D.h" />
     <ClInclude Include="src\core\vulkan\vulkanRenderer.h" />
@@ -182,6 +180,10 @@
     <ClInclude Include="src\rendererFormat.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Managers\VulkanColorBuffer.cpp" />
+    <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Managers\VulkanCore.cpp" />
+    <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Managers\VulkanDepthBuffer.cpp" />
+    <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Managers\VulkanRenderableObject.cpp" />
     <ClCompile Include="src\Layers\layer.cpp" />
     <ClCompile Include="src\Layers\layerStack.cpp" />
     <ClCompile Include="src\Renderer.cpp" />
@@ -198,13 +200,9 @@
     <ClCompile Include="src\core\opengl\backend\vertexAndIndexBuffer.cpp" />
     <ClCompile Include="src\core\opengl\backend\window.cpp" />
     <ClCompile Include="src\core\opengl\openglRenderer.cpp" />
-    <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Managers\VulkanBufferFunctions.cpp" />
-    <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Managers\VulkanCoreFunctions.cpp" />
     <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Managers\VulkanExtensionsManager.cpp" />
     <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Managers\VulkanFunctions.cpp" />
     <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Managers\VulkanOneTimeCommandBufferManager.cpp" />
-    <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Managers\VulkanQueueManager.cpp" />
-    <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Managers\VulkanTextureFunctions.cpp" />
     <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Managers\VulkanValidator.cpp" />
     <ClCompile Include="src\core\vulkan\Renderer Backend Layer\VulkanRBL3D.cpp" />
     <ClCompile Include="src\core\vulkan\vulkanRenderer.cpp" />

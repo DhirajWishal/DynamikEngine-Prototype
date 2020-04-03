@@ -50,6 +50,7 @@ project "ADGR"
 		"%{IncludeLib.GLFW}",
 		"%{IncludeLib.GLEW}",
 		"%{IncludeLib.Vulkan}",
+		"%{IncludeLib.DirectX}",
 		DynamikInternalBinaries
 	}
 
@@ -58,6 +59,7 @@ project "ADGR"
 		"glew32s",
 		"opengl32",
 		"vulkan-1",
+		"d3dcompiler",
 		"Events",
 		"Platform",
 		"Managers",

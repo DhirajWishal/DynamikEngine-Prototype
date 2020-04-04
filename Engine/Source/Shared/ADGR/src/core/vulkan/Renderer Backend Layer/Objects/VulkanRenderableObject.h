@@ -7,6 +7,8 @@
 
 #include "VulkanShader.h"
 
+#include <GameObject.h>
+
 namespace Dynamik {
 	namespace ADGR {
 		namespace Backend {
@@ -105,7 +107,6 @@ namespace Dynamik {
 
 			struct ADGRVulkanDescriptorPoolInitInfo {
 				ARRAY<VkDescriptorPoolSize> additionalSizes;
-				UI32 poolCount = 3;
 			};
 
 			struct ADGRVulkanDescriptorSetsInitInfo {
@@ -123,49 +124,70 @@ namespace Dynamik {
 				UI32 width, height;
 			};
 
+			struct ADGRVulkanTextureSamplerInitInfo {
+				VkFilter magFilter;
+				VkFilter minFilter;
+				VkSamplerAddressMode modeU;
+				VkSamplerAddressMode modeV;
+				VkSamplerAddressMode modeW;
+
+				F32 minMipLevels;
+				F32 maxMipLevels;
+
+				VkBool32 anisotrophyEnable = VK_FALSE;
+				F32 maxAnisotrophy = 16;
+				VkBorderColor borderColor = VK_BORDER_COLOR_INT_OPAQUE_BLACK;
+				VkBool32 unnormalizedCoordinates = VK_FALSE;
+				VkBool32 compareEnable = VK_FALSE;
+				VkCompareOp compareOp = VK_COMPARE_OP_ALWAYS;
+				VkSamplerMipmapMode mipMapMode = VK_SAMPLER_MIPMAP_MODE_LINEAR;
+				F32 mipLoadBias = 0;
+			};
+
 			struct ADGRVulkanDescrpitorContainer {
 				VkDescriptorSetLayout layout;
 				ARRAY<VkDescriptorPool> descriptorPools;
 				ARRAY<ARRAY<VkDescriptorSet>> descriptorSets;
 			};
 
-			class VulkanRenderableObject {
+			class VulkanRenderableObject : public GameObject {
 			public:
 				VulkanRenderableObject(VkDevice logicalDevice, VkPhysicalDevice physicalDevice, VkCommandPool commandPool, VkQueue graphicsQueue, VkQueue presentQueue)
 					: logicalDevice(logicalDevice), physicalDevice(physicalDevice), commandPool(commandPool), graphicsQueue(graphicsQueue), presentQueue(presentQueue) {}
-				~VulkanRenderableObject() {}
+				virtual ~VulkanRenderableObject() {}
 
-				void initializeDescriptorSetLayout(ADGRVulkanDescriptorSetLayoutInitInfo into);
-				void terminateDescriptorSetLayout();
+				virtual void initializeDescriptorSetLayout(ADGRVulkanDescriptorSetLayoutInitInfo into);
+				virtual void terminateDescriptorSetLayout();
 
-				void initializePipelineLayout(ADGRVulkanPipelineLayoutInitInfo info);
-				void terminatePipelineLayout();
+				virtual void initializePipelineLayout(ADGRVulkanPipelineLayoutInitInfo info);
+				virtual void terminatePipelineLayout();
 
-				void initializePipeline(VkExtent2D swapChainExtent, ADGRVulkanPipelineInitInfo info);
-				void terminatePipeline();
+				virtual void initializePipeline(VkExtent2D swapChainExtent, ADGRVulkanPipelineInitInfo info);
+				virtual void terminatePipeline();
 
-				void initializeTextures(ARRAY<ADGRVulkanTextureInitInfo> infos);
-				void generateMipMaps(POINTER<ADGRVulkanTextureContainer> container);
-				void terminateTextures();
+				virtual void initializeTextures(ARRAY<ADGRVulkanTextureInitInfo> infos);
+				virtual void initializeTextureSampler(ADGRVulkanTextureSamplerInitInfo info, POINTER<VkSampler> imageSampler);
+				virtual void generateMipMaps(POINTER<ADGRVulkanTextureContainer> container);
+				virtual void terminateTextures();
 
-				void initializeVertexBuffer(ARRAY<Vertex>* vertexes);
-				void terminateVertexBuffer();
+				virtual void initializeVertexBuffer(ARRAY<Vertex>* vertexes);
+				virtual void terminateVertexBuffer();
 
-				void initializeIndexBufferUI8(ARRAY<UI8>* indexes);
-				void initializeIndexBufferUI16(ARRAY<UI16>* indexes);
-				void initializeIndexBufferUI32(ARRAY<UI32>* indexes);
-				void initializeIndexBufferUI64(ARRAY<UI64>* indexes);
-				void terminateIndexBuffer();
+				virtual void initializeIndexBufferUI8(ARRAY<UI8>* indexes);
+				virtual void initializeIndexBufferUI16(ARRAY<UI16>* indexes);
+				virtual void initializeIndexBufferUI32(ARRAY<UI32>* indexes);
+				virtual void initializeIndexBufferUI64(ARRAY<UI64>* indexes);
+				virtual void terminateIndexBuffer();
 
-				void initializeDescriptorPool(ADGRVulkanDescriptorPoolInitInfo info);
-				void terminateDescriptorPool();
+				virtual void initializeDescriptorPool(ADGRVulkanDescriptorPoolInitInfo info);
+				virtual void terminateDescriptorPool();
 
-				void initializeDescriptorSets(ADGRVulkanDescriptorSetsInitInfo info);
-				void terminateDescriptorSets();
+				virtual void initializeDescriptorSets(ADGRVulkanDescriptorSetsInitInfo info);
+				virtual void terminateDescriptorSets();
 
-				void initializeUniformBuffer();
-				void updateUniformBuffer(UniformBufferObject uniformBuferObject, UI32 currentImage);
-				void terminateUniformBuffer();
+				virtual void initializeUniformBuffer(UI32 count);
+				virtual void updateUniformBuffer(UniformBufferObject uniformBuferObject, std::deque<DMKEventContainer>& eventContainers, UI32 currentImage, UI32 frameWidth = 0, UI32 frameHeight = 0);
+				virtual void terminateUniformBuffer();
 
 				DMK_ADGR_RENDERING_TECHNOLOGY renderTechnology = DMK_ADGR_RENDERING_TECHNOLOGY::DMK_ADGR_RENDER_INDEXED;
 
@@ -195,7 +217,7 @@ namespace Dynamik {
 				ARRAY<VkDeviceMemory> uniformBufferMemories;
 
 				//VulkanPushConstantManager pushConstant;
-				std::array<glm::vec4, 6> pushConstants;
+				ARRAY<glm::vec4> pushConstants;
 			};
 		}
 	}

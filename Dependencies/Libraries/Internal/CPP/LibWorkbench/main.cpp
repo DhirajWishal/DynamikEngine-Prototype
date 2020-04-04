@@ -22,17 +22,32 @@ using namespace Dynamik;
  PROS: indexed allocation (not contigeious)
 */
 
-int main() {
-    std::string str = "";
+class Base {
+public:
+    Base() {}
+    virtual ~Base() {}
 
-    while (true)
-    {
-        std::cout << "Enter String: ";
-        std::getline(std::cin, str);
-        std::cout << "Generated Hash: "; 
-        getHash(str.c_str());
-        std::cout << "\n\n";
+    virtual void hello() {
+        std::cout << "Hello world!\n";
     }
+};
+
+class Child : public Base {
+public:
+    Child() {}
+    ~Child() {}
+
+    void hello() override {
+        std::cout << "Im child!\n";
+    }
+};
+
+int main() {
+    Base base;
+    base.hello();
+
+    Child child;
+    child.hello();
 
 	return 0;
 }

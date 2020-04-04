@@ -171,6 +171,7 @@
     <ClInclude Include="src\dmkafx.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="GameLibraries\GameObject.cpp" />
     <ClCompile Include="src\core\application.cpp" />
     <ClCompile Include="src\core\data store\internalFormat.cpp" />
     <ClCompile Include="src\core\engineControlUnit.cpp" />

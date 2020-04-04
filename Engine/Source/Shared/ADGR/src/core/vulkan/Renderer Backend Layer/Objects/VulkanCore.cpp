@@ -6,13 +6,11 @@
 #include "VulkanFunctions.h"
 #include "defines.h"
 
-#include "Platform/Windows/file/readFile.h"
 #include "CentralDataHub.h"
 
 namespace Dynamik {
 	namespace ADGR {
 		namespace Backend {
-			using namespace core;
 
 			/* HELPER FUNCTIONS */
 			/* DEVICE */
@@ -227,131 +225,6 @@ namespace Dynamik {
 				terminateSyncObjects();
 			}
 
-			void VulkanCore::initializeCommandBuffers(ARRAY<VulkanRenderableObject> objects)
-			{
-				commandBuffers.resize(frameBuffers.size());
-
-				VkCommandBufferAllocateInfo allocInfo = {};
-				allocInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO;
-				allocInfo.commandPool = commandPool;
-				allocInfo.level = VK_COMMAND_BUFFER_LEVEL_PRIMARY;
-				allocInfo.commandBufferCount = static_cast<UI32>(frameBuffers.size());
-
-				if (vkAllocateCommandBuffers(logicalDevice, &allocInfo, commandBuffers.data()) != VK_SUCCESS)
-					DMK_CORE_FATAL("failed to allocate command buffers!");
-
-				for (size_t i = 0; i < frameBuffers.size(); i++) {
-					VkCommandBufferBeginInfo beginInfo = {};
-					beginInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO;
-					beginInfo.flags = VK_COMMAND_BUFFER_USAGE_SIMULTANEOUS_USE_BIT;
-
-					if (vkBeginCommandBuffer(commandBuffers[i], &beginInfo) != VK_SUCCESS)
-						DMK_CORE_FATAL("failed to begin recording command commandBuffers[i]!");
-
-					VkRenderPassBeginInfo renderPassInfo = {};
-					renderPassInfo.sType = VK_STRUCTURE_TYPE_RENDER_PASS_BEGIN_INFO;
-					renderPassInfo.renderPass = renderPass;
-					renderPassInfo.framebuffer = frameBuffers[i];
-					renderPassInfo.renderArea.offset = { 0, 0 };
-					renderPassInfo.renderArea.extent = swapChainExtent;
-
-					/*
-					 (2.0f / 256.0f),
-					 (8.0f / 256.0f),
-					 (32.0f / 256.0f),
-					 (1.00000000f)
-					*/
-
-					std::array<VkClearValue, 2> clearValues = {};
-					//clearValues[0].color = {
-					//	container->clearScreenValues[0],	// Red
-					//	container->clearScreenValues[1],	// Green
-					//	container->clearScreenValues[2],	// Blue
-					//	container->clearScreenValues[3]		// Alpha
-					//};
-
-					clearValues[0].color = {
-					 (2.0f / 256.0f),
-					 (8.0f / 256.0f),
-					 (32.0f / 256.0f),
-					 (1.00000000f)
-					};
-					clearValues[1].depthStencil = { 1.0f, 0 };
-
-					renderPassInfo.clearValueCount = static_cast<UI32>(clearValues.size());
-					renderPassInfo.pClearValues = clearValues.data();
-
-					/* BEGIN VULKAN COMMANDS */
-					VkDeviceSize offsets[] = { 0 };
-					// begin render pass
-					vkCmdBeginRenderPass(commandBuffers[i], &renderPassInfo, VK_SUBPASS_CONTENTS_INLINE);
-
-					/* TODO: pushConstants */
-					// pushConstants[0] = ...
-					// vkCmdPushConstants(commandBuffers[i], &pipelineLayout, VK_SHADER_STAGE_VERTEX_BIT,
-					//		0, pushConstants.size(), pushConstants.data());
-					//
-					// Update light positions
-					// w component = light radius scale
-
-					/* DRAW COMMANDS */
-					for (I32 _itr = 0; _itr < objects.size(); _itr++) {
-						vkCmdPushConstants(commandBuffers[i], objects.at(_itr).pipelineLayout, VK_SHADER_STAGE_VERTEX_BIT, 0, objects.at(_itr).pushConstants.size(), objects.at(_itr).pushConstants.data());
-
-						// Render type selection
-						if (objects.at(_itr).renderTechnology == DMK_ADGR_RENDERING_TECHNOLOGY::DMK_ADGR_RENDER_VERTEX) 		// Render as individual vertexes
-							drawVertex(commandBuffers[i], i, &objects.at(_itr), offsets);
-
-						else if (objects.at(_itr).renderTechnology == DMK_ADGR_RENDERING_TECHNOLOGY::DMK_ADGR_RENDER_INDEXED) 		// Render as individual indexes
-							drawIndexed(commandBuffers[i], i, &objects.at(_itr), offsets);
-
-						else if (objects.at(_itr).renderTechnology == DMK_ADGR_RENDERING_TECHNOLOGY::DMK_ADGR_RENDER_INDIRECT) {
-						}
-						else if (objects.at(_itr).renderTechnology == DMK_ADGR_RENDERING_TECHNOLOGY::DMK_ADGR_RENDER_INDEXED_INDIRECT) {
-						}
-						else if (objects.at(_itr).renderTechnology == DMK_ADGR_RENDERING_TECHNOLOGY::DMK_ADGR_RENDER_SKYBOX_VERTEX) {		// Render as individual vertexes
-							drawVertex(commandBuffers[i], i, &objects.at(_itr), offsets);
-						}
-						else if (objects.at(_itr).renderTechnology == DMK_ADGR_RENDERING_TECHNOLOGY::DMK_ADGR_RENDER_SKYBOX_INDEXED) {		// Render as individual indexes
-							drawIndexed(commandBuffers[i], i, &objects.at(_itr), offsets);
-						}
-						else if (objects.at(_itr).renderTechnology == DMK_ADGR_RENDERING_TECHNOLOGY::DMK_ADGR_RENDER_SKYBOX_INDIRECT) {
-						}
-						else if (objects.at(_itr).renderTechnology == DMK_ADGR_RENDERING_TECHNOLOGY::DMK_ADGR_RENDER_SKYBOX_INDEXED_INDIRECT) {
-						}
-						else
-							DMK_CORE_FATAL("Invalid rendering type!");
-					}
-
-					// end renderPass
-					vkCmdEndRenderPass(commandBuffers[i]);
-
-					/* END VULKAN COMMANDS */
-					if (vkEndCommandBuffer(commandBuffers[i]) != VK_SUCCESS)
-						DMK_CORE_FATAL("failed to record command commandBuffers[i]!");
-
-					/*
-					 Vulkan command (draw) order:
-						begin render pass
-						Per-object:
-							init pipeline
-							bind vertex buffers
-							bind index buffers
-							bind descriptor sets
-							draw indexed data
-						end render pass
-						end command commandBuffers[i]
-					*/
-				}
-
-			}
-
-			void VulkanCore::terminateCommandBuffers()
-			{
-				vkFreeCommandBuffers(logicalDevice, commandPool, static_cast<UI32>(commandBuffers.size()), commandBuffers.data());
-
-			}
-
 			void VulkanCore::initializeInstance(ADGRVulkanInstanceInitInfo info)
 			{
 				if (VulkanValidator::enableValidationLayers && !VulkanValidator::checkValidationLayerSupport())
@@ -421,6 +294,57 @@ namespace Dynamik {
 			{
 				if (VulkanValidator::enableValidationLayers)
 					destroyDebugUtilsMessengerEXT(instance, debugMessenger, nullptr);
+			}
+
+			void VulkanCore::syncFence(UI32 frame)
+			{
+				vkWaitForFences(logicalDevice, 1, &inFlightFences[frame], VK_TRUE, std::numeric_limits<uint64_t>::max());
+			}
+
+			VkResult VulkanCore::getNextImage(POINTER<UI32> index)
+			{
+				return vkAcquireNextImageKHR(logicalDevice,swapChain, std::numeric_limits<uint64_t>::max(),
+					imageAvailables[index.dereference()], VK_NULL_HANDLE, index);
+			}
+
+			VkResult VulkanCore::submitQueues(UI32 index, UI32 frame)
+			{
+				// submit info
+				submitInfo.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO;
+
+				// wait for semaphores
+				waitSemaphores[0] = { imageAvailables[frame] };
+				waitStages[0] = { VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT };
+				submitInfo.waitSemaphoreCount = 1;
+				submitInfo.pWaitSemaphores = waitSemaphores;
+				submitInfo.pWaitDstStageMask = waitStages;
+				submitInfo.commandBufferCount = 1;
+				submitInfo.pCommandBuffers = &commandBuffers[index];
+
+				// signal semaphores
+				signalSemaphores[0] = { renderFinishes[frame] };
+				submitInfo.signalSemaphoreCount = 1;
+				submitInfo.pSignalSemaphores = signalSemaphores;
+
+				// reset fences
+				vkResetFences(logicalDevice, 1, &inFlightFences[frame]);
+
+				// submit command queue
+				if (vkQueueSubmit(graphicsQueue, 1, &submitInfo, inFlightFences[frame]) != VK_SUCCESS)
+					DMK_CORE_FATAL("failed to submit draw command buffer!");
+
+				// present queue info
+				presentInfo.sType = VK_STRUCTURE_TYPE_PRESENT_INFO_KHR;
+				presentInfo.waitSemaphoreCount = 1;
+				presentInfo.pWaitSemaphores = signalSemaphores;
+
+				// swapchain info
+				presentInfo.swapchainCount = 1;
+				presentInfo.pSwapchains = &swapChain;
+				presentInfo.pImageIndices = &index;
+
+				// submit queue
+				return vkQueuePresentKHR(presentQueue, &presentInfo);
 			}
 
 			void VulkanCore::populateDebugMessegerCreateInfo(VkDebugUtilsMessengerCreateInfoEXT& createInfo)
@@ -867,6 +791,131 @@ namespace Dynamik {
 					vkDestroyFramebuffer(logicalDevice, buffer, nullptr);
 
 				frameBuffers.clear();
+			}
+
+			void VulkanCore::initializeCommandBuffers(ARRAY<VulkanRenderableObject> objects)
+			{
+				commandBuffers.resize(frameBuffers.size());
+
+				VkCommandBufferAllocateInfo allocInfo = {};
+				allocInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO;
+				allocInfo.commandPool = commandPool;
+				allocInfo.level = VK_COMMAND_BUFFER_LEVEL_PRIMARY;
+				allocInfo.commandBufferCount = static_cast<UI32>(frameBuffers.size());
+
+				if (vkAllocateCommandBuffers(logicalDevice, &allocInfo, commandBuffers.data()) != VK_SUCCESS)
+					DMK_CORE_FATAL("failed to allocate command buffers!");
+
+				for (size_t i = 0; i < frameBuffers.size(); i++) {
+					VkCommandBufferBeginInfo beginInfo = {};
+					beginInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO;
+					beginInfo.flags = VK_COMMAND_BUFFER_USAGE_SIMULTANEOUS_USE_BIT;
+
+					if (vkBeginCommandBuffer(commandBuffers[i], &beginInfo) != VK_SUCCESS)
+						DMK_CORE_FATAL("failed to begin recording command commandBuffers[i]!");
+
+					VkRenderPassBeginInfo renderPassInfo = {};
+					renderPassInfo.sType = VK_STRUCTURE_TYPE_RENDER_PASS_BEGIN_INFO;
+					renderPassInfo.renderPass = renderPass;
+					renderPassInfo.framebuffer = frameBuffers[i];
+					renderPassInfo.renderArea.offset = { 0, 0 };
+					renderPassInfo.renderArea.extent = swapChainExtent;
+
+					/*
+					 (2.0f / 256.0f),
+					 (8.0f / 256.0f),
+					 (32.0f / 256.0f),
+					 (1.00000000f)
+					*/
+
+					std::array<VkClearValue, 2> clearValues = {};
+					//clearValues[0].color = {
+					//	container->clearScreenValues[0],	// Red
+					//	container->clearScreenValues[1],	// Green
+					//	container->clearScreenValues[2],	// Blue
+					//	container->clearScreenValues[3]		// Alpha
+					//};
+
+					clearValues[0].color = {
+					 (2.0f / 256.0f),
+					 (8.0f / 256.0f),
+					 (32.0f / 256.0f),
+					 (1.00000000f)
+					};
+					clearValues[1].depthStencil = { 1.0f, 0 };
+
+					renderPassInfo.clearValueCount = static_cast<UI32>(clearValues.size());
+					renderPassInfo.pClearValues = clearValues.data();
+
+					/* BEGIN VULKAN COMMANDS */
+					VkDeviceSize offsets[] = { 0 };
+					// begin render pass
+					vkCmdBeginRenderPass(commandBuffers[i], &renderPassInfo, VK_SUBPASS_CONTENTS_INLINE);
+
+					/* TODO: pushConstants */
+					// pushConstants[0] = ...
+					// vkCmdPushConstants(commandBuffers[i], &pipelineLayout, VK_SHADER_STAGE_VERTEX_BIT,
+					//		0, pushConstants.size(), pushConstants.data());
+					//
+					// Update light positions
+					// w component = light radius scale
+
+					/* DRAW COMMANDS */
+					for (I32 _itr = 0; _itr < objects.size(); _itr++) {
+						//vkCmdPushConstants(commandBuffers[i], objects.at(_itr).pipelineLayout, VK_SHADER_STAGE_VERTEX_BIT, 0, objects.at(_itr).pushConstants.size(), objects.at(_itr).pushConstants.data());
+
+						// Render type selection
+						if (objects.at(_itr).renderTechnology == DMK_ADGR_RENDERING_TECHNOLOGY::DMK_ADGR_RENDER_VERTEX) 		// Render as individual vertexes
+							drawVertex(commandBuffers[i], i, &objects.at(_itr), offsets);
+
+						else if (objects.at(_itr).renderTechnology == DMK_ADGR_RENDERING_TECHNOLOGY::DMK_ADGR_RENDER_INDEXED) 		// Render as individual indexes
+							drawIndexed(commandBuffers[i], i, &objects.at(_itr), offsets);
+
+						else if (objects.at(_itr).renderTechnology == DMK_ADGR_RENDERING_TECHNOLOGY::DMK_ADGR_RENDER_INDIRECT) {
+						}
+						else if (objects.at(_itr).renderTechnology == DMK_ADGR_RENDERING_TECHNOLOGY::DMK_ADGR_RENDER_INDEXED_INDIRECT) {
+						}
+						else if (objects.at(_itr).renderTechnology == DMK_ADGR_RENDERING_TECHNOLOGY::DMK_ADGR_RENDER_SKYBOX_VERTEX) {		// Render as individual vertexes
+							drawVertex(commandBuffers[i], i, &objects.at(_itr), offsets);
+						}
+						else if (objects.at(_itr).renderTechnology == DMK_ADGR_RENDERING_TECHNOLOGY::DMK_ADGR_RENDER_SKYBOX_INDEXED) {		// Render as individual indexes
+							drawIndexed(commandBuffers[i], i, &objects.at(_itr), offsets);
+						}
+						else if (objects.at(_itr).renderTechnology == DMK_ADGR_RENDERING_TECHNOLOGY::DMK_ADGR_RENDER_SKYBOX_INDIRECT) {
+						}
+						else if (objects.at(_itr).renderTechnology == DMK_ADGR_RENDERING_TECHNOLOGY::DMK_ADGR_RENDER_SKYBOX_INDEXED_INDIRECT) {
+						}
+						else
+							DMK_CORE_FATAL("Invalid rendering type!");
+					}
+
+					// end renderPass
+					vkCmdEndRenderPass(commandBuffers[i]);
+
+					/* END VULKAN COMMANDS */
+					if (vkEndCommandBuffer(commandBuffers[i]) != VK_SUCCESS)
+						DMK_CORE_FATAL("failed to record command commandBuffers[i]!");
+
+					/*
+					 Vulkan command (draw) order:
+						begin render pass
+						Per-object:
+							init pipeline
+							bind vertex buffers
+							bind index buffers
+							bind descriptor sets
+							draw indexed data
+						end render pass
+						end command commandBuffers[i]
+					*/
+				}
+
+			}
+
+			void VulkanCore::terminateCommandBuffers()
+			{
+				vkFreeCommandBuffers(logicalDevice, commandPool, static_cast<UI32>(commandBuffers.size()), commandBuffers.data());
+
 			}
 
 			void VulkanCore::initializeSyncObjects()

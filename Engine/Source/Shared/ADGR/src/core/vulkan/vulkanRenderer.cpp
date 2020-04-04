@@ -24,8 +24,6 @@ namespace Dynamik {
 		using namespace core;
 
 #ifdef DMK_DEBUG
-		Debugger::benchmark::FPS myFPSCal;
-
 		// ----------
 #endif
 
@@ -118,10 +116,11 @@ namespace Dynamik {
 		// draw frame
 		void vulkanRenderer::drawFrame() {
 #ifdef DMK_DEBUG
-			myFPSCal.getFPS();	// FPS calculator
 
  // ----------
 #endif
+
+			my3DRenderer.drawFrame();
 
 			// wait for fences
 			//vkWaitForFences(myVulkanDataContainers[vulkanContainerIndex].device, 1, &myFencesInFlight[currentFrame],
@@ -254,11 +253,7 @@ namespace Dynamik {
 
 		// events
 		std::deque<DMKEventContainer>* vulkanRenderer::events() {
-			//myWindowManager.pollEvents();
-			//myEventContainers = myWindowManager.getEventContainer();
-			//
-			//return &myEventContainers;
-			return nullptr;
+			return my3DRenderer.events();
 		}
 
 		void vulkanRenderer::setFormats(ARRAY<RendererFormat>& rendererFormats) {

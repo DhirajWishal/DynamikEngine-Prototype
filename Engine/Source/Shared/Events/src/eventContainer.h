@@ -59,6 +59,14 @@ namespace Dynamik {
 		bool movementFrontBackLock = false;
 		bool movementLeftRightLock = false;
 		bool movementRotationLock = false;
+
+		float frameWidth = 0;
+		float frameHeight = 0;
+		float fieldOfView = 45.0f;
+		float near = 0.001f;
+		float far = 10.0f;
+
+		bool useRadians = true;
 	};
 }
 #endif // !_DYNAMIK_EVENTS_CONTAINER_H

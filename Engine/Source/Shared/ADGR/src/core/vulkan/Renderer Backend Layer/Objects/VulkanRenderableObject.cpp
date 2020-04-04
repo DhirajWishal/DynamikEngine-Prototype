@@ -66,13 +66,15 @@ namespace Dynamik {
 
 				if (info.pushConstantsEnable) {
 					ARRAY<VkPushConstantRange> pushConstantInfos;
+					pushConstants.resize(info.pushConstantCount);
 
 					// initialize push constants
 					for (I32 i = 0; i <= info.pushConstantCount; i++) {
 						VkPushConstantRange pushConsInfo = {};
 						pushConsInfo.stageFlags = VK_SHADER_STAGE_VERTEX_BIT;
-						pushConsInfo.size = sizeof(pushConstants);
+						pushConsInfo.size = pushConstants.typeSize() * info.pushConstantCount;
 						pushConsInfo.offset = info.pushConstantOffset;
+						//pushConsInfo.offset = pushConstants.typeSize() * i;
 
 						pushConstantInfos.push_back(pushConsInfo);
 					}
@@ -81,8 +83,11 @@ namespace Dynamik {
 				}
 
 				// create the pipeline layout
-				if (vkCreatePipelineLayout(logicalDevice, &pipelineLayoutInfo, nullptr, &pipelineLayout) != VK_SUCCESS)
+				VkPipelineLayout _pipelineLayout = VK_NULL_HANDLE;
+				if (vkCreatePipelineLayout(logicalDevice, &pipelineLayoutInfo, nullptr, &_pipelineLayout) != VK_SUCCESS)
 					DMK_CORE_FATAL("failed to create pipeline layout!");
+
+				pipelineLayout = _pipelineLayout;
 			}
 
 			void VulkanRenderableObject::terminatePipelineLayout()
@@ -92,8 +97,8 @@ namespace Dynamik {
 
 			void VulkanRenderableObject::initializePipeline(VkExtent2D swapChainExtent, ADGRVulkanPipelineInitInfo info)
 			{
-				auto bindingDescription = Vertex::getBindingDescription(1).toVector();
-				auto attributeDescriptions = Vertex::getAttributeDescriptions().toVector();
+				auto bindingDescription = Vertex::getBindingDescription(1);
+				auto attributeDescriptions = Vertex::getAttributeDescriptions();
 
 				VkPipelineVertexInputStateCreateInfo vertexInputInfo = {};
 				vertexInputInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO;
@@ -231,10 +236,11 @@ namespace Dynamik {
 					pipelineInfo.pDynamicState = &dynamicStateInfo;
 
 				// create the pipeline
-				if (vkCreateGraphicsPipelines(logicalDevice, info.pipelineCache, 1, &pipelineInfo, nullptr, &pipeline) != VK_SUCCESS)
+				VkPipeline _pipeline = VK_NULL_HANDLE;
+				if (vkCreateGraphicsPipelines(logicalDevice, info.pipelineCache, 1, &pipelineInfo, nullptr, &_pipeline) != VK_SUCCESS)
 					DMK_CORE_FATAL("failed to create graphics pipeline!");
 
-				/* DESTROY SHADER MODULES */
+				pipeline = _pipeline;
 			}
 
 			void VulkanRenderableObject::terminatePipeline()
@@ -326,26 +332,15 @@ namespace Dynamik {
 
 					generateMipMaps(&_container);
 
-					VkSamplerCreateInfo samplerInfo = {};
-					samplerInfo.sType = VK_STRUCTURE_TYPE_SAMPLER_CREATE_INFO;
-					samplerInfo.magFilter = info.magFilter;
-					samplerInfo.minFilter = info.minFilter;
-					samplerInfo.addressModeU = info.modeU;
-					samplerInfo.addressModeV = info.modeV;
-					samplerInfo.addressModeW = info.modeW;
-					samplerInfo.anisotropyEnable = VK_TRUE;
-					samplerInfo.maxAnisotropy = 16;
-					samplerInfo.borderColor = VK_BORDER_COLOR_INT_OPAQUE_BLACK;
-					samplerInfo.unnormalizedCoordinates = VK_FALSE;
-					samplerInfo.compareEnable = VK_FALSE;
-					samplerInfo.compareOp = VK_COMPARE_OP_ALWAYS;
-					samplerInfo.mipmapMode = VK_SAMPLER_MIPMAP_MODE_LINEAR;
-					samplerInfo.minLod = info.minMipLevels; // change this for varying mip levels
-					samplerInfo.maxLod = static_cast<F32>(info.maxMipLevels);
-					samplerInfo.mipLodBias = 0; // Optional
-
-					if (vkCreateSampler(logicalDevice, &samplerInfo, nullptr, &_container.imageSampler) != VK_SUCCESS)
-						DMK_CORE_FATAL("failed to create texture sampler!");
+					ADGRVulkanTextureSamplerInitInfo samplerInitInfo;
+					samplerInitInfo.magFilter = info.magFilter;
+					samplerInitInfo.minFilter = info.minFilter;
+					samplerInitInfo.maxMipLevels = info.maxMipLevels;
+					samplerInitInfo.minMipLevels = info.minMipLevels;
+					samplerInitInfo.modeU = info.modeU;
+					samplerInitInfo.modeV = info.modeV;
+					samplerInitInfo.modeW = info.modeW;
+					initializeTextureSampler(samplerInitInfo, &_container.imageSampler);
 
 					ADGRCreateImageViewInfo cinfo2;
 					cinfo2.image = _container.image;
@@ -357,6 +352,30 @@ namespace Dynamik {
 
 					textures.pushBack(_container);
 				}
+			}
+
+			void VulkanRenderableObject::initializeTextureSampler(ADGRVulkanTextureSamplerInitInfo info, POINTER<VkSampler> imageSampler)
+			{
+				VkSamplerCreateInfo samplerInfo = {};
+				samplerInfo.sType = VK_STRUCTURE_TYPE_SAMPLER_CREATE_INFO;
+				samplerInfo.magFilter = info.magFilter;
+				samplerInfo.minFilter = info.minFilter;
+				samplerInfo.addressModeU = info.modeU;
+				samplerInfo.addressModeV = info.modeV;
+				samplerInfo.addressModeW = info.modeW;
+				samplerInfo.anisotropyEnable = info.anisotrophyEnable;
+				samplerInfo.maxAnisotropy = info.maxAnisotrophy;
+				samplerInfo.borderColor = info.borderColor;
+				samplerInfo.unnormalizedCoordinates = info.unnormalizedCoordinates;
+				samplerInfo.compareEnable = info.compareEnable;
+				samplerInfo.compareOp = info.compareOp;
+				samplerInfo.mipmapMode = info.mipMapMode;
+				samplerInfo.minLod = info.minMipLevels; // change this for varying mip levels
+				samplerInfo.maxLod = static_cast<F32>(info.maxMipLevels);
+				samplerInfo.mipLodBias = info.mipLoadBias; // Optional
+
+				if (vkCreateSampler(logicalDevice, &samplerInfo, nullptr, imageSampler.get()) != VK_SUCCESS)
+					DMK_CORE_FATAL("failed to create texture sampler!");
 			}
 
 			void  VulkanRenderableObject::generateMipMaps(POINTER<ADGRVulkanTextureContainer> container)
@@ -522,7 +541,7 @@ namespace Dynamik {
 
 				ADGRCreateBufferInfo indexBufferInfo;
 				indexBufferInfo.bufferSize = bufferSize;
-				indexBufferInfo.usage = (VkBufferUsageFlagBits)(VK_BUFFER_USAGE_TRANSFER_DST_BIT | VK_BUFFER_USAGE_VERTEX_BUFFER_BIT);
+				indexBufferInfo.usage = (VkBufferUsageFlagBits)(VK_BUFFER_USAGE_TRANSFER_DST_BIT | VK_BUFFER_USAGE_INDEX_BUFFER_BIT);
 				indexBufferInfo.bufferMemoryPropertyflags = VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT;
 				indexBufferInfo.buffer = &_buffer;
 				indexBufferInfo.bufferMemory = &_bufferMemory;
@@ -566,7 +585,7 @@ namespace Dynamik {
 
 				ADGRCreateBufferInfo indexBufferInfo;
 				indexBufferInfo.bufferSize = bufferSize;
-				indexBufferInfo.usage = (VkBufferUsageFlagBits)(VK_BUFFER_USAGE_TRANSFER_DST_BIT | VK_BUFFER_USAGE_VERTEX_BUFFER_BIT);
+				indexBufferInfo.usage = (VkBufferUsageFlagBits)(VK_BUFFER_USAGE_TRANSFER_DST_BIT | VK_BUFFER_USAGE_INDEX_BUFFER_BIT);
 				indexBufferInfo.bufferMemoryPropertyflags = VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT;
 				indexBufferInfo.buffer = &_buffer;
 				indexBufferInfo.bufferMemory = &_bufferMemory;
@@ -610,7 +629,7 @@ namespace Dynamik {
 
 				ADGRCreateBufferInfo indexBufferInfo;
 				indexBufferInfo.bufferSize = bufferSize;
-				indexBufferInfo.usage = (VkBufferUsageFlagBits)(VK_BUFFER_USAGE_TRANSFER_DST_BIT | VK_BUFFER_USAGE_VERTEX_BUFFER_BIT);
+				indexBufferInfo.usage = (VkBufferUsageFlagBits)(VK_BUFFER_USAGE_TRANSFER_DST_BIT | VK_BUFFER_USAGE_INDEX_BUFFER_BIT);
 				indexBufferInfo.bufferMemoryPropertyflags = VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT;
 				indexBufferInfo.buffer = &_buffer;
 				indexBufferInfo.bufferMemory = &_bufferMemory;
@@ -654,7 +673,7 @@ namespace Dynamik {
 
 				ADGRCreateBufferInfo indexBufferInfo;
 				indexBufferInfo.bufferSize = bufferSize;
-				indexBufferInfo.usage = (VkBufferUsageFlagBits)(VK_BUFFER_USAGE_TRANSFER_DST_BIT | VK_BUFFER_USAGE_VERTEX_BUFFER_BIT);
+				indexBufferInfo.usage = (VkBufferUsageFlagBits)(VK_BUFFER_USAGE_TRANSFER_DST_BIT | VK_BUFFER_USAGE_INDEX_BUFFER_BIT);
 				indexBufferInfo.bufferMemoryPropertyflags = VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT;
 				indexBufferInfo.buffer = &_buffer;
 				indexBufferInfo.bufferMemory = &_bufferMemory;
@@ -681,15 +700,16 @@ namespace Dynamik {
 
 			void VulkanRenderableObject::initializeDescriptorPool(ADGRVulkanDescriptorPoolInitInfo info)
 			{
-				for (UI32 itr = 0; itr < info.poolCount; itr++) {
+				UI32 poolCount = uniformBuffers.size();
+				for (UI32 itr = 0; itr < poolCount; itr++) {
 					ARRAY<VkDescriptorPoolSize> poolSizes = {};
 					VkDescriptorPoolSize _poolSize1;
 					_poolSize1.type = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;
-					_poolSize1.descriptorCount = static_cast<UI32>(info.poolCount);
+					_poolSize1.descriptorCount = static_cast<UI32>(poolCount);
 
 					VkDescriptorPoolSize _poolSize2;
 					_poolSize2.type = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
-					_poolSize2.descriptorCount = static_cast<UI32>(info.poolCount);
+					_poolSize2.descriptorCount = static_cast<UI32>(poolCount);
 
 					poolSizes.push_back(_poolSize1);
 					poolSizes.push_back(_poolSize2);
@@ -701,7 +721,7 @@ namespace Dynamik {
 					poolInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_POOL_CREATE_INFO;
 					poolInfo.poolSizeCount = static_cast<UI32>(poolSizes.size());
 					poolInfo.pPoolSizes = poolSizes.data();
-					poolInfo.maxSets = static_cast<UI32>(info.poolCount);
+					poolInfo.maxSets = static_cast<UI32>(poolCount);
 
 					VkDescriptorPool _localDescriptorPool = VK_NULL_HANDLE;
 
@@ -720,21 +740,21 @@ namespace Dynamik {
 
 			void VulkanRenderableObject::initializeDescriptorSets(ADGRVulkanDescriptorSetsInitInfo info)
 			{
-				ARRAY<VkDescriptorSetLayout> layouts(descriptors.descriptorSets.size(), descriptors.layout);
+				std::vector<VkDescriptorSetLayout> layouts(uniformBuffers.size(), descriptors.layout);
 				descriptors.descriptorSets.resize(textures.size());
 
 				for (UI32 itr = 0; itr < textures.size(); itr++) {
-					VkDescriptorSetAllocateInfo allocInfo = {};
-					allocInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_ALLOCATE_INFO;
-					allocInfo.descriptorPool = descriptors.descriptorPools[itr];
-					allocInfo.descriptorSetCount = static_cast<UI32>(descriptors.descriptorSets.size());
-					allocInfo.pSetLayouts = layouts.data();
+					for (size_t i = 0; i < uniformBuffers.size(); i++) {
+						VkDescriptorSetAllocateInfo allocInfo = {};
+						allocInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_ALLOCATE_INFO;
+						allocInfo.descriptorPool = descriptors.descriptorPools[i];
+						allocInfo.descriptorSetCount = 1;
+						allocInfo.pSetLayouts = &descriptors.layout;
 
-					descriptors.descriptorSets.resize(descriptors.descriptorSets.size());
-					if (vkAllocateDescriptorSets(logicalDevice, &allocInfo, descriptors.descriptorSets[itr].data()) != VK_SUCCESS)
-						DMK_CORE_FATAL("failed to allocate descriptor sets!");
+						VkDescriptorSet _descriptorSet = VK_NULL_HANDLE;
+						if (vkAllocateDescriptorSets(logicalDevice, &allocInfo, &_descriptorSet) != VK_SUCCESS)
+							DMK_CORE_FATAL("failed to allocate descriptor sets!");
 
-					for (size_t i = 0; i < (descriptors.descriptorSets.size()); i++) {
 						VkDescriptorBufferInfo bufferInfo = {};
 						bufferInfo.buffer = uniformBuffers[i];
 						bufferInfo.offset = 0;
@@ -749,21 +769,26 @@ namespace Dynamik {
 
 						VkWriteDescriptorSet _writes1;
 						_writes1.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
-						_writes1.dstSet = descriptors.descriptorSets[itr][i];
+						_writes1.dstSet = _descriptorSet;
 						_writes1.dstBinding = 0;
 						_writes1.dstArrayElement = 0;
 						_writes1.descriptorType = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;
 						_writes1.descriptorCount = 1;
 						_writes1.pBufferInfo = &bufferInfo;
+						_writes1.pNext = VK_NULL_HANDLE;
+						_writes1.pImageInfo = VK_NULL_HANDLE;
+						_writes1.pTexelBufferView = VK_NULL_HANDLE;
 
 						VkWriteDescriptorSet _writes2;
 						_writes2.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
-						_writes2.dstSet = descriptors.descriptorSets[itr][i];
+						_writes2.dstSet = _descriptorSet;
 						_writes2.dstBinding = 1;
 						_writes2.dstArrayElement = 0;
 						_writes2.descriptorType = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
 						_writes2.descriptorCount = 1;
 						_writes2.pImageInfo = &imageInfo;
+						_writes2.pNext = VK_NULL_HANDLE;
+						_writes2.pTexelBufferView = VK_NULL_HANDLE;
 
 						descriptorWrites.push_back(_writes1);
 						descriptorWrites.push_back(_writes2);
@@ -773,6 +798,8 @@ namespace Dynamik {
 
 						vkUpdateDescriptorSets(logicalDevice, static_cast<UI32>(descriptorWrites.size()),
 							descriptorWrites.data(), 0, nullptr);
+
+						descriptors.descriptorSets[itr].pushBack(_descriptorSet);
 					} // make two descriptor layouts for each descriptor set
 				}
 			}
@@ -781,15 +808,15 @@ namespace Dynamik {
 			{
 			}
 
-			void VulkanRenderableObject::initializeUniformBuffer()
+			void VulkanRenderableObject::initializeUniformBuffer(UI32 count)
 			{
 				VkDeviceSize bufferSize = sizeof(UniformBufferObject);
-				UI32 count = descriptors.descriptorPools.size();
 
 				uniformBuffers.resize(count);
 				uniformBufferMemories.resize(count);
 
-				for (size_t i = 0; i < count; i++) {
+				for (size_t i = 0; i < count; i++)
+				{
 					ADGRCreateBufferInfo bufferInfo;
 					bufferInfo.bufferSize = bufferSize;
 					bufferInfo.usage = VK_BUFFER_USAGE_UNIFORM_BUFFER_BIT;
@@ -801,8 +828,30 @@ namespace Dynamik {
 				}
 			}
 
-			void VulkanRenderableObject::updateUniformBuffer(UniformBufferObject uniformBuferObject, UI32 currentImage)
+			void VulkanRenderableObject::updateUniformBuffer(
+				UniformBufferObject uniformBuferObject,
+				std::deque<DMKEventContainer>& eventContainers,
+				UI32 currentImage,
+				UI32 frameWidth,
+				UI32 frameHeight)
 			{
+				// TODO: update
+				/*
+				DMKUpdateInfo updateInfo = {};
+				updateInfo = draw(eventContainers);
+
+				UniformBufferObject ubo = {};
+				ubo.model = glm::rotate(glm::translate(glm::mat4(1.0f), glm::vec3(updateInfo.leftRight, updateInfo.frontBack, updateInfo.upDown)),
+					glm::radians(updateInfo.rotationX), glm::vec3(0.0f, 0.0f, 1.0f))
+					* glm::rotate(glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, 0.0f)),
+						glm::radians(updateInfo.rotationY), glm::vec3(0.0f, 1.0f, 0.0f))
+					* glm::rotate(glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, 0.0f)),
+						glm::radians(updateInfo.rotationZ), glm::vec3(1.0f, 0.0f, 0.0f));
+				ubo.view = glm::lookAt(glm::vec3(0.5f, 3.0f, 0.5f), glm::vec3(0.0f, 0.0f, 0.0f),
+					glm::vec3(0.0f, 0.0f, 1.0f));
+				ubo.proj = glm::perspective(glm::radians(45.0f), (F32)frameWidth / (F32)frameHeight, 0.001f, 10.0f);
+				ubo.proj[1][1] *= -1;
+				*/
 				void* data = nullptr;
 				vkMapMemory(logicalDevice, uniformBufferMemories[currentImage], 0, sizeof(uniformBuferObject), 0, &data);
 				memcpy(data, &uniformBuferObject, sizeof(uniformBuferObject));

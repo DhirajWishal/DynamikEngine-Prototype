@@ -2,6 +2,8 @@
 #ifndef _DYNAMIK_ADGR_VULKAN_RENDERER_BACKEND_LAYER_INDEX_H
 #define _DYNAMIK_ADGR_VULKAN_RENDERER_BACKEND_LAYER_INDEX_H
 
+#include "VulkanControlHeader.h"
+
 #include "VulkanFunctions.h"
 #include "VulkanOneTimeCommandBufferManager.h"
 

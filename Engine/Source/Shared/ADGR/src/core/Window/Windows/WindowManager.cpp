@@ -79,6 +79,18 @@ namespace Dynamik {
 			glfwSetWindowIcon(window, 1, icons.data());
 		}
 
+		void WindowManager::updateWindowSize()
+		{
+			I32 width = 0, height = 0;
+			while (width == 0 || height == 0) {
+				glfwGetFramebufferSize(window, &width, &height);
+				glfwWaitEvents();
+			}
+
+			windowWidth = width;
+			windowHeight = height;
+		}
+
 		void WindowManager::keyEventHandler(DMKEventType type, I32 keycode, I32 count) {
 			DMKEventContainer _localContainer = {};
 			_localContainer.eventType = type;

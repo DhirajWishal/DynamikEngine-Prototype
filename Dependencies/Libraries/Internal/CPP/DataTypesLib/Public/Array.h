@@ -164,7 +164,9 @@ namespace Dynamik {
 				if ((size + _getAllocatableSize(size)) > maxSize()) return; /* TODO: Error Flagging */
 
 				_reAllocateBack(_getAllocatableSize(size));
-				setData(myBeginPtr, (UI32)value, capacity());
+				UI32 _tempSize = size;
+				while (_tempSize--)
+					pushBack(value);
 			}
 			else
 				_reAllocateBack(_getNextSize());

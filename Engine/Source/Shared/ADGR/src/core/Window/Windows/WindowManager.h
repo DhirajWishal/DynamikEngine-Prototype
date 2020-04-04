@@ -45,6 +45,7 @@ namespace Dynamik {
 
 			void setIcon(std::string paths);
 
+			void updateWindowSize();
 			UI32 windowWidth;
 			UI32 windowHeight;
 

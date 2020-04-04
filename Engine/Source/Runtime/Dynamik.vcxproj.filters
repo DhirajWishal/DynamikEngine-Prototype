@@ -140,6 +140,7 @@
     <ClCompile Include="src\dmkafx.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="GameLibraries\GameObject.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Dynamik.lua" />

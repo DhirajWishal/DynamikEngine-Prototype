@@ -2,9 +2,11 @@
 #ifndef _DYNAMIK_ADGR_VULKAN_RENDERER_BACKEND_LAYER_3D_H
 #define _DYNAMIK_ADGR_VULKAN_RENDERER_BACKEND_LAYER_3D_H
 
-#include "Managers/VulkanRBLIndex.h"
+#include "Objects/VulkanRBLIndex.h"
 #include "core/base/RendererBackendBase.h"
 #include "core/Window/Windows/WindowManager.h"
+
+#include "core/Components/Camera3D.h"
 
 namespace Dynamik {
 	namespace ADGR {
@@ -35,6 +37,7 @@ namespace Dynamik {
 			void initStageThree() override;
 
 			void drawFrame() override;
+			void recreateSwapChain();
 
 			void shutDown() override;
 			void shutDownStageOne() override;
@@ -44,20 +47,33 @@ namespace Dynamik {
 			void getObjects(ARRAY<ADGRVulkan3DObjectData> objectDatas);
 			void update();
 
+			std::deque<DMKEventContainer>* events() override;
+
 		private:
 			void initializeObjects();
 
+			Camera3D myCamera;
+
 			WindowManager myWindowManager;
+			std::deque<DMKEventContainer> eventsContainer;
 
 			VulkanCore myVulkanCore;
 			VulkanColorBuffer myColorBuffer;
 			VulkanDepthBuffer myDepthBuffer;
 
 			ARRAY<VulkanRenderableObject> renderableObjects;
-
 			ARRAY<ADGRVulkan3DObjectData> rawObjectStore;
 
-			VkDevice device;
+			UI32 imageIndex = 0;
+			UI32 currentFrame = 0;
+
+			VkResult result;
+			VkSubmitInfo submitInfo = {};
+			VkPresentInfoKHR presentInfo = {};
+			VkSemaphore waitSemaphores[1];
+			VkPipelineStageFlags waitStages[1];
+			VkSemaphore signalSemaphores[1];
+			VkSwapchainKHR swapChains[1];
 		};
 	}
 }

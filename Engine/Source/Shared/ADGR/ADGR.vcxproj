@@ -145,12 +145,14 @@
   <ItemGroup>
     <ClInclude Include="src\ADGR.h" />
     <ClInclude Include="src\core\Components\Camera.h" />
+    <ClInclude Include="src\core\Components\Camera2D.h" />
     <ClInclude Include="src\core\Components\Camera3D.h" />
     <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Objects\VulkanColorBuffer.h" />
     <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Objects\VulkanCore.h" />
     <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Objects\VulkanDepthBuffer.h" />
     <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Objects\VulkanRenderableObject.h" />
     <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Objects\VulkanShader.h" />
+    <ClInclude Include="src\core\vulkan\Renderer Backend Layer\VulkanRBL2D.h" />
     <ClInclude Include="src\core\vulkan\Renderer Backend Layer\VulkanSkyBox.h" />
     <ClInclude Include="src\Layers\layer.h" />
     <ClInclude Include="src\Layers\layerStack.h" />
@@ -185,12 +187,14 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\core\Components\Camera.cpp" />
+    <ClCompile Include="src\core\Components\Camera2D.cpp" />
     <ClCompile Include="src\core\Components\Camera3D.cpp" />
     <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Objects\VulkanColorBuffer.cpp" />
     <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Objects\VulkanCore.cpp" />
     <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Objects\VulkanDepthBuffer.cpp" />
     <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Objects\VulkanRenderableObject.cpp" />
     <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Objects\VulkanShader.cpp" />
+    <ClCompile Include="src\core\vulkan\Renderer Backend Layer\VulkanRBL2D.cpp" />
     <ClCompile Include="src\core\vulkan\Renderer Backend Layer\VulkanSkyBox.cpp" />
     <ClCompile Include="src\Layers\layer.cpp" />
     <ClCompile Include="src\Layers\layerStack.cpp" />

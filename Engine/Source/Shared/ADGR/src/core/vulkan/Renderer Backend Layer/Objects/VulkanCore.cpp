@@ -301,10 +301,10 @@ namespace Dynamik {
 				vkWaitForFences(logicalDevice, 1, &inFlightFences[frame], VK_TRUE, std::numeric_limits<uint64_t>::max());
 			}
 
-			VkResult VulkanCore::getNextImage(POINTER<UI32> index)
+			VkResult VulkanCore::getNextImage(POINTER<UI32> index, UI32 frame)
 			{
-				return vkAcquireNextImageKHR(logicalDevice,swapChain, std::numeric_limits<uint64_t>::max(),
-					imageAvailables[index.dereference()], VK_NULL_HANDLE, index);
+				return vkAcquireNextImageKHR(logicalDevice, swapChain, std::numeric_limits<uint64_t>::max(),
+					imageAvailables[frame], VK_NULL_HANDLE, index);
 			}
 
 			VkResult VulkanCore::submitQueues(UI32 index, UI32 frame)
@@ -655,72 +655,6 @@ namespace Dynamik {
 
 			void VulkanCore::initializeRenderPass(ADGRVulkanRenderPassInitInfo info)
 			{
-				ARRAY<VkAttachmentDescription> attachments;
-
-				// attachment descriptions
-				VkAttachmentDescription colorAttachment = {};
-				colorAttachment.format = swapChainImageFormat;
-				colorAttachment.samples = msaaSamples;
-				colorAttachment.loadOp = VK_ATTACHMENT_LOAD_OP_CLEAR;
-				colorAttachment.storeOp = VK_ATTACHMENT_STORE_OP_STORE;
-				colorAttachment.stencilLoadOp = VK_ATTACHMENT_LOAD_OP_DONT_CARE;
-				colorAttachment.stencilStoreOp = VK_ATTACHMENT_STORE_OP_DONT_CARE;
-				colorAttachment.initialLayout = VK_IMAGE_LAYOUT_UNDEFINED;
-				colorAttachment.finalLayout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
-				attachments.push_back(colorAttachment);
-
-				VkAttachmentReference colorAttachmentRef = {};
-				colorAttachmentRef.attachment = 0;
-				colorAttachmentRef.layout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
-
-				VkAttachmentReference colorAttachmentResolveRef = {};
-				colorAttachmentResolveRef.attachment = 2;
-				colorAttachmentResolveRef.layout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
-
-				// sub passes
-				VkSubpassDescription subpass = {};
-				subpass.pipelineBindPoint = VK_PIPELINE_BIND_POINT_GRAPHICS;
-				subpass.colorAttachmentCount = 1;
-				subpass.pColorAttachments = &colorAttachmentRef;
-				subpass.pResolveAttachments = &colorAttachmentResolveRef;
-
-				if (info.enableDepthAttachment)
-				{
-					VkAttachmentDescription depthAttachment = {};
-					depthAttachment.format = VulkanFunctions::findDepthFormat(physicalDevice);
-					depthAttachment.samples = msaaSamples;
-					depthAttachment.loadOp = VK_ATTACHMENT_LOAD_OP_CLEAR;
-					depthAttachment.storeOp = VK_ATTACHMENT_STORE_OP_DONT_CARE;
-					depthAttachment.stencilLoadOp = VK_ATTACHMENT_LOAD_OP_DONT_CARE;
-					depthAttachment.stencilStoreOp = VK_ATTACHMENT_STORE_OP_DONT_CARE;
-					depthAttachment.initialLayout = VK_IMAGE_LAYOUT_UNDEFINED;
-					depthAttachment.finalLayout = VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL;
-					attachments.push_back(depthAttachment);
-
-					VkAttachmentReference depthAttachmentRef = {};
-					depthAttachmentRef.attachment = 1;
-					depthAttachmentRef.layout = VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL;
-
-					subpass.pDepthStencilAttachment = &depthAttachmentRef;
-				}
-
-				VkAttachmentDescription colorAttachmentResolve = {};
-				colorAttachmentResolve.format = swapChainImageFormat;
-				colorAttachmentResolve.samples = VK_SAMPLE_COUNT_1_BIT;
-				colorAttachmentResolve.loadOp = VK_ATTACHMENT_LOAD_OP_DONT_CARE;
-				colorAttachmentResolve.storeOp = VK_ATTACHMENT_STORE_OP_STORE;
-				colorAttachmentResolve.stencilLoadOp = VK_ATTACHMENT_LOAD_OP_DONT_CARE;
-				colorAttachmentResolve.stencilStoreOp = VK_ATTACHMENT_STORE_OP_DONT_CARE;
-				colorAttachmentResolve.initialLayout = VK_IMAGE_LAYOUT_UNDEFINED;
-				colorAttachmentResolve.finalLayout = VK_IMAGE_LAYOUT_PRESENT_SRC_KHR;
-				attachments.push_back(colorAttachmentResolve);
-
-				ARRAY<VkSubpassDescription> subPasses;
-				subPasses.push_back(subpass);
-
-				for (VkSubpassDescription _description : info.additionalSubPasses)
-					subPasses.push_back(_description);
-
 				VkSubpassDependency dependency = {};
 				dependency.srcSubpass = VK_SUBPASS_EXTERNAL;
 				dependency.dstSubpass = info.destinationSubpass;
@@ -738,10 +672,10 @@ namespace Dynamik {
 				// render pass info
 				VkRenderPassCreateInfo renderPassInfo = {};
 				renderPassInfo.sType = VK_STRUCTURE_TYPE_RENDER_PASS_CREATE_INFO;
-				renderPassInfo.attachmentCount = static_cast<UI32>(attachments.size());
-				renderPassInfo.pAttachments = attachments.data();
-				renderPassInfo.subpassCount = subPasses.size();
-				renderPassInfo.pSubpasses = subPasses.data();
+				renderPassInfo.attachmentCount = static_cast<UI32>(info.attachments.size());
+				renderPassInfo.pAttachments = info.attachments.data();
+				renderPassInfo.subpassCount = info.subPasses.size();
+				renderPassInfo.pSubpasses = info.subPasses.data();
 				renderPassInfo.dependencyCount = dependencies.size();
 				renderPassInfo.pDependencies = dependencies.data();
 
@@ -793,7 +727,7 @@ namespace Dynamik {
 				frameBuffers.clear();
 			}
 
-			void VulkanCore::initializeCommandBuffers(ARRAY<VulkanRenderableObject> objects)
+			void VulkanCore::initializeCommandBuffers(ADGRVulkanCommandBufferInitInfo info)
 			{
 				commandBuffers.resize(frameBuffers.size());
 
@@ -821,13 +755,6 @@ namespace Dynamik {
 					renderPassInfo.renderArea.offset = { 0, 0 };
 					renderPassInfo.renderArea.extent = swapChainExtent;
 
-					/*
-					 (2.0f / 256.0f),
-					 (8.0f / 256.0f),
-					 (32.0f / 256.0f),
-					 (1.00000000f)
-					*/
-
 					std::array<VkClearValue, 2> clearValues = {};
 					//clearValues[0].color = {
 					//	container->clearScreenValues[0],	// Red
@@ -837,12 +764,12 @@ namespace Dynamik {
 					//};
 
 					clearValues[0].color = {
-					 (2.0f / 256.0f),
-					 (8.0f / 256.0f),
-					 (32.0f / 256.0f),
-					 (1.00000000f)
+						info.clearValues[0],
+						info.clearValues[1],
+						info.clearValues[2],
+						info.clearValues[3]
 					};
-					clearValues[1].depthStencil = { 1.0f, 0 };
+					clearValues[1].depthStencil = { info.depthStencilDepth, info.stencilIndex };
 
 					renderPassInfo.clearValueCount = static_cast<UI32>(clearValues.size());
 					renderPassInfo.pClearValues = clearValues.data();
@@ -861,29 +788,29 @@ namespace Dynamik {
 					// w component = light radius scale
 
 					/* DRAW COMMANDS */
-					for (I32 _itr = 0; _itr < objects.size(); _itr++) {
-						//vkCmdPushConstants(commandBuffers[i], objects.at(_itr).pipelineLayout, VK_SHADER_STAGE_VERTEX_BIT, 0, objects.at(_itr).pushConstants.size(), objects.at(_itr).pushConstants.data());
+					for (I32 _itr = 0; _itr < info.objects.size(); _itr++) {
+						//vkCmdPushConstants(commandBuffers[i], info.objects.at(_itr).pipelineLayout, VK_SHADER_STAGE_VERTEX_BIT, 0, info.objects.at(_itr).pushConstants.size(), info.objects.at(_itr).pushConstants.data());
 
 						// Render type selection
-						if (objects.at(_itr).renderTechnology == DMK_ADGR_RENDERING_TECHNOLOGY::DMK_ADGR_RENDER_VERTEX) 		// Render as individual vertexes
-							drawVertex(commandBuffers[i], i, &objects.at(_itr), offsets);
+						if (info.objects.at(_itr).renderTechnology == DMK_ADGR_RENDERING_TECHNOLOGY::DMK_ADGR_RENDER_VERTEX) 		// Render as individual vertexes
+							drawVertex(commandBuffers[i], i, &info.objects.at(_itr), offsets);
 
-						else if (objects.at(_itr).renderTechnology == DMK_ADGR_RENDERING_TECHNOLOGY::DMK_ADGR_RENDER_INDEXED) 		// Render as individual indexes
-							drawIndexed(commandBuffers[i], i, &objects.at(_itr), offsets);
+						else if (info.objects.at(_itr).renderTechnology == DMK_ADGR_RENDERING_TECHNOLOGY::DMK_ADGR_RENDER_INDEXED) 		// Render as individual indexes
+							drawIndexed(commandBuffers[i], i, &info.objects.at(_itr), offsets);
 
-						else if (objects.at(_itr).renderTechnology == DMK_ADGR_RENDERING_TECHNOLOGY::DMK_ADGR_RENDER_INDIRECT) {
+						else if (info.objects.at(_itr).renderTechnology == DMK_ADGR_RENDERING_TECHNOLOGY::DMK_ADGR_RENDER_INDIRECT) {
 						}
-						else if (objects.at(_itr).renderTechnology == DMK_ADGR_RENDERING_TECHNOLOGY::DMK_ADGR_RENDER_INDEXED_INDIRECT) {
+						else if (info.objects.at(_itr).renderTechnology == DMK_ADGR_RENDERING_TECHNOLOGY::DMK_ADGR_RENDER_INDEXED_INDIRECT) {
 						}
-						else if (objects.at(_itr).renderTechnology == DMK_ADGR_RENDERING_TECHNOLOGY::DMK_ADGR_RENDER_SKYBOX_VERTEX) {		// Render as individual vertexes
-							drawVertex(commandBuffers[i], i, &objects.at(_itr), offsets);
+						else if (info.objects.at(_itr).renderTechnology == DMK_ADGR_RENDERING_TECHNOLOGY::DMK_ADGR_RENDER_SKYBOX_VERTEX) {		// Render as individual vertexes
+							drawVertex(commandBuffers[i], i, &info.objects.at(_itr), offsets);
 						}
-						else if (objects.at(_itr).renderTechnology == DMK_ADGR_RENDERING_TECHNOLOGY::DMK_ADGR_RENDER_SKYBOX_INDEXED) {		// Render as individual indexes
-							drawIndexed(commandBuffers[i], i, &objects.at(_itr), offsets);
+						else if (info.objects.at(_itr).renderTechnology == DMK_ADGR_RENDERING_TECHNOLOGY::DMK_ADGR_RENDER_SKYBOX_INDEXED) {		// Render as individual indexes
+							drawIndexed(commandBuffers[i], i, &info.objects.at(_itr), offsets);
 						}
-						else if (objects.at(_itr).renderTechnology == DMK_ADGR_RENDERING_TECHNOLOGY::DMK_ADGR_RENDER_SKYBOX_INDIRECT) {
+						else if (info.objects.at(_itr).renderTechnology == DMK_ADGR_RENDERING_TECHNOLOGY::DMK_ADGR_RENDER_SKYBOX_INDIRECT) {
 						}
-						else if (objects.at(_itr).renderTechnology == DMK_ADGR_RENDERING_TECHNOLOGY::DMK_ADGR_RENDER_SKYBOX_INDEXED_INDIRECT) {
+						else if (info.objects.at(_itr).renderTechnology == DMK_ADGR_RENDERING_TECHNOLOGY::DMK_ADGR_RENDER_SKYBOX_INDEXED_INDIRECT) {
 						}
 						else
 							DMK_CORE_FATAL("Invalid rendering type!");

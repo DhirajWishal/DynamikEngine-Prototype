@@ -60,11 +60,10 @@ namespace Dynamik {
 		bool movementLeftRightLock = false;
 		bool movementRotationLock = false;
 
-		float frameWidth = 0;
-		float frameHeight = 0;
 		float fieldOfView = 45.0f;
 		float near = 0.001f;
 		float far = 10.0f;
+		float aspectRatio = 0.0f;
 
 		bool useRadians = true;
 	};

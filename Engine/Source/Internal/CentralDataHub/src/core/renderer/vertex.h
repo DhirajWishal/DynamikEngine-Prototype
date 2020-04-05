@@ -37,6 +37,21 @@ namespace Dynamik {
 		}
 	};
 
+	struct vertex2D {
+		glm::vec2 position = glm::vec2(0.0f, 0.0f);
+		glm::vec3 color = glm::vec3(0.0f, 0.0f, 0.0f);
+		glm::vec2 texCoordinates = glm::vec2(0.0f, 0.0f);
+
+		static ARRAY<VkVertexInputBindingDescription> getBindingDescription(int bindCount);
+		static ARRAY<VkVertexInputAttributeDescription> getAttributeDescriptions();
+
+		bool operator==(const vertex2D& other) const {
+			return position == other.position
+				&& color == other.color
+				&& texCoordinates == other.texCoordinates;
+		}
+	};
+
 	class DMKVertex {
 	public:
 		DMKVertex() {}

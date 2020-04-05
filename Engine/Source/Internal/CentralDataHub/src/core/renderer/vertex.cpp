@@ -50,4 +50,43 @@ namespace Dynamik {
 
 		return attributeDescriptions;
 	}
+
+	ARRAY<VkVertexInputBindingDescription> Dynamik::vertex2D::getBindingDescription(int bindCount)
+	{
+		ARRAY<VkVertexInputBindingDescription> bindingDescription(bindCount);
+
+		for (int i = 0; i < bindCount; i++) {
+			bindingDescription[i].binding = i;
+			bindingDescription[i].stride = sizeof(vertex2D);
+			bindingDescription[i].inputRate = VK_VERTEX_INPUT_RATE_VERTEX;
+		}
+
+		return bindingDescription;
+	}
+
+	ARRAY<VkVertexInputAttributeDescription> vertex2D::getAttributeDescriptions()
+	{
+		ARRAY<VkVertexInputAttributeDescription> attributeDescriptions;
+
+		VkVertexInputAttributeDescription _description = {};
+		_description.binding = 0;
+		_description.location = 0;
+		_description.format = VK_FORMAT_R32G32B32_SFLOAT;
+		_description.offset = offsetof(vertex2D, position);
+		attributeDescriptions.pushBack(_description);
+
+		_description.binding = 0;
+		_description.location = 1;
+		_description.format = VK_FORMAT_R32G32B32_SFLOAT;
+		_description.offset = offsetof(vertex2D, color);
+		attributeDescriptions.pushBack(_description);
+
+		_description.binding = 0;
+		_description.location = 2;
+		_description.format = VK_FORMAT_R32G32_SFLOAT;
+		_description.offset = offsetof(vertex2D, texCoordinates);
+		attributeDescriptions.pushBack(_description);
+
+		return attributeDescriptions;
+	}
 }

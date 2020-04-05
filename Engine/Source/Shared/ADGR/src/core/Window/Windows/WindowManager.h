@@ -20,6 +20,12 @@ namespace Dynamik {
 			std::string iconPaths;
 		};
 
+		struct GLFWWindowHandleContainer {
+			POINTER<GLFWwindow*> windowPointer;
+			UI32 windowWidth = 0;
+			UI32 windowHeight = 0;
+		};
+
 		class WindowManager {
 		public:
 			WindowManager() {}
@@ -48,6 +54,8 @@ namespace Dynamik {
 			void updateWindowSize();
 			UI32 windowWidth;
 			UI32 windowHeight;
+
+			GLFWWindowHandleContainer getHandle();
 
 		private:
 			std::deque<DMKEventContainer> eventContainer = {};

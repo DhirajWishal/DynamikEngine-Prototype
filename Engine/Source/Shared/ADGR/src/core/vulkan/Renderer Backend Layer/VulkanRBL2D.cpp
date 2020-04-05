@@ -1,17 +1,16 @@
 #include "adgrafx.h"
-#include "VulkanRBL3D.h"
+#include "VulkanRBL2D.h"
 
 namespace Dynamik {
 	namespace ADGR {
-
-		void VulkanRBL3D::init()
+		void VulkanRBL2D::init()
 		{
 			initStageOne();
 			initStageTwo();
 			initStageThree();
 		}
 
-		void VulkanRBL3D::initStageOne()
+		void VulkanRBL2D::initStageOne()
 		{
 			// initialize the instance
 			ADGRVulkanInstanceInitInfo instanceInitInfo;
@@ -29,32 +28,12 @@ namespace Dynamik {
 			// initialize render pass
 			initializeRenderPass();
 
-			myColorBuffer.initialize(
-				myVulkanCore.getLogicalDevice(),
-				myVulkanCore.getPhysicalDevice(),
-				myVulkanCore.getCommandPool(),
-				myVulkanCore.getGraphicsQueue(),
-				myVulkanCore.getPresentQueue(),
-				myVulkanCore.getSwapChainImageFormat(),
-				myVulkanCore.getSwapChainExtent(),
-				myVulkanCore.getMsaaSamples());
-
-			myDepthBuffer.initialize(
-				myVulkanCore.getLogicalDevice(),
-				myVulkanCore.getPhysicalDevice(),
-				myVulkanCore.getCommandPool(),
-				myVulkanCore.getGraphicsQueue(),
-				myVulkanCore.getPresentQueue(),
-				myVulkanCore.getSwapChainExtent(),
-				myVulkanCore.getMsaaSamples());
-
 			// initialize frame buffer
 			ADGRVulkanFrameBufferInitInfo frameBufferInitInfo;
-			frameBufferInitInfo.preAttachments = { myColorBuffer.imageView, myDepthBuffer.imageView };
 			myVulkanCore.initializeFrameBuffer(frameBufferInitInfo);
 		}
 
-		void VulkanRBL3D::initStageTwo()
+		void VulkanRBL2D::initStageTwo()
 		{
 			// initialize objects
 			initializeObjects();
@@ -65,12 +44,12 @@ namespace Dynamik {
 			myVulkanCore.initializeCommandBuffers(commandBufferInitInfo);
 		}
 
-		void VulkanRBL3D::initStageThree()
+		void VulkanRBL2D::initStageThree()
 		{
 			myVulkanCore.initializeSyncObjects();
 		}
 
-		void VulkanRBL3D::drawFrame(std::deque<DMKEventContainer> container)
+		void VulkanRBL2D::drawFrame(std::deque<DMKEventContainer> container)
 		{
 			// wait for fences
 			myVulkanCore.syncFence(currentFrame);
@@ -109,7 +88,7 @@ namespace Dynamik {
 			currentFrame = (currentFrame + 1) % MAX_FRAMES_IN_FLIGHT;
 		}
 
-		void VulkanRBL3D::recreateSwapChain()
+		void VulkanRBL2D::recreateSwapChain()
 		{
 			shutDownStageOne();
 
@@ -127,33 +106,13 @@ namespace Dynamik {
 			// initialize render pass
 			initializeRenderPass();
 
-			myColorBuffer.initialize(
-				myVulkanCore.getLogicalDevice(),
-				myVulkanCore.getPhysicalDevice(),
-				myVulkanCore.getCommandPool(),
-				myVulkanCore.getGraphicsQueue(),
-				myVulkanCore.getPresentQueue(),
-				myVulkanCore.getSwapChainImageFormat(),
-				myVulkanCore.getSwapChainExtent(),
-				myVulkanCore.getMsaaSamples());
-
-			myDepthBuffer.initialize(
-				myVulkanCore.getLogicalDevice(),
-				myVulkanCore.getPhysicalDevice(),
-				myVulkanCore.getCommandPool(),
-				myVulkanCore.getGraphicsQueue(),
-				myVulkanCore.getPresentQueue(),
-				myVulkanCore.getSwapChainExtent(),
-				myVulkanCore.getMsaaSamples());
-
 			// initialize frame buffer
 			ADGRVulkanFrameBufferInitInfo frameBufferInitInfo;
-			frameBufferInitInfo.preAttachments = { myColorBuffer.imageView, myDepthBuffer.imageView };
 			myVulkanCore.initializeFrameBuffer(frameBufferInitInfo);
 
 			for (UI32 itr = 0; itr < rawObjectStore.size(); itr++)
 			{
-				ADGRVulkan3DObjectData _object = rawObjectStore[itr];
+				ADGRVulkan2DObjectData _object = rawObjectStore[itr];
 				VulkanRenderableObject _renderObject = renderableObjects[itr];
 
 				// initialize descriptor set layout
@@ -213,9 +172,8 @@ namespace Dynamik {
 				ADGRVulkanPipelineInitInfo pipelineInitInfo;
 				pipelineInitInfo.renderPass = myVulkanCore.getRenderPass();
 				pipelineInitInfo.shaders = _shaders;
-				pipelineInitInfo.multisamplerMsaaSamples = myVulkanCore.getMsaaSamples();
-				pipelineInitInfo.vertexBindingDescription = Vertex::getBindingDescription(1);
-				pipelineInitInfo.vertexAttributeDescription = Vertex::getAttributeDescriptions();
+				pipelineInitInfo.vertexBindingDescription = vertex2D::getBindingDescription(1);
+				pipelineInitInfo.vertexAttributeDescription = vertex2D::getAttributeDescriptions();
 				_renderObject.initializePipeline(myVulkanCore.getSwapChainExtent(), pipelineInitInfo);
 
 				for (VulkanShader _shader : _shaders)
@@ -239,18 +197,15 @@ namespace Dynamik {
 			myVulkanCore.initializeCommandBuffers(commandBufferInitInfo);
 		}
 
-		void VulkanRBL3D::shutDown()
+		void VulkanRBL2D::shutDown()
 		{
 			shutDownStageOne();
 			shutDownStageTwo();
 			shutDownStageThree();
 		}
 
-		void VulkanRBL3D::shutDownStageOne()
+		void VulkanRBL2D::shutDownStageOne()
 		{
-			myDepthBuffer.terminate(myVulkanCore.getLogicalDevice());
-			myColorBuffer.terminate(myVulkanCore.getLogicalDevice());
-
 			myVulkanCore.terminateFrameBuffer();
 
 			myVulkanCore.terminateCommandBuffers();
@@ -260,7 +215,7 @@ namespace Dynamik {
 			myVulkanCore.terminateSwapChain();
 		}
 
-		void VulkanRBL3D::shutDownStageTwo()
+		void VulkanRBL2D::shutDownStageTwo()
 		{
 			for (VulkanRenderableObject& _object : renderableObjects)
 			{
@@ -278,7 +233,7 @@ namespace Dynamik {
 			}
 		}
 
-		void VulkanRBL3D::shutDownStageThree()
+		void VulkanRBL2D::shutDownStageThree()
 		{
 			myVulkanCore.terminateSyncObjects();
 
@@ -288,20 +243,32 @@ namespace Dynamik {
 
 			myVulkanCore.terminateInstance();
 		}
-
-		void VulkanRBL3D::getObjects(ARRAY<ADGRVulkan3DObjectData> objectDatas)
+		
+		void VulkanRBL2D::getObjects(ARRAY<ADGRVulkan2DObjectData> objectDatas)
 		{
-			rawObjectStore = objectDatas;
-		}
+			for (ADGRVulkan2DObjectData _object : objectDatas)
+			{
+				vertex2D _p1 = { {-0.5f, -0.5f}, {1.0f, 0.0f, 0.0f}, {1.0f, 0.0f} };
+				vertex2D _p2 = { {0.5f, -0.5f}, {0.0f, 1.0f, 0.0f}, {0.0f, 0.0f} };
+				vertex2D _p3 = { {0.5f, 0.5f}, {0.0f, 0.0f, 1.0f}, {0.0f, 1.0f} };
+				vertex2D _p4 = { {-0.5f, 0.5f}, {1.0f, 1.0f, 1.0f}, {1.0f, 1.0f} };
 
-		void VulkanRBL3D::update()
+				ARRAY<vertex2D> _vertexObject = { _p1, _p2, _p3, _p4 };
+				_object.vertexBufferObjects->pushBack(_vertexObject);
+				_object.indexBufferObjects->pushBack({ 0, 1, 2, 2, 3, 0 });
+
+				rawObjectStore.pushBack(_object);
+			}
+		}
+		
+		void VulkanRBL2D::update()
 		{
 			initializeObjects();
 		}
-
-		void VulkanRBL3D::initializeObjects()
+		
+		void VulkanRBL2D::initializeObjects()
 		{
-			for (ADGRVulkan3DObjectData _object : rawObjectStore)
+			for (ADGRVulkan2DObjectData _object : rawObjectStore)
 			{
 				VulkanRenderableObject _renderObject(
 					myVulkanCore.getLogicalDevice(),
@@ -367,9 +334,8 @@ namespace Dynamik {
 				ADGRVulkanPipelineInitInfo pipelineInitInfo;
 				pipelineInitInfo.renderPass = myVulkanCore.getRenderPass();
 				pipelineInitInfo.shaders = _shaders;
-				pipelineInitInfo.multisamplerMsaaSamples = myVulkanCore.getMsaaSamples();
-				pipelineInitInfo.vertexBindingDescription = Vertex::getBindingDescription(1);
-				pipelineInitInfo.vertexAttributeDescription = Vertex::getAttributeDescriptions();
+				pipelineInitInfo.vertexBindingDescription = vertex2D::getBindingDescription(1);
+				pipelineInitInfo.vertexAttributeDescription = vertex2D::getAttributeDescriptions();
 				_renderObject.initializePipeline(myVulkanCore.getSwapChainExtent(), pipelineInitInfo);
 
 				for (VulkanShader _shader : _shaders)
@@ -397,11 +363,17 @@ namespace Dynamik {
 
 				// initialize vertex buffers
 				for (UI32 _itr = 0; _itr < _object.vertexBufferObjects->size(); _itr++)
-					_renderObject.initializeVertexBuffer(&_object.vertexBufferObjects->at(_itr));
+				{
+					_renderObject.initializeVertex2DBuffer(&_object.vertexBufferObjects->at(_itr));
+					break;
+				}
 
 				// initialize index buffers
 				for (UI32 _itr = 0; _itr < _object.indexBufferObjects->size(); _itr++)
+				{
 					_renderObject.initializeIndexBufferUI32(&_object.indexBufferObjects->at(_itr));
+					break;
+				}
 
 				// initialize uniform buffers
 				_renderObject.initializeUniformBuffer(myVulkanCore.getSwapChainImages().size());
@@ -417,21 +389,21 @@ namespace Dynamik {
 				renderableObjects.push_back(_renderObject);
 			}
 		}
-
-		void VulkanRBL3D::initializeRenderPass()
+		
+		void VulkanRBL2D::initializeRenderPass()
 		{
 			ARRAY<VkAttachmentDescription> attachments;
 
 			// attachment descriptions
 			VkAttachmentDescription colorAttachment = {};
 			colorAttachment.format = myVulkanCore.getSwapChainImageFormat();
-			colorAttachment.samples = myVulkanCore.getMsaaSamples();
+			colorAttachment.samples = VK_SAMPLE_COUNT_1_BIT;
 			colorAttachment.loadOp = VK_ATTACHMENT_LOAD_OP_CLEAR;
 			colorAttachment.storeOp = VK_ATTACHMENT_STORE_OP_STORE;
 			colorAttachment.stencilLoadOp = VK_ATTACHMENT_LOAD_OP_DONT_CARE;
 			colorAttachment.stencilStoreOp = VK_ATTACHMENT_STORE_OP_DONT_CARE;
 			colorAttachment.initialLayout = VK_IMAGE_LAYOUT_UNDEFINED;
-			colorAttachment.finalLayout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
+			colorAttachment.finalLayout = VK_IMAGE_LAYOUT_PRESENT_SRC_KHR;
 			attachments.push_back(colorAttachment);
 
 			VkAttachmentReference colorAttachmentRef = {};
@@ -443,40 +415,6 @@ namespace Dynamik {
 			subpass.pipelineBindPoint = VK_PIPELINE_BIND_POINT_GRAPHICS;
 			subpass.colorAttachmentCount = 1;
 			subpass.pColorAttachments = &colorAttachmentRef;
-
-			VkAttachmentDescription depthAttachment = {};
-			depthAttachment.format = VulkanFunctions::findDepthFormat(myVulkanCore.getPhysicalDevice());
-			depthAttachment.samples = myVulkanCore.getMsaaSamples();
-			depthAttachment.loadOp = VK_ATTACHMENT_LOAD_OP_CLEAR;
-			depthAttachment.storeOp = VK_ATTACHMENT_STORE_OP_DONT_CARE;
-			depthAttachment.stencilLoadOp = VK_ATTACHMENT_LOAD_OP_DONT_CARE;
-			depthAttachment.stencilStoreOp = VK_ATTACHMENT_STORE_OP_DONT_CARE;
-			depthAttachment.initialLayout = VK_IMAGE_LAYOUT_UNDEFINED;
-			depthAttachment.finalLayout = VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL;
-			attachments.push_back(depthAttachment);
-
-			VkAttachmentReference depthAttachmentRef = {};
-			depthAttachmentRef.attachment = 1;
-			depthAttachmentRef.layout = VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL;
-			subpass.pDepthStencilAttachment = &depthAttachmentRef;
-
-
-			VkAttachmentDescription colorAttachmentResolve = {};
-			colorAttachmentResolve.format = myVulkanCore.getSwapChainImageFormat();
-			colorAttachmentResolve.samples = VK_SAMPLE_COUNT_1_BIT;
-			colorAttachmentResolve.loadOp = VK_ATTACHMENT_LOAD_OP_DONT_CARE;
-			colorAttachmentResolve.storeOp = VK_ATTACHMENT_STORE_OP_STORE;
-			colorAttachmentResolve.stencilLoadOp = VK_ATTACHMENT_LOAD_OP_DONT_CARE;
-			colorAttachmentResolve.stencilStoreOp = VK_ATTACHMENT_STORE_OP_DONT_CARE;
-			colorAttachmentResolve.initialLayout = VK_IMAGE_LAYOUT_UNDEFINED;
-			colorAttachmentResolve.finalLayout = VK_IMAGE_LAYOUT_PRESENT_SRC_KHR;
-			attachments.push_back(colorAttachmentResolve);
-
-			VkAttachmentReference colorAttachmentResolveRef = {};
-			colorAttachmentResolveRef.attachment = 2;
-			colorAttachmentResolveRef.layout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
-			subpass.pResolveAttachments = &colorAttachmentResolveRef;
-
 
 			ARRAY<VkSubpassDescription> subPasses;
 			subPasses.push_back(subpass);

@@ -14,12 +14,12 @@ namespace Dynamik {
 			};
 
 			struct ADGRVulkanRenderPassInitInfo {
-				B1 enableDepthAttachment = true;
-
 				UI32 destinationSubpass = 0;
 				VkAccessFlags accessFlags = 0;
 
-				ARRAY<VkSubpassDescription> additionalSubPasses;
+				ARRAY<VkAttachmentDescription> attachments;
+
+				ARRAY<VkSubpassDescription> subPasses;
 				ARRAY<VkSubpassDependency> additionalSubPassDependencies;
 			};
 
@@ -52,6 +52,17 @@ namespace Dynamik {
 				B1 isComplete();
 			};
 
+			struct ADGRVulkanCommandBufferInitInfo {
+				ARRAY<VulkanRenderableObject> objects;
+				ARRAY<F32> clearValues = { 
+					(2.0f / 256.0f),
+					(8.0f / 256.0f),
+					(32.0f / 256.0f),
+					(1.00000000f) };
+				F32 depthStencilDepth = 1.0f;
+				UI32 stencilIndex = 0;
+			};
+
 			class VulkanCore {
 			public:
 				VulkanCore() {}
@@ -82,7 +93,7 @@ namespace Dynamik {
 				virtual void initializeFrameBuffer(ADGRVulkanFrameBufferInitInfo info);
 				virtual void terminateFrameBuffer();
 
-				virtual void initializeCommandBuffers(ARRAY<VulkanRenderableObject> objects);
+				virtual void initializeCommandBuffers(ADGRVulkanCommandBufferInitInfo info);
 				virtual void terminateCommandBuffers();
 
 				virtual void initializeSyncObjects();
@@ -118,7 +129,7 @@ namespace Dynamik {
 			public:
 				/* DRAW CALLS */
 				virtual void syncFence(UI32 frame);
-				virtual VkResult getNextImage(POINTER<UI32> index);
+				virtual VkResult getNextImage(POINTER<UI32> index, UI32 frame);
 				virtual VkResult submitQueues(UI32 index, UI32 frame);
 
 			private:

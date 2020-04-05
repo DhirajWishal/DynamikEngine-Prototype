@@ -97,15 +97,12 @@ namespace Dynamik {
 
 			void VulkanRenderableObject::initializePipeline(VkExtent2D swapChainExtent, ADGRVulkanPipelineInitInfo info)
 			{
-				auto bindingDescription = Vertex::getBindingDescription(1);
-				auto attributeDescriptions = Vertex::getAttributeDescriptions();
-
 				VkPipelineVertexInputStateCreateInfo vertexInputInfo = {};
 				vertexInputInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO;
-				vertexInputInfo.vertexBindingDescriptionCount = static_cast<UI32>(bindingDescription.size());
-				vertexInputInfo.vertexAttributeDescriptionCount = static_cast<UI32>(attributeDescriptions.size());
-				vertexInputInfo.pVertexBindingDescriptions = bindingDescription.data();
-				vertexInputInfo.pVertexAttributeDescriptions = attributeDescriptions.data();
+				vertexInputInfo.vertexBindingDescriptionCount = static_cast<UI32>(info.vertexBindingDescription.size());
+				vertexInputInfo.vertexAttributeDescriptionCount = static_cast<UI32>(info.vertexAttributeDescription.size());
+				vertexInputInfo.pVertexBindingDescriptions = info.vertexBindingDescription.data();
+				vertexInputInfo.pVertexAttributeDescriptions = info.vertexAttributeDescription.data();
 
 				// initialize the input assembler
 				VkPipelineInputAssemblyStateCreateInfo inputAssembly = {};
@@ -504,6 +501,49 @@ namespace Dynamik {
 				vertexBufferMemories.pushBack(_bufferMemory);
 			}
 
+			void VulkanRenderableObject::initializeVertex2DBuffer(ARRAY<vertex2D>* vertexes)
+			{
+				VkBuffer _buffer = VK_NULL_HANDLE;
+				VkDeviceMemory _bufferMemory = VK_NULL_HANDLE;
+
+				vertexCount = vertexes->size();
+				VkDeviceSize bufferSize = vertexCount * vertexes->typeSize();
+
+				VkBuffer stagingBuffer;
+				VkDeviceMemory stagingBufferMemory;
+
+				ADGRCreateBufferInfo bufferInfo;
+				bufferInfo.bufferSize = bufferSize;
+				bufferInfo.usage = VK_BUFFER_USAGE_TRANSFER_SRC_BIT;
+				bufferInfo.bufferMemoryPropertyflags = VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT;
+				bufferInfo.buffer = &stagingBuffer;
+				bufferInfo.bufferMemory = &stagingBufferMemory;
+
+				VulkanFunctions::createBuffer(logicalDevice, physicalDevice, bufferInfo);
+
+				void* data = nullptr;
+				vkMapMemory(logicalDevice, stagingBufferMemory, 0, bufferSize, 0, &data);
+				memcpy(data, vertexes->data(), (size_t)bufferSize);
+				vkUnmapMemory(logicalDevice, stagingBufferMemory);
+
+				ADGRCreateBufferInfo vertBufferInfo;
+				vertBufferInfo.bufferSize = bufferSize;
+				vertBufferInfo.usage = (VkBufferUsageFlagBits)(VK_BUFFER_USAGE_TRANSFER_DST_BIT | VK_BUFFER_USAGE_VERTEX_BUFFER_BIT);
+				vertBufferInfo.bufferMemoryPropertyflags = VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT;
+				vertBufferInfo.buffer = &_buffer;
+				vertBufferInfo.bufferMemory = &_bufferMemory;
+
+				VulkanFunctions::createBuffer(logicalDevice, physicalDevice, vertBufferInfo);
+
+				VulkanFunctions::copyBuffer(logicalDevice, commandPool, graphicsQueue, presentQueue, stagingBuffer, _buffer, bufferSize);
+
+				vkDestroyBuffer(logicalDevice, stagingBuffer, nullptr);
+				vkFreeMemory(logicalDevice, stagingBufferMemory, nullptr);
+
+				vertexBuffers.pushBack(_buffer);
+				vertexBufferMemories.pushBack(_bufferMemory);
+			}
+
 			void VulkanRenderableObject::terminateVertexBuffer()
 			{
 				for (UI32 _itr = 0; _itr < vertexBuffers.size(); _itr++)
@@ -828,30 +868,8 @@ namespace Dynamik {
 				}
 			}
 
-			void VulkanRenderableObject::updateUniformBuffer(
-				UniformBufferObject uniformBuferObject,
-				std::deque<DMKEventContainer>& eventContainers,
-				UI32 currentImage,
-				UI32 frameWidth,
-				UI32 frameHeight)
+			void VulkanRenderableObject::updateUniformBuffer(UniformBufferObject uniformBuferObject, UI32 currentImage)
 			{
-				// TODO: update
-				/*
-				DMKUpdateInfo updateInfo = {};
-				updateInfo = draw(eventContainers);
-
-				UniformBufferObject ubo = {};
-				ubo.model = glm::rotate(glm::translate(glm::mat4(1.0f), glm::vec3(updateInfo.leftRight, updateInfo.frontBack, updateInfo.upDown)),
-					glm::radians(updateInfo.rotationX), glm::vec3(0.0f, 0.0f, 1.0f))
-					* glm::rotate(glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, 0.0f)),
-						glm::radians(updateInfo.rotationY), glm::vec3(0.0f, 1.0f, 0.0f))
-					* glm::rotate(glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, 0.0f)),
-						glm::radians(updateInfo.rotationZ), glm::vec3(1.0f, 0.0f, 0.0f));
-				ubo.view = glm::lookAt(glm::vec3(0.5f, 3.0f, 0.5f), glm::vec3(0.0f, 0.0f, 0.0f),
-					glm::vec3(0.0f, 0.0f, 1.0f));
-				ubo.proj = glm::perspective(glm::radians(45.0f), (F32)frameWidth / (F32)frameHeight, 0.001f, 10.0f);
-				ubo.proj[1][1] *= -1;
-				*/
 				void* data = nullptr;
 				vkMapMemory(logicalDevice, uniformBufferMemories[currentImage], 0, sizeof(uniformBuferObject), 0, &data);
 				memcpy(data, &uniformBuferObject, sizeof(uniformBuferObject));

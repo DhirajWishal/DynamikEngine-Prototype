@@ -24,6 +24,8 @@ namespace Dynamik {
 		using namespace core;
 
 #ifdef DMK_DEBUG
+		Debugger::benchmark::FPS myFPSCal;
+
 		// ----------
 #endif
 
@@ -37,6 +39,12 @@ namespace Dynamik {
 		// Basic one-time initializations
 		void vulkanRenderer::initStageOne()
 		{
+			// initialize the window
+			DMKWindowManagerInitInfo windowInitInfo;
+			windowInitInfo.iconPaths = "E:/Projects/Dynamik Engine/Versions/Dynamik (Prototype)/Dependencies/Assets/icons/Dynamik.jpg";
+			myWindowManager.initialize(windowInitInfo);
+			my3DRenderer.setWindowHandle(myWindowManager.getHandle());
+
 			my3DRenderer.initStageOne();
 		}
 
@@ -59,201 +67,49 @@ namespace Dynamik {
 
 		// basic one-time shut down functions
 		void vulkanRenderer::shutDownStageOne() {
+			my3DRenderer.shutDownStageOne();
 		}
 
 		// per object shut down functions
 		void vulkanRenderer::shutDownStageTwo() {
-			//for (I32 itr = 0; itr < myFormatsCount; itr++) {
-			//	vulkanFormat* _localVulkanFormat = &myVulkanFormats[itr];
-			//
-			//	// clean pipeline and pipeline layout
-			//	myPipelineManager.clear(&myVulkanDataContainers[vulkanContainerIndex], _localVulkanFormat);
-			//
-			//	// clean uniform buffers, uniform buffer memories and descriptor pools
-			//	myUniformBufferManager.clean(&myVulkanDataContainers[vulkanContainerIndex], _localVulkanFormat);
-			//
-			//	// clear textures
-			//	myTextureManager.clear(&myVulkanDataContainers[vulkanContainerIndex], _localVulkanFormat);
-			//
-			//	// clear index buffer
-			//	if (_localVulkanFormat->myRendererFormat->myRenderTechnology == DMK_ADGR_RENDERING_TECHNOLOGY::DMK_ADGR_RENDER_INDEXED)
-			//		myIndexBufferManager.clear(&myVulkanDataContainers[vulkanContainerIndex], _localVulkanFormat);
-			//
-			//	// clear vertex buffer
-			//	myVertexBufferManager.clear(&myVulkanDataContainers[vulkanContainerIndex], _localVulkanFormat);
-			//
-			//	// destroy descriptorSetLayout
-			//	vkDestroyDescriptorSetLayout(myVulkanDataContainers[vulkanContainerIndex].device,
-			//		_localVulkanFormat->myDescriptorSetLayout, nullptr);
-			//}
+			my3DRenderer.shutDownStageTwo();
 		}
 
 		// final shut down functions
 		void vulkanRenderer::shutDownStageThree() {
-			// delete frames in flight
-			//for (size_t i = 0; i < MAX_FRAMES_IN_FLIGHT; i++) {
-			//	vkDestroySemaphore(myVulkanDataContainers[vulkanContainerIndex].device, myImageAvailableSemaphores[i], nullptr);
-			//	vkDestroySemaphore(myVulkanDataContainers[vulkanContainerIndex].device, myRenderFinishedSemaphores[i], nullptr);
-			//	vkDestroyFence(myVulkanDataContainers[vulkanContainerIndex].device, myFencesInFlight[i], nullptr);
-			//}
-			//
-			//// delete device
-			//vkDestroyDevice(myVulkanDataContainers[vulkanContainerIndex].device, nullptr);
-			//
-			//// stop the debugger
-			//myDebugger.deleteDebugger();
-			//
-			//// destroy vulkan surface
-			//vkDestroySurfaceKHR(myVulkanDataContainers[vulkanContainerIndex].instance, myVulkanDataContainers[vulkanContainerIndex].surface, nullptr);
-			//
-			//// clear instance
-			//myInstanceManager.clear(&myVulkanDataContainers[vulkanContainerIndex]);
-			//
-			//// final
-			//myWindowManager.clear(&myVulkanDataContainers[vulkanContainerIndex]);
+			my3DRenderer.shutDownStageThree();
+
+			myWindowManager.terminate();
 		}
 
 		// draw frame
 		void vulkanRenderer::drawFrame() {
 #ifdef DMK_DEBUG
+			myFPSCal.getFPS();	// FPS calculator
 
  // ----------
 #endif
+			myWindowManager.pollEvents();
+			eventContainer = myWindowManager.getEventContainer();
 
-			my3DRenderer.drawFrame();
+			my3DRenderer.drawFrame(eventContainer);
 
-			// wait for fences
-			//vkWaitForFences(myVulkanDataContainers[vulkanContainerIndex].device, 1, &myFencesInFlight[currentFrame],
-			//	VK_TRUE, std::numeric_limits<uint64_t>::max());
-			//
-			//// get image index
-			//imageIndex = 0;
-			//result = vkAcquireNextImageKHR(myVulkanDataContainers[vulkanContainerIndex].device,
-			//	myVulkanDataContainers[vulkanContainerIndex].swapchainContainer.swapchain, std::numeric_limits<uint64_t>::max(),
-			//	myImageAvailableSemaphores[currentFrame], VK_NULL_HANDLE, &imageIndex);
-			//
-			//// recreate swachain if needed
-			//if (result == VK_ERROR_OUT_OF_DATE_KHR) {
-			//	recreateSwapChain();
-			//	return;
-			//}
-			//else if (result != VK_SUCCESS && result != VK_SUBOPTIMAL_KHR)
-			//	DMK_CORE_FATAL("failed to acquire swap chain image!");
-			//
-			//// draw call
-			//// uniform buffer object update
-			//for (I32 itr = 0; itr < myFormatsCount; itr++)
-			//	myUniformBufferManager.updateBuffer3D(&myVulkanDataContainers[vulkanContainerIndex],
-			//		myEventContainers, &myVulkanFormats[itr], imageIndex);
-			//
-			//// submit info
-			//submitInfo.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO;
-			//
-			//// wait for semaphores
-			//waitSemaphores[0] = { myImageAvailableSemaphores[currentFrame] };
-			//waitStages[0] = { VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT };
-			//submitInfo.waitSemaphoreCount = 1;
-			//submitInfo.pWaitSemaphores = waitSemaphores;
-			//submitInfo.pWaitDstStageMask = waitStages;
-			//submitInfo.commandBufferCount = 1;
-			//submitInfo.pCommandBuffers = &myVulkanDataContainers[vulkanContainerIndex].commandBufferContainer.buffers[imageIndex];
-			//
-			//// signal semaphores
-			//signalSemaphores[0] = { myRenderFinishedSemaphores[currentFrame] };
-			//submitInfo.signalSemaphoreCount = 1;
-			//submitInfo.pSignalSemaphores = signalSemaphores;
-			//
-			//// reset fences
-			//vkResetFences(myVulkanDataContainers[vulkanContainerIndex].device, 1, &myFencesInFlight[currentFrame]);
-			//
-			//// submit command queue
-			//if (vkQueueSubmit(myVulkanDataContainers[vulkanContainerIndex].graphicsQueue, 1, &submitInfo,
-			//	myFencesInFlight[currentFrame]) != VK_SUCCESS)
-			//	DMK_CORE_FATAL("failed to submit draw command buffer!");
-			//
-			//// present queue info
-			//presentInfo.sType = VK_STRUCTURE_TYPE_PRESENT_INFO_KHR;
-			//presentInfo.waitSemaphoreCount = 1;
-			//presentInfo.pWaitSemaphores = signalSemaphores;
-			//
-			//// swapchain info
-			//swapChains[0] = { myVulkanDataContainers[vulkanContainerIndex].swapchainContainer.swapchain };
-			//presentInfo.swapchainCount = 1;
-			//presentInfo.pSwapchains = swapChains;
-			//presentInfo.pImageIndices = &imageIndex;
-			//
-			//// submit queue
-			//result = vkQueuePresentKHR(myVulkanDataContainers[vulkanContainerIndex].presentQueue, &presentInfo);
-			//
-			//// frame buffer resize event
-			//if (result == VK_ERROR_OUT_OF_DATE_KHR || result == VK_SUBOPTIMAL_KHR || myWindowManager.isFrameBufferResized()) {
-			//	myWindowManager.frameBufferResizedUpdate(false);
-			//	recreateSwapChain();
-			//}
-			//else if (result != VK_SUCCESS)
-			//	DMK_CORE_FATAL("failed to present swap chain image!");
-			//
-			//// current frame select
-			//currentFrame = (currentFrame + 1) % MAX_FRAMES_IN_FLIGHT;
+			if (myWindowManager.isFrameBufferResized())
+			{
+				myWindowManager.frameBufferResizedUpdate(false);
+				my3DRenderer.setWindowHandle(myWindowManager.getHandle());
+				recreateSwapChain();
+			}
 		}
 
 		// recreate the swapchain
 		void vulkanRenderer::recreateSwapChain() {
-			//// window resize event
-			//myWindowManager.onWindowResizeEvent(&myVulkanDataContainers[vulkanContainerIndex]);
-			//
-			//// first stage shut down
-			//shutDownStageOne();
-			//
-			//// initialize the command pool
-			//initCommandPool();
-			//
-			//// clear swapChain, Pipeline, Uniform buffers and descriptorPool
-			//for (I32 itr = 0; itr < myFormatsCount; itr++) {
-			//	vulkanFormat* _localVulkanFormat = &myVulkanFormats[itr];
-			//
-			//	// clean pipeline and pipeline layout
-			//	myPipelineManager.clear(&myVulkanDataContainers[vulkanContainerIndex], _localVulkanFormat);
-			//
-			//	// clean uniform buffers, uniform buffer memories and descriptor pools
-			//	myUniformBufferManager.clean(&myVulkanDataContainers[vulkanContainerIndex], _localVulkanFormat);
-			//}
-			//
-			//// init swapchain
-			//initSwapChain();
-			//
-			//// TODO: manually initialization
-			//initColorBuffer();
-			//
-			//// TODO: manually initialization
-			//initDepthBuffer();
-			//
-			//// initialize the render pass
-			//initRenderPass();
-			//
-			//// TODO: manually initialization
-			//initFrameBuffers();
-			//
-			//for (UI32 _itr = 0; _itr < myFormatsCount; _itr++) {
-			//	vulkanFormat* _localVulkanFormat = &myVulkanFormats[_itr];
-			//
-			//	// init pipelines
-			//	initPipelines(_localVulkanFormat);
-			//
-			//	// uniform buffer creation
-			//	initUniformBuffers(_localVulkanFormat);
-			//
-			//	// descriptor pool creation
-			//	initDescriptorPoolsAndSets(_localVulkanFormat);
-			//}
-			//
-			//// init command buffers
-			//initCommandBuffers(&myVulkanFormats);
+			my3DRenderer.recreateSwapChain();
 		}
 
 		// events
 		std::deque<DMKEventContainer>* vulkanRenderer::events() {
-			return my3DRenderer.events();
+			return &eventContainer;
 		}
 
 		void vulkanRenderer::setFormats(ARRAY<RendererFormat>& rendererFormats) {

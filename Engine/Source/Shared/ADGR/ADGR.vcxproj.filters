@@ -149,6 +149,8 @@
     <ClInclude Include="src\core\vulkan\Renderer Backend Layer\VulkanSkyBox.h" />
     <ClInclude Include="src\core\Components\Camera.h" />
     <ClInclude Include="src\core\Components\Camera3D.h" />
+    <ClInclude Include="src\core\vulkan\Renderer Backend Layer\VulkanRBL2D.h" />
+    <ClInclude Include="src\core\Components\Camera2D.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Layers\layer.cpp">
@@ -225,6 +227,8 @@
     <ClCompile Include="src\core\vulkan\Renderer Backend Layer\VulkanSkyBox.cpp" />
     <ClCompile Include="src\core\Components\Camera.cpp" />
     <ClCompile Include="src\core\Components\Camera3D.cpp" />
+    <ClCompile Include="src\core\vulkan\Renderer Backend Layer\VulkanRBL2D.cpp" />
+    <ClCompile Include="src\core\Components\Camera2D.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ADGR.lua" />

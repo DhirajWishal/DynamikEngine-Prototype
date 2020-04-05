@@ -22,6 +22,7 @@
 #include "core/data store/internalFormat.h"
 
 #include "Renderer Backend Layer/VulkanRBL3D.h"
+#include "Renderer Backend Layer/VulkanRBL2D.h"
 
 #ifdef DMK_USE_VULKAN
 namespace Dynamik {
@@ -82,7 +83,7 @@ namespace Dynamik {
 			/* FUNCTION
 			 * Draw frame function.
 			 */
-			void drawFrame() override;
+			void drawFrame();
 
 			/* FUNCTION
 			 * Full Shut down function.
@@ -133,6 +134,9 @@ namespace Dynamik {
 			void recreateSwapChain();
 
 			VulkanRBL3D my3DRenderer;
+			WindowManager myWindowManager;
+
+			std::deque<DMKEventContainer> eventContainer;
 		};
 	}
 }

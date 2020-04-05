@@ -115,9 +115,9 @@ namespace Dynamik {
 			//myThreadManager.run(1);
 
 			while (!myRenderingEngine.getWindowCloseEvent()) {
+				myRenderingEngine.draw();
 				auto events = myRenderingEngine.getEvents();
 			
-				myRenderingEngine.draw();
 				myEngine.update();
 				if (events->size())
 					onEvent(events);

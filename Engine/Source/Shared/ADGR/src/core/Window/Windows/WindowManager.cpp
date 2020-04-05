@@ -27,6 +27,8 @@ namespace Dynamik {
 			windowWidth = mode->width;
 			windowHeight = mode->height;
 
+			glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
+
 #endif
 			glfwMakeContextCurrent(window);
 
@@ -38,7 +40,7 @@ namespace Dynamik {
 			glfwSetCursorPosCallback(window, onCursorPosEvent);
 			glfwSetWindowCloseCallback(window, onwindowCloseEvent);
 
-			glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
+			//glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
 
 			setIcon(info.iconPaths);
 		}
@@ -89,6 +91,15 @@ namespace Dynamik {
 
 			windowWidth = width;
 			windowHeight = height;
+		}
+
+		GLFWWindowHandleContainer WindowManager::getHandle()
+		{
+			GLFWWindowHandleContainer _container;
+			_container.windowPointer = &window;
+			_container.windowWidth = windowWidth;
+			_container.windowHeight = windowHeight;
+			return _container;
 		}
 
 		void WindowManager::keyEventHandler(DMKEventType type, I32 keycode, I32 count) {

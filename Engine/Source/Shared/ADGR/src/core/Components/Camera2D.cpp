@@ -1,10 +1,10 @@
 #include "adgrafx.h"
-#include "Camera3D.h"
+#include "Camera2D.h"
 
 namespace Dynamik {
 	namespace ADGR {
-		UniformBufferObject Camera3D::updateCamera(std::deque<DMKEventContainer> container, DMKUpdateInfo updateInfo)
-		{
+        UniformBufferObject Camera2D::updateCamera(std::deque<DMKEventContainer> container, DMKUpdateInfo updateInfo)
+        {
 			float angelX = updateInfo.rotationX;
 			float angelY = updateInfo.rotationY;
 			float angelZ = updateInfo.rotationZ;
@@ -86,17 +86,17 @@ namespace Dynamik {
 
 			glm::mat4 _rotationX = glm::rotate(
 				glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, 0.0f)),
-				angelX,
+				0.0f,
 				glm::vec3(0.0f, 0.0f, 1.0f));
 
 			glm::mat4 _rotationY = glm::rotate(
 				glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, 0.0f)),
-				angelY,
+				0.0f,
 				glm::vec3(0.0f, 1.0f, 0.0f));
 
 			glm::mat4 _rotationZ = glm::rotate(
 				glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, 0.0f)),
-				angelZ,
+				0.0f,
 				glm::vec3(1.0f, 0.0f, 0.0f));
 
 			UniformBufferObject ubo = {};
@@ -107,6 +107,21 @@ namespace Dynamik {
 			ubo.proj[1][1] *= -1;
 
 			return ubo;
-		}
+
+            /*
+            static auto startTime = std::chrono::high_resolution_clock::now();
+
+            auto currentTime = std::chrono::high_resolution_clock::now();
+            float time = std::chrono::duration<float, std::chrono::seconds::period>(currentTime - startTime).count();
+
+            UniformBufferObject ubo = {};
+            ubo.model = glm::rotate(glm::mat4(1.0f), time * glm::radians(90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+            ubo.view = glm::lookAt(glm::vec3(2.0f, 2.0f, 2.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+            ubo.proj = glm::perspective(updateInfo.fieldOfView, updateInfo.aspectRatio, updateInfo.near, updateInfo.far);
+            ubo.proj[1][1] *= -1;
+
+            return ubo;
+            */
+        }
 	}
 }

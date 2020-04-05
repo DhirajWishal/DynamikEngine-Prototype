@@ -1,15 +1,15 @@
 #pragma once
-#ifndef _DYNAMIK_ADGR_CAMERA_3D_H
-#define _DYNAMIK_ADGR_CAMERA_3D_H
+#ifndef _DYNAMIK_ADGR_CAMERA_2D_H
+#define _DYNAMIK_ADGR_CAMERA_2D_H
 
 #include "Camera.h"
 
 namespace Dynamik {
 	namespace ADGR {
-		class Camera3D : public Camera {
+		class Camera2D : public Camera {
 		public:
-			Camera3D() {}
-			~Camera3D() {}
+			Camera2D() {}
+			~Camera2D() {}
 
 			UniformBufferObject updateCamera(std::deque<DMKEventContainer> container, DMKUpdateInfo updateInfo) override;
 
@@ -22,4 +22,4 @@ namespace Dynamik {
 	}
 }
 
-#endif // !_DYNAMIK_ADGR_CAMERA_3D_H
+#endif // !_DYNAMIK_ADGR_CAMERA_2D_H

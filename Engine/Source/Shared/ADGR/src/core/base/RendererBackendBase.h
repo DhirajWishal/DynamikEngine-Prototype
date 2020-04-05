@@ -61,7 +61,7 @@ namespace Dynamik {
 			virtual void initStageTwo() {}	// initialize stage two
 			virtual void initStageThree() {}	// initialize stage three
 
-			virtual void drawFrame() {}	// draw call
+			virtual void drawFrame(std::deque<DMKEventContainer> container) {}	// draw call
 
 			virtual void shutDown() {}	// shut down the renderer
 			virtual void shutDownStageOne() {}	// shut down stage one

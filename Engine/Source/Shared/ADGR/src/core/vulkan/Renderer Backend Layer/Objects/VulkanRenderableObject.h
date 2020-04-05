@@ -26,6 +26,8 @@ namespace Dynamik {
 			};
 
 			struct ADGRVulkanPipelineInitInfo {
+				ARRAY<VkVertexInputBindingDescription> vertexBindingDescription;
+				ARRAY<VkVertexInputAttributeDescription> vertexAttributeDescription;
 				ARRAY<VulkanShader> shaders;
 
 				// primitive assembly info
@@ -171,6 +173,7 @@ namespace Dynamik {
 				virtual void terminateTextures();
 
 				virtual void initializeVertexBuffer(ARRAY<Vertex>* vertexes);
+				virtual void initializeVertex2DBuffer(ARRAY<vertex2D>* vertexes);
 				virtual void terminateVertexBuffer();
 
 				virtual void initializeIndexBufferUI8(ARRAY<UI8>* indexes);
@@ -186,7 +189,7 @@ namespace Dynamik {
 				virtual void terminateDescriptorSets();
 
 				virtual void initializeUniformBuffer(UI32 count);
-				virtual void updateUniformBuffer(UniformBufferObject uniformBuferObject, std::deque<DMKEventContainer>& eventContainers, UI32 currentImage, UI32 frameWidth = 0, UI32 frameHeight = 0);
+				virtual void updateUniformBuffer(UniformBufferObject uniformBuferObject, UI32 currentImage);
 				virtual void terminateUniformBuffer();
 
 				DMK_ADGR_RENDERING_TECHNOLOGY renderTechnology = DMK_ADGR_RENDERING_TECHNOLOGY::DMK_ADGR_RENDER_INDEXED;

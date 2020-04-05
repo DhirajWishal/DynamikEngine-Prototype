@@ -28,12 +28,11 @@ namespace Dynamik {
 			virtual UniformBufferObject updateCamera(std::deque<DMKEventContainer> container, DMKUpdateInfo updateInfo) { return UniformBufferObject(); }
 
 		protected:
-			glm::vec3 myPosition = glm::vec3(0.0f, 0.0f, 0.0f);
-			glm::vec3 myTarget = glm::vec3(0.0f, 0.0f, 0.0f);
-			glm::vec3 myLookDirection = glm::normalize(myPosition - myTarget);
-			glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f);
-			glm::vec3 myRight = glm::normalize(glm::cross(up, myLookDirection));
-			glm::vec3 myUp = glm::cross(myLookDirection, myRight);
+			glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 3.0f);
+			glm::vec3 cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
+			glm::vec3 cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
+			float _rotX = 0.0f;
+			float _rotY = 0.0f;
 		};
 	}
 }

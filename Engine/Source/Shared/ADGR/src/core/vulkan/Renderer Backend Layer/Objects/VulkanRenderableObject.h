@@ -6,25 +6,13 @@
 #include "UniformBufferObject.h"
 
 #include "VulkanShader.h"
+#include "VulkanSwapChain.h"
 
 #include <GameObject.h>
 
 namespace Dynamik {
 	namespace ADGR {
 		namespace Backend {
-			struct ADGRVulkanDescriptorSetLayoutInitInfo {
-				ARRAY<VkDescriptorSetLayoutBinding> additionalBindings;
-			};
-
-			struct ADGRVulkanPipelineLayoutInitInfo {
-				// push constants info
-				B1 pushConstantsEnable = false;									// Vulkan push constants enable
-				UI32 pushConstantCount = 1;										// Vulkan push constants count
-				I32 pushConstantOffset = 0;										// Vulkan push constants offset
-
-				ARRAY<VkDescriptorSetLayout> additionalLayouts;
-			};
-
 			struct ADGRVulkanPipelineInitInfo {
 				ARRAY<VkVertexInputBindingDescription> vertexBindingDescription;
 				ARRAY<VkVertexInputAttributeDescription> vertexAttributeDescription;
@@ -91,7 +79,6 @@ namespace Dynamik {
 				VkPipeline pipelineBasePipelineHandle = VK_NULL_HANDLE;				// Vulkan base pipeline handle
 				UI32 pipelineBasePipelineIndex = 0;
 				VkPipelineCache pipelineCache = VK_NULL_HANDLE;					// Vulkan pipeline cache
-				VkRenderPass renderPass = VK_NULL_HANDLE;
 			};
 
 			struct ADGRVulkanTextureInitInfo {
@@ -147,7 +134,6 @@ namespace Dynamik {
 			};
 
 			struct ADGRVulkanDescrpitorContainer {
-				VkDescriptorSetLayout layout;
 				ARRAY<VkDescriptorPool> descriptorPools;
 				ARRAY<ARRAY<VkDescriptorSet>> descriptorSets;
 			};
@@ -158,13 +144,7 @@ namespace Dynamik {
 					: logicalDevice(logicalDevice), physicalDevice(physicalDevice), commandPool(commandPool), graphicsQueue(graphicsQueue), presentQueue(presentQueue) {}
 				virtual ~VulkanRenderableObject() {}
 
-				virtual void initializeDescriptorSetLayout(ADGRVulkanDescriptorSetLayoutInitInfo into);
-				virtual void terminateDescriptorSetLayout();
-
-				virtual void initializePipelineLayout(ADGRVulkanPipelineLayoutInitInfo info);
-				virtual void terminatePipelineLayout();
-
-				virtual void initializePipeline(VkExtent2D swapChainExtent, ADGRVulkanPipelineInitInfo info);
+				virtual void initializePipeline(ADGRVulkanPipelineInitInfo info);
 				virtual void terminatePipeline();
 
 				virtual void initializeTextures(ARRAY<ADGRVulkanTextureInitInfo> infos);
@@ -188,7 +168,7 @@ namespace Dynamik {
 				virtual void initializeDescriptorSets(ADGRVulkanDescriptorSetsInitInfo info);
 				virtual void terminateDescriptorSets();
 
-				virtual void initializeUniformBuffer(UI32 count);
+				virtual void initializeUniformBuffer();
 				virtual void updateUniformBuffer(UniformBufferObject uniformBuferObject, UI32 currentImage);
 				virtual void terminateUniformBuffer();
 
@@ -199,6 +179,8 @@ namespace Dynamik {
 				VkCommandPool commandPool = VK_NULL_HANDLE;
 				VkQueue graphicsQueue = VK_NULL_HANDLE;
 				VkQueue presentQueue = VK_NULL_HANDLE;
+
+				POINTER<VulkanSwapChain> swapChainPointer;
 
 				ARRAY<VkBuffer> vertexBuffers;
 				ARRAY<VkDeviceMemory> vertexBufferMemories;
@@ -213,14 +195,12 @@ namespace Dynamik {
 
 				ADGRVulkanDescrpitorContainer descriptors;
 
-				VkPipelineLayout pipelineLayout = VK_NULL_HANDLE;
 				VkPipeline pipeline = VK_NULL_HANDLE;
 
 				ARRAY<VkBuffer> uniformBuffers;
 				ARRAY<VkDeviceMemory> uniformBufferMemories;
 
 				//VulkanPushConstantManager pushConstant;
-				ARRAY<glm::vec4> pushConstants;
 			};
 		}
 	}

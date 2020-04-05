@@ -163,7 +163,6 @@ namespace Dynamik {
 		uint32_t sceneCount = 0;
 
 		/* MANAGERS */
-		utils::daiManager fileManager;
 
 		/* THREADS */
 	};

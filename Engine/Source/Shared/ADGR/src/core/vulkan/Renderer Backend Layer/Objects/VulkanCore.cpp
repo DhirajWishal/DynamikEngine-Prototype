@@ -8,6 +8,8 @@
 
 #include "CentralDataHub.h"
 
+#include "VulkanSwapChain.h"
+
 namespace Dynamik {
 	namespace ADGR {
 		namespace Backend {
@@ -40,7 +42,7 @@ namespace Dynamik {
 
 				B1 swapChainAdequate = false;
 				if (extensionsSupported) {
-					VulkanSwapChainSupportDetails swapChainSupport = VulkanCore::querySwapChainSupport(&physicalDevice, &surface);
+					VulkanSwapChainSupportDetails swapChainSupport = VulkanSwapChain::querySwapChainSupport(&physicalDevice, &surface);
 					swapChainAdequate = (swapChainSupport.formats.empty()) && (swapChainSupport.presentModes.empty());
 				}
 
@@ -118,48 +120,6 @@ namespace Dynamik {
 					func(instance, debugMessenger, pAllocator);
 			}
 
-			/* SWAPCHAIN */
-			VkSurfaceFormatKHR chooseSwapSurfaceFormat(const ARRAY<VkSurfaceFormatKHR>& availableFormats) {
-				for (const auto& availableFormat : availableFormats)
-					if (availableFormat.format == VK_FORMAT_B8G8R8A8_UNORM
-						&& availableFormat.colorSpace == VK_COLOR_SPACE_SRGB_NONLINEAR_KHR)
-						return availableFormat;
-
-				return ((ARRAY<VkSurfaceFormatKHR>)availableFormats)[0];
-			}
-
-			VkPresentModeKHR chooseSwapPresentMode(const ARRAY<VkPresentModeKHR>& availablePresentModes) {
-				VkPresentModeKHR bestMode = VK_PRESENT_MODE_FIFO_KHR;
-
-				for (const auto& availablePresentMode : availablePresentModes) {
-					if (availablePresentMode == VK_PRESENT_MODE_MAILBOX_KHR) {
-						return availablePresentMode;
-					}
-					else if (availablePresentMode == VK_PRESENT_MODE_IMMEDIATE_KHR)
-						bestMode = availablePresentMode;
-				}
-
-				return bestMode;
-			}
-
-			VkExtent2D chooseSwapExtent(const VkSurfaceCapabilitiesKHR& capabilities, UI32 width, UI32 height) {
-				if (capabilities.currentExtent.width != std::numeric_limits<UI32>::max())
-					return capabilities.currentExtent;
-				else {
-					VkExtent2D actualExtent = {
-						width,
-						height
-					};
-
-					actualExtent.width = std::max(capabilities.minImageExtent.width,
-						std::min(capabilities.maxImageExtent.width, actualExtent.width));
-					actualExtent.height = std::max(capabilities.minImageExtent.height,
-						std::min(capabilities.maxImageExtent.height, actualExtent.height));
-
-					return actualExtent;
-				}
-			}
-
 			// if drawing in vertex
 			void drawVertex(VkCommandBuffer buffer, I32 index, VulkanRenderableObject* object, VkDeviceSize* offsets) {
 				for (UI32 i = 0; i < object->vertexBuffers.size(); i++) {
@@ -171,7 +131,7 @@ namespace Dynamik {
 
 					// binding descriptor set(s)
 					if (object->descriptors.descriptorSets.size())
-						vkCmdBindDescriptorSets(buffer, VK_PIPELINE_BIND_POINT_GRAPHICS, object->pipelineLayout, 0, 1, &object->descriptors.descriptorSets[i][index], 0, nullptr);
+						vkCmdBindDescriptorSets(buffer, VK_PIPELINE_BIND_POINT_GRAPHICS, object->swapChainPointer->getPipelineLayout(), 0, 1, &object->descriptors.descriptorSets[i][index], 0, nullptr);
 
 					// draw command
 					vkCmdDraw(buffer, object->vertexCount, 1, 0, 1);
@@ -189,7 +149,7 @@ namespace Dynamik {
 
 					// binding descriptor set(s)
 					if (object->descriptors.descriptorSets.size())
-						vkCmdBindDescriptorSets(buffer, VK_PIPELINE_BIND_POINT_GRAPHICS, object->pipelineLayout, 0, 1, &object->descriptors.descriptorSets[i][index], 0, nullptr);
+						vkCmdBindDescriptorSets(buffer, VK_PIPELINE_BIND_POINT_GRAPHICS, object->swapChainPointer->getPipelineLayout(), 0, 1, &object->descriptors.descriptorSets[i][index], 0, nullptr);
 
 					// index buffer bind
 					if (object->indexbufferObjectTypeSize == sizeof(UI8))
@@ -213,10 +173,7 @@ namespace Dynamik {
 				initializeDebugger();
 				initializeSurface(initInfo.windowPointer);
 				initializeDevice();
-				initializeSwapChain(initInfo.width, initInfo.height);
 				initializeCommandPool();
-				initializeRenderPass(initInfo.renderPassInitInfo);
-				initializeFrameBuffer(initInfo.frameBufferInitInfo);
 				initializeSyncObjects();
 			}
 
@@ -301,13 +258,13 @@ namespace Dynamik {
 				vkWaitForFences(logicalDevice, 1, &inFlightFences[frame], VK_TRUE, std::numeric_limits<uint64_t>::max());
 			}
 
-			VkResult VulkanCore::getNextImage(POINTER<UI32> index, UI32 frame)
+			VkResult VulkanCore::getNextImage(VkSwapchainKHR swapChain, POINTER<UI32> index, UI32 frame)
 			{
 				return vkAcquireNextImageKHR(logicalDevice, swapChain, std::numeric_limits<uint64_t>::max(),
 					imageAvailables[frame], VK_NULL_HANDLE, index);
 			}
 
-			VkResult VulkanCore::submitQueues(UI32 index, UI32 frame)
+			VkResult VulkanCore::submitQueues(VkSwapchainKHR swapChain, UI32 index, UI32 frame)
 			{
 				// submit info
 				submitInfo.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO;
@@ -485,100 +442,6 @@ namespace Dynamik {
 				vkGetDeviceQueue(logicalDevice, indices.presentFamily.value(), 0, &presentQueue);
 			}
 
-			void VulkanCore::initializeSwapChain(UI32 width, UI32 height)
-			{
-				VulkanSwapChainSupportDetails swapChainSupport = querySwapChainSupport(&physicalDevice, &surface);
-
-				VkSurfaceFormatKHR surfaceFormat = chooseSwapSurfaceFormat(swapChainSupport.formats);
-				VkPresentModeKHR presentMode = chooseSwapPresentMode(swapChainSupport.presentModes);
-				VkExtent2D extent = chooseSwapExtent(swapChainSupport.capabilities, width, height);
-
-				VkCompositeAlphaFlagBitsKHR surfaceComposite =
-					(surfaceCapabilities.supportedCompositeAlpha & VK_COMPOSITE_ALPHA_OPAQUE_BIT_KHR)
-					? VK_COMPOSITE_ALPHA_OPAQUE_BIT_KHR
-					: (surfaceCapabilities.supportedCompositeAlpha & VK_COMPOSITE_ALPHA_PRE_MULTIPLIED_BIT_KHR)
-					? VK_COMPOSITE_ALPHA_PRE_MULTIPLIED_BIT_KHR
-					: (surfaceCapabilities.supportedCompositeAlpha & VK_COMPOSITE_ALPHA_POST_MULTIPLIED_BIT_KHR)
-					? VK_COMPOSITE_ALPHA_POST_MULTIPLIED_BIT_KHR
-					: VK_COMPOSITE_ALPHA_INHERIT_BIT_KHR;
-
-				UI32 imageCount = swapChainSupport.capabilities.minImageCount + 1;
-				if (swapChainSupport.capabilities.maxImageCount > 0
-					&& imageCount > swapChainSupport.capabilities.maxImageCount)
-					imageCount = swapChainSupport.capabilities.maxImageCount;
-
-				VkSwapchainCreateInfoKHR createInfo = {};
-				createInfo.sType = VK_STRUCTURE_TYPE_SWAPCHAIN_CREATE_INFO_KHR;
-				createInfo.surface = surface;
-				createInfo.minImageCount = imageCount;
-				createInfo.imageFormat = surfaceFormat.format;
-				createInfo.imageColorSpace = surfaceFormat.colorSpace;
-				createInfo.imageExtent = extent;
-				createInfo.imageArrayLayers = 1;
-				createInfo.imageUsage = VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT;
-				//createInfo.imageUsage = VK_IMAGE_USAGE_TRANSFER_DST_BIT;
-
-				ADGRVulkanQueue indices = findQueueFamilies(physicalDevice, surface);
-				UI32 queueFamilyindices[] = {
-					indices.graphicsFamily.value(),
-					indices.presentFamily.value()
-				};
-
-				if (indices.graphicsFamily != indices.presentFamily) {
-					createInfo.imageSharingMode = VK_SHARING_MODE_CONCURRENT;
-					createInfo.queueFamilyIndexCount = 2;
-					createInfo.pQueueFamilyIndices = queueFamilyindices;
-				}
-				else {
-					createInfo.imageSharingMode = VK_SHARING_MODE_EXCLUSIVE;
-					createInfo.queueFamilyIndexCount = 0;
-					createInfo.pQueueFamilyIndices = nullptr;
-				}
-
-				createInfo.preTransform = swapChainSupport.capabilities.currentTransform;
-				createInfo.compositeAlpha = VK_COMPOSITE_ALPHA_OPAQUE_BIT_KHR;
-				createInfo.presentMode = presentMode;
-				createInfo.clipped = VK_TRUE;
-				createInfo.oldSwapchain = VK_NULL_HANDLE;
-
-				if (vkCreateSwapchainKHR(logicalDevice, &createInfo, nullptr, &swapChain))
-					DMK_CORE_FATAL("Failed to create Swap Chain!");
-
-				vkGetSwapchainImagesKHR(logicalDevice, swapChain, &imageCount, nullptr);
-				swapChainImages.resize(imageCount);
-				vkGetSwapchainImagesKHR(logicalDevice, swapChain, &imageCount, swapChainImages.data());
-
-				swapChainImageFormat = surfaceFormat.format;
-				swapChainExtent = extent;
-
-				initializeSwapChainImageViews();
-			}
-
-			void VulkanCore::terminateSwapChain()
-			{
-				// destroy swapchain image views
-				for (size_t i = 0; i < swapChainImageViews.size(); i++)
-					vkDestroyImageView(logicalDevice, swapChainImageViews[i], nullptr);
-
-				// destroy swapchain
-				vkDestroySwapchainKHR(logicalDevice, swapChain, nullptr);
-			}
-
-			void VulkanCore::initializeSwapChainImageViews()
-			{
-				swapChainImageViews.resize(swapChainImages.size());
-
-				for (UI32 i = 0; i < swapChainImages.size(); i++) {
-					ADGRCreateImageViewInfo info;
-					info.image = swapChainImages[i];
-					info.format = swapChainImageFormat;
-					info.aspectFlags = VK_IMAGE_ASPECT_COLOR_BIT;
-					info.mipLevels = 1;
-
-					swapChainImageViews.at(i) = VulkanFunctions::createImageView(logicalDevice, info);
-				}
-			}
-
 			void VulkanCore::initializeCommandPool()
 			{
 				ADGRVulkanQueue queueFamilyIndices = findQueueFamilies(physicalDevice, surface);
@@ -595,31 +458,6 @@ namespace Dynamik {
 			void VulkanCore::terminateCommandPool()
 			{
 				vkDestroyCommandPool(logicalDevice, commandPool, nullptr);
-			}
-
-			VulkanSwapChainSupportDetails VulkanCore::querySwapChainSupport(VkPhysicalDevice* device, VkSurfaceKHR* surface)
-			{
-				VulkanSwapChainSupportDetails details;
-				vkGetPhysicalDeviceSurfaceCapabilitiesKHR(*device, *surface, &details.capabilities);
-
-				UI32 formatCount;
-				vkGetPhysicalDeviceSurfaceFormatsKHR(*device, *surface, &formatCount, nullptr);
-
-				if (formatCount != 0) {
-					details.formats.resize(formatCount);
-					vkGetPhysicalDeviceSurfaceFormatsKHR(*device, *surface, &formatCount, details.formats.data());
-				}
-
-				UI32 presentModeCount;
-				vkGetPhysicalDeviceSurfacePresentModesKHR(*device, *surface, &presentModeCount, nullptr);
-
-				if (presentModeCount != 0) {
-					details.presentModes.resize(presentModeCount);
-					vkGetPhysicalDeviceSurfacePresentModesKHR(*device, *surface,
-						&presentModeCount, details.presentModes.data());
-				}
-
-				return details;
 			}
 
 			ADGRVulkanQueue VulkanCore::findQueueFamilies(VkPhysicalDevice physicalDevice, VkSurfaceKHR surface)
@@ -653,94 +491,20 @@ namespace Dynamik {
 				return indices;
 			}
 
-			void VulkanCore::initializeRenderPass(ADGRVulkanRenderPassInitInfo info)
-			{
-				VkSubpassDependency dependency = {};
-				dependency.srcSubpass = VK_SUBPASS_EXTERNAL;
-				dependency.dstSubpass = info.destinationSubpass;
-				dependency.srcStageMask = VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT;
-				dependency.srcAccessMask = info.accessFlags;
-				dependency.dstStageMask = VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT;
-				dependency.dstAccessMask = VK_ACCESS_COLOR_ATTACHMENT_READ_BIT | VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT;
-
-				ARRAY<VkSubpassDependency> dependencies;
-				dependencies.push_back(dependency);
-
-				for (VkSubpassDependency _dependency : info.additionalSubPassDependencies)
-					dependencies.push_back(_dependency);
-
-				// render pass info
-				VkRenderPassCreateInfo renderPassInfo = {};
-				renderPassInfo.sType = VK_STRUCTURE_TYPE_RENDER_PASS_CREATE_INFO;
-				renderPassInfo.attachmentCount = static_cast<UI32>(info.attachments.size());
-				renderPassInfo.pAttachments = info.attachments.data();
-				renderPassInfo.subpassCount = info.subPasses.size();
-				renderPassInfo.pSubpasses = info.subPasses.data();
-				renderPassInfo.dependencyCount = dependencies.size();
-				renderPassInfo.pDependencies = dependencies.data();
-
-				// create the render pass
-				if (vkCreateRenderPass(logicalDevice, &renderPassInfo, nullptr, &renderPass) != VK_SUCCESS)
-					DMK_CORE_FATAL("failed to create render pass!");
-			}
-
-			void VulkanCore::terminateRenderPass()
-			{
-				if (renderPass != VK_NULL_HANDLE)
-					vkDestroyRenderPass(logicalDevice, renderPass, nullptr);
-			}
-
-			void VulkanCore::initializeFrameBuffer(ADGRVulkanFrameBufferInitInfo info)
-			{
-				frameBuffers.resize(swapChainImageViews.size());
-
-				for (size_t i = 0; i < swapChainImageViews.size(); i++)
-				{
-					ARRAY<VkImageView> attachments;
-					for (VkImageView _imageView : info.preAttachments)
-						attachments.push_back(_imageView);
-
-					attachments.push_back(swapChainImageViews[i]);
-
-					for (VkImageView _imageView : info.additionalAttachments)
-						attachments.push_back(_imageView);
-
-					VkFramebufferCreateInfo framebufferInfo = {};
-					framebufferInfo.sType = VK_STRUCTURE_TYPE_FRAMEBUFFER_CREATE_INFO;
-					framebufferInfo.renderPass = renderPass;
-					framebufferInfo.attachmentCount = static_cast<UI32>(attachments.size());
-					framebufferInfo.pAttachments = attachments.data();
-					framebufferInfo.width = swapChainExtent.width;
-					framebufferInfo.height = swapChainExtent.height;
-					framebufferInfo.layers = 1;
-
-					if (vkCreateFramebuffer(logicalDevice, &framebufferInfo, nullptr, &frameBuffers[i]) != VK_SUCCESS)
-						DMK_CORE_FATAL("failed to create framebuffer!");
-				}
-			}
-
-			void VulkanCore::terminateFrameBuffer()
-			{
-				for (VkFramebuffer buffer : frameBuffers)
-					vkDestroyFramebuffer(logicalDevice, buffer, nullptr);
-
-				frameBuffers.clear();
-			}
-
 			void VulkanCore::initializeCommandBuffers(ADGRVulkanCommandBufferInitInfo info)
 			{
-				commandBuffers.resize(frameBuffers.size());
+				commandBuffers.resize(info.count);
 
 				VkCommandBufferAllocateInfo allocInfo = {};
 				allocInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO;
 				allocInfo.commandPool = commandPool;
 				allocInfo.level = VK_COMMAND_BUFFER_LEVEL_PRIMARY;
-				allocInfo.commandBufferCount = static_cast<UI32>(frameBuffers.size());
+				allocInfo.commandBufferCount = static_cast<UI32>(info.count);
 
 				if (vkAllocateCommandBuffers(logicalDevice, &allocInfo, commandBuffers.data()) != VK_SUCCESS)
 					DMK_CORE_FATAL("failed to allocate command buffers!");
 
-				for (size_t i = 0; i < frameBuffers.size(); i++) {
+				for (size_t i = 0; i < info.count; i++) {
 					VkCommandBufferBeginInfo beginInfo = {};
 					beginInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO;
 					beginInfo.flags = VK_COMMAND_BUFFER_USAGE_SIMULTANEOUS_USE_BIT;
@@ -748,50 +512,50 @@ namespace Dynamik {
 					if (vkBeginCommandBuffer(commandBuffers[i], &beginInfo) != VK_SUCCESS)
 						DMK_CORE_FATAL("failed to begin recording command commandBuffers[i]!");
 
-					VkRenderPassBeginInfo renderPassInfo = {};
-					renderPassInfo.sType = VK_STRUCTURE_TYPE_RENDER_PASS_BEGIN_INFO;
-					renderPassInfo.renderPass = renderPass;
-					renderPassInfo.framebuffer = frameBuffers[i];
-					renderPassInfo.renderArea.offset = { 0, 0 };
-					renderPassInfo.renderArea.extent = swapChainExtent;
-
-					std::array<VkClearValue, 2> clearValues = {};
-					//clearValues[0].color = {
-					//	container->clearScreenValues[0],	// Red
-					//	container->clearScreenValues[1],	// Green
-					//	container->clearScreenValues[2],	// Blue
-					//	container->clearScreenValues[3]		// Alpha
-					//};
-
-					clearValues[0].color = {
-						info.clearValues[0],
-						info.clearValues[1],
-						info.clearValues[2],
-						info.clearValues[3]
-					};
-					clearValues[1].depthStencil = { info.depthStencilDepth, info.stencilIndex };
-
-					renderPassInfo.clearValueCount = static_cast<UI32>(clearValues.size());
-					renderPassInfo.pClearValues = clearValues.data();
-
-					/* BEGIN VULKAN COMMANDS */
-					VkDeviceSize offsets[] = { 0 };
-					// begin render pass
-					vkCmdBeginRenderPass(commandBuffers[i], &renderPassInfo, VK_SUBPASS_CONTENTS_INLINE);
-
-					/* TODO: pushConstants */
-					// pushConstants[0] = ...
-					// vkCmdPushConstants(commandBuffers[i], &pipelineLayout, VK_SHADER_STAGE_VERTEX_BIT,
-					//		0, pushConstants.size(), pushConstants.data());
-					//
-					// Update light positions
-					// w component = light radius scale
-
-					/* DRAW COMMANDS */
 					for (I32 _itr = 0; _itr < info.objects.size(); _itr++) {
-						//vkCmdPushConstants(commandBuffers[i], info.objects.at(_itr).pipelineLayout, VK_SHADER_STAGE_VERTEX_BIT, 0, info.objects.at(_itr).pushConstants.size(), info.objects.at(_itr).pushConstants.data());
+						VkRenderPassBeginInfo renderPassInfo = {};
+						renderPassInfo.sType = VK_STRUCTURE_TYPE_RENDER_PASS_BEGIN_INFO;
+						renderPassInfo.renderPass = info.objects[_itr].swapChainPointer->getRenderPass();
+						renderPassInfo.framebuffer = info.objects[_itr].swapChainPointer->getFrameBuffer(i);
+						renderPassInfo.renderArea.offset = { 0, 0 };
+						renderPassInfo.renderArea.extent = info.objects[_itr].swapChainPointer->getSwapChainExtent();
 
-						// Render type selection
+						std::array<VkClearValue, 2> clearValues = {};
+						//clearValues[0].color = {
+						//	container->clearScreenValues[0],	// Red
+						//	container->clearScreenValues[1],	// Green
+						//	container->clearScreenValues[2],	// Blue
+						//	container->clearScreenValues[3]		// Alpha
+						//};
+
+						clearValues[0].color = {
+							info.clearValues[0],
+							info.clearValues[1],
+							info.clearValues[2],
+							info.clearValues[3]
+						};
+						clearValues[1].depthStencil = { info.depthStencilDepth, info.stencilIndex };
+
+						renderPassInfo.clearValueCount = static_cast<UI32>(clearValues.size());
+						renderPassInfo.pClearValues = clearValues.data();
+
+						/* BEGIN VULKAN COMMANDS */
+						VkDeviceSize offsets[] = { 0 };
+						// begin render pass
+						vkCmdBeginRenderPass(commandBuffers[i], &renderPassInfo, VK_SUBPASS_CONTENTS_INLINE);
+
+						/* TODO: pushConstants */
+						// pushConstants[0] = ...
+						// vkCmdPushConstants(commandBuffers[i], &pipelineLayout, VK_SHADER_STAGE_VERTEX_BIT,
+						//		0, pushConstants.size(), pushConstants.data());
+						//
+						// Update light positions
+						// w component = light radius scale
+
+						/* DRAW COMMANDS */
+							//vkCmdPushConstants(commandBuffers[i], info.objects.at(_itr).pipelineLayout, VK_SHADER_STAGE_VERTEX_BIT, 0, info.objects.at(_itr).pushConstants.size(), info.objects.at(_itr).pushConstants.data());
+
+							// Render type selection
 						if (info.objects.at(_itr).renderTechnology == DMK_ADGR_RENDERING_TECHNOLOGY::DMK_ADGR_RENDER_VERTEX) 		// Render as individual vertexes
 							drawVertex(commandBuffers[i], i, &info.objects.at(_itr), offsets);
 

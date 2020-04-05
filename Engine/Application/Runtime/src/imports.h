@@ -37,7 +37,26 @@ Dynamik::ARRAY<std::string> getTexturePath(std::vector<char>& file) {
 	std::string path;
 
 	for (auto i : file)
+	{
+		if (i == '\n')
+		{
+			std::istringstream iss;
+			iss.str(path);
+
+			std::replace(path.begin(), path.end(), '\r', ' ');
+			std::replace(path.begin(), path.end(), (char)'\"', ' ');
+
+			if (path[0] == ' ') path.replace(0, 1, "");
+			if (path[path.size() - 1] == ' ') path.replace(path.size() - 1, 1, "");
+
+			paths.push_back(path);
+
+			path.clear();
+			continue;
+		}
+
 		path.push_back(i);
+	}
 
 	std::istringstream iss;
 	iss.str(path);

@@ -21,13 +21,22 @@
 
 #include "core/data store/internalFormat.h"
 
-#include "Renderer Backend Layer/VulkanRBL3D.h"
-#include "Renderer Backend Layer/VulkanRBL2D.h"
+#include "Renderer Backend Layer/Objects/VulkanRBLIndex.h"
+
+#include "Renderer Backend Layer/VulkanObject2D.h"
+#include "Renderer Backend Layer/VulkanObject3D.h"
+
+#include "core/Window/Windows/WindowManager.h"
+
+#include "core/Components/Camera2D.h"
+#include "core/Components/Camera3D.h"
+#include "Renderer Backend Layer/VulkanSwapChain3D.h"
 
 #ifdef DMK_USE_VULKAN
 namespace Dynamik {
 	namespace ADGR {
 		using namespace core;
+		using namespace Backend;
 
 		/* RENDERER BACKEND LAYER
 		 * BASE: RendererBackend
@@ -113,30 +122,55 @@ namespace Dynamik {
 			/* FUNCTION
 			 * Check for window close event.
 			 */
-			inline B1 closeEvent() override { return false; }
+			B1 closeEvent() override;
 
 			/* FUNCTION
 			 * Set Renderer formats to the renderer.
 			 *
 			 * @param rendererFormats: An ARRAY of renderer formats.
 			 */
-			void setFormats(ARRAY<RendererFormat>& rendererFormats) override;
+			void setFormats(ARRAY<RendererFormat>& rendererFormats);
+			void setFormats3D(ARRAY<RendererFormat>& rendererFormats) override;
 
 			/* FUNCTION
 			 * Update the renderer formats.
 			 *
 			 * @param rendererFormats: An ARRAY of renderer formats.
 			 */
-			void updateFormats(ARRAY<RendererFormat>& rendererFormats) override;
+			void updateFormats3D(ARRAY<RendererFormat>& rendererFormats) override;
 
 			/* PRIVATE FUNCTIONS */
 		private:
 			void recreateSwapChain();
+			void initializeObjects();
+			void initializeObjectsBasic();
 
-			VulkanRBL3D my3DRenderer;
+			void initializeSwapChain();
+
+			void initializeColorBuffer();
+			void initializeDepthBuffer();
+
+			void draw3D(VkSwapchainKHR swapChain);
+
+			Camera2D myCamera2D;
+			Camera3D myCamera3D;
+
+			VulkanCore myVulkanCore;
+			VulkanSwapChain3D mySwapChain3D;
+
+			VulkanColorBuffer myColorBuffer;
+			VulkanDepthBuffer myDepthBuffer;
+
+			ARRAY<VulkanRenderableObject> renderableObjects;
+			ARRAY<ADGRVulkan3DObjectData> rawObjects;
+
 			WindowManager myWindowManager;
 
 			std::deque<DMKEventContainer> eventContainer;
+
+			UI32 currentFrame = 0;
+			UI32 imageIndex = 0;
+			VkResult result = VkResult::VK_ERROR_UNKNOWN;
 		};
 	}
 }

@@ -13,89 +13,7 @@ namespace Dynamik {
 	namespace ADGR {
 		namespace Backend {
 			using namespace core;
-			void VulkanRenderableObject::initializeDescriptorSetLayout(ADGRVulkanDescriptorSetLayoutInitInfo info)
-			{
-				VkDescriptorSetLayoutBinding uboLayoutBinding = {};
-				uboLayoutBinding.binding = 0; // info.bindIndex;
-				uboLayoutBinding.descriptorCount = 1;
-				uboLayoutBinding.descriptorType = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;
-				uboLayoutBinding.pImmutableSamplers = nullptr; // Optional
-				uboLayoutBinding.stageFlags = VK_SHADER_STAGE_VERTEX_BIT;
-
-				VkDescriptorSetLayoutBinding samplerLayoutBinding = {};
-				samplerLayoutBinding.binding = 1; // info.bindIndex;
-				samplerLayoutBinding.descriptorCount = 1;
-				samplerLayoutBinding.descriptorType = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
-				samplerLayoutBinding.pImmutableSamplers = nullptr; // Optional
-				samplerLayoutBinding.stageFlags = VK_SHADER_STAGE_FRAGMENT_BIT;
-
-				ARRAY<VkDescriptorSetLayoutBinding> bindings;
-				bindings.push_back(uboLayoutBinding);
-				bindings.push_back(samplerLayoutBinding);
-
-				for (VkDescriptorSetLayoutBinding _binding : info.additionalBindings)
-					bindings.push_back(_binding);
-
-				VkDescriptorSetLayoutCreateInfo layoutInfo = {};
-				layoutInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_LAYOUT_CREATE_INFO;
-				layoutInfo.bindingCount = static_cast<UI32>(bindings.size());
-				layoutInfo.pBindings = bindings.data();
-
-				if (vkCreateDescriptorSetLayout(logicalDevice, &layoutInfo, nullptr, &descriptors.layout) != VK_SUCCESS)
-					DMK_CORE_FATAL("failed to create descriptor set layout!");
-			}
-
-			void VulkanRenderableObject::terminateDescriptorSetLayout()
-			{
-				vkDestroyDescriptorSetLayout(logicalDevice, descriptors.layout, nullptr);
-			}
-
-			void VulkanRenderableObject::initializePipelineLayout(ADGRVulkanPipelineLayoutInitInfo info)
-			{
-				ARRAY<VkDescriptorSetLayout> _layouts;
-				_layouts.pushBack(descriptors.layout);
-
-				for (auto _layout : info.additionalLayouts)
-					_layouts.pushBack(_layout);
-
-				// initialize the pipeline layout
-				VkPipelineLayoutCreateInfo pipelineLayoutInfo = {};
-				pipelineLayoutInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO;
-				pipelineLayoutInfo.setLayoutCount = _layouts.size();
-				pipelineLayoutInfo.pSetLayouts = _layouts.data();
-
-				if (info.pushConstantsEnable) {
-					ARRAY<VkPushConstantRange> pushConstantInfos;
-					pushConstants.resize(info.pushConstantCount);
-
-					// initialize push constants
-					for (I32 i = 0; i <= info.pushConstantCount; i++) {
-						VkPushConstantRange pushConsInfo = {};
-						pushConsInfo.stageFlags = VK_SHADER_STAGE_VERTEX_BIT;
-						pushConsInfo.size = pushConstants.typeSize() * info.pushConstantCount;
-						pushConsInfo.offset = info.pushConstantOffset;
-						//pushConsInfo.offset = pushConstants.typeSize() * i;
-
-						pushConstantInfos.push_back(pushConsInfo);
-					}
-					pipelineLayoutInfo.pushConstantRangeCount = info.pushConstantCount;	// make support for multiple
-					pipelineLayoutInfo.pPushConstantRanges = pushConstantInfos.data();
-				}
-
-				// create the pipeline layout
-				VkPipelineLayout _pipelineLayout = VK_NULL_HANDLE;
-				if (vkCreatePipelineLayout(logicalDevice, &pipelineLayoutInfo, nullptr, &_pipelineLayout) != VK_SUCCESS)
-					DMK_CORE_FATAL("failed to create pipeline layout!");
-
-				pipelineLayout = _pipelineLayout;
-			}
-
-			void VulkanRenderableObject::terminatePipelineLayout()
-			{
-				vkDestroyPipelineLayout(logicalDevice, pipelineLayout, nullptr);
-			}
-
-			void VulkanRenderableObject::initializePipeline(VkExtent2D swapChainExtent, ADGRVulkanPipelineInitInfo info)
+			void VulkanRenderableObject::initializePipeline(ADGRVulkanPipelineInitInfo info)
 			{
 				VkPipelineVertexInputStateCreateInfo vertexInputInfo = {};
 				vertexInputInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO;
@@ -116,8 +34,8 @@ namespace Dynamik {
 					VkViewport viewport = {};
 					viewport.x = 0.0f;
 					viewport.y = 0.0f;
-					viewport.width = (F32)swapChainExtent.width;
-					viewport.height = (F32)swapChainExtent.height;
+					viewport.width = (F32)swapChainPointer->getSwapChainExtent().width;
+					viewport.height = (F32)swapChainPointer->getSwapChainExtent().height;
 					viewport.minDepth = 0.0f;
 					viewport.maxDepth = 1.0f;
 
@@ -129,7 +47,7 @@ namespace Dynamik {
 				for (I32 i = 0; i < info.scissorCount; i++) {
 					VkRect2D scissor = {};
 					scissor.offset = info.offsets[0];
-					scissor.extent = swapChainExtent;
+					scissor.extent = swapChainPointer->getSwapChainExtent();
 
 					scissors.push_back(scissor);
 				}
@@ -222,8 +140,8 @@ namespace Dynamik {
 				pipelineInfo.pMultisampleState = &multisampling;
 				pipelineInfo.pDepthStencilState = &depthStencil;
 				pipelineInfo.pColorBlendState = &colorBlending;
-				pipelineInfo.layout = pipelineLayout;
-				pipelineInfo.renderPass = info.renderPass;
+				pipelineInfo.layout = swapChainPointer->getPipelineLayout();
+				pipelineInfo.renderPass = swapChainPointer->getRenderPass();
 				pipelineInfo.subpass = info.pipelineSubPass;
 				pipelineInfo.basePipelineHandle = info.pipelineBasePipelineHandle;
 				pipelineInfo.basePipelineIndex = info.pipelineBasePipelineIndex;
@@ -780,16 +698,18 @@ namespace Dynamik {
 
 			void VulkanRenderableObject::initializeDescriptorSets(ADGRVulkanDescriptorSetsInitInfo info)
 			{
-				std::vector<VkDescriptorSetLayout> layouts(uniformBuffers.size(), descriptors.layout);
+				std::vector<VkDescriptorSetLayout> layouts(uniformBuffers.size(), swapChainPointer->getDescriptorSetLayout());
 				descriptors.descriptorSets.resize(textures.size());
 
 				for (UI32 itr = 0; itr < textures.size(); itr++) {
 					for (size_t i = 0; i < uniformBuffers.size(); i++) {
+						VkDescriptorSetLayout _layout = swapChainPointer->getDescriptorSetLayout();
+
 						VkDescriptorSetAllocateInfo allocInfo = {};
 						allocInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_ALLOCATE_INFO;
 						allocInfo.descriptorPool = descriptors.descriptorPools[i];
 						allocInfo.descriptorSetCount = 1;
-						allocInfo.pSetLayouts = &descriptors.layout;
+						allocInfo.pSetLayouts = &_layout;
 
 						VkDescriptorSet _descriptorSet = VK_NULL_HANDLE;
 						if (vkAllocateDescriptorSets(logicalDevice, &allocInfo, &_descriptorSet) != VK_SUCCESS)
@@ -848,9 +768,10 @@ namespace Dynamik {
 			{
 			}
 
-			void VulkanRenderableObject::initializeUniformBuffer(UI32 count)
+			void VulkanRenderableObject::initializeUniformBuffer()
 			{
 				VkDeviceSize bufferSize = sizeof(UniformBufferObject);
+				UI32 count = swapChainPointer->getSwapChainImages().size();
 
 				uniformBuffers.resize(count);
 				uniformBufferMemories.resize(count);

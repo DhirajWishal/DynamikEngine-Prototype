@@ -91,7 +91,7 @@ namespace Dynamik {
 
 		void Renderer::updateRendererFormats() {
 			myRendererFormats = myTemporaryFormats;
-			rendererCore.updateFormats(myRendererFormats);
+			rendererCore.updateFormats3D(myRendererFormats);
 			myTemporaryFormats.clear();
 		}
 

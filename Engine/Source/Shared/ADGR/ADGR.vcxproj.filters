@@ -105,9 +105,6 @@
     <ClInclude Include="src\core\opengl\openglRenderer.h">
       <Filter>src\core\opengl</Filter>
     </ClInclude>
-    <ClInclude Include="src\core\vulkan\Renderer Backend Layer\VulkanRBL3D.h">
-      <Filter>src\core\vulkan\Renderer Backend Layer</Filter>
-    </ClInclude>
     <ClInclude Include="src\core\vulkan\vulkanRenderer.h">
       <Filter>src\core\vulkan</Filter>
     </ClInclude>
@@ -149,8 +146,11 @@
     <ClInclude Include="src\core\vulkan\Renderer Backend Layer\VulkanSkyBox.h" />
     <ClInclude Include="src\core\Components\Camera.h" />
     <ClInclude Include="src\core\Components\Camera3D.h" />
-    <ClInclude Include="src\core\vulkan\Renderer Backend Layer\VulkanRBL2D.h" />
     <ClInclude Include="src\core\Components\Camera2D.h" />
+    <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Objects\VulkanSwapChain.h" />
+    <ClInclude Include="src\core\vulkan\Renderer Backend Layer\VulkanObject2D.h" />
+    <ClInclude Include="src\core\vulkan\Renderer Backend Layer\VulkanObject3D.h" />
+    <ClInclude Include="src\core\vulkan\Renderer Backend Layer\VulkanSwapChain3D.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Layers\layer.cpp">
@@ -195,9 +195,6 @@
     <ClCompile Include="src\core\opengl\openglRenderer.cpp">
       <Filter>src\core\opengl</Filter>
     </ClCompile>
-    <ClCompile Include="src\core\vulkan\Renderer Backend Layer\VulkanRBL3D.cpp">
-      <Filter>src\core\vulkan\Renderer Backend Layer</Filter>
-    </ClCompile>
     <ClCompile Include="src\core\vulkan\vulkanRenderer.cpp">
       <Filter>src\core\vulkan</Filter>
     </ClCompile>
@@ -227,8 +224,9 @@
     <ClCompile Include="src\core\vulkan\Renderer Backend Layer\VulkanSkyBox.cpp" />
     <ClCompile Include="src\core\Components\Camera.cpp" />
     <ClCompile Include="src\core\Components\Camera3D.cpp" />
-    <ClCompile Include="src\core\vulkan\Renderer Backend Layer\VulkanRBL2D.cpp" />
     <ClCompile Include="src\core\Components\Camera2D.cpp" />
+    <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Objects\VulkanSwapChain.cpp" />
+    <ClCompile Include="src\core\vulkan\Renderer Backend Layer\VulkanSwapChain3D.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ADGR.lua" />

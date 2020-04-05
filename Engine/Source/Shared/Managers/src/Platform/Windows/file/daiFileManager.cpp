@@ -16,7 +16,7 @@ namespace Dynamik {
 
 		void daiManager::open(std::string path) {
 			if (file.is_open())
-				file.close();
+				close();
 			file.open(path);
 		}
 
@@ -41,6 +41,7 @@ namespace Dynamik {
 		}
 
 		void daiManager::close() {
+			dataStore = ARRAY<ARRAY<std::string>>();
 			file.close();
 		}
 

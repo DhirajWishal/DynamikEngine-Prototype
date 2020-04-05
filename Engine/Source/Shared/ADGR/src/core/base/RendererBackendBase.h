@@ -68,8 +68,10 @@ namespace Dynamik {
 			virtual void shutDownStageTwo() {}	// shut down stage two
 			virtual void shutDownStageThree() {}	// shut down stage three
 
-			virtual void setFormats(ARRAY<RendererFormat>& formats) {}	// set formats to the renderer
-			virtual void updateFormats(ARRAY<RendererFormat>& formats) {}	// update formats in the renderer
+			virtual void setFormats3D(ARRAY<RendererFormat>& formats) {}	// set formats to the renderer
+			virtual void updateFormats3D(ARRAY<RendererFormat>& formats) {}	// update formats in the renderer
+			virtual void setFormats2D(ARRAY<RendererFormat>& formats) {}	// set formats to the renderer
+			virtual void updateFormats2D(ARRAY<RendererFormat>& formats) {}	// update formats in the renderer
 
 			void setShaderPaths(ARRAY<std::string> paths) { myShaderPaths = paths; }	// set shader paths
 			void setObjectAndTexturePaths(ARRAY<std::string>& object, ARRAY<ARRAY<std::string>>& texture) {	// set object and texture paths

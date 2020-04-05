@@ -43,19 +43,49 @@ namespace Dynamik {
 			DMKWindowManagerInitInfo windowInitInfo;
 			windowInitInfo.iconPaths = "E:/Projects/Dynamik Engine/Versions/Dynamik (Prototype)/Dependencies/Assets/icons/Dynamik.jpg";
 			myWindowManager.initialize(windowInitInfo);
-			my3DRenderer.setWindowHandle(myWindowManager.getHandle());
 
-			my3DRenderer.initStageOne();
+			// initialize the instance
+			ADGRVulkanInstanceInitInfo instanceInitInfo;
+			instanceInitInfo.applicationName = "Dynamik Engine";
+			instanceInitInfo.engineName = "Dynamik";
+			myVulkanCore.initializeInstance(instanceInitInfo);
+			myVulkanCore.initializeSurface(&myWindowManager.window);
+
+			myVulkanCore.initializeDevice();
+
+			myVulkanCore.initializeCommandPool();
+
+			initializeSwapChain();
+
+			initializeColorBuffer();
+			initializeDepthBuffer();
+
+			ADGRVulkanFrameBufferInitInfo frameBufferInitInfo;
+			frameBufferInitInfo.preAttachments = { myColorBuffer.imageView, myDepthBuffer.imageView };
+			mySwapChain3D.initializeFrameBuffers(frameBufferInitInfo);
+
+			ADGRVulkanDescriptorSetLayoutInitInfo layoutInitInfo;
+			mySwapChain3D.initializeDescriptorSetLayout(layoutInitInfo);
+
+			ADGRVulkanPipelineLayoutInitInfo pipelineLayoutInitInfo;
+			pipelineLayoutInitInfo.pushConstantCount = 6;
+			pipelineLayoutInitInfo.pushConstantOffset = 0;
+			pipelineLayoutInitInfo.pushConstantsEnable = true;
+			mySwapChain3D.initializePipelineLayout(pipelineLayoutInitInfo);
 		}
 
 		// object loading and initialization
 		void vulkanRenderer::initStageTwo() {
-			my3DRenderer.initStageTwo();
+			initializeObjects();
+
+			ADGRVulkanCommandBufferInitInfo commandBufferInitInfo;
+			commandBufferInitInfo.objects = renderableObjects;
+			myVulkanCore.initializeCommandBuffers(commandBufferInitInfo);
 		}
 
 		// final initialization
 		void vulkanRenderer::initStageThree() {
-			my3DRenderer.initStageThree();
+			myVulkanCore.initializeSyncObjects();
 		}
 
 		// shutdown the renderer
@@ -67,17 +97,40 @@ namespace Dynamik {
 
 		// basic one-time shut down functions
 		void vulkanRenderer::shutDownStageOne() {
-			my3DRenderer.shutDownStageOne();
+			myDepthBuffer.terminate(myVulkanCore.getLogicalDevice());
+			myColorBuffer.terminate(myVulkanCore.getLogicalDevice());
+
+			myVulkanCore.terminateCommandBuffers();
+
+			mySwapChain3D.terminate();
 		}
 
 		// per object shut down functions
 		void vulkanRenderer::shutDownStageTwo() {
-			my3DRenderer.shutDownStageTwo();
+			for (VulkanRenderableObject& _object : renderableObjects)
+			{
+				_object.terminatePipeline();
+
+				_object.terminateUniformBuffer();
+
+				_object.terminateTextures();
+
+				_object.terminateIndexBuffer();
+
+				_object.terminateVertexBuffer();
+			}
 		}
 
 		// final shut down functions
-		void vulkanRenderer::shutDownStageThree() {
-			my3DRenderer.shutDownStageThree();
+		void vulkanRenderer::shutDownStageThree()
+		{
+			myVulkanCore.terminateSyncObjects();
+
+			myVulkanCore.terminateDevice();
+
+			myVulkanCore.terminateDebugger();
+
+			myVulkanCore.terminateInstance();
 
 			myWindowManager.terminate();
 		}
@@ -92,19 +145,322 @@ namespace Dynamik {
 			myWindowManager.pollEvents();
 			eventContainer = myWindowManager.getEventContainer();
 
-			my3DRenderer.drawFrame(eventContainer);
+			myVulkanCore.syncFence(currentFrame);
+
+			//draw2D(mySwapChain2D.getSwapChain());
+			draw3D(mySwapChain3D.swapChainContainer.getSwapChain());
+
+			// current frame select
+			currentFrame = (currentFrame + 1) % MAX_FRAMES_IN_FLIGHT;
 
 			if (myWindowManager.isFrameBufferResized())
 			{
 				myWindowManager.frameBufferResizedUpdate(false);
-				my3DRenderer.setWindowHandle(myWindowManager.getHandle());
 				recreateSwapChain();
 			}
 		}
 
 		// recreate the swapchain
 		void vulkanRenderer::recreateSwapChain() {
-			my3DRenderer.recreateSwapChain();
+			shutDownStageOne();
+
+			myVulkanCore.initializeCommandPool();
+
+			for (VulkanRenderableObject& _object : renderableObjects)
+			{
+				_object.terminatePipeline();
+
+				_object.terminateUniformBuffer();
+			}
+
+			initializeSwapChain();
+
+			initializeColorBuffer();
+			initializeDepthBuffer();
+
+			ADGRVulkanFrameBufferInitInfo frameBufferInitInfo;
+			frameBufferInitInfo.preAttachments = { myColorBuffer.imageView, myDepthBuffer.imageView };
+			mySwapChain3D.initializeFrameBuffers(frameBufferInitInfo);
+
+			ADGRVulkanDescriptorSetLayoutInitInfo layoutInitInfo;
+			mySwapChain3D.initializeDescriptorSetLayout(layoutInitInfo);
+
+			ADGRVulkanPipelineLayoutInitInfo pipelineLayoutInitInfo;
+			pipelineLayoutInitInfo.pushConstantCount = 6;
+			pipelineLayoutInitInfo.pushConstantOffset = 0;
+			pipelineLayoutInitInfo.pushConstantsEnable = true;
+			mySwapChain3D.initializePipelineLayout(pipelineLayoutInitInfo);
+
+			initializeObjectsBasic();
+
+			ADGRVulkanCommandBufferInitInfo commandBufferInitInfo;
+			commandBufferInitInfo.objects = renderableObjects;
+			myVulkanCore.initializeCommandBuffers(commandBufferInitInfo);
+		}
+
+		void vulkanRenderer::initializeObjects()
+		{
+			for (ADGRVulkan3DObjectData _object : rawObjects)
+			{
+				VulkanObject3D _renderObject(
+					myVulkanCore.getLogicalDevice(),
+					myVulkanCore.getPhysicalDevice(),
+					myVulkanCore.getCommandPool(),
+					myVulkanCore.getGraphicsQueue(),
+					myVulkanCore.getPresentQueue()
+					);
+
+				_renderObject.swapChainPointer = &mySwapChain3D.swapChainContainer;
+
+				ARRAY<VulkanShader> _shaders;
+
+				if (_object.vertexShaderPath.size() && _object.vertexShaderPath != "NONE")
+				{
+					ADGRVulkanShaderInitInfo _initInfo;
+					_initInfo.path = _object.vertexShaderPath;
+					_initInfo.type = ADGRVulkanShaderType::ADGR_VULKAN_SHADER_TYPE_VERTEX;
+
+					VulkanShader _shader;
+					_shader.initialize(myVulkanCore.getLogicalDevice(), _initInfo);
+					_shaders.pushBack(_shader);
+				}
+				if (_object.tessellationShaderPath.size() && _object.tessellationShaderPath != "NONE")
+				{
+					ADGRVulkanShaderInitInfo _initInfo;
+					_initInfo.path = _object.tessellationShaderPath;
+					_initInfo.type = ADGRVulkanShaderType::ADGR_VULKAN_SHADER_TYPE_TESSELLATION;
+
+					VulkanShader _shader;
+					_shader.initialize(myVulkanCore.getLogicalDevice(), _initInfo);
+					_shaders.pushBack(_shader);
+				}
+				if (_object.geometryShaderPath.size() && _object.geometryShaderPath != "NONE")
+				{
+					ADGRVulkanShaderInitInfo _initInfo;
+					_initInfo.path = _object.geometryShaderPath;
+					_initInfo.type = ADGRVulkanShaderType::ADGR_VULKAN_SHADER_TYPE_GEOMETRY;
+
+					VulkanShader _shader;
+					_shader.initialize(myVulkanCore.getLogicalDevice(), _initInfo);
+					_shaders.pushBack(_shader);
+				}
+				if (_object.fragmentShaderPath.size() && _object.fragmentShaderPath != "NONE")
+				{
+					ADGRVulkanShaderInitInfo _initInfo;
+					_initInfo.path = _object.fragmentShaderPath;
+					_initInfo.type = ADGRVulkanShaderType::ADGR_VULKAN_SHADER_TYPE_FRAGMENT;
+
+					VulkanShader _shader;
+					_shader.initialize(myVulkanCore.getLogicalDevice(), _initInfo);
+					_shaders.pushBack(_shader);
+				}
+
+				// initialize pipeline
+				ADGRVulkanPipelineInitInfo pipelineInitInfo;
+				pipelineInitInfo.shaders = _shaders;
+				pipelineInitInfo.multisamplerMsaaSamples = myVulkanCore.getMsaaSamples();
+				pipelineInitInfo.vertexBindingDescription = Vertex::getBindingDescription(1);
+				pipelineInitInfo.vertexAttributeDescription = Vertex::getAttributeDescriptions();
+				_renderObject.initializePipeline(pipelineInitInfo);
+
+				for (VulkanShader _shader : _shaders)
+					_shader.terminate(myVulkanCore.getLogicalDevice());
+
+				ARRAY<ADGRVulkanTextureInitInfo> textureInitInfos;
+
+				// initialize textures
+				for (UI32 _itr = 0; _itr < _object.texturePaths.size(); _itr++)
+				{
+					ADGRVulkanTextureInitInfo initInfo;
+					initInfo.path = _object.texturePaths[_itr];
+					initInfo.format = VK_FORMAT_R8G8B8A8_UNORM;
+					initInfo.mipLevels = 1;
+					initInfo.modeU = VK_SAMPLER_ADDRESS_MODE_REPEAT;
+					initInfo.modeV = VK_SAMPLER_ADDRESS_MODE_REPEAT;
+					initInfo.modeW = VK_SAMPLER_ADDRESS_MODE_REPEAT;
+					initInfo.magFilter = VK_FILTER_LINEAR;
+					initInfo.minFilter = VK_FILTER_LINEAR;
+					initInfo.aspectFlags = VK_IMAGE_ASPECT_COLOR_BIT;
+					textureInitInfos.pushBack(initInfo);
+				}
+
+				_renderObject.initializeTextures(textureInitInfos);
+
+				// initialize vertex buffers
+				for (UI32 _itr = 0; _itr < _object.vertexBufferObjects->size(); _itr++)
+					_renderObject.initializeVertexBuffer(&_object.vertexBufferObjects->at(_itr));
+
+				// initialize index buffers
+				for (UI32 _itr = 0; _itr < _object.indexBufferObjects->size(); _itr++)
+					_renderObject.initializeIndexBufferUI32(&_object.indexBufferObjects->at(_itr));
+
+				// initialize uniform buffers
+				_renderObject.initializeUniformBuffer();
+
+				// initialize descriptor pool
+				ADGRVulkanDescriptorPoolInitInfo descriptorPoolInitInfo;
+				_renderObject.initializeDescriptorPool(descriptorPoolInitInfo);
+
+				// initialize descriptor sets
+				ADGRVulkanDescriptorSetsInitInfo descriptorSetsInitInfo;
+				_renderObject.initializeDescriptorSets(descriptorSetsInitInfo);
+
+				renderableObjects.push_back(_renderObject);
+			}
+		}
+
+		void vulkanRenderer::initializeObjectsBasic()
+		{
+			for (ADGRVulkan3DObjectData _object : rawObjects)
+			{
+				VulkanObject3D _renderObject(
+					myVulkanCore.getLogicalDevice(),
+					myVulkanCore.getPhysicalDevice(),
+					myVulkanCore.getCommandPool(),
+					myVulkanCore.getGraphicsQueue(),
+					myVulkanCore.getPresentQueue()
+					);
+
+				_renderObject.swapChainPointer = &mySwapChain3D.swapChainContainer;
+
+				ARRAY<VulkanShader> _shaders;
+
+				if (_object.vertexShaderPath.size() && _object.vertexShaderPath != "NONE")
+				{
+					ADGRVulkanShaderInitInfo _initInfo;
+					_initInfo.path = _object.vertexShaderPath;
+					_initInfo.type = ADGRVulkanShaderType::ADGR_VULKAN_SHADER_TYPE_VERTEX;
+
+					VulkanShader _shader;
+					_shader.initialize(myVulkanCore.getLogicalDevice(), _initInfo);
+					_shaders.pushBack(_shader);
+				}
+				if (_object.tessellationShaderPath.size() && _object.tessellationShaderPath != "NONE")
+				{
+					ADGRVulkanShaderInitInfo _initInfo;
+					_initInfo.path = _object.tessellationShaderPath;
+					_initInfo.type = ADGRVulkanShaderType::ADGR_VULKAN_SHADER_TYPE_TESSELLATION;
+
+					VulkanShader _shader;
+					_shader.initialize(myVulkanCore.getLogicalDevice(), _initInfo);
+					_shaders.pushBack(_shader);
+				}
+				if (_object.geometryShaderPath.size() && _object.geometryShaderPath != "NONE")
+				{
+					ADGRVulkanShaderInitInfo _initInfo;
+					_initInfo.path = _object.geometryShaderPath;
+					_initInfo.type = ADGRVulkanShaderType::ADGR_VULKAN_SHADER_TYPE_GEOMETRY;
+
+					VulkanShader _shader;
+					_shader.initialize(myVulkanCore.getLogicalDevice(), _initInfo);
+					_shaders.pushBack(_shader);
+				}
+				if (_object.fragmentShaderPath.size() && _object.fragmentShaderPath != "NONE")
+				{
+					ADGRVulkanShaderInitInfo _initInfo;
+					_initInfo.path = _object.fragmentShaderPath;
+					_initInfo.type = ADGRVulkanShaderType::ADGR_VULKAN_SHADER_TYPE_FRAGMENT;
+
+					VulkanShader _shader;
+					_shader.initialize(myVulkanCore.getLogicalDevice(), _initInfo);
+					_shaders.pushBack(_shader);
+				}
+
+				// initialize pipeline
+				ADGRVulkanPipelineInitInfo pipelineInitInfo;
+				pipelineInitInfo.shaders = _shaders;
+				pipelineInitInfo.multisamplerMsaaSamples = myVulkanCore.getMsaaSamples();
+				pipelineInitInfo.vertexBindingDescription = Vertex::getBindingDescription(1);
+				pipelineInitInfo.vertexAttributeDescription = Vertex::getAttributeDescriptions();
+				_renderObject.initializePipeline(pipelineInitInfo);
+
+				for (VulkanShader _shader : _shaders)
+					_shader.terminate(myVulkanCore.getLogicalDevice());
+
+				// initialize uniform buffers
+				_renderObject.initializeUniformBuffer();
+
+				// initialize descriptor pool
+				ADGRVulkanDescriptorPoolInitInfo descriptorPoolInitInfo;
+				_renderObject.initializeDescriptorPool(descriptorPoolInitInfo);
+
+				// initialize descriptor sets
+				ADGRVulkanDescriptorSetsInitInfo descriptorSetsInitInfo;
+				_renderObject.initializeDescriptorSets(descriptorSetsInitInfo);
+
+				renderableObjects.push_back(_renderObject);
+			}
+		}
+
+		void vulkanRenderer::initializeSwapChain()
+		{
+			mySwapChain3D.basicInitialize(
+				myVulkanCore.getLogicalDevice(),
+				myVulkanCore.getPhysicalDevice(),
+				myVulkanCore.getSurface(),
+				myVulkanCore.getSurfaceCapabilities());
+
+			mySwapChain3D.initializeSwapChain(myWindowManager.windowWidth, myWindowManager.windowHeight);
+
+			mySwapChain3D.initializeRenderPass(myVulkanCore.getMsaaSamples());
+		}
+
+		void vulkanRenderer::initializeColorBuffer()
+		{
+			myColorBuffer.initialize(
+				myVulkanCore.getLogicalDevice(),
+				myVulkanCore.getPhysicalDevice(),
+				myVulkanCore.getCommandPool(),
+				myVulkanCore.getGraphicsQueue(),
+				myVulkanCore.getPresentQueue(),
+				mySwapChain3D.swapChainContainer.getSwapChainImageFormat(),
+				mySwapChain3D.swapChainContainer.getSwapChainExtent(),
+				myVulkanCore.getMsaaSamples());
+		}
+
+		void vulkanRenderer::initializeDepthBuffer()
+		{
+			myDepthBuffer.initialize(
+				myVulkanCore.getLogicalDevice(),
+				myVulkanCore.getPhysicalDevice(),
+				myVulkanCore.getCommandPool(),
+				myVulkanCore.getGraphicsQueue(),
+				myVulkanCore.getPresentQueue(),
+				mySwapChain3D.swapChainContainer.getSwapChainExtent(),
+				myVulkanCore.getMsaaSamples());
+		}
+
+		void vulkanRenderer::draw3D(VkSwapchainKHR swapChain)
+		{
+			// get image index
+			imageIndex = 0;
+			result = myVulkanCore.getNextImage(swapChain, &imageIndex, currentFrame);
+
+			// recreate swachain if needed
+			if (result == VK_ERROR_OUT_OF_DATE_KHR) {
+				recreateSwapChain();
+				return;
+			}
+			else if (result != VK_SUCCESS && result != VK_SUBOPTIMAL_KHR)
+				DMK_CORE_FATAL("failed to acquire swap chain image!");
+
+			// draw call
+			// uniform buffer object update
+			for (VulkanRenderableObject _object : renderableObjects)
+			{
+				DMKUpdateInfo info;
+				info.aspectRatio = (F32)myWindowManager.windowWidth / (F32)myWindowManager.windowHeight;
+				_object.updateUniformBuffer(myCamera3D.updateCamera(eventContainer, info), imageIndex);
+			}
+
+			result = myVulkanCore.submitQueues(swapChain, imageIndex, currentFrame);
+
+			// frame buffer resize event
+			if (result == VK_ERROR_OUT_OF_DATE_KHR || result == VK_SUBOPTIMAL_KHR) {
+				recreateSwapChain();
+			}
+			else if (result != VK_SUCCESS)
+				DMK_CORE_FATAL("failed to present swap chain image!");
 		}
 
 		// events
@@ -112,29 +468,31 @@ namespace Dynamik {
 			return &eventContainer;
 		}
 
-		void vulkanRenderer::setFormats(ARRAY<RendererFormat>& rendererFormats) {
-			ARRAY<ADGRVulkan3DObjectData> _objectDatas;
-
-			for (UI32 _itr = 0; _itr < rendererFormats.size(); _itr++)
-			{
-				ADGRVulkan3DObjectData _object;
-				_object.vertexShaderPath = rendererFormats[_itr].myInternalFormat->myGameObject->myProperties.renderableObjectProperties.vertexShaderPath;
-				_object.tessellationShaderPath = rendererFormats[_itr].myInternalFormat->myGameObject->myProperties.renderableObjectProperties.tessellationShaderPath;
-				_object.geometryShaderPath = rendererFormats[_itr].myInternalFormat->myGameObject->myProperties.renderableObjectProperties.geometryShaderPath;
-				_object.fragmentShaderPath = rendererFormats[_itr].myInternalFormat->myGameObject->myProperties.renderableObjectProperties.fragmentShaderPath;
-
-				_object.texturePaths = rendererFormats[_itr].myInternalFormat->myGameObject->myProperties.texturePaths;
-
-				_object.vertexBufferObjects = &rendererFormats[_itr].myInternalFormat->myVertexBufferObjects;
-				_object.indexBufferObjects = &rendererFormats[_itr].myInternalFormat->myIndexBufferObjects;
-
-				_objectDatas.pushBack(_object);
-			}
-
-			my3DRenderer.getObjects(_objectDatas);
+		B1 vulkanRenderer::closeEvent()
+		{
+			return myWindowManager.isWindowCloseEvent;
 		}
 
-		void vulkanRenderer::updateFormats(ARRAY<RendererFormat>& rendererFormats) {
+		void vulkanRenderer::setFormats(ARRAY<RendererFormat>& rendererFormats)
+		{
+			bool first = true;
+			for (RendererFormat& _format : rendererFormats)
+			{
+				if (false)
+				{
+					ARRAY<RendererFormat> _formats = { _format };
+					setFormats2D(_formats);
+					first = false;
+				}
+				else
+				{
+					ARRAY<RendererFormat> _formats = { _format };
+					setFormats3D(_formats);
+				}
+			}
+		}
+
+		void vulkanRenderer::setFormats3D(ARRAY<RendererFormat>& rendererFormats) {
 			ARRAY<ADGRVulkan3DObjectData> _objectDatas;
 
 			for (UI32 _itr = 0; _itr < rendererFormats.size(); _itr++)
@@ -153,7 +511,12 @@ namespace Dynamik {
 				_objectDatas.pushBack(_object);
 			}
 
-			my3DRenderer.getObjects(_objectDatas);
+			rawObjects = _objectDatas;
+		}
+
+		void vulkanRenderer::updateFormats3D(ARRAY<RendererFormat>& rendererFormats)
+		{
+			setFormats3D(rendererFormats);
 		}
 	}
 }

@@ -82,7 +82,7 @@ namespace Dynamik {
 				static void onMouseButtonEvent(GLFWwindow* window, I32 button, I32 action, I32 mods);
 				static void onMouseScrolledEvent(GLFWwindow* window, double xOffset, double yOffset);
 				static void onCursorPosEvent(GLFWwindow* window, double xPos, double yPos);
-				static void onwindowCloseEvent(GLFWwindow* window);
+				static void onWindowCloseEvent(GLFWwindow* window);
 
 				void setEventCallback(const eventCallbackFunction& callback) {
 					myEventCallbackFunction = callback;

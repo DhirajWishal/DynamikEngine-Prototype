@@ -13,36 +13,13 @@ namespace Dynamik {
 				std::string engineName = "Dynamik";
 			};
 
-			struct ADGRVulkanRenderPassInitInfo {
-				UI32 destinationSubpass = 0;
-				VkAccessFlags accessFlags = 0;
-
-				ARRAY<VkAttachmentDescription> attachments;
-
-				ARRAY<VkSubpassDescription> subPasses;
-				ARRAY<VkSubpassDependency> additionalSubPassDependencies;
-			};
-
-			struct ADGRVulkanFrameBufferInitInfo {
-				ARRAY<VkImageView> preAttachments;
-				ARRAY<VkImageView> additionalAttachments;
-			};
-
 			struct ADGRVulkanCoreInitDescriptor {
 				ADGRVulkanInstanceInitInfo instanceInitInfo;
-				ADGRVulkanRenderPassInitInfo renderPassInitInfo;
-				ADGRVulkanFrameBufferInitInfo frameBufferInitInfo;
 
 				UI32 width = 0;
 				UI32 height = 0;
 
 				POINTER<GLFWwindow*> windowPointer;
-			};
-
-			struct VulkanSwapChainSupportDetails {
-				VkSurfaceCapabilitiesKHR capabilities = {};
-				ARRAY<VkSurfaceFormatKHR> formats = {};
-				ARRAY<VkPresentModeKHR> presentModes = {};
 			};
 
 			struct ADGRVulkanQueue {
@@ -61,46 +38,41 @@ namespace Dynamik {
 					(1.00000000f) };
 				F32 depthStencilDepth = 1.0f;
 				UI32 stencilIndex = 0;
+
+				UI32 count = 3;
 			};
 
 			class VulkanCore {
 			public:
 				VulkanCore() {}
-				virtual ~VulkanCore() {}
+				~VulkanCore() {}
 
-				virtual void initialize(ADGRVulkanCoreInitDescriptor initInfo);
-				virtual void terminate();
+				void initialize(ADGRVulkanCoreInitDescriptor initInfo);
+				void terminate();
 
-				virtual void initializeInstance(ADGRVulkanInstanceInitInfo info);
-				virtual void initializeSurface(POINTER<GLFWwindow*> windowPtr);
-				virtual void terminateInstance();
+				void initializeInstance(ADGRVulkanInstanceInitInfo info);
+				void initializeSurface(POINTER<GLFWwindow*> windowPtr);
+				void terminateInstance();
 
-				virtual void initializeDebugger();
-				virtual void terminateDebugger();
+				void initializeDebugger();
+				void terminateDebugger();
 
-				virtual void initializeDevice();
-				virtual void terminateDevice();
+				void initializeDevice();
+				void terminateDevice();
 
-				virtual void initializeSwapChain(UI32 width, UI32 height);
-				virtual void terminateSwapChain();
+				void initializeCommandPool();
+				void terminateCommandPool();
 
-				virtual void initializeCommandPool();
-				virtual void terminateCommandPool();
+				void initializeCommandBuffers(ADGRVulkanCommandBufferInitInfo info);
+				void terminateCommandBuffers();
 
-				virtual void initializeRenderPass(ADGRVulkanRenderPassInitInfo info);
-				virtual void terminateRenderPass();
+				void initializeSyncObjects();
+				void terminateSyncObjects();
 
-				virtual void initializeFrameBuffer(ADGRVulkanFrameBufferInitInfo info);
-				virtual void terminateFrameBuffer();
-
-				virtual void initializeCommandBuffers(ADGRVulkanCommandBufferInitInfo info);
-				virtual void terminateCommandBuffers();
-
-				virtual void initializeSyncObjects();
-				virtual void terminateSyncObjects();
-
-				static VulkanSwapChainSupportDetails querySwapChainSupport(VkPhysicalDevice* device, VkSurfaceKHR* surface);
 				static ADGRVulkanQueue findQueueFamilies(VkPhysicalDevice physicalDevice, VkSurfaceKHR surface);
+
+				const VkSurfaceKHR getSurface() const { return surface; }
+				const VkSurfaceCapabilitiesKHR getSurfaceCapabilities() const { return surfaceCapabilities; }
 
 				const VkDevice getLogicalDevice() const { return logicalDevice; }
 				const POINTER<VkDevice> getLogicalDeviceAddr() const { return &logicalDevice; }
@@ -117,28 +89,19 @@ namespace Dynamik {
 				const VkQueue getPresentQueue() const { return presentQueue; }
 				const POINTER<VkQueue> getPresentQueueAddr() const { return &presentQueue; }
 
-				const ARRAY<VkImage> getSwapChainImages() const { return swapChainImages; }
-				const ARRAY<VkImageView> getSwapChainImageViews() const { return swapChainImageViews; }
-				const VkExtent2D getSwapChainExtent() const { return swapChainExtent; }
-				const VkFormat getSwapChainImageFormat() const { return swapChainImageFormat; }
-
 				const VkSampleCountFlagBits getMsaaSamples() const { return msaaSamples; }
-
-				const VkRenderPass getRenderPass() const { return renderPass; }
 
 			public:
 				/* DRAW CALLS */
 				virtual void syncFence(UI32 frame);
-				virtual VkResult getNextImage(POINTER<UI32> index, UI32 frame);
-				virtual VkResult submitQueues(UI32 index, UI32 frame);
+				virtual VkResult getNextImage(VkSwapchainKHR swapChain, POINTER<UI32> index, UI32 frame);
+				virtual VkResult submitQueues(VkSwapchainKHR swapChain, UI32 index, UI32 frame);
 
 			private:
 				void populateDebugMessegerCreateInfo(VkDebugUtilsMessengerCreateInfoEXT& createInfo);
 
 				void initPhysicalDevice();
 				void initLogicalDevice();
-
-				void initializeSwapChainImageViews();
 
 				VkResult result;
 				VkSubmitInfo submitInfo = {};
@@ -156,18 +119,8 @@ namespace Dynamik {
 
 				VkDebugUtilsMessengerEXT debugMessenger = VK_NULL_HANDLE;
 
-				VkSwapchainKHR swapChain = VK_NULL_HANDLE;
-				ARRAY<VkImage> swapChainImages;
-				ARRAY<VkImageView> swapChainImageViews;
-				VkFormat swapChainImageFormat = VK_FORMAT_UNDEFINED;
-				VkExtent2D swapChainExtent = { 0, 0 };
-
 				VkCommandPool commandPool = VK_NULL_HANDLE;
 				ARRAY<VkCommandBuffer> commandBuffers;
-
-				VkRenderPass renderPass = VK_NULL_HANDLE;
-
-				ARRAY<VkFramebuffer> frameBuffers;
 
 				VkQueue graphicsQueue = VK_NULL_HANDLE;
 				VkQueue presentQueue = VK_NULL_HANDLE;

@@ -44,7 +44,7 @@ namespace Dynamik {
 				glfwSetMouseButtonCallback(container->window, onMouseButtonEvent);
 				glfwSetScrollCallback(container->window, onMouseScrolledEvent);
 				glfwSetCursorPosCallback(container->window, onCursorPosEvent);
-				glfwSetWindowCloseCallback(container->window, onwindowCloseEvent);
+				glfwSetWindowCloseCallback(container->window, onWindowCloseEvent);
 
 				glfwSetInputMode(container->window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
 
@@ -105,7 +105,7 @@ namespace Dynamik {
 				data->mouseMovedEvent(xPos, yPos);
 			}
 
-			void windowManagerGL::onwindowCloseEvent(GLFWwindow* window) {
+			void windowManagerGL::onWindowCloseEvent(GLFWwindow* window) {
 			}
 
 			void windowManagerGL::clear(ADGROpenGLDataContainer* container) {

@@ -285,6 +285,8 @@ namespace Dynamik {
 				) {
 				GameObject* gameObject = gameObjects[itr];	// inner array initialization
 
+				utils::daiManager fileManager;
+
 				fileManager.open(gameObject->myProperties.location + (
 					(gameObject->myProperties.location[gameObject->myProperties.location.size() - 1] == '/')
 					? "modelData.dai" : "/modelData.dai"));

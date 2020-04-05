@@ -284,12 +284,7 @@ namespace Dynamik {
 		 */
 		~ARRAY()
 		{
-			if (DestructorCallMode == DMKArrayDestructorCallMode::DMK_ARRAY_DESTRUCTOR_CALL_MODE_DESTRUCT_ALL)
-				_destroyRange(myBeginPtr, myNextPtr);
-			else if (DestructorCallMode == DMKArrayDestructorCallMode::DMK_ARRAY_DESTRUCTOR_CALL_MODE_DESTRUCT_ALL_THREADED)
-				_destroyRangeInThreads(myBeginPtr, myNextPtr);
-
-			Allocator::deAllocate(myBeginPtr, myEndPtr);
+			_terminate();
 		}
 
 		/* PRIVATE DATA TYPES */
@@ -578,8 +573,9 @@ namespace Dynamik {
 		 */
 		void clear()
 		{
-			Allocator::deAllocate(myBeginPtr.get(), _getAllocationSize());
+			_terminate();
 			_reAllocateAssign(_getNextSize());
+			myDataCount = 0;
 		}
 
 		/* FUNCTION
@@ -1366,6 +1362,19 @@ namespace Dynamik {
 		inline void _singleDestruct(RPTR data)
 		{
 			data->~TYPE();
+		}
+
+		/* PRIVATE FUNCTION
+		 * Terminate the data stored in the local pointers.
+		 */
+		inline void _terminate()
+		{
+			if (DestructorCallMode == DMKArrayDestructorCallMode::DMK_ARRAY_DESTRUCTOR_CALL_MODE_DESTRUCT_ALL)
+				_destroyRange(myBeginPtr, myNextPtr);
+			else if (DestructorCallMode == DMKArrayDestructorCallMode::DMK_ARRAY_DESTRUCTOR_CALL_MODE_DESTRUCT_ALL_THREADED)
+				_destroyRangeInThreads(myBeginPtr, myNextPtr);
+
+			Allocator::deAllocate(myBeginPtr, myEndPtr);
 		}
 
 		/* PRIVATE FUNCTION

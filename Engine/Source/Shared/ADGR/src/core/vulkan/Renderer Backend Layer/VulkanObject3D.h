@@ -8,6 +8,8 @@ namespace Dynamik {
 	namespace ADGR {
 		namespace Backend {
 			struct ADGRVulkan3DObjectData {
+				DMKObjectType type = DMKObjectType::DMK_OBJECT_TYPE_STATIC_OBJECT;
+
 				POINTER<ARRAY<ARRAY<Vertex>>> vertexBufferObjects;
 				POINTER<ARRAY<ARRAY<UI32>>> indexBufferObjects;
 
@@ -23,17 +25,7 @@ namespace Dynamik {
 
 			class VulkanObject3D : public VulkanRenderableObject {
 			public:
-				VulkanObject3D(
-					VkDevice logicalDevice,
-					VkPhysicalDevice physicalDevice,
-					VkCommandPool commandPool,
-					VkQueue graphicsQueue,
-					VkQueue presentQueue)
-					: VulkanRenderableObject(
-						logicalDevice,
-						physicalDevice, commandPool,
-						graphicsQueue,
-						presentQueue) {}
+				VulkanObject3D(ADGRVulkanRenderableObjectInitInfo info) : VulkanRenderableObject(info) {}
 				~VulkanObject3D() {}
 			};
 		}

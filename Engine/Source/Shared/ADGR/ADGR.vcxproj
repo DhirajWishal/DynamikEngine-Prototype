@@ -80,7 +80,7 @@
       <PrecompiledHeaderFile>adgrafx.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>DMK_PLATFORM_WINDOWS;DMK_BUILD_DLL;DMK_USE_VULKAN;GLEW_STATIC;GLFW_INCLUDE_VULKAN;DMK_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\Libraries\Local;$(SolutionDir)Engine\Source\Runtime\src;$(SolutionDir)Engine\Source\Runtime\GameLibraries;$(SolutionDir)Engine\Source\Shared\ADGR\src;$(SolutionDir)Engine\Source\Shared\Audio\src;$(SolutionDir)Engine\Source\Shared\Intellect\src;$(SolutionDir)Engine\Source\Shared\Events\src;$(SolutionDir)Engine\Source\Shared\Managers\src;$(SolutionDir)Engine\Source\Shared\Networking\src;$(SolutionDir)Dependencies\Programs\DevConsole\src;$(SolutionDir)Dependencies\Programs\Debugger\src;$(SolutionDir)Engine\Source\Internal\Platform\src;$(SolutionDir)Engine\Source\Internal\Utilities\src;$(SolutionDir)Engine\Source\Internal\CentralDataHub\src;$(SolutionDir)Dependencies\Libraries\External\glfw\include;$(SolutionDir)Dependencies\GLEW\include;$(SolutionDir)Dependencies\Libraries\External\glm;$(SolutionDir)Dependencies\Libraries\External\stb;$(SolutionDir)Dependencies\Libraries\External\tinyobjloader;$(SolutionDir)Dependencies\Libraries\Local\irrKlang\include;$(SolutionDir)Dependencies\Libraries\Local\assimp;$(SolutionDir)Dependencies\Libraries\External\Vulkan\include;$(SolutionDir)Dependencies\Libraries\Internal\CPP;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\Libraries\Local;$(SolutionDir)Engine\Source\Runtime\src;$(SolutionDir)Engine\Source\Runtime\GameLibraries;$(SolutionDir)Engine\Source\Shared\ADGR\src;$(SolutionDir)Engine\Source\Shared\Audio\src;$(SolutionDir)Engine\Source\Shared\Intellect\src;$(SolutionDir)Engine\Source\Shared\Events\src;$(SolutionDir)Engine\Source\Shared\Managers\src;$(SolutionDir)Engine\Source\Shared\Networking\src;$(SolutionDir)Dependencies\Programs\DevConsole\src;$(SolutionDir)Dependencies\Programs\Debugger\src;$(SolutionDir)Engine\Source\Internal\Platform\src;$(SolutionDir)Engine\Source\Internal\Utilities\src;$(SolutionDir)Engine\Source\Internal\CentralDataHub\src;$(SolutionDir)Dependencies\Libraries\External\glfw\include;$(SolutionDir)Dependencies\GLEW\include;$(SolutionDir)Dependencies\Libraries\External\glm;$(SolutionDir)Dependencies\Libraries\External\stb;$(SolutionDir)Dependencies\Libraries\External\tinyobjloader;$(SolutionDir)Dependencies\Libraries\Local\irrKlang\include;$(SolutionDir)Dependencies\Libraries\Local\assimp;$(SolutionDir)Dependencies\Libraries\External\Vulkan\include;$(SolutionDir)Dependencies\Libraries\External\gli\gli;$(SolutionDir)Dependencies\Libraries\Internal\CPP;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
@@ -100,7 +100,7 @@
       <PrecompiledHeaderFile>adgrafx.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>DMK_PLATFORM_WINDOWS;DMK_BUILD_DLL;DMK_USE_VULKAN;GLEW_STATIC;GLFW_INCLUDE_VULKAN;DMK_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\Libraries\Local;$(SolutionDir)Engine\Source\Runtime\src;$(SolutionDir)Engine\Source\Runtime\GameLibraries;$(SolutionDir)Engine\Source\Shared\ADGR\src;$(SolutionDir)Engine\Source\Shared\Audio\src;$(SolutionDir)Engine\Source\Shared\Intellect\src;$(SolutionDir)Engine\Source\Shared\Events\src;$(SolutionDir)Engine\Source\Shared\Managers\src;$(SolutionDir)Engine\Source\Shared\Networking\src;$(SolutionDir)Dependencies\Programs\DevConsole\src;$(SolutionDir)Dependencies\Programs\Debugger\src;$(SolutionDir)Engine\Source\Internal\Platform\src;$(SolutionDir)Engine\Source\Internal\Utilities\src;$(SolutionDir)Engine\Source\Internal\CentralDataHub\src;$(SolutionDir)Dependencies\Libraries\External\glfw\include;$(SolutionDir)Dependencies\GLEW\include;$(SolutionDir)Dependencies\Libraries\External\glm;$(SolutionDir)Dependencies\Libraries\External\stb;$(SolutionDir)Dependencies\Libraries\External\tinyobjloader;$(SolutionDir)Dependencies\Libraries\Local\irrKlang\include;$(SolutionDir)Dependencies\Libraries\Local\assimp;$(SolutionDir)Dependencies\Libraries\External\Vulkan\include;$(SolutionDir)Dependencies\Libraries\Internal\CPP;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\Libraries\Local;$(SolutionDir)Engine\Source\Runtime\src;$(SolutionDir)Engine\Source\Runtime\GameLibraries;$(SolutionDir)Engine\Source\Shared\ADGR\src;$(SolutionDir)Engine\Source\Shared\Audio\src;$(SolutionDir)Engine\Source\Shared\Intellect\src;$(SolutionDir)Engine\Source\Shared\Events\src;$(SolutionDir)Engine\Source\Shared\Managers\src;$(SolutionDir)Engine\Source\Shared\Networking\src;$(SolutionDir)Dependencies\Programs\DevConsole\src;$(SolutionDir)Dependencies\Programs\Debugger\src;$(SolutionDir)Engine\Source\Internal\Platform\src;$(SolutionDir)Engine\Source\Internal\Utilities\src;$(SolutionDir)Engine\Source\Internal\CentralDataHub\src;$(SolutionDir)Dependencies\Libraries\External\glfw\include;$(SolutionDir)Dependencies\GLEW\include;$(SolutionDir)Dependencies\Libraries\External\glm;$(SolutionDir)Dependencies\Libraries\External\stb;$(SolutionDir)Dependencies\Libraries\External\tinyobjloader;$(SolutionDir)Dependencies\Libraries\Local\irrKlang\include;$(SolutionDir)Dependencies\Libraries\Local\assimp;$(SolutionDir)Dependencies\Libraries\External\Vulkan\include;$(SolutionDir)Dependencies\Libraries\External\gli\gli;$(SolutionDir)Dependencies\Libraries\Internal\CPP;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -124,7 +124,7 @@
       <PrecompiledHeaderFile>adgrafx.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>DMK_PLATFORM_WINDOWS;DMK_BUILD_DLL;DMK_USE_VULKAN;GLEW_STATIC;GLFW_INCLUDE_VULKAN;DMK_DISTRIBUTION;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\Libraries\Local;$(SolutionDir)Engine\Source\Runtime\src;$(SolutionDir)Engine\Source\Runtime\GameLibraries;$(SolutionDir)Engine\Source\Shared\ADGR\src;$(SolutionDir)Engine\Source\Shared\Audio\src;$(SolutionDir)Engine\Source\Shared\Intellect\src;$(SolutionDir)Engine\Source\Shared\Events\src;$(SolutionDir)Engine\Source\Shared\Managers\src;$(SolutionDir)Engine\Source\Shared\Networking\src;$(SolutionDir)Dependencies\Programs\DevConsole\src;$(SolutionDir)Dependencies\Programs\Debugger\src;$(SolutionDir)Engine\Source\Internal\Platform\src;$(SolutionDir)Engine\Source\Internal\Utilities\src;$(SolutionDir)Engine\Source\Internal\CentralDataHub\src;$(SolutionDir)Dependencies\Libraries\External\glfw\include;$(SolutionDir)Dependencies\GLEW\include;$(SolutionDir)Dependencies\Libraries\External\glm;$(SolutionDir)Dependencies\Libraries\External\stb;$(SolutionDir)Dependencies\Libraries\External\tinyobjloader;$(SolutionDir)Dependencies\Libraries\Local\irrKlang\include;$(SolutionDir)Dependencies\Libraries\Local\assimp;$(SolutionDir)Dependencies\Libraries\External\Vulkan\include;$(SolutionDir)Dependencies\Libraries\Internal\CPP;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\Libraries\Local;$(SolutionDir)Engine\Source\Runtime\src;$(SolutionDir)Engine\Source\Runtime\GameLibraries;$(SolutionDir)Engine\Source\Shared\ADGR\src;$(SolutionDir)Engine\Source\Shared\Audio\src;$(SolutionDir)Engine\Source\Shared\Intellect\src;$(SolutionDir)Engine\Source\Shared\Events\src;$(SolutionDir)Engine\Source\Shared\Managers\src;$(SolutionDir)Engine\Source\Shared\Networking\src;$(SolutionDir)Dependencies\Programs\DevConsole\src;$(SolutionDir)Dependencies\Programs\Debugger\src;$(SolutionDir)Engine\Source\Internal\Platform\src;$(SolutionDir)Engine\Source\Internal\Utilities\src;$(SolutionDir)Engine\Source\Internal\CentralDataHub\src;$(SolutionDir)Dependencies\Libraries\External\glfw\include;$(SolutionDir)Dependencies\GLEW\include;$(SolutionDir)Dependencies\Libraries\External\glm;$(SolutionDir)Dependencies\Libraries\External\stb;$(SolutionDir)Dependencies\Libraries\External\tinyobjloader;$(SolutionDir)Dependencies\Libraries\Local\irrKlang\include;$(SolutionDir)Dependencies\Libraries\Local\assimp;$(SolutionDir)Dependencies\Libraries\External\Vulkan\include;$(SolutionDir)Dependencies\Libraries\External\gli\gli;$(SolutionDir)Dependencies\Libraries\Internal\CPP;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -144,19 +144,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="src\ADGR.h" />
-    <ClInclude Include="src\core\Components\Camera.h" />
-    <ClInclude Include="src\core\Components\Camera2D.h" />
-    <ClInclude Include="src\core\Components\Camera3D.h" />
-    <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Objects\VulkanColorBuffer.h" />
-    <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Objects\VulkanCore.h" />
-    <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Objects\VulkanDepthBuffer.h" />
-    <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Objects\VulkanSwapChain.h" />
-    <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Objects\VulkanRenderableObject.h" />
-    <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Objects\VulkanShader.h" />
-    <ClInclude Include="src\core\vulkan\Renderer Backend Layer\VulkanObject2D.h" />
-    <ClInclude Include="src\core\vulkan\Renderer Backend Layer\VulkanObject3D.h" />
-    <ClInclude Include="src\core\vulkan\Renderer Backend Layer\VulkanSkyBox.h" />
-    <ClInclude Include="src\core\vulkan\Renderer Backend Layer\VulkanSwapChain3D.h" />
     <ClInclude Include="src\Layers\layer.h" />
     <ClInclude Include="src\Layers\layerStack.h" />
     <ClInclude Include="src\Renderer.h" />
@@ -165,6 +152,11 @@
     <ClInclude Include="src\Wrapper\dll_wrapper.h" />
     <ClInclude Include="src\Wrapper\internal_wrapper.h" />
     <ClInclude Include="src\adgrafx.h" />
+    <ClInclude Include="src\core\Components\Camera.h" />
+    <ClInclude Include="src\core\Components\Camera2D.h" />
+    <ClInclude Include="src\core\Components\Camera3D.h" />
+    <ClInclude Include="src\core\Components\CameraReflect.h" />
+    <ClInclude Include="src\core\Components\CameraSkybox.h" />
     <ClInclude Include="src\core\Window\Windows\WindowManager.h" />
     <ClInclude Include="src\core\base\RendererBackendBase.h" />
     <ClInclude Include="src\core\directx12\directx12Renderer.h" />
@@ -175,12 +167,23 @@
     <ClInclude Include="src\core\opengl\backend\vertexAndIndexBuffer.h" />
     <ClInclude Include="src\core\opengl\backend\window.h" />
     <ClInclude Include="src\core\opengl\openglRenderer.h" />
+    <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Objects\VulkanColorBuffer.h" />
     <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Objects\VulkanControlHeader.h" />
+    <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Objects\VulkanCore.h" />
+    <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Objects\VulkanDepthBuffer.h" />
     <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Objects\VulkanExtensionsManager.h" />
     <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Objects\VulkanFunctions.h" />
     <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Objects\VulkanOneTimeCommandBufferManager.h" />
     <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Objects\VulkanRBLIndex.h" />
+    <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Objects\VulkanRenderableObject.h" />
+    <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Objects\VulkanShader.h" />
+    <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Objects\VulkanSwapChain.h" />
     <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Objects\VulkanValidator.h" />
+    <ClInclude Include="src\core\vulkan\Renderer Backend Layer\VulkanObject2D.h" />
+    <ClInclude Include="src\core\vulkan\Renderer Backend Layer\VulkanObject3D.h" />
+    <ClInclude Include="src\core\vulkan\Renderer Backend Layer\VulkanReflectObject.h" />
+    <ClInclude Include="src\core\vulkan\Renderer Backend Layer\VulkanSkyBox.h" />
+    <ClInclude Include="src\core\vulkan\Renderer Backend Layer\VulkanSwapChain3D.h" />
     <ClInclude Include="src\core\vulkan\vulkanRenderer.h" />
     <ClInclude Include="src\defines.h" />
     <ClInclude Include="src\interface.h" />
@@ -188,17 +191,6 @@
     <ClInclude Include="src\rendererFormat.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\core\Components\Camera.cpp" />
-    <ClCompile Include="src\core\Components\Camera2D.cpp" />
-    <ClCompile Include="src\core\Components\Camera3D.cpp" />
-    <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Objects\VulkanColorBuffer.cpp" />
-    <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Objects\VulkanCore.cpp" />
-    <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Objects\VulkanDepthBuffer.cpp" />
-    <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Objects\VulkanSwapChain.cpp" />
-    <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Objects\VulkanRenderableObject.cpp" />
-    <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Objects\VulkanShader.cpp" />
-    <ClCompile Include="src\core\vulkan\Renderer Backend Layer\VulkanSkyBox.cpp" />
-    <ClCompile Include="src\core\vulkan\Renderer Backend Layer\VulkanSwapChain3D.cpp" />
     <ClCompile Include="src\Layers\layer.cpp" />
     <ClCompile Include="src\Layers\layerStack.cpp" />
     <ClCompile Include="src\Renderer.cpp" />
@@ -208,6 +200,11 @@
     <ClCompile Include="src\adgrafx.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="src\core\Components\Camera.cpp" />
+    <ClCompile Include="src\core\Components\Camera2D.cpp" />
+    <ClCompile Include="src\core\Components\Camera3D.cpp" />
+    <ClCompile Include="src\core\Components\CameraReflect.cpp" />
+    <ClCompile Include="src\core\Components\CameraSkybox.cpp" />
     <ClCompile Include="src\core\Window\Windows\WindowManager.cpp" />
     <ClCompile Include="src\core\directx12\directx12Renderer.cpp" />
     <ClCompile Include="src\core\opengl\backend\shader.cpp" />
@@ -215,10 +212,19 @@
     <ClCompile Include="src\core\opengl\backend\vertexAndIndexBuffer.cpp" />
     <ClCompile Include="src\core\opengl\backend\window.cpp" />
     <ClCompile Include="src\core\opengl\openglRenderer.cpp" />
+    <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Objects\VulkanColorBuffer.cpp" />
+    <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Objects\VulkanCore.cpp" />
+    <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Objects\VulkanDepthBuffer.cpp" />
     <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Objects\VulkanExtensionsManager.cpp" />
     <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Objects\VulkanFunctions.cpp" />
     <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Objects\VulkanOneTimeCommandBufferManager.cpp" />
+    <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Objects\VulkanRenderableObject.cpp" />
+    <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Objects\VulkanShader.cpp" />
+    <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Objects\VulkanSwapChain.cpp" />
     <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Objects\VulkanValidator.cpp" />
+    <ClCompile Include="src\core\vulkan\Renderer Backend Layer\VulkanReflectObject.cpp" />
+    <ClCompile Include="src\core\vulkan\Renderer Backend Layer\VulkanSkyBox.cpp" />
+    <ClCompile Include="src\core\vulkan\Renderer Backend Layer\VulkanSwapChain3D.cpp" />
     <ClCompile Include="src\core\vulkan\vulkanRenderer.cpp" />
     <ClCompile Include="src\rendererCommandQueue.cpp" />
     <ClCompile Include="src\rendererFormat.cpp" />

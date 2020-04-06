@@ -23,17 +23,7 @@ namespace Dynamik {
 
 			class VulkanObject2D : public VulkanRenderableObject {
 			public:
-				VulkanObject2D(
-					VkDevice logicalDevice,
-					VkPhysicalDevice physicalDevice,
-					VkCommandPool commandPool,
-					VkQueue graphicsQueue,
-					VkQueue presentQueue)
-					: VulkanRenderableObject(
-						logicalDevice,
-						physicalDevice, commandPool,
-						graphicsQueue,
-						presentQueue) {}
+				VulkanObject2D(ADGRVulkanRenderableObjectInitInfo info) : VulkanRenderableObject(info) {}
 				~VulkanObject2D() {}
 			};
 		}

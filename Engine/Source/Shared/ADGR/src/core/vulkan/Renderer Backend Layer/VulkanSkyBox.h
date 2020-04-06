@@ -9,18 +9,15 @@ namespace Dynamik {
 		namespace Backend {
 			class VulkanSkyBox : public VulkanRenderableObject {
 			public:
-				VulkanSkyBox(
-					VkDevice logicalDevice,
-					VkPhysicalDevice physicalDevice,
-					VkCommandPool commandPool,
-					VkQueue graphicsQueue,
-					VkQueue presentQueue)
-				: VulkanRenderableObject(
-					logicalDevice,
-					physicalDevice, commandPool,
-					graphicsQueue,
-					presentQueue) {}
+				VulkanSkyBox(ADGRVulkanRenderableObjectInitInfo info);
 				~VulkanSkyBox() {}
+
+				void initializeTextures(ARRAY<ADGRVulkanTextureInitInfo> infos) override;
+
+				void initializeUniformBuffer() override;
+				void updateUniformBuffer(UBO_MP uniformBufferObject, UI32 currentImage);
+
+				void initializeDescriptorSets(ADGRVulkanDescriptorSetsInitInfo info) override;
 			};
 		}
 	}

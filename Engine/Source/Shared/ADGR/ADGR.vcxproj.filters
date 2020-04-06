@@ -13,6 +13,9 @@
     <Filter Include="src\core">
       <UniqueIdentifier>{C55F2ECF-B12C-89DA-DA45-7782C671BE68}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\core\Components">
+      <UniqueIdentifier>{BABF888E-2621-669C-AF8E-AC4E1BEF9C5B}</UniqueIdentifier>
+    </Filter>
     <Filter Include="src\core\Window">
       <UniqueIdentifier>{0C5DA260-78E8-0F25-81F9-9219ED036C25}</UniqueIdentifier>
     </Filter>
@@ -40,11 +43,8 @@
     <Filter Include="src\core\vulkan\Renderer Backend Layer">
       <UniqueIdentifier>{30A9E146-1CFB-B836-051A-F646F10AD21F}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\core\vulkan\Renderer Backend Layer\Managers">
-      <UniqueIdentifier>{0DC1EEF4-79FC-4EB8-82F1-CB47EEABD3E8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\core\vulkan\Renderer Backend Layer\Managers\Objects">
-      <UniqueIdentifier>{C61C11CC-3204-FCC1-3BF2-FD3DA7589F84}</UniqueIdentifier>
+    <Filter Include="src\core\vulkan\Renderer Backend Layer\Objects">
+      <UniqueIdentifier>{E9776FA3-D5F5-BF3C-BEED-7DD4AA0A0265}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -74,6 +74,21 @@
     </ClInclude>
     <ClInclude Include="src\adgrafx.h">
       <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Components\Camera.h">
+      <Filter>src\core\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Components\Camera2D.h">
+      <Filter>src\core\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Components\Camera3D.h">
+      <Filter>src\core\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Components\CameraReflect.h">
+      <Filter>src\core\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Components\CameraSkybox.h">
+      <Filter>src\core\Components</Filter>
     </ClInclude>
     <ClInclude Include="src\core\Window\Windows\WindowManager.h">
       <Filter>src\core\Window\Windows</Filter>
@@ -105,6 +120,57 @@
     <ClInclude Include="src\core\opengl\openglRenderer.h">
       <Filter>src\core\opengl</Filter>
     </ClInclude>
+    <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Objects\VulkanColorBuffer.h">
+      <Filter>src\core\vulkan\Renderer Backend Layer\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Objects\VulkanControlHeader.h">
+      <Filter>src\core\vulkan\Renderer Backend Layer\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Objects\VulkanCore.h">
+      <Filter>src\core\vulkan\Renderer Backend Layer\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Objects\VulkanDepthBuffer.h">
+      <Filter>src\core\vulkan\Renderer Backend Layer\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Objects\VulkanExtensionsManager.h">
+      <Filter>src\core\vulkan\Renderer Backend Layer\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Objects\VulkanFunctions.h">
+      <Filter>src\core\vulkan\Renderer Backend Layer\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Objects\VulkanOneTimeCommandBufferManager.h">
+      <Filter>src\core\vulkan\Renderer Backend Layer\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Objects\VulkanRBLIndex.h">
+      <Filter>src\core\vulkan\Renderer Backend Layer\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Objects\VulkanRenderableObject.h">
+      <Filter>src\core\vulkan\Renderer Backend Layer\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Objects\VulkanShader.h">
+      <Filter>src\core\vulkan\Renderer Backend Layer\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Objects\VulkanSwapChain.h">
+      <Filter>src\core\vulkan\Renderer Backend Layer\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Objects\VulkanValidator.h">
+      <Filter>src\core\vulkan\Renderer Backend Layer\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\vulkan\Renderer Backend Layer\VulkanObject2D.h">
+      <Filter>src\core\vulkan\Renderer Backend Layer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\vulkan\Renderer Backend Layer\VulkanObject3D.h">
+      <Filter>src\core\vulkan\Renderer Backend Layer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\vulkan\Renderer Backend Layer\VulkanReflectObject.h">
+      <Filter>src\core\vulkan\Renderer Backend Layer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\vulkan\Renderer Backend Layer\VulkanSkyBox.h">
+      <Filter>src\core\vulkan\Renderer Backend Layer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\vulkan\Renderer Backend Layer\VulkanSwapChain3D.h">
+      <Filter>src\core\vulkan\Renderer Backend Layer</Filter>
+    </ClInclude>
     <ClInclude Include="src\core\vulkan\vulkanRenderer.h">
       <Filter>src\core\vulkan</Filter>
     </ClInclude>
@@ -120,37 +186,6 @@
     <ClInclude Include="src\rendererFormat.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Objects\VulkanColorBuffer.h" />
-    <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Objects\VulkanControlHeader.h">
-      <Filter>src\core\vulkan\Renderer Backend Layer\Managers</Filter>
-    </ClInclude>
-    <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Objects\VulkanCore.h" />
-    <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Objects\VulkanDepthBuffer.h" />
-    <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Objects\VulkanExtensionsManager.h">
-      <Filter>src\core\vulkan\Renderer Backend Layer\Managers</Filter>
-    </ClInclude>
-    <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Objects\VulkanFunctions.h">
-      <Filter>src\core\vulkan\Renderer Backend Layer\Managers</Filter>
-    </ClInclude>
-    <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Objects\VulkanOneTimeCommandBufferManager.h">
-      <Filter>src\core\vulkan\Renderer Backend Layer\Managers</Filter>
-    </ClInclude>
-    <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Objects\VulkanRBLIndex.h">
-      <Filter>src\core\vulkan\Renderer Backend Layer\Managers</Filter>
-    </ClInclude>
-    <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Objects\VulkanRenderableObject.h" />
-    <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Objects\VulkanShader.h" />
-    <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Objects\VulkanValidator.h">
-      <Filter>src\core\vulkan\Renderer Backend Layer\Managers</Filter>
-    </ClInclude>
-    <ClInclude Include="src\core\vulkan\Renderer Backend Layer\VulkanSkyBox.h" />
-    <ClInclude Include="src\core\Components\Camera.h" />
-    <ClInclude Include="src\core\Components\Camera3D.h" />
-    <ClInclude Include="src\core\Components\Camera2D.h" />
-    <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Objects\VulkanSwapChain.h" />
-    <ClInclude Include="src\core\vulkan\Renderer Backend Layer\VulkanObject2D.h" />
-    <ClInclude Include="src\core\vulkan\Renderer Backend Layer\VulkanObject3D.h" />
-    <ClInclude Include="src\core\vulkan\Renderer Backend Layer\VulkanSwapChain3D.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Layers\layer.cpp">
@@ -174,6 +209,21 @@
     <ClCompile Include="src\adgrafx.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="src\core\Components\Camera.cpp">
+      <Filter>src\core\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\Components\Camera2D.cpp">
+      <Filter>src\core\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\Components\Camera3D.cpp">
+      <Filter>src\core\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\Components\CameraReflect.cpp">
+      <Filter>src\core\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\Components\CameraSkybox.cpp">
+      <Filter>src\core\Components</Filter>
+    </ClCompile>
     <ClCompile Include="src\core\Window\Windows\WindowManager.cpp">
       <Filter>src\core\Window\Windows</Filter>
     </ClCompile>
@@ -195,6 +245,45 @@
     <ClCompile Include="src\core\opengl\openglRenderer.cpp">
       <Filter>src\core\opengl</Filter>
     </ClCompile>
+    <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Objects\VulkanColorBuffer.cpp">
+      <Filter>src\core\vulkan\Renderer Backend Layer\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Objects\VulkanCore.cpp">
+      <Filter>src\core\vulkan\Renderer Backend Layer\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Objects\VulkanDepthBuffer.cpp">
+      <Filter>src\core\vulkan\Renderer Backend Layer\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Objects\VulkanExtensionsManager.cpp">
+      <Filter>src\core\vulkan\Renderer Backend Layer\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Objects\VulkanFunctions.cpp">
+      <Filter>src\core\vulkan\Renderer Backend Layer\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Objects\VulkanOneTimeCommandBufferManager.cpp">
+      <Filter>src\core\vulkan\Renderer Backend Layer\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Objects\VulkanRenderableObject.cpp">
+      <Filter>src\core\vulkan\Renderer Backend Layer\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Objects\VulkanShader.cpp">
+      <Filter>src\core\vulkan\Renderer Backend Layer\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Objects\VulkanSwapChain.cpp">
+      <Filter>src\core\vulkan\Renderer Backend Layer\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Objects\VulkanValidator.cpp">
+      <Filter>src\core\vulkan\Renderer Backend Layer\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\vulkan\Renderer Backend Layer\VulkanReflectObject.cpp">
+      <Filter>src\core\vulkan\Renderer Backend Layer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\vulkan\Renderer Backend Layer\VulkanSkyBox.cpp">
+      <Filter>src\core\vulkan\Renderer Backend Layer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\vulkan\Renderer Backend Layer\VulkanSwapChain3D.cpp">
+      <Filter>src\core\vulkan\Renderer Backend Layer</Filter>
+    </ClCompile>
     <ClCompile Include="src\core\vulkan\vulkanRenderer.cpp">
       <Filter>src\core\vulkan</Filter>
     </ClCompile>
@@ -204,29 +293,6 @@
     <ClCompile Include="src\rendererFormat.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Objects\VulkanColorBuffer.cpp" />
-    <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Objects\VulkanCore.cpp" />
-    <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Objects\VulkanDepthBuffer.cpp" />
-    <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Objects\VulkanExtensionsManager.cpp">
-      <Filter>src\core\vulkan\Renderer Backend Layer\Managers</Filter>
-    </ClCompile>
-    <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Objects\VulkanFunctions.cpp">
-      <Filter>src\core\vulkan\Renderer Backend Layer\Managers</Filter>
-    </ClCompile>
-    <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Objects\VulkanOneTimeCommandBufferManager.cpp">
-      <Filter>src\core\vulkan\Renderer Backend Layer\Managers</Filter>
-    </ClCompile>
-    <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Objects\VulkanRenderableObject.cpp" />
-    <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Objects\VulkanShader.cpp" />
-    <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Objects\VulkanValidator.cpp">
-      <Filter>src\core\vulkan\Renderer Backend Layer\Managers</Filter>
-    </ClCompile>
-    <ClCompile Include="src\core\vulkan\Renderer Backend Layer\VulkanSkyBox.cpp" />
-    <ClCompile Include="src\core\Components\Camera.cpp" />
-    <ClCompile Include="src\core\Components\Camera3D.cpp" />
-    <ClCompile Include="src\core\Components\Camera2D.cpp" />
-    <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Objects\VulkanSwapChain.cpp" />
-    <ClCompile Include="src\core\vulkan\Renderer Backend Layer\VulkanSwapChain3D.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ADGR.lua" />

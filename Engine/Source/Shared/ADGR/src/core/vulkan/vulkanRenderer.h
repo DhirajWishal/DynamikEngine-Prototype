@@ -30,6 +30,9 @@
 
 #include "core/Components/Camera2D.h"
 #include "core/Components/Camera3D.h"
+#include "core/Components/CameraReflect.h"
+#include "core/Components/CameraSkybox.h"
+
 #include "Renderer Backend Layer/VulkanSwapChain3D.h"
 
 #ifdef DMK_USE_VULKAN
@@ -145,6 +148,8 @@ namespace Dynamik {
 			void initializeObjects();
 			void initializeObjectsBasic();
 
+			ADGRVulkanRenderableObjectInitInfo RenderableObjectInitInfo();
+
 			void initializeSwapChain();
 
 			void initializeColorBuffer();
@@ -154,6 +159,8 @@ namespace Dynamik {
 
 			Camera2D myCamera2D;
 			Camera3D myCamera3D;
+			CameraReflect myCameraReflect;
+			CameraSkybox myCameraSkybox;
 
 			VulkanCore myVulkanCore;
 			VulkanSwapChain3D mySwapChain3D;
@@ -161,7 +168,7 @@ namespace Dynamik {
 			VulkanColorBuffer myColorBuffer;
 			VulkanDepthBuffer myDepthBuffer;
 
-			ARRAY<VulkanRenderableObject> renderableObjects;
+			ARRAY<ADGRVulkanRenderData> renderDatas;
 			ARRAY<ADGRVulkan3DObjectData> rawObjects;
 
 			WindowManager myWindowManager;

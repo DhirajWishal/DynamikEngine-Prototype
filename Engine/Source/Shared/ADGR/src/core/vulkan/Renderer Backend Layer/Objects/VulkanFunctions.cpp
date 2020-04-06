@@ -222,13 +222,14 @@ namespace Dynamik {
 				VkImageViewCreateInfo viewInfo = {};
 				viewInfo.sType = VK_STRUCTURE_TYPE_IMAGE_VIEW_CREATE_INFO;
 				viewInfo.image = info.image;
-				viewInfo.viewType = VK_IMAGE_VIEW_TYPE_2D;
+				viewInfo.viewType = info.viewType;
 				viewInfo.format = info.format;
 				viewInfo.subresourceRange.aspectMask = info.aspectFlags;
 				viewInfo.subresourceRange.baseMipLevel = 0;
 				viewInfo.subresourceRange.levelCount = info.mipLevels;
 				viewInfo.subresourceRange.baseArrayLayer = 0;
-				viewInfo.subresourceRange.layerCount = 1;
+				viewInfo.subresourceRange.layerCount = info.layerCount;
+				viewInfo.components = info.component;
 
 				VkImageView imageView;
 				if (vkCreateImageView(device, &viewInfo, nullptr, &imageView) != VK_SUCCESS)
@@ -267,6 +268,20 @@ namespace Dynamik {
 					1,
 					&region
 				);
+			}
+			
+			void VulkanFunctions::copyBufferToImageOverride(VkDevice logicalDevice, VkCommandPool commandPool, VkQueue graphicsQueue, VkQueue presentQueue, ADGRCopyBufferToImageInfo info, ARRAY<VkBufferImageCopy> copyRegions)
+			{
+				VulkanOneTimeCommandBufferManager oneTimeCommandBuffer(logicalDevice, commandPool, graphicsQueue, presentQueue);
+				VkCommandBuffer commandBuffer = oneTimeCommandBuffer.myCommandBuffers[0];
+
+				vkCmdCopyBufferToImage(
+					commandBuffer,
+					info.buffer,
+					info.image,
+					VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL,
+					copyRegions.size(),
+					copyRegions.data());
 			}
 		}
 	}

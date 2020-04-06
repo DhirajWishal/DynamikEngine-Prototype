@@ -34,8 +34,8 @@ namespace Dynamik {
 					VkViewport viewport = {};
 					viewport.x = 0.0f;
 					viewport.y = 0.0f;
-					viewport.width = (F32)swapChainPointer->getSwapChainExtent().width;
-					viewport.height = (F32)swapChainPointer->getSwapChainExtent().height;
+					viewport.width = (F32)myRenderData.swapChainPointer->getSwapChainExtent().width;
+					viewport.height = (F32)myRenderData.swapChainPointer->getSwapChainExtent().height;
 					viewport.minDepth = 0.0f;
 					viewport.maxDepth = 1.0f;
 
@@ -47,7 +47,7 @@ namespace Dynamik {
 				for (I32 i = 0; i < info.scissorCount; i++) {
 					VkRect2D scissor = {};
 					scissor.offset = info.offsets[0];
-					scissor.extent = swapChainPointer->getSwapChainExtent();
+					scissor.extent = myRenderData.swapChainPointer->getSwapChainExtent();
 
 					scissors.push_back(scissor);
 				}
@@ -140,8 +140,8 @@ namespace Dynamik {
 				pipelineInfo.pMultisampleState = &multisampling;
 				pipelineInfo.pDepthStencilState = &depthStencil;
 				pipelineInfo.pColorBlendState = &colorBlending;
-				pipelineInfo.layout = swapChainPointer->getPipelineLayout();
-				pipelineInfo.renderPass = swapChainPointer->getRenderPass();
+				pipelineInfo.layout = myRenderData.swapChainPointer->getPipelineLayout();
+				pipelineInfo.renderPass = myRenderData.swapChainPointer->getRenderPass();
 				pipelineInfo.subpass = info.pipelineSubPass;
 				pipelineInfo.basePipelineHandle = info.pipelineBasePipelineHandle;
 				pipelineInfo.basePipelineIndex = info.pipelineBasePipelineIndex;
@@ -155,12 +155,12 @@ namespace Dynamik {
 				if (vkCreateGraphicsPipelines(logicalDevice, info.pipelineCache, 1, &pipelineInfo, nullptr, &_pipeline) != VK_SUCCESS)
 					DMK_CORE_FATAL("failed to create graphics pipeline!");
 
-				pipeline = _pipeline;
+				myRenderData.pipeline = _pipeline;
 			}
 
 			void VulkanRenderableObject::terminatePipeline()
 			{
-				vkDestroyPipeline(logicalDevice, pipeline, nullptr);
+				vkDestroyPipeline(logicalDevice, myRenderData.pipeline, nullptr);
 			}
 
 			void VulkanRenderableObject::initializeTextures(ARRAY<ADGRVulkanTextureInitInfo> infos)
@@ -231,7 +231,6 @@ namespace Dynamik {
 					transitionInfo.newLayout = VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL;
 					transitionInfo.mipLevels = info.mipLevels;
 					transitionInfo.layerCount = 1;
-
 					VulkanFunctions::transitionImageLayout(logicalDevice, commandPool, graphicsQueue, presentQueue, transitionInfo);
 
 					ADGRCopyBufferToImageInfo cpyInfo;
@@ -239,7 +238,6 @@ namespace Dynamik {
 					cpyInfo.image = _container.image;
 					cpyInfo.width = static_cast<UI32>(texData.texWidth);
 					cpyInfo.height = static_cast<UI32>(texData.texHeight);
-
 					VulkanFunctions::copyBufferToImage(logicalDevice, commandPool, graphicsQueue, presentQueue, cpyInfo);
 
 					vkDestroyBuffer(logicalDevice, stagingBuffer, nullptr);
@@ -265,7 +263,7 @@ namespace Dynamik {
 
 					_container.imageView = VulkanFunctions::createImageView(logicalDevice, cinfo2);
 
-					textures.pushBack(_container);
+					myRenderData.textures.pushBack(_container);
 				}
 			}
 
@@ -367,7 +365,7 @@ namespace Dynamik {
 
 			void VulkanRenderableObject::terminateTextures()
 			{
-				for (const ADGRVulkanTextureContainer& container : textures) {
+				for (ADGRVulkanTextureContainer container : myRenderData.textures) {
 					vkDestroySampler(logicalDevice, container.imageSampler, nullptr);
 					vkDestroyImageView(logicalDevice, container.imageView, nullptr);
 
@@ -381,8 +379,8 @@ namespace Dynamik {
 				VkBuffer _buffer = VK_NULL_HANDLE;
 				VkDeviceMemory _bufferMemory = VK_NULL_HANDLE;
 
-				vertexCount = vertexes->size();
-				VkDeviceSize bufferSize = vertexCount * vertexes->typeSize();
+				myRenderData.vertexCount = vertexes->size();
+				VkDeviceSize bufferSize = myRenderData.vertexCount * vertexes->typeSize();
 
 				VkBuffer stagingBuffer;
 				VkDeviceMemory stagingBufferMemory;
@@ -415,8 +413,8 @@ namespace Dynamik {
 				vkDestroyBuffer(logicalDevice, stagingBuffer, nullptr);
 				vkFreeMemory(logicalDevice, stagingBufferMemory, nullptr);
 
-				vertexBuffers.pushBack(_buffer);
-				vertexBufferMemories.pushBack(_bufferMemory);
+				myRenderData.vertexBuffers.pushBack(_buffer);
+				myRenderData.vertexBufferMemories.pushBack(_bufferMemory);
 			}
 
 			void VulkanRenderableObject::initializeVertex2DBuffer(ARRAY<vertex2D>* vertexes)
@@ -424,8 +422,8 @@ namespace Dynamik {
 				VkBuffer _buffer = VK_NULL_HANDLE;
 				VkDeviceMemory _bufferMemory = VK_NULL_HANDLE;
 
-				vertexCount = vertexes->size();
-				VkDeviceSize bufferSize = vertexCount * vertexes->typeSize();
+				myRenderData.vertexCount = vertexes->size();
+				VkDeviceSize bufferSize = myRenderData.vertexCount * vertexes->typeSize();
 
 				VkBuffer stagingBuffer;
 				VkDeviceMemory stagingBufferMemory;
@@ -458,27 +456,27 @@ namespace Dynamik {
 				vkDestroyBuffer(logicalDevice, stagingBuffer, nullptr);
 				vkFreeMemory(logicalDevice, stagingBufferMemory, nullptr);
 
-				vertexBuffers.pushBack(_buffer);
-				vertexBufferMemories.pushBack(_bufferMemory);
+				myRenderData.vertexBuffers.pushBack(_buffer);
+				myRenderData.vertexBufferMemories.pushBack(_bufferMemory);
 			}
 
 			void VulkanRenderableObject::terminateVertexBuffer()
 			{
-				for (UI32 _itr = 0; _itr < vertexBuffers.size(); _itr++)
+				for (UI32 _itr = 0; _itr < myRenderData.vertexBuffers.size(); _itr++)
 				{
-					vkDestroyBuffer(logicalDevice, vertexBuffers[_itr], nullptr);
-					vkFreeMemory(logicalDevice, vertexBufferMemories[_itr], nullptr);
+					vkDestroyBuffer(logicalDevice, myRenderData.vertexBuffers[_itr], nullptr);
+					vkFreeMemory(logicalDevice, myRenderData.vertexBufferMemories[_itr], nullptr);
 				}
 			}
 
 			void VulkanRenderableObject::initializeIndexBufferUI8(ARRAY<UI8>* indexes)
 			{
-				indexbufferObjectTypeSize = sizeof(UI8);
+				myRenderData.indexbufferObjectTypeSize = sizeof(UI8);
 				VkBuffer _buffer = VK_NULL_HANDLE;
 				VkDeviceMemory _bufferMemory = VK_NULL_HANDLE;
 
-				indexCount = indexes->size();
-				VkDeviceSize bufferSize = indexCount * indexes->typeSize();
+				myRenderData.indexCount = indexes->size();
+				VkDeviceSize bufferSize = myRenderData.indexCount * indexes->typeSize();
 
 				VkBuffer stagingBuffer;
 				VkDeviceMemory stagingBufferMemory;
@@ -511,18 +509,18 @@ namespace Dynamik {
 				vkDestroyBuffer(logicalDevice, stagingBuffer, nullptr);
 				vkFreeMemory(logicalDevice, stagingBufferMemory, nullptr);
 
-				indexBuffers.pushBack(_buffer);
-				indexBufferMemories.pushBack(_bufferMemory);
+				myRenderData.indexBuffers.pushBack(_buffer);
+				myRenderData.indexBufferMemories.pushBack(_bufferMemory);
 			}
 
 			void VulkanRenderableObject::initializeIndexBufferUI16(ARRAY<UI16>* indexes)
 			{
-				indexbufferObjectTypeSize = sizeof(UI16);
+				myRenderData.indexbufferObjectTypeSize = sizeof(UI16);
 				VkBuffer _buffer = VK_NULL_HANDLE;
 				VkDeviceMemory _bufferMemory = VK_NULL_HANDLE;
 
-				indexCount = indexes->size();
-				VkDeviceSize bufferSize = indexCount * indexes->typeSize();
+				myRenderData.indexCount = indexes->size();
+				VkDeviceSize bufferSize = myRenderData.indexCount * indexes->typeSize();
 
 				VkBuffer stagingBuffer;
 				VkDeviceMemory stagingBufferMemory;
@@ -555,18 +553,18 @@ namespace Dynamik {
 				vkDestroyBuffer(logicalDevice, stagingBuffer, nullptr);
 				vkFreeMemory(logicalDevice, stagingBufferMemory, nullptr);
 
-				indexBuffers.pushBack(_buffer);
-				indexBufferMemories.pushBack(_bufferMemory);
+				myRenderData.indexBuffers.pushBack(_buffer);
+				myRenderData.indexBufferMemories.pushBack(_bufferMemory);
 			}
 
 			void VulkanRenderableObject::initializeIndexBufferUI32(ARRAY<UI32>* indexes)
 			{
-				indexbufferObjectTypeSize = sizeof(UI32);
+				myRenderData.indexbufferObjectTypeSize = sizeof(UI32);
 				VkBuffer _buffer = VK_NULL_HANDLE;
 				VkDeviceMemory _bufferMemory = VK_NULL_HANDLE;
 
-				indexCount = indexes->size();
-				VkDeviceSize bufferSize = indexCount * indexes->typeSize();
+				myRenderData.indexCount = indexes->size();
+				VkDeviceSize bufferSize = myRenderData.indexCount * indexes->typeSize();
 
 				VkBuffer stagingBuffer;
 				VkDeviceMemory stagingBufferMemory;
@@ -599,18 +597,18 @@ namespace Dynamik {
 				vkDestroyBuffer(logicalDevice, stagingBuffer, nullptr);
 				vkFreeMemory(logicalDevice, stagingBufferMemory, nullptr);
 
-				indexBuffers.pushBack(_buffer);
-				indexBufferMemories.pushBack(_bufferMemory);
+				myRenderData.indexBuffers.pushBack(_buffer);
+				myRenderData.indexBufferMemories.pushBack(_bufferMemory);
 			}
 
 			void VulkanRenderableObject::initializeIndexBufferUI64(ARRAY<UI64>* indexes)
 			{
-				indexbufferObjectTypeSize = sizeof(UI64);
+				myRenderData.indexbufferObjectTypeSize = sizeof(UI64);
 				VkBuffer _buffer = VK_NULL_HANDLE;
 				VkDeviceMemory _bufferMemory = VK_NULL_HANDLE;
 
-				indexCount = indexes->size();
-				VkDeviceSize bufferSize = indexCount * indexes->typeSize();
+				myRenderData.indexCount = indexes->size();
+				VkDeviceSize bufferSize = myRenderData.indexCount * indexes->typeSize();
 
 				VkBuffer stagingBuffer;
 				VkDeviceMemory stagingBufferMemory;
@@ -643,22 +641,22 @@ namespace Dynamik {
 				vkDestroyBuffer(logicalDevice, stagingBuffer, nullptr);
 				vkFreeMemory(logicalDevice, stagingBufferMemory, nullptr);
 
-				indexBuffers.pushBack(_buffer);
-				indexBufferMemories.pushBack(_bufferMemory);
+				myRenderData.indexBuffers.pushBack(_buffer);
+				myRenderData.indexBufferMemories.pushBack(_bufferMemory);
 			}
 
 			void VulkanRenderableObject::terminateIndexBuffer()
 			{
-				for (UI32 _itr = 0; _itr < indexBuffers.size(); _itr++)
+				for (UI32 _itr = 0; _itr < myRenderData.indexBuffers.size(); _itr++)
 				{
-					vkDestroyBuffer(logicalDevice, indexBuffers[_itr], nullptr);
-					vkFreeMemory(logicalDevice, indexBufferMemories[_itr], nullptr);
+					vkDestroyBuffer(logicalDevice, myRenderData.indexBuffers[_itr], nullptr);
+					vkFreeMemory(logicalDevice, myRenderData.indexBufferMemories[_itr], nullptr);
 				}
 			}
 
 			void VulkanRenderableObject::initializeDescriptorPool(ADGRVulkanDescriptorPoolInitInfo info)
 			{
-				UI32 poolCount = uniformBuffers.size();
+				UI32 poolCount = myRenderData.uniformBuffers.size();
 				for (UI32 itr = 0; itr < poolCount; itr++) {
 					ARRAY<VkDescriptorPoolSize> poolSizes = {};
 					VkDescriptorPoolSize _poolSize1;
@@ -686,28 +684,28 @@ namespace Dynamik {
 					if (vkCreateDescriptorPool(logicalDevice, &poolInfo, nullptr, &_localDescriptorPool) != VK_SUCCESS)
 						DMK_CORE_FATAL("failed to create descriptor pool!");
 
-					descriptors.descriptorPools.push_back(_localDescriptorPool);
+					myRenderData.descriptors.descriptorPools.push_back(_localDescriptorPool);
 				}
 			}
 
 			void VulkanRenderableObject::terminateDescriptorPool()
 			{
-				for (auto descriptorPool : descriptors.descriptorPools)
+				for (auto descriptorPool : myRenderData.descriptors.descriptorPools)
 					vkDestroyDescriptorPool(logicalDevice, descriptorPool, nullptr);
 			}
 
 			void VulkanRenderableObject::initializeDescriptorSets(ADGRVulkanDescriptorSetsInitInfo info)
 			{
-				std::vector<VkDescriptorSetLayout> layouts(uniformBuffers.size(), swapChainPointer->getDescriptorSetLayout());
-				descriptors.descriptorSets.resize(textures.size());
+				std::vector<VkDescriptorSetLayout> layouts(myRenderData.uniformBuffers.size(), myRenderData.swapChainPointer->getDescriptorSetLayout());
+				myRenderData.descriptors.descriptorSets.resize(myRenderData.textures.size());
 
-				for (UI32 itr = 0; itr < textures.size(); itr++) {
-					for (size_t i = 0; i < uniformBuffers.size(); i++) {
-						VkDescriptorSetLayout _layout = swapChainPointer->getDescriptorSetLayout();
+				for (UI32 itr = 0; itr < myRenderData.textures.size(); itr++) {
+					for (size_t i = 0; i < myRenderData.uniformBuffers.size(); i++) {
+						VkDescriptorSetLayout _layout = myRenderData.swapChainPointer->getDescriptorSetLayout();
 
 						VkDescriptorSetAllocateInfo allocInfo = {};
 						allocInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_ALLOCATE_INFO;
-						allocInfo.descriptorPool = descriptors.descriptorPools[i];
+						allocInfo.descriptorPool = myRenderData.descriptors.descriptorPools[i];
 						allocInfo.descriptorSetCount = 1;
 						allocInfo.pSetLayouts = &_layout;
 
@@ -716,14 +714,14 @@ namespace Dynamik {
 							DMK_CORE_FATAL("failed to allocate descriptor sets!");
 
 						VkDescriptorBufferInfo bufferInfo = {};
-						bufferInfo.buffer = uniformBuffers[i];
+						bufferInfo.buffer = myRenderData.uniformBuffers[i];
 						bufferInfo.offset = 0;
 						bufferInfo.range = sizeof(UniformBufferObject);
 
 						VkDescriptorImageInfo imageInfo = {};
 						imageInfo.imageLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
-						imageInfo.imageView = textures[itr].imageView;
-						imageInfo.sampler = textures[itr].imageSampler;
+						imageInfo.imageView = myRenderData.textures[itr].imageView;
+						imageInfo.sampler = myRenderData.textures[itr].imageSampler;
 
 						ARRAY<VkWriteDescriptorSet> descriptorWrites = {};
 
@@ -759,22 +757,18 @@ namespace Dynamik {
 						vkUpdateDescriptorSets(logicalDevice, static_cast<UI32>(descriptorWrites.size()),
 							descriptorWrites.data(), 0, nullptr);
 
-						descriptors.descriptorSets[itr].pushBack(_descriptorSet);
+						myRenderData.descriptors.descriptorSets[itr].pushBack(_descriptorSet);
 					} // make two descriptor layouts for each descriptor set
 				}
-			}
-
-			void VulkanRenderableObject::terminateDescriptorSets()
-			{
 			}
 
 			void VulkanRenderableObject::initializeUniformBuffer()
 			{
 				VkDeviceSize bufferSize = sizeof(UniformBufferObject);
-				UI32 count = swapChainPointer->getSwapChainImages().size();
+				UI32 count = myRenderData.swapChainPointer->getSwapChainImages().size();
 
-				uniformBuffers.resize(count);
-				uniformBufferMemories.resize(count);
+				myRenderData.uniformBuffers.resize(count);
+				myRenderData.uniformBufferMemories.resize(count);
 
 				for (size_t i = 0; i < count; i++)
 				{
@@ -782,8 +776,8 @@ namespace Dynamik {
 					bufferInfo.bufferSize = bufferSize;
 					bufferInfo.usage = VK_BUFFER_USAGE_UNIFORM_BUFFER_BIT;
 					bufferInfo.bufferMemoryPropertyflags = VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT;
-					bufferInfo.buffer = &uniformBuffers[i];
-					bufferInfo.bufferMemory = &uniformBufferMemories[i];
+					bufferInfo.buffer = &myRenderData.uniformBuffers[i];
+					bufferInfo.bufferMemory = &myRenderData.uniformBufferMemories[i];
 
 					VulkanFunctions::createBuffer(logicalDevice, physicalDevice, bufferInfo);
 				}
@@ -792,16 +786,16 @@ namespace Dynamik {
 			void VulkanRenderableObject::updateUniformBuffer(UniformBufferObject uniformBuferObject, UI32 currentImage)
 			{
 				void* data = nullptr;
-				vkMapMemory(logicalDevice, uniformBufferMemories[currentImage], 0, sizeof(uniformBuferObject), 0, &data);
+				vkMapMemory(logicalDevice, myRenderData.uniformBufferMemories[currentImage], 0, sizeof(uniformBuferObject), 0, &data);
 				memcpy(data, &uniformBuferObject, sizeof(uniformBuferObject));
-				vkUnmapMemory(logicalDevice, uniformBufferMemories[currentImage]);
+				vkUnmapMemory(logicalDevice, myRenderData.uniformBufferMemories[currentImage]);
 			}
 
 			void VulkanRenderableObject::terminateUniformBuffer()
 			{
-				for (I32 x = 0; x < uniformBuffers.size(); x++) {
-					vkDestroyBuffer(logicalDevice, uniformBuffers[x], nullptr);
-					vkFreeMemory(logicalDevice, uniformBufferMemories[x], nullptr);
+				for (I32 x = 0; x < myRenderData.uniformBuffers.size(); x++) {
+					vkDestroyBuffer(logicalDevice, myRenderData.uniformBuffers[x], nullptr);
+					vkFreeMemory(logicalDevice, myRenderData.uniformBufferMemories[x], nullptr);
 				}
 			}
 		}

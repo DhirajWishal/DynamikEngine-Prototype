@@ -275,14 +275,7 @@ namespace Dynamik {
 		gameObjects = scenes[sceneCount]->myGameObjects;
 
 		for (int itr = 0; itr < gameObjects.size(); itr++) {
-			if (
-				(gameObjects[itr]->myProperties.type == DMKObjectType::DMK_OBJECT_TYPE_MESH)
-				|| (gameObjects[itr]->myProperties.type == DMKObjectType::DMK_OBJECT_TYPE_STATIC_OBJECT)
-				|| (gameObjects[itr]->myProperties.type == DMKObjectType::DMK_OBJECT_TYPE_INTERACTIVE_OBJECT)
-				|| (gameObjects[itr]->myProperties.type == DMKObjectType::DMK_OBJECT_TYPE_PLAYER)
-				|| (gameObjects[itr]->myProperties.type == DMKObjectType::DMK_OBJECT_TYPE_NPC)
-				|| (gameObjects[itr]->myProperties.type == DMKObjectType::DMK_OBJECT_TYPE_CUSTOM)
-				) {
+			if (renderableObjectCheck(gameObjects[itr])) {
 				GameObject* gameObject = gameObjects[itr];	// inner array initialization
 
 				utils::daiManager fileManager;

@@ -4,10 +4,14 @@
 
 #include <GLFW/glfw3.h>
 #include "VulkanRenderableObject.h"
+#include "VulkanSwapChain.h"
 
 namespace Dynamik {
 	namespace ADGR {
 		namespace Backend {
+			struct ADGRVulkanRenderData;
+			class VulkanSwapChain;
+
 			struct ADGRVulkanInstanceInitInfo {
 				std::string applicationName = "Dynamik Engine";
 				std::string engineName = "Dynamik";
@@ -30,7 +34,8 @@ namespace Dynamik {
 			};
 
 			struct ADGRVulkanCommandBufferInitInfo {
-				ARRAY<VulkanRenderableObject> objects;
+				ARRAY<ADGRVulkanRenderData> objects;
+				VulkanSwapChain swapChain;
 				ARRAY<F32> clearValues = { 
 					(2.0f / 256.0f),
 					(8.0f / 256.0f),

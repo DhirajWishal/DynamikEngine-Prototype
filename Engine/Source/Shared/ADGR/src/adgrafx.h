@@ -69,6 +69,8 @@
 
 #include <GLFW/glfw3.h>
 
+#include <load_ktx.hpp>
+
 #elif defined(DMK_USE_DIRECT_X)
 
 #define WIN32_LEAN_AND_MEAN

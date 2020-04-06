@@ -5,6 +5,7 @@
 #include <vulkan/vulkan.h>
 #include "UniformBufferObject.h"
 
+#include "VulkanCore.h"
 #include "VulkanShader.h"
 #include "VulkanSwapChain.h"
 
@@ -13,6 +14,14 @@
 namespace Dynamik {
 	namespace ADGR {
 		namespace Backend {
+			struct ADGRVulkanRenderableObjectInitInfo {
+				VkDevice logicalDevice = VK_NULL_HANDLE;
+				VkPhysicalDevice physicalDevice = VK_NULL_HANDLE;
+				VkCommandPool commandPool = VK_NULL_HANDLE;
+				VkQueue graphicsQueue = VK_NULL_HANDLE;
+				VkQueue presentQueue = VK_NULL_HANDLE;
+			};
+
 			struct ADGRVulkanPipelineInitInfo {
 				ARRAY<VkVertexInputBindingDescription> vertexBindingDescription;
 				ARRAY<VkVertexInputAttributeDescription> vertexAttributeDescription;
@@ -138,10 +147,35 @@ namespace Dynamik {
 				ARRAY<ARRAY<VkDescriptorSet>> descriptorSets;
 			};
 
+			struct ADGRVulkanRenderData {
+				DMKObjectType type = DMKObjectType::DMK_OBJECT_TYPE_STATIC_OBJECT;
+				DMK_ADGR_RENDERING_TECHNOLOGY renderTechnology = DMK_ADGR_RENDERING_TECHNOLOGY::DMK_ADGR_RENDER_INDEXED;
+
+				POINTER<VulkanSwapChain> swapChainPointer;
+
+				ARRAY<VkBuffer> vertexBuffers;
+				ARRAY<VkDeviceMemory> vertexBufferMemories;
+				UI32 vertexCount = 0;
+
+				ARRAY<VkBuffer> indexBuffers;
+				ARRAY<VkDeviceMemory> indexBufferMemories;
+				UI32 indexCount = 0;
+				UI32 indexbufferObjectTypeSize = 0;
+
+				ARRAY<ADGRVulkanTextureContainer> textures;
+
+				ADGRVulkanDescrpitorContainer descriptors;
+
+				VkPipeline pipeline = VK_NULL_HANDLE;
+
+				ARRAY<VkBuffer> uniformBuffers;
+				ARRAY<VkDeviceMemory> uniformBufferMemories;
+			};
+
 			class VulkanRenderableObject : public GameObject {
 			public:
-				VulkanRenderableObject(VkDevice logicalDevice, VkPhysicalDevice physicalDevice, VkCommandPool commandPool, VkQueue graphicsQueue, VkQueue presentQueue)
-					: logicalDevice(logicalDevice), physicalDevice(physicalDevice), commandPool(commandPool), graphicsQueue(graphicsQueue), presentQueue(presentQueue) {}
+				VulkanRenderableObject(ADGRVulkanRenderableObjectInitInfo info)
+					: logicalDevice(info.logicalDevice), physicalDevice(info.physicalDevice), commandPool(info.commandPool), graphicsQueue(info.graphicsQueue), presentQueue(info.presentQueue) {}
 				virtual ~VulkanRenderableObject() {}
 
 				virtual void initializePipeline(ADGRVulkanPipelineInitInfo info);
@@ -166,41 +200,23 @@ namespace Dynamik {
 				virtual void terminateDescriptorPool();
 
 				virtual void initializeDescriptorSets(ADGRVulkanDescriptorSetsInitInfo info);
-				virtual void terminateDescriptorSets();
 
 				virtual void initializeUniformBuffer();
 				virtual void updateUniformBuffer(UniformBufferObject uniformBuferObject, UI32 currentImage);
 				virtual void terminateUniformBuffer();
 
-				DMK_ADGR_RENDERING_TECHNOLOGY renderTechnology = DMK_ADGR_RENDERING_TECHNOLOGY::DMK_ADGR_RENDER_INDEXED;
+				void setSwapChainContainer(POINTER<VulkanSwapChain> swapChain) { myRenderData.swapChainPointer = swapChain; }
+				void setRenderData(ADGRVulkanRenderData data) { myRenderData = data; }
+				const ADGRVulkanRenderData getRenderData() const { return myRenderData; }
 
+			protected:
 				VkDevice logicalDevice = VK_NULL_HANDLE;
 				VkPhysicalDevice physicalDevice = VK_NULL_HANDLE;
 				VkCommandPool commandPool = VK_NULL_HANDLE;
 				VkQueue graphicsQueue = VK_NULL_HANDLE;
 				VkQueue presentQueue = VK_NULL_HANDLE;
 
-				POINTER<VulkanSwapChain> swapChainPointer;
-
-				ARRAY<VkBuffer> vertexBuffers;
-				ARRAY<VkDeviceMemory> vertexBufferMemories;
-				UI32 vertexCount = 0;
-
-				ARRAY<VkBuffer> indexBuffers;
-				ARRAY<VkDeviceMemory> indexBufferMemories;
-				UI32 indexCount = 0;
-				UI32 indexbufferObjectTypeSize = 0;
-
-				ARRAY<ADGRVulkanTextureContainer> textures;
-
-				ADGRVulkanDescrpitorContainer descriptors;
-
-				VkPipeline pipeline = VK_NULL_HANDLE;
-
-				ARRAY<VkBuffer> uniformBuffers;
-				ARRAY<VkDeviceMemory> uniformBufferMemories;
-
-				//VulkanPushConstantManager pushConstant;
+				ADGRVulkanRenderData myRenderData;
 			};
 		}
 	}

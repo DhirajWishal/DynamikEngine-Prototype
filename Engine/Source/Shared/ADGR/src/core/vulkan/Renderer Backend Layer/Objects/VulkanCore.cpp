@@ -121,7 +121,7 @@ namespace Dynamik {
 			}
 
 			// if drawing in vertex
-			void drawVertex(VkCommandBuffer buffer, I32 index, VulkanRenderableObject* object, VkDeviceSize* offsets) {
+			void drawVertex(VkCommandBuffer buffer, I32 index, ADGRVulkanRenderData* object, VkDeviceSize* offsets) {
 				for (UI32 i = 0; i < object->vertexBuffers.size(); i++) {
 					// bind pipeline
 					vkCmdBindPipeline(buffer, VK_PIPELINE_BIND_POINT_GRAPHICS, object->pipeline);
@@ -139,7 +139,7 @@ namespace Dynamik {
 			}
 
 			// if drawing in indexed
-			void drawIndexed(VkCommandBuffer buffer, I32 index, VulkanRenderableObject* object, VkDeviceSize* offsets) {
+			void drawIndexed(VkCommandBuffer buffer, I32 index, ADGRVulkanRenderData* object, VkDeviceSize* offsets) {
 				for (UI32 i = 0; i < object->vertexBuffers.size(); i++) {
 					// bind pipeline
 					vkCmdBindPipeline(buffer, VK_PIPELINE_BIND_POINT_GRAPHICS, object->pipeline);
@@ -512,38 +512,38 @@ namespace Dynamik {
 					if (vkBeginCommandBuffer(commandBuffers[i], &beginInfo) != VK_SUCCESS)
 						DMK_CORE_FATAL("failed to begin recording command commandBuffers[i]!");
 
+					VkRenderPassBeginInfo renderPassInfo = {};
+					renderPassInfo.sType = VK_STRUCTURE_TYPE_RENDER_PASS_BEGIN_INFO;
+					renderPassInfo.renderPass = info.swapChain.getRenderPass();
+					renderPassInfo.framebuffer = info.swapChain.getFrameBuffer(i);
+					renderPassInfo.renderArea.offset = { 0, 0 };
+					renderPassInfo.renderArea.extent = info.swapChain.getSwapChainExtent();
+
+					std::array<VkClearValue, 2> clearValues = {};
+					//clearValues[0].color = {
+					//	container->clearScreenValues[0],	// Red
+					//	container->clearScreenValues[1],	// Green
+					//	container->clearScreenValues[2],	// Blue
+					//	container->clearScreenValues[3]		// Alpha
+					//};
+
+					clearValues[0].color = {
+						info.clearValues[0],
+						info.clearValues[1],
+						info.clearValues[2],
+						info.clearValues[3]
+					};
+					clearValues[1].depthStencil = { info.depthStencilDepth, info.stencilIndex };
+
+					renderPassInfo.clearValueCount = static_cast<UI32>(clearValues.size());
+					renderPassInfo.pClearValues = clearValues.data();
+
+					/* BEGIN VULKAN COMMANDS */
+					VkDeviceSize offsets[] = { 0 };
+					// begin render pass
+					vkCmdBeginRenderPass(commandBuffers[i], &renderPassInfo, VK_SUBPASS_CONTENTS_INLINE);
+
 					for (I32 _itr = 0; _itr < info.objects.size(); _itr++) {
-						VkRenderPassBeginInfo renderPassInfo = {};
-						renderPassInfo.sType = VK_STRUCTURE_TYPE_RENDER_PASS_BEGIN_INFO;
-						renderPassInfo.renderPass = info.objects[_itr].swapChainPointer->getRenderPass();
-						renderPassInfo.framebuffer = info.objects[_itr].swapChainPointer->getFrameBuffer(i);
-						renderPassInfo.renderArea.offset = { 0, 0 };
-						renderPassInfo.renderArea.extent = info.objects[_itr].swapChainPointer->getSwapChainExtent();
-
-						std::array<VkClearValue, 2> clearValues = {};
-						//clearValues[0].color = {
-						//	container->clearScreenValues[0],	// Red
-						//	container->clearScreenValues[1],	// Green
-						//	container->clearScreenValues[2],	// Blue
-						//	container->clearScreenValues[3]		// Alpha
-						//};
-
-						clearValues[0].color = {
-							info.clearValues[0],
-							info.clearValues[1],
-							info.clearValues[2],
-							info.clearValues[3]
-						};
-						clearValues[1].depthStencil = { info.depthStencilDepth, info.stencilIndex };
-
-						renderPassInfo.clearValueCount = static_cast<UI32>(clearValues.size());
-						renderPassInfo.pClearValues = clearValues.data();
-
-						/* BEGIN VULKAN COMMANDS */
-						VkDeviceSize offsets[] = { 0 };
-						// begin render pass
-						vkCmdBeginRenderPass(commandBuffers[i], &renderPassInfo, VK_SUBPASS_CONTENTS_INLINE);
-
 						/* TODO: pushConstants */
 						// pushConstants[0] = ...
 						// vkCmdPushConstants(commandBuffers[i], &pipelineLayout, VK_SHADER_STAGE_VERTEX_BIT,

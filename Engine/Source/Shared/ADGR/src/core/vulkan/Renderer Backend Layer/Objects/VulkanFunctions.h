@@ -52,7 +52,12 @@ namespace Dynamik {
 				VkImageAspectFlags aspectFlags;
 				VkImageView* textureImageView;
 
+				VkComponentMapping component = {};
+
+				VkImageViewType viewType = VK_IMAGE_VIEW_TYPE_2D;
+
 				UI32 mipLevels;
+				UI32 layerCount = 1;
 			};
 
 			struct ADGRCopyBufferToImageInfo {
@@ -85,6 +90,7 @@ namespace Dynamik {
 				static void transitionImageLayout(VkDevice logicalDevice, VkCommandPool commandPool, VkQueue graphicsQueue, VkQueue presentQueue, ADGRTransitionImageLayoutInfo info);
 				static VkImageView createImageView(VkDevice device, ADGRCreateImageViewInfo info);
 				static void copyBufferToImage(VkDevice logicalDevice, VkCommandPool commandPool, VkQueue graphicsQueue, VkQueue presentQueue, ADGRCopyBufferToImageInfo info);
+				static void copyBufferToImageOverride(VkDevice logicalDevice, VkCommandPool commandPool, VkQueue graphicsQueue, VkQueue presentQueue, ADGRCopyBufferToImageInfo info, ARRAY<VkBufferImageCopy> copyRegions);
 			};
 		}
 	}

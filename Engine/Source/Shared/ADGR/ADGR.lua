@@ -43,6 +43,7 @@ project "ADGR"
 		"%{IncludeDir.irrKlang}",
 		"%{IncludeDir.assimp}",
 		"%{IncludeDir.Vulkan}",
+		"%{IncludeDir.gli}",
 		DynamikInternalLibsPath
 	}
 

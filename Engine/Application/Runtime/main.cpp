@@ -57,9 +57,9 @@ int main(int argc, char** argv) {
 		};
 
 		Dynamik::ARRAY<Dynamik::DMKObjectType> objTypes = {
-			Dynamik::DMKObjectType::DMK_OBJECT_TYPE_INTERACTIVE_OBJECT,
-			Dynamik::DMKObjectType::DMK_OBJECT_TYPE_INTERACTIVE_OBJECT,
 			Dynamik::DMKObjectType::DMK_OBJECT_TYPE_STATIC_OBJECT,
+			Dynamik::DMKObjectType::DMK_OBJECT_TYPE_SKYBOX,
+			Dynamik::DMKObjectType::DMK_OBJECT_TYPE_INTERACTIVE_OBJECT,
 			Dynamik::DMKObjectType::DMK_OBJECT_TYPE_AI,
 			Dynamik::DMKObjectType::DMK_OBJECT_TYPE_STATIC_OBJECT,
 		};
@@ -70,6 +70,7 @@ int main(int argc, char** argv) {
 		for (int i = 0; i < paths.size(); i++) {
 			Dynamik::GameObjectProperties props;
 			props.name = "Mars";
+			props.type = objTypes[i];
 			props.ID = std::to_string(i);
 			props.location = paths[i];
 			props.transformProperties.location = locations[i];

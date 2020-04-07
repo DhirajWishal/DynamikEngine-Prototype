@@ -18,9 +18,6 @@ namespace Dynamik {
 				void updateUniformBuffer(UBO_MP uniformBufferObject, UI32 currentImage);
 
 				void initializeDescriptorSets(ADGRVulkanDescriptorSetsInitInfo info) override;
-
-			private:
-				ADGRVulkanTextureContainer loadCubeMapImage(ARRAY<std::string> paths, VkFormat format);
 			};
 		}
 	}

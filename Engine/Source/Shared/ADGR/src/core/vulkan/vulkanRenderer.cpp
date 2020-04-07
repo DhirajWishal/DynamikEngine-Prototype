@@ -408,6 +408,73 @@ namespace Dynamik {
 			}
 		}
 
+		ARRAY<Vertex> vulkanRenderer::_skyBoxTest()
+		{
+			ARRAY<Vertex> _localVertexBufferObject = {};
+
+			F32 S_SIZE = 0.5f;
+
+			ARRAY<ARRAY<F32>> locations =
+			{
+				{-S_SIZE, S_SIZE, -S_SIZE},
+				{-S_SIZE, -S_SIZE, -S_SIZE},
+				{S_SIZE, -S_SIZE, -S_SIZE },
+				{S_SIZE, -S_SIZE, -S_SIZE },
+				{S_SIZE, S_SIZE, -S_SIZE  },
+				{-S_SIZE, S_SIZE, -S_SIZE },
+
+				{-S_SIZE, -S_SIZE, S_SIZE },
+				{-S_SIZE, -S_SIZE, -S_SIZE},
+				{-S_SIZE, S_SIZE, -S_SIZE },
+				{-S_SIZE, S_SIZE, -S_SIZE },
+				{-S_SIZE, S_SIZE, S_SIZE  },
+				{-S_SIZE, -S_SIZE, S_SIZE },
+
+				{S_SIZE, -S_SIZE, -S_SIZE },
+				{S_SIZE, -S_SIZE, S_SIZE  },
+				{S_SIZE, S_SIZE, S_SIZE	  },
+				{S_SIZE, S_SIZE, S_SIZE	  },
+				{S_SIZE, S_SIZE, -S_SIZE  },
+				{S_SIZE, -S_SIZE, -S_SIZE },
+
+				{-S_SIZE, -S_SIZE, S_SIZE },
+				{-S_SIZE, S_SIZE, S_SIZE  },
+				{S_SIZE, S_SIZE, S_SIZE	  },
+				{S_SIZE, S_SIZE, S_SIZE	  },
+				{S_SIZE, -S_SIZE, S_SIZE  },
+				{-S_SIZE, -S_SIZE, S_SIZE },
+
+				{-S_SIZE, S_SIZE, -S_SIZE },
+				{S_SIZE, S_SIZE, -S_SIZE  },
+				{S_SIZE, S_SIZE, S_SIZE	  },
+				{S_SIZE, S_SIZE, S_SIZE	  },
+				{-S_SIZE, S_SIZE, S_SIZE  },
+				{-S_SIZE, S_SIZE, -S_SIZE },
+
+				{-S_SIZE, -S_SIZE, -S_SIZE},
+				{-S_SIZE, -S_SIZE, S_SIZE },
+				{S_SIZE, -S_SIZE, -S_SIZE },
+				{S_SIZE, -S_SIZE, -S_SIZE },
+				{-S_SIZE, -S_SIZE, S_SIZE },
+				{S_SIZE, -S_SIZE, S_SIZE  }
+			};
+
+			for (I32 itr = 0; itr < 6; itr++) {
+				for (I32 x = itr * 6; x < ((itr * 6) + 6); x++) {
+					Vertex v;
+					v.Position = { locations[x][0], locations[x][1], locations[x][2] };
+					v.Color = { 1.0f, 1.0f, 1.0f };
+					v.TexCoordinates = { 0.0f, 0.0f };
+					v.Normals = { 0.0f, 0.0f, 0.0f };
+					v.Integrity = 1.0f;
+
+					_localVertexBufferObject.push_back(v);
+				}
+			}
+
+			return _localVertexBufferObject;
+		}
+
 		ADGRVulkanRenderableObjectInitInfo vulkanRenderer::RenderableObjectInitInfo()
 		{
 			ADGRVulkanRenderableObjectInitInfo _info;
@@ -538,66 +605,16 @@ namespace Dynamik {
 
 			_renderObject.initializeTextures(textureInitInfos);
 
-			ARRAY<VertexP> _VBO = {
-				{{-1.0f,  1.0f, -1.0f}},
-				{{-1.0f, -1.0f, -1.0f}},
-				{{ 1.0f, -1.0f, -1.0f}},
-				{{ 1.0f, -1.0f, -1.0f}},
-				{{ 1.0f,  1.0f, -1.0f}},
-				{{-1.0f,  1.0f, -1.0f}},
-
-				{{-1.0f, -1.0f,  1.0f}},
-				{{-1.0f, -1.0f, -1.0f}},
-				{{-1.0f,  1.0f, -1.0f}},
-				{{-1.0f,  1.0f, -1.0f}},
-				{{-1.0f,  1.0f,  1.0f}},
-				{{-1.0f, -1.0f,  1.0f}},
-
-				{{1.0f, -1.0f, -1.0f}},
-				{{1.0f, -1.0f,  1.0f}},
-				{{1.0f,  1.0f,  1.0f}},
-				{{1.0f,  1.0f,  1.0f}},
-				{{1.0f,  1.0f, -1.0f}},
-				{{1.0f, -1.0f, -1.0f}},
-
-				{{-1.0f, -1.0f,  1.0f}},
-				{{-1.0f,  1.0f,  1.0f}},
-				{{ 1.0f,  1.0f,  1.0f}},
-				{{ 1.0f,  1.0f,  1.0f}},
-				{{ 1.0f, -1.0f,  1.0f}},
-				{{-1.0f, -1.0f,  1.0f}},
-
-				{{-1.0f,  1.0f, -1.0f}},
-				{{ 1.0f,  1.0f, -1.0f}},
-				{{ 1.0f,  1.0f,  1.0f}},
-				{{ 1.0f,  1.0f,  1.0f}},
-				{{-1.0f,  1.0f,  1.0f}},
-				{{-1.0f,  1.0f, -1.0f}},
-
-				{{-1.0f, -1.0f, -1.0f}},
-				{{-1.0f, -1.0f,  1.0f}},
-				{{ 1.0f, -1.0f, -1.0f}},
-				{{ 1.0f, -1.0f, -1.0f}},
-				{{-1.0f, -1.0f,  1.0f}},
-				{{ 1.0f, -1.0f,  1.0f}}
-			};
-
-			ARRAY<UI32> _IBO = {
-				0, 1, 2, 3, 4,
-				6, 7, 8, 9, 10,
-				12, 13, 14, 15, 16,
-				18, 19, 20, 21, 22,
-				24, 25, 26, 27, 28,
-				30, 31, 32, 33, 34
-			};
+			//auto buffer = _skyBoxTest();
 
 			// initialize vertex buffers
 			for (UI32 _itr = 0; _itr < _object.vertexBufferObjects->size(); _itr++)
-				_renderObject.initializeVertexBufferP(&_VBO);
+				//_renderObject.initializeVertexBuffer(&buffer);
+				_renderObject.initializeVertexBuffer(&_object.vertexBufferObjects->at(_itr));
 
 			// initialize index buffers
 			for (UI32 _itr = 0; _itr < _object.indexBufferObjects->size(); _itr++)
-				_renderObject.initializeIndexBufferUI32(&_IBO);
+				_renderObject.initializeIndexBufferUI32(&_object.indexBufferObjects->at(_itr));
 
 			// initialize uniform buffers
 			_renderObject.initializeUniformBuffer();
@@ -610,6 +627,7 @@ namespace Dynamik {
 			ADGRVulkanDescriptorSetsInitInfo descriptorSetsInitInfo;
 			_renderObject.initializeDescriptorSets(descriptorSetsInitInfo);
 
+			_renderObject.myRenderData.renderTechnology = DMK_ADGR_RENDERING_TECHNOLOGY::DMK_ADGR_RENDER_VERTEX;
 			return _renderObject.getRenderData();
 		}
 
@@ -666,8 +684,8 @@ namespace Dynamik {
 			ADGRVulkanPipelineInitInfo pipelineInitInfo;
 			pipelineInitInfo.shaders = _shaders;
 			pipelineInitInfo.multisamplerMsaaSamples = myVulkanCore.getMsaaSamples();
-			pipelineInitInfo.vertexBindingDescription = VertexPN::getBindingDescription(1);
-			pipelineInitInfo.vertexAttributeDescription = VertexPN::getAttributeDescriptions();
+			pipelineInitInfo.vertexBindingDescription = Vertex::getBindingDescription(1);
+			pipelineInitInfo.vertexAttributeDescription = Vertex::getAttributeDescriptions();
 			pipelineInitInfo.isTexturesAvailable = _object.texturePaths.size();
 			_renderObject.initializePipeline(pipelineInitInfo);
 
@@ -694,66 +712,13 @@ namespace Dynamik {
 
 			_renderObject.initializeTextures(textureInitInfos);
 
-			ARRAY<VertexPN> _VAO = {
-				{{-0.5f, -0.5f, -0.5f},  {0.0f,  0.0f, -1.0f}},
-				{{ 0.5f, -0.5f, -0.5f},  {0.0f,  0.0f, -1.0f}},
-				{{ 0.5f,  0.5f, -0.5f},  {0.0f,  0.0f, -1.0f}},
-				{{ 0.5f,  0.5f, -0.5f},  {0.0f,  0.0f, -1.0f}},
-				{{-0.5f,  0.5f, -0.5f},  {0.0f,  0.0f, -1.0f}},
-				{{-0.5f, -0.5f, -0.5f},  {0.0f,  0.0f, -1.0f}},
-
-				{{-0.5f, -0.5f,  0.5f},  {0.0f,  0.0f, 1.0f}},
-				{{ 0.5f, -0.5f,  0.5f},  {0.0f,  0.0f, 1.0f}},
-				{{ 0.5f,  0.5f,  0.5f},  {0.0f,  0.0f, 1.0f}},
-				{{ 0.5f,  0.5f,  0.5f},  {0.0f,  0.0f, 1.0f}},
-				{{-0.5f,  0.5f,  0.5f},  {0.0f,  0.0f, 1.0f}},
-				{{-0.5f, -0.5f,  0.5f},  {0.0f,  0.0f, 1.0f}},
-
-				{{-0.5f,  0.5f,  0.5f}, {-1.0f,  0.0f,  0.0f}},
-				{{-0.5f,  0.5f, -0.5f}, {-1.0f,  0.0f,  0.0f}},
-				{{-0.5f, -0.5f, -0.5f}, {-1.0f,  0.0f,  0.0f}},
-				{{-0.5f, -0.5f, -0.5f}, {-1.0f,  0.0f,  0.0f}},
-				{{-0.5f, -0.5f,  0.5f}, {-1.0f,  0.0f,  0.0f}},
-				{{-0.5f,  0.5f,  0.5f}, {-1.0f,  0.0f,  0.0f}},
-
-				{{ 0.5f,  0.5f,  0.5f},  {1.0f,  0.0f,  0.0f}},
-				{{ 0.5f,  0.5f, -0.5f},  {1.0f,  0.0f,  0.0f}},
-				{{ 0.5f, -0.5f, -0.5f},  {1.0f,  0.0f,  0.0f}},
-				{{ 0.5f, -0.5f, -0.5f},  {1.0f,  0.0f,  0.0f}},
-				{{ 0.5f, -0.5f,  0.5f},  {1.0f,  0.0f,  0.0f}},
-				{{ 0.5f,  0.5f,  0.5f},  {1.0f,  0.0f,  0.0f}},
-
-				{{-0.5f, -0.5f, -0.5f},  {0.0f, -1.0f,  0.0f}},
-				{{ 0.5f, -0.5f, -0.5f},  {0.0f, -1.0f,  0.0f}},
-				{{ 0.5f, -0.5f,  0.5f},  {0.0f, -1.0f,  0.0f}},
-				{{ 0.5f, -0.5f,  0.5f},  {0.0f, -1.0f,  0.0f}},
-				{{-0.5f, -0.5f,  0.5f},  {0.0f, -1.0f,  0.0f}},
-				{{-0.5f, -0.5f, -0.5f},  {0.0f, -1.0f,  0.0f}},
-
-				{{-0.5f,  0.5f, -0.5f},  {0.0f,  1.0f,  0.0f}},
-				{{ 0.5f,  0.5f, -0.5f},  {0.0f,  1.0f,  0.0f}},
-				{{ 0.5f,  0.5f,  0.5f},  {0.0f,  1.0f,  0.0f}},
-				{{ 0.5f,  0.5f,  0.5f},  {0.0f,  1.0f,  0.0f}},
-				{{-0.5f,  0.5f,  0.5f},  {0.0f,  1.0f,  0.0f}},
-				{{-0.5f,  0.5f, -0.5f},  {0.0f,  1.0f,  0.0f}}
-			};
-
-			ARRAY<UI32> _IBO = {
-				0, 1, 2, 3, 4,
-				6, 7, 8, 9, 10,
-				12, 13, 14, 15, 16,
-				18, 19, 20, 21, 22,
-				24, 25, 26, 27, 28,
-				30, 31, 32, 33, 34
-			};
-
-			// initialize vertex buffers
-			for (UI32 _itr = 0; _itr < _object.vertexBufferObjects->size(); _itr++)
-				_renderObject.initializeVertexBufferPN(&_VAO);
+				// initialize vertex buffers
+				for (UI32 _itr = 0; _itr < _object.vertexBufferObjects->size(); _itr++)
+					_renderObject.initializeVertexBuffer(&_object.vertexBufferObjects->at(_itr));
 
 			// initialize index buffers
 			for (UI32 _itr = 0; _itr < _object.indexBufferObjects->size(); _itr++)
-				_renderObject.initializeIndexBufferUI32(&_IBO);
+				_renderObject.initializeIndexBufferUI32(&_object.indexBufferObjects->at(_itr));
 
 			// initialize uniform buffers
 			_renderObject.initializeUniformBuffer();
@@ -804,7 +769,7 @@ namespace Dynamik {
 
 					DMKUpdateInfo info;
 					info.aspectRatio = (F32)myWindowManager.windowWidth / (F32)myWindowManager.windowHeight;
-					_renderObject.updateUniformBuffer(myCamera3D.updateCamera(eventContainer, info), imageIndex);
+					_renderObject.updateUniformBuffer(myCameraReflect.updateCamera(eventContainer, info), imageIndex);
 				}
 				else if (_object.type == DMKObjectType::DMK_OBJECT_TYPE_STATIC_OBJECT)
 				{

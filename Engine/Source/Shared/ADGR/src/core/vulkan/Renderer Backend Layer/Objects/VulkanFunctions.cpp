@@ -116,7 +116,7 @@ namespace Dynamik {
 				imageInfo.mipLevels = info.mipLevels;
 				imageInfo.arrayLayers = info.arrayLayers;
 				imageInfo.format = info.format;
-				imageInfo.initialLayout = VK_IMAGE_LAYOUT_UNDEFINED;
+				imageInfo.initialLayout = info.initialLayout;
 				imageInfo.usage = info.usage;
 				imageInfo.samples = info.numSamples;
 				imageInfo.sharingMode = VK_SHARING_MODE_EXCLUSIVE;

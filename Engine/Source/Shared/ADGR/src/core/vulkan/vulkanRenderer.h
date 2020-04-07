@@ -148,6 +148,8 @@ namespace Dynamik {
 			void initializeObjects();
 			void initializeObjectsBasic();
 
+			ARRAY<Vertex> _skyBoxTest();
+
 			ADGRVulkanRenderableObjectInitInfo RenderableObjectInitInfo();
 
 			void initializeSwapChain();

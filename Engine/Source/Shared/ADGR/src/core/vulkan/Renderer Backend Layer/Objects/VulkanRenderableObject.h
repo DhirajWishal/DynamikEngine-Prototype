@@ -174,6 +174,11 @@ namespace Dynamik {
 				ARRAY<VkDeviceMemory> uniformBufferMemories;
 			};
 
+			struct StaggingBufferContainer {
+				VkBuffer buffer = VK_NULL_HANDLE;
+				VkDeviceMemory bufferMemory = VK_NULL_HANDLE;
+			};
+
 			class VulkanRenderableObject : public GameObject {
 			public:
 				VulkanRenderableObject(ADGRVulkanRenderableObjectInitInfo info)

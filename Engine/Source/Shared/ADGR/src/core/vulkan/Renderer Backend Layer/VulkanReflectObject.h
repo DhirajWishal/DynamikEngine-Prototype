@@ -10,13 +10,16 @@ namespace Dynamik {
 			class VulkanReflectObject : public VulkanRenderableObject {
 			public:
 				VulkanReflectObject(ADGRVulkanRenderableObjectInitInfo info)
-					: VulkanRenderableObject(info) {}
+					: VulkanRenderableObject(info) 
+				{
+					myRenderData.type = DMKObjectType::DMK_OBJECT_TYPE_DEBUG_OBJECT;
+				}
 				~VulkanReflectObject() {}
 
 				void initializeTextures(ARRAY<ADGRVulkanTextureInitInfo> infos) override;
 
-				//void initializeUniformBuffer() override;
-				//void updateUniformBuffer(UBO_MPL uniformBufferObject, UI32 currentImage);
+				void initializeUniformBuffer() override;
+				void updateUniformBuffer(UBO_MPL uniformBufferObject, UI32 currentImage);
 
 				void initializeDescriptorSets(ADGRVulkanDescriptorSetsInitInfo info) override;
 			};

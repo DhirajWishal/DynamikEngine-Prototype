@@ -18,6 +18,8 @@ namespace Dynamik {
 				UI32 width = 0;
 				UI32 height = 0;
 
+				VkImageLayout initialLayout = VK_IMAGE_LAYOUT_UNDEFINED;
+
 				VkFormat format = VK_FORMAT_UNDEFINED;
 				VkImage* image = nullptr;
 				VkDeviceMemory* imageMemory = nullptr;

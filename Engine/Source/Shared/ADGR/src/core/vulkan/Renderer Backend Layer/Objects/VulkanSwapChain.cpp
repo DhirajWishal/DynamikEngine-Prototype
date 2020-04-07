@@ -284,6 +284,7 @@ namespace Dynamik {
 
 				if (info.pushConstantsEnable) {
 					ARRAY<VkPushConstantRange> pushConstantInfos;
+					pushConstantCount = info.pushConstantCount;
 					pushConstants.resize(info.pushConstantCount);
 
 					// initialize push constants
@@ -297,7 +298,10 @@ namespace Dynamik {
 						pushConstantInfos.push_back(pushConsInfo);
 					}
 					pipelineLayoutInfo.pushConstantRangeCount = info.pushConstantCount;	// make support for multiple
-					pipelineLayoutInfo.pPushConstantRanges = pushConstantInfos.data();
+					if (info.pushConstantCount)
+						pipelineLayoutInfo.pPushConstantRanges = pushConstantInfos.data();
+					else
+						pipelineLayoutInfo.pPushConstantRanges = nullptr;
 				}
 
 				// create the pipeline layout

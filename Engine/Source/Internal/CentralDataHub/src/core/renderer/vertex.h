@@ -29,11 +29,11 @@ namespace Dynamik {
 		static ARRAY<VkVertexInputAttributeDescription> getAttributeDescriptions();
 
 		bool operator==(const Vertex& other) const {
-			return Position == other.Position
-				&& Color == other.Color
-				&& TexCoordinates == other.TexCoordinates
-				&& Normals == other.Normals
-				&& Integrity == other.Integrity;
+			return Position			==		other.Position
+				&& Color			==		other.Color
+				&& TexCoordinates	==		other.TexCoordinates
+				&& Normals			==		other.Normals
+				&& Integrity		==		other.Integrity;
 		}
 	};
 
@@ -49,6 +49,30 @@ namespace Dynamik {
 			return position == other.position
 				&& color == other.color
 				&& texCoordinates == other.texCoordinates;
+		}
+	};
+
+	struct VertexP {
+		glm::vec3 position = glm::vec3(0.0f, 0.0f, 0.0f);
+
+		static ARRAY<VkVertexInputBindingDescription> getBindingDescription(int bindCount);
+		static ARRAY<VkVertexInputAttributeDescription> getAttributeDescriptions();
+
+		bool operator==(const VertexP& other) const {
+			return position == other.position;
+		}
+	};
+
+	struct VertexPN {
+		glm::vec3 position = glm::vec3(0.0f, 0.0f, 0.0f);
+		glm::vec3 normal = glm::vec3(0.0f, 0.0f, 0.0f);
+
+		static ARRAY<VkVertexInputBindingDescription> getBindingDescription(int bindCount);
+		static ARRAY<VkVertexInputAttributeDescription> getAttributeDescriptions();
+
+		bool operator==(const VertexPN& other) const {
+			return position == other.position
+				&& normal == other.normal;
 		}
 	};
 

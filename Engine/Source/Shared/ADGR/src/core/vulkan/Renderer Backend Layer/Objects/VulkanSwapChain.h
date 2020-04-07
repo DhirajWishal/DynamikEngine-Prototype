@@ -78,6 +78,7 @@ namespace Dynamik {
 
 				const VkDescriptorSetLayout getDescriptorSetLayout() const { return descriptorSetLayout; }
 				const VkPipelineLayout getPipelineLayout() const { return pipelineLayout; }
+				const UI32 getPushConstantCount() const { return pushConstantCount; }
 
 				static VulkanSwapChainSupportDetails querySwapChainSupport(VkPhysicalDevice* device, VkSurfaceKHR* surface);
 
@@ -103,6 +104,7 @@ namespace Dynamik {
 
 				VkDescriptorSetLayout descriptorSetLayout = VK_NULL_HANDLE;
 				VkPipelineLayout pipelineLayout = VK_NULL_HANDLE;
+				UI32 pushConstantCount = 0;
 			};
 		}
 	}

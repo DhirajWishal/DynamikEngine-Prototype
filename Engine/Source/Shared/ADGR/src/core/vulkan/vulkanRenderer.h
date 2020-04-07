@@ -155,6 +155,9 @@ namespace Dynamik {
 			void initializeColorBuffer();
 			void initializeDepthBuffer();
 
+			ADGRVulkanRenderData initializeSkyboxObject(ADGRVulkan3DObjectData _object);
+			ADGRVulkanRenderData initializeReflectObject(ADGRVulkan3DObjectData _object);
+
 			void draw3D(VkSwapchainKHR swapChain);
 
 			Camera2D myCamera2D;

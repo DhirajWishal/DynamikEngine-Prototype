@@ -89,4 +89,64 @@ namespace Dynamik {
 
 		return attributeDescriptions;
 	}
+
+	ARRAY<VkVertexInputBindingDescription> VertexP::getBindingDescription(int bindCount)
+	{
+		ARRAY<VkVertexInputBindingDescription> bindingDescription(bindCount);
+
+		for (int i = 0; i < bindCount; i++) {
+			bindingDescription[i].binding = i;
+			bindingDescription[i].stride = sizeof(VertexP);
+			bindingDescription[i].inputRate = VK_VERTEX_INPUT_RATE_VERTEX;
+		}
+
+		return bindingDescription;
+	}
+
+	ARRAY<VkVertexInputAttributeDescription> VertexP::getAttributeDescriptions()
+	{
+		ARRAY<VkVertexInputAttributeDescription> attributeDescriptions;
+
+		VkVertexInputAttributeDescription _description = {};
+		_description.binding = 0;
+		_description.location = 0;
+		_description.format = VK_FORMAT_R32G32B32_SFLOAT;
+		_description.offset = offsetof(VertexP, position);
+		attributeDescriptions.pushBack(_description);
+
+		return attributeDescriptions;
+	}
+
+	ARRAY<VkVertexInputBindingDescription> VertexPN::getBindingDescription(int bindCount)
+	{
+		ARRAY<VkVertexInputBindingDescription> bindingDescription(bindCount);
+
+		for (int i = 0; i < bindCount; i++) {
+			bindingDescription[i].binding = i;
+			bindingDescription[i].stride = sizeof(VertexPN);
+			bindingDescription[i].inputRate = VK_VERTEX_INPUT_RATE_VERTEX;
+		}
+
+		return bindingDescription;
+	}
+
+	ARRAY<VkVertexInputAttributeDescription> VertexPN::getAttributeDescriptions()
+	{
+		ARRAY<VkVertexInputAttributeDescription> attributeDescriptions;
+
+		VkVertexInputAttributeDescription _description = {};
+		_description.binding = 0;
+		_description.location = 0;
+		_description.format = VK_FORMAT_R32G32B32_SFLOAT;
+		_description.offset = offsetof(VertexPN, position);
+		attributeDescriptions.pushBack(_description);
+
+		_description.binding = 0;
+		_description.location = 0;
+		_description.format = VK_FORMAT_R32G32B32_SFLOAT;
+		_description.offset = offsetof(VertexPN, normal);
+		attributeDescriptions.pushBack(_description);
+
+		return attributeDescriptions;
+	}
 }

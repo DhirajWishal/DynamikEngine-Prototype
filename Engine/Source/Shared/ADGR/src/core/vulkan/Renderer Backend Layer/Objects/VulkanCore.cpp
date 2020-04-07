@@ -131,7 +131,7 @@ namespace Dynamik {
 
 					// binding descriptor set(s)
 					if (object->descriptors.descriptorSets.size())
-						vkCmdBindDescriptorSets(buffer, VK_PIPELINE_BIND_POINT_GRAPHICS, object->swapChainPointer->getPipelineLayout(), 0, 1, &object->descriptors.descriptorSets[i][index], 0, nullptr);
+						vkCmdBindDescriptorSets(buffer, VK_PIPELINE_BIND_POINT_GRAPHICS, object->swapChainPointer->getPipelineLayout(), 0, 1, &object->descriptors.descriptorSets[index], 0, nullptr);
 
 					// draw command
 					vkCmdDraw(buffer, object->vertexCount, 1, 0, 1);
@@ -149,7 +149,7 @@ namespace Dynamik {
 
 					// binding descriptor set(s)
 					if (object->descriptors.descriptorSets.size())
-						vkCmdBindDescriptorSets(buffer, VK_PIPELINE_BIND_POINT_GRAPHICS, object->swapChainPointer->getPipelineLayout(), 0, 1, &object->descriptors.descriptorSets[i][index], 0, nullptr);
+						vkCmdBindDescriptorSets(buffer, VK_PIPELINE_BIND_POINT_GRAPHICS, object->pipelineLayout, 0, 1, &object->descriptors.descriptorSets[index], 0, nullptr);
 
 					// index buffer bind
 					if (object->indexbufferObjectTypeSize == sizeof(UI8))
@@ -553,9 +553,10 @@ namespace Dynamik {
 						// w component = light radius scale
 
 						/* DRAW COMMANDS */
-							//vkCmdPushConstants(commandBuffers[i], info.objects.at(_itr).pipelineLayout, VK_SHADER_STAGE_VERTEX_BIT, 0, info.objects.at(_itr).pushConstants.size(), info.objects.at(_itr).pushConstants.data());
+						if (info.objects.at(_itr).swapChainPointer->getPushConstantCount())
+							vkCmdPushConstants(commandBuffers[i], info.objects.at(_itr).pipelineLayout, VK_SHADER_STAGE_VERTEX_BIT, 0, info.objects.at(_itr).swapChainPointer->pushConstants.size(), info.objects.at(_itr).swapChainPointer->pushConstants.data());
 
-							// Render type selection
+						// Render type selection
 						if (info.objects.at(_itr).renderTechnology == DMK_ADGR_RENDERING_TECHNOLOGY::DMK_ADGR_RENDER_VERTEX) 		// Render as individual vertexes
 							drawVertex(commandBuffers[i], i, &info.objects.at(_itr), offsets);
 

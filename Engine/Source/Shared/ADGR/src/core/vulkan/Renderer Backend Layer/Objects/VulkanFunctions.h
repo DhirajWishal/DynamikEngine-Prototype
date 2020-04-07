@@ -63,6 +63,7 @@ namespace Dynamik {
 			struct ADGRCopyBufferToImageInfo {
 				VkBuffer buffer;
 				VkImage image;
+				VkImageLayout destinationImageLayout = VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL;
 
 				UI32 width;
 				UI32 height;

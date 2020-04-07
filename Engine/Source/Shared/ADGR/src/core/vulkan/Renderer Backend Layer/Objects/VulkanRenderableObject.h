@@ -26,6 +26,7 @@ namespace Dynamik {
 				ARRAY<VkVertexInputBindingDescription> vertexBindingDescription;
 				ARRAY<VkVertexInputAttributeDescription> vertexAttributeDescription;
 				ARRAY<VulkanShader> shaders;
+				B1 isTexturesAvailable = true;
 
 				// primitive assembly info
 				VkPrimitiveTopology inputAssemblyTopology = VkPrimitiveTopology::VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST;	// Vulkan input assembler topologies
@@ -144,7 +145,7 @@ namespace Dynamik {
 
 			struct ADGRVulkanDescrpitorContainer {
 				ARRAY<VkDescriptorPool> descriptorPools;
-				ARRAY<ARRAY<VkDescriptorSet>> descriptorSets;
+				ARRAY<VkDescriptorSet> descriptorSets;
 			};
 
 			struct ADGRVulkanRenderData {
@@ -167,6 +168,7 @@ namespace Dynamik {
 				ADGRVulkanDescrpitorContainer descriptors;
 
 				VkPipeline pipeline = VK_NULL_HANDLE;
+				VkPipelineLayout pipelineLayout = VK_NULL_HANDLE;
 
 				ARRAY<VkBuffer> uniformBuffers;
 				ARRAY<VkDeviceMemory> uniformBufferMemories;
@@ -188,6 +190,8 @@ namespace Dynamik {
 
 				virtual void initializeVertexBuffer(ARRAY<Vertex>* vertexes);
 				virtual void initializeVertex2DBuffer(ARRAY<vertex2D>* vertexes);
+				virtual void initializeVertexBufferP(ARRAY<VertexP>* vertexes);
+				virtual void initializeVertexBufferPN(ARRAY<VertexPN>* vertexes);
 				virtual void terminateVertexBuffer();
 
 				virtual void initializeIndexBufferUI8(ARRAY<UI8>* indexes);
@@ -208,15 +212,19 @@ namespace Dynamik {
 				void setSwapChainContainer(POINTER<VulkanSwapChain> swapChain) { myRenderData.swapChainPointer = swapChain; }
 				void setRenderData(ADGRVulkanRenderData data) { myRenderData = data; }
 				const ADGRVulkanRenderData getRenderData() const { return myRenderData; }
+				ADGRVulkanRenderData myRenderData;
 
 			protected:
+				virtual void initializeNoTextureDescriptorSetLayout();
+				virtual void initializeNoTexturePipelineLayout();
+
 				VkDevice logicalDevice = VK_NULL_HANDLE;
 				VkPhysicalDevice physicalDevice = VK_NULL_HANDLE;
 				VkCommandPool commandPool = VK_NULL_HANDLE;
 				VkQueue graphicsQueue = VK_NULL_HANDLE;
 				VkQueue presentQueue = VK_NULL_HANDLE;
 
-				ADGRVulkanRenderData myRenderData;
+				VkDescriptorSetLayout noTextureDescriptorSetLayout = VK_NULL_HANDLE;
 			};
 		}
 	}

@@ -117,15 +117,15 @@ namespace Dynamik {
 			while (!myRenderingEngine.getWindowCloseEvent()) {
 				myRenderingEngine.draw();
 				auto events = myRenderingEngine.getEvents();
-			
+
 				myEngine.update();
 				if (events->size())
 					onEvent(events);
-			
+
 				for (auto layer : layerStack)
 					layer->update();
 			}
-			
+
 			myRenderingEngine.idleCall();
 		}
 	}
@@ -450,7 +450,9 @@ namespace Dynamik {
 	}
 
 	bool Application::renderableObjectCheck(internalFormat format) {
-		return (format.myGameObject->myProperties.type == DMKObjectType::DMK_OBJECT_TYPE_MESH)
+		return (format.myGameObject->myProperties.type == DMKObjectType::DMK_OBJECT_TYPE_IMAGE_2D)
+			|| (format.myGameObject->myProperties.type == DMKObjectType::DMK_OBJECT_TYPE_DEBUG_OBJECT)
+			|| (format.myGameObject->myProperties.type == DMKObjectType::DMK_OBJECT_TYPE_MESH)
 			|| (format.myGameObject->myProperties.type == DMKObjectType::DMK_OBJECT_TYPE_STATIC_OBJECT)
 			|| (format.myGameObject->myProperties.type == DMKObjectType::DMK_OBJECT_TYPE_INTERACTIVE_OBJECT)
 			|| (format.myGameObject->myProperties.type == DMKObjectType::DMK_OBJECT_TYPE_PLAYER)

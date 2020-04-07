@@ -7,11 +7,11 @@ namespace Dynamik {
 	namespace ADGR {
 		namespace Backend {
 			VulkanSkyBox::VulkanSkyBox(ADGRVulkanRenderableObjectInitInfo info)
-				: VulkanRenderableObject(info) 
+				: VulkanRenderableObject(info)
 			{
 				myRenderData.type = DMKObjectType::DMK_OBJECT_TYPE_SKYBOX;
 			}
-			
+
 			void VulkanSkyBox::initializeTextures(ARRAY<ADGRVulkanTextureInitInfo> infos)
 			{
 				VkPhysicalDeviceFeatures _features;
@@ -125,6 +125,7 @@ namespace Dynamik {
 					ADGRCopyBufferToImageInfo cpyInfo;
 					cpyInfo.buffer = stagingBuffer;
 					cpyInfo.image = _container.image;
+					cpyInfo.destinationImageLayout = VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL;
 					VulkanFunctions::copyBufferToImageOverride(logicalDevice, commandPool, graphicsQueue, presentQueue, cpyInfo, bufferCopyRegions);
 
 					//generateMipMaps(&_container);
@@ -159,6 +160,96 @@ namespace Dynamik {
 				}
 			}
 
+			struct StaggingBufferContainer {
+				VkBuffer buffer = VK_NULL_HANDLE;
+				VkDeviceMemory bufferMemory = VK_NULL_HANDLE;
+			};
+
+			ADGRVulkanTextureContainer VulkanSkyBox::loadCubeMapImage(ARRAY<std::string> paths, VkFormat format)
+			{
+				ARRAY<StaggingBufferContainer> bufferContainers;
+				UI32 width = 0;
+				UI32 height = 0;
+
+				for (const std::string& path : paths)
+				{
+					resource::TextureData texData;
+					unsigned char* pixels = nullptr;
+
+					if (format == VK_FORMAT_R8G8B8A8_UNORM)
+						pixels = texData.loadTexture((path), resource::TEXTURE_TYPE_RGBA);
+					else if (format == VK_FORMAT_R8G8B8_UNORM)
+						pixels = texData.loadTexture((path), resource::TEXTURE_TYPE_RGB);
+					else
+						DMK_CORE_FATAL("Invalid texture format!");
+
+					VkDeviceSize imageSize = texData.size;
+
+					if (!pixels)
+						DMK_CORE_FATAL("failed to load texture image!");
+
+					StaggingBufferContainer _container;
+
+					ADGRCreateBufferInfo bufferInfo;
+					bufferInfo.bufferSize = imageSize;
+					bufferInfo.usage = VK_BUFFER_USAGE_TRANSFER_SRC_BIT;
+					bufferInfo.bufferMemoryPropertyflags = VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT;
+					bufferInfo.buffer = &_container.buffer;
+					bufferInfo.bufferMemory = &_container.bufferMemory;
+
+					VulkanFunctions::createBuffer(logicalDevice, physicalDevice, bufferInfo);
+
+					void* data;
+					if (vkMapMemory(logicalDevice, _container.bufferMemory, 0, static_cast<size_t>(imageSize), 0, &data) != VK_SUCCESS)
+						DMK_CORE_FATAL("Failed to map memory!");
+					memcpy(data, pixels, static_cast<size_t>(imageSize));
+					vkUnmapMemory(logicalDevice, _container.bufferMemory);
+
+					texData.freeData(pixels);
+					bufferContainers.pushBack(_container);
+				}
+
+				ADGRVulkanTextureContainer _container;
+
+				ADGRCreateImageInfo cinfo;
+				cinfo.width = width;
+				cinfo.height = height;
+				cinfo.format = format;
+				cinfo.tiling = VK_IMAGE_TILING_OPTIMAL;
+				cinfo.usage = VK_IMAGE_USAGE_TRANSFER_SRC_BIT | VK_IMAGE_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT;
+				cinfo.properties = VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT;
+				cinfo.image = &_container.image;
+				cinfo.imageMemory = &_container.imageMemory;
+				cinfo.mipLevels = 1;
+				cinfo.numSamples = VK_SAMPLE_COUNT_1_BIT;
+				cinfo.flags = NULL;
+
+				VulkanFunctions::createImage(logicalDevice, physicalDevice, cinfo);
+
+				ADGRTransitionImageLayoutInfo transitionInfo;
+				transitionInfo.image = _container.image;
+				transitionInfo.format = _container.format;
+				transitionInfo.oldLayout = VK_IMAGE_LAYOUT_UNDEFINED;
+				transitionInfo.newLayout = VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL;
+				transitionInfo.mipLevels = 1;
+				transitionInfo.layerCount = 6;
+				VulkanFunctions::transitionImageLayout(logicalDevice, commandPool, graphicsQueue, presentQueue, transitionInfo);
+
+				for (StaggingBufferContainer _bufferContainer : bufferContainers)
+				{
+					ADGRCopyBufferToImageInfo cpyInfo;
+					cpyInfo.buffer = _bufferContainer.buffer;
+					cpyInfo.image = _container.image;
+					cpyInfo.width = width;
+					cpyInfo.height = height;
+					VulkanFunctions::copyBufferToImage(logicalDevice, commandPool, graphicsQueue, presentQueue, cpyInfo);
+
+					vkDestroyBuffer(logicalDevice, _bufferContainer.buffer, nullptr);
+					vkFreeMemory(logicalDevice, _bufferContainer.bufferMemory, nullptr);
+				}
+				return _container;
+			}
+
 			void VulkanSkyBox::initializeUniformBuffer()
 			{
 				VkDeviceSize bufferSize = sizeof(UBO_MP);
@@ -190,70 +281,76 @@ namespace Dynamik {
 
 			void VulkanSkyBox::initializeDescriptorSets(ADGRVulkanDescriptorSetsInitInfo info)
 			{
-				std::vector<VkDescriptorSetLayout> layouts(myRenderData.uniformBuffers.size(), myRenderData.swapChainPointer->getDescriptorSetLayout());
-				myRenderData.descriptors.descriptorSets.resize(myRenderData.textures.size());
+				myRenderData.descriptors.descriptorSets.resize(myRenderData.uniformBuffers.size());
 
-				for (UI32 itr = 0; itr < myRenderData.textures.size(); itr++) {
-					for (size_t i = 0; i < myRenderData.uniformBuffers.size(); i++) {
-						VkDescriptorSetLayout _layout = myRenderData.swapChainPointer->getDescriptorSetLayout();
+				VkDescriptorSetLayout _layout = VK_NULL_HANDLE;
+				if (myRenderData.textures.size())
+					_layout = myRenderData.swapChainPointer->getDescriptorSetLayout();
+				else
+					_layout = noTextureDescriptorSetLayout;
 
-						VkDescriptorSetAllocateInfo allocInfo = {};
-						allocInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_ALLOCATE_INFO;
-						allocInfo.descriptorPool = myRenderData.descriptors.descriptorPools[i];
-						allocInfo.descriptorSetCount = 1;
-						allocInfo.pSetLayouts = &_layout;
+				for (UI32 itr = 0; itr < myRenderData.uniformBuffers.size(); itr++) {
+					VkDescriptorSetAllocateInfo allocInfo = {};
+					allocInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_ALLOCATE_INFO;
+					allocInfo.descriptorPool = myRenderData.descriptors.descriptorPools[itr];
+					allocInfo.descriptorSetCount = 1;
+					allocInfo.pSetLayouts = &_layout;
 
-						VkDescriptorSet _descriptorSet = VK_NULL_HANDLE;
-						if (vkAllocateDescriptorSets(logicalDevice, &allocInfo, &_descriptorSet) != VK_SUCCESS)
-							DMK_CORE_FATAL("failed to allocate descriptor sets!");
+					VkDescriptorSet _descriptorSet = VK_NULL_HANDLE;
+					if (vkAllocateDescriptorSets(logicalDevice, &allocInfo, &_descriptorSet) != VK_SUCCESS)
+						DMK_CORE_FATAL("failed to allocate descriptor sets!");
 
-						VkDescriptorBufferInfo bufferInfo = {};
-						bufferInfo.buffer = myRenderData.uniformBuffers[i];
-						bufferInfo.offset = 0;
-						bufferInfo.range = sizeof(UBO_MP);
+					VkDescriptorBufferInfo bufferInfo = {};
+					bufferInfo.buffer = myRenderData.uniformBuffers[itr];
+					bufferInfo.offset = 0;
+					bufferInfo.range = sizeof(UBO_MP);
 
-						VkDescriptorImageInfo imageInfo = {};
-						imageInfo.imageLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
-						imageInfo.imageView = myRenderData.textures[itr].imageView;
-						imageInfo.sampler = myRenderData.textures[itr].imageSampler;
+					ARRAY<VkWriteDescriptorSet> descriptorWrites = {};
 
-						ARRAY<VkWriteDescriptorSet> descriptorWrites = {};
+					VkWriteDescriptorSet _writes1;
+					_writes1.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
+					_writes1.dstSet = _descriptorSet;
+					_writes1.dstBinding = 0;
+					_writes1.dstArrayElement = 0;
+					_writes1.descriptorType = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;
+					_writes1.descriptorCount = 1;
+					_writes1.pBufferInfo = &bufferInfo;
+					_writes1.pNext = VK_NULL_HANDLE;
+					_writes1.pImageInfo = VK_NULL_HANDLE;
+					_writes1.pTexelBufferView = VK_NULL_HANDLE;
+					descriptorWrites.push_back(_writes1);
 
-						VkWriteDescriptorSet _writes1;
-						_writes1.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
-						_writes1.dstSet = _descriptorSet;
-						_writes1.dstBinding = 0;
-						_writes1.dstArrayElement = 0;
-						_writes1.descriptorType = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;
-						_writes1.descriptorCount = 1;
-						_writes1.pBufferInfo = &bufferInfo;
-						_writes1.pNext = VK_NULL_HANDLE;
-						_writes1.pImageInfo = VK_NULL_HANDLE;
-						_writes1.pTexelBufferView = VK_NULL_HANDLE;
+					if (myRenderData.textures.size())
+					{
+						for (UI32 _texIndex = 0; _texIndex < myRenderData.textures.size(); _texIndex++)
+						{
+							VkDescriptorImageInfo imageInfo = {};
+							imageInfo.imageLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
+							imageInfo.imageView = myRenderData.textures[_texIndex].imageView;
+							imageInfo.sampler = myRenderData.textures[_texIndex].imageSampler;
 
-						VkWriteDescriptorSet _writes2;
-						_writes2.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
-						_writes2.dstSet = _descriptorSet;
-						_writes2.dstBinding = 1;
-						_writes2.dstArrayElement = 0;
-						_writes2.descriptorType = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
-						_writes2.descriptorCount = 1;
-						_writes2.pImageInfo = &imageInfo;
-						_writes2.pNext = VK_NULL_HANDLE;
-						_writes2.pTexelBufferView = VK_NULL_HANDLE;
+							VkWriteDescriptorSet _writes2;
+							_writes2.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
+							_writes2.dstSet = _descriptorSet;
+							_writes2.dstBinding = 1;
+							_writes2.dstArrayElement = 0;
+							_writes2.descriptorType = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
+							_writes2.descriptorCount = 1;
+							_writes2.pImageInfo = &imageInfo;
+							_writes2.pNext = VK_NULL_HANDLE;
+							_writes2.pTexelBufferView = VK_NULL_HANDLE;
+							descriptorWrites.push_back(_writes2);
+						}
+					}
 
-						descriptorWrites.push_back(_writes1);
-						descriptorWrites.push_back(_writes2);
+					for (VkWriteDescriptorSet _write : info.additionalWrites)
+						descriptorWrites.push_back(_write);
 
-						for (VkWriteDescriptorSet _write : info.additionalWrites)
-							descriptorWrites.push_back(_write);
+					vkUpdateDescriptorSets(logicalDevice, static_cast<UI32>(descriptorWrites.size()),
+						descriptorWrites.data(), 0, nullptr);
 
-						vkUpdateDescriptorSets(logicalDevice, static_cast<UI32>(descriptorWrites.size()),
-							descriptorWrites.data(), 0, nullptr);
-
-						myRenderData.descriptors.descriptorSets[itr].pushBack(_descriptorSet);
-					} // make two descriptor layouts for each descriptor set
-				}
+					myRenderData.descriptors.descriptorSets.pushBack(_descriptorSet);
+				} // make two descriptor layouts for each descriptor set
 			}
 		}
 	}

@@ -13,8 +13,10 @@ namespace Dynamik {
 					: VulkanRenderableObject(info) {}
 				~VulkanReflectObject() {}
 
-				void initializeUniformBuffer() override;
-				void updateUniformBuffer(UBO_MPL uniformBufferObject, UI32 currentImage);
+				void initializeTextures(ARRAY<ADGRVulkanTextureInitInfo> infos) override;
+
+				//void initializeUniformBuffer() override;
+				//void updateUniformBuffer(UBO_MPL uniformBufferObject, UI32 currentImage);
 
 				void initializeDescriptorSets(ADGRVulkanDescriptorSetsInitInfo info) override;
 			};

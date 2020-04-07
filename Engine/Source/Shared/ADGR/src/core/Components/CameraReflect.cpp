@@ -66,8 +66,10 @@ namespace Dynamik {
 						cameraPos -= cameraSpeed * cameraUp;
 						break;
 					case DMK_KEY_LEFT:
+						bias += 0.5f;
 						break;
 					case DMK_KEY_RIGHT:
+						bias -= 0.5f;
 						break;
 					}
 				}

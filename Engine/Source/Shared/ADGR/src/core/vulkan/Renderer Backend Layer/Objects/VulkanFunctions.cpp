@@ -264,7 +264,7 @@ namespace Dynamik {
 					commandBuffer,
 					info.buffer,
 					info.image,
-					VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL,
+					info.destinationImageLayout,
 					1,
 					&region
 				);
@@ -279,7 +279,7 @@ namespace Dynamik {
 					commandBuffer,
 					info.buffer,
 					info.image,
-					VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL,
+					info.destinationImageLayout,
 					copyRegions.size(),
 					copyRegions.data());
 			}

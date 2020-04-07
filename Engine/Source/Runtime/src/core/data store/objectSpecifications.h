@@ -15,6 +15,9 @@ namespace Dynamik {
 
 	// Object types:
 	enum class DMKObjectType {
+		DMK_OBJECT_TYPE_IMAGE_2D,
+		DMK_OBJECT_TYPE_DEBUG_OBJECT,
+
 		DMK_OBJECT_TYPE_MESH,					// per object ubo
 		DMK_OBJECT_TYPE_STATIC_OBJECT,			// terrain ubo
 		DMK_OBJECT_TYPE_INTERACTIVE_OBJECT,		// per object ubo
@@ -34,6 +37,8 @@ namespace Dynamik {
 		DMK_OBJECT_TYPE_AI,
 		DMK_OBJECT_TYPE_SCRIPT,
 		DMK_OBJECT_TYPE_KEY_BINDINGS,
+
+
 		DMK_OBJECT_TYPE_CUSTOM
 	};
 

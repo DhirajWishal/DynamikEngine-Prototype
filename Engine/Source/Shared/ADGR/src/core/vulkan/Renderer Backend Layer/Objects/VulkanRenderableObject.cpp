@@ -140,12 +140,22 @@ namespace Dynamik {
 				pipelineInfo.pMultisampleState = &multisampling;
 				pipelineInfo.pDepthStencilState = &depthStencil;
 				pipelineInfo.pColorBlendState = &colorBlending;
-				pipelineInfo.layout = myRenderData.swapChainPointer->getPipelineLayout();
 				pipelineInfo.renderPass = myRenderData.swapChainPointer->getRenderPass();
 				pipelineInfo.subpass = info.pipelineSubPass;
 				pipelineInfo.basePipelineHandle = info.pipelineBasePipelineHandle;
 				pipelineInfo.basePipelineIndex = info.pipelineBasePipelineIndex;
 				pipelineInfo.pTessellationState = nullptr;
+
+				if (!info.isTexturesAvailable)
+				{
+					initializeNoTextureDescriptorSetLayout();
+					initializeNoTexturePipelineLayout();
+				}
+				else
+				{
+					myRenderData.pipelineLayout = myRenderData.swapChainPointer->getPipelineLayout();
+				}
+				pipelineInfo.layout = myRenderData.pipelineLayout;
 
 				if (info.dynamicStateEnable)
 					pipelineInfo.pDynamicState = &dynamicStateInfo;
@@ -260,7 +270,6 @@ namespace Dynamik {
 					cinfo2.format = _container.format;
 					cinfo2.mipLevels = _container.mipLevels;
 					cinfo2.aspectFlags = info.aspectFlags;
-
 					_container.imageView = VulkanFunctions::createImageView(logicalDevice, cinfo2);
 
 					myRenderData.textures.pushBack(_container);
@@ -418,6 +427,92 @@ namespace Dynamik {
 			}
 
 			void VulkanRenderableObject::initializeVertex2DBuffer(ARRAY<vertex2D>* vertexes)
+			{
+				VkBuffer _buffer = VK_NULL_HANDLE;
+				VkDeviceMemory _bufferMemory = VK_NULL_HANDLE;
+
+				myRenderData.vertexCount = vertexes->size();
+				VkDeviceSize bufferSize = myRenderData.vertexCount * vertexes->typeSize();
+
+				VkBuffer stagingBuffer;
+				VkDeviceMemory stagingBufferMemory;
+
+				ADGRCreateBufferInfo bufferInfo;
+				bufferInfo.bufferSize = bufferSize;
+				bufferInfo.usage = VK_BUFFER_USAGE_TRANSFER_SRC_BIT;
+				bufferInfo.bufferMemoryPropertyflags = VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT;
+				bufferInfo.buffer = &stagingBuffer;
+				bufferInfo.bufferMemory = &stagingBufferMemory;
+
+				VulkanFunctions::createBuffer(logicalDevice, physicalDevice, bufferInfo);
+
+				void* data = nullptr;
+				vkMapMemory(logicalDevice, stagingBufferMemory, 0, bufferSize, 0, &data);
+				memcpy(data, vertexes->data(), (size_t)bufferSize);
+				vkUnmapMemory(logicalDevice, stagingBufferMemory);
+
+				ADGRCreateBufferInfo vertBufferInfo;
+				vertBufferInfo.bufferSize = bufferSize;
+				vertBufferInfo.usage = (VkBufferUsageFlagBits)(VK_BUFFER_USAGE_TRANSFER_DST_BIT | VK_BUFFER_USAGE_VERTEX_BUFFER_BIT);
+				vertBufferInfo.bufferMemoryPropertyflags = VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT;
+				vertBufferInfo.buffer = &_buffer;
+				vertBufferInfo.bufferMemory = &_bufferMemory;
+
+				VulkanFunctions::createBuffer(logicalDevice, physicalDevice, vertBufferInfo);
+
+				VulkanFunctions::copyBuffer(logicalDevice, commandPool, graphicsQueue, presentQueue, stagingBuffer, _buffer, bufferSize);
+
+				vkDestroyBuffer(logicalDevice, stagingBuffer, nullptr);
+				vkFreeMemory(logicalDevice, stagingBufferMemory, nullptr);
+
+				myRenderData.vertexBuffers.pushBack(_buffer);
+				myRenderData.vertexBufferMemories.pushBack(_bufferMemory);
+			}
+
+			void VulkanRenderableObject::initializeVertexBufferP(ARRAY<VertexP>* vertexes)
+			{
+				VkBuffer _buffer = VK_NULL_HANDLE;
+				VkDeviceMemory _bufferMemory = VK_NULL_HANDLE;
+
+				myRenderData.vertexCount = vertexes->size();
+				VkDeviceSize bufferSize = myRenderData.vertexCount * vertexes->typeSize();
+
+				VkBuffer stagingBuffer;
+				VkDeviceMemory stagingBufferMemory;
+
+				ADGRCreateBufferInfo bufferInfo;
+				bufferInfo.bufferSize = bufferSize;
+				bufferInfo.usage = VK_BUFFER_USAGE_TRANSFER_SRC_BIT;
+				bufferInfo.bufferMemoryPropertyflags = VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT;
+				bufferInfo.buffer = &stagingBuffer;
+				bufferInfo.bufferMemory = &stagingBufferMemory;
+
+				VulkanFunctions::createBuffer(logicalDevice, physicalDevice, bufferInfo);
+
+				void* data = nullptr;
+				vkMapMemory(logicalDevice, stagingBufferMemory, 0, bufferSize, 0, &data);
+				memcpy(data, vertexes->data(), (size_t)bufferSize);
+				vkUnmapMemory(logicalDevice, stagingBufferMemory);
+
+				ADGRCreateBufferInfo vertBufferInfo;
+				vertBufferInfo.bufferSize = bufferSize;
+				vertBufferInfo.usage = (VkBufferUsageFlagBits)(VK_BUFFER_USAGE_TRANSFER_DST_BIT | VK_BUFFER_USAGE_VERTEX_BUFFER_BIT);
+				vertBufferInfo.bufferMemoryPropertyflags = VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT;
+				vertBufferInfo.buffer = &_buffer;
+				vertBufferInfo.bufferMemory = &_bufferMemory;
+
+				VulkanFunctions::createBuffer(logicalDevice, physicalDevice, vertBufferInfo);
+
+				VulkanFunctions::copyBuffer(logicalDevice, commandPool, graphicsQueue, presentQueue, stagingBuffer, _buffer, bufferSize);
+
+				vkDestroyBuffer(logicalDevice, stagingBuffer, nullptr);
+				vkFreeMemory(logicalDevice, stagingBufferMemory, nullptr);
+
+				myRenderData.vertexBuffers.pushBack(_buffer);
+				myRenderData.vertexBufferMemories.pushBack(_bufferMemory);
+			}
+
+			void VulkanRenderableObject::initializeVertexBufferPN(ARRAY<VertexPN>* vertexes)
 			{
 				VkBuffer _buffer = VK_NULL_HANDLE;
 				VkDeviceMemory _bufferMemory = VK_NULL_HANDLE;
@@ -656,110 +751,119 @@ namespace Dynamik {
 
 			void VulkanRenderableObject::initializeDescriptorPool(ADGRVulkanDescriptorPoolInitInfo info)
 			{
-				UI32 poolCount = myRenderData.uniformBuffers.size();
-				for (UI32 itr = 0; itr < poolCount; itr++) {
+				for (UI32 _itr = 0; _itr < myRenderData.uniformBuffers.size(); _itr++)
+				{
 					ARRAY<VkDescriptorPoolSize> poolSizes = {};
+
 					VkDescriptorPoolSize _poolSize1;
 					_poolSize1.type = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;
-					_poolSize1.descriptorCount = static_cast<UI32>(poolCount);
-
-					VkDescriptorPoolSize _poolSize2;
-					_poolSize2.type = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
-					_poolSize2.descriptorCount = static_cast<UI32>(poolCount);
-
+					_poolSize1.descriptorCount = 1;
 					poolSizes.push_back(_poolSize1);
-					poolSizes.push_back(_poolSize2);
+
+					if (myRenderData.textures.size())
+					{
+						VkDescriptorPoolSize _poolSize2;
+						_poolSize2.type = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
+						_poolSize2.descriptorCount = myRenderData.textures.size();
+
+						poolSizes.push_back(_poolSize2);
+					}
 
 					for (VkDescriptorPoolSize _size : info.additionalSizes)
 						poolSizes.push_back(_size);
 
 					VkDescriptorPoolCreateInfo poolInfo = {};
 					poolInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_POOL_CREATE_INFO;
-					poolInfo.poolSizeCount = static_cast<UI32>(poolSizes.size());
+					poolInfo.poolSizeCount = poolSizes.size();
 					poolInfo.pPoolSizes = poolSizes.data();
-					poolInfo.maxSets = static_cast<UI32>(poolCount);
+					poolInfo.maxSets = 1;
 
 					VkDescriptorPool _localDescriptorPool = VK_NULL_HANDLE;
-
 					if (vkCreateDescriptorPool(logicalDevice, &poolInfo, nullptr, &_localDescriptorPool) != VK_SUCCESS)
 						DMK_CORE_FATAL("failed to create descriptor pool!");
 
-					myRenderData.descriptors.descriptorPools.push_back(_localDescriptorPool);
+					myRenderData.descriptors.descriptorPools.pushBack(_localDescriptorPool);
 				}
 			}
 
 			void VulkanRenderableObject::terminateDescriptorPool()
 			{
-				for (auto descriptorPool : myRenderData.descriptors.descriptorPools)
-					vkDestroyDescriptorPool(logicalDevice, descriptorPool, nullptr);
+				for(VkDescriptorPool _pool : myRenderData.descriptors.descriptorPools)
+				vkDestroyDescriptorPool(logicalDevice, _pool, nullptr);
 			}
 
 			void VulkanRenderableObject::initializeDescriptorSets(ADGRVulkanDescriptorSetsInitInfo info)
 			{
-				std::vector<VkDescriptorSetLayout> layouts(myRenderData.uniformBuffers.size(), myRenderData.swapChainPointer->getDescriptorSetLayout());
-				myRenderData.descriptors.descriptorSets.resize(myRenderData.textures.size());
+				myRenderData.descriptors.descriptorSets.resize(myRenderData.uniformBuffers.size());
 
-				for (UI32 itr = 0; itr < myRenderData.textures.size(); itr++) {
-					for (size_t i = 0; i < myRenderData.uniformBuffers.size(); i++) {
-						VkDescriptorSetLayout _layout = myRenderData.swapChainPointer->getDescriptorSetLayout();
+				VkDescriptorSetLayout _layout = VK_NULL_HANDLE;
+				if (myRenderData.textures.size())
+					_layout = myRenderData.swapChainPointer->getDescriptorSetLayout();
+				else
+					_layout = noTextureDescriptorSetLayout;
 
-						VkDescriptorSetAllocateInfo allocInfo = {};
-						allocInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_ALLOCATE_INFO;
-						allocInfo.descriptorPool = myRenderData.descriptors.descriptorPools[i];
-						allocInfo.descriptorSetCount = 1;
-						allocInfo.pSetLayouts = &_layout;
+				for (UI32 itr = 0; itr < myRenderData.uniformBuffers.size(); itr++) {
+					VkDescriptorSetAllocateInfo allocInfo = {};
+					allocInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_ALLOCATE_INFO;
+					allocInfo.descriptorPool = myRenderData.descriptors.descriptorPools[itr];
+					allocInfo.descriptorSetCount = 1;
+					allocInfo.pSetLayouts = &_layout;
 
-						VkDescriptorSet _descriptorSet = VK_NULL_HANDLE;
-						if (vkAllocateDescriptorSets(logicalDevice, &allocInfo, &_descriptorSet) != VK_SUCCESS)
-							DMK_CORE_FATAL("failed to allocate descriptor sets!");
+					VkDescriptorSet _descriptorSet = VK_NULL_HANDLE;
+					if (vkAllocateDescriptorSets(logicalDevice, &allocInfo, &_descriptorSet) != VK_SUCCESS)
+						DMK_CORE_FATAL("failed to allocate descriptor sets!");
 
-						VkDescriptorBufferInfo bufferInfo = {};
-						bufferInfo.buffer = myRenderData.uniformBuffers[i];
-						bufferInfo.offset = 0;
-						bufferInfo.range = sizeof(UniformBufferObject);
+					VkDescriptorBufferInfo bufferInfo = {};
+					bufferInfo.buffer = myRenderData.uniformBuffers[itr];
+					bufferInfo.offset = 0;
+					bufferInfo.range = sizeof(UniformBufferObject);
 
-						VkDescriptorImageInfo imageInfo = {};
-						imageInfo.imageLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
-						imageInfo.imageView = myRenderData.textures[itr].imageView;
-						imageInfo.sampler = myRenderData.textures[itr].imageSampler;
+					ARRAY<VkWriteDescriptorSet> descriptorWrites = {};
 
-						ARRAY<VkWriteDescriptorSet> descriptorWrites = {};
+					VkWriteDescriptorSet _writes1;
+					_writes1.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
+					_writes1.dstSet = _descriptorSet;
+					_writes1.dstBinding = 0;
+					_writes1.dstArrayElement = 0;
+					_writes1.descriptorType = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;
+					_writes1.descriptorCount = 1;
+					_writes1.pBufferInfo = &bufferInfo;
+					_writes1.pNext = VK_NULL_HANDLE;
+					_writes1.pImageInfo = VK_NULL_HANDLE;
+					_writes1.pTexelBufferView = VK_NULL_HANDLE;
+					descriptorWrites.push_back(_writes1);
 
-						VkWriteDescriptorSet _writes1;
-						_writes1.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
-						_writes1.dstSet = _descriptorSet;
-						_writes1.dstBinding = 0;
-						_writes1.dstArrayElement = 0;
-						_writes1.descriptorType = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;
-						_writes1.descriptorCount = 1;
-						_writes1.pBufferInfo = &bufferInfo;
-						_writes1.pNext = VK_NULL_HANDLE;
-						_writes1.pImageInfo = VK_NULL_HANDLE;
-						_writes1.pTexelBufferView = VK_NULL_HANDLE;
+					if (myRenderData.textures.size())
+					{
+						for (UI32 _texIndex = 0; _texIndex < myRenderData.textures.size(); _texIndex++)
+						{
+							VkDescriptorImageInfo imageInfo = {};
+							imageInfo.imageLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
+							imageInfo.imageView = myRenderData.textures[_texIndex].imageView;
+							imageInfo.sampler = myRenderData.textures[_texIndex].imageSampler;
 
-						VkWriteDescriptorSet _writes2;
-						_writes2.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
-						_writes2.dstSet = _descriptorSet;
-						_writes2.dstBinding = 1;
-						_writes2.dstArrayElement = 0;
-						_writes2.descriptorType = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
-						_writes2.descriptorCount = 1;
-						_writes2.pImageInfo = &imageInfo;
-						_writes2.pNext = VK_NULL_HANDLE;
-						_writes2.pTexelBufferView = VK_NULL_HANDLE;
+							VkWriteDescriptorSet _writes2;
+							_writes2.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
+							_writes2.dstSet = _descriptorSet;
+							_writes2.dstBinding = 1;
+							_writes2.dstArrayElement = 0;
+							_writes2.descriptorType = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
+							_writes2.descriptorCount = 1;
+							_writes2.pImageInfo = &imageInfo;
+							_writes2.pNext = VK_NULL_HANDLE;
+							_writes2.pTexelBufferView = VK_NULL_HANDLE;
+							descriptorWrites.push_back(_writes2);
+						}
+					}
 
-						descriptorWrites.push_back(_writes1);
-						descriptorWrites.push_back(_writes2);
+					for (VkWriteDescriptorSet _write : info.additionalWrites)
+						descriptorWrites.push_back(_write);
 
-						for (VkWriteDescriptorSet _write : info.additionalWrites)
-							descriptorWrites.push_back(_write);
+					vkUpdateDescriptorSets(logicalDevice, static_cast<UI32>(descriptorWrites.size()),
+						descriptorWrites.data(), 0, nullptr);
 
-						vkUpdateDescriptorSets(logicalDevice, static_cast<UI32>(descriptorWrites.size()),
-							descriptorWrites.data(), 0, nullptr);
-
-						myRenderData.descriptors.descriptorSets[itr].pushBack(_descriptorSet);
-					} // make two descriptor layouts for each descriptor set
-				}
+					myRenderData.descriptors.descriptorSets.pushBack(_descriptorSet);
+				} // make two descriptor layouts for each descriptor set
 			}
 
 			void VulkanRenderableObject::initializeUniformBuffer()
@@ -797,6 +901,64 @@ namespace Dynamik {
 					vkDestroyBuffer(logicalDevice, myRenderData.uniformBuffers[x], nullptr);
 					vkFreeMemory(logicalDevice, myRenderData.uniformBufferMemories[x], nullptr);
 				}
+			}
+
+			void VulkanRenderableObject::initializeNoTextureDescriptorSetLayout()
+			{
+				VkDescriptorSetLayoutBinding uboLayoutBinding = {};
+				uboLayoutBinding.binding = 0; // info.bindIndex;
+				uboLayoutBinding.descriptorCount = 1;
+				uboLayoutBinding.descriptorType = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;
+				uboLayoutBinding.pImmutableSamplers = nullptr; // Optional
+				uboLayoutBinding.stageFlags = VK_SHADER_STAGE_VERTEX_BIT;
+
+				ARRAY<VkDescriptorSetLayoutBinding> bindings;
+				bindings.push_back(uboLayoutBinding);
+
+				VkDescriptorSetLayoutCreateInfo layoutInfo = {};
+				layoutInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_LAYOUT_CREATE_INFO;
+				layoutInfo.bindingCount = static_cast<UI32>(bindings.size());
+				layoutInfo.pBindings = bindings.data();
+
+				if (vkCreateDescriptorSetLayout(logicalDevice, &layoutInfo, nullptr, &noTextureDescriptorSetLayout) != VK_SUCCESS)
+					DMK_CORE_FATAL("failed to create descriptor set layout!");
+			}
+
+			void VulkanRenderableObject::initializeNoTexturePipelineLayout()
+			{
+				VkPipelineLayoutCreateInfo pipelineLayoutInfo = {};
+				pipelineLayoutInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO;
+				pipelineLayoutInfo.setLayoutCount = 1;
+				pipelineLayoutInfo.pSetLayouts = &noTextureDescriptorSetLayout;
+
+				/*
+				if (false) {
+					ARRAY<VkPushConstantRange> pushConstantInfos;
+					pushConstants.resize(info.pushConstantCount);
+
+					// initialize push constants
+					for (I32 i = 0; i <= info.pushConstantCount; i++) {
+						VkPushConstantRange pushConsInfo = {};
+						pushConsInfo.stageFlags = VK_SHADER_STAGE_VERTEX_BIT;
+						pushConsInfo.size = pushConstants.typeSize() * info.pushConstantCount;
+						pushConsInfo.offset = info.pushConstantOffset;
+						//pushConsInfo.offset = pushConstants.typeSize() * i;
+
+						pushConstantInfos.push_back(pushConsInfo);
+					}
+					pipelineLayoutInfo.pushConstantRangeCount = info.pushConstantCount;	// make support for multiple
+					pipelineLayoutInfo.pPushConstantRanges = pushConstantInfos.data();
+				}*/
+
+				pipelineLayoutInfo.pushConstantRangeCount = 0;	// make support for multiple
+				pipelineLayoutInfo.pPushConstantRanges = nullptr;
+
+				// create the pipeline layout
+				VkPipelineLayout _pipelineLayout = VK_NULL_HANDLE;
+				if (vkCreatePipelineLayout(logicalDevice, &pipelineLayoutInfo, nullptr, &_pipelineLayout) != VK_SUCCESS)
+					DMK_CORE_FATAL("failed to create pipeline layout!");
+
+				myRenderData.pipelineLayout = _pipelineLayout;
 			}
 		}
 	}

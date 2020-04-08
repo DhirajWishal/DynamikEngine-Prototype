@@ -76,6 +76,19 @@ namespace Dynamik {
 		}
 	};
 
+	struct VertexP2N2 {
+		glm::vec2 position;
+		glm::vec2 normal;
+
+		static ARRAY<VkVertexInputBindingDescription> getBindingDescription(int bindCount);
+		static ARRAY<VkVertexInputAttributeDescription> getAttributeDescriptions();
+
+		bool operator==(const VertexP2N2& other) const {
+			return position == other.position
+				&& normal == other.normal;
+		}
+	};
+
 	class DMKVertex {
 	public:
 		DMKVertex() {}

@@ -17,6 +17,7 @@ namespace Dynamik {
 			struct ADGRVulkanRenderPassInitInfo {
 				UI32 destinationSubpass = 0;
 				VkAccessFlags accessFlags = 0;
+				B1 overrideDependencies = false;
 
 				ARRAY<VkAttachmentDescription> attachments;
 
@@ -27,10 +28,13 @@ namespace Dynamik {
 			struct ADGRVulkanFrameBufferInitInfo {
 				ARRAY<VkImageView> preAttachments;
 				ARRAY<VkImageView> additionalAttachments;
+				VkRenderPass overrideRenderPass = VK_NULL_HANDLE;
+				B1 useSwapChainImageView = true;
 			};
 
 			struct ADGRVulkanDescriptorSetLayoutInitInfo {
 				ARRAY<VkDescriptorSetLayoutBinding> additionalBindings;
+				B1 overrideBindings = false;
 			};
 
 			struct ADGRVulkanPipelineLayoutInitInfo {

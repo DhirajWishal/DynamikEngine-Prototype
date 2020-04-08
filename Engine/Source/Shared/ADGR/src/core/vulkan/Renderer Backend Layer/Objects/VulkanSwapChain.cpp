@@ -159,16 +159,20 @@ namespace Dynamik {
 
 			void VulkanSwapChain::initializeRenderPass(ADGRVulkanRenderPassInitInfo info)
 			{
-				VkSubpassDependency dependency = {};
-				dependency.srcSubpass = VK_SUBPASS_EXTERNAL;
-				dependency.dstSubpass = info.destinationSubpass;
-				dependency.srcStageMask = VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT;
-				dependency.srcAccessMask = info.accessFlags;
-				dependency.dstStageMask = VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT;
-				dependency.dstAccessMask = VK_ACCESS_COLOR_ATTACHMENT_READ_BIT | VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT;
-
 				ARRAY<VkSubpassDependency> dependencies;
-				dependencies.push_back(dependency);
+
+				if (!info.overrideDependencies)
+				{
+					VkSubpassDependency dependency = {};
+					dependency.srcSubpass = VK_SUBPASS_EXTERNAL;
+					dependency.dstSubpass = info.destinationSubpass;
+					dependency.srcStageMask = VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT;
+					dependency.srcAccessMask = info.accessFlags;
+					dependency.dstStageMask = VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT;
+					dependency.dstAccessMask = VK_ACCESS_COLOR_ATTACHMENT_READ_BIT | VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT;
+
+					dependencies.push_back(dependency);
+				}
 
 				for (VkSubpassDependency _dependency : info.additionalSubPassDependencies)
 					dependencies.push_back(_dependency);
@@ -204,7 +208,8 @@ namespace Dynamik {
 					for (VkImageView _imageView : info.preAttachments)
 						attachments.push_back(_imageView);
 
-					attachments.push_back(swapChainImageViews[i]);
+					if (info.useSwapChainImageView)
+						attachments.push_back(swapChainImageViews[i]);
 
 					for (VkImageView _imageView : info.additionalAttachments)
 						attachments.push_back(_imageView);
@@ -212,6 +217,11 @@ namespace Dynamik {
 					VkFramebufferCreateInfo framebufferInfo = {};
 					framebufferInfo.sType = VK_STRUCTURE_TYPE_FRAMEBUFFER_CREATE_INFO;
 					framebufferInfo.renderPass = renderPass;
+					if (info.overrideRenderPass != VK_NULL_HANDLE)
+					{
+						framebufferInfo.renderPass = info.overrideRenderPass;
+						renderPass = info.overrideRenderPass;
+					}
 					framebufferInfo.attachmentCount = static_cast<UI32>(attachments.size());
 					framebufferInfo.pAttachments = attachments.data();
 					framebufferInfo.width = swapChainExtent.width;
@@ -233,23 +243,25 @@ namespace Dynamik {
 
 			void VulkanSwapChain::initializeDescriptorSetLayout(ADGRVulkanDescriptorSetLayoutInitInfo info)
 			{
-				VkDescriptorSetLayoutBinding uboLayoutBinding = {};
-				uboLayoutBinding.binding = 0; // info.bindIndex;
-				uboLayoutBinding.descriptorCount = 1;
-				uboLayoutBinding.descriptorType = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;
-				uboLayoutBinding.pImmutableSamplers = nullptr; // Optional
-				uboLayoutBinding.stageFlags = VK_SHADER_STAGE_VERTEX_BIT;
-
-				VkDescriptorSetLayoutBinding samplerLayoutBinding = {};
-				samplerLayoutBinding.binding = 1; // info.bindIndex;
-				samplerLayoutBinding.descriptorCount = 1;
-				samplerLayoutBinding.descriptorType = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
-				samplerLayoutBinding.pImmutableSamplers = nullptr; // Optional
-				samplerLayoutBinding.stageFlags = VK_SHADER_STAGE_FRAGMENT_BIT;
-
 				ARRAY<VkDescriptorSetLayoutBinding> bindings;
-				bindings.push_back(uboLayoutBinding);
-				bindings.push_back(samplerLayoutBinding);
+				if (!info.overrideBindings)
+				{
+					VkDescriptorSetLayoutBinding uboLayoutBinding = {};
+					uboLayoutBinding.binding = 0; // info.bindIndex;
+					uboLayoutBinding.descriptorCount = 1;
+					uboLayoutBinding.descriptorType = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;
+					uboLayoutBinding.pImmutableSamplers = nullptr; // Optional
+					uboLayoutBinding.stageFlags = VK_SHADER_STAGE_VERTEX_BIT;
+					bindings.push_back(uboLayoutBinding);
+
+					VkDescriptorSetLayoutBinding samplerLayoutBinding = {};
+					samplerLayoutBinding.binding = 1; // info.bindIndex;
+					samplerLayoutBinding.descriptorCount = 1;
+					samplerLayoutBinding.descriptorType = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
+					samplerLayoutBinding.pImmutableSamplers = nullptr; // Optional
+					samplerLayoutBinding.stageFlags = VK_SHADER_STAGE_FRAGMENT_BIT;
+					bindings.push_back(samplerLayoutBinding);
+				}
 
 				for (VkDescriptorSetLayoutBinding _binding : info.additionalBindings)
 					bindings.push_back(_binding);

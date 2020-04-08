@@ -71,7 +71,7 @@ namespace Dynamik {
 		VkVertexInputAttributeDescription _description = {};
 		_description.binding = 0;
 		_description.location = 0;
-		_description.format = VK_FORMAT_R32G32B32_SFLOAT;
+		_description.format = VK_FORMAT_R32G32_SFLOAT;
 		_description.offset = offsetof(vertex2D, position);
 		attributeDescriptions.pushBack(_description);
 
@@ -142,9 +142,42 @@ namespace Dynamik {
 		attributeDescriptions.pushBack(_description);
 
 		_description.binding = 0;
-		_description.location = 0;
+		_description.location = 1;
 		_description.format = VK_FORMAT_R32G32B32_SFLOAT;
 		_description.offset = offsetof(VertexPN, normal);
+		attributeDescriptions.pushBack(_description);
+
+		return attributeDescriptions;
+	}
+
+	ARRAY<VkVertexInputBindingDescription> VertexP2N2::getBindingDescription(int bindCount)
+	{
+		ARRAY<VkVertexInputBindingDescription> bindingDescription(bindCount);
+
+		for (int i = 0; i < bindCount; i++) {
+			bindingDescription[i].binding = i;
+			bindingDescription[i].stride = sizeof(VertexP2N2);
+			bindingDescription[i].inputRate = VK_VERTEX_INPUT_RATE_VERTEX;
+		}
+
+		return bindingDescription;
+	}
+
+	ARRAY<VkVertexInputAttributeDescription> VertexP2N2::getAttributeDescriptions()
+	{
+		ARRAY<VkVertexInputAttributeDescription> attributeDescriptions;
+
+		VkVertexInputAttributeDescription _description = {};
+		_description.binding = 0;
+		_description.location = 0;
+		_description.format = VK_FORMAT_R32G32_SFLOAT;
+		_description.offset = offsetof(VertexP2N2, position);
+		attributeDescriptions.pushBack(_description);
+
+		_description.binding = 0;
+		_description.location = 1;
+		_description.format = VK_FORMAT_R32G32_SFLOAT;
+		_description.offset = offsetof(VertexP2N2, normal);
 		attributeDescriptions.pushBack(_description);
 
 		return attributeDescriptions;

@@ -186,6 +186,10 @@
     <ClInclude Include="src\rendererFormat.h">
       <Filter>src</Filter>
     </ClInclude>
+    <ClInclude Include="src\core\Components\TextOverlay.h" />
+    <ClInclude Include="src\core\vulkan\Renderer Backend Layer\VulkanTextOverlay.h" />
+    <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Objects\VulkanCommandBuffer.h" />
+    <ClInclude Include="src\core\vulkan\Renderer Backend Layer\VulkanTextObject.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Layers\layer.cpp">
@@ -293,8 +297,12 @@
     <ClCompile Include="src\rendererFormat.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="src\core\vulkan\Renderer Backend Layer\VulkanTextOverlay.cpp" />
+    <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Objects\VulkanCommandBuffer.cpp" />
+    <ClCompile Include="src\core\vulkan\Renderer Backend Layer\VulkanTextObject.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ADGR.lua" />
+    <None Include="src\core\vulkan\Renderer Backend Layer\External\stb_font_consolas_24_latin1.inl" />
   </ItemGroup>
 </Project>

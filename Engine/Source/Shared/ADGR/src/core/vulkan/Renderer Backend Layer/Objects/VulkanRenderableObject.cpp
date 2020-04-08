@@ -13,6 +13,16 @@ namespace Dynamik {
 	namespace ADGR {
 		namespace Backend {
 			using namespace core;
+
+			void VulkanRenderableObject::initializeResources(ADGRVulkanRenderableObjectInitInfo info)
+			{
+				logicalDevice = info.logicalDevice;
+				physicalDevice = info.physicalDevice;
+				graphicsQueue = info.graphicsQueue;
+				presentQueue = info.presentQueue;
+				commandPool = info.commandPool;
+			}
+
 			void VulkanRenderableObject::initializePipeline(ADGRVulkanPipelineInitInfo info)
 			{
 				VkPipelineVertexInputStateCreateInfo vertexInputInfo = {};
@@ -97,12 +107,15 @@ namespace Dynamik {
 					colorBlendAttachments.push_back(colorBlendAttachment);
 				}
 
+				for (VkPipelineColorBlendAttachmentState _state : info.additionalColorBlendStates)
+					colorBlendAttachments.pushBack(_state);
+
 				// initialize the color blender state
 				VkPipelineColorBlendStateCreateInfo colorBlending = {};
 				colorBlending.sType = VK_STRUCTURE_TYPE_PIPELINE_COLOR_BLEND_STATE_CREATE_INFO;
 				colorBlending.logicOpEnable = info.colorBlendingLogicOpEnable;
 				colorBlending.logicOp = info.colorBlendingLogicOp;
-				colorBlending.attachmentCount = info.colorBlendingColorBlendCount;
+				colorBlending.attachmentCount = colorBlendAttachments.size();
 				colorBlending.pAttachments = colorBlendAttachments.data();
 				colorBlending.blendConstants[0] = info.colorBlendingBlendConstants[0];
 				colorBlending.blendConstants[1] = info.colorBlendingBlendConstants[1];
@@ -140,22 +153,26 @@ namespace Dynamik {
 				pipelineInfo.pMultisampleState = &multisampling;
 				pipelineInfo.pDepthStencilState = &depthStencil;
 				pipelineInfo.pColorBlendState = &colorBlending;
-				pipelineInfo.renderPass = myRenderData.swapChainPointer->getRenderPass();
 				pipelineInfo.subpass = info.pipelineSubPass;
 				pipelineInfo.basePipelineHandle = info.pipelineBasePipelineHandle;
 				pipelineInfo.basePipelineIndex = info.pipelineBasePipelineIndex;
 				pipelineInfo.pTessellationState = nullptr;
+				pipelineInfo.layout = info.pipelineLayout;
+				pipelineInfo.renderPass = myRenderData.swapChainPointer->getRenderPass();
+
+				if (info.renderPass != VK_NULL_HANDLE)
+					pipelineInfo.renderPass = info.renderPass;
 
 				if (!info.isTexturesAvailable)
 				{
 					initializeNoTextureDescriptorSetLayout();
 					initializeNoTexturePipelineLayout();
 				}
-				else
+				else if (info.pipelineLayout == VK_NULL_HANDLE)
 				{
 					myRenderData.pipelineLayout = myRenderData.swapChainPointer->getPipelineLayout();
+					pipelineInfo.layout = myRenderData.pipelineLayout;
 				}
-				pipelineInfo.layout = myRenderData.pipelineLayout;
 
 				if (info.dynamicStateEnable)
 					pipelineInfo.pDynamicState = &dynamicStateInfo;
@@ -250,6 +267,14 @@ namespace Dynamik {
 					cpyInfo.height = static_cast<UI32>(texData.texHeight);
 					VulkanFunctions::copyBufferToImage(logicalDevice, commandPool, graphicsQueue, presentQueue, cpyInfo);
 
+					transitionInfo.image = _container.image;
+					transitionInfo.format = _container.format;
+					transitionInfo.oldLayout = VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL;
+					transitionInfo.newLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
+					transitionInfo.mipLevels = info.mipLevels;
+					transitionInfo.layerCount = 1;
+					VulkanFunctions::transitionImageLayout(logicalDevice, commandPool, graphicsQueue, presentQueue, transitionInfo);
+
 					vkDestroyBuffer(logicalDevice, stagingBuffer, nullptr);
 					vkFreeMemory(logicalDevice, stagingBufferMemory, nullptr);
 
@@ -263,7 +288,7 @@ namespace Dynamik {
 					samplerInitInfo.modeU = info.modeU;
 					samplerInitInfo.modeV = info.modeV;
 					samplerInitInfo.modeW = info.modeW;
-					initializeTextureSampler(samplerInitInfo, &_container.imageSampler);
+					_container.imageSampler = VulkanFunctions::createImageSampler(logicalDevice, samplerInitInfo);
 
 					ADGRCreateImageViewInfo cinfo2;
 					cinfo2.image = _container.image;
@@ -274,30 +299,6 @@ namespace Dynamik {
 
 					myRenderData.textures.pushBack(_container);
 				}
-			}
-
-			void VulkanRenderableObject::initializeTextureSampler(ADGRVulkanTextureSamplerInitInfo info, POINTER<VkSampler> imageSampler)
-			{
-				VkSamplerCreateInfo samplerInfo = {};
-				samplerInfo.sType = VK_STRUCTURE_TYPE_SAMPLER_CREATE_INFO;
-				samplerInfo.magFilter = info.magFilter;
-				samplerInfo.minFilter = info.minFilter;
-				samplerInfo.addressModeU = info.modeU;
-				samplerInfo.addressModeV = info.modeV;
-				samplerInfo.addressModeW = info.modeW;
-				samplerInfo.anisotropyEnable = info.anisotrophyEnable;
-				samplerInfo.maxAnisotropy = info.maxAnisotrophy;
-				samplerInfo.borderColor = info.borderColor;
-				samplerInfo.unnormalizedCoordinates = info.unnormalizedCoordinates;
-				samplerInfo.compareEnable = info.compareEnable;
-				samplerInfo.compareOp = info.compareOp;
-				samplerInfo.mipmapMode = info.mipMapMode;
-				samplerInfo.minLod = info.minMipLevels; // change this for varying mip levels
-				samplerInfo.maxLod = static_cast<F32>(info.maxMipLevels);
-				samplerInfo.mipLodBias = info.mipLoadBias; // Optional
-
-				if (vkCreateSampler(logicalDevice, &samplerInfo, nullptr, imageSampler.get()) != VK_SUCCESS)
-					DMK_CORE_FATAL("failed to create texture sampler!");
 			}
 
 			void  VulkanRenderableObject::generateMipMaps(POINTER<ADGRVulkanTextureContainer> container)
@@ -788,8 +789,8 @@ namespace Dynamik {
 
 			void VulkanRenderableObject::terminateDescriptorPool()
 			{
-				for(VkDescriptorPool _pool : myRenderData.descriptors.descriptorPools)
-				vkDestroyDescriptorPool(logicalDevice, _pool, nullptr);
+				for (VkDescriptorPool _pool : myRenderData.descriptors.descriptorPools)
+					vkDestroyDescriptorPool(logicalDevice, _pool, nullptr);
 			}
 
 			void VulkanRenderableObject::initializeDescriptorSets(ADGRVulkanDescriptorSetsInitInfo info)

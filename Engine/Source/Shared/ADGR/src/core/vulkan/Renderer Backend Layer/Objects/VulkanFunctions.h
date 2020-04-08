@@ -74,6 +74,26 @@ namespace Dynamik {
 				UI32 layerCount = 1;
 			};
 
+			struct ADGRVulkanTextureSamplerInitInfo {
+				VkFilter magFilter;
+				VkFilter minFilter;
+				VkSamplerAddressMode modeU;
+				VkSamplerAddressMode modeV;
+				VkSamplerAddressMode modeW;
+
+				F32 minMipLevels;
+				F32 maxMipLevels;
+
+				VkBool32 anisotrophyEnable = VK_FALSE;
+				F32 maxAnisotrophy = 16;
+				VkBorderColor borderColor = VK_BORDER_COLOR_INT_OPAQUE_BLACK;
+				VkBool32 unnormalizedCoordinates = VK_FALSE;
+				VkBool32 compareEnable = VK_FALSE;
+				VkCompareOp compareOp = VK_COMPARE_OP_ALWAYS;
+				VkSamplerMipmapMode mipMapMode = VK_SAMPLER_MIPMAP_MODE_LINEAR;
+				F32 mipLoadBias = 0;
+			};
+
 			class VulkanFunctions {
 			public:
 				VulkanFunctions() {}
@@ -94,6 +114,7 @@ namespace Dynamik {
 				static VkImageView createImageView(VkDevice device, ADGRCreateImageViewInfo info);
 				static void copyBufferToImage(VkDevice logicalDevice, VkCommandPool commandPool, VkQueue graphicsQueue, VkQueue presentQueue, ADGRCopyBufferToImageInfo info);
 				static void copyBufferToImageOverride(VkDevice logicalDevice, VkCommandPool commandPool, VkQueue graphicsQueue, VkQueue presentQueue, ADGRCopyBufferToImageInfo info, ARRAY<VkBufferImageCopy> copyRegions);
+				static VkSampler createImageSampler(VkDevice logicalDevice, ADGRVulkanTextureSamplerInitInfo info);
 			};
 		}
 	}

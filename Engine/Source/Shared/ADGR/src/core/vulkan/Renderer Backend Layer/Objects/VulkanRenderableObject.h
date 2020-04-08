@@ -22,6 +22,13 @@ namespace Dynamik {
 				VkQueue presentQueue = VK_NULL_HANDLE;
 			};
 
+			struct ADGRVulkanShaderPathContainer {
+				std::string vertexShaderPath = "";
+				std::string tessellationShaderPath = "";
+				std::string geometryShaderPath = "";
+				std::string fragmentShaderPath = "";
+			};
+
 			struct ADGRVulkanPipelineInitInfo {
 				ARRAY<VkVertexInputBindingDescription> vertexBindingDescription;
 				ARRAY<VkVertexInputAttributeDescription> vertexAttributeDescription;
@@ -61,6 +68,7 @@ namespace Dynamik {
 				VkBool32 depthStencilTestEnable = VK_FALSE;							// Vulkan depth stencil test enable
 
 				// color blender info
+				ARRAY<VkPipelineColorBlendAttachmentState> additionalColorBlendStates;
 				ARRAY<VkColorComponentFlags> colorBlenderColorWriteMasks = {	// Vulkan color blend write masks
 					VK_COLOR_COMPONENT_R_BIT	// Red
 					| VK_COLOR_COMPONENT_G_BIT	// Green
@@ -88,7 +96,9 @@ namespace Dynamik {
 				UI32 pipelineSubPass = 0;										// Vulkan pipeline sub pass
 				VkPipeline pipelineBasePipelineHandle = VK_NULL_HANDLE;				// Vulkan base pipeline handle
 				UI32 pipelineBasePipelineIndex = 0;
+				VkRenderPass renderPass = VK_NULL_HANDLE;
 				VkPipelineCache pipelineCache = VK_NULL_HANDLE;					// Vulkan pipeline cache
+				VkPipelineLayout pipelineLayout = VK_NULL_HANDLE;
 			};
 
 			struct ADGRVulkanTextureInitInfo {
@@ -121,26 +131,6 @@ namespace Dynamik {
 				UI32 mipLevels;
 
 				UI32 width, height;
-			};
-
-			struct ADGRVulkanTextureSamplerInitInfo {
-				VkFilter magFilter;
-				VkFilter minFilter;
-				VkSamplerAddressMode modeU;
-				VkSamplerAddressMode modeV;
-				VkSamplerAddressMode modeW;
-
-				F32 minMipLevels;
-				F32 maxMipLevels;
-
-				VkBool32 anisotrophyEnable = VK_FALSE;
-				F32 maxAnisotrophy = 16;
-				VkBorderColor borderColor = VK_BORDER_COLOR_INT_OPAQUE_BLACK;
-				VkBool32 unnormalizedCoordinates = VK_FALSE;
-				VkBool32 compareEnable = VK_FALSE;
-				VkCompareOp compareOp = VK_COMPARE_OP_ALWAYS;
-				VkSamplerMipmapMode mipMapMode = VK_SAMPLER_MIPMAP_MODE_LINEAR;
-				F32 mipLoadBias = 0;
 			};
 
 			struct ADGRVulkanDescrpitorContainer {
@@ -181,15 +171,17 @@ namespace Dynamik {
 
 			class VulkanRenderableObject : public GameObject {
 			public:
+				VulkanRenderableObject() {}
 				VulkanRenderableObject(ADGRVulkanRenderableObjectInitInfo info)
 					: logicalDevice(info.logicalDevice), physicalDevice(info.physicalDevice), commandPool(info.commandPool), graphicsQueue(info.graphicsQueue), presentQueue(info.presentQueue) {}
 				virtual ~VulkanRenderableObject() {}
+
+				virtual void initializeResources(ADGRVulkanRenderableObjectInitInfo info);
 
 				virtual void initializePipeline(ADGRVulkanPipelineInitInfo info);
 				virtual void terminatePipeline();
 
 				virtual void initializeTextures(ARRAY<ADGRVulkanTextureInitInfo> infos);
-				virtual void initializeTextureSampler(ADGRVulkanTextureSamplerInitInfo info, POINTER<VkSampler> imageSampler);
 				virtual void generateMipMaps(POINTER<ADGRVulkanTextureContainer> container);
 				virtual void terminateTextures();
 

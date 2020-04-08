@@ -283,6 +283,33 @@ namespace Dynamik {
 					copyRegions.size(),
 					copyRegions.data());
 			}
+			
+			VkSampler VulkanFunctions::createImageSampler(VkDevice logicalDevice, ADGRVulkanTextureSamplerInitInfo info)
+			{
+				VkSamplerCreateInfo samplerInfo = {};
+				samplerInfo.sType = VK_STRUCTURE_TYPE_SAMPLER_CREATE_INFO;
+				samplerInfo.magFilter = info.magFilter;
+				samplerInfo.minFilter = info.minFilter;
+				samplerInfo.addressModeU = info.modeU;
+				samplerInfo.addressModeV = info.modeV;
+				samplerInfo.addressModeW = info.modeW;
+				samplerInfo.anisotropyEnable = info.anisotrophyEnable;
+				samplerInfo.maxAnisotropy = info.maxAnisotrophy;
+				samplerInfo.borderColor = info.borderColor;
+				samplerInfo.unnormalizedCoordinates = info.unnormalizedCoordinates;
+				samplerInfo.compareEnable = info.compareEnable;
+				samplerInfo.compareOp = info.compareOp;
+				samplerInfo.mipmapMode = info.mipMapMode;
+				samplerInfo.minLod = info.minMipLevels; // change this for varying mip levels
+				samplerInfo.maxLod = static_cast<F32>(info.maxMipLevels);
+				samplerInfo.mipLodBias = info.mipLoadBias; // Optional
+
+				VkSampler _sampler = VK_NULL_HANDLE;
+				if (vkCreateSampler(logicalDevice, &samplerInfo, nullptr, &_sampler) != VK_SUCCESS)
+					DMK_CORE_FATAL("failed to create texture sampler!");
+
+				return _sampler;
+			}
 		}
 	}
 }

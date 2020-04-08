@@ -25,6 +25,8 @@
 
 #include "Renderer Backend Layer/VulkanObject2D.h"
 #include "Renderer Backend Layer/VulkanObject3D.h"
+#include "Renderer Backend Layer/VulkanSwapChain3D.h"
+#include "Renderer Backend Layer/VulkanTextOverlay.h"
 
 #include "core/Window/Windows/WindowManager.h"
 
@@ -33,13 +35,33 @@
 #include "core/Components/CameraReflect.h"
 #include "core/Components/CameraSkybox.h"
 
-#include "Renderer Backend Layer/VulkanSwapChain3D.h"
+#include "Renderer Backend Layer/External/stb_font_consolas_24_latin1.inl"
 
-#ifdef DMK_USE_VULKAN
 namespace Dynamik {
 	namespace ADGR {
 		using namespace core;
 		using namespace Backend;
+
+		struct ADGRVulkanTextOverlayDataContainer {
+			VkBuffer vertexBuffer = VK_NULL_HANDLE;
+			VkDeviceMemory vertexBufferMemory = VK_NULL_HANDLE;
+			ADGRVulkanTextureContainer textureContainer;
+
+			VkDescriptorSetLayout descriptorSetLayout = VK_NULL_HANDLE;
+			VkDescriptorPool descriptorPool = VK_NULL_HANDLE;
+			VkDescriptorSet descriptorSet = VK_NULL_HANDLE;
+
+			VkRenderPass renderPass = VK_NULL_HANDLE;
+			VkPipeline pipeline = VK_NULL_HANDLE;
+			VkPipelineLayout pipelineLayout = VK_NULL_HANDLE;
+
+			glm::vec4* mapped = nullptr;
+			stb_fontchar stbFontData[STB_FONT_consolas_24_latin1_NUM_CHARS];
+			UI32 numberOfLetters = 0;
+
+			B1 isInitialized = false;
+			B1 isVisible = true;
+		};
 
 		/* RENDERER BACKEND LAYER
 		 * BASE: RendererBackend
@@ -142,11 +164,16 @@ namespace Dynamik {
 			 */
 			void updateFormats3D(ARRAY<RendererFormat>& rendererFormats) override;
 
+			void addText(std::string string, F32 x, F32 y, DMKTextAlign align);
+
 			/* PRIVATE FUNCTIONS */
 		private:
 			void recreateSwapChain();
 			void initializeObjects();
 			void initializeObjectsBasic();
+
+			void initializeOverlay();
+			void addOverlay();
 
 			ARRAY<Vertex> _skyBoxTest();
 
@@ -169,6 +196,7 @@ namespace Dynamik {
 
 			VulkanCore myVulkanCore;
 			VulkanSwapChain3D mySwapChain3D;
+			VulkanCommandBuffer myCommandBuffer;
 
 			VulkanColorBuffer myColorBuffer;
 			VulkanDepthBuffer myDepthBuffer;
@@ -183,9 +211,33 @@ namespace Dynamik {
 			UI32 currentFrame = 0;
 			UI32 imageIndex = 0;
 			VkResult result = VkResult::VK_ERROR_UNKNOWN;
+
+		private:
+			ADGRVulkanTextOverlayDataContainer overlayContainer;
+			VulkanCommandBuffer overlayCommandBuffer;
+			void _initializeOverlayCommandPool();
+			void _initializeOverlayDescriptorSetLayout();
+			void _initializeOverlayPipelineLayout();
+			void _initializeOverlayRenderPass();
+
+			void _initializeOverlayVertexBuffer();
+			void _initializeOverlayTextureImage();
+			void _initializeOverlayPipeline(ADGRVulkanShaderPathContainer shaderContainer);
+			void _initializeOverlayDescriptorPool();
+			void _initializeOverlayDescriptorSets();
+
+			VkCommandBuffer _drawOverlay(UI32 imageIndex);
+
+			void _beginUpdate();
+			void _endUpdate();
+
+			void _initializeOverlayCommandBuffers(ADGRVulkanCommandBufferInitInfo info);
+
+			void _initializeOverlayStageOne();
+			void _initializeOverlayStageTwo(ADGRVulkanShaderPathContainer shaderContainer);
+			void _terminateOverlay();
 		};
 	}
 }
 
-#endif
 #endif	//	_DMK_ADGR_RENDER_H

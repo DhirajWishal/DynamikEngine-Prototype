@@ -136,7 +136,7 @@ namespace Dynamik {
 						samplerInitInfo.mipLoadBias = 0.0f;
 						samplerInitInfo.compareOp = VK_COMPARE_OP_NEVER;
 						samplerInitInfo.borderColor = VK_BORDER_COLOR_FLOAT_OPAQUE_WHITE;
-						initializeTextureSampler(samplerInitInfo, &_container.imageSampler);
+						_container.imageSampler = VulkanFunctions::createImageSampler(logicalDevice, samplerInitInfo);
 
 						ADGRCreateImageViewInfo cinfo2;
 						cinfo2.image = _container.image;
@@ -255,7 +255,7 @@ namespace Dynamik {
 					samplerInitInfo.mipLoadBias = 0.0f;
 					samplerInitInfo.compareOp = VK_COMPARE_OP_NEVER;
 					samplerInitInfo.borderColor = VK_BORDER_COLOR_FLOAT_OPAQUE_WHITE;
-					initializeTextureSampler(samplerInitInfo, &_container.imageSampler);
+					_container.imageSampler = VulkanFunctions::createImageSampler(logicalDevice, samplerInitInfo);
 
 					ADGRCreateImageViewInfo cinfo2;
 					cinfo2.image = _container.image;

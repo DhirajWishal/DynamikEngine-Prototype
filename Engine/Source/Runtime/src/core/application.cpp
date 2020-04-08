@@ -450,17 +450,6 @@ namespace Dynamik {
 	}
 
 	bool Application::renderableObjectCheck(internalFormat format) {
-		return (format.myGameObject->myProperties.type == DMKObjectType::DMK_OBJECT_TYPE_IMAGE_2D)
-			|| (format.myGameObject->myProperties.type == DMKObjectType::DMK_OBJECT_TYPE_DEBUG_OBJECT)
-			|| (format.myGameObject->myProperties.type == DMKObjectType::DMK_OBJECT_TYPE_MESH)
-			|| (format.myGameObject->myProperties.type == DMKObjectType::DMK_OBJECT_TYPE_STATIC_OBJECT)
-			|| (format.myGameObject->myProperties.type == DMKObjectType::DMK_OBJECT_TYPE_INTERACTIVE_OBJECT)
-			|| (format.myGameObject->myProperties.type == DMKObjectType::DMK_OBJECT_TYPE_PLAYER)
-			|| (format.myGameObject->myProperties.type == DMKObjectType::DMK_OBJECT_TYPE_NPC)
-			|| (format.myGameObject->myProperties.type == DMKObjectType::DMK_OBJECT_TYPE_TEXTURE_UI)
-			|| (format.myGameObject->myProperties.type == DMKObjectType::DMK_OBJECT_TYPE_SKYBOX)
-			|| (format.myGameObject->myProperties.type == DMKObjectType::DMK_OBJECT_TYPE_SPRITES)
-			|| (format.myGameObject->myProperties.type == DMKObjectType::DMK_OBJECT_TYPE_FONT)
-			|| (format.myGameObject->myProperties.type == DMKObjectType::DMK_OBJECT_TYPE_PARTICLE);
+		return (format.myGameObject->myProperties.type <= DMKObjectType::DMK_OBJECT_TYPE_MAX_RENDERABLE_TYPES);
 	}
 }

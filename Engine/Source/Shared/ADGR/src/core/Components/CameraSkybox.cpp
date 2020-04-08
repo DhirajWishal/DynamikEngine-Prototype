@@ -71,8 +71,8 @@ namespace Dynamik {
 				}
 				else if (eventContainer.eventType == DMKEventType::DMK_EVENT_TYPE_MOUSE_MOVED)
 				{
-					_rotX = eventContainer.xAxis;
-					_rotY = eventContainer.yAxis;
+					_rotX = eventContainer.yAxis;
+					_rotY = eventContainer.xAxis;
 				}
 			}
 

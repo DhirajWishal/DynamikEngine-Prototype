@@ -16,8 +16,8 @@ namespace Dynamik {
 					vkCmdBindVertexBuffers(buffer, 0, 1, &object->vertexBuffers[i], offsets);
 
 					// binding descriptor set(s)
-					if (object->descriptors.descriptorSets.size())
-						vkCmdBindDescriptorSets(buffer, VK_PIPELINE_BIND_POINT_GRAPHICS, object->swapChainPointer->getPipelineLayout(), 0, 1, &object->descriptors.descriptorSets[index], 0, nullptr);
+					if (object->descriptors.descriptorSet != VK_NULL_HANDLE)
+						vkCmdBindDescriptorSets(buffer, VK_PIPELINE_BIND_POINT_GRAPHICS, object->pipelineLayout, 0, 1, &object->descriptors.descriptorSet, 0, nullptr);
 
 					// draw command
 					vkCmdDraw(buffer, object->vertexCount, 1, 0, 1);
@@ -34,8 +34,8 @@ namespace Dynamik {
 					vkCmdBindVertexBuffers(buffer, 0, 1, &object->vertexBuffers[i], offsets);
 
 					// binding descriptor set(s)
-					if (object->descriptors.descriptorSets.size())
-						vkCmdBindDescriptorSets(buffer, VK_PIPELINE_BIND_POINT_GRAPHICS, object->pipelineLayout, 0, 1, &object->descriptors.descriptorSets[index], 0, nullptr);
+					if (object->descriptors.descriptorSet != VK_NULL_HANDLE)
+						vkCmdBindDescriptorSets(buffer, VK_PIPELINE_BIND_POINT_GRAPHICS, object->pipelineLayout, 0, 1, &object->descriptors.descriptorSet, 0, nullptr);
 
 					// index buffer bind
 					if (object->indexbufferObjectTypeSize == sizeof(UI8))

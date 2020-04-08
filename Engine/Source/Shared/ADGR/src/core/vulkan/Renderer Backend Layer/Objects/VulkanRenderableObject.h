@@ -134,8 +134,8 @@ namespace Dynamik {
 			};
 
 			struct ADGRVulkanDescrpitorContainer {
-				ARRAY<VkDescriptorPool> descriptorPools;
-				ARRAY<VkDescriptorSet> descriptorSets;
+				VkDescriptorPool pool = VK_NULL_HANDLE;
+				VkDescriptorSet descriptorSet = VK_NULL_HANDLE;
 			};
 
 			struct ADGRVulkanRenderData {

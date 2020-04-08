@@ -308,7 +308,7 @@ namespace Dynamik {
 						else
 							physicalDevice = device;
 
-						//msaaSamples = VulkanFunctions::getMaxUsableSampleCount(physicalDevice);
+						msaaSamples = VulkanFunctions::getMaxUsableSampleCount(physicalDevice);
 						break;
 					}
 

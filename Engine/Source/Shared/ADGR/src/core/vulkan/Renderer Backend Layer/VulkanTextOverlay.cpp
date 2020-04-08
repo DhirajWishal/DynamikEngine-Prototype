@@ -381,24 +381,21 @@ namespace Dynamik {
 
 			void VulkanTextOverlay::_initializeDescriptorPool()
 			{
-				for (UI32 _itr = 0; _itr < mySwapChainObject.getSwapChainImages().size(); _itr++)
-				{
-					VkDescriptorPoolSize poolSize;
-					poolSize.type = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
-					poolSize.descriptorCount = 1;
+				VkDescriptorPoolSize poolSize;
+				poolSize.type = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
+				poolSize.descriptorCount = 1;
 
-					VkDescriptorPoolCreateInfo poolInfo = {};
-					poolInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_POOL_CREATE_INFO;
-					poolInfo.poolSizeCount = 1;
-					poolInfo.pPoolSizes = &poolSize;
-					poolInfo.maxSets = 1;
+				VkDescriptorPoolCreateInfo poolInfo = {};
+				poolInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_POOL_CREATE_INFO;
+				poolInfo.poolSizeCount = 1;
+				poolInfo.pPoolSizes = &poolSize;
+				poolInfo.maxSets = 1;
 
-					VkDescriptorPool _localDescriptorPool = VK_NULL_HANDLE;
-					if (vkCreateDescriptorPool(myCoreObject.logicalDevice, &poolInfo, nullptr, &_localDescriptorPool) != VK_SUCCESS)
-						DMK_CORE_FATAL("failed to create descriptor pool!");
+				VkDescriptorPool _localDescriptorPool = VK_NULL_HANDLE;
+				if (vkCreateDescriptorPool(myCoreObject.logicalDevice, &poolInfo, nullptr, &_localDescriptorPool) != VK_SUCCESS)
+					DMK_CORE_FATAL("failed to create descriptor pool!");
 
-					myRenderData.descriptors.descriptorPools.pushBack(_localDescriptorPool);
-				}
+				myRenderData.descriptors.pool = _localDescriptorPool;
 			}
 
 			void VulkanTextOverlay::_initializeDescriptorSetLayout()
@@ -429,37 +426,35 @@ namespace Dynamik {
 			{
 				VkDescriptorSetLayout _layout = mySwapChainObject.getDescriptorSetLayout();
 
-				for (UI32 itr = 0; itr < mySwapChainObject.getSwapChainImages().size(); itr++) {
-					VkDescriptorSetAllocateInfo allocInfo = {};
-					allocInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_ALLOCATE_INFO;
-					allocInfo.descriptorPool = myRenderData.descriptors.descriptorPools[itr];
-					allocInfo.descriptorSetCount = 1;
-					allocInfo.pSetLayouts = &_layout;
+				VkDescriptorSetAllocateInfo allocInfo = {};
+				allocInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_ALLOCATE_INFO;
+				allocInfo.descriptorPool = myRenderData.descriptors.pool;
+				allocInfo.descriptorSetCount = 1;
+				allocInfo.pSetLayouts = &_layout;
 
-					VkDescriptorSet _descriptorSet = VK_NULL_HANDLE;
-					if (vkAllocateDescriptorSets(myCoreObject.logicalDevice, &allocInfo, &_descriptorSet) != VK_SUCCESS)
-						DMK_CORE_FATAL("failed to allocate descriptor sets!");
+				VkDescriptorSet _descriptorSet = VK_NULL_HANDLE;
+				if (vkAllocateDescriptorSets(myCoreObject.logicalDevice, &allocInfo, &_descriptorSet) != VK_SUCCESS)
+					DMK_CORE_FATAL("failed to allocate descriptor sets!");
 
-					VkDescriptorImageInfo imageInfo = {};
-					imageInfo.imageLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
-					imageInfo.imageView = textureContainer.imageView;
-					imageInfo.sampler = textureContainer.imageSampler;
+				VkDescriptorImageInfo imageInfo = {};
+				imageInfo.imageLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
+				imageInfo.imageView = textureContainer.imageView;
+				imageInfo.sampler = textureContainer.imageSampler;
 
-					VkWriteDescriptorSet _writes;
-					_writes.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
-					_writes.dstSet = _descriptorSet;
-					_writes.dstBinding = 0;
-					_writes.dstArrayElement = 0;
-					_writes.descriptorType = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
-					_writes.descriptorCount = 1;
-					_writes.pImageInfo = &imageInfo;
-					_writes.pNext = VK_NULL_HANDLE;
-					_writes.pTexelBufferView = VK_NULL_HANDLE;
+				VkWriteDescriptorSet _writes;
+				_writes.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
+				_writes.dstSet = _descriptorSet;
+				_writes.dstBinding = 0;
+				_writes.dstArrayElement = 0;
+				_writes.descriptorType = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
+				_writes.descriptorCount = 1;
+				_writes.pImageInfo = &imageInfo;
+				_writes.pNext = VK_NULL_HANDLE;
+				_writes.pTexelBufferView = VK_NULL_HANDLE;
 
-					vkUpdateDescriptorSets(myCoreObject.logicalDevice, 1, &_writes, 0, nullptr);
+				vkUpdateDescriptorSets(myCoreObject.logicalDevice, 1, &_writes, 0, nullptr);
 
-					myRenderData.descriptors.descriptorSets.pushBack(_descriptorSet);
-				} // make two descriptor layouts for each descriptor set
+				myRenderData.descriptors.descriptorSet = _descriptorSet;
 			}
 
 			void VulkanTextOverlay::_initializePipelineCache()
@@ -670,8 +665,8 @@ namespace Dynamik {
 					{
 						vkCmdBindPipeline(buffers[i], VK_PIPELINE_BIND_POINT_GRAPHICS, _data.pipeline);
 
-						if (_data.descriptors.descriptorSets.size())
-							vkCmdBindDescriptorSets(buffers[i], VK_PIPELINE_BIND_POINT_GRAPHICS, _data.pipelineLayout, 0, 1, &_data.descriptors.descriptorSets[i], 0, NULL);
+						if (_data.descriptors.descriptorSet != VK_NULL_HANDLE)
+							vkCmdBindDescriptorSets(buffers[i], VK_PIPELINE_BIND_POINT_GRAPHICS, _data.pipelineLayout, 0, 1, &_data.descriptors.descriptorSet, 0, NULL);
 
 						vkCmdBindVertexBuffers(buffers[i], 0, 1, &vertexBuffer, offsets);
 						vkCmdBindVertexBuffers(buffers[i], 1, 1, &vertexBuffer, offsets);

@@ -15,7 +15,7 @@ namespace Dynamik {
 				void initializeTextures(ARRAY<ADGRVulkanTextureInitInfo> infos) override;
 
 				void initializeUniformBuffer() override;
-				void updateUniformBuffer(UBO_MP uniformBufferObject, UI32 currentImage);
+				void updateUniformBuffer(UniformBufferObject uniformBufferObject, UI32 currentImage);
 
 				void initializeDescriptorSets(ADGRVulkanDescriptorSetsInitInfo info) override;
 			};

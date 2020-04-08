@@ -175,7 +175,7 @@ namespace Dynamik {
 			void initializeOverlay();
 			void addOverlay();
 
-			ARRAY<Vertex> _skyBoxTest();
+			std::pair<ARRAY<Vertex>, ARRAY<UI32>> _skyBoxTest();
 
 			ADGRVulkanRenderableObjectInitInfo RenderableObjectInitInfo();
 

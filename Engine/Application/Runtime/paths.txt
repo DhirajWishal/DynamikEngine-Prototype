@@ -1,2 +1,1 @@
-E:/Projects/Dynamik Engine/Game Repository/assets/assets/moon
-E:/Projects/Dynamik Engine/Game Repository/assets/assets/Overlay
+E:/Projects/Dynamik Engine/Game Repository/assets/assets/Skybox

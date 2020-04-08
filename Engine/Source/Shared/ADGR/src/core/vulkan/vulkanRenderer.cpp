@@ -71,7 +71,6 @@ namespace Dynamik {
 
 			ADGRVulkanFrameBufferInitInfo frameBufferInitInfo;
 			frameBufferInitInfo.preAttachments = { myColorBuffer.imageView, myDepthBuffer.imageView };
-			frameBufferInitInfo.useSwapChainImageView = false;
 			mySwapChain3D.initializeFrameBuffers(frameBufferInitInfo);
 
 			ADGRVulkanDescriptorSetLayoutInitInfo layoutInitInfo;
@@ -436,11 +435,11 @@ namespace Dynamik {
 		{
 		}
 
-		ARRAY<Vertex> vulkanRenderer::_skyBoxTest()
+		std::pair<ARRAY<Vertex>, ARRAY<UI32>> vulkanRenderer::_skyBoxTest()
 		{
 			ARRAY<Vertex> _localVertexBufferObject = {};
 
-			F32 S_SIZE = 0.5f;
+			F32 S_SIZE = 5.0f;
 
 			ARRAY<ARRAY<F32>> locations =
 			{
@@ -487,6 +486,10 @@ namespace Dynamik {
 				{S_SIZE, -S_SIZE, S_SIZE  }
 			};
 
+			ARRAY<UI32> indexBufferObject;
+			/*
+			std::unordered_map<Vertex, uint32_t> uniqueVertices = {};
+
 			for (I32 itr = 0; itr < 6; itr++) {
 				for (I32 x = itr * 6; x < ((itr * 6) + 6); x++) {
 					Vertex v;
@@ -496,11 +499,16 @@ namespace Dynamik {
 					v.Normals = { 0.0f, 0.0f, 0.0f };
 					v.Integrity = 1.0f;
 
-					_localVertexBufferObject.push_back(v);
+					if (uniqueVertices.count(v) == 0) {
+						uniqueVertices[v] = static_cast<uint32_t>(locations.size());
+						_localVertexBufferObject.push_back(v);
+					}
+
+					indexBufferObject.push_back(uniqueVertices[v]);
 				}
 			}
-
-			return _localVertexBufferObject;
+			*/
+			return { _localVertexBufferObject, indexBufferObject };
 		}
 
 		ADGRVulkanRenderableObjectInitInfo vulkanRenderer::RenderableObjectInitInfo()
@@ -524,74 +532,7 @@ namespace Dynamik {
 
 			mySwapChain3D.initializeSwapChain(myWindowManager.windowWidth, myWindowManager.windowHeight);
 
-
-			VkAttachmentDescription attachments[2] = {};
-
-			// Color attachment
-			attachments[0].format = mySwapChain3D.swapChainContainer.getSwapChainImageFormat();
-			attachments[0].samples = VK_SAMPLE_COUNT_1_BIT;
-			// Don't clear the framebuffer (like the renderpass from the example does)
-			attachments[0].loadOp = VK_ATTACHMENT_LOAD_OP_LOAD;
-			attachments[0].storeOp = VK_ATTACHMENT_STORE_OP_STORE;
-			attachments[0].stencilLoadOp = VK_ATTACHMENT_LOAD_OP_DONT_CARE;
-			attachments[0].stencilStoreOp = VK_ATTACHMENT_STORE_OP_DONT_CARE;
-			attachments[0].initialLayout = VK_IMAGE_LAYOUT_PRESENT_SRC_KHR;
-			attachments[0].finalLayout = VK_IMAGE_LAYOUT_PRESENT_SRC_KHR;
-
-			// Depth attachment
-			attachments[1].format = VulkanFunctions::findDepthFormat(myVulkanCore.physicalDevice);
-			attachments[1].samples = VK_SAMPLE_COUNT_1_BIT;
-			attachments[1].loadOp = VK_ATTACHMENT_LOAD_OP_CLEAR;
-			attachments[1].storeOp = VK_ATTACHMENT_STORE_OP_STORE;
-			attachments[1].stencilLoadOp = VK_ATTACHMENT_LOAD_OP_DONT_CARE;
-			attachments[1].stencilStoreOp = VK_ATTACHMENT_STORE_OP_DONT_CARE;
-			attachments[1].initialLayout = VK_IMAGE_LAYOUT_UNDEFINED;
-			attachments[1].finalLayout = VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL;
-
-			VkAttachmentReference colorReference = {};
-			colorReference.attachment = 0;
-			colorReference.layout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
-
-			VkAttachmentReference depthReference = {};
-			depthReference.attachment = 1;
-			depthReference.layout = VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL;
-
-			VkSubpassDescription subpass = {};
-			subpass.pipelineBindPoint = VK_PIPELINE_BIND_POINT_GRAPHICS;
-			subpass.colorAttachmentCount = 1;
-			subpass.pColorAttachments = &colorReference;
-			subpass.pDepthStencilAttachment = &depthReference;
-
-			// Use subpass dependencies for image layout transitions
-			VkSubpassDependency subpassDependencies[2] = {};
-
-			// Transition from final to initial (VK_SUBPASS_EXTERNAL refers to all commmands executed outside of the actual renderpass)
-			subpassDependencies[0].srcSubpass = VK_SUBPASS_EXTERNAL;
-			subpassDependencies[0].dstSubpass = 0;
-			subpassDependencies[0].srcStageMask = VK_PIPELINE_STAGE_BOTTOM_OF_PIPE_BIT;
-			subpassDependencies[0].dstStageMask = VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT;
-			subpassDependencies[0].srcAccessMask = VK_ACCESS_MEMORY_READ_BIT;
-			subpassDependencies[0].dstAccessMask = VK_ACCESS_COLOR_ATTACHMENT_READ_BIT | VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT;
-			subpassDependencies[0].dependencyFlags = VK_DEPENDENCY_BY_REGION_BIT;
-
-			// Transition from initial to final
-			subpassDependencies[1].srcSubpass = 0;
-			subpassDependencies[1].dstSubpass = VK_SUBPASS_EXTERNAL;
-			subpassDependencies[1].srcStageMask = VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT;
-			subpassDependencies[1].dstStageMask = VK_PIPELINE_STAGE_BOTTOM_OF_PIPE_BIT;
-			subpassDependencies[1].srcAccessMask = VK_ACCESS_COLOR_ATTACHMENT_READ_BIT | VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT;
-			subpassDependencies[1].dstAccessMask = VK_ACCESS_MEMORY_READ_BIT;
-			subpassDependencies[1].dependencyFlags = VK_DEPENDENCY_BY_REGION_BIT;
-
-			ARRAY<VkSubpassDescription> subPasses;
-			subPasses.push_back(subpass);
-
-			ADGRVulkanRenderPassInitInfo renderPassInitInfo;
-			renderPassInitInfo.attachments = { attachments[0], attachments[1] };
-			renderPassInitInfo.subPasses = subPasses;
-			renderPassInitInfo.additionalSubPassDependencies = { subpassDependencies[0], subpassDependencies[1] };
-			renderPassInitInfo.overrideDependencies = true;
-			mySwapChain3D.swapChainContainer.initializeRenderPass(renderPassInitInfo);
+			mySwapChain3D.initializeRenderPass(myVulkanCore.msaaSamples);
 		}
 
 		void vulkanRenderer::initializeColorBuffer()
@@ -672,8 +613,8 @@ namespace Dynamik {
 			ADGRVulkanPipelineInitInfo pipelineInitInfo;
 			pipelineInitInfo.shaders = _shaders;
 			pipelineInitInfo.multisamplerMsaaSamples = myVulkanCore.msaaSamples;
-			pipelineInitInfo.vertexBindingDescription = VertexP::getBindingDescription(1);
-			pipelineInitInfo.vertexAttributeDescription = VertexP::getAttributeDescriptions();
+			pipelineInitInfo.vertexBindingDescription = Vertex::getBindingDescription(1);
+			pipelineInitInfo.vertexAttributeDescription = Vertex::getAttributeDescriptions();
 			pipelineInitInfo.isTexturesAvailable = _object.texturePaths.size();
 			_renderObject.initializePipeline(pipelineInitInfo);
 
@@ -722,7 +663,6 @@ namespace Dynamik {
 			ADGRVulkanDescriptorSetsInitInfo descriptorSetsInitInfo;
 			_renderObject.initializeDescriptorSets(descriptorSetsInitInfo);
 
-			_renderObject.myRenderData.renderTechnology = DMK_ADGR_RENDERING_TECHNOLOGY::DMK_ADGR_RENDER_VERTEX;
 			return _renderObject.getRenderData();
 		}
 
@@ -855,7 +795,7 @@ namespace Dynamik {
 
 					DMKUpdateInfo info;
 					info.aspectRatio = (F32)myWindowManager.windowWidth / (F32)myWindowManager.windowHeight;
-					_renderObject.updateUniformBuffer(myCameraSkybox.updateCamera(eventContainer, info), imageIndex);
+					_renderObject.updateUniformBuffer(myCamera3D.updateCamera(eventContainer, info), imageIndex);
 				}
 				else if (_object.type == DMKObjectType::DMK_OBJECT_TYPE_DEBUG_OBJECT)
 				{
@@ -1116,6 +1056,7 @@ namespace Dynamik {
 			_initializeOverlayDescriptorSetLayout();
 			_initializeOverlayPipelineLayout();
 			//_initializeOverlayRenderPass();
+			overlayContainer.isInitialized = false;
 		}
 
 		void vulkanRenderer::_initializeOverlayStageTwo(ADGRVulkanShaderPathContainer shaderContainer)
@@ -1125,6 +1066,7 @@ namespace Dynamik {
 			_initializeOverlayPipeline(shaderContainer);
 			_initializeOverlayDescriptorPool();
 			_initializeOverlayDescriptorSets();
+			overlayContainer.isInitialized = true;
 		}
 
 		void vulkanRenderer::_terminateOverlay()
@@ -1165,7 +1107,7 @@ namespace Dynamik {
 			cinfo.height = fontHeight;
 			cinfo.format = VK_FORMAT_R8_UNORM;
 			cinfo.tiling = VK_IMAGE_TILING_OPTIMAL;
-			cinfo.usage =  VK_IMAGE_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT;
+			cinfo.usage = VK_IMAGE_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT;
 			cinfo.properties = VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT;
 			cinfo.image = &overlayContainer.textureContainer.image;
 			cinfo.imageMemory = &overlayContainer.textureContainer.imageMemory;

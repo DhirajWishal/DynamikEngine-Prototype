@@ -146,6 +146,7 @@
     <ClInclude Include="src\ADGR.h" />
     <ClInclude Include="src\core\Components\TextOverlay.h" />
     <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Objects\VulkanCommandBuffer.h" />
+    <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Objects\VulkanUtilities.h" />
     <ClInclude Include="src\core\vulkan\Renderer Backend Layer\VulkanTextObject.h" />
     <ClInclude Include="src\core\vulkan\Renderer Backend Layer\VulkanTextOverlay.h" />
     <ClInclude Include="src\Layers\layer.h" />
@@ -196,6 +197,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Objects\VulkanCommandBuffer.cpp" />
+    <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Objects\VulkanUtilities.cpp" />
     <ClCompile Include="src\core\vulkan\Renderer Backend Layer\VulkanTextObject.cpp" />
     <ClCompile Include="src\core\vulkan\Renderer Backend Layer\VulkanTextOverlay.cpp" />
     <ClCompile Include="src\Layers\layer.cpp" />

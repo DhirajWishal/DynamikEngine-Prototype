@@ -3,7 +3,7 @@
 
 namespace Dynamik {
 	namespace ADGR {
-        UniformBufferObject Camera2D::updateCamera(std::deque<DMKEventContainer> container, DMKUpdateInfo updateInfo)
+        UniformBufferObject Camera2D::updateCamera(std::deque<DMKEventContainer> container, DMKUpdateInfo updateInfo, B1 viewMatrixLock)
         {
 			float angelX = updateInfo.rotationX;
 			float angelY = updateInfo.rotationY;
@@ -79,9 +79,9 @@ namespace Dynamik {
 			if (updateInfo.useRadians)
 			{
 				updateInfo.fieldOfView = glm::radians(updateInfo.fieldOfView);
-				angelX = glm::radians(_rotX);
+				angelX = glm::radians(updateInfo.rotationZ);
 				angelY = glm::radians(_rotY);
-				angelZ = glm::radians(updateInfo.rotationZ);
+				angelZ = glm::radians(_rotX);
 			}
 
 			glm::mat4 _rotationX = glm::rotate(

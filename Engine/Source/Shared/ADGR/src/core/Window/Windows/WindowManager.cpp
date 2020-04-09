@@ -32,6 +32,8 @@ namespace Dynamik {
 #endif
 			glfwMakeContextCurrent(window);
 
+			glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+
 			glfwSetWindowUserPointer(window, this);
 			glfwSetFramebufferSizeCallback(window, framebufferResizeCallback);
 			glfwSetKeyCallback(window, onKeyEvent);
@@ -146,9 +148,11 @@ namespace Dynamik {
 			switch (action) {
 			case DMK_PRESS: {
 				data->keyEventHandler(DMKEventType::DMK_EVENT_TYPE_KEY_PRESS, keycode);
-
 				if (keycode == DMK_KEY_ESCAPE)
+				{
 					glfwSetWindowShouldClose(win, GL_TRUE);
+					data->isWindowCloseEvent = true;
+				}
 				break;
 			}
 			case DMK_BUTTON_RELEASE: {

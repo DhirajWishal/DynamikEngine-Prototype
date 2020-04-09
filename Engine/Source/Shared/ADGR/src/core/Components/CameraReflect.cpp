@@ -83,9 +83,9 @@ namespace Dynamik {
 			if (updateInfo.useRadians)
 			{
 				updateInfo.fieldOfView = glm::radians(updateInfo.fieldOfView);
-				angelX = glm::radians(_rotX);
+				angelX = glm::radians(updateInfo.rotationZ);
 				angelY = glm::radians(_rotY);
-				angelZ = glm::radians(updateInfo.rotationZ);
+				angelZ = glm::radians(_rotX);
 			}
 
 			glm::mat4 viewMatrix = glm::mat4(1.0f);

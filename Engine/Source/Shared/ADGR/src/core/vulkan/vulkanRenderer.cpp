@@ -616,6 +616,7 @@ namespace Dynamik {
 			pipelineInitInfo.vertexBindingDescription = Vertex::getBindingDescription(1);
 			pipelineInitInfo.vertexAttributeDescription = Vertex::getAttributeDescriptions();
 			pipelineInitInfo.isTexturesAvailable = _object.texturePaths.size();
+			pipelineInitInfo.rasterizerFrontFace = VK_FRONT_FACE_CLOCKWISE;
 			_renderObject.initializePipeline(pipelineInitInfo);
 
 			for (VulkanShader _shader : _shaders)
@@ -668,7 +669,7 @@ namespace Dynamik {
 
 		ADGRVulkanRenderData vulkanRenderer::initializeReflectObject(ADGRVulkan3DObjectData _object)
 		{
-			VulkanReflectObject _renderObject(RenderableObjectInitInfo());
+			VulkanSkyBox _renderObject(RenderableObjectInitInfo());
 
 			_renderObject.setSwapChainContainer(&mySwapChain3D.swapChainContainer);
 
@@ -722,6 +723,7 @@ namespace Dynamik {
 			pipelineInitInfo.vertexBindingDescription = Vertex::getBindingDescription(1);
 			pipelineInitInfo.vertexAttributeDescription = Vertex::getAttributeDescriptions();
 			pipelineInitInfo.isTexturesAvailable = _object.texturePaths.size();
+			pipelineInitInfo.rasterizerFrontFace = VK_FRONT_FACE_CLOCKWISE;
 			_renderObject.initializePipeline(pipelineInitInfo);
 
 			for (VulkanShader _shader : _shaders)
@@ -795,7 +797,7 @@ namespace Dynamik {
 
 					DMKUpdateInfo info;
 					info.aspectRatio = (F32)myWindowManager.windowWidth / (F32)myWindowManager.windowHeight;
-					_renderObject.updateUniformBuffer(myCamera3D.updateCamera(eventContainer, info), imageIndex);
+					_renderObject.updateUniformBuffer(myCameraSkybox.updateCamera(eventContainer, info), imageIndex);
 				}
 				else if (_object.type == DMKObjectType::DMK_OBJECT_TYPE_DEBUG_OBJECT)
 				{
@@ -804,7 +806,7 @@ namespace Dynamik {
 
 					DMKUpdateInfo info;
 					info.aspectRatio = (F32)myWindowManager.windowWidth / (F32)myWindowManager.windowHeight;
-					_renderObject.updateUniformBuffer(myCameraReflect.updateCamera(eventContainer, info), imageIndex);
+					_renderObject.updateUniformBuffer(myCameraSkybox.updateCamera(eventContainer, info), imageIndex);
 				}
 				else if (_object.type == DMKObjectType::DMK_OBJECT_TYPE_STATIC_OBJECT)
 				{

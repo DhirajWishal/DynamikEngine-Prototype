@@ -11,7 +11,7 @@ namespace Dynamik {
 			CameraSkybox() {}
 			~CameraSkybox() {}
 
-			UBO_MP updateCamera(std::deque<DMKEventContainer> container, DMKUpdateInfo updateInfo);
+			UniformBufferObject updateCamera(std::deque<DMKEventContainer> container, DMKUpdateInfo updateInfo);
 
 		private:
 			glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 3.0f);
@@ -19,6 +19,11 @@ namespace Dynamik {
 			glm::vec3 cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
 			float _rotX = 0.0f;
 			float _rotY = 0.0f;
+
+			Camera_OpenGL glCam{ glm::vec3(0.0f, 0.0f, 3.0f) };
+			float lastX = 0.0f;
+			float lastY = 0.0f;
+			bool firstMouse = true;
 		};
 	}
 }

@@ -11,7 +11,7 @@ namespace Dynamik {
 			Camera2D() {}
 			~Camera2D() {}
 
-			UniformBufferObject updateCamera(std::deque<DMKEventContainer> container, DMKUpdateInfo updateInfo) override;
+			UniformBufferObject updateCamera(std::deque<DMKEventContainer> container, DMKUpdateInfo updateInfo, B1 viewMatrixLock = false) override;
 		};
 	}
 }

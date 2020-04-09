@@ -292,7 +292,7 @@ namespace Dynamik {
 
 			void VulkanReflectObject::initializeUniformBuffer()
 			{
-				VkDeviceSize bufferSize = sizeof(UBO_MPL);
+				VkDeviceSize bufferSize = sizeof(UniformBufferObject);
 				UI32 count = myRenderData.swapChainPointer->getSwapChainImages().size();
 
 				myRenderData.uniformBuffers.resize(count);
@@ -311,7 +311,7 @@ namespace Dynamik {
 				}
 			}
 
-			void VulkanReflectObject::updateUniformBuffer(UBO_MPL uniformBufferObject, UI32 currentImage)
+			void VulkanReflectObject::updateUniformBuffer(UniformBufferObject uniformBufferObject, UI32 currentImage)
 			{
 				void* data = nullptr;
 				vkMapMemory(logicalDevice, myRenderData.uniformBufferMemories[currentImage], 0, sizeof(uniformBufferObject), 0, &data);

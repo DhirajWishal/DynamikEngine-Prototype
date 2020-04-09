@@ -3,7 +3,7 @@
 
 namespace Dynamik {
 	namespace ADGR {
-		UniformBufferObject Camera3D::updateCamera(std::deque<DMKEventContainer> container, DMKUpdateInfo updateInfo)
+		UniformBufferObject Camera3D::updateCamera(std::deque<DMKEventContainer> container, DMKUpdateInfo updateInfo, B1 viewMatrixLock)
 		{
 			float angelX = updateInfo.rotationX;
 			float angelY = updateInfo.rotationY;
@@ -14,62 +14,70 @@ namespace Dynamik {
 			for (int i = 0; i < container.size(); i++) {
 				DMKEventContainer eventContainer = container.back();
 				container.pop_back();
+				if (!viewMatrixLock)
+				{
+					if (eventContainer.eventType == DMKEventType::DMK_EVENT_TYPE_KEY_PRESS)
+					{
+						switch (eventContainer.code) {
+						case DMK_KEY_W:
+							cameraPos += cameraSpeed * cameraFront;
+							break;
+						case DMK_KEY_A:
+							cameraPos -= glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
+							break;
+						case DMK_KEY_S:
+							cameraPos -= cameraSpeed * cameraFront;
+							break;
+						case DMK_KEY_D:
+							cameraPos += glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
+							break;
+						case DMK_KEY_UP:
+							cameraPos += cameraSpeed * cameraUp;
+							break;
+						case DMK_KEY_DOWN:
+							cameraPos -= cameraSpeed * cameraUp;
+							break;
+						case DMK_KEY_LEFT:
+							break;
+						case DMK_KEY_RIGHT:
+							break;
+						}
+					}
+					else if (eventContainer.eventType == DMKEventType::DMK_EVENT_TYPE_KEY_REPEAT)
+					{
+						switch (eventContainer.code) {
+						case DMK_KEY_W:
+							cameraPos += cameraSpeed * cameraFront;
+							break;
+						case DMK_KEY_A:
+							cameraPos -= glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
+							break;
+						case DMK_KEY_S:
+							cameraPos -= cameraSpeed * cameraFront;
+							break;
+						case DMK_KEY_D:
+							cameraPos += glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
+							break;
+						case DMK_KEY_UP:
+							cameraPos += cameraSpeed * cameraUp;
+							break;
+						case DMK_KEY_DOWN:
+							cameraPos -= cameraSpeed * cameraUp;
+							break;
+						case DMK_KEY_LEFT:
+							break;
+						case DMK_KEY_RIGHT:
+							break;
+						}
+					}
+					else if (eventContainer.eventType == DMKEventType::DMK_EVENT_TYPE_MOUSE_MOVED)
+					{
+						_rotX = eventContainer.yAxis;
+						_rotY = eventContainer.xAxis;
+					}
+				}
 
-				if (eventContainer.eventType == DMKEventType::DMK_EVENT_TYPE_KEY_PRESS)
-				{
-					switch (eventContainer.code) {
-					case DMK_KEY_W:
-						cameraPos += cameraSpeed * cameraFront;
-						break;
-					case DMK_KEY_A:
-						cameraPos -= glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
-						break;
-					case DMK_KEY_S:
-						cameraPos -= cameraSpeed * cameraFront;
-						break;
-					case DMK_KEY_D:
-						cameraPos += glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
-						break;
-					case DMK_KEY_UP:
-						cameraPos += cameraSpeed * cameraUp;
-						break;
-					case DMK_KEY_DOWN:
-						cameraPos -= cameraSpeed * cameraUp;
-						break;
-					case DMK_KEY_LEFT:
-						break;
-					case DMK_KEY_RIGHT:
-						break;
-					}
-				}
-				else if (eventContainer.eventType == DMKEventType::DMK_EVENT_TYPE_KEY_REPEAT)
-				{
-					switch (eventContainer.code) {
-					case DMK_KEY_W:
-						cameraPos += cameraSpeed * cameraFront;
-						break;
-					case DMK_KEY_A:
-						cameraPos -= glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
-						break;
-					case DMK_KEY_S:
-						cameraPos -= cameraSpeed * cameraFront;
-						break;
-					case DMK_KEY_D:
-						cameraPos += glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
-						break;
-					case DMK_KEY_UP:
-						cameraPos += cameraSpeed * cameraUp;
-						break;
-					case DMK_KEY_DOWN:
-						cameraPos -= cameraSpeed * cameraUp;
-						break;
-					case DMK_KEY_LEFT:
-						break;
-					case DMK_KEY_RIGHT:
-						break;
-					}
-				}
-				else if (eventContainer.eventType == DMKEventType::DMK_EVENT_TYPE_MOUSE_MOVED)
+				if (eventContainer.eventType == DMKEventType::DMK_EVENT_TYPE_MOUSE_MOVED)
 				{
 					_rotX = eventContainer.yAxis;
 					_rotY = eventContainer.xAxis;
@@ -79,9 +87,9 @@ namespace Dynamik {
 			if (updateInfo.useRadians)
 			{
 				updateInfo.fieldOfView = glm::radians(updateInfo.fieldOfView);
-				angelX = glm::radians(_rotX);
-				angelY = glm::radians(_rotY);
-				angelZ = glm::radians(updateInfo.rotationZ);
+				angelX = glm::radians(updateInfo.rotationZ);
+				angelY = glm::radians(_rotY) * 0.5;
+				angelZ = glm::radians(_rotX) * 0.5;
 			}
 
 			glm::mat4 _rotationX = glm::rotate(

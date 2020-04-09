@@ -25,6 +25,7 @@ project "AlgorithmLib"
 
 	includedirs {
 		"$(SolutionDir)Dependencies/Libraries/Internal/CPP",
+		"%{IncludeDir.gli}"
 	}
 
 	filter "system:windows"

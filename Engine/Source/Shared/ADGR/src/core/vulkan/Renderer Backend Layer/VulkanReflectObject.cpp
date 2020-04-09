@@ -6,6 +6,12 @@
 namespace Dynamik {
 	namespace ADGR {
 		namespace Backend {
+			VulkanReflectObject::VulkanReflectObject(ADGRVulkanRenderableObjectInitInfo info)
+				: VulkanRenderableObject(info)
+			{
+				myRenderData.type = DMKObjectType::DMK_OBJECT_TYPE_DEBUG_OBJECT;
+			}
+			
 			void VulkanReflectObject::initializeTextures(ARRAY<ADGRVulkanTextureInitInfo> infos)
 			{
 				ADGRVulkanTextureContainer _container;
@@ -123,8 +129,6 @@ namespace Dynamik {
 						cpyInfo.destinationImageLayout = VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL;
 						VulkanFunctions::copyBufferToImageOverride(logicalDevice, commandPool, graphicsQueue, presentQueue, cpyInfo, bufferCopyRegions);
 
-						//generateMipMaps(&_container);
-
 						ADGRVulkanTextureSamplerInitInfo samplerInitInfo;
 						samplerInitInfo.magFilter = info.magFilter;
 						samplerInitInfo.minFilter = info.minFilter;
@@ -234,6 +238,8 @@ namespace Dynamik {
 					cpyInfo.image = _container.image;
 					cpyInfo.width = static_cast<UI32>(texData.texWidth);
 					cpyInfo.height = static_cast<UI32>(texData.texHeight);
+					cpyInfo.baseArrayCount = 0;
+					cpyInfo.layerCount = 6;
 					VulkanFunctions::copyBufferToImage(logicalDevice, commandPool, graphicsQueue, presentQueue, cpyInfo);
 
 					transitionInfo.image = _container.image;
@@ -245,16 +251,18 @@ namespace Dynamik {
 					VulkanFunctions::transitionImageLayout(logicalDevice, commandPool, graphicsQueue, presentQueue, transitionInfo);
 
 					ADGRVulkanTextureSamplerInitInfo samplerInitInfo;
-					samplerInitInfo.magFilter = infos[0].magFilter;
-					samplerInitInfo.minFilter = infos[0].minFilter;
+					samplerInitInfo.magFilter = VK_FILTER_LINEAR;
+					samplerInitInfo.minFilter = VK_FILTER_LINEAR;
+					samplerInitInfo.mipMapMode = VK_SAMPLER_MIPMAP_MODE_LINEAR;
 					samplerInitInfo.maxMipLevels = infos[0].maxMipLevels;
 					samplerInitInfo.minMipLevels = infos[0].minMipLevels;
-					samplerInitInfo.modeU = infos[0].modeU;
-					samplerInitInfo.modeV = infos[0].modeV;
-					samplerInitInfo.modeW = infos[0].modeW;
+					samplerInitInfo.modeU = VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE;
+					samplerInitInfo.modeV = VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE;
+					samplerInitInfo.modeW = VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE;
 					samplerInitInfo.mipLoadBias = 0.0f;
 					samplerInitInfo.compareOp = VK_COMPARE_OP_NEVER;
 					samplerInitInfo.borderColor = VK_BORDER_COLOR_FLOAT_OPAQUE_WHITE;
+					samplerInitInfo.maxAnisotrophy = 1.0f;
 					_container.imageSampler = VulkanFunctions::createImageSampler(logicalDevice, samplerInitInfo);
 
 					ADGRCreateImageViewInfo cinfo2;
@@ -292,7 +300,7 @@ namespace Dynamik {
 
 			void VulkanReflectObject::initializeUniformBuffer()
 			{
-				VkDeviceSize bufferSize = sizeof(UniformBufferObject);
+				VkDeviceSize bufferSize = sizeof(UBO_MVPC);
 				UI32 count = myRenderData.swapChainPointer->getSwapChainImages().size();
 
 				myRenderData.uniformBuffers.resize(count);
@@ -311,7 +319,7 @@ namespace Dynamik {
 				}
 			}
 
-			void VulkanReflectObject::updateUniformBuffer(UniformBufferObject uniformBufferObject, UI32 currentImage)
+			void VulkanReflectObject::updateUniformBuffer(UBO_MVPC uniformBufferObject, UI32 currentImage)
 			{
 				void* data = nullptr;
 				vkMapMemory(logicalDevice, myRenderData.uniformBufferMemories[currentImage], 0, sizeof(uniformBufferObject), 0, &data);
@@ -344,7 +352,7 @@ namespace Dynamik {
 					VkDescriptorBufferInfo bufferInfo = {};
 					bufferInfo.buffer = myRenderData.uniformBuffers[itr];
 					bufferInfo.offset = 0;
-					bufferInfo.range = sizeof(UniformBufferObject);
+					bufferInfo.range = sizeof(UBO_MVPC);
 
 					VkWriteDescriptorSet _writes1;
 					_writes1.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;

@@ -5,6 +5,10 @@ namespace Dynamik {
 	namespace ADGR {
 		UniformBufferObject Camera3D::updateCamera(std::deque<DMKEventContainer> container, DMKUpdateInfo updateInfo, B1 viewMatrixLock)
 		{
+			float currentFrame = glfwGetTime();
+			deltaTime = currentFrame - lastFrame;
+			lastFrame = currentFrame;
+
 			float angelX = updateInfo.rotationX;
 			float angelY = updateInfo.rotationY;
 			float angelZ = updateInfo.rotationZ;
@@ -14,107 +18,106 @@ namespace Dynamik {
 			for (int i = 0; i < container.size(); i++) {
 				DMKEventContainer eventContainer = container.back();
 				container.pop_back();
-				if (!viewMatrixLock)
+
+				if (eventContainer.eventType == DMKEventType::DMK_EVENT_TYPE_KEY_PRESS)
 				{
-					if (eventContainer.eventType == DMKEventType::DMK_EVENT_TYPE_KEY_PRESS)
-					{
-						switch (eventContainer.code) {
-						case DMK_KEY_W:
-							cameraPos += cameraSpeed * cameraFront;
-							break;
-						case DMK_KEY_A:
-							cameraPos -= glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
-							break;
-						case DMK_KEY_S:
-							cameraPos -= cameraSpeed * cameraFront;
-							break;
-						case DMK_KEY_D:
-							cameraPos += glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
-							break;
-						case DMK_KEY_UP:
-							cameraPos += cameraSpeed * cameraUp;
-							break;
-						case DMK_KEY_DOWN:
-							cameraPos -= cameraSpeed * cameraUp;
-							break;
-						case DMK_KEY_LEFT:
-							break;
-						case DMK_KEY_RIGHT:
-							break;
-						}
-					}
-					else if (eventContainer.eventType == DMKEventType::DMK_EVENT_TYPE_KEY_REPEAT)
-					{
-						switch (eventContainer.code) {
-						case DMK_KEY_W:
-							cameraPos += cameraSpeed * cameraFront;
-							break;
-						case DMK_KEY_A:
-							cameraPos -= glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
-							break;
-						case DMK_KEY_S:
-							cameraPos -= cameraSpeed * cameraFront;
-							break;
-						case DMK_KEY_D:
-							cameraPos += glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
-							break;
-						case DMK_KEY_UP:
-							cameraPos += cameraSpeed * cameraUp;
-							break;
-						case DMK_KEY_DOWN:
-							cameraPos -= cameraSpeed * cameraUp;
-							break;
-						case DMK_KEY_LEFT:
-							break;
-						case DMK_KEY_RIGHT:
-							break;
-						}
-					}
-					else if (eventContainer.eventType == DMKEventType::DMK_EVENT_TYPE_MOUSE_MOVED)
-					{
-						_rotX = eventContainer.yAxis;
-						_rotY = eventContainer.xAxis;
+					switch (eventContainer.code) {
+					case DMK_KEY_W:
+						glCam.ProcessKeyboard(FORWARD, deltaTime);
+						break;
+					case DMK_KEY_A:
+						glCam.ProcessKeyboard(LEFT, deltaTime);
+						break;
+					case DMK_KEY_S:
+						glCam.ProcessKeyboard(BACKWARD, deltaTime);
+						break;
+					case DMK_KEY_D:
+						glCam.ProcessKeyboard(RIGHT, deltaTime);
+						break;
+					case DMK_KEY_UP:
+						glCam.Position += cameraSpeed * glCam.Up;
+						break;
+					case DMK_KEY_DOWN:
+						glCam.Position -= cameraSpeed * glCam.Up;
+						break;
+					case DMK_KEY_LEFT:
+						break;
+					case DMK_KEY_RIGHT:
+						break;
+					case DMK_KEY_KP_ADD:
+						glCam.MovementSpeed += 0.5f;
+						break;
+					case DMK_KEY_KP_SUBTRACT:
+						glCam.MovementSpeed -= 0.5f;
+						break;
 					}
 				}
-
-				if (eventContainer.eventType == DMKEventType::DMK_EVENT_TYPE_MOUSE_MOVED)
+				else if (eventContainer.eventType == DMKEventType::DMK_EVENT_TYPE_KEY_REPEAT)
 				{
-					_rotX = eventContainer.yAxis;
-					_rotY = eventContainer.xAxis;
+					switch (eventContainer.code) {
+					case DMK_KEY_W:
+						glCam.ProcessKeyboard(FORWARD, deltaTime);
+						break;
+					case DMK_KEY_A:
+						glCam.ProcessKeyboard(LEFT, deltaTime);
+						break;
+					case DMK_KEY_S:
+						glCam.ProcessKeyboard(BACKWARD, deltaTime);
+						break;
+					case DMK_KEY_D:
+						glCam.ProcessKeyboard(RIGHT, deltaTime);
+						break;
+					case DMK_KEY_UP:
+						glCam.Position += cameraSpeed * glCam.Up;
+						break;
+					case DMK_KEY_DOWN:
+						glCam.Position -= cameraSpeed * glCam.Up;
+						break;
+					case DMK_KEY_LEFT:
+						break;
+					case DMK_KEY_RIGHT:
+						break;
+					}
+				}
+				else if (eventContainer.eventType == DMKEventType::DMK_EVENT_TYPE_MOUSE_MOVED)
+				{
+					_rotX = eventContainer.xAxis;
+					_rotY = eventContainer.yAxis;
 				}
 			}
 
 			if (updateInfo.useRadians)
 			{
 				updateInfo.fieldOfView = glm::radians(updateInfo.fieldOfView);
-				angelX = glm::radians(updateInfo.rotationZ);
-				angelY = glm::radians(_rotY) * 0.5;
-				angelZ = glm::radians(_rotX) * 0.5;
+				angelX = cos(glm::radians(_rotX)) * cos(glm::radians(_rotY));
+				angelY = sin(glm::radians(_rotY));
+				angelZ = sin(glm::radians(_rotX)) * cos(glm::radians(_rotY));
 			}
 
-			glm::mat4 _rotationX = glm::rotate(
-				glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, 0.0f)),
-				angelX,
-				glm::vec3(0.0f, 0.0f, 1.0f));
+			if (firstMouse)
+			{
+				lastX = _rotX;
+				lastY = _rotY;
+				firstMouse = false;
+			}
 
-			glm::mat4 _rotationY = glm::rotate(
-				glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, 0.0f)),
-				angelY,
-				glm::vec3(0.0f, 1.0f, 0.0f));
+			float xoffset = _rotX - lastX;
+			float yoffset = lastY - _rotY; // reversed since y-coordinates go from bottom to top
 
-			glm::mat4 _rotationZ = glm::rotate(
-				glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, 0.0f)),
-				angelZ,
-				glm::vec3(1.0f, 0.0f, 0.0f));
+			lastX = _rotX;
+			lastY = _rotY;
 
-			UniformBufferObject ubo = {};
-			ubo.model = _rotationX * _rotationY * _rotationZ;
-			ubo.view = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
-			ubo.proj = glm::perspective(updateInfo.fieldOfView, updateInfo.aspectRatio, updateInfo.near, updateInfo.far);
+			;
+			glCam.ProcessMouseMovement(xoffset, yoffset);
 
-			ubo.proj[1][1] *= -1;
+			UniformBufferObject uboVS;
+			glm::mat4 viewMatrix = glm::mat4(1.0f);
+			uboVS.model = glm::mat4(1.0f);
+			uboVS.view = glCam.GetViewMatrix();
+			uboVS.proj = glm::perspective(glm::radians(60.0f), updateInfo.aspectRatio, updateInfo.near, updateInfo.far);
+			uboVS.proj[1][1] *= -1;
 
-			return ubo;
+			return uboVS;
 		}
 	}
 }

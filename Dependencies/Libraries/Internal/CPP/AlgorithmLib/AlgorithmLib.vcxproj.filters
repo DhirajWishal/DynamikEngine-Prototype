@@ -13,8 +13,12 @@
     <ClInclude Include="Public\Swap.h">
       <Filter>Public</Filter>
     </ClInclude>
+    <ClInclude Include="Public\CubemapCreator.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="AlgorithmLib.lua" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Private\CubemapCreator.cpp" />
   </ItemGroup>
 </Project>

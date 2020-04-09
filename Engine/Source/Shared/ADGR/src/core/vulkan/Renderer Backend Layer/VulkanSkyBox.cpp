@@ -129,8 +129,6 @@ namespace Dynamik {
 						cpyInfo.destinationImageLayout = VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL;
 						VulkanFunctions::copyBufferToImageOverride(logicalDevice, commandPool, graphicsQueue, presentQueue, cpyInfo, bufferCopyRegions);
 
-						//generateMipMaps(&_container);
-
 						ADGRVulkanTextureSamplerInitInfo samplerInitInfo;
 						samplerInitInfo.magFilter = info.magFilter;
 						samplerInitInfo.minFilter = info.minFilter;

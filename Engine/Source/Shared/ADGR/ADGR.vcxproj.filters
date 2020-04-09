@@ -90,6 +90,9 @@
     <ClInclude Include="src\core\Components\CameraSkybox.h">
       <Filter>src\core\Components</Filter>
     </ClInclude>
+    <ClInclude Include="src\core\Components\TextOverlay.h">
+      <Filter>src\core\Components</Filter>
+    </ClInclude>
     <ClInclude Include="src\core\Window\Windows\WindowManager.h">
       <Filter>src\core\Window\Windows</Filter>
     </ClInclude>
@@ -123,6 +126,9 @@
     <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Objects\VulkanColorBuffer.h">
       <Filter>src\core\vulkan\Renderer Backend Layer\Objects</Filter>
     </ClInclude>
+    <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Objects\VulkanCommandBuffer.h">
+      <Filter>src\core\vulkan\Renderer Backend Layer\Objects</Filter>
+    </ClInclude>
     <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Objects\VulkanControlHeader.h">
       <Filter>src\core\vulkan\Renderer Backend Layer\Objects</Filter>
     </ClInclude>
@@ -153,6 +159,9 @@
     <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Objects\VulkanSwapChain.h">
       <Filter>src\core\vulkan\Renderer Backend Layer\Objects</Filter>
     </ClInclude>
+    <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Objects\VulkanUtilities.h">
+      <Filter>src\core\vulkan\Renderer Backend Layer\Objects</Filter>
+    </ClInclude>
     <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Objects\VulkanValidator.h">
       <Filter>src\core\vulkan\Renderer Backend Layer\Objects</Filter>
     </ClInclude>
@@ -171,6 +180,12 @@
     <ClInclude Include="src\core\vulkan\Renderer Backend Layer\VulkanSwapChain3D.h">
       <Filter>src\core\vulkan\Renderer Backend Layer</Filter>
     </ClInclude>
+    <ClInclude Include="src\core\vulkan\Renderer Backend Layer\VulkanTextObject.h">
+      <Filter>src\core\vulkan\Renderer Backend Layer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\vulkan\Renderer Backend Layer\VulkanTextOverlay.h">
+      <Filter>src\core\vulkan\Renderer Backend Layer</Filter>
+    </ClInclude>
     <ClInclude Include="src\core\vulkan\vulkanRenderer.h">
       <Filter>src\core\vulkan</Filter>
     </ClInclude>
@@ -186,11 +201,6 @@
     <ClInclude Include="src\rendererFormat.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="src\core\Components\TextOverlay.h" />
-    <ClInclude Include="src\core\vulkan\Renderer Backend Layer\VulkanTextOverlay.h" />
-    <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Objects\VulkanCommandBuffer.h" />
-    <ClInclude Include="src\core\vulkan\Renderer Backend Layer\VulkanTextObject.h" />
-    <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Objects\VulkanUtilities.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Layers\layer.cpp">
@@ -253,6 +263,9 @@
     <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Objects\VulkanColorBuffer.cpp">
       <Filter>src\core\vulkan\Renderer Backend Layer\Objects</Filter>
     </ClCompile>
+    <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Objects\VulkanCommandBuffer.cpp">
+      <Filter>src\core\vulkan\Renderer Backend Layer\Objects</Filter>
+    </ClCompile>
     <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Objects\VulkanCore.cpp">
       <Filter>src\core\vulkan\Renderer Backend Layer\Objects</Filter>
     </ClCompile>
@@ -277,6 +290,9 @@
     <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Objects\VulkanSwapChain.cpp">
       <Filter>src\core\vulkan\Renderer Backend Layer\Objects</Filter>
     </ClCompile>
+    <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Objects\VulkanUtilities.cpp">
+      <Filter>src\core\vulkan\Renderer Backend Layer\Objects</Filter>
+    </ClCompile>
     <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Objects\VulkanValidator.cpp">
       <Filter>src\core\vulkan\Renderer Backend Layer\Objects</Filter>
     </ClCompile>
@@ -289,6 +305,12 @@
     <ClCompile Include="src\core\vulkan\Renderer Backend Layer\VulkanSwapChain3D.cpp">
       <Filter>src\core\vulkan\Renderer Backend Layer</Filter>
     </ClCompile>
+    <ClCompile Include="src\core\vulkan\Renderer Backend Layer\VulkanTextObject.cpp">
+      <Filter>src\core\vulkan\Renderer Backend Layer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\vulkan\Renderer Backend Layer\VulkanTextOverlay.cpp">
+      <Filter>src\core\vulkan\Renderer Backend Layer</Filter>
+    </ClCompile>
     <ClCompile Include="src\core\vulkan\vulkanRenderer.cpp">
       <Filter>src\core\vulkan</Filter>
     </ClCompile>
@@ -298,13 +320,8 @@
     <ClCompile Include="src\rendererFormat.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="src\core\vulkan\Renderer Backend Layer\VulkanTextOverlay.cpp" />
-    <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Objects\VulkanCommandBuffer.cpp" />
-    <ClCompile Include="src\core\vulkan\Renderer Backend Layer\VulkanTextObject.cpp" />
-    <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Objects\VulkanUtilities.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ADGR.lua" />
-    <None Include="src\core\vulkan\Renderer Backend Layer\External\stb_font_consolas_24_latin1.inl" />
   </ItemGroup>
 </Project>

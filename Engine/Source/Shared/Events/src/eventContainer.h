@@ -57,12 +57,12 @@ namespace Dynamik {
 		// movement and rotaion locks
 		bool movementUpDownLock = false;
 		bool movementFrontBackLock = false;
+		float far = 256.0f;
 		bool movementLeftRightLock = false;
 		bool movementRotationLock = false;
 
 		float fieldOfView = 45.0f;
 		float near = 0.001f;
-		float far = 10.0f;
 		float aspectRatio = 0.0f;
 
 		bool useRadians = true;

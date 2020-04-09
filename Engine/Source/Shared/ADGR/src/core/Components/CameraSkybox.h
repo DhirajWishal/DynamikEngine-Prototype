@@ -24,6 +24,7 @@ namespace Dynamik {
 			float lastX = 0.0f;
 			float lastY = 0.0f;
 			bool firstMouse = true;
+			float zoom = 45.0f;
 		};
 	}
 }

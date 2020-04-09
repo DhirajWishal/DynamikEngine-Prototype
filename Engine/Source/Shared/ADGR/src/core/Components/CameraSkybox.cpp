@@ -74,6 +74,15 @@ namespace Dynamik {
 					_rotX = eventContainer.xAxis;
 					_rotY = eventContainer.yAxis;
 				}
+				else if (eventContainer.eventType == DMKEventType::DMK_EVENT_TYPE_MOUSE_SCROLL)
+				{
+					if (zoom >= 1.0f && zoom <= 45.0f)
+						zoom -= eventContainer.yOffset;
+					if (zoom <= 1.0f)
+						zoom = 1.0f;
+					if (zoom >= 45.0f)
+						zoom = 45.0f;
+				}
 			}
 
 			if (updateInfo.useRadians)
@@ -103,7 +112,7 @@ namespace Dynamik {
 			glm::mat4 viewMatrix = glm::mat4(1.0f);
 			uboVS.model = glm::mat4(1.0f);
 			uboVS.view = glm::mat4(glm::mat3(glCam.GetViewMatrix()));
-			uboVS.proj = glm::perspective(glm::radians(45.0f), updateInfo.aspectRatio, 0.1f, 256.0f);
+			uboVS.proj = glm::perspective(glm::radians(zoom), updateInfo.aspectRatio, updateInfo.near, updateInfo.far);
 			uboVS.proj[1][1] *= -1;
 
 			return uboVS;

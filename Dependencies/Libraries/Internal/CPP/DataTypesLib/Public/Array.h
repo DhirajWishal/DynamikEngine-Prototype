@@ -126,6 +126,7 @@ namespace Dynamik {
 		ARRAY()
 		{
 			_setLocalDataToDefault();
+			_reAllocateAssign(_getNextSize());
 		}
 
 		/* CONSTRUCTOR

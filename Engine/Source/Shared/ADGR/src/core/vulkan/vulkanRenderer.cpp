@@ -109,6 +109,8 @@ namespace Dynamik {
 
 		// basic one-time shut down functions
 		void vulkanRenderer::shutDownStageOne() {
+			vkDeviceWaitIdle(myVulkanCore.logicalDevice);
+
 			myDepthBuffer.terminate(myVulkanCore.logicalDevice);
 			myColorBuffer.terminate(myVulkanCore.logicalDevice);
 
@@ -119,10 +121,12 @@ namespace Dynamik {
 
 		// per object shut down functions
 		void vulkanRenderer::shutDownStageTwo() {
+			mySwapChain3D.swapChainContainer.terminateDescriptorSetLayout();
+			mySwapChain3D.swapChainContainer.terminatePipelineLayout();
+
 			for (ADGRVulkanRenderData& _objectData : renderDatas)
 			{
-				VulkanRenderableObject _object(RenderableObjectInitInfo()
-					);
+				VulkanRenderableObject _object(RenderableObjectInitInfo());
 
 				_object.setRenderData(_objectData);
 

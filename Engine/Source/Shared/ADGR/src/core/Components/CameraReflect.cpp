@@ -127,7 +127,7 @@ namespace Dynamik {
 			uboVS.model = glm::mat4(1.0f);
 			uboVS.view = glCam.GetViewMatrix();
 			uboVS.cameraPos = glCam.Position;
-			uboVS.proj = glm::perspective(glm::radians(zoom), updateInfo.aspectRatio, updateInfo.near, updateInfo.far);
+			uboVS.proj = glm::perspective(glm::radians(60.0f), updateInfo.aspectRatio, updateInfo.near, updateInfo.far);
 			uboVS.proj[1][1] *= -1;
 
 			return uboVS;

@@ -149,6 +149,7 @@
     <ClInclude Include="GameLibraries\KeyBingings.h" />
     <ClInclude Include="GameLibraries\Level.h" />
     <ClInclude Include="GameLibraries\Scene.h" />
+    <ClInclude Include="GameLibraries\SkyboxObject.h" />
     <ClInclude Include="src\Dynamik.h" />
     <ClInclude Include="src\core\application.h" />
     <ClInclude Include="src\core\core.h" />

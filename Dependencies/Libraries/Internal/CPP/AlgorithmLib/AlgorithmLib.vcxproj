@@ -134,6 +134,9 @@
     <ClInclude Include="Public\Swap.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Private\CubemapCreator.cpp" />
+  </ItemGroup>
+  <ItemGroup>
     <None Include="AlgorithmLib.lua" />
   </ItemGroup>
   <ItemGroup>
@@ -143,9 +146,6 @@
     <ProjectReference Include="..\DataTypesLib\DataTypesLib.vcxproj">
       <Project>{6B37DFCD-579A-6E72-0020-A728EC613AF5}</Project>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="Private\CubemapCreator.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

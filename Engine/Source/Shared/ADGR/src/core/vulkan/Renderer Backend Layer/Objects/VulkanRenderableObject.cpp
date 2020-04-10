@@ -803,11 +803,11 @@ namespace Dynamik {
 				allocInfo.descriptorSetCount = 1;
 				allocInfo.pSetLayouts = &_layout;
 
-				VkDescriptorSet _descriptorSet = VK_NULL_HANDLE;
-				if (vkAllocateDescriptorSets(logicalDevice, &allocInfo, &_descriptorSet) != VK_SUCCESS)
+				if (vkAllocateDescriptorSets(logicalDevice, &allocInfo, &myRenderData.descriptors.descriptorSet) != VK_SUCCESS)
 					DMK_CORE_FATAL("failed to allocate descriptor sets!");
 
 				ARRAY<VkWriteDescriptorSet> descriptorWrites = {};
+				ARRAY<VkDescriptorBufferInfo> bufferInfos;
 
 				for (UI32 itr = 0; itr < myRenderData.uniformBuffers.size(); itr++)
 				{
@@ -815,20 +815,21 @@ namespace Dynamik {
 					bufferInfo.buffer = myRenderData.uniformBuffers[itr];
 					bufferInfo.offset = 0;
 					bufferInfo.range = sizeof(UniformBufferObject);
-
-					VkWriteDescriptorSet _writes1;
-					_writes1.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
-					_writes1.dstSet = _descriptorSet;
-					_writes1.dstBinding = 0;
-					_writes1.dstArrayElement = 0;
-					_writes1.descriptorType = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;
-					_writes1.descriptorCount = 1;
-					_writes1.pBufferInfo = &bufferInfo;
-					_writes1.pNext = VK_NULL_HANDLE;
-					_writes1.pImageInfo = VK_NULL_HANDLE;
-					_writes1.pTexelBufferView = VK_NULL_HANDLE;
-					descriptorWrites.push_back(_writes1);
+					bufferInfos.pushBack(bufferInfo);
 				}
+
+				VkWriteDescriptorSet _writes1;
+				_writes1.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
+				_writes1.dstSet = myRenderData.descriptors.descriptorSet;
+				_writes1.dstBinding = 0;
+				_writes1.dstArrayElement = 0;
+				_writes1.descriptorType = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;
+				_writes1.descriptorCount = 1;
+				_writes1.pBufferInfo = bufferInfos.data();
+				_writes1.pNext = VK_NULL_HANDLE;
+				_writes1.pImageInfo = VK_NULL_HANDLE;
+				_writes1.pTexelBufferView = VK_NULL_HANDLE;
+				descriptorWrites.push_back(_writes1);
 
 				if (myRenderData.textures.size())
 				{
@@ -841,7 +842,7 @@ namespace Dynamik {
 
 						VkWriteDescriptorSet _writes2;
 						_writes2.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
-						_writes2.dstSet = _descriptorSet;
+						_writes2.dstSet = myRenderData.descriptors.descriptorSet;
 						_writes2.dstBinding = 1;
 						_writes2.dstArrayElement = 0;
 						_writes2.descriptorType = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
@@ -849,6 +850,7 @@ namespace Dynamik {
 						_writes2.pImageInfo = &imageInfo;
 						_writes2.pNext = VK_NULL_HANDLE;
 						_writes2.pTexelBufferView = VK_NULL_HANDLE;
+						_writes2.pBufferInfo = VK_NULL_HANDLE;
 						descriptorWrites.push_back(_writes2);
 					}
 				}
@@ -858,8 +860,6 @@ namespace Dynamik {
 
 				vkUpdateDescriptorSets(logicalDevice, static_cast<UI32>(descriptorWrites.size()),
 					descriptorWrites.data(), 0, nullptr);
-
-				myRenderData.descriptors.descriptorSet = _descriptorSet;
 			}
 
 			void VulkanRenderableObject::initializeUniformBuffer()

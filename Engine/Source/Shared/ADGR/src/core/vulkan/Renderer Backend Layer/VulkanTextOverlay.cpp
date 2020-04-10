@@ -568,6 +568,11 @@ namespace Dynamik {
 				initializeCommandBuffers();
 			}
 
+			void VulkanTextOverlay::_terminateCommandPool()
+			{
+				commandBufferManager.terminateCommandPool();
+			}
+
 			void VulkanTextOverlay::_terminateVertexBuffer()
 			{
 				vkDestroyBuffer(myCoreObject.logicalDevice, vertexBuffer, nullptr);
@@ -584,18 +589,27 @@ namespace Dynamik {
 
 			void VulkanTextOverlay::_terminateDescriptorPool()
 			{
+				vkDestroyDescriptorPool(myCoreObject.logicalDevice, myRenderData.descriptors.pool, nullptr);
+			}
+
+			void VulkanTextOverlay::_terminateDescriptorLayout()
+			{
+				mySwapChainObject.terminateDescriptorSetLayout();
 			}
 
 			void VulkanTextOverlay::_terminatePipelineLayout()
 			{
+				mySwapChainObject.terminatePipelineLayout();
 			}
 
 			void VulkanTextOverlay::_terminatePipeline()
 			{
+				vkDestroyPipeline(myCoreObject.logicalDevice, myRenderData.pipeline, nullptr);
 			}
 
 			void VulkanTextOverlay::_terminateSwapChain()
 			{
+				mySwapChainObject.terminate();
 			}
 
 			void VulkanTextOverlay::_localCommandBuffer::initializeCommandBuffers(ADGRVulkanCommandBufferInitInfo info)

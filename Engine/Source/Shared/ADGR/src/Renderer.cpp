@@ -104,6 +104,9 @@ namespace Dynamik {
 				for (I32 i = 0; i < internalFormats.size(); i++) {
 					B1 isInitiated = false;
 					RendererFormat* _localFormat = &formats->at(i);
+					if (_localFormat->myInternalFormat->myGameObject->myProperties.type == DMKObjectType::DMK_OBJECT_TYPE_ANIMATION)
+						continue;
+
 					if (_localFormat->myInternalFormat->myVertexBufferObjects.size())
 						for (UI32 itr = 0; itr < _localFormat->myInternalFormat->myVertexBufferObjects.size(); itr++)
 							if (_localFormat->myInternalFormat->myVertexBufferObjects[itr].size())

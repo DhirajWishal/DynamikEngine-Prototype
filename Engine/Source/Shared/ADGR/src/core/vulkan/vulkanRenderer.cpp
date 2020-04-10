@@ -20,6 +20,7 @@
 
 #include "Renderer Backend Layer/VulkanSkyBox.h"
 #include "Renderer Backend Layer/VulkanReflectObject.h"
+#include "Renderer Backend Layer/Animations/VulkanSkeletalAnimation.h"
 
 #define TEXTOVERLAY_MAX_CHAR_COUNT 2048
 
@@ -115,15 +116,13 @@ namespace Dynamik {
 			myColorBuffer.terminate(myVulkanCore.logicalDevice);
 
 			myCommandBuffer.terminateCommandBuffers();
+			myCommandBuffer.terminateCommandPool();
 
 			mySwapChain3D.terminate();
 		}
 
 		// per object shut down functions
 		void vulkanRenderer::shutDownStageTwo() {
-			mySwapChain3D.swapChainContainer.terminateDescriptorSetLayout();
-			mySwapChain3D.swapChainContainer.terminatePipelineLayout();
-
 			for (ADGRVulkanRenderData& _objectData : renderDatas)
 			{
 				VulkanRenderableObject _object(RenderableObjectInitInfo());
@@ -139,7 +138,11 @@ namespace Dynamik {
 				_object.terminateIndexBuffer();
 
 				_object.terminateVertexBuffer();
+
+				_object.terminateDescriptorPool();
 			}
+
+			_terminateOverlay();
 		}
 
 		// final shut down functions
@@ -349,7 +352,13 @@ namespace Dynamik {
 					_initializeOverlayStageTwo(shaderContainer);
 					addText("Hello World", 15.0f, 15.0f, DMKTextAlign::DMK_TEXT_ALIGN_LEFT);
 				}
+				else if (_object.type == DMKObjectType::DMK_OBJECT_TYPE_ANIMATION)
+				{
+					renderDatas.pushBack(initializeSkeletalAnimation(_object));
+				}
 			}
+
+			rawObjects.clear();
 		}
 
 		void vulkanRenderer::initializeObjectsBasic()
@@ -774,6 +783,164 @@ namespace Dynamik {
 			return _renderObject.getRenderData();
 		}
 
+		ADGRVulkanRenderData vulkanRenderer::initializeSkeletalAnimation(ADGRVulkan3DObjectData _object)
+		{
+			VulkanSkeletalAnimation _renderObject(RenderableObjectInitInfo());
+			_renderObject.setSwapChainContainer(&mySwapChain3D.swapChainContainer);
+
+			_renderObject.scene = _renderObject.Importer.ReadFile(_object.modelpath.c_str(), 0);
+			_renderObject.setAnimation(0);
+
+			// Setup bones
+			// One vertex bone info structure per vertex
+			uint32_t vertexCount(0);
+			for (uint32_t m = 0; m < _renderObject.scene->mNumMeshes; m++) {
+				vertexCount += _renderObject.scene->mMeshes[m]->mNumVertices;
+			};
+			_renderObject.bones.resize(vertexCount);
+			// Store global inverse transform matrix of root node 
+			_renderObject.globalInverseTransform = _renderObject.scene->mRootNode->mTransformation;
+			_renderObject.globalInverseTransform.Inverse();
+			// Load bones (weights and IDs)
+			uint32_t vertexBase(0);
+			for (uint32_t m = 0; m < _renderObject.scene->mNumMeshes; m++) {
+				aiMesh* paiMesh = _renderObject.scene->mMeshes[m];
+				if (paiMesh->mNumBones > 0) {
+					_renderObject.loadBones(paiMesh, vertexBase, _renderObject.bones);
+				}
+				vertexBase += _renderObject.scene->mMeshes[m]->mNumVertices;
+			}
+
+			// Iterate through all meshes in the file and extract the vertex information used in this demo
+			ARRAY<SkeletalVertex> vertexBuffer;
+			vertexBase = 0;
+			for (uint32_t m = 0; m < _renderObject.scene->mNumMeshes; m++) {
+				for (uint32_t v = 0; v < _renderObject.scene->mMeshes[m]->mNumVertices; v++) {
+					SkeletalVertex vertex;
+
+					vertex.Position = glm::make_vec3(&_renderObject.scene->mMeshes[m]->mVertices[v].x);
+					vertex.Normal = glm::make_vec3(&_renderObject.scene->mMeshes[m]->mNormals[v].x);
+					vertex.UV = glm::make_vec2(&_renderObject.scene->mMeshes[m]->mTextureCoords[0][v].x);
+					vertex.Color = (_renderObject.scene->mMeshes[m]->HasVertexColors(0)) ? glm::make_vec3(&_renderObject.scene->mMeshes[m]->mColors[0][v].r) : glm::vec3(1.0f);
+
+					// Fetch bone weights and IDs
+					for (uint32_t j = 0; j < MAX_BONES_PER_VERTEX; j++) {
+						vertex.boneWeights[j] = _renderObject.bones[vertexBase + v].weights[j];
+						vertex.boneIDs[j] = _renderObject.bones[vertexBase + v].IDs[j];
+					}
+
+					vertexBuffer.push_back(vertex);
+				}
+				vertexBase += _renderObject.scene->mMeshes[m]->mNumVertices;
+			}
+			_renderObject.initializeVertexBuffer(&vertexBuffer);
+
+			// Generate index buffer from loaded mesh file
+			ARRAY<uint32_t> indexBuffer;
+			for (uint32_t m = 0; m < _renderObject.scene->mNumMeshes; m++)
+			{
+				uint32_t indexBase = static_cast<uint32_t>(indexBuffer.size());
+				for (uint32_t f = 0; f < _renderObject.scene->mMeshes[m]->mNumFaces; f++)
+				{
+					for (uint32_t i = 0; i < 3; i++)
+					{
+						indexBuffer.push_back(_renderObject.scene->mMeshes[m]->mFaces[f].mIndices[i] + indexBase);
+					}
+				}
+			}
+			_renderObject.initializeIndexBufferUI32(&indexBuffer);
+
+
+			ARRAY<VulkanShader> _shaders;
+
+			if (_object.vertexShaderPath.size() && _object.vertexShaderPath != "NONE")
+			{
+				ADGRVulkanShaderInitInfo _initInfo;
+				_initInfo.path = _object.vertexShaderPath;
+				_initInfo.type = ADGRVulkanShaderType::ADGR_VULKAN_SHADER_TYPE_VERTEX;
+
+				VulkanShader _shader;
+				_shader.initialize(myVulkanCore.logicalDevice, _initInfo);
+				_shaders.pushBack(_shader);
+			}
+			if (_object.tessellationShaderPath.size() && _object.tessellationShaderPath != "NONE")
+			{
+				ADGRVulkanShaderInitInfo _initInfo;
+				_initInfo.path = _object.tessellationShaderPath;
+				_initInfo.type = ADGRVulkanShaderType::ADGR_VULKAN_SHADER_TYPE_TESSELLATION;
+
+				VulkanShader _shader;
+				_shader.initialize(myVulkanCore.logicalDevice, _initInfo);
+				_shaders.pushBack(_shader);
+			}
+			if (_object.geometryShaderPath.size() && _object.geometryShaderPath != "NONE")
+			{
+				ADGRVulkanShaderInitInfo _initInfo;
+				_initInfo.path = _object.geometryShaderPath;
+				_initInfo.type = ADGRVulkanShaderType::ADGR_VULKAN_SHADER_TYPE_GEOMETRY;
+
+				VulkanShader _shader;
+				_shader.initialize(myVulkanCore.logicalDevice, _initInfo);
+				_shaders.pushBack(_shader);
+			}
+			if (_object.fragmentShaderPath.size() && _object.fragmentShaderPath != "NONE")
+			{
+				ADGRVulkanShaderInitInfo _initInfo;
+				_initInfo.path = _object.fragmentShaderPath;
+				_initInfo.type = ADGRVulkanShaderType::ADGR_VULKAN_SHADER_TYPE_FRAGMENT;
+
+				VulkanShader _shader;
+				_shader.initialize(myVulkanCore.logicalDevice, _initInfo);
+				_shaders.pushBack(_shader);
+			}
+
+			// initialize pipeline
+			ADGRVulkanPipelineInitInfo pipelineInitInfo;
+			pipelineInitInfo.shaders = _shaders;
+			pipelineInitInfo.multisamplerMsaaSamples = myVulkanCore.msaaSamples;
+			pipelineInitInfo.vertexBindingDescription = SkeletalVertex::getBindingDescription(1);
+			pipelineInitInfo.vertexAttributeDescription = SkeletalVertex::getAttributeDescriptions();
+			pipelineInitInfo.isTexturesAvailable = _object.texturePaths.size();
+			pipelineInitInfo.rasterizerFrontFace = VK_FRONT_FACE_CLOCKWISE;
+			_renderObject.initializePipeline(pipelineInitInfo);
+
+			for (VulkanShader _shader : _shaders)
+				_shader.terminate(myVulkanCore.logicalDevice);
+
+			ARRAY<ADGRVulkanTextureInitInfo> textureInitInfos;
+
+			// initialize textures
+			for (UI32 _itr = 0; _itr < _object.texturePaths.size(); _itr++)
+			{
+				ADGRVulkanTextureInitInfo initInfo;
+				initInfo.path = _object.texturePaths[_itr];
+				initInfo.format = VK_FORMAT_R8G8B8A8_UNORM;
+				initInfo.mipLevels = 1;
+				initInfo.modeU = VK_SAMPLER_ADDRESS_MODE_REPEAT;
+				initInfo.modeV = VK_SAMPLER_ADDRESS_MODE_REPEAT;
+				initInfo.modeW = VK_SAMPLER_ADDRESS_MODE_REPEAT;
+				initInfo.magFilter = VK_FILTER_LINEAR;
+				initInfo.minFilter = VK_FILTER_LINEAR;
+				initInfo.aspectFlags = VK_IMAGE_ASPECT_COLOR_BIT;
+				textureInitInfos.pushBack(initInfo);
+			}
+
+			_renderObject.initializeTextures(textureInitInfos);
+
+			// initialize uniform buffers
+			_renderObject.initializeUniformBuffer();
+
+			// initialize descriptor pool
+			ADGRVulkanDescriptorPoolInitInfo descriptorPoolInitInfo;
+			_renderObject.initializeDescriptorPool(descriptorPoolInitInfo);
+
+			// initialize descriptor sets
+			ADGRVulkanDescriptorSetsInitInfo descriptorSetsInitInfo;
+			_renderObject.initializeDescriptorSets(descriptorSetsInitInfo);
+
+			return _renderObject.getRenderData();
+		}
+
 		void vulkanRenderer::draw3D(VkSwapchainKHR swapChain)
 		{
 			// get image index
@@ -819,6 +986,15 @@ namespace Dynamik {
 					DMKUpdateInfo info;
 					info.aspectRatio = (F32)myWindowManager.windowWidth / (F32)myWindowManager.windowHeight;
 					_renderObject.updateUniformBuffer(myCamera3D.updateCamera(eventContainer, info), imageIndex);
+				}
+				else if (_object.type == DMKObjectType::DMK_OBJECT_TYPE_ANIMATION)
+				{
+					VulkanSkeletalAnimation _renderObject(RenderableObjectInitInfo());
+					_renderObject.setRenderData(_object);
+
+					DMKUpdateInfo info;
+					info.aspectRatio = (F32)myWindowManager.windowWidth / (F32)myWindowManager.windowHeight;
+					_renderObject.updateUniformBuffer(myAnimationCamera.updateCamera(eventContainer, info), imageIndex, runningTime);
 				}
 			}
 
@@ -1076,6 +1252,11 @@ namespace Dynamik {
 
 		void vulkanRenderer::_terminateOverlay()
 		{
+			overlayCommandBuffer.terminateCommandBuffers();
+			overlayCommandBuffer.terminateCommandPool();
+
+			vkDestroyPipelineLayout(myVulkanCore.logicalDevice, overlayContainer.pipelineLayout, nullptr);
+			vkDestroyDescriptorSetLayout(myVulkanCore.logicalDevice, overlayContainer.descriptorSetLayout, nullptr);
 		}
 
 		void vulkanRenderer::_initializeOverlayVertexBuffer()
@@ -1377,6 +1558,7 @@ namespace Dynamik {
 			for (UI32 _itr = 0; _itr < rendererFormats.size(); _itr++)
 			{
 				ADGRVulkan3DObjectData _object;
+				_object.modelpath = rendererFormats[_itr].myInternalFormat->myGameObject->myProperties.objectPath[0];
 				_object.vertexShaderPath = rendererFormats[_itr].myInternalFormat->myGameObject->myProperties.renderableObjectProperties.vertexShaderPath;
 				_object.tessellationShaderPath = rendererFormats[_itr].myInternalFormat->myGameObject->myProperties.renderableObjectProperties.tessellationShaderPath;
 				_object.geometryShaderPath = rendererFormats[_itr].myInternalFormat->myGameObject->myProperties.renderableObjectProperties.geometryShaderPath;

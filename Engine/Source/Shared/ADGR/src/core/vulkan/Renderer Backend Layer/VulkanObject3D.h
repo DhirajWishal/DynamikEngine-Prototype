@@ -9,6 +9,7 @@ namespace Dynamik {
 		namespace Backend {
 			struct ADGRVulkan3DObjectData {
 				DMKObjectType type = DMKObjectType::DMK_OBJECT_TYPE_STATIC_OBJECT;
+				std::string modelpath = "";
 
 				POINTER<ARRAY<ARRAY<Vertex>>> vertexBufferObjects;
 				POINTER<ARRAY<ARRAY<UI32>>> indexBufferObjects;

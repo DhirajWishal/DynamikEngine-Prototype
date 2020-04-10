@@ -1,2 +1,1 @@
-E:/Projects/Dynamik Engine/Game Repository/assets/assets/Skybox
 E:/Projects/Dynamik Engine/Game Repository/assets/assets/Reflect

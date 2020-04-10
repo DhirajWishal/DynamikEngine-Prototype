@@ -176,36 +176,76 @@ namespace Dynamik {
 				VkPipelineStageFlags sourceStage{};
 				VkPipelineStageFlags destinationStage{};
 
-				if (info.oldLayout == VK_IMAGE_LAYOUT_UNDEFINED && info.newLayout == VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL) {
-					barrier.srcAccessMask = 0;
-					barrier.dstAccessMask = VK_ACCESS_TRANSFER_WRITE_BIT;
-
+				switch (info.oldLayout)
+				{
+				case VK_IMAGE_LAYOUT_UNDEFINED:
 					sourceStage = VK_PIPELINE_STAGE_TOP_OF_PIPE_BIT;
-					destinationStage = VK_PIPELINE_STAGE_TRANSFER_BIT;
-				}
-				else if (info.oldLayout == VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL && info.newLayout == VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL) {
-					barrier.srcAccessMask = VK_ACCESS_TRANSFER_WRITE_BIT;
-					barrier.dstAccessMask = VK_ACCESS_SHADER_READ_BIT;
+					barrier.srcAccessMask = 0;
+					break;
 
+				case VK_IMAGE_LAYOUT_PREINITIALIZED:
+					barrier.srcAccessMask = VK_ACCESS_HOST_WRITE_BIT;
+					break;
+
+				case VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL:
+					barrier.srcAccessMask = VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT;
+					break;
+
+				case VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL:
+					barrier.srcAccessMask = VK_ACCESS_DEPTH_STENCIL_ATTACHMENT_WRITE_BIT;
+					break;
+
+				case VK_IMAGE_LAYOUT_TRANSFER_SRC_OPTIMAL:
+					barrier.srcAccessMask = VK_ACCESS_TRANSFER_READ_BIT;
+					break;
+
+				case VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL:
 					sourceStage = VK_PIPELINE_STAGE_TRANSFER_BIT;
-					destinationStage = VK_PIPELINE_STAGE_FRAGMENT_SHADER_BIT;
-				}
-				else if (info.oldLayout == VK_IMAGE_LAYOUT_UNDEFINED && info.newLayout == VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL) {
-					barrier.srcAccessMask = 0;
-					barrier.dstAccessMask = VK_ACCESS_DEPTH_STENCIL_ATTACHMENT_READ_BIT | VK_ACCESS_DEPTH_STENCIL_ATTACHMENT_WRITE_BIT;
+					barrier.srcAccessMask = VK_ACCESS_TRANSFER_WRITE_BIT;
+					break;
 
-					sourceStage = VK_PIPELINE_STAGE_TOP_OF_PIPE_BIT;
-					destinationStage = VK_PIPELINE_STAGE_EARLY_FRAGMENT_TESTS_BIT;
-				}
-				else if (info.oldLayout == VK_IMAGE_LAYOUT_UNDEFINED && info.newLayout == VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL) {
-					barrier.srcAccessMask = 0;
-					barrier.dstAccessMask = VK_ACCESS_COLOR_ATTACHMENT_READ_BIT | VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT;
-					sourceStage = VK_PIPELINE_STAGE_TOP_OF_PIPE_BIT;
-					destinationStage = VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT;
-				}
-				else {
+				case VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL:
+					destinationStage = VK_PIPELINE_STAGE_FRAGMENT_SHADER_BIT;
+					barrier.srcAccessMask = VK_ACCESS_SHADER_READ_BIT;
+					break;
+				default:
 					DMK_CORE_FATAL("unsupported layout transition!");
+					break;
 				}
+
+				switch (info.newLayout)
+				{
+				case VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL:
+					destinationStage = VK_PIPELINE_STAGE_TRANSFER_BIT;
+					barrier.dstAccessMask = VK_ACCESS_TRANSFER_WRITE_BIT;
+					break;
+
+				case VK_IMAGE_LAYOUT_TRANSFER_SRC_OPTIMAL:
+					barrier.dstAccessMask = VK_ACCESS_TRANSFER_READ_BIT;
+					break;
+
+				case VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL:
+					destinationStage = VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT;
+					barrier.dstAccessMask = VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT;
+					break;
+
+				case VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL:
+					destinationStage = VK_PIPELINE_STAGE_EARLY_FRAGMENT_TESTS_BIT;
+					barrier.dstAccessMask = barrier.dstAccessMask | VK_ACCESS_DEPTH_STENCIL_ATTACHMENT_WRITE_BIT;
+					break;
+
+				case VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL:
+					if (barrier.srcAccessMask == 0)
+					{
+						barrier.srcAccessMask = VK_ACCESS_HOST_WRITE_BIT | VK_ACCESS_TRANSFER_WRITE_BIT;
+					}
+					barrier.dstAccessMask = VK_ACCESS_SHADER_READ_BIT;
+					break;
+				default:
+					DMK_CORE_FATAL("unsupported layout transition!");
+					break;
+				}
+
 
 				vkCmdPipelineBarrier(
 					commandBuffer,

@@ -66,9 +66,12 @@ namespace Dynamik {
 				void _beginUpdate();
 				void _endUpdate();
 
+				void _terminateCommandPool();
+
 				void _terminateVertexBuffer();
 				void _terminateTextureImage();
 				void _terminateDescriptorPool();
+				void _terminateDescriptorLayout();
 				void _terminatePipelineLayout();
 				void _terminatePipeline();
 				void _terminateSwapChain();

@@ -131,6 +131,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\SkyboxDefinition.h" />
     <ClInclude Include="src\engineInstance.h" />
     <ClInclude Include="src\imports.h" />
     <ClInclude Include="src\objectDefinitions.h" />

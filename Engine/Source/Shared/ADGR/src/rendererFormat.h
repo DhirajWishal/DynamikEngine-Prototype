@@ -12,6 +12,7 @@ namespace Dynamik {
 	namespace ADGR {
 		class RendererFormat {
 		public:
+			RendererFormat() {}
 			RendererFormat(InternalFormat* internalFormat) : myInternalFormat(internalFormat) {}
 			virtual ~RendererFormat() {}
 

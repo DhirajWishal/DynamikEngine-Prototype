@@ -105,6 +105,7 @@ namespace Dynamik {
 			{
 				swapChainContainer.terminate();
 				swapChainContainer.terminateDescriptorSetLayout();
+				swapChainContainer.terminatePipelineLayout();
 			}
 		}
 	}

@@ -126,7 +126,6 @@ namespace Dynamik {
 		ARRAY()
 		{
 			_setLocalDataToDefault();
-			_reAllocateAssign(_getNextSize());
 		}
 
 		/* CONSTRUCTOR
@@ -162,15 +161,17 @@ namespace Dynamik {
 		{
 			if (size)
 			{
-				if ((size + _getAllocatableSize(size)) > maxSize()) return; /* TODO: Error Flagging */
+				UI32 _allocatableSize = _getAllocatableSize(size);
+				if ((size + _allocatableSize) > maxSize()) return; /* TODO: Error Flagging */
 
-				_reAllocateBack(_getAllocatableSize(size));
-				UI32 _tempSize = size;
-				while (_tempSize--)
-					pushBack(value);
+				_reAllocateBack(_allocatableSize);
+				_fillWithData(size, TYPE());
 			}
 			else
+			{
 				_reAllocateBack(_getNextSize());
+				_fillWithData(capacity(), TYPE());
+			}
 
 			myDataCount = size;
 			myNextPtr += size;
@@ -576,6 +577,8 @@ namespace Dynamik {
 		{
 			_terminate();
 			_reAllocateAssign(_getNextSize());
+			_fillWithData(capacity(), TYPE());
+
 			myDataCount = 0;
 		}
 
@@ -594,6 +597,7 @@ namespace Dynamik {
 					Allocator::deAllocate(myBeginPtr.get(), _getAllocationSize());
 
 				_reAllocateAssign(_getAllocatableSize(size));
+				_fillWithData(capacity(), TYPE());
 
 				myDataCount = size;
 			}
@@ -613,6 +617,7 @@ namespace Dynamik {
 				Allocator::deAllocate(myBeginPtr.get(), _getAllocationSize());
 
 			_reAllocateAssign(_getAllocatableSize(size));
+			_fillWithData(capacity(), (TYPE&&)value);
 
 			_setValue(value, capacity());
 		}
@@ -1603,6 +1608,19 @@ namespace Dynamik {
 			}
 
 			return index;
+		}
+
+		/* PRIVATE FUNCTION
+		 * Fills the allocated capacity with the constructor of the data type.
+		 */
+		inline void _fillWithData(UI32 capacity, TYPE&& data)
+		{
+			PTR _tempPtr = myBeginPtr;
+			while (capacity--)
+			{
+				_tempPtr.set((TYPE&&)data);
+				_tempPtr++;
+			}
 		}
 
 		/* PRIVATE VARIABLES AND CONSTANTS */

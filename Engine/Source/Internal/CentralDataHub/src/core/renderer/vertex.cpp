@@ -182,4 +182,61 @@ namespace Dynamik {
 
 		return attributeDescriptions;
 	}
+
+	ARRAY<VkVertexInputBindingDescription> SkeletalVertex::getBindingDescription(int bindCount)
+	{
+		ARRAY<VkVertexInputBindingDescription> bindingDescription(bindCount);
+
+		for (int i = 0; i < bindCount; i++) {
+			bindingDescription[i].binding = i;
+			bindingDescription[i].stride = sizeof(SkeletalVertex);
+			bindingDescription[i].inputRate = VK_VERTEX_INPUT_RATE_VERTEX;
+		}
+
+		return bindingDescription;
+	}
+
+	ARRAY<VkVertexInputAttributeDescription> SkeletalVertex::getAttributeDescriptions()
+	{
+		ARRAY<VkVertexInputAttributeDescription> attributeDescriptions;
+
+		VkVertexInputAttributeDescription _description = {};
+		_description.binding = 0;
+		_description.location = 0;
+		_description.format = VK_FORMAT_R32G32B32_SFLOAT;
+		_description.offset = offsetof(SkeletalVertex, Position);
+		attributeDescriptions.pushBack(_description);
+
+		_description.binding = 0;
+		_description.location = 1;
+		_description.format = VK_FORMAT_R32G32B32_SFLOAT;
+		_description.offset = offsetof(SkeletalVertex, Normal);
+		attributeDescriptions.pushBack(_description);
+
+		_description.binding = 0;
+		_description.location = 2;
+		_description.format = VK_FORMAT_R32G32_SFLOAT;
+		_description.offset = offsetof(SkeletalVertex, UV);
+		attributeDescriptions.pushBack(_description);
+
+		_description.binding = 0;
+		_description.location = 3;
+		_description.format = VK_FORMAT_R32G32_SFLOAT;
+		_description.offset = offsetof(SkeletalVertex, Color);
+		attributeDescriptions.pushBack(_description);
+
+		_description.binding = 0;
+		_description.location = 4;
+		_description.format = VK_FORMAT_R32G32B32A32_SFLOAT;
+		_description.offset = offsetof(SkeletalVertex, boneWeights);
+		attributeDescriptions.pushBack(_description);
+
+		_description.binding = 0;
+		_description.location = 5;
+		_description.format = VK_FORMAT_R32G32B32A32_UINT;
+		_description.offset = offsetof(SkeletalVertex, boneIDs);
+		attributeDescriptions.pushBack(_description);
+
+		return attributeDescriptions;
+	}
 }

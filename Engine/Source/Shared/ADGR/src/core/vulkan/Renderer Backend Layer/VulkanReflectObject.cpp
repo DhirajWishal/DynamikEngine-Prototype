@@ -169,21 +169,11 @@ namespace Dynamik {
 					if (paths.size() < 6)
 						DMK_CORE_FATAL("Invalid skybox texture!");
 
-					std::string pathFront = paths[0];
-					std::string pathBack = paths[1];
-					std::string pathLeft = paths[2];
-					std::string pathRight = paths[3];
-					std::string pathUp = paths[4];
-					std::string pathDown = paths[5];
-
 					resource::TextureData texData;
 					unsigned char* images[6];
-					images[0] = texData.loadTexture(pathFront, resource::TEXTURE_TYPE_RGBA);
-					images[1] = texData.loadTexture(pathBack, resource::TEXTURE_TYPE_RGBA);
-					images[2] = texData.loadTexture(pathLeft, resource::TEXTURE_TYPE_RGBA);
-					images[3] = texData.loadTexture(pathRight, resource::TEXTURE_TYPE_RGBA);
-					images[4] = texData.loadTexture(pathUp, resource::TEXTURE_TYPE_RGBA);
-					images[5] = texData.loadTexture(pathDown, resource::TEXTURE_TYPE_RGBA);
+
+					for (UI32 _itr = 0; _itr < 6; _itr++)
+						images[_itr] = texData.loadTexture(paths[_itr], resource::TEXTURE_TYPE_RGBA);
 
 					width = texData.texWidth;
 					height = texData.texHeight;
@@ -341,11 +331,11 @@ namespace Dynamik {
 				allocInfo.descriptorSetCount = 1;
 				allocInfo.pSetLayouts = &_layout;
 
-				VkDescriptorSet _descriptorSet = VK_NULL_HANDLE;
-				if (vkAllocateDescriptorSets(logicalDevice, &allocInfo, &_descriptorSet) != VK_SUCCESS)
+				if (vkAllocateDescriptorSets(logicalDevice, &allocInfo, &myRenderData.descriptors.descriptorSet) != VK_SUCCESS)
 					DMK_CORE_FATAL("failed to allocate descriptor sets!");
 
 				ARRAY<VkWriteDescriptorSet> descriptorWrites = {};
+				ARRAY<VkDescriptorBufferInfo> bufferInfos;
 
 				for (UI32 itr = 0; itr < myRenderData.uniformBuffers.size(); itr++)
 				{
@@ -353,20 +343,21 @@ namespace Dynamik {
 					bufferInfo.buffer = myRenderData.uniformBuffers[itr];
 					bufferInfo.offset = 0;
 					bufferInfo.range = sizeof(UBO_MVPC);
-
-					VkWriteDescriptorSet _writes1;
-					_writes1.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
-					_writes1.dstSet = _descriptorSet;
-					_writes1.dstBinding = 0;
-					_writes1.dstArrayElement = 0;
-					_writes1.descriptorType = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;
-					_writes1.descriptorCount = 1;
-					_writes1.pBufferInfo = &bufferInfo;
-					_writes1.pNext = VK_NULL_HANDLE;
-					_writes1.pImageInfo = VK_NULL_HANDLE;
-					_writes1.pTexelBufferView = VK_NULL_HANDLE;
-					descriptorWrites.push_back(_writes1);
+					bufferInfos.pushBack(bufferInfo);
 				}
+
+				VkWriteDescriptorSet _writes1;
+				_writes1.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
+				_writes1.dstSet = myRenderData.descriptors.descriptorSet;
+				_writes1.dstBinding = 0;
+				_writes1.dstArrayElement = 0;
+				_writes1.descriptorType = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;
+				_writes1.descriptorCount = 1;
+				_writes1.pBufferInfo = bufferInfos.data();
+				_writes1.pNext = VK_NULL_HANDLE;
+				_writes1.pImageInfo = VK_NULL_HANDLE;
+				_writes1.pTexelBufferView = VK_NULL_HANDLE;
+				descriptorWrites.push_back(_writes1);
 
 				if (myRenderData.textures.size())
 				{
@@ -379,7 +370,7 @@ namespace Dynamik {
 
 						VkWriteDescriptorSet _writes2;
 						_writes2.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
-						_writes2.dstSet = _descriptorSet;
+						_writes2.dstSet = myRenderData.descriptors.descriptorSet;
 						_writes2.dstBinding = 1;
 						_writes2.dstArrayElement = 0;
 						_writes2.descriptorType = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
@@ -387,6 +378,7 @@ namespace Dynamik {
 						_writes2.pImageInfo = &imageInfo;
 						_writes2.pNext = VK_NULL_HANDLE;
 						_writes2.pTexelBufferView = VK_NULL_HANDLE;
+						_writes2.pBufferInfo = VK_NULL_HANDLE;
 						descriptorWrites.push_back(_writes2);
 					}
 				}
@@ -396,8 +388,6 @@ namespace Dynamik {
 
 				vkUpdateDescriptorSets(logicalDevice, static_cast<UI32>(descriptorWrites.size()),
 					descriptorWrites.data(), 0, nullptr);
-
-				myRenderData.descriptors.descriptorSet = _descriptorSet;
 			}
 		}
 	}

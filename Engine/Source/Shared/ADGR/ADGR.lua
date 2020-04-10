@@ -52,6 +52,7 @@ project "ADGR"
 		"%{IncludeLib.GLEW}",
 		"%{IncludeLib.Vulkan}",
 		"%{IncludeLib.DirectX}",
+		"%{IncludeLib.Assimp}",
 		DynamikInternalBinaries
 	}
 
@@ -61,6 +62,8 @@ project "ADGR"
 		"opengl32",
 		"vulkan-1",
 		"d3dcompiler",
+		"assimp",
+		"assimp-vc140-mt",
 		"Events",
 		"Platform",
 		"Managers",

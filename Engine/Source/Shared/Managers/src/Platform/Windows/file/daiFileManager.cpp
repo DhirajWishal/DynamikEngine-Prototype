@@ -77,6 +77,10 @@ namespace Dynamik {
 		}
 
 		void daiManager::initDataStore() {
+			dataStore.resize(DMK_DAI_FILE_DATA_TYPE_MAX_ENUM);
+			locationData.resize(3);
+			rotationData.resize(3);
+
 			std::string _line = DMK_TEXT("");
 			while (getLine(&_line)) {
 				if (_line[0] == 'M' || _line[0] == 'm')	// Models

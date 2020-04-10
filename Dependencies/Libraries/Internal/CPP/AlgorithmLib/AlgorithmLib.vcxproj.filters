@@ -1,24 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
+    <Filter Include="Private">
+      <UniqueIdentifier>{001F8D23-6CFE-0BBF-7516-9795E1747220}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Public">
       <UniqueIdentifier>{8480F8CA-7022-23A1-59DD-36F5451EAAF1}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AlgorithmLib.h" />
+    <ClInclude Include="Public\CubemapCreator.h">
+      <Filter>Public</Filter>
+    </ClInclude>
     <ClInclude Include="Public\Sort.h">
       <Filter>Public</Filter>
     </ClInclude>
     <ClInclude Include="Public\Swap.h">
       <Filter>Public</Filter>
     </ClInclude>
-    <ClInclude Include="Public\CubemapCreator.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Private\CubemapCreator.cpp">
+      <Filter>Private</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="AlgorithmLib.lua" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="Private\CubemapCreator.cpp" />
   </ItemGroup>
 </Project>

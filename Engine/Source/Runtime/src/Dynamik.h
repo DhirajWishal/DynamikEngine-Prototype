@@ -27,6 +27,7 @@
 #include "core/utils/safeLock.h"
 
 #include "GameObject.h"
+#include "SkyboxObject.h"
 #include "KeyBingings.h"
 
 #include "DataTypesLib/DataTypesLib.h"

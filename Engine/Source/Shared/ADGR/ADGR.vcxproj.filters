@@ -43,6 +43,9 @@
     <Filter Include="src\core\vulkan\Renderer Backend Layer">
       <UniqueIdentifier>{30A9E146-1CFB-B836-051A-F646F10AD21F}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\core\vulkan\Renderer Backend Layer\Animations">
+      <UniqueIdentifier>{7262F396-DE28-50B3-2784-DE159389BE17}</UniqueIdentifier>
+    </Filter>
     <Filter Include="src\core\vulkan\Renderer Backend Layer\Objects">
       <UniqueIdentifier>{E9776FA3-D5F5-BF3C-BEED-7DD4AA0A0265}</UniqueIdentifier>
     </Filter>
@@ -123,6 +126,9 @@
     <ClInclude Include="src\core\opengl\openglRenderer.h">
       <Filter>src\core\opengl</Filter>
     </ClInclude>
+    <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Animations\VulkanSkeletalAnimation.h">
+      <Filter>src\core\vulkan\Renderer Backend Layer\Animations</Filter>
+    </ClInclude>
     <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Objects\VulkanColorBuffer.h">
       <Filter>src\core\vulkan\Renderer Backend Layer\Objects</Filter>
     </ClInclude>
@@ -201,6 +207,7 @@
     <ClInclude Include="src\rendererFormat.h">
       <Filter>src</Filter>
     </ClInclude>
+    <ClInclude Include="src\core\Components\AnimationCamera.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Layers\layer.cpp">
@@ -259,6 +266,9 @@
     </ClCompile>
     <ClCompile Include="src\core\opengl\openglRenderer.cpp">
       <Filter>src\core\opengl</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Animations\VulkanSkeletalAnimation.cpp">
+      <Filter>src\core\vulkan\Renderer Backend Layer\Animations</Filter>
     </ClCompile>
     <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Objects\VulkanColorBuffer.cpp">
       <Filter>src\core\vulkan\Renderer Backend Layer\Objects</Filter>
@@ -320,6 +330,7 @@
     <ClCompile Include="src\rendererFormat.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="src\core\Components\AnimationCamera.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ADGR.lua" />

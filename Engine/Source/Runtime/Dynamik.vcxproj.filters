@@ -48,6 +48,9 @@
     <ClInclude Include="GameLibraries\Scene.h">
       <Filter>GameLibraries</Filter>
     </ClInclude>
+    <ClInclude Include="GameLibraries\SkyboxObject.h">
+      <Filter>GameLibraries</Filter>
+    </ClInclude>
     <ClInclude Include="src\Dynamik.h">
       <Filter>src</Filter>
     </ClInclude>

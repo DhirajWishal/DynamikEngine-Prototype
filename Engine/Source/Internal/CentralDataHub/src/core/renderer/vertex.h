@@ -89,6 +89,18 @@ namespace Dynamik {
 		}
 	};
 
+	struct SkeletalVertex {
+		glm::vec3 Position;
+		glm::vec3 Normal;
+		glm::vec2 UV;
+		glm::vec3 Color;
+		float boneWeights[4];
+		UI32 boneIDs[4];
+
+		static ARRAY<VkVertexInputBindingDescription> getBindingDescription(int bindCount);
+		static ARRAY<VkVertexInputAttributeDescription> getAttributeDescriptions();
+	};
+
 	class DMKVertex {
 	public:
 		DMKVertex() {}

@@ -6,6 +6,9 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\SkyboxDefinition.h">
+      <Filter>src</Filter>
+    </ClInclude>
     <ClInclude Include="src\engineInstance.h">
       <Filter>src</Filter>
     </ClInclude>

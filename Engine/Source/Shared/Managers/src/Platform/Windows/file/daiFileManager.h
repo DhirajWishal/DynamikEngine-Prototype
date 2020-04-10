@@ -87,9 +87,9 @@ namespace Dynamik {
 			std::string myPath = DMK_TEXT("");
 			std::fstream file = {};
 
-			ARRAY<ARRAY<std::string>> dataStore{ DMK_DAI_FILE_DATA_TYPE_MAX_ENUM };
-			ARRAY<float> locationData{ 3 };
-			ARRAY<float> rotationData{ 3 };
+			ARRAY<ARRAY<std::string>> dataStore{};
+			ARRAY<float> locationData{};
+			ARRAY<float> rotationData{};
 			bool isDataStoreInit = false;
 		};
 	}

@@ -30,6 +30,7 @@
 
 #include "core/Window/Windows/WindowManager.h"
 
+#include "core/Components/AnimationCamera.h"
 #include "core/Components/Camera2D.h"
 #include "core/Components/Camera3D.h"
 #include "core/Components/CameraReflect.h"
@@ -186,9 +187,11 @@ namespace Dynamik {
 
 			ADGRVulkanRenderData initializeSkyboxObject(ADGRVulkan3DObjectData _object);
 			ADGRVulkanRenderData initializeReflectObject(ADGRVulkan3DObjectData _object);
+			ADGRVulkanRenderData initializeSkeletalAnimation(ADGRVulkan3DObjectData _object);
 
 			void draw3D(VkSwapchainKHR swapChain);
 
+			AnimationCamera myAnimationCamera;
 			Camera2D myCamera2D;
 			Camera3D myCamera3D;
 			CameraReflect myCameraReflect;
@@ -211,6 +214,8 @@ namespace Dynamik {
 			UI32 currentFrame = 0;
 			UI32 imageIndex = 0;
 			VkResult result = VkResult::VK_ERROR_UNKNOWN;
+
+			F32 runningTime = 0.0f;
 
 		private:
 			ADGRVulkanTextOverlayDataContainer overlayContainer;

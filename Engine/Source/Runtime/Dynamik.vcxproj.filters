@@ -111,6 +111,7 @@
     <ClInclude Include="src\dmkafx.h">
       <Filter>src</Filter>
     </ClInclude>
+    <ClInclude Include="GameLibraries\Material.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameLibraries\GameObject.cpp">

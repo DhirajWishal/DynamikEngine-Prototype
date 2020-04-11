@@ -85,7 +85,7 @@ namespace Dynamik {
 				VkPipelineCache pipelineCache = VK_NULL_HANDLE;
 				glm::vec4* mapped = nullptr;
 				stb_fontchar stbFontData[STB_FONT_consolas_24_latin1_NUM_CHARS];
-				uint32_t numLetters;
+				UI32 numLetters;
 			private:
 
 				std::string vertexShaderPath = "";

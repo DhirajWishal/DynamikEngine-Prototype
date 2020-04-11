@@ -12,6 +12,8 @@ namespace Dynamik {
 				VulkanSkyBox(ADGRVulkanRenderableObjectInitInfo info);
 				~VulkanSkyBox() {}
 
+				ADGRVulkanRenderData initializeObject(VkDevice logicalDevice, ADGRVulkan3DObjectData _object, VkSampleCountFlagBits msaaSamples) override;
+
 				void initializeTextures(ARRAY<ADGRVulkanTextureInitInfo> infos) override;
 
 				void initializeUniformBuffer() override;

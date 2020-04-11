@@ -145,6 +145,8 @@
   <ItemGroup>
     <ClInclude Include="src\ADGR.h" />
     <ClInclude Include="src\core\Components\AnimationCamera.h" />
+    <ClInclude Include="src\core\vulkan\Renderer Backend Layer\VulkanAnimationManager.h" />
+    <ClInclude Include="src\core\vulkan\Renderer Backend Layer\VulkanPBRObject.h" />
     <ClInclude Include="src\Layers\layer.h" />
     <ClInclude Include="src\Layers\layerStack.h" />
     <ClInclude Include="src\Renderer.h" />
@@ -199,6 +201,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\core\Components\AnimationCamera.cpp" />
+    <ClCompile Include="src\core\vulkan\Renderer Backend Layer\VulkanAnimationManager.cpp" />
+    <ClCompile Include="src\core\vulkan\Renderer Backend Layer\VulkanPBRObject.cpp" />
     <ClCompile Include="src\Layers\layer.cpp" />
     <ClCompile Include="src\Layers\layerStack.cpp" />
     <ClCompile Include="src\Renderer.cpp" />
@@ -244,6 +248,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="ADGR.lua" />
+    <None Include="src\core\vulkan\Renderer Backend Layer\External\stb_font_consolas_24_latin1.inl" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Events\Events.vcxproj">

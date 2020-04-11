@@ -233,7 +233,7 @@ namespace Dynamik {
 
 		_description.binding = 0;
 		_description.location = 5;
-		_description.format = VK_FORMAT_R32G32B32A32_UINT;
+		_description.format = VK_FORMAT_R32G32B32A32_SINT;
 		_description.offset = offsetof(SkeletalVertex, boneIDs);
 		attributeDescriptions.pushBack(_description);
 

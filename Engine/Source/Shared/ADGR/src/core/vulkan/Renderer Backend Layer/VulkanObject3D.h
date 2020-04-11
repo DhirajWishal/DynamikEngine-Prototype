@@ -7,23 +7,6 @@
 namespace Dynamik {
 	namespace ADGR {
 		namespace Backend {
-			struct ADGRVulkan3DObjectData {
-				DMKObjectType type = DMKObjectType::DMK_OBJECT_TYPE_STATIC_OBJECT;
-				std::string modelpath = "";
-
-				POINTER<ARRAY<ARRAY<Vertex>>> vertexBufferObjects;
-				POINTER<ARRAY<ARRAY<UI32>>> indexBufferObjects;
-
-				std::string vertexShaderPath = "";
-				std::string tessellationShaderPath = "";
-				std::string geometryShaderPath = "";
-				std::string fragmentShaderPath = "";
-
-				ARRAY<std::string> texturePaths;
-
-				DMK_ADGR_RENDERING_TECHNOLOGY renderTechnology = DMK_ADGR_RENDERING_TECHNOLOGY::DMK_ADGR_RENDER_INDEXED;
-			};
-
 			class VulkanObject3D : public VulkanRenderableObject {
 			public:
 				VulkanObject3D(ADGRVulkanRenderableObjectInitInfo info) : VulkanRenderableObject(info) {}

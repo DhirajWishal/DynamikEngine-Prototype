@@ -27,6 +27,9 @@
 #include "Renderer Backend Layer/VulkanObject3D.h"
 #include "Renderer Backend Layer/VulkanSwapChain3D.h"
 #include "Renderer Backend Layer/VulkanTextOverlay.h"
+#include "Renderer Backend Layer/VulkanPBRObject.h"
+
+#include "Renderer Backend Layer/Animations/VulkanSkeletalAnimation.h"
 
 #include "core/Window/Windows/WindowManager.h"
 
@@ -205,7 +208,11 @@ namespace Dynamik {
 			VulkanDepthBuffer myDepthBuffer;
 
 			ARRAY<ADGRVulkanRenderData> renderDatas;
+			ARRAY<ADGRVulkanSkeletalAnimationData> animationDatas;
 			ARRAY<ADGRVulkan3DObjectData> rawObjects;
+
+			ADGRVulkanSkeletalAnimationData _skeletalData;
+			VulkanSkeletalAnimation* myAnimation;
 
 			WindowManager myWindowManager;
 
@@ -215,7 +222,9 @@ namespace Dynamik {
 			UI32 imageIndex = 0;
 			VkResult result = VkResult::VK_ERROR_UNKNOWN;
 
-			F32 runningTime = 0.0f;
+			F32 runningTime = 1.0f;
+
+			ARRAY<Material> myRenderableMeterials;
 
 		private:
 			ADGRVulkanTextOverlayDataContainer overlayContainer;

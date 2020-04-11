@@ -25,12 +25,109 @@ namespace Dynamik {
 				finalTransformation = aiMatrix4x4();
 			}
 
+			VulkanSkeletalAnimation::VulkanSkeletalAnimation(ADGRVulkanRenderableObjectInitInfo info) : VulkanRenderableObject(info)
+			{
+				myRenderData.type = DMKObjectType::DMK_OBJECT_TYPE_SKELETAL_ANIMATION;
+			}
+
+			ADGRVulkanRenderData VulkanSkeletalAnimation::initializeObject(VkDevice logicalDevice, ADGRVulkan3DObjectData _object, VkSampleCountFlagBits msaaSamples)
+			{
+				ARRAY<VulkanShader> _shaders;
+
+				if (_object.vertexShaderPath.size() && _object.vertexShaderPath != "NONE")
+				{
+					ADGRVulkanShaderInitInfo _initInfo;
+					_initInfo.path = _object.vertexShaderPath;
+					_initInfo.type = ADGRVulkanShaderType::ADGR_VULKAN_SHADER_TYPE_VERTEX;
+
+					VulkanShader _shader;
+					_shader.initialize(logicalDevice, _initInfo);
+					_shaders.pushBack(_shader);
+				}
+				if (_object.tessellationShaderPath.size() && _object.tessellationShaderPath != "NONE")
+				{
+					ADGRVulkanShaderInitInfo _initInfo;
+					_initInfo.path = _object.tessellationShaderPath;
+					_initInfo.type = ADGRVulkanShaderType::ADGR_VULKAN_SHADER_TYPE_TESSELLATION;
+
+					VulkanShader _shader;
+					_shader.initialize(logicalDevice, _initInfo);
+					_shaders.pushBack(_shader);
+				}
+				if (_object.geometryShaderPath.size() && _object.geometryShaderPath != "NONE")
+				{
+					ADGRVulkanShaderInitInfo _initInfo;
+					_initInfo.path = _object.geometryShaderPath;
+					_initInfo.type = ADGRVulkanShaderType::ADGR_VULKAN_SHADER_TYPE_GEOMETRY;
+
+					VulkanShader _shader;
+					_shader.initialize(logicalDevice, _initInfo);
+					_shaders.pushBack(_shader);
+				}
+				if (_object.fragmentShaderPath.size() && _object.fragmentShaderPath != "NONE")
+				{
+					ADGRVulkanShaderInitInfo _initInfo;
+					_initInfo.path = _object.fragmentShaderPath;
+					_initInfo.type = ADGRVulkanShaderType::ADGR_VULKAN_SHADER_TYPE_FRAGMENT;
+
+					VulkanShader _shader;
+					_shader.initialize(logicalDevice, _initInfo);
+					_shaders.pushBack(_shader);
+				}
+
+				// initialize pipeline
+				ADGRVulkanPipelineInitInfo pipelineInitInfo;
+				pipelineInitInfo.shaders = _shaders;
+				pipelineInitInfo.multisamplerMsaaSamples = msaaSamples;
+				pipelineInitInfo.vertexBindingDescription = SkeletalVertex::getBindingDescription(1);
+				pipelineInitInfo.vertexAttributeDescription = SkeletalVertex::getAttributeDescriptions();
+				pipelineInitInfo.isTexturesAvailable = _object.texturePaths.size();
+				pipelineInitInfo.rasterizerFrontFace = VK_FRONT_FACE_CLOCKWISE;
+				initializePipeline(pipelineInitInfo);
+
+				for (VulkanShader _shader : _shaders)
+					_shader.terminate(logicalDevice);
+
+				ARRAY<ADGRVulkanTextureInitInfo> textureInitInfos;
+
+				// initialize textures
+				for (UI32 _itr = 0; _itr < _object.texturePaths.size(); _itr++)
+				{
+					ADGRVulkanTextureInitInfo initInfo;
+					initInfo.path = _object.texturePaths[_itr];
+					initInfo.format = VK_FORMAT_R8G8B8A8_UNORM;
+					initInfo.mipLevels = 1;
+					initInfo.modeU = VK_SAMPLER_ADDRESS_MODE_REPEAT;
+					initInfo.modeV = VK_SAMPLER_ADDRESS_MODE_REPEAT;
+					initInfo.modeW = VK_SAMPLER_ADDRESS_MODE_REPEAT;
+					initInfo.magFilter = VK_FILTER_LINEAR;
+					initInfo.minFilter = VK_FILTER_LINEAR;
+					initInfo.aspectFlags = VK_IMAGE_ASPECT_COLOR_BIT;
+					textureInitInfos.pushBack(initInfo);
+				}
+
+				initializeTextures(textureInitInfos);
+
+				// initialize uniform buffers
+				initializeUniformBuffer();
+
+				// initialize descriptor pool
+				ADGRVulkanDescriptorPoolInitInfo descriptorPoolInitInfo;
+				initializeDescriptorPool(descriptorPoolInitInfo);
+
+				// initialize descriptor sets
+				ADGRVulkanDescriptorSetsInitInfo descriptorSetsInitInfo;
+				initializeDescriptorSets(descriptorSetsInitInfo);
+
+				return myRenderData;
+			}
+
 			void VulkanSkeletalAnimation::setAnimation(UI32 animationIndex)
 			{
-				if (animationIndex >= scene->mNumAnimations)
+				if (animationIndex >= myAnimationData.scene->mNumAnimations)
 					DMK_CORE_FATAL("Invalid animation index!");
 
-				pAnimation = scene->mAnimations[animationIndex];
+				myAnimationData.pAnimation = myAnimationData.scene->mAnimations[animationIndex];
 			}
 
 			void VulkanSkeletalAnimation::loadBones(const aiMesh* pMesh, UI32 vertexOffset, ARRAY<ADGRVulkanSkeletalBoneData>& bones)
@@ -44,44 +141,42 @@ namespace Dynamik {
 
 					std::string name(pMesh->mBones[_itr]->mName.data);
 
-					if (boneMapping.find(name) == boneMapping.end())
+					if (myAnimationData.boneMapping.find(name) == myAnimationData.boneMapping.end())
 					{
 						// Bone not present, add new one
-						index = numBones;
-						numBones++;
+						index = myAnimationData.numBones;
+						myAnimationData.numBones++;
 						ADGRVulkanSkeletalBoneInfo bone;
-						boneInfo.push_back(bone);
-						boneInfo[index].offset = pMesh->mBones[_itr]->mOffsetMatrix;
-						boneMapping[name] = index;
+						myAnimationData.boneInfo.push_back(bone);
+						myAnimationData.boneInfo[index].offset = pMesh->mBones[_itr]->mOffsetMatrix;
+						myAnimationData.boneMapping[name] = index;
 					}
 					else
 					{
-						index = boneMapping[name];
+						index = myAnimationData.boneMapping[name];
 					}
 
-					for (uint32_t j = 0; j < pMesh->mBones[_itr]->mNumWeights; j++)
+					for (UI32 j = 0; j < pMesh->mBones[_itr]->mNumWeights; j++)
 					{
-						uint32_t vertexID = vertexOffset + pMesh->mBones[_itr]->mWeights[j].mVertexId;
+						UI32 vertexID = vertexOffset + pMesh->mBones[_itr]->mWeights[j].mVertexId;
 						bones[vertexID].add(index, pMesh->mBones[_itr]->mWeights[j].mWeight);
 					}
 
 				}
-				boneTransforms.resize(numBones);
+				myAnimationData.boneTransforms.resize(myAnimationData.numBones);
 			}
 
 			void VulkanSkeletalAnimation::update(F32 time)
 			{
-				float TicksPerSecond = (float)(scene->mAnimations[0]->mTicksPerSecond != 0 ? scene->mAnimations[0]->mTicksPerSecond : 25.0f);
+				float TicksPerSecond = (float)(myAnimationData.scene->mAnimations[0]->mTicksPerSecond != 0 ? myAnimationData.scene->mAnimations[0]->mTicksPerSecond : 25.0f);
 				float TimeInTicks = time * TicksPerSecond;
-				float AnimationTime = fmod(TimeInTicks, (float)scene->mAnimations[0]->mDuration);
+				float AnimationTime = fmod(TimeInTicks, (float)myAnimationData.scene->mAnimations[0]->mDuration);
 
 				aiMatrix4x4 identity = aiMatrix4x4();
-				readNodeHierarchy(AnimationTime, scene->mRootNode, identity);
+				readNodeHierarchy(AnimationTime, myAnimationData.scene->mRootNode, identity);
 
-				for (uint32_t i = 0; i < boneTransforms.size(); i++)
-				{
-					boneTransforms[i] = boneInfo[i].finalTransformation;
-				}
+				for (UI32 i = 0; i < myAnimationData.boneTransforms.size(); i++)
+					myAnimationData.boneTransforms[i] = myAnimationData.boneInfo[i].finalTransformation;
 			}
 
 			void VulkanSkeletalAnimation::draw(F32 time)
@@ -134,7 +229,7 @@ namespace Dynamik {
 			void VulkanSkeletalAnimation::initializeTextures(ARRAY<ADGRVulkanTextureInitInfo> infos)
 			{
 				ADGRVulkanTextureContainer _container;
-				if ((infos[0].path.find(".ktx") != std::string::npos) || (infos.size() < 6))
+				if ((infos[0].path.find(".ktx") != std::string::npos) && (infos.size() < 6))
 				{
 					VkPhysicalDeviceFeatures _features;
 					vkGetPhysicalDeviceFeatures(physicalDevice, &_features);
@@ -215,9 +310,9 @@ namespace Dynamik {
 						VulkanFunctions::createImage(logicalDevice, physicalDevice, cinfo);
 
 						std::vector<VkBufferImageCopy> bufferCopyRegions;
-						for (uint32_t face = 0; face < ktxTexture.max_face() + 1; face++)
+						for (UI32 face = 0; face < ktxTexture.max_face() + 1; face++)
 						{
-							for (uint32_t level = 0; level < _container.mipLevels; level++)
+							for (UI32 level = 0; level < _container.mipLevels; level++)
 							{
 								// Calculate offset into staging buffer for the current mip level and face
 								VkBufferImageCopy bufferCopyRegion = {};
@@ -248,6 +343,14 @@ namespace Dynamik {
 						cpyInfo.destinationImageLayout = VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL;
 						VulkanFunctions::copyBufferToImageOverride(logicalDevice, commandPool, graphicsQueue, presentQueue, cpyInfo, bufferCopyRegions);
 
+						transitionInfo.image = _container.image;
+						transitionInfo.format = _container.format;
+						transitionInfo.oldLayout = VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL;
+						transitionInfo.newLayout = VK_IMAGE_LAYOUT_GENERAL;
+						transitionInfo.mipLevels = 1;
+						transitionInfo.layerCount = ktxTexture.max_face() + 1;
+						VulkanFunctions::transitionImageLayout(logicalDevice, commandPool, graphicsQueue, presentQueue, transitionInfo);
+
 						ADGRVulkanTextureSamplerInitInfo samplerInitInfo;
 						samplerInitInfo.magFilter = info.magFilter;
 						samplerInitInfo.minFilter = info.minFilter;
@@ -274,7 +377,7 @@ namespace Dynamik {
 						vkFreeMemory(logicalDevice, stagingBufferMemory, nullptr);
 					}
 				}
-				else
+				else if (infos.size() == 6)
 				{
 					StaggingBufferContainer bufferContainer;
 					UI32 width = 0;
@@ -353,7 +456,7 @@ namespace Dynamik {
 					transitionInfo.image = _container.image;
 					transitionInfo.format = _container.format;
 					transitionInfo.oldLayout = VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL;
-					transitionInfo.newLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
+					transitionInfo.newLayout = VK_IMAGE_LAYOUT_GENERAL;
 					transitionInfo.mipLevels = 1;
 					transitionInfo.layerCount = 6;
 					VulkanFunctions::transitionImageLayout(logicalDevice, commandPool, graphicsQueue, presentQueue, transitionInfo);
@@ -402,6 +505,111 @@ namespace Dynamik {
 					for (UI32 i = 0; i < 6; i++)
 						texData.freeData(images[i]);
 				}
+				else
+				{
+					ADGRVulkanTextureInitInfo info = infos[0];
+					_container.format = info.format;
+					_container.mipLevels = info.mipLevels;
+
+					resource::TextureData texData;
+					unsigned char* pixels = nullptr;
+
+					if (_container.format == VK_FORMAT_R8G8B8A8_UNORM)
+						pixels = texData.loadTexture((info.path), resource::TEXTURE_TYPE_RGBA);
+					else if (_container.format == VK_FORMAT_R8G8B8_UNORM)
+						pixels = texData.loadTexture((info.path), resource::TEXTURE_TYPE_RGB);
+					else
+						DMK_CORE_FATAL("Invalid texture format!");
+
+					_container.width = texData.texWidth;
+					_container.height = texData.texHeight;
+
+					VkDeviceSize imageSize = texData.size;
+
+					if (!pixels)
+						DMK_CORE_FATAL("failed to load texture image!");
+
+					VkBuffer stagingBuffer = VK_NULL_HANDLE;
+					VkDeviceMemory stagingBufferMemory = VK_NULL_HANDLE;
+
+					ADGRCreateBufferInfo bufferInfo;
+					bufferInfo.bufferSize = imageSize;
+					bufferInfo.usage = VK_BUFFER_USAGE_TRANSFER_SRC_BIT;
+					bufferInfo.bufferMemoryPropertyflags = VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT;
+					bufferInfo.buffer = &stagingBuffer;
+					bufferInfo.bufferMemory = &stagingBufferMemory;
+
+					VulkanFunctions::createBuffer(logicalDevice, physicalDevice, bufferInfo);
+
+					void* data;
+					if (vkMapMemory(logicalDevice, stagingBufferMemory, 0, static_cast<size_t>(imageSize), 0, &data) != VK_SUCCESS)
+						DMK_CORE_FATAL("Failed to map memory!");
+					memcpy(data, pixels, static_cast<size_t>(imageSize));
+					vkUnmapMemory(logicalDevice, stagingBufferMemory);
+
+					texData.freeData(pixels);
+
+					ADGRCreateImageInfo cinfo;
+					cinfo.width = texData.texWidth;
+					cinfo.height = texData.texHeight;
+					cinfo.format = _container.format;
+					cinfo.tiling = VK_IMAGE_TILING_OPTIMAL;
+					cinfo.usage = VK_IMAGE_USAGE_TRANSFER_SRC_BIT | VK_IMAGE_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT;
+					cinfo.properties = VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT;
+					cinfo.image = &_container.image;
+					cinfo.imageMemory = &_container.imageMemory;
+					cinfo.mipLevels = info.mipLevels;
+					cinfo.numSamples = VK_SAMPLE_COUNT_1_BIT;
+					cinfo.flags = NULL;
+
+					VulkanFunctions::createImage(logicalDevice, physicalDevice, cinfo);
+
+					ADGRTransitionImageLayoutInfo transitionInfo;
+					transitionInfo.image = _container.image;
+					transitionInfo.format = _container.format;
+					transitionInfo.oldLayout = VK_IMAGE_LAYOUT_UNDEFINED;
+					transitionInfo.newLayout = VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL;
+					transitionInfo.mipLevels = info.mipLevels;
+					transitionInfo.layerCount = 1;
+					VulkanFunctions::transitionImageLayout(logicalDevice, commandPool, graphicsQueue, presentQueue, transitionInfo);
+
+					ADGRCopyBufferToImageInfo cpyInfo;
+					cpyInfo.buffer = stagingBuffer;
+					cpyInfo.image = _container.image;
+					cpyInfo.width = static_cast<UI32>(texData.texWidth);
+					cpyInfo.height = static_cast<UI32>(texData.texHeight);
+					VulkanFunctions::copyBufferToImage(logicalDevice, commandPool, graphicsQueue, presentQueue, cpyInfo);
+
+					transitionInfo.image = _container.image;
+					transitionInfo.format = _container.format;
+					transitionInfo.oldLayout = VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL;
+					transitionInfo.newLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
+					transitionInfo.mipLevels = info.mipLevels;
+					transitionInfo.layerCount = 1;
+					VulkanFunctions::transitionImageLayout(logicalDevice, commandPool, graphicsQueue, presentQueue, transitionInfo);
+
+					vkDestroyBuffer(logicalDevice, stagingBuffer, nullptr);
+					vkFreeMemory(logicalDevice, stagingBufferMemory, nullptr);
+
+					generateMipMaps(&_container);
+
+					ADGRVulkanTextureSamplerInitInfo samplerInitInfo;
+					samplerInitInfo.magFilter = info.magFilter;
+					samplerInitInfo.minFilter = info.minFilter;
+					samplerInitInfo.maxMipLevels = info.maxMipLevels;
+					samplerInitInfo.minMipLevels = info.minMipLevels;
+					samplerInitInfo.modeU = info.modeU;
+					samplerInitInfo.modeV = info.modeV;
+					samplerInitInfo.modeW = info.modeW;
+					_container.imageSampler = VulkanFunctions::createImageSampler(logicalDevice, samplerInitInfo);
+
+					ADGRCreateImageViewInfo cinfo2;
+					cinfo2.image = _container.image;
+					cinfo2.format = _container.format;
+					cinfo2.mipLevels = _container.mipLevels;
+					cinfo2.aspectFlags = info.aspectFlags;
+					_container.imageView = VulkanFunctions::createImageView(logicalDevice, cinfo2);
+				}
 
 				myRenderData.textures.pushBack(_container);
 			}
@@ -431,10 +639,8 @@ namespace Dynamik {
 			{
 				update(time);
 
-				for (UI32 _itr = 0; _itr < boneTransforms.size(); _itr++)
-				{
-					uniformBufferObject.bones[_itr] = glm::transpose(glm::make_mat4(&boneTransforms[_itr].a1));
-				}
+				for (UI32 _itr = 0; _itr < myAnimationData.boneTransforms.size(); _itr++)
+					uniformBufferObject.bones[_itr] = glm::transpose(glm::make_mat4(&myAnimationData.boneTransforms[_itr].a1));
 
 				void* data = nullptr;
 				vkMapMemory(logicalDevice, myRenderData.uniformBufferMemories[currentImage], 0, sizeof(uniformBufferObject), 0, &data);
@@ -517,13 +723,11 @@ namespace Dynamik {
 
 			const aiNodeAnim* VulkanSkeletalAnimation::findNodeAnim(const aiAnimation* animation, const std::string nodeName)
 			{
-				for (uint32_t i = 0; i < animation->mNumChannels; i++)
+				for (UI32 i = 0; i < animation->mNumChannels; i++)
 				{
 					const aiNodeAnim* nodeAnim = animation->mChannels[i];
 					if (std::string(nodeAnim->mNodeName.data) == nodeName)
-					{
 						return nodeAnim;
-					}
 				}
 				return nullptr;
 			}
@@ -538,8 +742,8 @@ namespace Dynamik {
 				}
 				else
 				{
-					uint32_t frameIndex = 0;
-					for (uint32_t i = 0; i < pNodeAnim->mNumPositionKeys - 1; i++)
+					UI32 frameIndex = 0;
+					for (UI32 i = 0; i < pNodeAnim->mNumPositionKeys - 1; i++)
 					{
 						if (time < (float)pNodeAnim->mPositionKeys[i + 1].mTime)
 						{
@@ -574,8 +778,8 @@ namespace Dynamik {
 				}
 				else
 				{
-					uint32_t frameIndex = 0;
-					for (uint32_t i = 0; i < pNodeAnim->mNumRotationKeys - 1; i++)
+					UI32 frameIndex = 0;
+					for (UI32 i = 0; i < pNodeAnim->mNumRotationKeys - 1; i++)
 					{
 						if (time < (float)pNodeAnim->mRotationKeys[i + 1].mTime)
 						{
@@ -610,8 +814,8 @@ namespace Dynamik {
 				}
 				else
 				{
-					uint32_t frameIndex = 0;
-					for (uint32_t i = 0; i < pNodeAnim->mNumScalingKeys - 1; i++)
+					UI32 frameIndex = 0;
+					for (UI32 i = 0; i < pNodeAnim->mNumScalingKeys - 1; i++)
 					{
 						if (time < (float)pNodeAnim->mScalingKeys[i + 1].mTime)
 						{
@@ -642,7 +846,7 @@ namespace Dynamik {
 
 				aiMatrix4x4 NodeTransformation(pNode->mTransformation);
 
-				const aiNodeAnim* pNodeAnim = findNodeAnim(pAnimation, NodeName);
+				const aiNodeAnim* pNodeAnim = findNodeAnim(myAnimationData.pAnimation, NodeName);
 
 				if (pNodeAnim)
 				{
@@ -656,16 +860,14 @@ namespace Dynamik {
 
 				aiMatrix4x4 GlobalTransformation = ParentTransform * NodeTransformation;
 
-				if (boneMapping.find(NodeName) != boneMapping.end())
+				if (myAnimationData.boneMapping.find(NodeName) != myAnimationData.boneMapping.end())
 				{
-					uint32_t BoneIndex = boneMapping[NodeName];
-					boneInfo[BoneIndex].finalTransformation = globalInverseTransform * GlobalTransformation * boneInfo[BoneIndex].offset;
+					UI32 BoneIndex = myAnimationData.boneMapping[NodeName];
+					myAnimationData.boneInfo[BoneIndex].finalTransformation = myAnimationData.globalInverseTransform * GlobalTransformation * myAnimationData.boneInfo[BoneIndex].offset;
 				}
 
-				for (uint32_t i = 0; i < pNode->mNumChildren; i++)
-				{
+				for (UI32 i = 0; i < pNode->mNumChildren; i++)
 					readNodeHierarchy(AnimationTime, pNode->mChildren[i], GlobalTransformation);
-				}
 			}
 		}
 	}

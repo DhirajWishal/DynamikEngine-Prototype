@@ -23,6 +23,105 @@ namespace Dynamik {
 				commandPool = info.commandPool;
 			}
 
+			ADGRVulkanRenderData VulkanRenderableObject::initializeObject(VkDevice logicalDevice, ADGRVulkan3DObjectData _object, VkSampleCountFlagBits msaaSamples)
+			{
+				ARRAY<VulkanShader> _shaders;
+
+				if (_object.vertexShaderPath.size() && _object.vertexShaderPath != "NONE")
+				{
+					ADGRVulkanShaderInitInfo _initInfo;
+					_initInfo.path = _object.vertexShaderPath;
+					_initInfo.type = ADGRVulkanShaderType::ADGR_VULKAN_SHADER_TYPE_VERTEX;
+
+					VulkanShader _shader;
+					_shader.initialize(logicalDevice, _initInfo);
+					_shaders.pushBack(_shader);
+				}
+				if (_object.tessellationShaderPath.size() && _object.tessellationShaderPath != "NONE")
+				{
+					ADGRVulkanShaderInitInfo _initInfo;
+					_initInfo.path = _object.tessellationShaderPath;
+					_initInfo.type = ADGRVulkanShaderType::ADGR_VULKAN_SHADER_TYPE_TESSELLATION;
+
+					VulkanShader _shader;
+					_shader.initialize(logicalDevice, _initInfo);
+					_shaders.pushBack(_shader);
+				}
+				if (_object.geometryShaderPath.size() && _object.geometryShaderPath != "NONE")
+				{
+					ADGRVulkanShaderInitInfo _initInfo;
+					_initInfo.path = _object.geometryShaderPath;
+					_initInfo.type = ADGRVulkanShaderType::ADGR_VULKAN_SHADER_TYPE_GEOMETRY;
+
+					VulkanShader _shader;
+					_shader.initialize(logicalDevice, _initInfo);
+					_shaders.pushBack(_shader);
+				}
+				if (_object.fragmentShaderPath.size() && _object.fragmentShaderPath != "NONE")
+				{
+					ADGRVulkanShaderInitInfo _initInfo;
+					_initInfo.path = _object.fragmentShaderPath;
+					_initInfo.type = ADGRVulkanShaderType::ADGR_VULKAN_SHADER_TYPE_FRAGMENT;
+
+					VulkanShader _shader;
+					_shader.initialize(logicalDevice, _initInfo);
+					_shaders.pushBack(_shader);
+				}
+
+				// initialize pipeline
+				ADGRVulkanPipelineInitInfo pipelineInitInfo;
+				pipelineInitInfo.shaders = _shaders;
+				pipelineInitInfo.multisamplerMsaaSamples = msaaSamples;
+				pipelineInitInfo.vertexBindingDescription = Vertex::getBindingDescription(1);
+				pipelineInitInfo.vertexAttributeDescription = Vertex::getAttributeDescriptions();
+				pipelineInitInfo.isTexturesAvailable = _object.texturePaths.size();
+				initializePipeline(pipelineInitInfo);
+
+				for (VulkanShader _shader : _shaders)
+					_shader.terminate(logicalDevice);
+
+				ARRAY<ADGRVulkanTextureInitInfo> textureInitInfos;
+
+				// initialize textures
+				for (UI32 _itr = 0; _itr < _object.texturePaths.size(); _itr++)
+				{
+					ADGRVulkanTextureInitInfo initInfo;
+					initInfo.path = _object.texturePaths[_itr];
+					initInfo.format = VK_FORMAT_R8G8B8A8_UNORM;
+					initInfo.mipLevels = 1;
+					initInfo.modeU = VK_SAMPLER_ADDRESS_MODE_REPEAT;
+					initInfo.modeV = VK_SAMPLER_ADDRESS_MODE_REPEAT;
+					initInfo.modeW = VK_SAMPLER_ADDRESS_MODE_REPEAT;
+					initInfo.magFilter = VK_FILTER_LINEAR;
+					initInfo.minFilter = VK_FILTER_LINEAR;
+					initInfo.aspectFlags = VK_IMAGE_ASPECT_COLOR_BIT;
+					textureInitInfos.pushBack(initInfo);
+				}
+
+				initializeTextures(textureInitInfos);
+
+				// initialize vertex buffers
+				for (UI32 _itr = 0; _itr < _object.vertexBufferObjects->size(); _itr++)
+					initializeVertexBuffer(&_object.vertexBufferObjects->at(_itr));
+
+				// initialize index buffers
+				for (UI32 _itr = 0; _itr < _object.indexBufferObjects->size(); _itr++)
+					initializeIndexBufferUI32(&_object.indexBufferObjects->at(_itr));
+
+				// initialize uniform buffers
+				initializeUniformBuffer();
+
+				// initialize descriptor pool
+				ADGRVulkanDescriptorPoolInitInfo descriptorPoolInitInfo;
+				initializeDescriptorPool(descriptorPoolInitInfo);
+
+				// initialize descriptor sets
+				ADGRVulkanDescriptorSetsInitInfo descriptorSetsInitInfo;
+				initializeDescriptorSets(descriptorSetsInitInfo);
+
+				return myRenderData;
+			}
+
 			void VulkanRenderableObject::initializePipeline(ADGRVulkanPipelineInitInfo info)
 			{
 				VkPipelineVertexInputStateCreateInfo vertexInputInfo = {};

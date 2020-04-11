@@ -4,7 +4,7 @@
 
 // Maximum number of bones per mesh
 // Must not be higher than same const in skinning shader
-#define MAX_BONES 64
+#define MAX_BONES 128
 
 namespace Dynamik {
 	namespace ADGR {
@@ -37,6 +37,10 @@ namespace Dynamik {
 			alignas(16) glm::mat4 view;
 			alignas(16) glm::mat4 proj;
 			alignas(16) glm::vec3 cameraPos;
+		};
+
+		struct UBO_L4 {
+			glm::vec4 lights[4];
 		};
 
 		struct UBO_SKELETAL {

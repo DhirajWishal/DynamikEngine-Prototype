@@ -169,6 +169,23 @@ namespace Dynamik {
 				VkDeviceMemory bufferMemory = VK_NULL_HANDLE;
 			};
 
+			struct ADGRVulkan3DObjectData {
+				DMKObjectType type = DMKObjectType::DMK_OBJECT_TYPE_STATIC_OBJECT;
+				std::string modelpath = "";
+
+				POINTER<ARRAY<ARRAY<Vertex>>> vertexBufferObjects;
+				POINTER<ARRAY<ARRAY<UI32>>> indexBufferObjects;
+
+				std::string vertexShaderPath = "";
+				std::string tessellationShaderPath = "";
+				std::string geometryShaderPath = "";
+				std::string fragmentShaderPath = "";
+
+				ARRAY<std::string> texturePaths;
+
+				DMK_ADGR_RENDERING_TECHNOLOGY renderTechnology = DMK_ADGR_RENDERING_TECHNOLOGY::DMK_ADGR_RENDER_INDEXED;
+			};
+
 			class VulkanRenderableObject : public GameObject {
 			public:
 				VulkanRenderableObject() {}
@@ -177,6 +194,8 @@ namespace Dynamik {
 				virtual ~VulkanRenderableObject() {}
 
 				virtual void initializeResources(ADGRVulkanRenderableObjectInitInfo info);
+
+				virtual ADGRVulkanRenderData initializeObject(VkDevice logicalDevice, ADGRVulkan3DObjectData _object, VkSampleCountFlagBits msaaSamples);
 
 				virtual void initializePipeline(ADGRVulkanPipelineInitInfo info);
 				virtual void terminatePipeline();

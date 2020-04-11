@@ -3,6 +3,8 @@
 
 #include "Objects/VulkanFunctions.h"
 
+#include <stb_image.h>
+
 namespace Dynamik {
 	namespace ADGR {
 		namespace Backend {
@@ -12,10 +14,110 @@ namespace Dynamik {
 				myRenderData.type = DMKObjectType::DMK_OBJECT_TYPE_SKYBOX;
 			}
 
+			ADGRVulkanRenderData VulkanSkyBox::initializeObject(VkDevice logicalDevice, ADGRVulkan3DObjectData _object, VkSampleCountFlagBits msaaSamples)
+			{
+				ARRAY<VulkanShader> _shaders;
+
+				if (_object.vertexShaderPath.size() && _object.vertexShaderPath != "NONE")
+				{
+					ADGRVulkanShaderInitInfo _initInfo;
+					_initInfo.path = _object.vertexShaderPath;
+					_initInfo.type = ADGRVulkanShaderType::ADGR_VULKAN_SHADER_TYPE_VERTEX;
+
+					VulkanShader _shader;
+					_shader.initialize(logicalDevice, _initInfo);
+					_shaders.pushBack(_shader);
+				}
+				if (_object.tessellationShaderPath.size() && _object.tessellationShaderPath != "NONE")
+				{
+					ADGRVulkanShaderInitInfo _initInfo;
+					_initInfo.path = _object.tessellationShaderPath;
+					_initInfo.type = ADGRVulkanShaderType::ADGR_VULKAN_SHADER_TYPE_TESSELLATION;
+
+					VulkanShader _shader;
+					_shader.initialize(logicalDevice, _initInfo);
+					_shaders.pushBack(_shader);
+				}
+				if (_object.geometryShaderPath.size() && _object.geometryShaderPath != "NONE")
+				{
+					ADGRVulkanShaderInitInfo _initInfo;
+					_initInfo.path = _object.geometryShaderPath;
+					_initInfo.type = ADGRVulkanShaderType::ADGR_VULKAN_SHADER_TYPE_GEOMETRY;
+
+					VulkanShader _shader;
+					_shader.initialize(logicalDevice, _initInfo);
+					_shaders.pushBack(_shader);
+				}
+				if (_object.fragmentShaderPath.size() && _object.fragmentShaderPath != "NONE")
+				{
+					ADGRVulkanShaderInitInfo _initInfo;
+					_initInfo.path = _object.fragmentShaderPath;
+					_initInfo.type = ADGRVulkanShaderType::ADGR_VULKAN_SHADER_TYPE_FRAGMENT;
+
+					VulkanShader _shader;
+					_shader.initialize(logicalDevice, _initInfo);
+					_shaders.pushBack(_shader);
+				}
+
+				// initialize pipeline
+				ADGRVulkanPipelineInitInfo pipelineInitInfo;
+				pipelineInitInfo.shaders = _shaders;
+				pipelineInitInfo.multisamplerMsaaSamples = msaaSamples;
+				pipelineInitInfo.vertexBindingDescription = Vertex::getBindingDescription(1);
+				pipelineInitInfo.vertexAttributeDescription = Vertex::getAttributeDescriptions();
+				pipelineInitInfo.isTexturesAvailable = _object.texturePaths.size();
+				pipelineInitInfo.rasterizerFrontFace = VK_FRONT_FACE_CLOCKWISE;
+				initializePipeline(pipelineInitInfo);
+
+				for (VulkanShader _shader : _shaders)
+					_shader.terminate(logicalDevice);
+
+				ARRAY<ADGRVulkanTextureInitInfo> textureInitInfos;
+
+				// initialize textures
+				for (UI32 _itr = 0; _itr < _object.texturePaths.size(); _itr++)
+				{
+					ADGRVulkanTextureInitInfo initInfo;
+					initInfo.path = _object.texturePaths[_itr];
+					initInfo.format = VK_FORMAT_R8G8B8A8_UNORM;
+					initInfo.mipLevels = 1;
+					initInfo.modeU = VK_SAMPLER_ADDRESS_MODE_REPEAT;
+					initInfo.modeV = VK_SAMPLER_ADDRESS_MODE_REPEAT;
+					initInfo.modeW = VK_SAMPLER_ADDRESS_MODE_REPEAT;
+					initInfo.magFilter = VK_FILTER_LINEAR;
+					initInfo.minFilter = VK_FILTER_LINEAR;
+					initInfo.aspectFlags = VK_IMAGE_ASPECT_COLOR_BIT;
+					textureInitInfos.pushBack(initInfo);
+				}
+
+				initializeTextures(textureInitInfos);
+
+				// initialize vertex buffers
+				for (UI32 _itr = 0; _itr < _object.vertexBufferObjects->size(); _itr++)
+					initializeVertexBuffer(&_object.vertexBufferObjects->at(_itr));
+
+				// initialize index buffers
+				for (UI32 _itr = 0; _itr < _object.indexBufferObjects->size(); _itr++)
+					initializeIndexBufferUI32(&_object.indexBufferObjects->at(_itr));
+
+				// initialize uniform buffers
+				initializeUniformBuffer();
+
+				// initialize descriptor pool
+				ADGRVulkanDescriptorPoolInitInfo descriptorPoolInitInfo;
+				initializeDescriptorPool(descriptorPoolInitInfo);
+
+				// initialize descriptor sets
+				ADGRVulkanDescriptorSetsInitInfo descriptorSetsInitInfo;
+				initializeDescriptorSets(descriptorSetsInitInfo);
+
+				return myRenderData;
+			}
+
 			void VulkanSkyBox::initializeTextures(ARRAY<ADGRVulkanTextureInitInfo> infos)
 			{
 				ADGRVulkanTextureContainer _container;
-				if ((infos[0].path.find(".ktx") != std::string::npos) || (infos.size() < 6))
+				if ((infos[0].path.find(".ktx") != std::string::npos) && (infos.size() < 6))
 				{
 					VkPhysicalDeviceFeatures _features;
 					vkGetPhysicalDeviceFeatures(physicalDevice, &_features);
@@ -96,9 +198,9 @@ namespace Dynamik {
 						VulkanFunctions::createImage(logicalDevice, physicalDevice, cinfo);
 
 						std::vector<VkBufferImageCopy> bufferCopyRegions;
-						for (uint32_t face = 0; face < ktxTexture.max_face() + 1; face++)
+						for (UI32 face = 0; face < ktxTexture.max_face() + 1; face++)
 						{
-							for (uint32_t level = 0; level < _container.mipLevels; level++)
+							for (UI32 level = 0; level < _container.mipLevels; level++)
 							{
 								// Calculate offset into staging buffer for the current mip level and face
 								VkBufferImageCopy bufferCopyRegion = {};
@@ -156,7 +258,7 @@ namespace Dynamik {
 						vkFreeMemory(logicalDevice, stagingBufferMemory, nullptr);
 					}
 				}
-				else
+				else if (infos.size() == 6)
 				{
 					StaggingBufferContainer bufferContainer;
 					UI32 width = 0;
@@ -283,6 +385,114 @@ namespace Dynamik {
 
 					for (UI32 i = 0; i < 6; i++)
 						texData.freeData(images[i]);
+				}
+				else if (infos.size() == 1)
+				{
+				ADGRVulkanTextureInitInfo info = infos[0];
+					std::string _path = info.path;
+					if (_path.find(".hdr") != std::string::npos)
+					{
+						_container.format = info.format;
+
+						resource::TextureData texData;
+						unsigned char* pixels = nullptr;
+
+						if (_container.format == VK_FORMAT_R8G8B8A8_UNORM)
+							pixels = texData.loadTexture((_path), resource::TEXTURE_TYPE_RGBA);
+						else if (_container.format == VK_FORMAT_R8G8B8_UNORM)
+							pixels = texData.loadTexture((_path), resource::TEXTURE_TYPE_RGB);
+						else
+							DMK_CORE_FATAL("Invalid texture format!");
+
+						_container.width = texData.texWidth;
+						_container.height = texData.texHeight;
+
+						VkDeviceSize imageSize = texData.size;
+
+						if (!pixels)
+							DMK_CORE_FATAL("failed to load texture image!");
+
+						VkBuffer stagingBuffer = VK_NULL_HANDLE;
+						VkDeviceMemory stagingBufferMemory = VK_NULL_HANDLE;
+
+						ADGRCreateBufferInfo bufferInfo;
+						bufferInfo.bufferSize = imageSize;
+						bufferInfo.usage = VK_BUFFER_USAGE_TRANSFER_SRC_BIT;
+						bufferInfo.bufferMemoryPropertyflags = VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT;
+						bufferInfo.buffer = &stagingBuffer;
+						bufferInfo.bufferMemory = &stagingBufferMemory;
+
+						VulkanFunctions::createBuffer(logicalDevice, physicalDevice, bufferInfo);
+
+						void* data;
+						if (vkMapMemory(logicalDevice, stagingBufferMemory, 0, static_cast<size_t>(imageSize), 0, &data) != VK_SUCCESS)
+							DMK_CORE_FATAL("Failed to map memory!");
+						memcpy(data, pixels, static_cast<size_t>(imageSize));
+						vkUnmapMemory(logicalDevice, stagingBufferMemory);
+
+						texData.freeData(pixels);
+
+						ADGRCreateImageInfo cinfo;
+						cinfo.width = texData.texWidth;
+						cinfo.height = texData.texHeight;
+						cinfo.format = _container.format;
+						cinfo.tiling = VK_IMAGE_TILING_OPTIMAL;
+						cinfo.usage = VK_IMAGE_USAGE_TRANSFER_SRC_BIT | VK_IMAGE_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT;
+						cinfo.properties = VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT;
+						cinfo.image = &_container.image;
+						cinfo.imageMemory = &_container.imageMemory;
+						cinfo.mipLevels = info.mipLevels;
+						cinfo.numSamples = VK_SAMPLE_COUNT_1_BIT;
+						cinfo.flags = NULL;
+
+						VulkanFunctions::createImage(logicalDevice, physicalDevice, cinfo);
+
+						ADGRTransitionImageLayoutInfo transitionInfo;
+						transitionInfo.image = _container.image;
+						transitionInfo.format = _container.format;
+						transitionInfo.oldLayout = VK_IMAGE_LAYOUT_UNDEFINED;
+						transitionInfo.newLayout = VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL;
+						transitionInfo.mipLevels = info.mipLevels;
+						transitionInfo.layerCount = 1;
+						VulkanFunctions::transitionImageLayout(logicalDevice, commandPool, graphicsQueue, presentQueue, transitionInfo);
+
+						ADGRCopyBufferToImageInfo cpyInfo;
+						cpyInfo.buffer = stagingBuffer;
+						cpyInfo.image = _container.image;
+						cpyInfo.width = static_cast<UI32>(texData.texWidth);
+						cpyInfo.height = static_cast<UI32>(texData.texHeight);
+						VulkanFunctions::copyBufferToImage(logicalDevice, commandPool, graphicsQueue, presentQueue, cpyInfo);
+
+						transitionInfo.image = _container.image;
+						transitionInfo.format = _container.format;
+						transitionInfo.oldLayout = VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL;
+						transitionInfo.newLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
+						transitionInfo.mipLevels = info.mipLevels;
+						transitionInfo.layerCount = 1;
+						VulkanFunctions::transitionImageLayout(logicalDevice, commandPool, graphicsQueue, presentQueue, transitionInfo);
+
+						vkDestroyBuffer(logicalDevice, stagingBuffer, nullptr);
+						vkFreeMemory(logicalDevice, stagingBufferMemory, nullptr);
+
+						//generateMipMaps(&_container);
+
+						ADGRVulkanTextureSamplerInitInfo samplerInitInfo;
+						samplerInitInfo.magFilter = info.magFilter;
+						samplerInitInfo.minFilter = info.minFilter;
+						samplerInitInfo.maxMipLevels = info.maxMipLevels;
+						samplerInitInfo.minMipLevels = info.minMipLevels;
+						samplerInitInfo.modeU = info.modeU;
+						samplerInitInfo.modeV = info.modeV;
+						samplerInitInfo.modeW = info.modeW;
+						_container.imageSampler = VulkanFunctions::createImageSampler(logicalDevice, samplerInitInfo);
+
+						ADGRCreateImageViewInfo cinfo2;
+						cinfo2.image = _container.image;
+						cinfo2.format = _container.format;
+						cinfo2.mipLevels = _container.mipLevels;
+						cinfo2.aspectFlags = info.aspectFlags;
+						_container.imageView = VulkanFunctions::createImageView(logicalDevice, cinfo2);
+					}
 				}
 
 				myRenderData.textures.pushBack(_container);

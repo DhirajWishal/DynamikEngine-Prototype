@@ -76,7 +76,7 @@ namespace Dynamik {
 			void VulkanTextOverlay::update(std::string text, F32 x, F32 y, DMKTextAlign align)
 			{
 				_beginUpdate();
-				const uint32_t firstChar = STB_FONT_consolas_24_latin1_FIRST_CHAR;
+				const UI32 firstChar = STB_FONT_consolas_24_latin1_FIRST_CHAR;
 
 				assert(mapped != nullptr);
 
@@ -92,7 +92,7 @@ namespace Dynamik {
 				float textWidth = 0;
 				for (auto letter : text)
 				{
-					stb_fontchar* charData = &stbFontData[(uint32_t)letter - firstChar];
+					stb_fontchar* charData = &stbFontData[(UI32)letter - firstChar];
 					textWidth += charData->advance * charW;
 				}
 
@@ -109,7 +109,7 @@ namespace Dynamik {
 				// Generate a uv mapped quad per char in the new text
 				for (auto letter : text)
 				{
-					stb_fontchar* charData = &stbFontData[(uint32_t)letter - firstChar];
+					stb_fontchar* charData = &stbFontData[(UI32)letter - firstChar];
 
 					mapped->x = (x + (float)charData->x0 * charW);
 					mapped->y = (y + (float)charData->y0 * charH);
@@ -296,8 +296,8 @@ namespace Dynamik {
 				VkDeviceSize bufferSize = TEXTOVERLAY_MAX_CHAR_COUNT * sizeof(glm::vec4);
 				UI32 size = width * height;
 
-				const uint32_t fontWidth = STB_FONT_consolas_24_latin1_BITMAP_WIDTH;
-				const uint32_t fontHeight = STB_FONT_consolas_24_latin1_BITMAP_WIDTH;
+				const UI32 fontWidth = STB_FONT_consolas_24_latin1_BITMAP_WIDTH;
+				const UI32 fontHeight = STB_FONT_consolas_24_latin1_BITMAP_WIDTH;
 				static unsigned char font24pixels[fontWidth][fontHeight];
 				stb_font_consolas_24_latin1(stbFontData, font24pixels, fontHeight);
 

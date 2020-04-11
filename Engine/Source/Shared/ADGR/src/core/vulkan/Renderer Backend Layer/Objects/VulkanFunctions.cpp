@@ -240,12 +240,16 @@ namespace Dynamik {
 						barrier.srcAccessMask = VK_ACCESS_HOST_WRITE_BIT | VK_ACCESS_TRANSFER_WRITE_BIT;
 					}
 					barrier.dstAccessMask = VK_ACCESS_SHADER_READ_BIT;
+					destinationStage = VK_PIPELINE_STAGE_FRAGMENT_SHADER_BIT;
+					break;
+
+				case VK_IMAGE_LAYOUT_GENERAL:
+					destinationStage = VK_PIPELINE_STAGE_ALL_COMMANDS_BIT;
 					break;
 				default:
 					DMK_CORE_FATAL("unsupported layout transition!");
 					break;
 				}
-
 
 				vkCmdPipelineBarrier(
 					commandBuffer,

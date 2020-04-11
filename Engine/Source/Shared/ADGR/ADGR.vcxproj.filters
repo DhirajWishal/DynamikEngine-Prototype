@@ -208,6 +208,8 @@
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="src\core\Components\AnimationCamera.h" />
+    <ClInclude Include="src\core\vulkan\Renderer Backend Layer\VulkanAnimationManager.h" />
+    <ClInclude Include="src\core\vulkan\Renderer Backend Layer\VulkanPBRObject.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Layers\layer.cpp">
@@ -331,8 +333,11 @@
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="src\core\Components\AnimationCamera.cpp" />
+    <ClCompile Include="src\core\vulkan\Renderer Backend Layer\VulkanAnimationManager.cpp" />
+    <ClCompile Include="src\core\vulkan\Renderer Backend Layer\VulkanPBRObject.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ADGR.lua" />
+    <None Include="src\core\vulkan\Renderer Backend Layer\External\stb_font_consolas_24_latin1.inl" />
   </ItemGroup>
 </Project>

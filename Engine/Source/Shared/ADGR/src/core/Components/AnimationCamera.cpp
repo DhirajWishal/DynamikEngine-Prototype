@@ -118,11 +118,14 @@ namespace Dynamik {
 
 			glCam.ProcessMouseMovement(xoffset, yoffset);
 
+			const glm::vec3 scale = glm::vec3(0.0025f);
+
 			UBO_SKELETAL uboVS;
 			uboVS.projection = glm::perspective(glm::radians(60.0f), updateInfo.aspectRatio, updateInfo.near, updateInfo.far);
 			uboVS.view = glCam.GetViewMatrix();
 			uboVS.viewPos = glm::vec4(glCam.Position, 0.0f) * glm::vec4(-1.0f);
 			uboVS.model = glm::rotate(glm::mat4(1.0f), glm::radians(90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+			uboVS.model = glm::scale(uboVS.model, scale);
 
 			return uboVS;
 		}

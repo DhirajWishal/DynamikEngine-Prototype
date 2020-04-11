@@ -33,10 +33,37 @@ namespace Dynamik {
 				aiMatrix4x4 finalTransformation;
 			};
 
+			struct ADGRVulkanSkeletalAnimationData {
+				// Bone related stuff
+				// Maps bone name with index
+				std::map<std::string, UI32> boneMapping;
+				// Bone details
+				ARRAY<ADGRVulkanSkeletalBoneInfo> boneInfo;
+				// Number of bones present
+				UI32 numBones = 0;
+				// Root inverese transform matrix
+				aiMatrix4x4 globalInverseTransform;
+				// Per-vertex bone info
+				ARRAY<ADGRVulkanSkeletalBoneData> bones;
+				// Bone transformations
+				ARRAY<aiMatrix4x4> boneTransforms;
+
+				// Modifier for the animation 
+				float animationSpeed = 0.75f;
+				// Currently active animation
+				aiAnimation* pAnimation;
+
+				// Store reference to the ASSIMP scene for accessing properties of it during animation
+				Assimp::Importer Importer;
+				const aiScene* scene;
+			};
+
 			class VulkanSkeletalAnimation : public VulkanRenderableObject {
 			public:
-				VulkanSkeletalAnimation(ADGRVulkanRenderableObjectInitInfo info) : VulkanRenderableObject(info) {}
+				VulkanSkeletalAnimation(ADGRVulkanRenderableObjectInitInfo info);
 				virtual ~VulkanSkeletalAnimation() {}
+
+				ADGRVulkanRenderData initializeObject(VkDevice logicalDevice, ADGRVulkan3DObjectData _object, VkSampleCountFlagBits msaaSamples) override;
 
 				void setAnimation(UI32 animationIndex);
 				void loadBones(const aiMesh* pMesh, UI32 vertexOffset, ARRAY<ADGRVulkanSkeletalBoneData>& bones);
@@ -53,28 +80,7 @@ namespace Dynamik {
 				void initializeDescriptorSets(ADGRVulkanDescriptorSetsInitInfo info) override;
 
 			public:
-				// Bone related stuff
-				// Maps bone name with index
-				std::map<std::string, uint32_t> boneMapping;
-				// Bone details
-				ARRAY<ADGRVulkanSkeletalBoneInfo> boneInfo;
-				// Number of bones present
-				uint32_t numBones = 0;
-				// Root inverese transform matrix
-				aiMatrix4x4 globalInverseTransform;
-				// Per-vertex bone info
-				ARRAY<ADGRVulkanSkeletalBoneData> bones;
-				// Bone transformations
-				ARRAY<aiMatrix4x4> boneTransforms;
-
-				// Modifier for the animation 
-				float animationSpeed = 0.75f;
-				// Currently active animation
-				aiAnimation* pAnimation;
-
-				// Store reference to the ASSIMP scene for accessing properties of it during animation
-				Assimp::Importer Importer;
-				const aiScene* scene;
+				ADGRVulkanSkeletalAnimationData myAnimationData;
 
 			private:
 				const aiNodeAnim* findNodeAnim(const aiAnimation* animation, const std::string nodeName);

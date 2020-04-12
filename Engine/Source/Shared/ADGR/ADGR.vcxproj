@@ -144,7 +144,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="src\ADGR.h" />
-    <ClInclude Include="src\core\Components\AnimationCamera.h" />
+    <ClInclude Include="src\core\Components\Camera\AnimationCamera.h" />
+    <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Objects\VulkanRenderLayout.h" />
     <ClInclude Include="src\core\vulkan\Renderer Backend Layer\VulkanAnimationManager.h" />
     <ClInclude Include="src\core\vulkan\Renderer Backend Layer\VulkanPBRObject.h" />
     <ClInclude Include="src\Layers\layer.h" />
@@ -155,11 +156,11 @@
     <ClInclude Include="src\Wrapper\dll_wrapper.h" />
     <ClInclude Include="src\Wrapper\internal_wrapper.h" />
     <ClInclude Include="src\adgrafx.h" />
-    <ClInclude Include="src\core\Components\Camera.h" />
-    <ClInclude Include="src\core\Components\Camera2D.h" />
-    <ClInclude Include="src\core\Components\Camera3D.h" />
-    <ClInclude Include="src\core\Components\CameraReflect.h" />
-    <ClInclude Include="src\core\Components\CameraSkybox.h" />
+    <ClInclude Include="src\core\Components\Camera\Camera.h" />
+    <ClInclude Include="src\core\Components\Camera\Camera2D.h" />
+    <ClInclude Include="src\core\Components\Camera\Camera3D.h" />
+    <ClInclude Include="src\core\Components\Camera\CameraReflect.h" />
+    <ClInclude Include="src\core\Components\Camera\CameraSkybox.h" />
     <ClInclude Include="src\core\Components\TextOverlay.h" />
     <ClInclude Include="src\core\Window\Windows\WindowManager.h" />
     <ClInclude Include="src\core\base\RendererBackendBase.h" />
@@ -200,7 +201,8 @@
     <ClInclude Include="src\rendererFormat.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\core\Components\AnimationCamera.cpp" />
+    <ClCompile Include="src\core\Components\Camera\AnimationCamera.cpp" />
+    <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Objects\VulkanRenderLayout.cpp" />
     <ClCompile Include="src\core\vulkan\Renderer Backend Layer\VulkanAnimationManager.cpp" />
     <ClCompile Include="src\core\vulkan\Renderer Backend Layer\VulkanPBRObject.cpp" />
     <ClCompile Include="src\Layers\layer.cpp" />
@@ -212,11 +214,11 @@
     <ClCompile Include="src\adgrafx.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="src\core\Components\Camera.cpp" />
-    <ClCompile Include="src\core\Components\Camera2D.cpp" />
-    <ClCompile Include="src\core\Components\Camera3D.cpp" />
-    <ClCompile Include="src\core\Components\CameraReflect.cpp" />
-    <ClCompile Include="src\core\Components\CameraSkybox.cpp" />
+    <ClCompile Include="src\core\Components\Camera\Camera.cpp" />
+    <ClCompile Include="src\core\Components\Camera\Camera2D.cpp" />
+    <ClCompile Include="src\core\Components\Camera\Camera3D.cpp" />
+    <ClCompile Include="src\core\Components\Camera\CameraReflect.cpp" />
+    <ClCompile Include="src\core\Components\Camera\CameraSkybox.cpp" />
     <ClCompile Include="src\core\Window\Windows\WindowManager.cpp" />
     <ClCompile Include="src\core\directx12\directx12Renderer.cpp" />
     <ClCompile Include="src\core\opengl\backend\shader.cpp" />

@@ -2,6 +2,8 @@
 #ifndef _DYNAMIK_ADGR_VULKAN_FUNCTIONS_H
 #define _DYNAMIK_ADGR_VULKAN_FUNCTIONS_H
 
+#include "VulkanRenderableObject.h"
+
 namespace Dynamik {
 	namespace ADGR {
 		namespace Backend {
@@ -115,6 +117,8 @@ namespace Dynamik {
 				static void copyBufferToImage(VkDevice logicalDevice, VkCommandPool commandPool, VkQueue graphicsQueue, VkQueue presentQueue, ADGRCopyBufferToImageInfo info);
 				static void copyBufferToImageOverride(VkDevice logicalDevice, VkCommandPool commandPool, VkQueue graphicsQueue, VkQueue presentQueue, ADGRCopyBufferToImageInfo info, ARRAY<VkBufferImageCopy> copyRegions);
 				static VkSampler createImageSampler(VkDevice logicalDevice, ADGRVulkanTextureSamplerInitInfo info);
+
+				static ADGRVulkanUnformBufferContainer createUniformBuffers(VkDevice logicalDevice, VkPhysicalDevice physicalDevice, VkDeviceSize bufferSize, UI32 count);
 			};
 		}
 	}

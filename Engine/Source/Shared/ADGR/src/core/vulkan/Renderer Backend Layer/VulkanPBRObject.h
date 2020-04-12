@@ -7,30 +7,18 @@
 namespace Dynamik {
 	namespace ADGR {
 		namespace Backend {
-			struct Material {
-				struct PushBlock {
-					float roughness;
-					float metallic;
-					float r, g, b;
-				} params;
-				std::string name;
-				Material() {}
-				Material(std::string n, glm::vec3 c, float r, float m) : name(n) {
-					params.roughness = r;
-					params.metallic = m;
-					params.r = c.r;
-					params.g = c.g;
-					params.b = c.b;
-				}
-				~Material() {}
-			};
-
 			class VulkanPBRObject : public VulkanRenderableObject {
 			public:
 				VulkanPBRObject(ADGRVulkanRenderableObjectInitInfo initInfo);
 				virtual ~VulkanPBRObject() {}
 
-				Material myMaterial;
+				virtual ADGRVulkanRenderData initializeObject(VkDevice logicalDevice, ADGRVulkan3DObjectData _object, VkSampleCountFlagBits msaaSamples) override;
+
+				void initializeUniformBuffer() override;
+				void updateUniformBuffer(UBO_MVPC uniformBufferObject, UI32 currentImage);
+
+				void initializeDescriptorPool(ADGRVulkanDescriptorPoolInitInfo info) override;
+				void initializeDescriptorSets(ADGRVulkanDescriptorSetsInitInfo info) override;
 			};
 		}
 	}

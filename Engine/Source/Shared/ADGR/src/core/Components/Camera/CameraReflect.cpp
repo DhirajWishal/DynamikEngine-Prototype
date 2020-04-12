@@ -81,6 +81,12 @@ namespace Dynamik {
 					case DMK_KEY_RIGHT:
 						bias -= 0.5f;
 						break;
+					case DMK_KEY_KP_ADD:
+						glCam.MovementSpeed += 0.5f;
+						break;
+					case DMK_KEY_KP_SUBTRACT:
+						glCam.MovementSpeed -= 0.5f;
+						break;
 					}
 				}
 				else if (eventContainer.eventType == DMKEventType::DMK_EVENT_TYPE_MOUSE_MOVED)
@@ -123,7 +129,6 @@ namespace Dynamik {
 			glCam.ProcessMouseMovement(xoffset, yoffset);
 
 			UBO_MVPC uboVS;
-			glm::mat4 viewMatrix = glm::mat4(1.0f);
 			uboVS.model = glm::mat4(1.0f);
 			uboVS.view = glCam.GetViewMatrix();
 			uboVS.cameraPos = glCam.Position;

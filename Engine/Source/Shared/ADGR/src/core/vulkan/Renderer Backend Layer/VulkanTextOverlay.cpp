@@ -410,21 +410,16 @@ namespace Dynamik {
 				ADGRVulkanDescriptorSetLayoutInitInfo layoutInitInfo;
 				layoutInitInfo.additionalBindings = { samplerLayoutBinding };
 				layoutInitInfo.overrideBindings = true;
-				mySwapChainObject.initializeDescriptorSetLayout(layoutInitInfo);
+				//mySwapChainObject.initializeDescriptorSetLayout(layoutInitInfo);
 			}
 
 			void VulkanTextOverlay::_initializePipelineLayout()
 			{
-				ADGRVulkanPipelineLayoutInitInfo pipelineLayoutInitInfo;
-				pipelineLayoutInitInfo.pushConstantCount = 0;
-				pipelineLayoutInitInfo.pushConstantOffset = 0;
-				pipelineLayoutInitInfo.pushConstantsEnable = false;
-				mySwapChainObject.initializePipelineLayout(pipelineLayoutInitInfo);
 			}
 
 			void VulkanTextOverlay::_initializeDescriptorSets()
 			{
-				VkDescriptorSetLayout _layout = mySwapChainObject.getDescriptorSetLayout();
+				VkDescriptorSetLayout _layout;
 
 				VkDescriptorSetAllocateInfo allocInfo = {};
 				allocInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_ALLOCATE_INFO;
@@ -590,16 +585,6 @@ namespace Dynamik {
 			void VulkanTextOverlay::_terminateDescriptorPool()
 			{
 				vkDestroyDescriptorPool(myCoreObject.logicalDevice, myRenderData.descriptors.pool, nullptr);
-			}
-
-			void VulkanTextOverlay::_terminateDescriptorLayout()
-			{
-				mySwapChainObject.terminateDescriptorSetLayout();
-			}
-
-			void VulkanTextOverlay::_terminatePipelineLayout()
-			{
-				mySwapChainObject.terminatePipelineLayout();
 			}
 
 			void VulkanTextOverlay::_terminatePipeline()

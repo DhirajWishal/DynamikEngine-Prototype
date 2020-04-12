@@ -90,22 +90,10 @@ namespace Dynamik {
 			{
 				swapChainContainer.initializeFrameBuffer(frameBufferInitInfo);
 			}
-
-			void VulkanSwapChain3D::initializeDescriptorSetLayout(ADGRVulkanDescriptorSetLayoutInitInfo layoutInitInfo)
-			{
-				swapChainContainer.initializeDescriptorSetLayout(layoutInitInfo);
-			}
-
-			void VulkanSwapChain3D::initializePipelineLayout(ADGRVulkanPipelineLayoutInitInfo pipelineLayoutInitInfo)
-			{
-				swapChainContainer.initializePipelineLayout(pipelineLayoutInitInfo);
-			}
 			
 			void VulkanSwapChain3D::terminate()
 			{
 				swapChainContainer.terminate();
-				swapChainContainer.terminateDescriptorSetLayout();
-				swapChainContainer.terminatePipelineLayout();
 			}
 		}
 	}

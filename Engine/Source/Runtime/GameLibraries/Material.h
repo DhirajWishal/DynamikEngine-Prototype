@@ -8,7 +8,7 @@ namespace Dynamik {
 	class DMKMaterial {
 	public:
 		DMKMaterial() {}
-		DMKMaterial() {}
+		virtual ~DMKMaterial() {}
 	};
 }
 

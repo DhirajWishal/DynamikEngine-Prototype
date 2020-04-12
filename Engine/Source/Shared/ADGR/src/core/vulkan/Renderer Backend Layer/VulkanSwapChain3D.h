@@ -16,8 +16,6 @@ namespace Dynamik {
 				void initializeSwapChain(UI32 width, UI32 height);
 				void initializeRenderPass(VkSampleCountFlagBits msaaSamples);
 				void initializeFrameBuffers(ADGRVulkanFrameBufferInitInfo frameBufferInitInfo);
-				void initializeDescriptorSetLayout(ADGRVulkanDescriptorSetLayoutInitInfo layoutInitInfo);
-				void initializePipelineLayout(ADGRVulkanPipelineLayoutInitInfo pipelineLayoutInitInfo);
 
 				void terminate();
 

@@ -98,6 +98,11 @@ namespace Dynamik {
 		ARRAY<float> color = { 0.0f, 0.0f, 0.0f, 1.0f };	// r, g, b, a
 	};
 
+	struct MaterialProperties {
+		B1 enablePBR = false;
+		std::string materialName = "";
+	};
+
 	// Game Object Properties
 	struct GameObjectProperties {
 		GameObjectProperties() {}
@@ -128,6 +133,7 @@ namespace Dynamik {
 		AudioProperties audioProperties = {};
 		CameraProperties cameraProperties = {};
 		LightingProperties ligitingProperties = {};
+		MaterialProperties materialProperties = {};
 
 		RenderableObjectProperties renderableObjectProperties = {};
 	};

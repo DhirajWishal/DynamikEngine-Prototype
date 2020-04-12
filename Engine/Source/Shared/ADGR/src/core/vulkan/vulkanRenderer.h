@@ -33,11 +33,11 @@
 
 #include "core/Window/Windows/WindowManager.h"
 
-#include "core/Components/AnimationCamera.h"
-#include "core/Components/Camera2D.h"
-#include "core/Components/Camera3D.h"
-#include "core/Components/CameraReflect.h"
-#include "core/Components/CameraSkybox.h"
+#include "core/Components/Camera/AnimationCamera.h"
+#include "core/Components/Camera/Camera2D.h"
+#include "core/Components/Camera/Camera3D.h"
+#include "core/Components/Camera/CameraReflect.h"
+#include "core/Components/Camera/CameraSkybox.h"
 
 #include "Renderer Backend Layer/External/stb_font_consolas_24_latin1.inl"
 
@@ -224,7 +224,7 @@ namespace Dynamik {
 
 			F32 runningTime = 1.0f;
 
-			ARRAY<Material> myRenderableMeterials;
+			std::map<std::string, ADGRVulkanMaterialDescriptor> myRenderableMeterials;
 
 		private:
 			ADGRVulkanTextOverlayDataContainer overlayContainer;

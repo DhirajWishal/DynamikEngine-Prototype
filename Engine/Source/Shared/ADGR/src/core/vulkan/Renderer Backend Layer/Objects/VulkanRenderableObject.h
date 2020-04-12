@@ -8,6 +8,7 @@
 #include "VulkanCore.h"
 #include "VulkanShader.h"
 #include "VulkanSwapChain.h"
+#include "VulkanRenderLayout.h"
 
 #include <GameObject.h>
 
@@ -122,6 +123,26 @@ namespace Dynamik {
 				ARRAY<VkWriteDescriptorSet> additionalWrites;
 			};
 
+			struct ADGRVulkanMaterialDescriptor {
+				struct PushBlock {
+					F32 roughness;
+					F32 metallic;
+					F32 r, g, b;
+				} params;
+
+				std::string name;
+
+				ADGRVulkanMaterialDescriptor() {}
+				ADGRVulkanMaterialDescriptor(std::string n, glm::vec3 c, F32 r, F32 m) : name(n) {
+					params.roughness = r;
+					params.metallic = m;
+					params.r = c.r;
+					params.g = c.g;
+					params.b = c.b;
+				}
+				~ADGRVulkanMaterialDescriptor() {}
+			};
+
 			struct ADGRVulkanTextureContainer {
 				VkImage image = VK_NULL_HANDLE;
 				VkImageView imageView = VK_NULL_HANDLE;
@@ -134,8 +155,14 @@ namespace Dynamik {
 			};
 
 			struct ADGRVulkanDescrpitorContainer {
+				VkDescriptorSetLayout layout = VK_NULL_HANDLE;
 				VkDescriptorPool pool = VK_NULL_HANDLE;
 				VkDescriptorSet descriptorSet = VK_NULL_HANDLE;
+			};
+
+			struct ADGRVulkanUnformBufferContainer {
+				ARRAY<VkBuffer> buffers;
+				ARRAY<VkDeviceMemory> bufferMemories;
 			};
 
 			struct ADGRVulkanRenderData {
@@ -160,8 +187,10 @@ namespace Dynamik {
 				VkPipeline pipeline = VK_NULL_HANDLE;
 				VkPipelineLayout pipelineLayout = VK_NULL_HANDLE;
 
-				ARRAY<VkBuffer> uniformBuffers;
-				ARRAY<VkDeviceMemory> uniformBufferMemories;
+				ARRAY<ADGRVulkanUnformBufferContainer> uniformBufferContainers;
+
+				ADGRVulkanMaterialDescriptor materialDescriptor;
+				B1 enableMaterials = false;
 			};
 
 			struct StaggingBufferContainer {
@@ -172,6 +201,8 @@ namespace Dynamik {
 			struct ADGRVulkan3DObjectData {
 				DMKObjectType type = DMKObjectType::DMK_OBJECT_TYPE_STATIC_OBJECT;
 				std::string modelpath = "";
+				std::string materialName = "Metal";
+				B1 isPBR = false;
 
 				POINTER<ARRAY<ARRAY<Vertex>>> vertexBufferObjects;
 				POINTER<ARRAY<ARRAY<UI32>>> indexBufferObjects;

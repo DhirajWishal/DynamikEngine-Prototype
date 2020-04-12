@@ -20,6 +20,7 @@
 
 #include "Renderer Backend Layer/VulkanSkyBox.h"
 #include "Renderer Backend Layer/VulkanReflectObject.h"
+#include "Renderer Backend Layer/VulkanPBRObject.h"
 
 #define TEXTOVERLAY_MAX_CHAR_COUNT 2048
 
@@ -55,6 +56,13 @@ namespace Dynamik {
 			myVulkanCore.initializeInstance(instanceInitInfo);
 			myVulkanCore.initializeSurface(&myWindowManager.window);
 
+			/*
+			 Assignment: = 
+			 Arithmetic: + - * / 
+			 Logical: ! ~ ^ | & 
+			 Comparison: || && ! == 
+			*/
+
 			myVulkanCore.initializeDevice();
 
 			ADGRVulkanCommandBufferInitResources initRes;
@@ -73,31 +81,22 @@ namespace Dynamik {
 			frameBufferInitInfo.preAttachments = { myColorBuffer.imageView, myDepthBuffer.imageView };
 			mySwapChain3D.initializeFrameBuffers(frameBufferInitInfo);
 
-			ADGRVulkanDescriptorSetLayoutInitInfo layoutInitInfo;
-			mySwapChain3D.initializeDescriptorSetLayout(layoutInitInfo);
-
-			ADGRVulkanPipelineLayoutInitInfo pipelineLayoutInitInfo;
-			pipelineLayoutInitInfo.pushConstantCount = 0;
-			pipelineLayoutInitInfo.pushConstantOffset = 0;
-			pipelineLayoutInitInfo.pushConstantsEnable = false;
-			mySwapChain3D.initializePipelineLayout(pipelineLayoutInitInfo);
-
 			_initializeOverlayStageOne();
 
 			// Other initializations
 			// Setup some default materials (source: https://seblagarde.wordpress.com/2011/08/17/feeding-a-physical-based-lighting-mode/)
-			myRenderableMeterials.push_back(Material("Gold", glm::vec3(1.0f, 0.765557f, 0.336057f), 0.1f, 1.0f));
-			myRenderableMeterials.push_back(Material("Copper", glm::vec3(0.955008f, 0.637427f, 0.538163f), 0.1f, 1.0f));
-			myRenderableMeterials.push_back(Material("Chromium", glm::vec3(0.549585f, 0.556114f, 0.554256f), 0.1f, 1.0f));
-			myRenderableMeterials.push_back(Material("Nickel", glm::vec3(0.659777f, 0.608679f, 0.525649f), 0.1f, 1.0f));
-			myRenderableMeterials.push_back(Material("Titanium", glm::vec3(0.541931f, 0.496791f, 0.449419f), 0.1f, 1.0f));
-			myRenderableMeterials.push_back(Material("Cobalt", glm::vec3(0.662124f, 0.654864f, 0.633732f), 0.1f, 1.0f));
-			myRenderableMeterials.push_back(Material("Platinum", glm::vec3(0.672411f, 0.637331f, 0.585456f), 0.1f, 1.0f));
+			myRenderableMeterials["Gold"] = (ADGRVulkanMaterialDescriptor("Gold", glm::vec3(1.0f, 0.765557f, 0.336057f), 0.1f, 1.0f));
+			myRenderableMeterials["Copper"] = (ADGRVulkanMaterialDescriptor("Copper", glm::vec3(0.955008f, 0.637427f, 0.538163f), 0.1f, 1.0f));
+			myRenderableMeterials["Chromium"] = (ADGRVulkanMaterialDescriptor("Chromium", glm::vec3(0.549585f, 0.556114f, 0.554256f), 0.1f, 1.0f));
+			myRenderableMeterials["Nickel"] = (ADGRVulkanMaterialDescriptor("Nickel", glm::vec3(0.659777f, 0.608679f, 0.525649f), 0.1f, 1.0f));
+			myRenderableMeterials["Titanium"] = (ADGRVulkanMaterialDescriptor("Titanium", glm::vec3(0.541931f, 0.496791f, 0.449419f), 0.1f, 1.0f));
+			myRenderableMeterials["Cobalt"] = (ADGRVulkanMaterialDescriptor("Cobalt", glm::vec3(0.662124f, 0.654864f, 0.633732f), 0.1f, 1.0f));
+			myRenderableMeterials["Platinum"] = (ADGRVulkanMaterialDescriptor("Platinum", glm::vec3(0.672411f, 0.637331f, 0.585456f), 0.1f, 1.0f));
 			// Testing materials
-			myRenderableMeterials.push_back(Material("White", glm::vec3(1.0f), 0.1f, 1.0f));
-			myRenderableMeterials.push_back(Material("Red", glm::vec3(1.0f, 0.0f, 0.0f), 0.1f, 1.0f));
-			myRenderableMeterials.push_back(Material("Blue", glm::vec3(0.0f, 0.0f, 1.0f), 0.1f, 1.0f));
-			myRenderableMeterials.push_back(Material("Black", glm::vec3(0.0f), 0.1f, 1.0f));
+			myRenderableMeterials["White"] = (ADGRVulkanMaterialDescriptor("White", glm::vec3(1.0f), 0.1f, 1.0f));
+			myRenderableMeterials["Red"] = (ADGRVulkanMaterialDescriptor("Red", glm::vec3(1.0f, 0.0f, 0.0f), 0.1f, 1.0f));
+			myRenderableMeterials["Blue"] = (ADGRVulkanMaterialDescriptor("Blue", glm::vec3(0.0f, 0.0f, 1.0f), 0.1f, 1.0f));
+			myRenderableMeterials["Black"] = (ADGRVulkanMaterialDescriptor("Black", glm::vec3(0.0f), 0.1f, 1.0f));
 		}
 
 		// object loading and initialization
@@ -208,8 +207,7 @@ namespace Dynamik {
 
 			for (ADGRVulkanRenderData& _objectData : renderDatas)
 			{
-				VulkanRenderableObject _object(RenderableObjectInitInfo()
-					);
+				VulkanRenderableObject _object(RenderableObjectInitInfo());
 
 				_object.setRenderData(_objectData);
 
@@ -227,15 +225,6 @@ namespace Dynamik {
 			frameBufferInitInfo.preAttachments = { myColorBuffer.imageView, myDepthBuffer.imageView };
 			mySwapChain3D.initializeFrameBuffers(frameBufferInitInfo);
 
-			ADGRVulkanDescriptorSetLayoutInitInfo layoutInitInfo;
-			mySwapChain3D.initializeDescriptorSetLayout(layoutInitInfo);
-
-			ADGRVulkanPipelineLayoutInitInfo pipelineLayoutInitInfo;
-			pipelineLayoutInitInfo.pushConstantCount = 6;
-			pipelineLayoutInitInfo.pushConstantOffset = 0;
-			pipelineLayoutInitInfo.pushConstantsEnable = true;
-			mySwapChain3D.initializePipelineLayout(pipelineLayoutInitInfo);
-
 			initializeObjectsBasic();
 
 			ADGRVulkanCommandBufferInitInfo commandBufferInitInfo;
@@ -250,11 +239,23 @@ namespace Dynamik {
 			{
 				if (_object.type == DMKObjectType::DMK_OBJECT_TYPE_STATIC_OBJECT)
 				{
-					VulkanRenderableObject _renderObject(RenderableObjectInitInfo());
+					if (_object.isPBR)
+					{
+						VulkanPBRObject _renderObject(RenderableObjectInitInfo());
 
-					_renderObject.setSwapChainContainer(&mySwapChain3D.swapChainContainer);
+						_renderObject.setSwapChainContainer(&mySwapChain3D.swapChainContainer);
+						_renderObject.myRenderData.materialDescriptor = myRenderableMeterials[_object.materialName];
 
-					renderDatas.push_back(_renderObject.initializeObject(myVulkanCore.logicalDevice, _object, myVulkanCore.msaaSamples));
+						renderDatas.push_back(_renderObject.initializeObject(myVulkanCore.logicalDevice, _object, myVulkanCore.msaaSamples));
+					}
+					else
+					{
+						VulkanRenderableObject _renderObject(RenderableObjectInitInfo());
+
+						_renderObject.setSwapChainContainer(&mySwapChain3D.swapChainContainer);
+
+						renderDatas.push_back(_renderObject.initializeObject(myVulkanCore.logicalDevice, _object, myVulkanCore.msaaSamples));
+					}
 				}
 				else if (_object.type == DMKObjectType::DMK_OBJECT_TYPE_SKYBOX)
 				{
@@ -618,12 +619,24 @@ namespace Dynamik {
 				}
 				else if (_object.type == DMKObjectType::DMK_OBJECT_TYPE_STATIC_OBJECT)
 				{
-					VulkanRenderableObject _renderObject(RenderableObjectInitInfo());
-					_renderObject.setRenderData(_object);
+					if (_object.enableMaterials)
+					{
+						VulkanPBRObject _renderObject(RenderableObjectInitInfo());
+						_renderObject.setRenderData(_object);
 
-					DMKUpdateInfo info;
-					info.aspectRatio = (F32)myWindowManager.windowWidth / (F32)myWindowManager.windowHeight;
-					_renderObject.updateUniformBuffer(myCamera3D.updateCamera(eventContainer, info), imageIndex);
+						DMKUpdateInfo info;
+						info.aspectRatio = (F32)myWindowManager.windowWidth / (F32)myWindowManager.windowHeight;
+						_renderObject.updateUniformBuffer(myCameraReflect.updateCamera(eventContainer, info), imageIndex);
+					}
+					else
+					{
+						VulkanRenderableObject _renderObject(RenderableObjectInitInfo());
+						_renderObject.setRenderData(_object);
+
+						DMKUpdateInfo info;
+						info.aspectRatio = (F32)myWindowManager.windowWidth / (F32)myWindowManager.windowHeight;
+						_renderObject.updateUniformBuffer(myCamera3D.updateCamera(eventContainer, info), imageIndex);
+					}
 				}
 				else if (_object.type == DMKObjectType::DMK_OBJECT_TYPE_SKELETAL_ANIMATION)
 				{
@@ -1194,6 +1207,11 @@ namespace Dynamik {
 			{
 				ADGRVulkan3DObjectData _object;
 				_object.modelpath = rendererFormats[_itr].myInternalFormat->myGameObject->myProperties.objectPath[0];
+
+				_object.materialName = rendererFormats[_itr].myInternalFormat->myGameObject->myProperties.materialProperties.materialName;
+				if (rendererFormats[_itr].myInternalFormat->myGameObject->myProperties.materialProperties.enablePBR)
+					_object.isPBR = true;
+
 				_object.vertexShaderPath = rendererFormats[_itr].myInternalFormat->myGameObject->myProperties.renderableObjectProperties.vertexShaderPath;
 				_object.tessellationShaderPath = rendererFormats[_itr].myInternalFormat->myGameObject->myProperties.renderableObjectProperties.tessellationShaderPath;
 				_object.geometryShaderPath = rendererFormats[_itr].myInternalFormat->myGameObject->myProperties.renderableObjectProperties.geometryShaderPath;

@@ -32,6 +32,13 @@ namespace Dynamik {
 
 			ADGRVulkanRenderData VulkanSkeletalAnimation::initializeObject(VkDevice logicalDevice, ADGRVulkan3DObjectData _object, VkSampleCountFlagBits msaaSamples)
 			{
+				ADGRVulkanDescriptorSetLayoutInitInfo layoutInitInfo;
+				myRenderData.descriptors.layout = VulkanRenderLayout::createDescriptorSetLayout(logicalDevice, layoutInitInfo);
+
+				ADGRVulkanPipelineLayoutInitInfo pipelineLayoutInitInfo;
+				pipelineLayoutInitInfo.layouts = { myRenderData.descriptors.layout };
+				myRenderData.pipelineLayout = VulkanRenderLayout::createPipelineLayout(logicalDevice, pipelineLayoutInitInfo);
+
 				ARRAY<VulkanShader> _shaders;
 
 				if (_object.vertexShaderPath.size() && _object.vertexShaderPath != "NONE")
@@ -616,23 +623,14 @@ namespace Dynamik {
 
 			void VulkanSkeletalAnimation::initializeUniformBuffer()
 			{
-				VkDeviceSize bufferSize = sizeof(UBO_SKELETAL);
-				UI32 count = myRenderData.swapChainPointer->getSwapChainImages().size();
-
-				myRenderData.uniformBuffers.resize(count);
-				myRenderData.uniformBufferMemories.resize(count);
-
-				for (size_t i = 0; i < count; i++)
-				{
-					ADGRCreateBufferInfo bufferInfo;
-					bufferInfo.bufferSize = bufferSize;
-					bufferInfo.usage = VK_BUFFER_USAGE_UNIFORM_BUFFER_BIT;
-					bufferInfo.bufferMemoryPropertyflags = VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT;
-					bufferInfo.buffer = &myRenderData.uniformBuffers[i];
-					bufferInfo.bufferMemory = &myRenderData.uniformBufferMemories[i];
-
-					VulkanFunctions::createBuffer(logicalDevice, physicalDevice, bufferInfo);
-				}
+				myRenderData.uniformBufferContainers.pushBack(
+					VulkanFunctions::createUniformBuffers(
+						logicalDevice,
+						physicalDevice,
+						sizeof(UBO_SKELETAL),
+						myRenderData.swapChainPointer->getSwapChainImages().size()
+						)
+					);
 			}
 
 			void VulkanSkeletalAnimation::updateUniformBuffer(UBO_SKELETAL uniformBufferObject, UI32 currentImage, F32 time)
@@ -642,17 +640,20 @@ namespace Dynamik {
 				for (UI32 _itr = 0; _itr < myAnimationData.boneTransforms.size(); _itr++)
 					uniformBufferObject.bones[_itr] = glm::transpose(glm::make_mat4(&myAnimationData.boneTransforms[_itr].a1));
 
-				void* data = nullptr;
-				vkMapMemory(logicalDevice, myRenderData.uniformBufferMemories[currentImage], 0, sizeof(uniformBufferObject), 0, &data);
-				memcpy(data, &uniformBufferObject, sizeof(uniformBufferObject));
-				vkUnmapMemory(logicalDevice, myRenderData.uniformBufferMemories[currentImage]);
+				for (ADGRVulkanUnformBufferContainer _container : myRenderData.uniformBufferContainers)
+				{
+					void* data = nullptr;
+					vkMapMemory(logicalDevice, _container.bufferMemories[currentImage], 0, sizeof(uniformBufferObject), 0, &data);
+					memcpy(data, &uniformBufferObject, sizeof(uniformBufferObject));
+					vkUnmapMemory(logicalDevice, _container.bufferMemories[currentImage]);
+				}
 			}
 
 			void VulkanSkeletalAnimation::initializeDescriptorSets(ADGRVulkanDescriptorSetsInitInfo info)
 			{
 				VkDescriptorSetLayout _layout = VK_NULL_HANDLE;
 				if (myRenderData.textures.size())
-					_layout = myRenderData.swapChainPointer->getDescriptorSetLayout();
+					_layout = myRenderData.descriptors.layout;
 				else
 					_layout = noTextureDescriptorSetLayout;
 
@@ -668,13 +669,16 @@ namespace Dynamik {
 				ARRAY<VkWriteDescriptorSet> descriptorWrites = {};
 				ARRAY<VkDescriptorBufferInfo> bufferInfos;
 
-				for (UI32 itr = 0; itr < myRenderData.uniformBuffers.size(); itr++)
+				for (UI32 itr = 0; itr < myRenderData.uniformBufferContainers.size(); itr++)
 				{
-					VkDescriptorBufferInfo bufferInfo = {};
-					bufferInfo.buffer = myRenderData.uniformBuffers[itr];
-					bufferInfo.offset = 0;
-					bufferInfo.range = sizeof(UBO_SKELETAL);
-					bufferInfos.pushBack(bufferInfo);
+					for (UI32 i = 0; i < myRenderData.uniformBufferContainers[itr].buffers.size(); i++)
+					{
+						VkDescriptorBufferInfo bufferInfo = {};
+						bufferInfo.buffer = myRenderData.uniformBufferContainers[itr].buffers[i];
+						bufferInfo.offset = 0;
+						bufferInfo.range = sizeof(UBO_SKELETAL);
+						bufferInfos.pushBack(bufferInfo);
+					}
 				}
 
 				VkWriteDescriptorSet _writes1;

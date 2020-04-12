@@ -3,6 +3,8 @@
 
 #include "VulkanFunctions.h"
 
+#define GRID_DIM 7
+
 namespace Dynamik {
 	namespace ADGR {
 		namespace Backend {
@@ -52,13 +54,49 @@ namespace Dynamik {
 				}
 			}
 
+			void drawIndexedPBR(VkCommandBuffer buffer, I32 index, ADGRVulkanRenderData* object, VkDeviceSize* offsets)
+			{
+				for (UI32 i = 0; i < object->vertexBuffers.size(); i++) {
+					// bind pipeline
+					vkCmdBindPipeline(buffer, VK_PIPELINE_BIND_POINT_GRAPHICS, object->pipeline);
+
+					// vertex buffer bind
+					vkCmdBindVertexBuffers(buffer, 0, 1, &object->vertexBuffers[i], offsets);
+
+					// binding descriptor set(s)
+					if (object->descriptors.descriptorSet != VK_NULL_HANDLE)
+						vkCmdBindDescriptorSets(buffer, VK_PIPELINE_BIND_POINT_GRAPHICS, object->pipelineLayout, 0, 1, &object->descriptors.descriptorSet, 0, nullptr);
+
+					// index buffer bind
+					if (object->indexbufferObjectTypeSize == sizeof(UI8))
+						vkCmdBindIndexBuffer(buffer, object->indexBuffers[i], 0, VK_INDEX_TYPE_UINT8_EXT);
+					else if (object->indexbufferObjectTypeSize == sizeof(UI16))
+						vkCmdBindIndexBuffer(buffer, object->indexBuffers[i], 0, VK_INDEX_TYPE_UINT16);
+					else if (object->indexbufferObjectTypeSize == sizeof(UI32))
+						vkCmdBindIndexBuffer(buffer, object->indexBuffers[i], 0, VK_INDEX_TYPE_UINT32);
+					else if (object->indexbufferObjectTypeSize == sizeof(UI64))
+						vkCmdBindIndexBuffer(buffer, object->indexBuffers[i], 0, VK_INDEX_TYPE_UINT32);
+
+					for (UI32 y = 0; y < GRID_DIM; y++) {
+						for (UI32 x = 0; x < GRID_DIM; x++) {
+							glm::vec3 pos = glm::vec3(F32(x - (GRID_DIM / 2.0f)) * 2.5f, 0.0f, F32(y - (GRID_DIM / 2.0f)) * 2.5f);
+							vkCmdPushConstants(buffer, object->pipelineLayout, VK_SHADER_STAGE_VERTEX_BIT, 0, sizeof(glm::vec3), &pos);
+							object->materialDescriptor.params.metallic = glm::clamp((F32)x / (F32)(GRID_DIM - 1), 0.1f, 1.0f);
+							object->materialDescriptor.params.roughness = glm::clamp((F32)y / (F32)(GRID_DIM - 1), 0.05f, 1.0f);
+							vkCmdPushConstants(buffer, object->pipelineLayout, VK_SHADER_STAGE_FRAGMENT_BIT, sizeof(glm::vec3), sizeof(ADGRVulkanMaterialDescriptor::PushBlock), &object->materialDescriptor);
+							vkCmdDrawIndexed(buffer, object->indexCount, 1, 0, 0, 0);
+						}
+					}
+				}
+			}
+
 			void VulkanCommandBuffer::initializeResources(ADGRVulkanCommandBufferInitResources info)
 			{
 				logicalDevice = info.logicalDevice;
 				physicalDevice = info.physicalDevice;
 				surface = info.surface;
 			}
-			
+
 			void VulkanCommandBuffer::initializeCommandPool()
 			{
 				ADGRVulkanQueue queueFamilyIndices = VulkanCore::findQueueFamilies(physicalDevice, surface);
@@ -71,12 +109,12 @@ namespace Dynamik {
 				if (vkCreateCommandPool(logicalDevice, &poolInfo, nullptr, &pool) != VK_SUCCESS)
 					DMK_CORE_FATAL("failed to create command pool!");
 			}
-			
+
 			void VulkanCommandBuffer::terminateCommandPool()
 			{
 				vkDestroyCommandPool(logicalDevice, pool, nullptr);
 			}
-			
+
 			void VulkanCommandBuffer::initializeCommandBuffers(ADGRVulkanCommandBufferInitInfo info)
 			{
 				buffers.resize(info.count);
@@ -133,16 +171,20 @@ namespace Dynamik {
 						// w component = light radius scale
 
 						/* DRAW COMMANDS */
-						if (info.objects.at(_itr).swapChainPointer->getPushConstantCount())
-							vkCmdPushConstants(buffers[i], info.objects.at(_itr).pipelineLayout, VK_SHADER_STAGE_VERTEX_BIT, 0, info.objects.at(_itr).swapChainPointer->pushConstants.size(), info.objects.at(_itr).swapChainPointer->pushConstants.data());
+						//if (info.objects.at(_itr).swapChainPointer->getPushConstantCount())
+						//	vkCmdPushConstants(buffers[i], info.objects.at(_itr).pipelineLayout, VK_SHADER_STAGE_VERTEX_BIT, 0, info.objects.at(_itr).swapChainPointer->pushConstants.size(), info.objects.at(_itr).swapChainPointer->pushConstants.data());
 
 						// Render type selection
 						if (info.objects.at(_itr).renderTechnology == DMK_ADGR_RENDERING_TECHNOLOGY::DMK_ADGR_RENDER_VERTEX) 		// Render as individual vertexes
 							drawVertex(buffers[i], i, &info.objects.at(_itr), offsets);
 
 						else if (info.objects.at(_itr).renderTechnology == DMK_ADGR_RENDERING_TECHNOLOGY::DMK_ADGR_RENDER_INDEXED) 		// Render as individual indexes
-							drawIndexed(buffers[i], i, &info.objects.at(_itr), offsets);
-
+						{
+							if (info.objects.at(_itr).enableMaterials)
+								drawIndexedPBR(buffers[i], i, &info.objects.at(_itr), offsets);
+							else
+								drawIndexed(buffers[i], i, &info.objects.at(_itr), offsets);
+						}
 						else if (info.objects.at(_itr).renderTechnology == DMK_ADGR_RENDERING_TECHNOLOGY::DMK_ADGR_RENDER_INDIRECT) {
 						}
 						else if (info.objects.at(_itr).renderTechnology == DMK_ADGR_RENDERING_TECHNOLOGY::DMK_ADGR_RENDER_INDEXED_INDIRECT) {
@@ -182,7 +224,7 @@ namespace Dynamik {
 					*/
 				}
 			}
-			
+
 			void VulkanCommandBuffer::terminateCommandBuffers()
 			{
 				vkFreeCommandBuffers(logicalDevice, pool, static_cast<UI32>(buffers.size()), buffers.data());

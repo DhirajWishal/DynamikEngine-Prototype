@@ -32,20 +32,6 @@ namespace Dynamik {
 				B1 useSwapChainImageView = true;
 			};
 
-			struct ADGRVulkanDescriptorSetLayoutInitInfo {
-				ARRAY<VkDescriptorSetLayoutBinding> additionalBindings;
-				B1 overrideBindings = false;
-			};
-
-			struct ADGRVulkanPipelineLayoutInitInfo {
-				// push constants info
-				B1 pushConstantsEnable = false;									// Vulkan push constants enable
-				UI32 pushConstantCount = 1;										// Vulkan push constants count
-				I32 pushConstantOffset = 0;										// Vulkan push constants offset
-
-				ARRAY<VkDescriptorSetLayout> additionalLayouts;
-			};
-
 			class VulkanSwapChain {
 			public:
 				VulkanSwapChain() {}
@@ -63,12 +49,6 @@ namespace Dynamik {
 				void initializeFrameBuffer(ADGRVulkanFrameBufferInitInfo info);
 				void terminateFrameBuffer();
 
-				virtual void initializeDescriptorSetLayout(ADGRVulkanDescriptorSetLayoutInitInfo into);
-				virtual void terminateDescriptorSetLayout();
-
-				virtual void initializePipelineLayout(ADGRVulkanPipelineLayoutInitInfo info);
-				virtual void terminatePipelineLayout();
-
 				const VkSwapchainKHR getSwapChain() const { return swapChain; }
 				const ARRAY<VkImage> getSwapChainImages() const { return swapChainImages; }
 				const ARRAY<VkImageView> getSwapChainImageViews() const { return swapChainImageViews; }
@@ -79,10 +59,6 @@ namespace Dynamik {
 				const VkFramebuffer getFrameBuffer(UI32 index) { return frameBuffers[index]; }
 
 				const VkRenderPass getRenderPass() const { return renderPass; }
-
-				const VkDescriptorSetLayout getDescriptorSetLayout() const { return descriptorSetLayout; }
-				const VkPipelineLayout getPipelineLayout() const { return pipelineLayout; }
-				const UI32 getPushConstantCount() const { return pushConstantCount; }
 
 				static VulkanSwapChainSupportDetails querySwapChainSupport(VkPhysicalDevice* device, VkSurfaceKHR* surface);
 
@@ -105,10 +81,6 @@ namespace Dynamik {
 				VkRenderPass renderPass = VK_NULL_HANDLE;
 
 				ARRAY<VkFramebuffer> frameBuffers;
-
-				VkDescriptorSetLayout descriptorSetLayout = VK_NULL_HANDLE;
-				VkPipelineLayout pipelineLayout = VK_NULL_HANDLE;
-				UI32 pushConstantCount = 0;
 			};
 		}
 	}

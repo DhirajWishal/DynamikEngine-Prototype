@@ -354,6 +354,28 @@ namespace Dynamik {
 
 				return _sampler;
 			}
+			
+			ADGRVulkanUnformBufferContainer VulkanFunctions::createUniformBuffers(VkDevice logicalDevice, VkPhysicalDevice physicalDevice, VkDeviceSize bufferSize, UI32 count)
+			{
+				ADGRVulkanUnformBufferContainer _container;
+
+				_container.buffers.resize(count);
+				_container.bufferMemories.resize(count);
+
+				for (size_t i = 0; i < count; i++)
+				{
+					ADGRCreateBufferInfo bufferInfo;
+					bufferInfo.bufferSize = bufferSize;
+					bufferInfo.usage = VK_BUFFER_USAGE_UNIFORM_BUFFER_BIT;
+					bufferInfo.bufferMemoryPropertyflags = VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT;
+					bufferInfo.buffer = &_container.buffers[i];
+					bufferInfo.bufferMemory = &_container.bufferMemories[i];
+
+					VulkanFunctions::createBuffer(logicalDevice, physicalDevice, bufferInfo);
+				}
+
+				return _container;
+			}
 		}
 	}
 }

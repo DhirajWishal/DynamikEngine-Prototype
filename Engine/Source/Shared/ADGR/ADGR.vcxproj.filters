@@ -78,21 +78,6 @@
     <ClInclude Include="src\adgrafx.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="src\core\Components\Camera.h">
-      <Filter>src\core\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="src\core\Components\Camera2D.h">
-      <Filter>src\core\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="src\core\Components\Camera3D.h">
-      <Filter>src\core\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="src\core\Components\CameraReflect.h">
-      <Filter>src\core\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="src\core\Components\CameraSkybox.h">
-      <Filter>src\core\Components</Filter>
-    </ClInclude>
     <ClInclude Include="src\core\Components\TextOverlay.h">
       <Filter>src\core\Components</Filter>
     </ClInclude>
@@ -207,9 +192,25 @@
     <ClInclude Include="src\rendererFormat.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="src\core\Components\AnimationCamera.h" />
     <ClInclude Include="src\core\vulkan\Renderer Backend Layer\VulkanAnimationManager.h" />
     <ClInclude Include="src\core\vulkan\Renderer Backend Layer\VulkanPBRObject.h" />
+    <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Objects\VulkanRenderLayout.h" />
+    <ClInclude Include="src\core\Components\Camera\AnimationCamera.h" />
+    <ClInclude Include="src\core\Components\Camera\Camera.h">
+      <Filter>src\core\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Components\Camera\Camera2D.h">
+      <Filter>src\core\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Components\Camera\Camera3D.h">
+      <Filter>src\core\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Components\Camera\CameraReflect.h">
+      <Filter>src\core\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Components\Camera\CameraSkybox.h">
+      <Filter>src\core\Components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Layers\layer.cpp">
@@ -232,21 +233,6 @@
     </ClCompile>
     <ClCompile Include="src\adgrafx.cpp">
       <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="src\core\Components\Camera.cpp">
-      <Filter>src\core\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="src\core\Components\Camera2D.cpp">
-      <Filter>src\core\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="src\core\Components\Camera3D.cpp">
-      <Filter>src\core\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="src\core\Components\CameraReflect.cpp">
-      <Filter>src\core\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="src\core\Components\CameraSkybox.cpp">
-      <Filter>src\core\Components</Filter>
     </ClCompile>
     <ClCompile Include="src\core\Window\Windows\WindowManager.cpp">
       <Filter>src\core\Window\Windows</Filter>
@@ -332,9 +318,25 @@
     <ClCompile Include="src\rendererFormat.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="src\core\Components\AnimationCamera.cpp" />
     <ClCompile Include="src\core\vulkan\Renderer Backend Layer\VulkanAnimationManager.cpp" />
     <ClCompile Include="src\core\vulkan\Renderer Backend Layer\VulkanPBRObject.cpp" />
+    <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Objects\VulkanRenderLayout.cpp" />
+    <ClCompile Include="src\core\Components\Camera\AnimationCamera.cpp" />
+    <ClCompile Include="src\core\Components\Camera\Camera.cpp">
+      <Filter>src\core\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\Components\Camera\Camera2D.cpp">
+      <Filter>src\core\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\Components\Camera\Camera3D.cpp">
+      <Filter>src\core\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\Components\Camera\CameraReflect.cpp">
+      <Filter>src\core\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\Components\Camera\CameraSkybox.cpp">
+      <Filter>src\core\Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="ADGR.lua" />

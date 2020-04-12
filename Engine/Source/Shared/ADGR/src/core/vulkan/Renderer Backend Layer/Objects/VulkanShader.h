@@ -38,7 +38,6 @@ namespace Dynamik {
 			private:
 				ARRAY<CHR> getCode(std::string path);
 			};
-
 		}
 	}
 }

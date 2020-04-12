@@ -48,7 +48,7 @@ namespace Dynamik {
 				// Bone transformations
 				ARRAY<aiMatrix4x4> boneTransforms;
 
-				// Modifier for the animation 
+				// Modifier for the animation
 				float animationSpeed = 0.75f;
 				// Currently active animation
 				aiAnimation* pAnimation;

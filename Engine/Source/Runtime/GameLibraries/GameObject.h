@@ -214,7 +214,7 @@ namespace Dynamik {
 
 		/* ---------- ########## \\\\\\\\\\ MAIN FUNCTIONS ////////// ########## ---------- */
 		virtual void init() {}
-		virtual DMKUpdateInfo draw(std::deque<DMKEventContainer>& eventContainers) 
+		virtual DMKUpdateInfo draw(std::deque<DMKEventContainer>& eventContainers)
 		{
 			Dynamik::ARRAY<std::future<void>, DMKArrayDestructorCallMode::DMK_ARRAY_DESTRUCTOR_CALL_MODE_DESTRUCT_ALL> threads;
 

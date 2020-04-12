@@ -145,6 +145,7 @@
   <ItemGroup>
     <ClInclude Include="src\ADGR.h" />
     <ClInclude Include="src\core\Components\Camera\AnimationCamera.h" />
+    <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Objects\VulkanPipeline.h" />
     <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Objects\VulkanRenderLayout.h" />
     <ClInclude Include="src\core\vulkan\Renderer Backend Layer\VulkanAnimationManager.h" />
     <ClInclude Include="src\core\vulkan\Renderer Backend Layer\VulkanPBRObject.h" />
@@ -202,6 +203,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\core\Components\Camera\AnimationCamera.cpp" />
+    <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Objects\VulkanPipeline.cpp" />
     <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Objects\VulkanRenderLayout.cpp" />
     <ClCompile Include="src\core\vulkan\Renderer Backend Layer\VulkanAnimationManager.cpp" />
     <ClCompile Include="src\core\vulkan\Renderer Backend Layer\VulkanPBRObject.cpp" />

@@ -589,7 +589,6 @@ namespace Dynamik {
 
 			void VulkanTextOverlay::_terminatePipeline()
 			{
-				vkDestroyPipeline(myCoreObject.logicalDevice, myRenderData.pipeline, nullptr);
 			}
 
 			void VulkanTextOverlay::_terminateSwapChain()
@@ -662,10 +661,10 @@ namespace Dynamik {
 
 					for (ADGRVulkanRenderData _data : info.objects)
 					{
-						vkCmdBindPipeline(buffers[i], VK_PIPELINE_BIND_POINT_GRAPHICS, _data.pipeline);
+						//vkCmdBindPipeline(buffers[i], VK_PIPELINE_BIND_POINT_GRAPHICS, _data.pipeline);
 
-						if (_data.descriptors.descriptorSet != VK_NULL_HANDLE)
-							vkCmdBindDescriptorSets(buffers[i], VK_PIPELINE_BIND_POINT_GRAPHICS, _data.pipelineLayout, 0, 1, &_data.descriptors.descriptorSet, 0, NULL);
+						if (_data.descriptors.descriptorSet != VK_NULL_HANDLE);
+							//vkCmdBindDescriptorSets(buffers[i], VK_PIPELINE_BIND_POINT_GRAPHICS, _data.pipelineLayout, 0, 1, &_data.descriptors.descriptorSet, 0, NULL);
 
 						vkCmdBindVertexBuffers(buffers[i], 0, 1, &vertexBuffer, offsets);
 						vkCmdBindVertexBuffers(buffers[i], 1, 1, &vertexBuffer, offsets);

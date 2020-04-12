@@ -105,7 +105,7 @@ namespace Dynamik {
 			unsigned int chat = DMK_KEY_L,
 			unsigned int console = DMK_KEY_GRAVE_ACCENT,
 			unsigned int send = DMK_KEY_ENTER
-		) : fireWeapon(fireWeapon), aimWeapon(aimWeapon), changeWeapon_1(changeWeapon1),
+			) : fireWeapon(fireWeapon), aimWeapon(aimWeapon), changeWeapon_1(changeWeapon1),
 			changeWeapon_2(changeWeapon2), changeWeapon_3(changeWeapon3), changeToMlee(changeToMlee),
 			changeMlee_1(changeMlee1), changeMlee_2(changeMlee2), changeMlee_3(changeMlee3),
 			mleeAttack(mleeAttack), reloadWeapon(reloadWeapon), pickWeapon(pickWeapon),

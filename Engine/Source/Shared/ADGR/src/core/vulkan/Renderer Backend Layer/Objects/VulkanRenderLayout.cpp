@@ -40,42 +40,10 @@ namespace Dynamik {
 
 				return _layout;
 			}
-			
+
 			void VulkanRenderLayout::terminateDescriptorSetLayout(VkDevice device, VkDescriptorSetLayout layout)
 			{
 				vkDestroyDescriptorSetLayout(device, layout, nullptr);
-			}
-			
-			VkPipelineLayout VulkanRenderLayout::createPipelineLayout(VkDevice device, ADGRVulkanPipelineLayoutInitInfo info)
-			{
-				// initialize the pipeline layout
-				VkPipelineLayoutCreateInfo pipelineLayoutInfo = {};
-				pipelineLayoutInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO;
-				pipelineLayoutInfo.setLayoutCount = info.layouts.size();
-				pipelineLayoutInfo.pSetLayouts = info.layouts.data();
-
-				if (info.pushConstantRanges.size())
-				{
-					pipelineLayoutInfo.pushConstantRangeCount = info.pushConstantRanges.size();
-					pipelineLayoutInfo.pPushConstantRanges = info.pushConstantRanges.data();
-				}
-				else
-				{
-					pipelineLayoutInfo.pushConstantRangeCount = 0;
-					pipelineLayoutInfo.pPushConstantRanges = VK_NULL_HANDLE;
-				}
-
-				// create the pipeline layout
-				VkPipelineLayout _pipelineLayout = VK_NULL_HANDLE;
-				if (vkCreatePipelineLayout(device, &pipelineLayoutInfo, nullptr, &_pipelineLayout) != VK_SUCCESS)
-					DMK_CORE_FATAL("failed to create pipeline layout!");
-
-				return _pipelineLayout;
-			}
-			
-			void VulkanRenderLayout::terminatePipelineLayout(VkDevice device, VkPipelineLayout layout)
-			{
-				vkDestroyPipelineLayout(device, layout, nullptr);
 			}
 		}
 	}

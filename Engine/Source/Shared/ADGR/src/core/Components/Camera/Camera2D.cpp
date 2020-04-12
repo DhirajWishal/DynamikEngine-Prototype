@@ -3,8 +3,8 @@
 
 namespace Dynamik {
 	namespace ADGR {
-        UniformBufferObject Camera2D::updateCamera(std::deque<DMKEventContainer> container, DMKUpdateInfo updateInfo, B1 viewMatrixLock)
-        {
+		UniformBufferObject Camera2D::updateCamera(std::deque<DMKEventContainer> container, DMKUpdateInfo updateInfo, B1 viewMatrixLock)
+		{
 			float angelX = updateInfo.rotationX;
 			float angelY = updateInfo.rotationY;
 			float angelZ = updateInfo.rotationZ;
@@ -107,6 +107,6 @@ namespace Dynamik {
 			ubo.proj[1][1] *= -1;
 
 			return ubo;
-        }
+		}
 	}
 }

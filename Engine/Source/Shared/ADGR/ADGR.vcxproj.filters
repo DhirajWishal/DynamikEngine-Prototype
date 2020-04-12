@@ -211,6 +211,7 @@
     <ClInclude Include="src\core\Components\Camera\CameraSkybox.h">
       <Filter>src\core\Components</Filter>
     </ClInclude>
+    <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Objects\VulkanPipeline.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Layers\layer.cpp">
@@ -337,6 +338,7 @@
     <ClCompile Include="src\core\Components\Camera\CameraSkybox.cpp">
       <Filter>src\core\Components</Filter>
     </ClCompile>
+    <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Objects\VulkanPipeline.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ADGR.lua" />

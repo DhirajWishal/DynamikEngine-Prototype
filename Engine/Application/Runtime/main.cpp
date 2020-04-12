@@ -59,8 +59,8 @@ int main(int argc, char** argv) {
 		};
 
 		Dynamik::ARRAY<Dynamik::DMKObjectType> objTypes = {
-			Dynamik::DMKObjectType::DMK_OBJECT_TYPE_STATIC_OBJECT,
 			Dynamik::DMKObjectType::DMK_OBJECT_TYPE_DEBUG_OBJECT,
+			Dynamik::DMKObjectType::DMK_OBJECT_TYPE_STATIC_OBJECT,
 			Dynamik::DMKObjectType::DMK_OBJECT_TYPE_SKELETAL_ANIMATION,
 			Dynamik::DMKObjectType::DMK_OBJECT_TYPE_STATIC_OBJECT,
 			Dynamik::DMKObjectType::DMK_OBJECT_TYPE_TEXT_OVERLAY,
@@ -80,7 +80,7 @@ int main(int argc, char** argv) {
 			props.ID = std::to_string(i);
 			props.location = paths[i];
 			props.transformProperties.location = locations[i];
-			props.materialProperties.enablePBR = true;
+			props.materialProperties.enablePBR = false;
 			props.materialProperties.materialName = "Chromium";
 			mars _local;
 			_local.myProperties = props;
@@ -102,7 +102,7 @@ int main(int argc, char** argv) {
 		Engine myEngine(scenes);
 		myEngine.run();
 	}
-	catch (std::exception & e) {
+	catch (std::exception& e) {
 		std::cout << e.what();
 
 		return DMK_FAIL;

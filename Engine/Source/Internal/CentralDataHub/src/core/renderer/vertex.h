@@ -29,11 +29,11 @@ namespace Dynamik {
 		static ARRAY<VkVertexInputAttributeDescription> getAttributeDescriptions();
 
 		bool operator==(const Vertex& other) const {
-			return Position			==		other.Position
-				&& Color			==		other.Color
-				&& TexCoordinates	==		other.TexCoordinates
-				&& Normals			==		other.Normals
-				&& Integrity		==		other.Integrity;
+			return Position == other.Position
+				&& Color == other.Color
+				&& TexCoordinates == other.TexCoordinates
+				&& Normals == other.Normals
+				&& Integrity == other.Integrity;
 		}
 	};
 

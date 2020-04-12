@@ -13,7 +13,6 @@
 namespace Dynamik {
 	namespace ADGR {
 		namespace Backend {
-
 			/* HELPER FUNCTIONS */
 			/* DEVICE */
 			const ARRAY<CCPTR> deviceExtensions = {

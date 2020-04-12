@@ -15,7 +15,7 @@ namespace Dynamik {
 			{
 				ADGRVulkanDescriptorSetLayoutInitInfo layoutInitInfo;
 				layoutInitInfo.overrideBindings = true;
-				
+
 				VkDescriptorSetLayoutBinding uboLayoutBinding = {};
 				uboLayoutBinding.binding = 0; // info.bindIndex;
 				uboLayoutBinding.descriptorCount = 1;
@@ -23,7 +23,7 @@ namespace Dynamik {
 				uboLayoutBinding.pImmutableSamplers = nullptr; // Optional
 				uboLayoutBinding.stageFlags = VK_SHADER_STAGE_VERTEX_BIT | VK_SHADER_STAGE_FRAGMENT_BIT;
 				layoutInitInfo.additionalBindings.pushBack(uboLayoutBinding);
-				
+
 				uboLayoutBinding.binding = 1; // info.bindIndex;
 				uboLayoutBinding.descriptorCount = 1;
 				uboLayoutBinding.descriptorType = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;
@@ -40,12 +40,12 @@ namespace Dynamik {
 				pushConstantRange.size = sizeof(glm::vec3);
 				pushConstantRange.offset = 0;
 				pipelineLayoutInitInfo.pushConstantRanges.pushBack(pushConstantRange);
-				
+
 				pushConstantRange.stageFlags = VK_SHADER_STAGE_FRAGMENT_BIT;
 				pushConstantRange.size = sizeof(ADGRVulkanMaterialDescriptor::PushBlock);
 				pushConstantRange.offset = sizeof(glm::vec3);
 				pipelineLayoutInitInfo.pushConstantRanges.pushBack(pushConstantRange);
-				myRenderData.pipelineLayout = VulkanRenderLayout::createPipelineLayout(logicalDevice, pipelineLayoutInitInfo);
+				initializePipelineLayout(pipelineLayoutInitInfo);
 
 				ARRAY<VulkanShader> _shaders;
 

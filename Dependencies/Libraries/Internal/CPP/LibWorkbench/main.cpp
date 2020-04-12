@@ -24,30 +24,30 @@ using namespace Dynamik;
 
 class Base {
 public:
-    Base() {}
-    virtual ~Base() {}
+	Base() {}
+	virtual ~Base() {}
 
-    virtual void hello() {
-        std::cout << "Hello world!\n";
-    }
+	virtual void hello() {
+		std::cout << "Hello world!\n";
+	}
 };
 
 class Child : public Base {
 public:
-    Child() {}
-    ~Child() {}
+	Child() {}
+	~Child() {}
 
-    void hello() override {
-        std::cout << "Im child!\n";
-    }
+	void hello() override {
+		std::cout << "Im child!\n";
+	}
 };
 
 int main() {
-    Base base;
-    base.hello();
+	Base base;
+	base.hello();
 
-    Child child;
-    child.hello();
+	Child child;
+	child.hello();
 
 	return 0;
 }

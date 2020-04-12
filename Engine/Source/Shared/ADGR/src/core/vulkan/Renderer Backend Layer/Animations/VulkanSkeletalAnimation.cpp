@@ -37,7 +37,7 @@ namespace Dynamik {
 
 				ADGRVulkanPipelineLayoutInitInfo pipelineLayoutInitInfo;
 				pipelineLayoutInitInfo.layouts = { myRenderData.descriptors.layout };
-				myRenderData.pipelineLayout = VulkanRenderLayout::createPipelineLayout(logicalDevice, pipelineLayoutInitInfo);
+				initializePipelineLayout(pipelineLayoutInitInfo);
 
 				ARRAY<VulkanShader> _shaders;
 
@@ -168,7 +168,6 @@ namespace Dynamik {
 						UI32 vertexID = vertexOffset + pMesh->mBones[_itr]->mWeights[j].mVertexId;
 						bones[vertexID].add(index, pMesh->mBones[_itr]->mWeights[j].mWeight);
 					}
-
 				}
 				myAnimationData.boneTransforms.resize(myAnimationData.numBones);
 			}

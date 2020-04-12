@@ -57,10 +57,10 @@ namespace Dynamik {
 			myVulkanCore.initializeSurface(&myWindowManager.window);
 
 			/*
-			 Assignment: = 
-			 Arithmetic: + - * / 
-			 Logical: ! ~ ^ | & 
-			 Comparison: || && ! == 
+			 Assignment: =
+			 Arithmetic: + - * /
+			 Logical: ! ~ ^ | &
+			 Comparison: || && ! ==
 			*/
 
 			myVulkanCore.initializeDevice();
@@ -364,7 +364,6 @@ namespace Dynamik {
 
 		void vulkanRenderer::initializeOverlay()
 		{
-
 		}
 
 		void vulkanRenderer::addOverlay()
@@ -529,7 +528,7 @@ namespace Dynamik {
 				vertexCount += myAnimation->myAnimationData.scene->mMeshes[m]->mNumVertices;
 			};
 			myAnimation->myAnimationData.bones.resize(vertexCount);
-			// Store global inverse transform matrix of root node 
+			// Store global inverse transform matrix of root node
 			myAnimation->myAnimationData.globalInverseTransform = myAnimation->myAnimationData.scene->mRootNode->mTransformation;
 			myAnimation->myAnimationData.globalInverseTransform.Inverse();
 			// Load bones (weights and IDs)
@@ -1103,7 +1102,7 @@ namespace Dynamik {
 			for (VulkanShader _shader : _shaders)
 				_shader.terminate(myVulkanCore.logicalDevice);
 
-			overlayContainer.pipeline = _object.getRenderData().pipeline;
+			//overlayContainer.pipeline = _object.getRenderData().pipeline;
 		}
 
 		void vulkanRenderer::_initializeOverlayDescriptorPool()

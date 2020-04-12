@@ -62,7 +62,6 @@ namespace Dynamik {
 				file.close();
 				return buffer;
 			}
-
 		}
 	}
 }

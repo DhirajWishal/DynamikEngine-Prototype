@@ -7,7 +7,7 @@ using namespace Dynamik;
 
 class Skybox : public DMKSkyboxObject {
 public:
-	Skybox() 
+	Skybox()
 	{
 		myProperties.name = "SkyBox";
 		myProperties.ID = "001";

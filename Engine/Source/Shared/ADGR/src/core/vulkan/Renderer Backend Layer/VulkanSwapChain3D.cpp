@@ -11,7 +11,7 @@ namespace Dynamik {
 				myPhysicalDevice = physicalDevice;
 				swapChainContainer.setBasicData(device, physicalDevice, surface, surfaceCapabilities);
 			}
-			
+
 			void VulkanSwapChain3D::initializeSwapChain(UI32 width, UI32 height)
 			{
 				swapChainContainer.initializeSwapChain(width, height);
@@ -59,7 +59,6 @@ namespace Dynamik {
 				depthAttachmentRef.layout = VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL;
 				subpass.pDepthStencilAttachment = &depthAttachmentRef;
 
-
 				VkAttachmentDescription colorAttachmentResolve = {};
 				colorAttachmentResolve.format = swapChainContainer.getSwapChainImageFormat();
 				colorAttachmentResolve.samples = VK_SAMPLE_COUNT_1_BIT;
@@ -76,7 +75,6 @@ namespace Dynamik {
 				colorAttachmentResolveRef.layout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
 				subpass.pResolveAttachments = &colorAttachmentResolveRef;
 
-
 				ARRAY<VkSubpassDescription> subPasses;
 				subPasses.push_back(subpass);
 
@@ -90,7 +88,7 @@ namespace Dynamik {
 			{
 				swapChainContainer.initializeFrameBuffer(frameBufferInitInfo);
 			}
-			
+
 			void VulkanSwapChain3D::terminate()
 			{
 				swapChainContainer.terminate();

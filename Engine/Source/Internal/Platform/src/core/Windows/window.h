@@ -33,7 +33,7 @@ namespace Dynamik {
 			const std::string& title = DMK_TEXT("Dynamik Engine"),
 			unsigned int width = 1280,
 			unsigned int height = 720
-		) : title(title), width(width), height(height) {
+			) : title(title), width(width), height(height) {
 		}
 	};
 

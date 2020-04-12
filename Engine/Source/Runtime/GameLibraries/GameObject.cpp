@@ -3,5 +3,4 @@
 
 namespace Dynamik {
 	//DMKUpdateInfo GameObject::draw(std::deque<DMKEventContainer>& eventContainers)
-	
 }

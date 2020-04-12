@@ -4,7 +4,6 @@
 namespace Dynamik {
 	namespace ADGR {
 		namespace Backend {
-
 		}
 	}
 }

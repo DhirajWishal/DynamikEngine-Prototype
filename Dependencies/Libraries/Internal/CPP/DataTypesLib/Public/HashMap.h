@@ -7,7 +7,6 @@
 
 namespace Dynamik {
 	class HMAP {
-
 	};
 
 	UI32 _getCCPTRSize(CCPTR string)

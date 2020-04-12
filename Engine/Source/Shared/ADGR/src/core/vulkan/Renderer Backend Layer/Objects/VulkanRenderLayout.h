@@ -12,13 +12,6 @@ namespace Dynamik {
 				B1 overrideBindings = false;
 			};
 
-			struct ADGRVulkanPipelineLayoutInitInfo {
-				// push constants info
-				ARRAY<VkPushConstantRange> pushConstantRanges;
-
-				ARRAY<VkDescriptorSetLayout> layouts;
-			};
-			
 			class VulkanRenderLayout {
 				VulkanRenderLayout(const VulkanRenderLayout&) = delete;
 				VulkanRenderLayout(VulkanRenderLayout&&) = delete;
@@ -26,9 +19,6 @@ namespace Dynamik {
 			public:
 				static VkDescriptorSetLayout createDescriptorSetLayout(VkDevice device, ADGRVulkanDescriptorSetLayoutInitInfo info);
 				static void terminateDescriptorSetLayout(VkDevice device, VkDescriptorSetLayout layout);
-
-				static VkPipelineLayout createPipelineLayout(VkDevice device, ADGRVulkanPipelineLayoutInitInfo info);
-				static void terminatePipelineLayout(VkDevice device, VkPipelineLayout layout);
 			};
 		}
 	}

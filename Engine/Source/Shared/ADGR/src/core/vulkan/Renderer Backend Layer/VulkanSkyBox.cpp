@@ -21,7 +21,7 @@ namespace Dynamik {
 
 				ADGRVulkanPipelineLayoutInitInfo pipelineLayoutInitInfo;
 				pipelineLayoutInitInfo.layouts = { myRenderData.descriptors.layout };
-				myRenderData.pipelineLayout = VulkanRenderLayout::createPipelineLayout(logicalDevice, pipelineLayoutInitInfo);
+				initializePipelineLayout(pipelineLayoutInitInfo);
 
 				ARRAY<VulkanShader> _shaders;
 
@@ -395,7 +395,7 @@ namespace Dynamik {
 				}
 				else if (infos.size() == 1)
 				{
-				ADGRVulkanTextureInitInfo info = infos[0];
+					ADGRVulkanTextureInitInfo info = infos[0];
 					std::string _path = info.path;
 					if (_path.find(".hdr") != std::string::npos)
 					{

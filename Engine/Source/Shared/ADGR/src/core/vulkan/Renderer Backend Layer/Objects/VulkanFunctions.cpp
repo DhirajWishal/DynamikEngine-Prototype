@@ -92,14 +92,14 @@ namespace Dynamik {
 					VK_IMAGE_TILING_OPTIMAL,
 					VK_FORMAT_FEATURE_DEPTH_STENCIL_ATTACHMENT_BIT,
 					physicalDevice
-				);
+					);
 			}
 
 			void VulkanFunctions::copyBuffer(VkDevice logicalDevice, VkCommandPool commandPool, VkQueue graphicsQueue, VkQueue presentQueue, VkBuffer srcBuffer, VkBuffer dstBuffer, VkDeviceSize size)
 			{
 				VulkanOneTimeCommandBufferManager oneTimeCommandBuffer(logicalDevice, commandPool, graphicsQueue, presentQueue);
 				VkCommandBuffer commandBuffer = oneTimeCommandBuffer.myCommandBuffers[0];
-				
+
 				VkBufferCopy copyRegion = {};
 				copyRegion.size = size;
 				vkCmdCopyBuffer(commandBuffer, srcBuffer, dstBuffer, 1, &copyRegion);
@@ -258,7 +258,7 @@ namespace Dynamik {
 					0, nullptr,
 					0, nullptr,
 					1, &barrier
-				);
+					);
 			}
 
 			VkImageView VulkanFunctions::createImageView(VkDevice device, ADGRCreateImageViewInfo info)
@@ -311,9 +311,9 @@ namespace Dynamik {
 					info.destinationImageLayout,
 					1,
 					&region
-				);
+					);
 			}
-			
+
 			void VulkanFunctions::copyBufferToImageOverride(VkDevice logicalDevice, VkCommandPool commandPool, VkQueue graphicsQueue, VkQueue presentQueue, ADGRCopyBufferToImageInfo info, ARRAY<VkBufferImageCopy> copyRegions)
 			{
 				VulkanOneTimeCommandBufferManager oneTimeCommandBuffer(logicalDevice, commandPool, graphicsQueue, presentQueue);
@@ -327,7 +327,7 @@ namespace Dynamik {
 					copyRegions.size(),
 					copyRegions.data());
 			}
-			
+
 			VkSampler VulkanFunctions::createImageSampler(VkDevice logicalDevice, ADGRVulkanTextureSamplerInitInfo info)
 			{
 				VkSamplerCreateInfo samplerInfo = {};
@@ -354,7 +354,7 @@ namespace Dynamik {
 
 				return _sampler;
 			}
-			
+
 			ADGRVulkanUnformBufferContainer VulkanFunctions::createUniformBuffers(VkDevice logicalDevice, VkPhysicalDevice physicalDevice, VkDeviceSize bufferSize, UI32 count)
 			{
 				ADGRVulkanUnformBufferContainer _container;

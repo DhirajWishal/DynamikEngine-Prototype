@@ -11,7 +11,7 @@ namespace Dynamik {
 			{
 				myRenderData.type = DMKObjectType::DMK_OBJECT_TYPE_DEBUG_OBJECT;
 			}
-			
+
 			ADGRVulkanRenderData VulkanReflectObject::initializeObject(VkDevice logicalDevice, ADGRVulkan3DObjectData _object, VkSampleCountFlagBits msaaSamples)
 			{
 				ADGRVulkanDescriptorSetLayoutInitInfo layoutInitInfo;
@@ -19,7 +19,7 @@ namespace Dynamik {
 
 				ADGRVulkanPipelineLayoutInitInfo pipelineLayoutInitInfo;
 				pipelineLayoutInitInfo.layouts = { myRenderData.descriptors.layout };
-				myRenderData.pipelineLayout = VulkanRenderLayout::createPipelineLayout(logicalDevice, pipelineLayoutInitInfo);
+				initializePipelineLayout(pipelineLayoutInitInfo);
 
 				ARRAY<VulkanShader> _shaders;
 

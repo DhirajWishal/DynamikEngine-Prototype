@@ -11,80 +11,89 @@ namespace Dynamik {
 			// if drawing in vertex
 			void drawVertex(VkCommandBuffer buffer, I32 index, ADGRVulkanRenderData* object, VkDeviceSize* offsets) {
 				for (UI32 i = 0; i < object->vertexBuffers.size(); i++) {
-					// bind pipeline
-					vkCmdBindPipeline(buffer, VK_PIPELINE_BIND_POINT_GRAPHICS, object->pipeline);
+					for (UI32 _itr = 0; _itr < object->pipelineContainers.size(); _itr++)
+					{
+						// bind pipeline
+						vkCmdBindPipeline(buffer, VK_PIPELINE_BIND_POINT_GRAPHICS, object->pipelineContainers[_itr].pipeline);
 
-					// vertex buffer bind
-					vkCmdBindVertexBuffers(buffer, 0, 1, &object->vertexBuffers[i], offsets);
+						// vertex buffer bind
+						vkCmdBindVertexBuffers(buffer, 0, 1, &object->vertexBuffers[i], offsets);
 
-					// binding descriptor set(s)
-					if (object->descriptors.descriptorSet != VK_NULL_HANDLE)
-						vkCmdBindDescriptorSets(buffer, VK_PIPELINE_BIND_POINT_GRAPHICS, object->pipelineLayout, 0, 1, &object->descriptors.descriptorSet, 0, nullptr);
+						// binding descriptor set(s)
+						if (object->descriptors.descriptorSet != VK_NULL_HANDLE)
+							vkCmdBindDescriptorSets(buffer, VK_PIPELINE_BIND_POINT_GRAPHICS, object->pipelineContainers[_itr].layout, 0, 1, &object->descriptors.descriptorSet, 0, nullptr);
 
-					// draw command
-					vkCmdDraw(buffer, object->vertexCount, 1, 0, 1);
+						// draw command
+						vkCmdDraw(buffer, object->vertexCount, 1, 0, 1);
+					}
 				}
 			}
 
 			// if drawing in indexed
 			void drawIndexed(VkCommandBuffer buffer, I32 index, ADGRVulkanRenderData* object, VkDeviceSize* offsets) {
 				for (UI32 i = 0; i < object->vertexBuffers.size(); i++) {
-					// bind pipeline
-					vkCmdBindPipeline(buffer, VK_PIPELINE_BIND_POINT_GRAPHICS, object->pipeline);
+					for (UI32 _itr = 0; _itr < object->pipelineContainers.size(); _itr++)
+					{
+						// bind pipeline
+						vkCmdBindPipeline(buffer, VK_PIPELINE_BIND_POINT_GRAPHICS, object->pipelineContainers[_itr].pipeline);
 
-					// vertex buffer bind
-					vkCmdBindVertexBuffers(buffer, 0, 1, &object->vertexBuffers[i], offsets);
+						// vertex buffer bind
+						vkCmdBindVertexBuffers(buffer, 0, 1, &object->vertexBuffers[i], offsets);
 
-					// binding descriptor set(s)
-					if (object->descriptors.descriptorSet != VK_NULL_HANDLE)
-						vkCmdBindDescriptorSets(buffer, VK_PIPELINE_BIND_POINT_GRAPHICS, object->pipelineLayout, 0, 1, &object->descriptors.descriptorSet, 0, nullptr);
+						// binding descriptor set(s)
+						if (object->descriptors.descriptorSet != VK_NULL_HANDLE)
+							vkCmdBindDescriptorSets(buffer, VK_PIPELINE_BIND_POINT_GRAPHICS, object->pipelineContainers[_itr].layout, 0, 1, &object->descriptors.descriptorSet, 0, nullptr);
 
-					// index buffer bind
-					if (object->indexbufferObjectTypeSize == sizeof(UI8))
-						vkCmdBindIndexBuffer(buffer, object->indexBuffers[i], 0, VK_INDEX_TYPE_UINT8_EXT);
-					else if (object->indexbufferObjectTypeSize == sizeof(UI16))
-						vkCmdBindIndexBuffer(buffer, object->indexBuffers[i], 0, VK_INDEX_TYPE_UINT16);
-					else if (object->indexbufferObjectTypeSize == sizeof(UI32))
-						vkCmdBindIndexBuffer(buffer, object->indexBuffers[i], 0, VK_INDEX_TYPE_UINT32);
-					else if (object->indexbufferObjectTypeSize == sizeof(UI64))
-						vkCmdBindIndexBuffer(buffer, object->indexBuffers[i], 0, VK_INDEX_TYPE_UINT32);
+						// index buffer bind
+						if (object->indexbufferObjectTypeSize == sizeof(UI8))
+							vkCmdBindIndexBuffer(buffer, object->indexBuffers[i], 0, VK_INDEX_TYPE_UINT8_EXT);
+						else if (object->indexbufferObjectTypeSize == sizeof(UI16))
+							vkCmdBindIndexBuffer(buffer, object->indexBuffers[i], 0, VK_INDEX_TYPE_UINT16);
+						else if (object->indexbufferObjectTypeSize == sizeof(UI32))
+							vkCmdBindIndexBuffer(buffer, object->indexBuffers[i], 0, VK_INDEX_TYPE_UINT32);
+						else if (object->indexbufferObjectTypeSize == sizeof(UI64))
+							vkCmdBindIndexBuffer(buffer, object->indexBuffers[i], 0, VK_INDEX_TYPE_UINT32);
 
-					// draw command
-					vkCmdDrawIndexed(buffer, object->indexCount, 1, 0, 0, 0);
+						// draw command
+						vkCmdDrawIndexed(buffer, object->indexCount, 1, 0, 0, 0);
+					}
 				}
 			}
 
 			void drawIndexedPBR(VkCommandBuffer buffer, I32 index, ADGRVulkanRenderData* object, VkDeviceSize* offsets)
 			{
 				for (UI32 i = 0; i < object->vertexBuffers.size(); i++) {
-					// bind pipeline
-					vkCmdBindPipeline(buffer, VK_PIPELINE_BIND_POINT_GRAPHICS, object->pipeline);
+					for (UI32 _itr = 0; _itr < object->pipelineContainers.size(); _itr++)
+					{
+						// bind pipeline
+						vkCmdBindPipeline(buffer, VK_PIPELINE_BIND_POINT_GRAPHICS, object->pipelineContainers[_itr].pipeline);
 
-					// vertex buffer bind
-					vkCmdBindVertexBuffers(buffer, 0, 1, &object->vertexBuffers[i], offsets);
+						// vertex buffer bind
+						vkCmdBindVertexBuffers(buffer, 0, 1, &object->vertexBuffers[i], offsets);
 
-					// binding descriptor set(s)
-					if (object->descriptors.descriptorSet != VK_NULL_HANDLE)
-						vkCmdBindDescriptorSets(buffer, VK_PIPELINE_BIND_POINT_GRAPHICS, object->pipelineLayout, 0, 1, &object->descriptors.descriptorSet, 0, nullptr);
+						// binding descriptor set(s)
+						if (object->descriptors.descriptorSet != VK_NULL_HANDLE)
+							vkCmdBindDescriptorSets(buffer, VK_PIPELINE_BIND_POINT_GRAPHICS, object->pipelineContainers[_itr].layout, 0, 1, &object->descriptors.descriptorSet, 0, nullptr);
 
-					// index buffer bind
-					if (object->indexbufferObjectTypeSize == sizeof(UI8))
-						vkCmdBindIndexBuffer(buffer, object->indexBuffers[i], 0, VK_INDEX_TYPE_UINT8_EXT);
-					else if (object->indexbufferObjectTypeSize == sizeof(UI16))
-						vkCmdBindIndexBuffer(buffer, object->indexBuffers[i], 0, VK_INDEX_TYPE_UINT16);
-					else if (object->indexbufferObjectTypeSize == sizeof(UI32))
-						vkCmdBindIndexBuffer(buffer, object->indexBuffers[i], 0, VK_INDEX_TYPE_UINT32);
-					else if (object->indexbufferObjectTypeSize == sizeof(UI64))
-						vkCmdBindIndexBuffer(buffer, object->indexBuffers[i], 0, VK_INDEX_TYPE_UINT32);
+						// index buffer bind
+						if (object->indexbufferObjectTypeSize == sizeof(UI8))
+							vkCmdBindIndexBuffer(buffer, object->indexBuffers[i], 0, VK_INDEX_TYPE_UINT8_EXT);
+						else if (object->indexbufferObjectTypeSize == sizeof(UI16))
+							vkCmdBindIndexBuffer(buffer, object->indexBuffers[i], 0, VK_INDEX_TYPE_UINT16);
+						else if (object->indexbufferObjectTypeSize == sizeof(UI32))
+							vkCmdBindIndexBuffer(buffer, object->indexBuffers[i], 0, VK_INDEX_TYPE_UINT32);
+						else if (object->indexbufferObjectTypeSize == sizeof(UI64))
+							vkCmdBindIndexBuffer(buffer, object->indexBuffers[i], 0, VK_INDEX_TYPE_UINT32);
 
-					for (UI32 y = 0; y < GRID_DIM; y++) {
-						for (UI32 x = 0; x < GRID_DIM; x++) {
-							glm::vec3 pos = glm::vec3(F32(x - (GRID_DIM / 2.0f)) * 2.5f, 0.0f, F32(y - (GRID_DIM / 2.0f)) * 2.5f);
-							vkCmdPushConstants(buffer, object->pipelineLayout, VK_SHADER_STAGE_VERTEX_BIT, 0, sizeof(glm::vec3), &pos);
-							object->materialDescriptor.params.metallic = glm::clamp((F32)x / (F32)(GRID_DIM - 1), 0.1f, 1.0f);
-							object->materialDescriptor.params.roughness = glm::clamp((F32)y / (F32)(GRID_DIM - 1), 0.05f, 1.0f);
-							vkCmdPushConstants(buffer, object->pipelineLayout, VK_SHADER_STAGE_FRAGMENT_BIT, sizeof(glm::vec3), sizeof(ADGRVulkanMaterialDescriptor::PushBlock), &object->materialDescriptor);
-							vkCmdDrawIndexed(buffer, object->indexCount, 1, 0, 0, 0);
+						for (UI32 y = 0; y < GRID_DIM; y++) {
+							for (UI32 x = 0; x < GRID_DIM; x++) {
+								glm::vec3 pos = glm::vec3(F32(x - (GRID_DIM / 2.0f)) * 2.5f, 0.0f, F32(y - (GRID_DIM / 2.0f)) * 2.5f);
+								vkCmdPushConstants(buffer, object->pipelineContainers[_itr].layout, VK_SHADER_STAGE_VERTEX_BIT, 0, sizeof(glm::vec3), &pos);
+								object->materialDescriptor.params.metallic = glm::clamp((F32)x / (F32)(GRID_DIM - 1), 0.1f, 1.0f);
+								object->materialDescriptor.params.roughness = glm::clamp((F32)y / (F32)(GRID_DIM - 1), 0.05f, 1.0f);
+								vkCmdPushConstants(buffer, object->pipelineContainers[_itr].layout, VK_SHADER_STAGE_FRAGMENT_BIT, sizeof(glm::vec3), sizeof(ADGRVulkanMaterialDescriptor::PushBlock), &object->materialDescriptor);
+								vkCmdDrawIndexed(buffer, object->indexCount, 1, 0, 0, 0);
+							}
 						}
 					}
 				}

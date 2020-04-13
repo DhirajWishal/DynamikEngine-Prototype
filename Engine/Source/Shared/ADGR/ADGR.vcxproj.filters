@@ -214,6 +214,14 @@
     <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Objects\VulkanPipeline.h" />
     <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Objects\VulkanPushConstant.h" />
     <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Objects\VulkanFrameBuffer.h" />
+    <ClInclude Include="src\core\vulkan\Renderer Backend Layer\VulkanOffsceenFrameBuffer.h" />
+    <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Objects\VulkanComputeShader.h" />
+    <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Compute\VulkanComputeCore.h" />
+    <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Compute\VulkanComputeManager.h" />
+    <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Compute\VulkanComputeObject.h" />
+    <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Compute\VulkanComputePipeline.h" />
+    <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Compute\VulkanComputeDescriptor.h" />
+    <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Compute\VulkanComputeCommandBuffer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Layers\layer.cpp">
@@ -343,6 +351,15 @@
     <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Objects\VulkanPipeline.cpp" />
     <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Objects\VulkanPushConstant.cpp" />
     <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Objects\VulkanFrameBuffer.cpp" />
+    <ClCompile Include="src\core\vulkan\Renderer Backend Layer\VulkanOffscreenFrameBuffer.cpp" />
+    <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Objects\VulkanComputeShader.cpp" />
+    <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Compute\ComputeExample.cpp" />
+    <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Compute\VulkanComputeCore.cpp" />
+    <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Compute\VulkanComputeManager.cpp" />
+    <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Compute\VulkanComputeObject.cpp" />
+    <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Compute\VulkanComputePipeline.cpp" />
+    <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Compute\VulkanComputeDescriptor.cpp" />
+    <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Compute\VulkanComputeCommandBuffer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ADGR.lua" />

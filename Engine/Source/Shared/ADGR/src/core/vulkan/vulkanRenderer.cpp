@@ -22,6 +22,8 @@
 #include "Renderer Backend Layer/VulkanReflectObject.h"
 #include "Renderer Backend Layer/VulkanPBRObject.h"
 
+#include "Renderer Backend Layer/Compute/VulkanComputeCore.h"
+
 #define TEXTOVERLAY_MAX_CHAR_COUNT 2048
 
 namespace Dynamik {
@@ -44,6 +46,12 @@ namespace Dynamik {
 		// Basic one-time initializations
 		void vulkanRenderer::initStageOne()
 		{
+			{
+				VulkanComputeCore _core;
+				_core.initializeInstance();
+				_core.initializeDevice();
+			}
+
 			// initialize the window
 			DMKWindowManagerInitInfo windowInitInfo;
 			windowInitInfo.iconPaths = "E:/Projects/Dynamik Engine/Versions/Dynamik (Prototype)/Dependencies/Assets/icons/Dynamik.jpg";

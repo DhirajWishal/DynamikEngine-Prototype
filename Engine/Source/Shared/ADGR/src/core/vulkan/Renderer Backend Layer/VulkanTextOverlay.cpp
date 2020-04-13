@@ -45,8 +45,8 @@ namespace Dynamik {
 					commandBufferManager.pool,
 					myCoreObject.graphicsQueue,
 					myCoreObject.presentQueue,
-					mySwapChainObject.getSwapChainImageFormat(),
-					mySwapChainObject.getSwapChainExtent(),
+					mySwapChainObject.swapChainImageFormat,
+					mySwapChainObject.swapChainExtent,
 					VK_SAMPLE_COUNT_1_BIT);
 
 				depthBuffer.initialize(
@@ -55,13 +55,15 @@ namespace Dynamik {
 					commandBufferManager.pool,
 					myCoreObject.graphicsQueue,
 					myCoreObject.presentQueue,
-					mySwapChainObject.getSwapChainExtent(),
+					mySwapChainObject.swapChainExtent,
 					VK_SAMPLE_COUNT_1_BIT);
 
 				ADGRVulkanFrameBufferInitInfo frameBufferInitInfo;
-				frameBufferInitInfo.additionalAttachments = { colorBuffer.imageView, depthBuffer.imageView };
-				frameBufferInitInfo.useSwapChainImageView = false;
-				mySwapChainObject.initializeFrameBuffer(frameBufferInitInfo);
+				frameBufferInitInfo.attachments.pushBack(colorBuffer.imageView);
+				for (VkImageView _view : mySwapChainObject.swapChainImageViews)
+					frameBufferInitInfo.attachments.pushBack(_view);
+				frameBufferInitInfo.attachments.pushBack(depthBuffer.imageView);
+				myFrameBuffer.initializeFrameBuffer(myCoreObject.logicalDevice, frameBufferInitInfo);
 
 				_initializeDescriptorSetLayout();
 				_initializePipelineLayout();
@@ -163,13 +165,13 @@ namespace Dynamik {
 
 			VkSwapchainKHR VulkanTextOverlay::getSwapChain()
 			{
-				return mySwapChainObject.getSwapChain();
+				return mySwapChainObject.swapChain;
 			}
 
 			void VulkanTextOverlay::initializeCommandBuffers()
 			{
 				ADGRVulkanCommandBufferInitInfo info;
-				info.count = mySwapChainObject.getSwapChainImages().size();
+				info.count = mySwapChainObject.swapChainImages.size();
 				info.objects = { myRenderData };
 				info.swapChain = mySwapChainObject;
 				commandBufferManager.vertexBuffer = vertexBuffer;
@@ -179,7 +181,7 @@ namespace Dynamik {
 
 			VkRenderPass VulkanTextOverlay::getRenderPass()
 			{
-				return mySwapChainObject.getRenderPass();
+				return myFrameBuffer.renderPass;
 			}
 
 			void VulkanTextOverlay::_initializeCommandPool()
@@ -208,7 +210,7 @@ namespace Dynamik {
 				VkAttachmentDescription attachments[2] = {};
 
 				// Color attachment
-				attachments[0].format = mySwapChainObject.getSwapChainImageFormat();
+				attachments[0].format = mySwapChainObject.swapChainImageFormat;
 				attachments[0].samples = VK_SAMPLE_COUNT_1_BIT;
 				// Don't clear the framebuffer (like the renderpass from the example does)
 				attachments[0].loadOp = VK_ATTACHMENT_LOAD_OP_LOAD;
@@ -271,7 +273,7 @@ namespace Dynamik {
 				renderPassInitInfo.subPasses = subPasses;
 				renderPassInitInfo.additionalSubPassDependencies = { subpassDependencies[0], subpassDependencies[1] };
 				renderPassInitInfo.overrideDependencies = true;
-				mySwapChainObject.initializeRenderPass(renderPassInitInfo);
+				myFrameBuffer.initializeRenderPass(myCoreObject.logicalDevice, renderPassInitInfo);
 			}
 
 			void VulkanTextOverlay::_initializeVertexBuffer()
@@ -620,10 +622,10 @@ namespace Dynamik {
 
 					VkRenderPassBeginInfo renderPassInfo = {};
 					renderPassInfo.sType = VK_STRUCTURE_TYPE_RENDER_PASS_BEGIN_INFO;
-					renderPassInfo.renderPass = info.swapChain.getRenderPass();
-					renderPassInfo.framebuffer = info.swapChain.getFrameBuffer(i);
+					renderPassInfo.renderPass = info.frameBuffer.renderPass;
+					renderPassInfo.framebuffer = info.frameBuffer.buffers[i];
 					renderPassInfo.renderArea.offset = { 0, 0 };
-					renderPassInfo.renderArea.extent = info.swapChain.getSwapChainExtent();
+					renderPassInfo.renderArea.extent = info.swapChain.swapChainExtent;
 
 					std::array<VkClearValue, 2> clearValues = {};
 					//clearValues[0].color = {
@@ -646,15 +648,15 @@ namespace Dynamik {
 					vkCmdBeginRenderPass(buffers[i], &renderPassInfo, VK_SUBPASS_CONTENTS_INLINE);
 
 					VkViewport viewport{};
-					viewport.width = info.swapChain.getSwapChainExtent().width;
-					viewport.height = info.swapChain.getSwapChainExtent().height;
+					viewport.width = info.swapChain.swapChainExtent.width;
+					viewport.height = info.swapChain.swapChainExtent.height;
 					viewport.minDepth = 0;
 					viewport.maxDepth = 0;
 					vkCmdSetViewport(buffers[i], 0, 1, &viewport);
 
 					VkRect2D rect2D{};
-					rect2D.extent.width = info.swapChain.getSwapChainExtent().width;
-					rect2D.extent.height = info.swapChain.getSwapChainExtent().height;
+					rect2D.extent.width = info.swapChain.swapChainExtent.width;
+					rect2D.extent.height = info.swapChain.swapChainExtent.height;
 					rect2D.offset.x = 0.0f;
 					rect2D.offset.y = 1.0f;
 					vkCmdSetScissor(buffers[i], 0, 1, &rect2D);

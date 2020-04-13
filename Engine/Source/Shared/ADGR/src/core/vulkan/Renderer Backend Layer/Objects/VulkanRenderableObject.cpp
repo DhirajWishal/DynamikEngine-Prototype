@@ -142,8 +142,8 @@ namespace Dynamik {
 				if (!myRenderData.pipelineContainers.size())
 					DMK_CORE_FATAL("Pipeline layout was not initialized!");
 
-				info.renderPass = myRenderData.swapChainPointer->getRenderPass();
-				info.swapChainExtent = myRenderData.swapChainPointer->getSwapChainExtent();
+				info.renderPass = myRenderData.frameBufferPointer->renderPass;
+				info.swapChainExtent = myRenderData.swapChainPointer->swapChainExtent;
 
 				UI32 _index = myRenderData.pipelineContainers.size() - 1;
 				myRenderData.pipelineContainers[_index].initializePipeline(logicalDevice, info);
@@ -837,7 +837,7 @@ namespace Dynamik {
 						logicalDevice,
 						physicalDevice,
 						sizeof(UniformBufferObject),
-						myRenderData.swapChainPointer->getSwapChainImages().size()
+						myRenderData.swapChainPointer->swapChainImages.size()
 						)
 					);
 			}

@@ -85,16 +85,12 @@ namespace Dynamik {
 						else if (object->indexbufferObjectTypeSize == sizeof(UI64))
 							vkCmdBindIndexBuffer(buffer, object->indexBuffers[i], 0, VK_INDEX_TYPE_UINT32);
 
-						for (UI32 y = 0; y < GRID_DIM; y++) {
-							for (UI32 x = 0; x < GRID_DIM; x++) {
-								glm::vec3 pos = glm::vec3(F32(x - (GRID_DIM / 2.0f)) * 2.5f, 0.0f, F32(y - (GRID_DIM / 2.0f)) * 2.5f);
-								vkCmdPushConstants(buffer, object->pipelineContainers[_itr].layout, VK_SHADER_STAGE_VERTEX_BIT, 0, sizeof(glm::vec3), &pos);
-								object->materialDescriptor.params.metallic = glm::clamp((F32)x / (F32)(GRID_DIM - 1), 0.1f, 1.0f);
-								object->materialDescriptor.params.roughness = glm::clamp((F32)y / (F32)(GRID_DIM - 1), 0.05f, 1.0f);
-								vkCmdPushConstants(buffer, object->pipelineContainers[_itr].layout, VK_SHADER_STAGE_FRAGMENT_BIT, sizeof(glm::vec3), sizeof(ADGRVulkanMaterialDescriptor::PushBlock), &object->materialDescriptor);
-								vkCmdDrawIndexed(buffer, object->indexCount, 1, 0, 0, 0);
-							}
-						}
+						glm::vec3 pos = glm::vec3(0.0f, 0.0f, 1.0f);
+						object->pushConstants[0].data = &pos;
+						object->pushConstants[0].pushData(buffer, object->pipelineContainers[_itr].layout);
+						object->pushConstants[1].data = &object->materialDescriptor.params;
+						object->pushConstants[1].pushData(buffer, object->pipelineContainers[_itr].layout);
+						vkCmdDrawIndexed(buffer, object->indexCount, 1, 0, 0, 0);
 					}
 				}
 			}
@@ -147,10 +143,10 @@ namespace Dynamik {
 
 					VkRenderPassBeginInfo renderPassInfo = {};
 					renderPassInfo.sType = VK_STRUCTURE_TYPE_RENDER_PASS_BEGIN_INFO;
-					renderPassInfo.renderPass = info.swapChain.getRenderPass();
-					renderPassInfo.framebuffer = info.swapChain.getFrameBuffer(i);
+					renderPassInfo.renderPass = info.frameBuffer.renderPass;
+					renderPassInfo.framebuffer = info.frameBuffer.buffers[i];
 					renderPassInfo.renderArea.offset = { 0, 0 };
-					renderPassInfo.renderArea.extent = info.swapChain.getSwapChainExtent();
+					renderPassInfo.renderArea.extent = info.swapChain.swapChainExtent;
 
 					std::array<VkClearValue, 2> clearValues = {};
 

@@ -11,3 +11,9 @@
    - Eg: E:/Dynamik/core assets/moon    (single quotes or double quotes are not needed)
 4. Select "Application" in the Solution Explorer as the StartUp Project if not selected by default.
 5. Run the Build and Run the solution. 
+
+## TODO List:
+- [ ] Control Panel Window (Editor).
+- [ ] Fully functional asset loader.
+- [ ] Fully functional animation handler (Vulkan).
+- [x] Vulkan push constant standardization.

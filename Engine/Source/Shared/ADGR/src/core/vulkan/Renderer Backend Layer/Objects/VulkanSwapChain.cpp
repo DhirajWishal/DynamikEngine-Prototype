@@ -58,8 +58,6 @@ namespace Dynamik {
 
 			void VulkanSwapChain::terminate()
 			{
-				terminateFrameBuffer();
-				terminateRenderPass();
 				terminateSwapChain();
 			}
 
@@ -155,90 +153,6 @@ namespace Dynamik {
 
 					swapChainImageViews.at(i) = VulkanFunctions::createImageView(logicalDevice, info);
 				}
-			}
-
-			void VulkanSwapChain::initializeRenderPass(ADGRVulkanRenderPassInitInfo info)
-			{
-				ARRAY<VkSubpassDependency> dependencies;
-
-				if (!info.overrideDependencies)
-				{
-					VkSubpassDependency dependency = {};
-					dependency.srcSubpass = VK_SUBPASS_EXTERNAL;
-					dependency.dstSubpass = info.destinationSubpass;
-					dependency.srcStageMask = VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT;
-					dependency.srcAccessMask = info.accessFlags;
-					dependency.dstStageMask = VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT;
-					dependency.dstAccessMask = VK_ACCESS_COLOR_ATTACHMENT_READ_BIT | VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT;
-
-					dependencies.push_back(dependency);
-				}
-
-				for (VkSubpassDependency _dependency : info.additionalSubPassDependencies)
-					dependencies.push_back(_dependency);
-
-				// render pass info
-				VkRenderPassCreateInfo renderPassInfo = {};
-				renderPassInfo.sType = VK_STRUCTURE_TYPE_RENDER_PASS_CREATE_INFO;
-				renderPassInfo.attachmentCount = static_cast<UI32>(info.attachments.size());
-				renderPassInfo.pAttachments = info.attachments.data();
-				renderPassInfo.subpassCount = info.subPasses.size();
-				renderPassInfo.pSubpasses = info.subPasses.data();
-				renderPassInfo.dependencyCount = dependencies.size();
-				renderPassInfo.pDependencies = dependencies.data();
-
-				// create the render pass
-				if (vkCreateRenderPass(logicalDevice, &renderPassInfo, nullptr, &renderPass) != VK_SUCCESS)
-					DMK_CORE_FATAL("failed to create render pass!");
-			}
-
-			void VulkanSwapChain::terminateRenderPass()
-			{
-				if (renderPass != VK_NULL_HANDLE)
-					vkDestroyRenderPass(logicalDevice, renderPass, nullptr);
-			}
-
-			void VulkanSwapChain::initializeFrameBuffer(ADGRVulkanFrameBufferInitInfo info)
-			{
-				frameBuffers.resize(swapChainImageViews.size());
-
-				for (size_t i = 0; i < swapChainImageViews.size(); i++)
-				{
-					ARRAY<VkImageView> attachments;
-					for (VkImageView _imageView : info.preAttachments)
-						attachments.push_back(_imageView);
-
-					if (info.useSwapChainImageView)
-						attachments.push_back(swapChainImageViews[i]);
-
-					for (VkImageView _imageView : info.additionalAttachments)
-						attachments.push_back(_imageView);
-
-					VkFramebufferCreateInfo framebufferInfo = {};
-					framebufferInfo.sType = VK_STRUCTURE_TYPE_FRAMEBUFFER_CREATE_INFO;
-					framebufferInfo.renderPass = renderPass;
-					if (info.overrideRenderPass != VK_NULL_HANDLE)
-					{
-						framebufferInfo.renderPass = info.overrideRenderPass;
-						renderPass = info.overrideRenderPass;
-					}
-					framebufferInfo.attachmentCount = static_cast<UI32>(attachments.size());
-					framebufferInfo.pAttachments = attachments.data();
-					framebufferInfo.width = swapChainExtent.width;
-					framebufferInfo.height = swapChainExtent.height;
-					framebufferInfo.layers = 1;
-
-					if (vkCreateFramebuffer(logicalDevice, &framebufferInfo, nullptr, &frameBuffers[i]) != VK_SUCCESS)
-						DMK_CORE_FATAL("failed to create framebuffer!");
-				}
-			}
-
-			void VulkanSwapChain::terminateFrameBuffer()
-			{
-				for (VkFramebuffer buffer : frameBuffers)
-					vkDestroyFramebuffer(logicalDevice, buffer, nullptr);
-
-				frameBuffers.clear();
 			}
 
 			VulkanSwapChainSupportDetails VulkanSwapChain::querySwapChainSupport(VkPhysicalDevice* device, VkSurfaceKHR* surface)

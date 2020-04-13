@@ -40,16 +40,22 @@ namespace Dynamik {
 		};
 
 		struct UBO_L4 {
-			glm::vec4 lights[4];
+			alignas(16) glm::vec4 lights[4];
 		};
 
 		struct UBO_SKELETAL {
-			glm::mat4 projection;
-			glm::mat4 view;
-			glm::mat4 model;
-			glm::mat4 bones[MAX_BONES];
-			glm::vec4 lightPos = glm::vec4(0.0f, -250.0f, 250.0f, 1.0);
-			glm::vec4 viewPos;
+			alignas(16) glm::mat4 projection;
+			alignas(16) glm::mat4 view;
+			alignas(16) glm::mat4 model;
+			alignas(16) glm::mat4 bones[MAX_BONES];
+			alignas(16) glm::vec4 lightPos = glm::vec4(0.0f, -250.0f, 250.0f, 1.0);
+			alignas(16) glm::vec4 viewPos;
+		};
+
+		struct UBO_L4EG {
+			alignas(16) glm::vec4 lights[4];
+			alignas(16) F32 exposure = 4.5f;
+			alignas(16) F32 gamma = 2.2f;
 		};
 
 		enum class DMKUniformBufferType {

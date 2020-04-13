@@ -401,7 +401,7 @@ namespace Dynamik {
 						logicalDevice,
 						physicalDevice,
 						sizeof(UBO_MVPC),
-						myRenderData.swapChainPointer->getSwapChainImages().size()
+						myRenderData.swapChainPointer->swapChainImages.size()
 						)
 					);
 			}

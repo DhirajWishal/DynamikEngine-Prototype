@@ -176,6 +176,8 @@ namespace Dynamik {
 			void initializeObjects();
 			void initializeObjectsBasic();
 
+			void initializeMaterials();
+
 			void initializeOverlay();
 			void addOverlay();
 
@@ -203,6 +205,7 @@ namespace Dynamik {
 			VulkanCore myVulkanCore;
 			VulkanSwapChain3D mySwapChain3D;
 			VulkanCommandBuffer myCommandBuffer;
+			VulkanFrameBuffer myFrameBuffer;
 
 			VulkanColorBuffer myColorBuffer;
 			VulkanDepthBuffer myDepthBuffer;

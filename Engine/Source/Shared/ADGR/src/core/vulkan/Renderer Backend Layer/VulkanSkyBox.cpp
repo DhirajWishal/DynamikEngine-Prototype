@@ -512,7 +512,7 @@ namespace Dynamik {
 						logicalDevice,
 						physicalDevice,
 						sizeof(UniformBufferObject),
-						myRenderData.swapChainPointer->getSwapChainImages().size()
+						myRenderData.swapChainPointer->swapChainImages.size()
 						)
 					);
 			}

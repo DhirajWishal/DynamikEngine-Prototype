@@ -112,6 +112,8 @@
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="GameLibraries\Material.h" />
+    <ClInclude Include="src\core\AssetIndexBlock.h" />
+    <ClInclude Include="src\core\AssetLoader.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameLibraries\GameObject.cpp">
@@ -147,6 +149,8 @@
     <ClCompile Include="src\dmkafx.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="src\core\AssetIndexBlock.cpp" />
+    <ClCompile Include="src\core\AssetLoader.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Dynamik.lua" />

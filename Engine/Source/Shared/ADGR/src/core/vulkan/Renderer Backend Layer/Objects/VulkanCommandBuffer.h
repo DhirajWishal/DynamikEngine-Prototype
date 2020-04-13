@@ -3,7 +3,7 @@
 #define _DYNAMIK_ADGR_VULKAN_COMMAND_BUFFER_H
 
 #include "VulkanRenderableObject.h"
-#include "VulkanSwapChain.h"
+#include "VulkanFrameBuffer.h"
 
 namespace Dynamik {
 	namespace ADGR {
@@ -17,6 +17,7 @@ namespace Dynamik {
 			struct ADGRVulkanCommandBufferInitInfo {
 				ARRAY<ADGRVulkanRenderData> objects;
 				VulkanSwapChain swapChain;
+				VulkanFrameBuffer frameBuffer;
 				ARRAY<F32> clearValues = {
 					(2.0f / 256.0f),
 					(8.0f / 256.0f),

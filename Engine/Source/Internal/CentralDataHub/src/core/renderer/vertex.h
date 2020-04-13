@@ -101,6 +101,22 @@ namespace Dynamik {
 		static ARRAY<VkVertexInputAttributeDescription> getAttributeDescriptions();
 	};
 
+	struct VertexPNU {
+		glm::vec3 Position;
+		glm::vec3 Normal;
+		glm::vec2 UV;
+
+		static ARRAY<VkVertexInputBindingDescription> getBindingDescription(int bindCount);
+		static ARRAY<VkVertexInputAttributeDescription> getAttributeDescriptions();
+
+		B1 operator==(const VertexPNU& other)
+		{
+			return Position == other.Position &&
+				Normal == other.Normal &&
+				UV == other.UV;
+		}
+	};
+
 	class DMKVertex {
 	public:
 		DMKVertex() {}

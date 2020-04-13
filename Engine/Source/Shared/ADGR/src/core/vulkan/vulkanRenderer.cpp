@@ -56,13 +56,6 @@ namespace Dynamik {
 			myVulkanCore.initializeInstance(instanceInitInfo);
 			myVulkanCore.initializeSurface(&myWindowManager.window);
 
-			/*
-			 Assignment: =
-			 Arithmetic: + - * /
-			 Logical: ! ~ ^ | &
-			 Comparison: || && ! ==
-			*/
-
 			myVulkanCore.initializeDevice();
 
 			ADGRVulkanCommandBufferInitResources initRes;
@@ -78,25 +71,17 @@ namespace Dynamik {
 			initializeDepthBuffer();
 
 			ADGRVulkanFrameBufferInitInfo frameBufferInitInfo;
-			frameBufferInitInfo.preAttachments = { myColorBuffer.imageView, myDepthBuffer.imageView };
-			mySwapChain3D.initializeFrameBuffers(frameBufferInitInfo);
+			frameBufferInitInfo.attachments.pushBack(myColorBuffer.imageView);
+			frameBufferInitInfo.attachments.pushBack(myDepthBuffer.imageView);
+			frameBufferInitInfo.swapChainImageViews = mySwapChain3D.swapChainContainer.swapChainImageViews;
+			frameBufferInitInfo.bufferCount = mySwapChain3D.swapChainContainer.swapChainImages.size();
+			frameBufferInitInfo.swapChainExtent = mySwapChain3D.swapChainContainer.swapChainExtent;
+			myFrameBuffer.initializeFrameBuffer(myVulkanCore.logicalDevice, frameBufferInitInfo);
 
 			_initializeOverlayStageOne();
 
 			// Other initializations
-			// Setup some default materials (source: https://seblagarde.wordpress.com/2011/08/17/feeding-a-physical-based-lighting-mode/)
-			myRenderableMeterials["Gold"] = (ADGRVulkanMaterialDescriptor("Gold", glm::vec3(1.0f, 0.765557f, 0.336057f), 0.1f, 1.0f));
-			myRenderableMeterials["Copper"] = (ADGRVulkanMaterialDescriptor("Copper", glm::vec3(0.955008f, 0.637427f, 0.538163f), 0.1f, 1.0f));
-			myRenderableMeterials["Chromium"] = (ADGRVulkanMaterialDescriptor("Chromium", glm::vec3(0.549585f, 0.556114f, 0.554256f), 0.1f, 1.0f));
-			myRenderableMeterials["Nickel"] = (ADGRVulkanMaterialDescriptor("Nickel", glm::vec3(0.659777f, 0.608679f, 0.525649f), 0.1f, 1.0f));
-			myRenderableMeterials["Titanium"] = (ADGRVulkanMaterialDescriptor("Titanium", glm::vec3(0.541931f, 0.496791f, 0.449419f), 0.1f, 1.0f));
-			myRenderableMeterials["Cobalt"] = (ADGRVulkanMaterialDescriptor("Cobalt", glm::vec3(0.662124f, 0.654864f, 0.633732f), 0.1f, 1.0f));
-			myRenderableMeterials["Platinum"] = (ADGRVulkanMaterialDescriptor("Platinum", glm::vec3(0.672411f, 0.637331f, 0.585456f), 0.1f, 1.0f));
-			// Testing materials
-			myRenderableMeterials["White"] = (ADGRVulkanMaterialDescriptor("White", glm::vec3(1.0f), 0.1f, 1.0f));
-			myRenderableMeterials["Red"] = (ADGRVulkanMaterialDescriptor("Red", glm::vec3(1.0f, 0.0f, 0.0f), 0.1f, 1.0f));
-			myRenderableMeterials["Blue"] = (ADGRVulkanMaterialDescriptor("Blue", glm::vec3(0.0f, 0.0f, 1.0f), 0.1f, 1.0f));
-			myRenderableMeterials["Black"] = (ADGRVulkanMaterialDescriptor("Black", glm::vec3(0.0f), 0.1f, 1.0f));
+			initializeMaterials();
 		}
 
 		// object loading and initialization
@@ -106,6 +91,7 @@ namespace Dynamik {
 			ADGRVulkanCommandBufferInitInfo commandBufferInitInfo;
 			commandBufferInitInfo.objects = renderDatas;
 			commandBufferInitInfo.swapChain = mySwapChain3D.swapChainContainer;
+			commandBufferInitInfo.frameBuffer = myFrameBuffer;
 			myCommandBuffer.initializeCommandBuffers(commandBufferInitInfo);
 		}
 
@@ -184,7 +170,7 @@ namespace Dynamik {
 
 			myVulkanCore.syncFence(currentFrame);
 
-			draw3D(mySwapChain3D.swapChainContainer.getSwapChain());
+			draw3D(mySwapChain3D.swapChainContainer.swapChain);
 
 			// current frame select
 			currentFrame = (currentFrame + 1) % MAX_FRAMES_IN_FLIGHT;
@@ -222,14 +208,19 @@ namespace Dynamik {
 			initializeDepthBuffer();
 
 			ADGRVulkanFrameBufferInitInfo frameBufferInitInfo;
-			frameBufferInitInfo.preAttachments = { myColorBuffer.imageView, myDepthBuffer.imageView };
-			mySwapChain3D.initializeFrameBuffers(frameBufferInitInfo);
+			frameBufferInitInfo.attachments.pushBack(myColorBuffer.imageView);
+			frameBufferInitInfo.attachments.pushBack(myDepthBuffer.imageView);
+			frameBufferInitInfo.swapChainImageViews = mySwapChain3D.swapChainContainer.swapChainImageViews;
+			frameBufferInitInfo.bufferCount = mySwapChain3D.swapChainContainer.swapChainImages.size();
+			frameBufferInitInfo.swapChainExtent = mySwapChain3D.swapChainContainer.swapChainExtent;
+			myFrameBuffer.initializeFrameBuffer(myVulkanCore.logicalDevice, frameBufferInitInfo);
 
 			initializeObjectsBasic();
 
 			ADGRVulkanCommandBufferInitInfo commandBufferInitInfo;
 			commandBufferInitInfo.objects = renderDatas;
 			commandBufferInitInfo.swapChain = mySwapChain3D.swapChainContainer;
+			commandBufferInitInfo.frameBuffer = myFrameBuffer;
 			myCommandBuffer.initializeCommandBuffers(commandBufferInitInfo);
 		}
 
@@ -244,6 +235,7 @@ namespace Dynamik {
 						VulkanPBRObject _renderObject(RenderableObjectInitInfo());
 
 						_renderObject.setSwapChainContainer(&mySwapChain3D.swapChainContainer);
+						_renderObject.setFrameBufferContainer(&myFrameBuffer);
 						_renderObject.myRenderData.materialDescriptor = myRenderableMeterials[_object.materialName];
 
 						renderDatas.push_back(_renderObject.initializeObject(myVulkanCore.logicalDevice, _object, myVulkanCore.msaaSamples));
@@ -253,6 +245,7 @@ namespace Dynamik {
 						VulkanRenderableObject _renderObject(RenderableObjectInitInfo());
 
 						_renderObject.setSwapChainContainer(&mySwapChain3D.swapChainContainer);
+						_renderObject.setFrameBufferContainer(&myFrameBuffer);
 
 						renderDatas.push_back(_renderObject.initializeObject(myVulkanCore.logicalDevice, _object, myVulkanCore.msaaSamples));
 					}
@@ -362,6 +355,23 @@ namespace Dynamik {
 			}
 		}
 
+		void vulkanRenderer::initializeMaterials()
+		{
+			// Setup some default materials (source: https://seblagarde.wordpress.com/2011/08/17/feeding-a-physical-based-lighting-mode/)
+			myRenderableMeterials["Gold"] = (ADGRVulkanMaterialDescriptor("Gold", glm::vec3(1.0f, 0.765557f, 0.336057f), 0.1f, 1.0f));
+			myRenderableMeterials["Copper"] = (ADGRVulkanMaterialDescriptor("Copper", glm::vec3(0.955008f, 0.637427f, 0.538163f), 0.1f, 1.0f));
+			myRenderableMeterials["Chromium"] = (ADGRVulkanMaterialDescriptor("Chromium", glm::vec3(0.549585f, 0.556114f, 0.554256f), 0.1f, 1.0f));
+			myRenderableMeterials["Nickel"] = (ADGRVulkanMaterialDescriptor("Nickel", glm::vec3(0.659777f, 0.608679f, 0.525649f), 0.1f, 1.0f));
+			myRenderableMeterials["Titanium"] = (ADGRVulkanMaterialDescriptor("Titanium", glm::vec3(0.541931f, 0.496791f, 0.449419f), 0.1f, 1.0f));
+			myRenderableMeterials["Cobalt"] = (ADGRVulkanMaterialDescriptor("Cobalt", glm::vec3(0.662124f, 0.654864f, 0.633732f), 0.1f, 1.0f));
+			myRenderableMeterials["Platinum"] = (ADGRVulkanMaterialDescriptor("Platinum", glm::vec3(0.672411f, 0.637331f, 0.585456f), 0.1f, 1.0f));
+			// Testing materials
+			myRenderableMeterials["White"] = (ADGRVulkanMaterialDescriptor("White", glm::vec3(1.0f), 0.1f, 1.0f));
+			myRenderableMeterials["Red"] = (ADGRVulkanMaterialDescriptor("Red", glm::vec3(1.0f, 0.0f, 0.0f), 0.1f, 1.0f));
+			myRenderableMeterials["Blue"] = (ADGRVulkanMaterialDescriptor("Blue", glm::vec3(0.0f, 0.0f, 1.0f), 0.1f, 1.0f));
+			myRenderableMeterials["Black"] = (ADGRVulkanMaterialDescriptor("Black", glm::vec3(0.0f), 0.1f, 1.0f));
+		}
+
 		void vulkanRenderer::initializeOverlay()
 		{
 		}
@@ -467,7 +477,69 @@ namespace Dynamik {
 
 			mySwapChain3D.initializeSwapChain(myWindowManager.windowWidth, myWindowManager.windowHeight);
 
-			mySwapChain3D.initializeRenderPass(myVulkanCore.msaaSamples);
+			ARRAY<VkAttachmentDescription> attachments;
+
+			// attachment descriptions
+			VkAttachmentDescription colorAttachment = {};
+			colorAttachment.format = mySwapChain3D.swapChainContainer.swapChainImageFormat;
+			colorAttachment.samples = myVulkanCore.msaaSamples;
+			colorAttachment.loadOp = VK_ATTACHMENT_LOAD_OP_CLEAR;
+			colorAttachment.storeOp = VK_ATTACHMENT_STORE_OP_STORE;
+			colorAttachment.stencilLoadOp = VK_ATTACHMENT_LOAD_OP_DONT_CARE;
+			colorAttachment.stencilStoreOp = VK_ATTACHMENT_STORE_OP_DONT_CARE;
+			colorAttachment.initialLayout = VK_IMAGE_LAYOUT_UNDEFINED;
+			colorAttachment.finalLayout = VK_IMAGE_LAYOUT_PRESENT_SRC_KHR;
+			attachments.push_back(colorAttachment);
+
+			VkAttachmentReference colorAttachmentRef = {};
+			colorAttachmentRef.attachment = 0;
+			colorAttachmentRef.layout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
+
+			// sub passes
+			VkSubpassDescription subpass = {};
+			subpass.pipelineBindPoint = VK_PIPELINE_BIND_POINT_GRAPHICS;
+			subpass.colorAttachmentCount = 1;
+			subpass.pColorAttachments = &colorAttachmentRef;
+
+			VkAttachmentDescription depthAttachment = {};
+			depthAttachment.format = VulkanFunctions::findDepthFormat(myVulkanCore.physicalDevice);
+			depthAttachment.samples = myVulkanCore.msaaSamples;
+			depthAttachment.loadOp = VK_ATTACHMENT_LOAD_OP_CLEAR;
+			depthAttachment.storeOp = VK_ATTACHMENT_STORE_OP_DONT_CARE;
+			depthAttachment.stencilLoadOp = VK_ATTACHMENT_LOAD_OP_DONT_CARE;
+			depthAttachment.stencilStoreOp = VK_ATTACHMENT_STORE_OP_DONT_CARE;
+			depthAttachment.initialLayout = VK_IMAGE_LAYOUT_UNDEFINED;
+			depthAttachment.finalLayout = VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL;
+			attachments.push_back(depthAttachment);
+
+			VkAttachmentReference depthAttachmentRef = {};
+			depthAttachmentRef.attachment = 1;
+			depthAttachmentRef.layout = VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL;
+			subpass.pDepthStencilAttachment = &depthAttachmentRef;
+
+			VkAttachmentDescription colorAttachmentResolve = {};
+			colorAttachmentResolve.format = mySwapChain3D.swapChainContainer.swapChainImageFormat;
+			colorAttachmentResolve.samples = VK_SAMPLE_COUNT_1_BIT;
+			colorAttachmentResolve.loadOp = VK_ATTACHMENT_LOAD_OP_DONT_CARE;
+			colorAttachmentResolve.storeOp = VK_ATTACHMENT_STORE_OP_STORE;
+			colorAttachmentResolve.stencilLoadOp = VK_ATTACHMENT_LOAD_OP_DONT_CARE;
+			colorAttachmentResolve.stencilStoreOp = VK_ATTACHMENT_STORE_OP_DONT_CARE;
+			colorAttachmentResolve.initialLayout = VK_IMAGE_LAYOUT_UNDEFINED;
+			colorAttachmentResolve.finalLayout = VK_IMAGE_LAYOUT_PRESENT_SRC_KHR;
+			attachments.push_back(colorAttachmentResolve);
+
+			VkAttachmentReference colorAttachmentResolveRef = {};
+			colorAttachmentResolveRef.attachment = 2;
+			colorAttachmentResolveRef.layout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
+			subpass.pResolveAttachments = &colorAttachmentResolveRef;
+
+			ARRAY<VkSubpassDescription> subPasses;
+			subPasses.push_back(subpass);
+
+			ADGRVulkanRenderPassInitInfo renderPassInitInfo;
+			renderPassInitInfo.attachments = attachments;
+			renderPassInitInfo.subPasses = subPasses;
+			myFrameBuffer.initializeRenderPass(myVulkanCore.logicalDevice, renderPassInitInfo);
 		}
 
 		void vulkanRenderer::initializeColorBuffer()
@@ -478,8 +550,8 @@ namespace Dynamik {
 				myCommandBuffer.pool,
 				myVulkanCore.graphicsQueue,
 				myVulkanCore.presentQueue,
-				mySwapChain3D.swapChainContainer.getSwapChainImageFormat(),
-				mySwapChain3D.swapChainContainer.getSwapChainExtent(),
+				mySwapChain3D.swapChainContainer.swapChainImageFormat,
+				mySwapChain3D.swapChainContainer.swapChainExtent,
 				myVulkanCore.msaaSamples);
 		}
 
@@ -491,7 +563,7 @@ namespace Dynamik {
 				myCommandBuffer.pool,
 				myVulkanCore.graphicsQueue,
 				myVulkanCore.presentQueue,
-				mySwapChain3D.swapChainContainer.getSwapChainExtent(),
+				mySwapChain3D.swapChainContainer.swapChainExtent,
 				myVulkanCore.msaaSamples);
 		}
 
@@ -500,6 +572,7 @@ namespace Dynamik {
 			VulkanSkyBox _renderObject(RenderableObjectInitInfo());
 
 			_renderObject.setSwapChainContainer(&mySwapChain3D.swapChainContainer);
+			_renderObject.setFrameBufferContainer(&myFrameBuffer);
 
 			return _renderObject.initializeObject(myVulkanCore.logicalDevice, _object, myVulkanCore.msaaSamples);
 		}
@@ -509,6 +582,7 @@ namespace Dynamik {
 			VulkanReflectObject _renderObject(RenderableObjectInitInfo());
 
 			_renderObject.setSwapChainContainer(&mySwapChain3D.swapChainContainer);
+			_renderObject.setFrameBufferContainer(&myFrameBuffer);
 
 			return _renderObject.initializeObject(myVulkanCore.logicalDevice, _object, myVulkanCore.msaaSamples);
 		}
@@ -710,7 +784,7 @@ namespace Dynamik {
 			VkAttachmentDescription attachments[2] = {};
 
 			// Color attachment
-			attachments[0].format = mySwapChain3D.swapChainContainer.getSwapChainImageFormat();
+			attachments[0].format = mySwapChain3D.swapChainContainer.swapChainImageFormat;
 			attachments[0].samples = VK_SAMPLE_COUNT_1_BIT;
 			// Don't clear the framebuffer (like the renderpass from the example does)
 			attachments[0].loadOp = VK_ATTACHMENT_LOAD_OP_LOAD;
@@ -812,10 +886,10 @@ namespace Dynamik {
 
 				VkRenderPassBeginInfo renderPassInfo = {};
 				renderPassInfo.sType = VK_STRUCTURE_TYPE_RENDER_PASS_BEGIN_INFO;
-				renderPassInfo.renderPass = info.swapChain.getRenderPass();
-				renderPassInfo.framebuffer = info.swapChain.getFrameBuffer(i);
+				renderPassInfo.renderPass = info.frameBuffer.renderPass;
+				renderPassInfo.framebuffer = info.frameBuffer.buffers[i];
 				renderPassInfo.renderArea.offset = { 0, 0 };
-				renderPassInfo.renderArea.extent = info.swapChain.getSwapChainExtent();
+				renderPassInfo.renderArea.extent = info.swapChain.swapChainExtent;
 
 				std::array<VkClearValue, 2> clearValues = {};
 
@@ -832,15 +906,15 @@ namespace Dynamik {
 				vkCmdBeginRenderPass(overlayCommandBuffer.buffers[i], &renderPassInfo, VK_SUBPASS_CONTENTS_INLINE);
 
 				VkViewport viewport{};
-				viewport.width = info.swapChain.getSwapChainExtent().width;
-				viewport.height = info.swapChain.getSwapChainExtent().height;
+				viewport.width = info.swapChain.swapChainExtent.width;
+				viewport.height = info.swapChain.swapChainExtent.height;
 				viewport.minDepth = 0;
 				viewport.maxDepth = 0;
 				vkCmdSetViewport(overlayCommandBuffer.buffers[i], 0, 1, &viewport);
 
 				VkRect2D rect2D{};
-				rect2D.extent.width = info.swapChain.getSwapChainExtent().width;
-				rect2D.extent.height = info.swapChain.getSwapChainExtent().height;
+				rect2D.extent.width = info.swapChain.swapChainExtent.width;
+				rect2D.extent.height = info.swapChain.swapChainExtent.height;
 				rect2D.offset.x = 0.0f;
 				rect2D.offset.y = 1.0f;
 				vkCmdSetScissor(overlayCommandBuffer.buffers[i], 0, 1, &rect2D);
@@ -926,8 +1000,8 @@ namespace Dynamik {
 			VkDeviceMemory stagingBufferMemory = VK_NULL_HANDLE;
 
 			VkDeviceSize bufferSize = TEXTOVERLAY_MAX_CHAR_COUNT * sizeof(glm::vec4);
-			UI32 width = mySwapChain3D.swapChainContainer.getSwapChainExtent().width;
-			UI32 height = mySwapChain3D.swapChainContainer.getSwapChainExtent().height;
+			UI32 width = mySwapChain3D.swapChainContainer.swapChainExtent.width;
+			UI32 height = mySwapChain3D.swapChainContainer.swapChainExtent.height;
 			UI32 size = width * height;
 
 			const UI32 fontWidth = STB_FONT_consolas_24_latin1_BITMAP_WIDTH;
@@ -1095,7 +1169,7 @@ namespace Dynamik {
 			initInfo.vertexBindingDescription = VertexP2N2::getBindingDescription(1);
 			initInfo.vertexAttributeDescription = VertexP2N2::getAttributeDescriptions();
 			initInfo.shaders = _shaders;
-			initInfo.renderPass = mySwapChain3D.swapChainContainer.getRenderPass();
+			initInfo.renderPass = myFrameBuffer.renderPass;
 			initInfo.pipelineLayout = overlayContainer.pipelineLayout;
 			_object.initializePipeline(initInfo);
 
@@ -1178,7 +1252,7 @@ namespace Dynamik {
 			overlayContainer.mapped = nullptr;
 
 			ADGRVulkanCommandBufferInitInfo initInfo;
-			initInfo.count = mySwapChain3D.swapChainContainer.getSwapChainImages().size();
+			initInfo.count = mySwapChain3D.swapChainContainer.swapChainImages.size();
 			initInfo.swapChain = mySwapChain3D.swapChainContainer;
 			_initializeOverlayCommandBuffers(initInfo);
 			overlayContainer.isInitialized = true;
@@ -1240,8 +1314,8 @@ namespace Dynamik {
 
 			assert(overlayContainer.mapped != nullptr);
 
-			UI32 width = mySwapChain3D.swapChainContainer.getSwapChainExtent().width;
-			UI32 height = mySwapChain3D.swapChainContainer.getSwapChainExtent().height;
+			UI32 width = mySwapChain3D.swapChainContainer.swapChainExtent.width;
+			UI32 height = mySwapChain3D.swapChainContainer.swapChainExtent.height;
 
 			const float charW = 1.5f / width;
 			const float charH = 1.5f / height;

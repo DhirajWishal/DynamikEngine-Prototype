@@ -14,8 +14,6 @@ namespace Dynamik {
 
 				void basicInitialize(VkDevice device, VkPhysicalDevice physicalDevice, VkSurfaceKHR surface, VkSurfaceCapabilitiesKHR surfaceCapabilities);
 				void initializeSwapChain(UI32 width, UI32 height);
-				void initializeRenderPass(VkSampleCountFlagBits msaaSamples);
-				void initializeFrameBuffers(ADGRVulkanFrameBufferInitInfo frameBufferInitInfo);
 
 				void terminate();
 

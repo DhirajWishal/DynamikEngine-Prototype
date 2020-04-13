@@ -80,7 +80,7 @@ int main(int argc, char** argv) {
 			props.ID = std::to_string(i);
 			props.location = paths[i];
 			props.transformProperties.location = locations[i];
-			props.materialProperties.enablePBR = false;
+			props.materialProperties.enablePBR = true;
 			props.materialProperties.materialName = "Chromium";
 			mars _local;
 			_local.myProperties = props;

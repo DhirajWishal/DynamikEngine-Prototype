@@ -7,9 +7,10 @@
 
 #include "VulkanCore.h"
 #include "VulkanShader.h"
-#include "VulkanSwapChain.h"
+#include "VulkanFrameBuffer.h"
 #include "VulkanRenderLayout.h"
 #include "VulkanPipeline.h"
+#include "VulkanPushConstant.h"
 
 #include <GameObject.h>
 
@@ -104,6 +105,7 @@ namespace Dynamik {
 				DMK_ADGR_RENDERING_TECHNOLOGY renderTechnology = DMK_ADGR_RENDERING_TECHNOLOGY::DMK_ADGR_RENDER_INDEXED;
 
 				POINTER<VulkanSwapChain> swapChainPointer;
+				POINTER<VulkanFrameBuffer> frameBufferPointer;
 
 				ARRAY<VkBuffer> vertexBuffers;
 				ARRAY<VkDeviceMemory> vertexBufferMemories;
@@ -121,6 +123,7 @@ namespace Dynamik {
 				ARRAY<VulkanPipeline> pipelineContainers;
 
 				ARRAY<ADGRVulkanUnformBufferContainer> uniformBufferContainers;
+				ARRAY<VulkanPushConstant> pushConstants;
 
 				ADGRVulkanMaterialDescriptor materialDescriptor;
 				B1 enableMaterials = false;
@@ -191,6 +194,7 @@ namespace Dynamik {
 				virtual void terminateUniformBuffer();
 
 				void setSwapChainContainer(POINTER<VulkanSwapChain> swapChain) { myRenderData.swapChainPointer = swapChain; }
+				void setFrameBufferContainer(POINTER<VulkanFrameBuffer> frameBuffer) { myRenderData.frameBufferPointer = frameBuffer; }
 				void setRenderData(ADGRVulkanRenderData data) { myRenderData = data; }
 				const ADGRVulkanRenderData getRenderData() const { return myRenderData; }
 				ADGRVulkanRenderData myRenderData;

@@ -6,7 +6,14 @@
 #include "Pointer.h"
 
 namespace Dynamik {
-	class HMAP {
+	template<class TYPE_KEY, class TYPE_DATA>
+	class HashMap {
+		using TK = TYPE_KEY;
+		using TD = TYPE_DATA;
+
+	public:
+		HashMap() {}
+		~HashMap() {}
 	};
 
 	UI32 _getCCPTRSize(CCPTR string)

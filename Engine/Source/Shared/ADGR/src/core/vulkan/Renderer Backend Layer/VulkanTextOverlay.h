@@ -78,6 +78,7 @@ namespace Dynamik {
 
 				VulkanCore myCoreObject;
 				VulkanSwapChain mySwapChainObject;
+				VulkanFrameBuffer myFrameBuffer;
 				ADGRVulkanRenderData myRenderData;
 				VulkanColorBuffer colorBuffer;
 				VulkanDepthBuffer depthBuffer;

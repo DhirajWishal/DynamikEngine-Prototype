@@ -26,6 +26,11 @@
 
 #define TEXTOVERLAY_MAX_CHAR_COUNT 2048
 
+/* IDEAS
+ Make one time compute objects so that we can compute something at a given instance.
+ Make multiple of those to compute multiple things.
+*/
+
 namespace Dynamik {
 	namespace ADGR {
 		using namespace core;
@@ -46,11 +51,11 @@ namespace Dynamik {
 		// Basic one-time initializations
 		void vulkanRenderer::initStageOne()
 		{
-			{
-				VulkanComputeCore _core;
-				_core.initializeInstance();
-				_core.initializeDevice();
-			}
+			// initialize the compute instance
+			myComputeCore.initializeInstance();
+
+			// initialize the compute device
+			myComputeCore.initializeDevice();
 
 			// initialize the window
 			DMKWindowManagerInitInfo windowInitInfo;
@@ -61,15 +66,15 @@ namespace Dynamik {
 			ADGRVulkanInstanceInitInfo instanceInitInfo;
 			instanceInitInfo.applicationName = "Dynamik Engine";
 			instanceInitInfo.engineName = "Dynamik";
-			myVulkanCore.initializeInstance(instanceInitInfo);
-			myVulkanCore.initializeSurface(&myWindowManager.window);
+			myVulkanGraphicsCore.initializeInstance(instanceInitInfo);
+			myVulkanGraphicsCore.initializeSurface(&myWindowManager.window);
 
-			myVulkanCore.initializeDevice();
+			myVulkanGraphicsCore.initializeDevice();
 
-			ADGRVulkanCommandBufferInitResources initRes;
-			initRes.logicalDevice = myVulkanCore.logicalDevice;
-			initRes.physicalDevice = myVulkanCore.physicalDevice;
-			initRes.surface = myVulkanCore.surface;
+			ADGRVulkanGraphicsCommandBufferInitResources initRes;
+			initRes.logicalDevice = myVulkanGraphicsCore.logicalDevice;
+			initRes.physicalDevice = myVulkanGraphicsCore.physicalDevice;
+			initRes.surface = myVulkanGraphicsCore.surface;
 			myCommandBuffer.initializeResources(initRes);
 			myCommandBuffer.initializeCommandPool();
 
@@ -78,13 +83,13 @@ namespace Dynamik {
 			initializeColorBuffer();
 			initializeDepthBuffer();
 
-			ADGRVulkanFrameBufferInitInfo frameBufferInitInfo;
+			ADGRVulkanGraphicsFrameBufferInitInfo frameBufferInitInfo;
 			frameBufferInitInfo.attachments.pushBack(myColorBuffer.imageView);
 			frameBufferInitInfo.attachments.pushBack(myDepthBuffer.imageView);
 			frameBufferInitInfo.swapChainImageViews = mySwapChain3D.swapChainContainer.swapChainImageViews;
 			frameBufferInitInfo.bufferCount = mySwapChain3D.swapChainContainer.swapChainImages.size();
 			frameBufferInitInfo.swapChainExtent = mySwapChain3D.swapChainContainer.swapChainExtent;
-			myFrameBuffer.initializeFrameBuffer(myVulkanCore.logicalDevice, frameBufferInitInfo);
+			myFrameBuffer.initializeFrameBuffer(myVulkanGraphicsCore.logicalDevice, frameBufferInitInfo);
 
 			_initializeOverlayStageOne();
 
@@ -96,7 +101,7 @@ namespace Dynamik {
 		void vulkanRenderer::initStageTwo() {
 			initializeObjects();
 
-			ADGRVulkanCommandBufferInitInfo commandBufferInitInfo;
+			ADGRVulkanGraphicsCommandBufferInitInfo commandBufferInitInfo;
 			commandBufferInitInfo.objects = renderDatas;
 			commandBufferInitInfo.swapChain = mySwapChain3D.swapChainContainer;
 			commandBufferInitInfo.frameBuffer = myFrameBuffer;
@@ -105,7 +110,7 @@ namespace Dynamik {
 
 		// final initialization
 		void vulkanRenderer::initStageThree() {
-			myVulkanCore.initializeSyncObjects();
+			myVulkanGraphicsCore.initializeSyncObjects();
 		}
 
 		// shutdown the renderer
@@ -117,10 +122,10 @@ namespace Dynamik {
 
 		// basic one-time shut down functions
 		void vulkanRenderer::shutDownStageOne() {
-			vkDeviceWaitIdle(myVulkanCore.logicalDevice);
+			vkDeviceWaitIdle(myVulkanGraphicsCore.logicalDevice);
 
-			myDepthBuffer.terminate(myVulkanCore.logicalDevice);
-			myColorBuffer.terminate(myVulkanCore.logicalDevice);
+			myDepthBuffer.terminate(myVulkanGraphicsCore.logicalDevice);
+			myColorBuffer.terminate(myVulkanGraphicsCore.logicalDevice);
 
 			myCommandBuffer.terminateCommandBuffers();
 			myCommandBuffer.terminateCommandPool();
@@ -132,7 +137,7 @@ namespace Dynamik {
 		void vulkanRenderer::shutDownStageTwo() {
 			for (ADGRVulkanRenderData& _objectData : renderDatas)
 			{
-				VulkanRenderableObject _object(RenderableObjectInitInfo());
+				VulkanGraphicsRenderableObject _object(RenderableObjectInitInfo());
 
 				_object.setRenderData(_objectData);
 
@@ -155,13 +160,13 @@ namespace Dynamik {
 		// final shut down functions
 		void vulkanRenderer::shutDownStageThree()
 		{
-			myVulkanCore.terminateSyncObjects();
+			myVulkanGraphicsCore.terminateSyncObjects();
 
-			myVulkanCore.terminateDevice();
+			myVulkanGraphicsCore.terminateDevice();
 
-			myVulkanCore.terminateDebugger();
+			myVulkanGraphicsCore.terminateDebugger();
 
-			myVulkanCore.terminateInstance();
+			myVulkanGraphicsCore.terminateInstance();
 
 			myWindowManager.terminate();
 		}
@@ -176,7 +181,7 @@ namespace Dynamik {
 			myWindowManager.pollEvents();
 			eventContainer = myWindowManager.getEventContainer();
 
-			myVulkanCore.syncFence(currentFrame);
+			myVulkanGraphicsCore.syncFence(currentFrame);
 
 			draw3D(mySwapChain3D.swapChainContainer.swapChain);
 
@@ -201,7 +206,7 @@ namespace Dynamik {
 
 			for (ADGRVulkanRenderData& _objectData : renderDatas)
 			{
-				VulkanRenderableObject _object(RenderableObjectInitInfo());
+				VulkanGraphicsRenderableObject _object(RenderableObjectInitInfo());
 
 				_object.setRenderData(_objectData);
 
@@ -215,17 +220,17 @@ namespace Dynamik {
 			initializeColorBuffer();
 			initializeDepthBuffer();
 
-			ADGRVulkanFrameBufferInitInfo frameBufferInitInfo;
+			ADGRVulkanGraphicsFrameBufferInitInfo frameBufferInitInfo;
 			frameBufferInitInfo.attachments.pushBack(myColorBuffer.imageView);
 			frameBufferInitInfo.attachments.pushBack(myDepthBuffer.imageView);
 			frameBufferInitInfo.swapChainImageViews = mySwapChain3D.swapChainContainer.swapChainImageViews;
 			frameBufferInitInfo.bufferCount = mySwapChain3D.swapChainContainer.swapChainImages.size();
 			frameBufferInitInfo.swapChainExtent = mySwapChain3D.swapChainContainer.swapChainExtent;
-			myFrameBuffer.initializeFrameBuffer(myVulkanCore.logicalDevice, frameBufferInitInfo);
+			myFrameBuffer.initializeFrameBuffer(myVulkanGraphicsCore.logicalDevice, frameBufferInitInfo);
 
 			initializeObjectsBasic();
 
-			ADGRVulkanCommandBufferInitInfo commandBufferInitInfo;
+			ADGRVulkanGraphicsCommandBufferInitInfo commandBufferInitInfo;
 			commandBufferInitInfo.objects = renderDatas;
 			commandBufferInitInfo.swapChain = mySwapChain3D.swapChainContainer;
 			commandBufferInitInfo.frameBuffer = myFrameBuffer;
@@ -246,16 +251,16 @@ namespace Dynamik {
 						_renderObject.setFrameBufferContainer(&myFrameBuffer);
 						_renderObject.myRenderData.materialDescriptor = myRenderableMeterials[_object.materialName];
 
-						renderDatas.push_back(_renderObject.initializeObject(myVulkanCore.logicalDevice, _object, myVulkanCore.msaaSamples));
+						renderDatas.push_back(_renderObject.initializeObject(myVulkanGraphicsCore.logicalDevice, _object, myVulkanGraphicsCore.msaaSamples));
 					}
 					else
 					{
-						VulkanRenderableObject _renderObject(RenderableObjectInitInfo());
+						VulkanGraphicsRenderableObject _renderObject(RenderableObjectInitInfo());
 
 						_renderObject.setSwapChainContainer(&mySwapChain3D.swapChainContainer);
 						_renderObject.setFrameBufferContainer(&myFrameBuffer);
 
-						renderDatas.push_back(_renderObject.initializeObject(myVulkanCore.logicalDevice, _object, myVulkanCore.msaaSamples));
+						renderDatas.push_back(_renderObject.initializeObject(myVulkanGraphicsCore.logicalDevice, _object, myVulkanGraphicsCore.msaaSamples));
 					}
 				}
 				else if (_object.type == DMKObjectType::DMK_OBJECT_TYPE_SKYBOX)
@@ -268,7 +273,7 @@ namespace Dynamik {
 				}
 				else if (_object.type == DMKObjectType::DMK_OBJECT_TYPE_TEXT_OVERLAY)
 				{
-					ADGRVulkanShaderPathContainer shaderContainer;
+					ADGRVulkanGraphicsShaderPathContainer shaderContainer;
 					shaderContainer.vertexShaderPath = _object.vertexShaderPath;
 					shaderContainer.tessellationShaderPath = _object.tessellationShaderPath;
 					shaderContainer.geometryShaderPath = _object.geometryShaderPath;
@@ -293,60 +298,60 @@ namespace Dynamik {
 
 				_renderObject.setSwapChainContainer(&mySwapChain3D.swapChainContainer);
 
-				ARRAY<VulkanShader> _shaders;
+				ARRAY<VulkanGraphicsShader> _shaders;
 
 				if (_object.vertexShaderPath.size() && _object.vertexShaderPath != "NONE")
 				{
-					ADGRVulkanShaderInitInfo _initInfo;
+					ADGRVulkanGraphicsShaderInitInfo _initInfo;
 					_initInfo.path = _object.vertexShaderPath;
-					_initInfo.type = ADGRVulkanShaderType::ADGR_VULKAN_SHADER_TYPE_VERTEX;
+					_initInfo.type = ADGRVulkanGraphicsShaderType::ADGR_VULKAN_SHADER_TYPE_VERTEX;
 
-					VulkanShader _shader;
-					_shader.initialize(myVulkanCore.logicalDevice, _initInfo);
+					VulkanGraphicsShader _shader;
+					_shader.initialize(myVulkanGraphicsCore.logicalDevice, _initInfo);
 					_shaders.pushBack(_shader);
 				}
 				if (_object.tessellationShaderPath.size() && _object.tessellationShaderPath != "NONE")
 				{
-					ADGRVulkanShaderInitInfo _initInfo;
+					ADGRVulkanGraphicsShaderInitInfo _initInfo;
 					_initInfo.path = _object.tessellationShaderPath;
-					_initInfo.type = ADGRVulkanShaderType::ADGR_VULKAN_SHADER_TYPE_TESSELLATION;
+					_initInfo.type = ADGRVulkanGraphicsShaderType::ADGR_VULKAN_SHADER_TYPE_TESSELLATION;
 
-					VulkanShader _shader;
-					_shader.initialize(myVulkanCore.logicalDevice, _initInfo);
+					VulkanGraphicsShader _shader;
+					_shader.initialize(myVulkanGraphicsCore.logicalDevice, _initInfo);
 					_shaders.pushBack(_shader);
 				}
 				if (_object.geometryShaderPath.size() && _object.geometryShaderPath != "NONE")
 				{
-					ADGRVulkanShaderInitInfo _initInfo;
+					ADGRVulkanGraphicsShaderInitInfo _initInfo;
 					_initInfo.path = _object.geometryShaderPath;
-					_initInfo.type = ADGRVulkanShaderType::ADGR_VULKAN_SHADER_TYPE_GEOMETRY;
+					_initInfo.type = ADGRVulkanGraphicsShaderType::ADGR_VULKAN_SHADER_TYPE_GEOMETRY;
 
-					VulkanShader _shader;
-					_shader.initialize(myVulkanCore.logicalDevice, _initInfo);
+					VulkanGraphicsShader _shader;
+					_shader.initialize(myVulkanGraphicsCore.logicalDevice, _initInfo);
 					_shaders.pushBack(_shader);
 				}
 				if (_object.fragmentShaderPath.size() && _object.fragmentShaderPath != "NONE")
 				{
-					ADGRVulkanShaderInitInfo _initInfo;
+					ADGRVulkanGraphicsShaderInitInfo _initInfo;
 					_initInfo.path = _object.fragmentShaderPath;
-					_initInfo.type = ADGRVulkanShaderType::ADGR_VULKAN_SHADER_TYPE_FRAGMENT;
+					_initInfo.type = ADGRVulkanGraphicsShaderType::ADGR_VULKAN_SHADER_TYPE_FRAGMENT;
 
-					VulkanShader _shader;
-					_shader.initialize(myVulkanCore.logicalDevice, _initInfo);
+					VulkanGraphicsShader _shader;
+					_shader.initialize(myVulkanGraphicsCore.logicalDevice, _initInfo);
 					_shaders.pushBack(_shader);
 				}
 
 				// initialize pipeline
-				ADGRVulkanPipelineInitInfo pipelineInitInfo;
+				ADGRVulkanGraphicsPipelineInitInfo pipelineInitInfo;
 				pipelineInitInfo.shaders = _shaders;
-				pipelineInitInfo.multisamplerMsaaSamples = myVulkanCore.msaaSamples;
+				pipelineInitInfo.multisamplerMsaaSamples = myVulkanGraphicsCore.msaaSamples;
 				pipelineInitInfo.vertexBindingDescription = Vertex::getBindingDescription(1);
 				pipelineInitInfo.vertexAttributeDescription = Vertex::getAttributeDescriptions();
 				pipelineInitInfo.isTexturesAvailable = _object.texturePaths.size();
 				_renderObject.initializePipeline(pipelineInitInfo);
 
-				for (VulkanShader _shader : _shaders)
-					_shader.terminate(myVulkanCore.logicalDevice);
+				for (VulkanGraphicsShader _shader : _shaders)
+					_shader.terminate(myVulkanGraphicsCore.logicalDevice);
 
 				// initialize uniform buffers
 				_renderObject.initializeUniformBuffer();
@@ -464,13 +469,13 @@ namespace Dynamik {
 			return { _localVertexBufferObject, indexBufferObject };
 		}
 
-		ADGRVulkanRenderableObjectInitInfo vulkanRenderer::RenderableObjectInitInfo()
+		ADGRVulkanGraphicsRenderableObjectInitInfo vulkanRenderer::RenderableObjectInitInfo()
 		{
-			ADGRVulkanRenderableObjectInitInfo _info;
-			_info.logicalDevice = myVulkanCore.logicalDevice;
-			_info.physicalDevice = myVulkanCore.physicalDevice;
-			_info.graphicsQueue = myVulkanCore.graphicsQueue;
-			_info.presentQueue = myVulkanCore.presentQueue;
+			ADGRVulkanGraphicsRenderableObjectInitInfo _info;
+			_info.logicalDevice = myVulkanGraphicsCore.logicalDevice;
+			_info.physicalDevice = myVulkanGraphicsCore.physicalDevice;
+			_info.graphicsQueue = myVulkanGraphicsCore.graphicsQueue;
+			_info.presentQueue = myVulkanGraphicsCore.presentQueue;
 			_info.commandPool = myCommandBuffer.pool;
 			return _info;
 		}
@@ -478,10 +483,10 @@ namespace Dynamik {
 		void vulkanRenderer::initializeSwapChain()
 		{
 			mySwapChain3D.basicInitialize(
-				myVulkanCore.logicalDevice,
-				myVulkanCore.physicalDevice,
-				myVulkanCore.surface,
-				myVulkanCore.surfaceCapabilities);
+				myVulkanGraphicsCore.logicalDevice,
+				myVulkanGraphicsCore.physicalDevice,
+				myVulkanGraphicsCore.surface,
+				myVulkanGraphicsCore.surfaceCapabilities);
 
 			mySwapChain3D.initializeSwapChain(myWindowManager.windowWidth, myWindowManager.windowHeight);
 
@@ -490,7 +495,7 @@ namespace Dynamik {
 			// attachment descriptions
 			VkAttachmentDescription colorAttachment = {};
 			colorAttachment.format = mySwapChain3D.swapChainContainer.swapChainImageFormat;
-			colorAttachment.samples = myVulkanCore.msaaSamples;
+			colorAttachment.samples = myVulkanGraphicsCore.msaaSamples;
 			colorAttachment.loadOp = VK_ATTACHMENT_LOAD_OP_CLEAR;
 			colorAttachment.storeOp = VK_ATTACHMENT_STORE_OP_STORE;
 			colorAttachment.stencilLoadOp = VK_ATTACHMENT_LOAD_OP_DONT_CARE;
@@ -510,8 +515,8 @@ namespace Dynamik {
 			subpass.pColorAttachments = &colorAttachmentRef;
 
 			VkAttachmentDescription depthAttachment = {};
-			depthAttachment.format = VulkanFunctions::findDepthFormat(myVulkanCore.physicalDevice);
-			depthAttachment.samples = myVulkanCore.msaaSamples;
+			depthAttachment.format = VulkanGraphicsFunctions::findDepthFormat(myVulkanGraphicsCore.physicalDevice);
+			depthAttachment.samples = myVulkanGraphicsCore.msaaSamples;
 			depthAttachment.loadOp = VK_ATTACHMENT_LOAD_OP_CLEAR;
 			depthAttachment.storeOp = VK_ATTACHMENT_STORE_OP_DONT_CARE;
 			depthAttachment.stencilLoadOp = VK_ATTACHMENT_LOAD_OP_DONT_CARE;
@@ -547,32 +552,32 @@ namespace Dynamik {
 			ADGRVulkanRenderPassInitInfo renderPassInitInfo;
 			renderPassInitInfo.attachments = attachments;
 			renderPassInitInfo.subPasses = subPasses;
-			myFrameBuffer.initializeRenderPass(myVulkanCore.logicalDevice, renderPassInitInfo);
+			myFrameBuffer.initializeRenderPass(myVulkanGraphicsCore.logicalDevice, renderPassInitInfo);
 		}
 
 		void vulkanRenderer::initializeColorBuffer()
 		{
 			myColorBuffer.initialize(
-				myVulkanCore.logicalDevice,
-				myVulkanCore.physicalDevice,
+				myVulkanGraphicsCore.logicalDevice,
+				myVulkanGraphicsCore.physicalDevice,
 				myCommandBuffer.pool,
-				myVulkanCore.graphicsQueue,
-				myVulkanCore.presentQueue,
+				myVulkanGraphicsCore.graphicsQueue,
+				myVulkanGraphicsCore.presentQueue,
 				mySwapChain3D.swapChainContainer.swapChainImageFormat,
 				mySwapChain3D.swapChainContainer.swapChainExtent,
-				myVulkanCore.msaaSamples);
+				myVulkanGraphicsCore.msaaSamples);
 		}
 
 		void vulkanRenderer::initializeDepthBuffer()
 		{
 			myDepthBuffer.initialize(
-				myVulkanCore.logicalDevice,
-				myVulkanCore.physicalDevice,
+				myVulkanGraphicsCore.logicalDevice,
+				myVulkanGraphicsCore.physicalDevice,
 				myCommandBuffer.pool,
-				myVulkanCore.graphicsQueue,
-				myVulkanCore.presentQueue,
+				myVulkanGraphicsCore.graphicsQueue,
+				myVulkanGraphicsCore.presentQueue,
 				mySwapChain3D.swapChainContainer.swapChainExtent,
-				myVulkanCore.msaaSamples);
+				myVulkanGraphicsCore.msaaSamples);
 		}
 
 		ADGRVulkanRenderData vulkanRenderer::initializeSkyboxObject(ADGRVulkan3DObjectData _object)
@@ -582,7 +587,7 @@ namespace Dynamik {
 			_renderObject.setSwapChainContainer(&mySwapChain3D.swapChainContainer);
 			_renderObject.setFrameBufferContainer(&myFrameBuffer);
 
-			return _renderObject.initializeObject(myVulkanCore.logicalDevice, _object, myVulkanCore.msaaSamples);
+			return _renderObject.initializeObject(myVulkanGraphicsCore.logicalDevice, _object, myVulkanGraphicsCore.msaaSamples);
 		}
 
 		ADGRVulkanRenderData vulkanRenderer::initializeReflectObject(ADGRVulkan3DObjectData _object)
@@ -592,7 +597,7 @@ namespace Dynamik {
 			_renderObject.setSwapChainContainer(&mySwapChain3D.swapChainContainer);
 			_renderObject.setFrameBufferContainer(&myFrameBuffer);
 
-			return _renderObject.initializeObject(myVulkanCore.logicalDevice, _object, myVulkanCore.msaaSamples);
+			return _renderObject.initializeObject(myVulkanGraphicsCore.logicalDevice, _object, myVulkanGraphicsCore.msaaSamples);
 		}
 
 		ADGRVulkanRenderData vulkanRenderer::initializeSkeletalAnimation(ADGRVulkan3DObjectData _object)
@@ -658,14 +663,14 @@ namespace Dynamik {
 			}
 			myAnimation->initializeIndexBufferUI32(&indexBuffer);
 
-			return myAnimation->initializeObject(myVulkanCore.logicalDevice, _object, myVulkanCore.msaaSamples);
+			return myAnimation->initializeObject(myVulkanGraphicsCore.logicalDevice, _object, myVulkanGraphicsCore.msaaSamples);
 		}
 
 		void vulkanRenderer::draw3D(VkSwapchainKHR swapChain)
 		{
 			// get image index
 			imageIndex = 0;
-			result = myVulkanCore.getNextImage(swapChain, &imageIndex, currentFrame);
+			result = myVulkanGraphicsCore.getNextImage(swapChain, &imageIndex, currentFrame);
 
 			// recreate swachain if needed
 			if (result == VK_ERROR_OUT_OF_DATE_KHR)
@@ -711,7 +716,7 @@ namespace Dynamik {
 					}
 					else
 					{
-						VulkanRenderableObject _renderObject(RenderableObjectInitInfo());
+						VulkanGraphicsRenderableObject _renderObject(RenderableObjectInitInfo());
 						_renderObject.setRenderData(_object);
 
 						DMKUpdateInfo info;
@@ -728,9 +733,9 @@ namespace Dynamik {
 			}
 
 			if (overlayContainer.isVisible && overlayContainer.isInitialized)
-				result = myVulkanCore.submitQueues({ swapChain }, imageIndex, currentFrame, { myCommandBuffer.buffers[imageIndex], _drawOverlay(imageIndex) });
+				result = myVulkanGraphicsCore.submitQueues({ swapChain }, imageIndex, currentFrame, { myCommandBuffer.buffers[imageIndex], _drawOverlay(imageIndex) });
 			else
-				result = myVulkanCore.submitQueues({ swapChain }, imageIndex, currentFrame, { myCommandBuffer.buffers[imageIndex] });
+				result = myVulkanGraphicsCore.submitQueues({ swapChain }, imageIndex, currentFrame, { myCommandBuffer.buffers[imageIndex] });
 
 			// frame buffer resize event
 			if (result == VK_ERROR_OUT_OF_DATE_KHR || result == VK_SUBOPTIMAL_KHR)
@@ -743,10 +748,10 @@ namespace Dynamik {
 
 		void vulkanRenderer::_initializeOverlayCommandPool()
 		{
-			ADGRVulkanCommandBufferInitResources initRes;
-			initRes.logicalDevice = myVulkanCore.logicalDevice;
-			initRes.physicalDevice = myVulkanCore.physicalDevice;
-			initRes.surface = myVulkanCore.surface;
+			ADGRVulkanGraphicsCommandBufferInitResources initRes;
+			initRes.logicalDevice = myVulkanGraphicsCore.logicalDevice;
+			initRes.physicalDevice = myVulkanGraphicsCore.physicalDevice;
+			initRes.surface = myVulkanGraphicsCore.surface;
 			overlayCommandBuffer.initializeResources(initRes);
 			overlayCommandBuffer.initializeCommandPool();
 		}
@@ -765,7 +770,7 @@ namespace Dynamik {
 			layoutInfo.bindingCount = 1;
 			layoutInfo.pBindings = &samplerLayoutBinding;
 
-			if (vkCreateDescriptorSetLayout(myVulkanCore.logicalDevice, &layoutInfo, nullptr, &overlayContainer.descriptorSetLayout) != VK_SUCCESS)
+			if (vkCreateDescriptorSetLayout(myVulkanGraphicsCore.logicalDevice, &layoutInfo, nullptr, &overlayContainer.descriptorSetLayout) != VK_SUCCESS)
 				DMK_CORE_FATAL("failed to create descriptor set layout!");
 		}
 
@@ -781,7 +786,7 @@ namespace Dynamik {
 
 			// create the pipeline layout
 			VkPipelineLayout _pipelineLayout = VK_NULL_HANDLE;
-			if (vkCreatePipelineLayout(myVulkanCore.logicalDevice, &pipelineLayoutInfo, nullptr, &_pipelineLayout) != VK_SUCCESS)
+			if (vkCreatePipelineLayout(myVulkanGraphicsCore.logicalDevice, &pipelineLayoutInfo, nullptr, &_pipelineLayout) != VK_SUCCESS)
 				DMK_CORE_FATAL("failed to create pipeline layout!");
 
 			overlayContainer.pipelineLayout = _pipelineLayout;
@@ -803,7 +808,7 @@ namespace Dynamik {
 			attachments[0].finalLayout = VK_IMAGE_LAYOUT_PRESENT_SRC_KHR;
 
 			// Depth attachment
-			attachments[1].format = VulkanFunctions::findDepthFormat(myVulkanCore.physicalDevice);
+			attachments[1].format = VulkanGraphicsFunctions::findDepthFormat(myVulkanGraphicsCore.physicalDevice);
 			attachments[1].samples = VK_SAMPLE_COUNT_1_BIT;
 			attachments[1].loadOp = VK_ATTACHMENT_LOAD_OP_CLEAR;
 			attachments[1].storeOp = VK_ATTACHMENT_STORE_OP_STORE;
@@ -866,11 +871,11 @@ namespace Dynamik {
 			renderPassInfo.pDependencies = subpassDependencies;
 
 			// create the render pass
-			if (vkCreateRenderPass(myVulkanCore.logicalDevice, &renderPassInfo, nullptr, &overlayContainer.renderPass) != VK_SUCCESS)
+			if (vkCreateRenderPass(myVulkanGraphicsCore.logicalDevice, &renderPassInfo, nullptr, &overlayContainer.renderPass) != VK_SUCCESS)
 				DMK_CORE_FATAL("failed to create render pass!");
 		}
 
-		void vulkanRenderer::_initializeOverlayCommandBuffers(ADGRVulkanCommandBufferInitInfo info)
+		void vulkanRenderer::_initializeOverlayCommandBuffers(ADGRVulkanGraphicsCommandBufferInitInfo info)
 		{
 			UI32 size = info.count;
 			overlayCommandBuffer.buffers.resize(size);
@@ -881,7 +886,7 @@ namespace Dynamik {
 			allocInfo.level = VK_COMMAND_BUFFER_LEVEL_PRIMARY;
 			allocInfo.commandBufferCount = size;
 
-			if (vkAllocateCommandBuffers(myVulkanCore.logicalDevice, &allocInfo, overlayCommandBuffer.buffers.data()) != VK_SUCCESS)
+			if (vkAllocateCommandBuffers(myVulkanGraphicsCore.logicalDevice, &allocInfo, overlayCommandBuffer.buffers.data()) != VK_SUCCESS)
 				DMK_CORE_FATAL("failed to allocate command buffers!");
 
 			for (size_t i = 0; i < size; i++) {
@@ -969,7 +974,7 @@ namespace Dynamik {
 			overlayContainer.isInitialized = false;
 		}
 
-		void vulkanRenderer::_initializeOverlayStageTwo(ADGRVulkanShaderPathContainer shaderContainer)
+		void vulkanRenderer::_initializeOverlayStageTwo(ADGRVulkanGraphicsShaderPathContainer shaderContainer)
 		{
 			_initializeOverlayVertexBuffer();
 			_initializeOverlayTextureImage();
@@ -984,22 +989,22 @@ namespace Dynamik {
 			overlayCommandBuffer.terminateCommandBuffers();
 			overlayCommandBuffer.terminateCommandPool();
 
-			vkDestroyPipelineLayout(myVulkanCore.logicalDevice, overlayContainer.pipelineLayout, nullptr);
-			vkDestroyDescriptorSetLayout(myVulkanCore.logicalDevice, overlayContainer.descriptorSetLayout, nullptr);
+			vkDestroyPipelineLayout(myVulkanGraphicsCore.logicalDevice, overlayContainer.pipelineLayout, nullptr);
+			vkDestroyDescriptorSetLayout(myVulkanGraphicsCore.logicalDevice, overlayContainer.descriptorSetLayout, nullptr);
 		}
 
 		void vulkanRenderer::_initializeOverlayVertexBuffer()
 		{
 			VkDeviceSize bufferSize = TEXTOVERLAY_MAX_CHAR_COUNT * sizeof(glm::vec4);
 
-			ADGRCreateBufferInfo vertBufferInfo;
+			ADGRVulkanCreateBufferInfo vertBufferInfo;
 			vertBufferInfo.bufferSize = bufferSize;
 			vertBufferInfo.usage = (VkBufferUsageFlagBits)(VK_BUFFER_USAGE_TRANSFER_DST_BIT | VK_BUFFER_USAGE_VERTEX_BUFFER_BIT);
 			vertBufferInfo.bufferMemoryPropertyflags = VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT;
 			vertBufferInfo.buffer = &overlayContainer.vertexBuffer;
 			vertBufferInfo.bufferMemory = &overlayContainer.vertexBufferMemory;
 
-			VulkanFunctions::createBuffer(myVulkanCore.logicalDevice, myVulkanCore.physicalDevice, vertBufferInfo);
+			VulkanGraphicsFunctions::createBuffer(myVulkanGraphicsCore.logicalDevice, myVulkanGraphicsCore.physicalDevice, vertBufferInfo);
 		}
 
 		void vulkanRenderer::_initializeOverlayTextureImage()
@@ -1017,7 +1022,7 @@ namespace Dynamik {
 			static unsigned char font24pixels[fontWidth][fontHeight];
 			stb_font_consolas_24_latin1(overlayContainer.stbFontData, font24pixels, fontHeight);
 
-			ADGRCreateImageInfo cinfo;
+			ADGRVulkanCreateImageInfo cinfo;
 			cinfo.width = fontWidth;
 			cinfo.height = fontHeight;
 			cinfo.format = VK_FORMAT_R8_UNORM;
@@ -1029,37 +1034,37 @@ namespace Dynamik {
 			cinfo.mipLevels = 1;
 			cinfo.numSamples = VK_SAMPLE_COUNT_1_BIT;
 			cinfo.flags = NULL;
-			VulkanFunctions::createImage(myVulkanCore.logicalDevice, myVulkanCore.physicalDevice, cinfo);
+			VulkanGraphicsFunctions::createImage(myVulkanGraphicsCore.logicalDevice, myVulkanGraphicsCore.physicalDevice, cinfo);
 
-			ADGRCreateBufferInfo bufferInfo;
+			ADGRVulkanCreateBufferInfo bufferInfo;
 			bufferInfo.bufferSize = fontWidth * fontHeight;
 			bufferInfo.usage = VK_BUFFER_USAGE_TRANSFER_SRC_BIT;
 			bufferInfo.bufferMemoryPropertyflags = VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT;
 			bufferInfo.buffer = &stagingBuffer;
 			bufferInfo.bufferMemory = &stagingBufferMemory;
-			VulkanFunctions::createBuffer(myVulkanCore.logicalDevice, myVulkanCore.physicalDevice, bufferInfo);
+			VulkanGraphicsFunctions::createBuffer(myVulkanGraphicsCore.logicalDevice, myVulkanGraphicsCore.physicalDevice, bufferInfo);
 
 			void* data;
-			if (vkMapMemory(myVulkanCore.logicalDevice, stagingBufferMemory, 0, static_cast<size_t>(bufferSize), 0, &data) != VK_SUCCESS)
+			if (vkMapMemory(myVulkanGraphicsCore.logicalDevice, stagingBufferMemory, 0, static_cast<size_t>(bufferSize), 0, &data) != VK_SUCCESS)
 				DMK_CORE_FATAL("Failed to map memory!");
 			memcpy(data, &font24pixels[0][0], fontWidth * fontHeight);
-			vkUnmapMemory(myVulkanCore.logicalDevice, stagingBufferMemory);
+			vkUnmapMemory(myVulkanGraphicsCore.logicalDevice, stagingBufferMemory);
 
-			ADGRTransitionImageLayoutInfo transitionInfo;
+			ADGRVulkanTransitionImageLayoutInfo transitionInfo;
 			transitionInfo.image = overlayContainer.textureContainer.image;
 			transitionInfo.format = VK_FORMAT_R8_UNORM;
 			transitionInfo.oldLayout = VK_IMAGE_LAYOUT_UNDEFINED;
 			transitionInfo.newLayout = VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL;
 			transitionInfo.mipLevels = 1;
 			transitionInfo.layerCount = 1;
-			VulkanFunctions::transitionImageLayout(myVulkanCore.logicalDevice, overlayCommandBuffer.pool, myVulkanCore.graphicsQueue, myVulkanCore.presentQueue, transitionInfo);
+			VulkanGraphicsFunctions::transitionImageLayout(myVulkanGraphicsCore.logicalDevice, overlayCommandBuffer.pool, myVulkanGraphicsCore.graphicsQueue, myVulkanGraphicsCore.presentQueue, transitionInfo);
 
-			ADGRCopyBufferToImageInfo cpyInfo;
+			ADGRVulkanCopyBufferToImageInfo cpyInfo;
 			cpyInfo.buffer = stagingBuffer;
 			cpyInfo.image = overlayContainer.textureContainer.image;
 			cpyInfo.width = fontWidth;
 			cpyInfo.height = fontHeight;
-			VulkanFunctions::copyBufferToImage(myVulkanCore.logicalDevice, overlayCommandBuffer.pool, myVulkanCore.graphicsQueue, myVulkanCore.presentQueue, cpyInfo);
+			VulkanGraphicsFunctions::copyBufferToImage(myVulkanGraphicsCore.logicalDevice, overlayCommandBuffer.pool, myVulkanGraphicsCore.graphicsQueue, myVulkanGraphicsCore.presentQueue, cpyInfo);
 
 			transitionInfo.image = overlayContainer.textureContainer.image;
 			transitionInfo.format = VK_FORMAT_R8_UNORM;
@@ -1067,10 +1072,10 @@ namespace Dynamik {
 			transitionInfo.newLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
 			transitionInfo.mipLevels = 1;
 			transitionInfo.layerCount = 1;
-			VulkanFunctions::transitionImageLayout(myVulkanCore.logicalDevice, overlayCommandBuffer.pool, myVulkanCore.graphicsQueue, myVulkanCore.presentQueue, transitionInfo);
+			VulkanGraphicsFunctions::transitionImageLayout(myVulkanGraphicsCore.logicalDevice, overlayCommandBuffer.pool, myVulkanGraphicsCore.graphicsQueue, myVulkanGraphicsCore.presentQueue, transitionInfo);
 
-			vkDestroyBuffer(myVulkanCore.logicalDevice, stagingBuffer, nullptr);
-			vkFreeMemory(myVulkanCore.logicalDevice, stagingBufferMemory, nullptr);
+			vkDestroyBuffer(myVulkanGraphicsCore.logicalDevice, stagingBuffer, nullptr);
+			vkFreeMemory(myVulkanGraphicsCore.logicalDevice, stagingBufferMemory, nullptr);
 
 			ADGRVulkanTextureSamplerInitInfo samplerInitInfo;
 			samplerInitInfo.magFilter = VK_FILTER_LINEAR;
@@ -1084,18 +1089,18 @@ namespace Dynamik {
 			samplerInitInfo.mipLoadBias = 0.0f;
 			samplerInitInfo.compareOp = VK_COMPARE_OP_NEVER;
 			samplerInitInfo.borderColor = VK_BORDER_COLOR_FLOAT_OPAQUE_WHITE;
-			overlayContainer.textureContainer.imageSampler = VulkanFunctions::createImageSampler(myVulkanCore.logicalDevice, samplerInitInfo);
+			overlayContainer.textureContainer.imageSampler = VulkanGraphicsFunctions::createImageSampler(myVulkanGraphicsCore.logicalDevice, samplerInitInfo);
 
-			ADGRCreateImageViewInfo cinfo2;
+			ADGRVulkanCreateImageViewInfo cinfo2;
 			cinfo2.image = overlayContainer.textureContainer.image;
 			cinfo2.format = VK_FORMAT_R8_UNORM;
 			cinfo2.mipLevels = 1;
 			cinfo2.aspectFlags = VK_IMAGE_ASPECT_COLOR_BIT;
 			cinfo2.component = { VK_COMPONENT_SWIZZLE_R, VK_COMPONENT_SWIZZLE_G, VK_COMPONENT_SWIZZLE_B,	VK_COMPONENT_SWIZZLE_A };;
-			overlayContainer.textureContainer.imageView = VulkanFunctions::createImageView(myVulkanCore.logicalDevice, cinfo2);
+			overlayContainer.textureContainer.imageView = VulkanGraphicsFunctions::createImageView(myVulkanGraphicsCore.logicalDevice, cinfo2);
 		}
 
-		void vulkanRenderer::_initializeOverlayPipeline(ADGRVulkanShaderPathContainer shaderContainer)
+		void vulkanRenderer::_initializeOverlayPipeline(ADGRVulkanGraphicsShaderPathContainer shaderContainer)
 		{
 			VkPipelineColorBlendAttachmentState blendAttachmentState{};
 			blendAttachmentState.blendEnable = VK_TRUE;
@@ -1107,60 +1112,60 @@ namespace Dynamik {
 			blendAttachmentState.dstAlphaBlendFactor = VK_BLEND_FACTOR_ZERO;
 			blendAttachmentState.alphaBlendOp = VK_BLEND_OP_ADD;
 
-			ARRAY<VulkanShader> _shaders;
+			ARRAY<VulkanGraphicsShader> _shaders;
 
 			if (shaderContainer.vertexShaderPath.size() && shaderContainer.vertexShaderPath != "NONE")
 			{
-				ADGRVulkanShaderInitInfo _initInfo;
+				ADGRVulkanGraphicsShaderInitInfo _initInfo;
 				_initInfo.path = shaderContainer.vertexShaderPath;
-				_initInfo.type = ADGRVulkanShaderType::ADGR_VULKAN_SHADER_TYPE_VERTEX;
+				_initInfo.type = ADGRVulkanGraphicsShaderType::ADGR_VULKAN_SHADER_TYPE_VERTEX;
 
-				VulkanShader _shader;
-				_shader.initialize(myVulkanCore.logicalDevice, _initInfo);
+				VulkanGraphicsShader _shader;
+				_shader.initialize(myVulkanGraphicsCore.logicalDevice, _initInfo);
 				_shaders.pushBack(_shader);
 			}
 			if (shaderContainer.tessellationShaderPath.size() && shaderContainer.tessellationShaderPath != "NONE")
 			{
-				ADGRVulkanShaderInitInfo _initInfo;
+				ADGRVulkanGraphicsShaderInitInfo _initInfo;
 				_initInfo.path = shaderContainer.tessellationShaderPath;
-				_initInfo.type = ADGRVulkanShaderType::ADGR_VULKAN_SHADER_TYPE_TESSELLATION;
+				_initInfo.type = ADGRVulkanGraphicsShaderType::ADGR_VULKAN_SHADER_TYPE_TESSELLATION;
 
-				VulkanShader _shader;
-				_shader.initialize(myVulkanCore.logicalDevice, _initInfo);
+				VulkanGraphicsShader _shader;
+				_shader.initialize(myVulkanGraphicsCore.logicalDevice, _initInfo);
 				_shaders.pushBack(_shader);
 			}
 			if (shaderContainer.geometryShaderPath.size() && shaderContainer.geometryShaderPath != "NONE")
 			{
-				ADGRVulkanShaderInitInfo _initInfo;
+				ADGRVulkanGraphicsShaderInitInfo _initInfo;
 				_initInfo.path = shaderContainer.geometryShaderPath;
-				_initInfo.type = ADGRVulkanShaderType::ADGR_VULKAN_SHADER_TYPE_GEOMETRY;
+				_initInfo.type = ADGRVulkanGraphicsShaderType::ADGR_VULKAN_SHADER_TYPE_GEOMETRY;
 
-				VulkanShader _shader;
-				_shader.initialize(myVulkanCore.logicalDevice, _initInfo);
+				VulkanGraphicsShader _shader;
+				_shader.initialize(myVulkanGraphicsCore.logicalDevice, _initInfo);
 				_shaders.pushBack(_shader);
 			}
 			if (shaderContainer.fragmentShaderPath.size() && shaderContainer.fragmentShaderPath != "NONE")
 			{
-				ADGRVulkanShaderInitInfo _initInfo;
+				ADGRVulkanGraphicsShaderInitInfo _initInfo;
 				_initInfo.path = shaderContainer.fragmentShaderPath;
-				_initInfo.type = ADGRVulkanShaderType::ADGR_VULKAN_SHADER_TYPE_FRAGMENT;
+				_initInfo.type = ADGRVulkanGraphicsShaderType::ADGR_VULKAN_SHADER_TYPE_FRAGMENT;
 
-				VulkanShader _shader;
-				_shader.initialize(myVulkanCore.logicalDevice, _initInfo);
+				VulkanGraphicsShader _shader;
+				_shader.initialize(myVulkanGraphicsCore.logicalDevice, _initInfo);
 				_shaders.pushBack(_shader);
 			}
 
-			VulkanRenderableObject _object;
+			VulkanGraphicsRenderableObject _object;
 			_object.setSwapChainContainer(&mySwapChain3D.swapChainContainer);
-			ADGRVulkanRenderableObjectInitInfo objInitInfo;
-			objInitInfo.logicalDevice = myVulkanCore.logicalDevice;
-			objInitInfo.physicalDevice = myVulkanCore.physicalDevice;
+			ADGRVulkanGraphicsRenderableObjectInitInfo objInitInfo;
+			objInitInfo.logicalDevice = myVulkanGraphicsCore.logicalDevice;
+			objInitInfo.physicalDevice = myVulkanGraphicsCore.physicalDevice;
 			objInitInfo.commandPool = overlayCommandBuffer.pool;
-			objInitInfo.graphicsQueue = myVulkanCore.graphicsQueue;
-			objInitInfo.presentQueue = myVulkanCore.presentQueue;
+			objInitInfo.graphicsQueue = myVulkanGraphicsCore.graphicsQueue;
+			objInitInfo.presentQueue = myVulkanGraphicsCore.presentQueue;
 			_object.initializeResources(objInitInfo);
 
-			ADGRVulkanPipelineInitInfo initInfo;
+			ADGRVulkanGraphicsPipelineInitInfo initInfo;
 			initInfo.colorBlendingColorBlendCount = 0;
 			initInfo.additionalColorBlendStates = { blendAttachmentState };
 			initInfo.inputAssemblyTopology = VK_PRIMITIVE_TOPOLOGY_TRIANGLE_STRIP;
@@ -1171,7 +1176,7 @@ namespace Dynamik {
 			initInfo.depthStencilEnable = VK_TRUE;
 			initInfo.depthStencilWriteEnable = VK_TRUE;
 			initInfo.depthStencilCompareOp = VK_COMPARE_OP_LESS_OR_EQUAL;
-			initInfo.multisamplerMsaaSamples = myVulkanCore.msaaSamples;
+			initInfo.multisamplerMsaaSamples = myVulkanGraphicsCore.msaaSamples;
 			initInfo.dynamicStateEnable = true;
 			initInfo.dynamicStateFlags = 0;
 			initInfo.vertexBindingDescription = VertexP2N2::getBindingDescription(1);
@@ -1181,8 +1186,8 @@ namespace Dynamik {
 			initInfo.pipelineLayout = overlayContainer.pipelineLayout;
 			_object.initializePipeline(initInfo);
 
-			for (VulkanShader _shader : _shaders)
-				_shader.terminate(myVulkanCore.logicalDevice);
+			for (VulkanGraphicsShader _shader : _shaders)
+				_shader.terminate(myVulkanGraphicsCore.logicalDevice);
 
 			//overlayContainer.pipeline = _object.getRenderData().pipeline;
 		}
@@ -1200,7 +1205,7 @@ namespace Dynamik {
 			poolInfo.maxSets = 1;
 
 			VkDescriptorPool _localDescriptorPool = VK_NULL_HANDLE;
-			if (vkCreateDescriptorPool(myVulkanCore.logicalDevice, &poolInfo, nullptr, &_localDescriptorPool) != VK_SUCCESS)
+			if (vkCreateDescriptorPool(myVulkanGraphicsCore.logicalDevice, &poolInfo, nullptr, &_localDescriptorPool) != VK_SUCCESS)
 				DMK_CORE_FATAL("failed to create descriptor pool!");
 
 			overlayContainer.descriptorPool = _localDescriptorPool;
@@ -1217,7 +1222,7 @@ namespace Dynamik {
 			allocInfo.pSetLayouts = &_layout;
 
 			VkDescriptorSet _descriptorSet = VK_NULL_HANDLE;
-			if (vkAllocateDescriptorSets(myVulkanCore.logicalDevice, &allocInfo, &_descriptorSet) != VK_SUCCESS)
+			if (vkAllocateDescriptorSets(myVulkanGraphicsCore.logicalDevice, &allocInfo, &_descriptorSet) != VK_SUCCESS)
 				DMK_CORE_FATAL("failed to allocate descriptor sets!");
 
 			VkDescriptorImageInfo imageInfo = {};
@@ -1236,7 +1241,7 @@ namespace Dynamik {
 			_writes.pNext = VK_NULL_HANDLE;
 			_writes.pTexelBufferView = VK_NULL_HANDLE;
 
-			vkUpdateDescriptorSets(myVulkanCore.logicalDevice, 1, &_writes, 0, nullptr);
+			vkUpdateDescriptorSets(myVulkanGraphicsCore.logicalDevice, 1, &_writes, 0, nullptr);
 
 			overlayContainer.descriptorSet = _descriptorSet;
 		}
@@ -1249,17 +1254,17 @@ namespace Dynamik {
 		void vulkanRenderer::_beginUpdate()
 		{
 			overlayContainer.isInitialized = false;
-			if (vkMapMemory(myVulkanCore.logicalDevice, overlayContainer.textureContainer.imageMemory, 0, VK_WHOLE_SIZE, 0, (void**)&overlayContainer.mapped) != VK_SUCCESS)
+			if (vkMapMemory(myVulkanGraphicsCore.logicalDevice, overlayContainer.textureContainer.imageMemory, 0, VK_WHOLE_SIZE, 0, (void**)&overlayContainer.mapped) != VK_SUCCESS)
 				DMK_CORE_FATAL("failed to map memory!");
 			overlayContainer.numberOfLetters = 0;
 		}
 
 		void vulkanRenderer::_endUpdate()
 		{
-			vkUnmapMemory(myVulkanCore.logicalDevice, overlayContainer.textureContainer.imageMemory);
+			vkUnmapMemory(myVulkanGraphicsCore.logicalDevice, overlayContainer.textureContainer.imageMemory);
 			overlayContainer.mapped = nullptr;
 
-			ADGRVulkanCommandBufferInitInfo initInfo;
+			ADGRVulkanGraphicsCommandBufferInitInfo initInfo;
 			initInfo.count = mySwapChain3D.swapChainContainer.swapChainImages.size();
 			initInfo.swapChain = mySwapChain3D.swapChainContainer;
 			_initializeOverlayCommandBuffers(initInfo);

@@ -12,38 +12,38 @@ namespace Dynamik {
 				createInfo.flags = VK_NULL_HANDLE;
 				createInfo.queueFamilyIndex = computeFamilyIndex;
 			}
-			
+
 			void VulkanComputeCommandBuffer::initializeCommandBuffers(VkDevice logicalDevice, ADGRVulkanComputeCommandBufferInitInfo info)
 			{
-				buffers.resize(info.count);
+				buffers.resize(info.computeDatas.size());
 
 				VkCommandBufferAllocateInfo allocInfo = {};
 				allocInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO;
 				allocInfo.commandPool = pool;
 				allocInfo.level = VK_COMMAND_BUFFER_LEVEL_PRIMARY;
-				allocInfo.commandBufferCount = static_cast<UI32>(info.count);
+				allocInfo.commandBufferCount = static_cast<UI32>(info.computeDatas.size());
 
 				if (vkAllocateCommandBuffers(logicalDevice, &allocInfo, buffers.data()) != VK_SUCCESS)
 					DMK_CORE_FATAL("failed to allocate compute command buffers!");
 
-				for (size_t i = 0; i < info.count; i++) {
+				for (size_t i = 0; i < info.computeDatas.size(); i++) {
 					VkCommandBufferBeginInfo beginInfo = {};
 					beginInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO;
-					beginInfo.flags = VK_COMMAND_BUFFER_USAGE_ONE_TIME_SUBMIT_BIT;
+					if (buffers.size() == 1)
+						beginInfo.flags = VK_COMMAND_BUFFER_USAGE_ONE_TIME_SUBMIT_BIT;
+					else
+						beginInfo.flags = VK_COMMAND_BUFFER_USAGE_SIMULTANEOUS_USE_BIT;
 
 					if (vkBeginCommandBuffer(buffers[i], &beginInfo) != VK_SUCCESS)
 						DMK_CORE_FATAL("failed to begin recording compute command commandBuffers[i]!");
 
-					for (UI32 _itr = 0; _itr < info.computeDatas.size(); _itr++)
-					{
-						vkCmdBindPipeline(buffers[i], VK_PIPELINE_BIND_POINT_COMPUTE, info.computeDatas[_itr].computePipeline.pipeline);
-					
-						vkCmdBindDescriptorSets(buffers[i], VK_PIPELINE_BIND_POINT_COMPUTE,
-							info.computeDatas[_itr].computePipeline.layout, 0, 1,
-							&info.computeDatas[_itr].computeDescriptor.container.descriptorSet, 0, 0);
+					vkCmdBindPipeline(buffers[i], VK_PIPELINE_BIND_POINT_COMPUTE, info.computeDatas[i].computePipeline.pipeline);
 
-						vkCmdDispatch(buffers[i], info.computeDatas[_itr].groupCountX, info.computeDatas[_itr].groupCountY, info.computeDatas[_itr].groupCountZ);
-					}
+					for (VkDescriptorSet _set : info.computeDatas[i].computeDescriptor.container.descriptorSets)
+						vkCmdBindDescriptorSets(buffers[i], VK_PIPELINE_BIND_POINT_COMPUTE,
+							info.computeDatas[i].computePipeline.layout, 0, 1, &_set, 0, 0);
+
+					vkCmdDispatch(buffers[i], info.computeDatas[i].groupCountX, info.computeDatas[i].groupCountY, info.computeDatas[i].groupCountZ);
 
 					if (vkEndCommandBuffer(buffers[i]) != VK_SUCCESS)
 						DMK_CORE_FATAL("failed to record compute command commandBuffers[i]!");

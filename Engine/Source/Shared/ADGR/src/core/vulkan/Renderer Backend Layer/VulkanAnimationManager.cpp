@@ -4,11 +4,11 @@
 namespace Dynamik {
 	namespace ADGR {
 		namespace Backend {
-			void VulkanAnimationManager::addInitializedAnimation(VkDevice logicalDevice, ADGRVulkan3DObjectData _object, VkSampleCountFlagBits msaaSamples, VulkanRenderableObject* animation)
+			void VulkanAnimationManager::addInitializedAnimation(VkDevice logicalDevice, ADGRVulkan3DObjectData _object, VkSampleCountFlagBits msaaSamples, VulkanGraphicsRenderableObject* animation)
 			{
 			}
 
-			void VulkanAnimationManager::addUninitializedAnimation(VulkanRenderableObject* animation)
+			void VulkanAnimationManager::addUninitializedAnimation(VulkanGraphicsRenderableObject* animation)
 			{
 			}
 

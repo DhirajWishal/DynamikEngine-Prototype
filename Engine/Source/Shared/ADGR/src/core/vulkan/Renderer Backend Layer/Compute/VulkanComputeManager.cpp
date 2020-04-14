@@ -21,13 +21,12 @@ namespace Dynamik {
 
 				ADGRVulkanComputeCommandBufferInitInfo commandBufferInitInfo;
 				commandBufferInitInfo.computeDatas = myComputeDatas;
-				commandBufferInitInfo.count = 1;
 				myComputeCommandBuffer.initializeCommandBuffers(myComputeCore.logicalDevice, commandBufferInitInfo);
 			}
 
 			void VulkanComputeManager::compute()
 			{
-				myComputeCore.submitQueue({ myComputeCommandBuffer.buffers[0] });
+				myComputeCore.submitQueue(myComputeCommandBuffer.buffers);
 				myComputeCore.finishCompute();
 			}
 

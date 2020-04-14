@@ -2,7 +2,7 @@
 #ifndef _DYNAMIK_ADGR_VULKAN_SKELETAL_ANIMATION_H
 #define _DYNAMIK_ADGR_VULKAN_SKELETAL_ANIMATION_H
 
-#include "../Objects/VulkanRenderableObject.h"
+#include "../Graphics/VulkanGraphicsRenderableObject.h"
 
 #include <assimp/assimp/Importer.hpp>
 #include <assimp/assimp/scene.h>
@@ -58,9 +58,9 @@ namespace Dynamik {
 				const aiScene* scene;
 			};
 
-			class VulkanSkeletalAnimation : public VulkanRenderableObject {
+			class VulkanSkeletalAnimation : public VulkanGraphicsRenderableObject {
 			public:
-				VulkanSkeletalAnimation(ADGRVulkanRenderableObjectInitInfo info);
+				VulkanSkeletalAnimation(ADGRVulkanGraphicsRenderableObjectInitInfo info);
 				virtual ~VulkanSkeletalAnimation() {}
 
 				ADGRVulkanRenderData initializeObject(VkDevice logicalDevice, ADGRVulkan3DObjectData _object, VkSampleCountFlagBits msaaSamples) override;

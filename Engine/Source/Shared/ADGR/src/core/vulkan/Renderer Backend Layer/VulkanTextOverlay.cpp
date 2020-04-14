@@ -3,7 +3,7 @@
 
 #define TEXTOVERLAY_MAX_CHAR_COUNT 2048
 
-#include "Objects/VulkanFunctions.h"
+#include "Graphics/VulkanGraphicsFunctions.h"
 
 namespace Dynamik {
 	namespace ADGR {
@@ -58,7 +58,7 @@ namespace Dynamik {
 					mySwapChainObject.swapChainExtent,
 					VK_SAMPLE_COUNT_1_BIT);
 
-				ADGRVulkanFrameBufferInitInfo frameBufferInitInfo;
+				ADGRVulkanGraphicsFrameBufferInitInfo frameBufferInitInfo;
 				frameBufferInitInfo.attachments.pushBack(colorBuffer.imageView);
 				for (VkImageView _view : mySwapChainObject.swapChainImageViews)
 					frameBufferInitInfo.attachments.pushBack(_view);
@@ -170,7 +170,7 @@ namespace Dynamik {
 
 			void VulkanTextOverlay::initializeCommandBuffers()
 			{
-				ADGRVulkanCommandBufferInitInfo info;
+				ADGRVulkanGraphicsCommandBufferInitInfo info;
 				info.count = mySwapChainObject.swapChainImages.size();
 				info.objects = { myRenderData };
 				info.swapChain = mySwapChainObject;
@@ -186,7 +186,7 @@ namespace Dynamik {
 
 			void VulkanTextOverlay::_initializeCommandPool()
 			{
-				ADGRVulkanCommandBufferInitResources resourceInit;
+				ADGRVulkanGraphicsCommandBufferInitResources resourceInit;
 				resourceInit.logicalDevice = myCoreObject.logicalDevice;
 				resourceInit.physicalDevice = myCoreObject.physicalDevice;
 				resourceInit.surface = myCoreObject.surface;
@@ -221,7 +221,7 @@ namespace Dynamik {
 				attachments[0].finalLayout = VK_IMAGE_LAYOUT_PRESENT_SRC_KHR;
 
 				// Depth attachment
-				attachments[1].format = VulkanFunctions::findDepthFormat(myCoreObject.physicalDevice);
+				attachments[1].format = VulkanGraphicsFunctions::findDepthFormat(myCoreObject.physicalDevice);
 				attachments[1].samples = VK_SAMPLE_COUNT_1_BIT;
 				attachments[1].loadOp = VK_ATTACHMENT_LOAD_OP_CLEAR;
 				attachments[1].storeOp = VK_ATTACHMENT_STORE_OP_STORE;
@@ -280,14 +280,14 @@ namespace Dynamik {
 			{
 				VkDeviceSize bufferSize = TEXTOVERLAY_MAX_CHAR_COUNT * sizeof(glm::vec4);
 
-				ADGRCreateBufferInfo vertBufferInfo;
+				ADGRVulkanCreateBufferInfo vertBufferInfo;
 				vertBufferInfo.bufferSize = bufferSize;
 				vertBufferInfo.usage = (VkBufferUsageFlagBits)(VK_BUFFER_USAGE_TRANSFER_DST_BIT | VK_BUFFER_USAGE_VERTEX_BUFFER_BIT);
 				vertBufferInfo.bufferMemoryPropertyflags = VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT;
 				vertBufferInfo.buffer = &vertexBuffer;
 				vertBufferInfo.bufferMemory = &vertexBufferMemory;
 
-				VulkanFunctions::createBuffer(myCoreObject.logicalDevice, myCoreObject.physicalDevice, vertBufferInfo);
+				VulkanGraphicsFunctions::createBuffer(myCoreObject.logicalDevice, myCoreObject.physicalDevice, vertBufferInfo);
 			}
 
 			void VulkanTextOverlay::_initializeTextureImage()
@@ -303,7 +303,7 @@ namespace Dynamik {
 				static unsigned char font24pixels[fontWidth][fontHeight];
 				stb_font_consolas_24_latin1(stbFontData, font24pixels, fontHeight);
 
-				ADGRCreateImageInfo cinfo;
+				ADGRVulkanCreateImageInfo cinfo;
 				cinfo.width = fontWidth;
 				cinfo.height = fontHeight;
 				cinfo.format = VK_FORMAT_R8_UNORM;
@@ -316,18 +316,18 @@ namespace Dynamik {
 				cinfo.numSamples = VK_SAMPLE_COUNT_1_BIT;
 				cinfo.flags = NULL;
 
-				VulkanFunctions::createImage(myCoreObject.logicalDevice, myCoreObject.physicalDevice, cinfo);
+				VulkanGraphicsFunctions::createImage(myCoreObject.logicalDevice, myCoreObject.physicalDevice, cinfo);
 
 				VkMemoryRequirements memReq;
 				vkGetImageMemoryRequirements(myCoreObject.logicalDevice, textureContainer.image, &memReq);
 
-				ADGRCreateBufferInfo bufferInfo;
+				ADGRVulkanCreateBufferInfo bufferInfo;
 				bufferInfo.bufferSize = memReq.size;
 				bufferInfo.usage = VK_BUFFER_USAGE_TRANSFER_SRC_BIT;
 				bufferInfo.bufferMemoryPropertyflags = VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT;
 				bufferInfo.buffer = &stagingBuffer;
 				bufferInfo.bufferMemory = &stagingBufferMemory;
-				VulkanFunctions::createBuffer(myCoreObject.logicalDevice, myCoreObject.physicalDevice, bufferInfo);
+				VulkanGraphicsFunctions::createBuffer(myCoreObject.logicalDevice, myCoreObject.physicalDevice, bufferInfo);
 
 				void* data;
 				if (vkMapMemory(myCoreObject.logicalDevice, stagingBufferMemory, 0, static_cast<size_t>(bufferSize), 0, &data) != VK_SUCCESS)
@@ -335,21 +335,21 @@ namespace Dynamik {
 				memcpy(data, &font24pixels[0][0], fontWidth * fontHeight);
 				vkUnmapMemory(myCoreObject.logicalDevice, stagingBufferMemory);
 
-				ADGRTransitionImageLayoutInfo transitionInfo;
+				ADGRVulkanTransitionImageLayoutInfo transitionInfo;
 				transitionInfo.image = textureContainer.image;
 				transitionInfo.format = VK_FORMAT_R8_UNORM;
 				transitionInfo.oldLayout = VK_IMAGE_LAYOUT_UNDEFINED;
 				transitionInfo.newLayout = VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL;
 				transitionInfo.mipLevels = 1;
 				transitionInfo.layerCount = 1;
-				VulkanFunctions::transitionImageLayout(myCoreObject.logicalDevice, commandBufferManager.pool, myCoreObject.graphicsQueue, myCoreObject.presentQueue, transitionInfo);
+				VulkanGraphicsFunctions::transitionImageLayout(myCoreObject.logicalDevice, commandBufferManager.pool, myCoreObject.graphicsQueue, myCoreObject.presentQueue, transitionInfo);
 
-				ADGRCopyBufferToImageInfo cpyInfo;
+				ADGRVulkanCopyBufferToImageInfo cpyInfo;
 				cpyInfo.buffer = stagingBuffer;
 				cpyInfo.image = textureContainer.image;
 				cpyInfo.width = fontWidth;
 				cpyInfo.height = fontHeight;
-				VulkanFunctions::copyBufferToImage(myCoreObject.logicalDevice, commandBufferManager.pool, myCoreObject.graphicsQueue, myCoreObject.presentQueue, cpyInfo);
+				VulkanGraphicsFunctions::copyBufferToImage(myCoreObject.logicalDevice, commandBufferManager.pool, myCoreObject.graphicsQueue, myCoreObject.presentQueue, cpyInfo);
 
 				transitionInfo.image = textureContainer.image;
 				transitionInfo.format = textureContainer.format;
@@ -357,7 +357,7 @@ namespace Dynamik {
 				transitionInfo.newLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
 				transitionInfo.mipLevels = 1;
 				transitionInfo.layerCount = 1;
-				VulkanFunctions::transitionImageLayout(myCoreObject.logicalDevice, commandBufferManager.pool, myCoreObject.graphicsQueue, myCoreObject.presentQueue, transitionInfo);
+				VulkanGraphicsFunctions::transitionImageLayout(myCoreObject.logicalDevice, commandBufferManager.pool, myCoreObject.graphicsQueue, myCoreObject.presentQueue, transitionInfo);
 
 				vkDestroyBuffer(myCoreObject.logicalDevice, stagingBuffer, nullptr);
 				vkFreeMemory(myCoreObject.logicalDevice, stagingBufferMemory, nullptr);
@@ -370,15 +370,15 @@ namespace Dynamik {
 				samplerInitInfo.modeU = VK_SAMPLER_ADDRESS_MODE_REPEAT;
 				samplerInitInfo.modeV = VK_SAMPLER_ADDRESS_MODE_REPEAT;
 				samplerInitInfo.modeW = VK_SAMPLER_ADDRESS_MODE_REPEAT;
-				textureContainer.imageSampler = VulkanFunctions::createImageSampler(myCoreObject.logicalDevice, samplerInitInfo);
+				textureContainer.imageSampler = VulkanGraphicsFunctions::createImageSampler(myCoreObject.logicalDevice, samplerInitInfo);
 
-				ADGRCreateImageViewInfo cinfo2;
+				ADGRVulkanCreateImageViewInfo cinfo2;
 				cinfo2.image = textureContainer.image;
 				cinfo2.format = VK_FORMAT_R8_UNORM;
 				cinfo2.mipLevels = 1;
 				cinfo2.aspectFlags = VK_IMAGE_ASPECT_COLOR_BIT;
 				cinfo2.component = { VK_COMPONENT_SWIZZLE_R, VK_COMPONENT_SWIZZLE_G, VK_COMPONENT_SWIZZLE_B,	VK_COMPONENT_SWIZZLE_A };;
-				textureContainer.imageView = VulkanFunctions::createImageView(myCoreObject.logicalDevice, cinfo2);
+				textureContainer.imageView = VulkanGraphicsFunctions::createImageView(myCoreObject.logicalDevice, cinfo2);
 			}
 
 			void VulkanTextOverlay::_initializeDescriptorPool()
@@ -474,53 +474,53 @@ namespace Dynamik {
 				blendAttachmentState.dstAlphaBlendFactor = VK_BLEND_FACTOR_ZERO;
 				blendAttachmentState.alphaBlendOp = VK_BLEND_OP_ADD;
 
-				ARRAY<VulkanShader> _shaders;
+				ARRAY<VulkanGraphicsShader> _shaders;
 
 				if (vertexShaderPath.size() && vertexShaderPath != "NONE")
 				{
-					ADGRVulkanShaderInitInfo _initInfo;
+					ADGRVulkanGraphicsShaderInitInfo _initInfo;
 					_initInfo.path = vertexShaderPath;
-					_initInfo.type = ADGRVulkanShaderType::ADGR_VULKAN_SHADER_TYPE_VERTEX;
+					_initInfo.type = ADGRVulkanGraphicsShaderType::ADGR_VULKAN_SHADER_TYPE_VERTEX;
 
-					VulkanShader _shader;
+					VulkanGraphicsShader _shader;
 					_shader.initialize(myCoreObject.logicalDevice, _initInfo);
 					_shaders.pushBack(_shader);
 				}
 				if (tessellationShaderPath.size() && tessellationShaderPath != "NONE")
 				{
-					ADGRVulkanShaderInitInfo _initInfo;
+					ADGRVulkanGraphicsShaderInitInfo _initInfo;
 					_initInfo.path = tessellationShaderPath;
-					_initInfo.type = ADGRVulkanShaderType::ADGR_VULKAN_SHADER_TYPE_TESSELLATION;
+					_initInfo.type = ADGRVulkanGraphicsShaderType::ADGR_VULKAN_SHADER_TYPE_TESSELLATION;
 
-					VulkanShader _shader;
+					VulkanGraphicsShader _shader;
 					_shader.initialize(myCoreObject.logicalDevice, _initInfo);
 					_shaders.pushBack(_shader);
 				}
 				if (geometryShaderPath.size() && geometryShaderPath != "NONE")
 				{
-					ADGRVulkanShaderInitInfo _initInfo;
+					ADGRVulkanGraphicsShaderInitInfo _initInfo;
 					_initInfo.path = geometryShaderPath;
-					_initInfo.type = ADGRVulkanShaderType::ADGR_VULKAN_SHADER_TYPE_GEOMETRY;
+					_initInfo.type = ADGRVulkanGraphicsShaderType::ADGR_VULKAN_SHADER_TYPE_GEOMETRY;
 
-					VulkanShader _shader;
+					VulkanGraphicsShader _shader;
 					_shader.initialize(myCoreObject.logicalDevice, _initInfo);
 					_shaders.pushBack(_shader);
 				}
 				if (fragmentShaderPath.size() && fragmentShaderPath != "NONE")
 				{
-					ADGRVulkanShaderInitInfo _initInfo;
+					ADGRVulkanGraphicsShaderInitInfo _initInfo;
 					_initInfo.path = fragmentShaderPath;
-					_initInfo.type = ADGRVulkanShaderType::ADGR_VULKAN_SHADER_TYPE_FRAGMENT;
+					_initInfo.type = ADGRVulkanGraphicsShaderType::ADGR_VULKAN_SHADER_TYPE_FRAGMENT;
 
-					VulkanShader _shader;
+					VulkanGraphicsShader _shader;
 					_shader.initialize(myCoreObject.logicalDevice, _initInfo);
 					_shaders.pushBack(_shader);
 				}
 
-				VulkanRenderableObject _object;
+				VulkanGraphicsRenderableObject _object;
 				_object.myRenderData = myRenderData;
 				_object.setSwapChainContainer(&mySwapChainObject);
-				ADGRVulkanRenderableObjectInitInfo objInitInfo;
+				ADGRVulkanGraphicsRenderableObjectInitInfo objInitInfo;
 				objInitInfo.logicalDevice = myCoreObject.logicalDevice;
 				objInitInfo.physicalDevice = myCoreObject.physicalDevice;
 				objInitInfo.commandPool = commandBufferManager.pool;
@@ -528,7 +528,7 @@ namespace Dynamik {
 				objInitInfo.presentQueue = myCoreObject.presentQueue;
 				_object.initializeResources(objInitInfo);
 
-				ADGRVulkanPipelineInitInfo initInfo;
+				ADGRVulkanGraphicsPipelineInitInfo initInfo;
 				initInfo.colorBlendingColorBlendCount = 0;
 				initInfo.additionalColorBlendStates = { blendAttachmentState };
 				initInfo.inputAssemblyTopology = VK_PRIMITIVE_TOPOLOGY_TRIANGLE_STRIP;
@@ -598,7 +598,7 @@ namespace Dynamik {
 				mySwapChainObject.terminate();
 			}
 
-			void VulkanTextOverlay::_localCommandBuffer::initializeCommandBuffers(ADGRVulkanCommandBufferInitInfo info)
+			void VulkanTextOverlay::_localCommandBuffer::initializeCommandBuffers(ADGRVulkanGraphicsCommandBufferInitInfo info)
 			{
 				UI32 size = info.count;
 				buffers.resize(size);

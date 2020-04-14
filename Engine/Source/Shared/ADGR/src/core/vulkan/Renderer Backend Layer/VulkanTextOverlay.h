@@ -3,10 +3,10 @@
 #define _DYNAMIK_ADGR_VULKAN_TEXT_OVERLAY_H
 
 #include "core/Components/TextOverlay.h"
-#include "Objects/VulkanCommandBuffer.h"
+#include "Graphics/VulkanGraphicsCommandBuffer.h"
 
-#include "Objects/VulkanColorBuffer.h"
-#include "Objects/VulkanDepthBuffer.h"
+#include "Graphics/VulkanGraphicsColorBuffer.h"
+#include "Graphics/VulkanGraphicsDepthBuffer.h"
 
 #include "External/stb_font_consolas_24_latin1.inl"
 
@@ -14,7 +14,7 @@ namespace Dynamik {
 	namespace ADGR {
 		namespace Backend {
 			struct ADGRVulkanTextOverlayInitInfo {
-				VulkanCore mainCore;
+				VulkanGraphicsCore mainCore;
 
 				UI32 frameBufferWidth = 0;
 				UI32 frameBufferHeight = 0;
@@ -76,12 +76,12 @@ namespace Dynamik {
 				void _terminatePipeline();
 				void _terminateSwapChain();
 
-				VulkanCore myCoreObject;
-				VulkanSwapChain mySwapChainObject;
-				VulkanFrameBuffer myFrameBuffer;
+				VulkanGraphicsCore myCoreObject;
+				VulkanGraphicsSwapChain mySwapChainObject;
+				VulkanGraphicsFrameBuffer myFrameBuffer;
 				ADGRVulkanRenderData myRenderData;
-				VulkanColorBuffer colorBuffer;
-				VulkanDepthBuffer depthBuffer;
+				VulkanGraphicsColorBuffer colorBuffer;
+				VulkanGraphicsDepthBuffer depthBuffer;
 
 				VkPipelineCache pipelineCache = VK_NULL_HANDLE;
 				glm::vec4* mapped = nullptr;
@@ -102,13 +102,13 @@ namespace Dynamik {
 				VkDeviceMemory vertexBufferMemory;
 
 			private:
-				class _localCommandBuffer : public VulkanCommandBuffer
+				class _localCommandBuffer : public VulkanGraphicsCommandBuffer
 				{
 				public:
 					_localCommandBuffer() {}
 					~_localCommandBuffer() {}
 
-					void initializeCommandBuffers(ADGRVulkanCommandBufferInitInfo info) override;
+					void initializeCommandBuffers(ADGRVulkanGraphicsCommandBufferInitInfo info) override;
 
 					UI32 numLetters = 0;
 					VkBuffer vertexBuffer = VK_NULL_HANDLE;

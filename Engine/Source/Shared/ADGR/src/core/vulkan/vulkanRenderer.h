@@ -21,11 +21,12 @@
 
 #include "core/data store/internalFormat.h"
 
-#include "Renderer Backend Layer/Objects/VulkanRBLIndex.h"
+#include "Renderer Backend Layer/Graphics/VulkanGraphicsRBLIndex.h"
+#include "Renderer Backend Layer/Compute/VulkanComputeRBLIndex.h"
 
 #include "Renderer Backend Layer/VulkanObject2D.h"
 #include "Renderer Backend Layer/VulkanObject3D.h"
-#include "Renderer Backend Layer/VulkanSwapChain3D.h"
+#include "Renderer Backend Layer/VulkanGraphicsSwapChain3D.h"
 #include "Renderer Backend Layer/VulkanTextOverlay.h"
 #include "Renderer Backend Layer/VulkanPBRObject.h"
 
@@ -183,7 +184,7 @@ namespace Dynamik {
 
 			std::pair<ARRAY<Vertex>, ARRAY<UI32>> _skyBoxTest();
 
-			ADGRVulkanRenderableObjectInitInfo RenderableObjectInitInfo();
+			ADGRVulkanGraphicsRenderableObjectInitInfo RenderableObjectInitInfo();
 
 			void initializeSwapChain();
 
@@ -202,13 +203,13 @@ namespace Dynamik {
 			CameraReflect myCameraReflect;
 			CameraSkybox myCameraSkybox;
 
-			VulkanCore myVulkanCore;
-			VulkanSwapChain3D mySwapChain3D;
-			VulkanCommandBuffer myCommandBuffer;
-			VulkanFrameBuffer myFrameBuffer;
+			VulkanGraphicsCore myVulkanGraphicsCore;
+			VulkanGraphicsSwapChain3D mySwapChain3D;
+			VulkanGraphicsCommandBuffer myCommandBuffer;
+			VulkanGraphicsFrameBuffer myFrameBuffer;
 
-			VulkanColorBuffer myColorBuffer;
-			VulkanDepthBuffer myDepthBuffer;
+			VulkanGraphicsColorBuffer myColorBuffer;
+			VulkanGraphicsDepthBuffer myDepthBuffer;
 
 			ARRAY<ADGRVulkanRenderData> renderDatas;
 			ARRAY<ADGRVulkanSkeletalAnimationData> animationDatas;
@@ -229,9 +230,12 @@ namespace Dynamik {
 
 			std::map<std::string, ADGRVulkanMaterialDescriptor> myRenderableMeterials;
 
+			private:
+				VulkanComputeCore myComputeCore;
+
 		private:
 			ADGRVulkanTextOverlayDataContainer overlayContainer;
-			VulkanCommandBuffer overlayCommandBuffer;
+			VulkanGraphicsCommandBuffer overlayCommandBuffer;
 			void _initializeOverlayCommandPool();
 			void _initializeOverlayDescriptorSetLayout();
 			void _initializeOverlayPipelineLayout();
@@ -239,7 +243,7 @@ namespace Dynamik {
 
 			void _initializeOverlayVertexBuffer();
 			void _initializeOverlayTextureImage();
-			void _initializeOverlayPipeline(ADGRVulkanShaderPathContainer shaderContainer);
+			void _initializeOverlayPipeline(ADGRVulkanGraphicsShaderPathContainer shaderContainer);
 			void _initializeOverlayDescriptorPool();
 			void _initializeOverlayDescriptorSets();
 
@@ -248,10 +252,10 @@ namespace Dynamik {
 			void _beginUpdate();
 			void _endUpdate();
 
-			void _initializeOverlayCommandBuffers(ADGRVulkanCommandBufferInitInfo info);
+			void _initializeOverlayCommandBuffers(ADGRVulkanGraphicsCommandBufferInitInfo info);
 
 			void _initializeOverlayStageOne();
-			void _initializeOverlayStageTwo(ADGRVulkanShaderPathContainer shaderContainer);
+			void _initializeOverlayStageTwo(ADGRVulkanGraphicsShaderPathContainer shaderContainer);
 			void _terminateOverlay();
 		};
 	}

@@ -2,15 +2,15 @@
 #ifndef _DYNAMIK_ADGR_VULKAN_PBR_OBJECT_H
 #define _DYNAMIK_ADGR_VULKAN_PBR_OBJECT_H
 
-#include "Objects/VulkanRenderableObject.h"
-#include "Objects/VulkanPushConstant.h"
+#include "Graphics/VulkanGraphicsRenderableObject.h"
+#include "Graphics/VulkanGraphicsPushConstant.h"
 
 namespace Dynamik {
 	namespace ADGR {
 		namespace Backend {
-			class VulkanPBRObject : public VulkanRenderableObject {
+			class VulkanPBRObject : public VulkanGraphicsRenderableObject {
 			public:
-				VulkanPBRObject(ADGRVulkanRenderableObjectInitInfo initInfo);
+				VulkanPBRObject(ADGRVulkanGraphicsRenderableObjectInitInfo initInfo);
 				virtual ~VulkanPBRObject() {}
 
 				virtual ADGRVulkanRenderData initializeObject(VkDevice logicalDevice, ADGRVulkan3DObjectData _object, VkSampleCountFlagBits msaaSamples) override;
@@ -24,13 +24,13 @@ namespace Dynamik {
 				void initializeDescriptorSets(ADGRVulkanDescriptorSetsInitInfo info) override;
 
 			private:
-				class _VertexPushConstant : public VulkanPushConstant {
+				class _VertexPushConstant : public VulkanGraphicsPushConstant {
 				public:
 					_VertexPushConstant();
 					~_VertexPushConstant() {}
 				} vertPushConstant;
 
-				class _FragmentPushConstant : public VulkanPushConstant {
+				class _FragmentPushConstant : public VulkanGraphicsPushConstant {
 				public:
 					_FragmentPushConstant();
 					~_FragmentPushConstant() {}

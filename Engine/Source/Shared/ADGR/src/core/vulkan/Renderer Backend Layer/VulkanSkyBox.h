@@ -2,14 +2,14 @@
 #ifndef _DYNAMIK_ADGR_VULKAN_SKY_BOX_H
 #define _DYNAMIK_ADGR_VULKAN_SKY_BOX_H
 
-#include "Objects/VulkanRenderableObject.h"
+#include "Graphics/VulkanGraphicsRenderableObject.h"
 
 namespace Dynamik {
 	namespace ADGR {
 		namespace Backend {
-			class VulkanSkyBox : public VulkanRenderableObject {
+			class VulkanSkyBox : public VulkanGraphicsRenderableObject {
 			public:
-				VulkanSkyBox(ADGRVulkanRenderableObjectInitInfo info);
+				VulkanSkyBox(ADGRVulkanGraphicsRenderableObjectInitInfo info);
 				~VulkanSkyBox() {}
 
 				ADGRVulkanRenderData initializeObject(VkDevice logicalDevice, ADGRVulkan3DObjectData _object, VkSampleCountFlagBits msaaSamples) override;

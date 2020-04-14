@@ -2,7 +2,7 @@
 #ifndef _DYNAMIK_ADGR_VULKAN_OBJECT_2D_H
 #define _DYNAMIK_ADGR_VULKAN_OBJECT_2D_H
 
-#include "Objects/VulkanRenderableObject.h"
+#include "Graphics/VulkanGraphicsRenderableObject.h"
 
 namespace Dynamik {
 	namespace ADGR {
@@ -21,9 +21,9 @@ namespace Dynamik {
 				DMK_ADGR_RENDERING_TECHNOLOGY renderTechnology = DMK_ADGR_RENDERING_TECHNOLOGY::DMK_ADGR_RENDER_INDEXED;
 			};
 
-			class VulkanObject2D : public VulkanRenderableObject {
+			class VulkanObject2D : public VulkanGraphicsRenderableObject {
 			public:
-				VulkanObject2D(ADGRVulkanRenderableObjectInitInfo info) : VulkanRenderableObject(info) {}
+				VulkanObject2D(ADGRVulkanGraphicsRenderableObjectInitInfo info) : VulkanGraphicsRenderableObject(info) {}
 				~VulkanObject2D() {}
 			};
 		}

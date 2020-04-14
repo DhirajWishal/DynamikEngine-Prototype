@@ -5,6 +5,8 @@
 #include "VulkanComputePipeline.h"
 #include "VulkanComputeDescriptor.h"
 
+#include "../Graphics/VulkanGraphicsRenderableObject.h"
+
 namespace Dynamik {
 	namespace ADGR {
 		namespace Backend {
@@ -19,34 +21,63 @@ namespace Dynamik {
 			struct ADGRVulkanComputeObjectInitInfo {
 				VkPhysicalDevice physicalDevice = VK_NULL_HANDLE;
 				VkDevice logicalDevice = VK_NULL_HANDLE;
+				VkQueue computeQueue = VK_NULL_HANDLE;
 				UI32 queueFamilyIndex = 0;
 				VkPhysicalDeviceMemoryProperties physicalDeviceMemoryProperties;
+				VkCommandPool commandPool = VK_NULL_HANDLE;
+			};
+
+			struct ADGRVulkanComputeInputContainer {
+				ADGRVulkanComputeInputContainer() {}
+				virtual ~ADGRVulkanComputeInputContainer() {}
+
+				VkBuffer dataBuffer = VK_NULL_HANDLE;
+				VkDeviceMemory dataBufferMemory = VK_NULL_HANDLE;
+			};
+
+			struct ADGRVulkanComputeBufferInputContainer : public ADGRVulkanComputeInputContainer {
+				ADGRVulkanComputeBufferInputContainer() {}
+				~ADGRVulkanComputeBufferInputContainer() {}
+			};
+
+			struct ADGRVulkanComputeImageInputContainer : public ADGRVulkanComputeInputContainer {
+				ADGRVulkanComputeImageInputContainer() {}
+				~ADGRVulkanComputeImageInputContainer() {}
+
+				ADGRVulkanTextureContainer inputTextureData;
 			};
 
 			class VulkanComputeObject {
 			public:
 				VulkanComputeObject() {}
 				VulkanComputeObject(ADGRVulkanComputeObjectInitInfo info) :
-					logicalDevice(info.logicalDevice), queueFamilyIndex(info.queueFamilyIndex),
+					logicalDevice(info.logicalDevice), computeQueue(info.computeQueue),
+					queueFamilyIndex(info.queueFamilyIndex),
 					physicalDeviceMemoryProperties(info.physicalDeviceMemoryProperties),
-					physicalDevice(info.physicalDevice) {}
+					physicalDevice(info.physicalDevice), commandPool(info.commandPool) {}
 				virtual ~VulkanComputeObject() {}
 
 				virtual void initialize();
+				virtual void initialize(ADGRVulkanComputeInputContainer container);
+				virtual void initialize(ADGRVulkanComputeBufferInputContainer container);
+				virtual void initialize(ADGRVulkanComputeImageInputContainer container);
+				virtual void terminate();
 
 				ADGRVulkanComputeData myComputeData;
 
-			private:
-				VkBuffer inputBuffer = VK_NULL_HANDLE;
-				VkDeviceMemory inputBufferMemory = VK_NULL_HANDLE;
-
-				VkBuffer outputBuffer = VK_NULL_HANDLE;
-				VkDeviceMemory outputBufferMemory = VK_NULL_HANDLE;
+			protected:
+				virtual void _initializeDescriptorSetLayout() {}
+				virtual void _initializePipelineLayout() {}
+				virtual void _initializePipeline() {}
+				virtual void _initializeDescriptorPool() {}
+				virtual void _initializeDescriptorSets() {}
 
 				VkPhysicalDevice physicalDevice = VK_NULL_HANDLE;
 				VkDevice logicalDevice = VK_NULL_HANDLE;
+				VkQueue computeQueue = VK_NULL_HANDLE;
 				UI32 queueFamilyIndex = 0;
 				VkPhysicalDeviceMemoryProperties physicalDeviceMemoryProperties;
+				VkCommandPool commandPool = VK_NULL_HANDLE;
 			};
 		}
 	}

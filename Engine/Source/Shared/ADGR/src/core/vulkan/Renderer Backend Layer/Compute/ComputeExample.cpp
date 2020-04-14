@@ -601,7 +601,7 @@ int main(int argc, const char* const argv[]) {
 
 		BAIL_ON_BAD_RESULT(vkQueueWaitIdle(queue));
 
-		BAIL_ON_BAD_RESULT(vkMapMemory(device, memory, 0, memorySize, 0, (void*)&payload));
+		//BAIL_ON_BAD_RESULT(vkMapMemory(device, memory, 0, memorySize, 0, (void*)&payload));
 		//
 		//for (uint32_t k = 0, e = bufferSize / sizeof(int32_t); k < e; k++) {
 		//	BAIL_ON_BAD_RESULT(payload[k + e] == payload[k] ? VK_SUCCESS : VK_ERROR_OUT_OF_HOST_MEMORY);

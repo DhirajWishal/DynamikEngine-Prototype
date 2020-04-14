@@ -2,14 +2,14 @@
 #ifndef _DYNAMIK_ADGR_VULKAN_OBJECT3D_H
 #define _DYNAMIK_ADGR_VULKAN_OBJECT3D_H
 
-#include "Objects/VulkanRenderableObject.h"
+#include "Graphics/VulkanGraphicsRenderableObject.h"
 
 namespace Dynamik {
 	namespace ADGR {
 		namespace Backend {
-			class VulkanObject3D : public VulkanRenderableObject {
+			class VulkanObject3D : public VulkanGraphicsRenderableObject {
 			public:
-				VulkanObject3D(ADGRVulkanRenderableObjectInitInfo info) : VulkanRenderableObject(info) {}
+				VulkanObject3D(ADGRVulkanGraphicsRenderableObjectInitInfo info) : VulkanGraphicsRenderableObject(info) {}
 				~VulkanObject3D() {}
 			};
 		}

@@ -12,8 +12,8 @@ namespace Dynamik {
 				VulkanAnimationManager() {}
 				~VulkanAnimationManager() {}
 
-				void addInitializedAnimation(VkDevice logicalDevice, ADGRVulkan3DObjectData _object, VkSampleCountFlagBits msaaSamples, VulkanRenderableObject* animation);
-				void addUninitializedAnimation(VulkanRenderableObject* animation);
+				void addInitializedAnimation(VkDevice logicalDevice, ADGRVulkan3DObjectData _object, VkSampleCountFlagBits msaaSamples, VulkanGraphicsRenderableObject* animation);
+				void addUninitializedAnimation(VulkanGraphicsRenderableObject* animation);
 
 				void addSkeletalAnimation(const VulkanSkeletalAnimation& animation);
 

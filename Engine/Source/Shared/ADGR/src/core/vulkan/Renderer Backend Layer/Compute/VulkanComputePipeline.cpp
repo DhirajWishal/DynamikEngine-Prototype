@@ -4,7 +4,7 @@
 namespace Dynamik {
 	namespace ADGR {
 		namespace Backend {		
-			void VulkanComputePipeline::initializePipelineLayout(VkDevice device, ADGRVulkanPipelineLayoutInitInfo info)
+			void VulkanComputePipeline::initializePipelineLayout(VkDevice device, ADGRVulkanGraphicsPipelineLayoutInitInfo info)
 			{
 				// initialize the pipeline layout
 				VkPipelineLayoutCreateInfo pipelineLayoutInfo = {};
@@ -34,7 +34,7 @@ namespace Dynamik {
 				pipelineInfo.sType = VK_STRUCTURE_TYPE_COMPUTE_PIPELINE_CREATE_INFO;
 				pipelineInfo.pNext = VK_NULL_HANDLE;
 				pipelineInfo.flags = VK_NULL_HANDLE;
-				pipelineInfo.stage = info.computeShaderStage;
+				pipelineInfo.stage = info.computeShader.stageCreateInfo;
 				pipelineInfo.layout = layout;
 				pipelineInfo.basePipelineHandle = VK_NULL_HANDLE;
 				pipelineInfo.basePipelineIndex = VK_NULL_HANDLE;

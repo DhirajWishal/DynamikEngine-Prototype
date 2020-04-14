@@ -1,13 +1,13 @@
 #include "adgrafx.h"
 #include "VulkanReflectObject.h"
 
-#include "Objects/VulkanFunctions.h"
+#include "Graphics/VulkanGraphicsFunctions.h"
 
 namespace Dynamik {
 	namespace ADGR {
 		namespace Backend {
-			VulkanReflectObject::VulkanReflectObject(ADGRVulkanRenderableObjectInitInfo info)
-				: VulkanRenderableObject(info)
+			VulkanReflectObject::VulkanReflectObject(ADGRVulkanGraphicsRenderableObjectInitInfo info)
+				: VulkanGraphicsRenderableObject(info)
 			{
 				myRenderData.type = DMKObjectType::DMK_OBJECT_TYPE_DEBUG_OBJECT;
 			}
@@ -15,57 +15,57 @@ namespace Dynamik {
 			ADGRVulkanRenderData VulkanReflectObject::initializeObject(VkDevice logicalDevice, ADGRVulkan3DObjectData _object, VkSampleCountFlagBits msaaSamples)
 			{
 				ADGRVulkanDescriptorSetLayoutInitInfo layoutInitInfo;
-				myRenderData.descriptors.layout = VulkanRenderLayout::createDescriptorSetLayout(logicalDevice, layoutInitInfo);
+				myRenderData.descriptors.layout = VulkanGraphicsRenderLayout::createDescriptorSetLayout(logicalDevice, layoutInitInfo);
 
-				ADGRVulkanPipelineLayoutInitInfo pipelineLayoutInitInfo;
+				ADGRVulkanGraphicsPipelineLayoutInitInfo pipelineLayoutInitInfo;
 				pipelineLayoutInitInfo.layouts = { myRenderData.descriptors.layout };
 				initializePipelineLayout(pipelineLayoutInitInfo);
 
-				ARRAY<VulkanShader> _shaders;
+				ARRAY<VulkanGraphicsShader> _shaders;
 
 				if (_object.vertexShaderPath.size() && _object.vertexShaderPath != "NONE")
 				{
-					ADGRVulkanShaderInitInfo _initInfo;
+					ADGRVulkanGraphicsShaderInitInfo _initInfo;
 					_initInfo.path = _object.vertexShaderPath;
-					_initInfo.type = ADGRVulkanShaderType::ADGR_VULKAN_SHADER_TYPE_VERTEX;
+					_initInfo.type = ADGRVulkanGraphicsShaderType::ADGR_VULKAN_SHADER_TYPE_VERTEX;
 
-					VulkanShader _shader;
+					VulkanGraphicsShader _shader;
 					_shader.initialize(logicalDevice, _initInfo);
 					_shaders.pushBack(_shader);
 				}
 				if (_object.tessellationShaderPath.size() && _object.tessellationShaderPath != "NONE")
 				{
-					ADGRVulkanShaderInitInfo _initInfo;
+					ADGRVulkanGraphicsShaderInitInfo _initInfo;
 					_initInfo.path = _object.tessellationShaderPath;
-					_initInfo.type = ADGRVulkanShaderType::ADGR_VULKAN_SHADER_TYPE_TESSELLATION;
+					_initInfo.type = ADGRVulkanGraphicsShaderType::ADGR_VULKAN_SHADER_TYPE_TESSELLATION;
 
-					VulkanShader _shader;
+					VulkanGraphicsShader _shader;
 					_shader.initialize(logicalDevice, _initInfo);
 					_shaders.pushBack(_shader);
 				}
 				if (_object.geometryShaderPath.size() && _object.geometryShaderPath != "NONE")
 				{
-					ADGRVulkanShaderInitInfo _initInfo;
+					ADGRVulkanGraphicsShaderInitInfo _initInfo;
 					_initInfo.path = _object.geometryShaderPath;
-					_initInfo.type = ADGRVulkanShaderType::ADGR_VULKAN_SHADER_TYPE_GEOMETRY;
+					_initInfo.type = ADGRVulkanGraphicsShaderType::ADGR_VULKAN_SHADER_TYPE_GEOMETRY;
 
-					VulkanShader _shader;
+					VulkanGraphicsShader _shader;
 					_shader.initialize(logicalDevice, _initInfo);
 					_shaders.pushBack(_shader);
 				}
 				if (_object.fragmentShaderPath.size() && _object.fragmentShaderPath != "NONE")
 				{
-					ADGRVulkanShaderInitInfo _initInfo;
+					ADGRVulkanGraphicsShaderInitInfo _initInfo;
 					_initInfo.path = _object.fragmentShaderPath;
-					_initInfo.type = ADGRVulkanShaderType::ADGR_VULKAN_SHADER_TYPE_FRAGMENT;
+					_initInfo.type = ADGRVulkanGraphicsShaderType::ADGR_VULKAN_SHADER_TYPE_FRAGMENT;
 
-					VulkanShader _shader;
+					VulkanGraphicsShader _shader;
 					_shader.initialize(logicalDevice, _initInfo);
 					_shaders.pushBack(_shader);
 				}
 
 				// initialize pipeline
-				ADGRVulkanPipelineInitInfo pipelineInitInfo;
+				ADGRVulkanGraphicsPipelineInitInfo pipelineInitInfo;
 				pipelineInitInfo.shaders = _shaders;
 				pipelineInitInfo.multisamplerMsaaSamples = msaaSamples;
 				pipelineInitInfo.vertexBindingDescription = Vertex::getBindingDescription(1);
@@ -73,7 +73,7 @@ namespace Dynamik {
 				pipelineInitInfo.isTexturesAvailable = _object.texturePaths.size();
 				initializePipeline(pipelineInitInfo);
 
-				for (VulkanShader _shader : _shaders)
+				for (VulkanGraphicsShader _shader : _shaders)
 					_shader.terminate(logicalDevice);
 
 				ARRAY<ADGRVulkanTextureInitInfo> textureInitInfos;
@@ -170,14 +170,14 @@ namespace Dynamik {
 						VkBuffer stagingBuffer = VK_NULL_HANDLE;
 						VkDeviceMemory stagingBufferMemory = VK_NULL_HANDLE;
 
-						ADGRCreateBufferInfo bufferInfo;
+						ADGRVulkanCreateBufferInfo bufferInfo;
 						bufferInfo.bufferSize = ktxTexture.size();
 						bufferInfo.usage = VK_BUFFER_USAGE_TRANSFER_SRC_BIT;
 						bufferInfo.bufferMemoryPropertyflags = VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT;
 						bufferInfo.buffer = &stagingBuffer;
 						bufferInfo.bufferMemory = &stagingBufferMemory;
 
-						VulkanFunctions::createBuffer(logicalDevice, physicalDevice, bufferInfo);
+						VulkanGraphicsFunctions::createBuffer(logicalDevice, physicalDevice, bufferInfo);
 
 						void* data;
 						if (vkMapMemory(logicalDevice, stagingBufferMemory, 0, static_cast<size_t>(ktxTexture.size()), 0, &data) != VK_SUCCESS)
@@ -185,7 +185,7 @@ namespace Dynamik {
 						memcpy(data, ktxTexture.data(), static_cast<size_t>(ktxTexture.size()));
 						vkUnmapMemory(logicalDevice, stagingBufferMemory);
 
-						ADGRCreateImageInfo cinfo;
+						ADGRVulkanCreateImageInfo cinfo;
 						cinfo.width = _container.width;
 						cinfo.height = _container.height;
 						cinfo.format = _container.format;
@@ -199,7 +199,7 @@ namespace Dynamik {
 						cinfo.arrayLayers = ktxTexture.max_face() + 1;
 						cinfo.flags = VK_IMAGE_CREATE_CUBE_COMPATIBLE_BIT;
 
-						VulkanFunctions::createImage(logicalDevice, physicalDevice, cinfo);
+						VulkanGraphicsFunctions::createImage(logicalDevice, physicalDevice, cinfo);
 
 						std::vector<VkBufferImageCopy> bufferCopyRegions;
 						for (UI32 face = 0; face < ktxTexture.max_face() + 1; face++)
@@ -220,20 +220,20 @@ namespace Dynamik {
 							}
 						}
 
-						ADGRTransitionImageLayoutInfo transitionInfo;
+						ADGRVulkanTransitionImageLayoutInfo transitionInfo;
 						transitionInfo.image = _container.image;
 						transitionInfo.format = _container.format;
 						transitionInfo.oldLayout = VK_IMAGE_LAYOUT_UNDEFINED;
 						transitionInfo.newLayout = VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL;
 						transitionInfo.mipLevels = info.mipLevels;
 						transitionInfo.layerCount = ktxTexture.max_face() + 1;
-						VulkanFunctions::transitionImageLayout(logicalDevice, commandPool, graphicsQueue, presentQueue, transitionInfo);
+						VulkanGraphicsFunctions::transitionImageLayout(logicalDevice, commandPool, graphicsQueue, presentQueue, transitionInfo);
 
-						ADGRCopyBufferToImageInfo cpyInfo;
+						ADGRVulkanCopyBufferToImageInfo cpyInfo;
 						cpyInfo.buffer = stagingBuffer;
 						cpyInfo.image = _container.image;
 						cpyInfo.destinationImageLayout = VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL;
-						VulkanFunctions::copyBufferToImageOverride(logicalDevice, commandPool, graphicsQueue, presentQueue, cpyInfo, bufferCopyRegions);
+						VulkanGraphicsFunctions::copyBufferToImageOverride(logicalDevice, commandPool, graphicsQueue, presentQueue, cpyInfo, bufferCopyRegions);
 
 						ADGRVulkanTextureSamplerInitInfo samplerInitInfo;
 						samplerInitInfo.magFilter = info.magFilter;
@@ -246,9 +246,9 @@ namespace Dynamik {
 						samplerInitInfo.mipLoadBias = 0.0f;
 						samplerInitInfo.compareOp = VK_COMPARE_OP_NEVER;
 						samplerInitInfo.borderColor = VK_BORDER_COLOR_FLOAT_OPAQUE_WHITE;
-						_container.imageSampler = VulkanFunctions::createImageSampler(logicalDevice, samplerInitInfo);
+						_container.imageSampler = VulkanGraphicsFunctions::createImageSampler(logicalDevice, samplerInitInfo);
 
-						ADGRCreateImageViewInfo cinfo2;
+						ADGRVulkanCreateImageViewInfo cinfo2;
 						cinfo2.image = _container.image;
 						cinfo2.format = _container.format;
 						cinfo2.mipLevels = _container.mipLevels;
@@ -256,7 +256,7 @@ namespace Dynamik {
 						cinfo2.viewType = VK_IMAGE_VIEW_TYPE_CUBE;
 						cinfo2.layerCount = 6;
 						cinfo2.component = { VK_COMPONENT_SWIZZLE_R, VK_COMPONENT_SWIZZLE_G, VK_COMPONENT_SWIZZLE_B, VK_COMPONENT_SWIZZLE_A };
-						_container.imageView = VulkanFunctions::createImageView(logicalDevice, cinfo2);
+						_container.imageView = VulkanGraphicsFunctions::createImageView(logicalDevice, cinfo2);
 
 						vkDestroyBuffer(logicalDevice, stagingBuffer, nullptr);
 						vkFreeMemory(logicalDevice, stagingBufferMemory, nullptr);
@@ -287,13 +287,13 @@ namespace Dynamik {
 					VkDeviceSize totalSize = texData.texWidth * texData.texHeight * 4 * 6;
 					UI32 layerSize = totalSize / 6;
 
-					ADGRCreateBufferInfo bufferInfo;
+					ADGRVulkanCreateBufferInfo bufferInfo;
 					bufferInfo.bufferSize = totalSize;
 					bufferInfo.usage = VK_BUFFER_USAGE_TRANSFER_SRC_BIT;
 					bufferInfo.bufferMemoryPropertyflags = VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT;
 					bufferInfo.buffer = &bufferContainer.buffer;
 					bufferInfo.bufferMemory = &bufferContainer.bufferMemory;
-					VulkanFunctions::createBuffer(logicalDevice, physicalDevice, bufferInfo);
+					VulkanGraphicsFunctions::createBuffer(logicalDevice, physicalDevice, bufferInfo);
 
 					_container.mipLevels = 1;
 					_container.format = VK_FORMAT_R8G8B8A8_UNORM;
@@ -305,7 +305,7 @@ namespace Dynamik {
 						memcpy((void*)((UI64(data)) + (layerSize * i)), images[i], static_cast<size_t>(layerSize));
 					vkUnmapMemory(logicalDevice, bufferContainer.bufferMemory);
 
-					ADGRCreateImageInfo cinfo;
+					ADGRVulkanCreateImageInfo cinfo;
 					cinfo.width = width;
 					cinfo.height = height;
 					cinfo.format = VK_FORMAT_R8G8B8A8_UNORM;
@@ -318,25 +318,25 @@ namespace Dynamik {
 					cinfo.numSamples = VK_SAMPLE_COUNT_1_BIT;
 					cinfo.arrayLayers = 6;
 					cinfo.flags = VK_IMAGE_CREATE_CUBE_COMPATIBLE_BIT;
-					VulkanFunctions::createImage(logicalDevice, physicalDevice, cinfo);
+					VulkanGraphicsFunctions::createImage(logicalDevice, physicalDevice, cinfo);
 
-					ADGRTransitionImageLayoutInfo transitionInfo;
+					ADGRVulkanTransitionImageLayoutInfo transitionInfo;
 					transitionInfo.image = _container.image;
 					transitionInfo.format = _container.format;
 					transitionInfo.oldLayout = VK_IMAGE_LAYOUT_UNDEFINED;
 					transitionInfo.newLayout = VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL;
 					transitionInfo.mipLevels = 1;
 					transitionInfo.layerCount = 6;
-					VulkanFunctions::transitionImageLayout(logicalDevice, commandPool, graphicsQueue, presentQueue, transitionInfo);
+					VulkanGraphicsFunctions::transitionImageLayout(logicalDevice, commandPool, graphicsQueue, presentQueue, transitionInfo);
 
-					ADGRCopyBufferToImageInfo cpyInfo;
+					ADGRVulkanCopyBufferToImageInfo cpyInfo;
 					cpyInfo.buffer = bufferContainer.buffer;
 					cpyInfo.image = _container.image;
 					cpyInfo.width = static_cast<UI32>(texData.texWidth);
 					cpyInfo.height = static_cast<UI32>(texData.texHeight);
 					cpyInfo.baseArrayCount = 0;
 					cpyInfo.layerCount = 6;
-					VulkanFunctions::copyBufferToImage(logicalDevice, commandPool, graphicsQueue, presentQueue, cpyInfo);
+					VulkanGraphicsFunctions::copyBufferToImage(logicalDevice, commandPool, graphicsQueue, presentQueue, cpyInfo);
 
 					transitionInfo.image = _container.image;
 					transitionInfo.format = _container.format;
@@ -344,7 +344,7 @@ namespace Dynamik {
 					transitionInfo.newLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
 					transitionInfo.mipLevels = 1;
 					transitionInfo.layerCount = 6;
-					VulkanFunctions::transitionImageLayout(logicalDevice, commandPool, graphicsQueue, presentQueue, transitionInfo);
+					VulkanGraphicsFunctions::transitionImageLayout(logicalDevice, commandPool, graphicsQueue, presentQueue, transitionInfo);
 
 					ADGRVulkanTextureSamplerInitInfo samplerInitInfo;
 					samplerInitInfo.magFilter = VK_FILTER_LINEAR;
@@ -359,9 +359,9 @@ namespace Dynamik {
 					samplerInitInfo.compareOp = VK_COMPARE_OP_NEVER;
 					samplerInitInfo.borderColor = VK_BORDER_COLOR_FLOAT_OPAQUE_WHITE;
 					samplerInitInfo.maxAnisotrophy = 1.0f;
-					_container.imageSampler = VulkanFunctions::createImageSampler(logicalDevice, samplerInitInfo);
+					_container.imageSampler = VulkanGraphicsFunctions::createImageSampler(logicalDevice, samplerInitInfo);
 
-					ADGRCreateImageViewInfo cinfo2;
+					ADGRVulkanCreateImageViewInfo cinfo2;
 					cinfo2.image = _container.image;
 					cinfo2.format = _container.format;
 					cinfo2.mipLevels = _container.mipLevels;
@@ -369,7 +369,7 @@ namespace Dynamik {
 					cinfo2.viewType = VK_IMAGE_VIEW_TYPE_CUBE;
 					cinfo2.layerCount = 6;
 					cinfo2.component = { VK_COMPONENT_SWIZZLE_R, VK_COMPONENT_SWIZZLE_G, VK_COMPONENT_SWIZZLE_B, VK_COMPONENT_SWIZZLE_A };
-					_container.imageView = VulkanFunctions::createImageView(logicalDevice, cinfo2);
+					_container.imageView = VulkanGraphicsFunctions::createImageView(logicalDevice, cinfo2);
 
 					/*
 					 For cube and cube array image views, the layers of the image view starting
@@ -397,7 +397,7 @@ namespace Dynamik {
 			void VulkanReflectObject::initializeUniformBuffer()
 			{
 				myRenderData.uniformBufferContainers.pushBack(
-					VulkanFunctions::createUniformBuffers(
+					VulkanGraphicsFunctions::createUniformBuffers(
 						logicalDevice,
 						physicalDevice,
 						sizeof(UBO_MVPC),

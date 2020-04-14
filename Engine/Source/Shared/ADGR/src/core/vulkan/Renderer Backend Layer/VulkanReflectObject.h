@@ -2,14 +2,14 @@
 #ifndef _DYNAMIK_ADGR_VULKAN_REFLECT_OBJECT_H
 #define _DYNAMIK_ADGR_VULKAN_REFLECT_OBJECT_H
 
-#include "Objects/VulkanRenderableObject.h"
+#include "Graphics/VulkanGraphicsRenderableObject.h"
 
 namespace Dynamik {
 	namespace ADGR {
 		namespace Backend {
-			class VulkanReflectObject : public VulkanRenderableObject {
+			class VulkanReflectObject : public VulkanGraphicsRenderableObject {
 			public:
-				VulkanReflectObject(ADGRVulkanRenderableObjectInitInfo info);
+				VulkanReflectObject(ADGRVulkanGraphicsRenderableObjectInitInfo info);
 				~VulkanReflectObject() {}
 
 				ADGRVulkanRenderData initializeObject(VkDevice logicalDevice, ADGRVulkan3DObjectData _object, VkSampleCountFlagBits msaaSamples) override;

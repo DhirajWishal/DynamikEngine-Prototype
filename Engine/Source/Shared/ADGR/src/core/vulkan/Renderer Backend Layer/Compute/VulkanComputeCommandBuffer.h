@@ -9,7 +9,6 @@ namespace Dynamik {
 	namespace ADGR {
 		namespace Backend {
 			struct ADGRVulkanComputeCommandBufferInitInfo {
-				UI32 count = 0;
 				ARRAY<ADGRVulkanComputeData> computeDatas;
 			};
 

@@ -77,19 +77,19 @@ namespace Dynamik {
 				vkQueueWaitIdle(computeQueue);
 			}
 
-			UI32 VulkanComputeCore::getBestTransferQueue(VkPhysicalDevice physicalDevice)
+			UI32 getBestTransferQueue(VkPhysicalDevice physicalDevice)
 			{
 				uint32_t queueFamilyPropertiesCount = 0;
 				vkGetPhysicalDeviceQueueFamilyProperties(physicalDevice, &queueFamilyPropertiesCount, 0);
 
-				VkQueueFamilyProperties* const queueFamilyProperties = nullptr;
+				VkQueueFamilyProperties queueFamilyProperties;
 
-				vkGetPhysicalDeviceQueueFamilyProperties(physicalDevice, &queueFamilyPropertiesCount, queueFamilyProperties);
+				vkGetPhysicalDeviceQueueFamilyProperties(physicalDevice, &queueFamilyPropertiesCount, &queueFamilyProperties);
 
 				// first try and find a queue that has just the transfer bit set
 				for (uint32_t i = 0; i < queueFamilyPropertiesCount; i++) {
 					// mask out the sparse binding bit that we aren't caring about (yet!)
-					const VkQueueFlags maskedFlags = (~VK_QUEUE_SPARSE_BINDING_BIT & queueFamilyProperties[i].queueFlags);
+					const VkQueueFlags maskedFlags = (~VK_QUEUE_SPARSE_BINDING_BIT & ((VkQueueFamilyProperties*)&queueFamilyProperties)[i].queueFlags);
 
 					if (!((VK_QUEUE_GRAPHICS_BIT | VK_QUEUE_COMPUTE_BIT) & maskedFlags) &&
 						(VK_QUEUE_TRANSFER_BIT & maskedFlags)) {
@@ -101,7 +101,7 @@ namespace Dynamik {
 				// remember that having compute on the queue implicitly enables transfer!
 				for (uint32_t i = 0; i < queueFamilyPropertiesCount; i++) {
 					// mask out the sparse binding bit that we aren't caring about (yet!)
-					const VkQueueFlags maskedFlags = (~VK_QUEUE_SPARSE_BINDING_BIT & queueFamilyProperties[i].queueFlags);
+					const VkQueueFlags maskedFlags = (~VK_QUEUE_SPARSE_BINDING_BIT & ((VkQueueFamilyProperties*)&queueFamilyProperties)[i].queueFlags);
 
 					if (!(VK_QUEUE_GRAPHICS_BIT & maskedFlags) && (VK_QUEUE_COMPUTE_BIT & maskedFlags)) {
 						return i;
@@ -111,7 +111,7 @@ namespace Dynamik {
 				// lastly get any queue that'll work for us (graphics, compute or transfer bit set)
 				for (uint32_t i = 0; i < queueFamilyPropertiesCount; i++) {
 					// mask out the sparse binding bit that we aren't caring about (yet!)
-					const VkQueueFlags maskedFlags = (~VK_QUEUE_SPARSE_BINDING_BIT & queueFamilyProperties[i].queueFlags);
+					const VkQueueFlags maskedFlags = (~VK_QUEUE_SPARSE_BINDING_BIT & ((VkQueueFamilyProperties*)&queueFamilyProperties)[i].queueFlags);
 
 					if ((VK_QUEUE_GRAPHICS_BIT | VK_QUEUE_COMPUTE_BIT | VK_QUEUE_TRANSFER_BIT) & maskedFlags) {
 						return i;
@@ -121,7 +121,7 @@ namespace Dynamik {
 				return VK_ERROR_INITIALIZATION_FAILED;
 			}
 
-			UI32 VulkanComputeCore::getBestComputeQueue(VkPhysicalDevice physicalDevice)
+			UI32 getBestComputeQueue(VkPhysicalDevice physicalDevice)
 			{
 				uint32_t queueFamilyPropertiesCount = 0;
 				vkGetPhysicalDeviceQueueFamilyProperties(physicalDevice, &queueFamilyPropertiesCount, 0);
@@ -217,7 +217,7 @@ namespace Dynamik {
 
 			void VulkanComputeCore::initializeLogicalDevice()
 			{
-				queueFamilyIndex = getBestComputeQueue(physicalDevice);
+				queueFamilyIndices = ADGRVulkanComputeQueue::getQueues(physicalDevice);
 
 				VkPhysicalDeviceFeatures deviceFeatures = {};
 				deviceFeatures.samplerAnisotropy = VK_TRUE;
@@ -234,7 +234,20 @@ namespace Dynamik {
 				if (vkCreateDevice(physicalDevice, &createInfo, nullptr, &logicalDevice) != VK_SUCCESS)
 					DMK_CORE_FATAL("failed to create logical device!");
 
-				vkGetDeviceQueue(logicalDevice, queueFamilyIndex, 0, &computeQueue);
+				computeQueue = VK_NULL_HANDLE;
+				transferQueue = VK_NULL_HANDLE;
+				vkGetDeviceQueue(logicalDevice, queueFamilyIndices.computeFamily.value(), 0, &computeQueue);
+				vkGetDeviceQueue(logicalDevice, queueFamilyIndices.transferFamily.value(), 0, &transferQueue);
+			}
+
+			ADGRVulkanComputeQueue ADGRVulkanComputeQueue::getQueues(VkPhysicalDevice physicalDevice)
+			{
+				ADGRVulkanComputeQueue _queue;
+
+				_queue.computeFamily = getBestComputeQueue(physicalDevice);
+				_queue.transferFamily = getBestTransferQueue(physicalDevice);
+
+				return _queue;
 			}
 
 			B1 ADGRVulkanComputeQueue::isComplete()

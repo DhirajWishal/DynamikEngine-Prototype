@@ -77,7 +77,7 @@ namespace Dynamik {
 				void initializeUniformBuffer() override;
 				void updateUniformBuffer(UBO_SKELETAL uniformBufferObject, UI32 currentImage, F32 time);
 
-				void initializeDescriptorSets(ADGRVulkanDescriptorSetsInitInfo info) override;
+				void initializeDescriptorSets() override;
 
 			public:
 				ADGRVulkanSkeletalAnimationData myAnimationData;

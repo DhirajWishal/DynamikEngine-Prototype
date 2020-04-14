@@ -212,7 +212,6 @@
     <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsRenderableObject.h">
       <Filter>src\core\vulkan\Renderer Backend Layer\Objects</Filter>
     </ClInclude>
-    <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsRenderLayout.h" />
     <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsShader.h">
       <Filter>src\core\vulkan\Renderer Backend Layer\Objects</Filter>
     </ClInclude>
@@ -228,6 +227,9 @@
       <Filter>src\core\vulkan\Renderer Backend Layer\Objects</Filter>
     </ClInclude>
     <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Compute\VulkanComputeRBLIndex.h" />
+    <ClInclude Include="src\core\vulkan\Renderer Backend Layer\VulkanBRDF.h" />
+    <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsDescriptor.h" />
+    <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Common\VulkanDescriptor.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Layers\layer.cpp">
@@ -359,7 +361,6 @@
     <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsRenderableObject.cpp">
       <Filter>src\core\vulkan\Renderer Backend Layer\Objects</Filter>
     </ClCompile>
-    <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsRenderLayout.cpp" />
     <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsShader.cpp">
       <Filter>src\core\vulkan\Renderer Backend Layer\Objects</Filter>
     </ClCompile>
@@ -371,6 +372,9 @@
     </ClCompile>
     <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Compute\VulkanComputeShader.cpp" />
     <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Compute\VulkanComputeFunctions.cpp" />
+    <ClCompile Include="src\core\vulkan\Renderer Backend Layer\VulkanBRDF.cpp" />
+    <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsDescriptor.cpp" />
+    <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Common\VulkanDescriptor.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ADGR.lua" />

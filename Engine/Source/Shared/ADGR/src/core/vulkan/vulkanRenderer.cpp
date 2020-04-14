@@ -51,11 +51,8 @@ namespace Dynamik {
 		// Basic one-time initializations
 		void vulkanRenderer::initStageOne()
 		{
-			// initialize the compute instance
-			myComputeCore.initializeInstance();
-
-			// initialize the compute device
-			myComputeCore.initializeDevice();
+			// initialize the compute API
+			//initializeComputeAPI();
 
 			// initialize the window
 			DMKWindowManagerInitInfo windowInitInfo;
@@ -357,12 +354,10 @@ namespace Dynamik {
 				_renderObject.initializeUniformBuffer();
 
 				// initialize descriptor pool
-				ADGRVulkanDescriptorPoolInitInfo descriptorPoolInitInfo;
-				_renderObject.initializeDescriptorPool(descriptorPoolInitInfo);
+				_renderObject.initializeDescriptorPool();
 
 				// initialize descriptor sets
-				ADGRVulkanDescriptorSetsInitInfo descriptorSetsInitInfo;
-				_renderObject.initializeDescriptorSets(descriptorSetsInitInfo);
+				_renderObject.initializeDescriptorSets();
 
 				renderDatas.push_back(_renderObject.getRenderData());
 			}
@@ -744,6 +739,18 @@ namespace Dynamik {
 			}
 			else if (result != VK_SUCCESS)
 				DMK_CORE_FATAL("failed to present swap chain image!");
+		}
+
+		void vulkanRenderer::initializeComputeAPI()
+		{
+			// initialize the compute instance
+			myComputeCore.initializeInstance();
+
+			// initialize the compute device
+			myComputeCore.initializeDevice();
+
+			// initialize the compute command pool
+			myComputeCommandBuffer.initializeCommandPool(myComputeCore.logicalDevice, myComputeCore.queueFamilyIndices.computeFamily.value());
 		}
 
 		void vulkanRenderer::_initializeOverlayCommandPool()

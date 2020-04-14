@@ -14,7 +14,6 @@ namespace Dynamik {
 			ADGRVulkanRenderData VulkanPBRObject::initializeObject(VkDevice logicalDevice, ADGRVulkan3DObjectData _object, VkSampleCountFlagBits msaaSamples)
 			{
 				ADGRVulkanDescriptorSetLayoutInitInfo layoutInitInfo;
-				layoutInitInfo.overrideBindings = true;
 
 				VkDescriptorSetLayoutBinding uboLayoutBinding = {};
 				uboLayoutBinding.binding = 0; // info.bindIndex;
@@ -22,36 +21,36 @@ namespace Dynamik {
 				uboLayoutBinding.descriptorType = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;
 				uboLayoutBinding.pImmutableSamplers = nullptr; // Optional
 				uboLayoutBinding.stageFlags = VK_SHADER_STAGE_VERTEX_BIT | VK_SHADER_STAGE_FRAGMENT_BIT;
-				layoutInitInfo.additionalBindings.pushBack(uboLayoutBinding);
+				layoutInitInfo.bindings.pushBack(uboLayoutBinding);
 
 				uboLayoutBinding.binding = 1; // info.bindIndex;
 				uboLayoutBinding.descriptorCount = 1;
 				uboLayoutBinding.descriptorType = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;
 				uboLayoutBinding.pImmutableSamplers = nullptr; // Optional
 				uboLayoutBinding.stageFlags = VK_SHADER_STAGE_FRAGMENT_BIT;
-				layoutInitInfo.additionalBindings.pushBack(uboLayoutBinding);
+				layoutInitInfo.bindings.pushBack(uboLayoutBinding);
 
 				uboLayoutBinding.binding = 2; // info.bindIndex;
 				uboLayoutBinding.descriptorCount = 1;
 				uboLayoutBinding.descriptorType = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
 				uboLayoutBinding.pImmutableSamplers = nullptr; // Optional
 				uboLayoutBinding.stageFlags = VK_SHADER_STAGE_FRAGMENT_BIT;
-				layoutInitInfo.additionalBindings.pushBack(uboLayoutBinding);
+				layoutInitInfo.bindings.pushBack(uboLayoutBinding);
 
 				uboLayoutBinding.binding = 3; // info.bindIndex;
 				uboLayoutBinding.descriptorCount = 1;
 				uboLayoutBinding.descriptorType = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
 				uboLayoutBinding.pImmutableSamplers = nullptr; // Optional
 				uboLayoutBinding.stageFlags = VK_SHADER_STAGE_FRAGMENT_BIT;
-				layoutInitInfo.additionalBindings.pushBack(uboLayoutBinding);
+				layoutInitInfo.bindings.pushBack(uboLayoutBinding);
 
 				uboLayoutBinding.binding = 4; // info.bindIndex;
 				uboLayoutBinding.descriptorCount = 1;
 				uboLayoutBinding.descriptorType = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
 				uboLayoutBinding.pImmutableSamplers = nullptr; // Optional
 				uboLayoutBinding.stageFlags = VK_SHADER_STAGE_FRAGMENT_BIT;
-				layoutInitInfo.additionalBindings.pushBack(uboLayoutBinding);
-				myRenderData.descriptors.layout = VulkanGraphicsRenderLayout::createDescriptorSetLayout(logicalDevice, layoutInitInfo);
+				layoutInitInfo.bindings.pushBack(uboLayoutBinding);
+				myRenderData.descriptors.initializeLayout(logicalDevice, layoutInitInfo);
 
 				ADGRVulkanGraphicsPipelineLayoutInitInfo pipelineLayoutInitInfo;
 				pipelineLayoutInitInfo.layouts = { myRenderData.descriptors.layout };
@@ -161,12 +160,10 @@ namespace Dynamik {
 				initializeUniformBuffer();
 
 				// initialize descriptor pool
-				ADGRVulkanDescriptorPoolInitInfo descriptorPoolInitInfo;
-				initializeDescriptorPool(descriptorPoolInitInfo);
+				initializeDescriptorPool();
 
 				// initialize descriptor sets
-				ADGRVulkanDescriptorSetsInitInfo descriptorSetsInitInfo;
-				initializeDescriptorSets(descriptorSetsInitInfo);
+				initializeDescriptorSets();
 
 				return myRenderData;
 			}
@@ -490,7 +487,7 @@ namespace Dynamik {
 				vkUnmapMemory(logicalDevice, _container.bufferMemories[currentImage]);
 			}
 
-			void VulkanPBRObject::initializeDescriptorPool(ADGRVulkanDescriptorPoolInitInfo info)
+			void VulkanPBRObject::initializeDescriptorPool()
 			{
 				ARRAY<VkDescriptorPoolSize> poolSizes = {};
 
@@ -508,32 +505,13 @@ namespace Dynamik {
 					poolSizes.push_back(_poolSize2);
 				}
 
-				VkDescriptorPoolCreateInfo poolInfo = {};
-				poolInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_POOL_CREATE_INFO;
-				poolInfo.poolSizeCount = poolSizes.size();
-				poolInfo.pPoolSizes = poolSizes.data();
-				poolInfo.maxSets = 1;
-
-				VkDescriptorPool _localDescriptorPool = VK_NULL_HANDLE;
-				if (vkCreateDescriptorPool(logicalDevice, &poolInfo, nullptr, &_localDescriptorPool) != VK_SUCCESS)
-					DMK_CORE_FATAL("failed to create descriptor pool!");
-
-				myRenderData.descriptors.pool = _localDescriptorPool;
+				ADGRVulkanDescriptorPoolInitInfo initInfo;
+				initInfo.poolSizes = poolSizes;
+				myRenderData.descriptors.initializePool(logicalDevice, initInfo);
 			}
 
-			void VulkanPBRObject::initializeDescriptorSets(ADGRVulkanDescriptorSetsInitInfo info)
+			void VulkanPBRObject::initializeDescriptorSets()
 			{
-				VkDescriptorSetLayout _layout = myRenderData.descriptors.layout;
-
-				VkDescriptorSetAllocateInfo allocInfo = {};
-				allocInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_ALLOCATE_INFO;
-				allocInfo.descriptorPool = myRenderData.descriptors.pool;
-				allocInfo.descriptorSetCount = 1;
-				allocInfo.pSetLayouts = &_layout;
-
-				if (vkAllocateDescriptorSets(logicalDevice, &allocInfo, &myRenderData.descriptors.descriptorSet) != VK_SUCCESS)
-					DMK_CORE_FATAL("failed to allocate descriptor sets!");
-
 				ARRAY<VkWriteDescriptorSet> descriptorWrites = {};
 				ARRAY<VkDescriptorBufferInfo> bufferInfos1;
 				ARRAY<VkDescriptorBufferInfo> bufferInfos2;
@@ -609,11 +587,9 @@ namespace Dynamik {
 					}
 				}
 
-				for (VkWriteDescriptorSet _write : info.additionalWrites)
-					descriptorWrites.push_back(_write);
-
-				vkUpdateDescriptorSets(logicalDevice, static_cast<UI32>(descriptorWrites.size()),
-					descriptorWrites.data(), 0, nullptr);
+				ADGRVulkanDescriptorSetsInitInfo initInfo;
+				initInfo.descriptorWrites = descriptorWrites;
+				myRenderData.descriptors.initializeSets(logicalDevice, initInfo);
 			}
 
 			VulkanPBRObject::_VertexPushConstant::_VertexPushConstant()

@@ -35,6 +35,8 @@ namespace Dynamik {
 				std::optional<UI32> transferFamily;
 				std::optional<UI32> computeFamily;
 
+				static ADGRVulkanComputeQueue getQueues(VkPhysicalDevice physicalDevice);
+
 				B1 isComplete();
 			};
 
@@ -55,8 +57,9 @@ namespace Dynamik {
 				VkInstance instance = VK_NULL_HANDLE;
 				VkPhysicalDevice physicalDevice = VK_NULL_HANDLE;
 				VkDevice logicalDevice = VK_NULL_HANDLE;
-				UI32 queueFamilyIndex = 0;
-				VkQueue computeQueue;
+				ADGRVulkanComputeQueue queueFamilyIndices;
+				VkQueue computeQueue = VK_NULL_HANDLE;
+				VkQueue transferQueue = VK_NULL_HANDLE;
 
 				ADGRVulkanComputeShaderPhysicalDeviceLimits physicalDeviceLimits;
 				VkPhysicalDeviceMemoryProperties physicalDeviceMemoryProperties;

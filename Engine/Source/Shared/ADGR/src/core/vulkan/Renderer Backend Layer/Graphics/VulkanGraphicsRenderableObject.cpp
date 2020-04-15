@@ -1,10 +1,10 @@
 #include "adgrafx.h"
 #include "VulkanGraphicsRenderableObject.h"
 
-#include "VulkanValidator.h"
-#include "VulkanExtensionsManager.h"
+#include "../Common/VulkanValidator.h"
+#include "../Common/VulkanExtensionsManager.h"
 #include "VulkanGraphicsFunctions.h"
-#include "VulkanGraphicsOneTimeCommandBufferManager.h"
+#include "VulkanGraphicsOneTimeCommandBuffer.h"
 #include "defines.h"
 
 #include "CentralDataHub.h"
@@ -292,7 +292,7 @@ namespace Dynamik {
 				if (!(formatProperties.optimalTilingFeatures & VK_FORMAT_FEATURE_SAMPLED_IMAGE_FILTER_LINEAR_BIT))
 					DMK_CORE_FATAL("texture image format does not support linear blitting!");
 
-				VulkanGraphicsOneTimeCommandBufferManager oneTimeCommandBuffer(logicalDevice, commandPool, graphicsQueue, presentQueue);
+				VulkanGraphicsOneTimeCommandBuffer oneTimeCommandBuffer(logicalDevice, commandPool, graphicsQueue, presentQueue);
 				VkCommandBuffer _commandBuffer = oneTimeCommandBuffer.myCommandBuffers[0];
 
 				VkImageMemoryBarrier barrier = {};
@@ -778,7 +778,6 @@ namespace Dynamik {
 
 				VkWriteDescriptorSet _writes1;
 				_writes1.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
-				_writes1.dstSet = myRenderData.descriptors.descriptorSet;
 				_writes1.dstBinding = 0;
 				_writes1.dstArrayElement = 0;
 				_writes1.descriptorType = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;
@@ -800,7 +799,6 @@ namespace Dynamik {
 
 						VkWriteDescriptorSet _writes2;
 						_writes2.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
-						_writes2.dstSet = myRenderData.descriptors.descriptorSet;
 						_writes2.dstBinding = 1;
 						_writes2.dstArrayElement = 0;
 						_writes2.descriptorType = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;

@@ -2,6 +2,7 @@
 #include "VulkanBRDF.h"
 
 #include "Graphics/VulkanGraphicsFunctions.h"
+#include "Graphics/VulkanGraphicsOneTimeCommandBuffer.h"
 
 namespace Dynamik {
 	namespace ADGR {
@@ -13,6 +14,17 @@ namespace Dynamik {
 				_initializeFrameBuffer();
 				_initializeDescriptorSetLayout();
 				_initializeDescriptorPool();
+				_initializeDescriptorSets();
+				_initializePipelineLayout();
+				_initializePipeline();
+				_initializeCommandBuffers();
+			}
+
+			void VulkanBRDF::terminate()
+			{
+				myPipeline.terminate(logicalDevice);
+				myFrameBuffer.terminate(logicalDevice);
+				myDescriptorContainer.terminate(logicalDevice);
 			}
 
 			void VulkanBRDF::_initializeTexture()
@@ -27,7 +39,7 @@ namespace Dynamik {
 				cinfo.height = dimentions;
 				cinfo.format = myTextureContainer.format;
 				cinfo.tiling = VK_IMAGE_TILING_OPTIMAL;
-				cinfo.usage = VK_IMAGE_USAGE_TRANSFER_SRC_BIT | VK_IMAGE_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT;
+				cinfo.usage = VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT | VK_IMAGE_USAGE_SAMPLED_BIT;
 				cinfo.properties = VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT;
 				cinfo.image = &myTextureContainer.image;
 				cinfo.imageMemory = &myTextureContainer.imageMemory;
@@ -97,7 +109,7 @@ namespace Dynamik {
 				initInfo.overrideDependencies = true;
 				myFrameBuffer.initializeRenderPass(logicalDevice, initInfo);
 			}
-			
+
 			void VulkanBRDF::_initializeFrameBuffer()
 			{
 				ADGRVulkanGraphicsFrameBufferInitInfo initInfo;
@@ -106,15 +118,103 @@ namespace Dynamik {
 				initInfo.swapChainExtent = { dimentions , dimentions };
 				myFrameBuffer.initializeFrameBuffer(logicalDevice, initInfo);
 			}
-			
+
 			void VulkanBRDF::_initializeDescriptorSetLayout()
 			{
 				ADGRVulkanDescriptorSetLayoutInitInfo initInfo;
 				myDescriptorContainer.initializeLayout(logicalDevice, initInfo);
 			}
-			
+
 			void VulkanBRDF::_initializeDescriptorPool()
 			{
+				VkDescriptorPoolSize poolSize;
+				poolSize.type = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
+				poolSize.descriptorCount = 1;
+
+				ADGRVulkanDescriptorPoolInitInfo initInfo;
+				initInfo.maxDescriptorSets = 1;
+				initInfo.poolSizes = { poolSize };
+				myDescriptorContainer.initializePool(logicalDevice, initInfo);
+			}
+
+			void VulkanBRDF::_initializeDescriptorSets()
+			{
+				myDescriptorContainer.allocateSets(logicalDevice);
+			}
+
+			void VulkanBRDF::_initializePipelineLayout()
+			{
+				ADGRVulkanGraphicsPipelineLayoutInitInfo initInfo;
+				initInfo.layouts = { myDescriptorContainer.layout };
+				myPipeline.initializePipelineLayout(logicalDevice, initInfo);
+			}
+
+			void VulkanBRDF::_initializePipeline()
+			{
+				ADGRVulkanGraphicsShaderInitInfo VSinitInfo;
+				VSinitInfo.path = "Shaders/BRDF/vert.spv";
+				VSinitInfo.type = ADGRVulkanGraphicsShaderType::ADGR_VULKAN_SHADER_TYPE_VERTEX;
+				VulkanGraphicsShader vertShader;
+				vertShader.initialize(logicalDevice, VSinitInfo);
+
+				ADGRVulkanGraphicsShaderInitInfo FSinitInfo;
+				FSinitInfo.path = "Shaders/BRDF/frag.spv";
+				FSinitInfo.type = ADGRVulkanGraphicsShaderType::ADGR_VULKAN_SHADER_TYPE_FRAGMENT;
+				VulkanGraphicsShader fragShader;
+				fragShader.initialize(logicalDevice, FSinitInfo);
+
+				ADGRVulkanGraphicsPipelineInitInfo initInfo;
+				initInfo.shaders = { vertShader, fragShader };
+				initInfo.vertexAttributeDescription = {};
+				initInfo.vertexBindingDescription = {};
+				initInfo.swapChainExtent.width = dimentions;
+				initInfo.swapChainExtent.height = dimentions;
+				initInfo.inputAssemblyTopology = VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST;
+				initInfo.renderPass = myFrameBuffer.renderPass;
+				myPipeline.initializePipeline(logicalDevice, initInfo);
+			}
+
+			void VulkanBRDF::_initializeCommandBuffers()
+			{
+				VulkanGraphicsOneTimeCommandBuffer oneTimeCommandBuffer(logicalDevice, commandPool, graphicsQueue, presentQueue);
+				std::array<VkClearValue, 1> clearValues;
+				clearValues[0].color = { { 0.0f, 0.0f, 0.0f, 1.0f } };
+
+				VkRenderPassBeginInfo renderPassInfo = {};
+				renderPassInfo.sType = VK_STRUCTURE_TYPE_RENDER_PASS_BEGIN_INFO;
+				renderPassInfo.renderPass = myFrameBuffer.renderPass;
+				renderPassInfo.framebuffer = myFrameBuffer.buffers[0];
+				renderPassInfo.renderArea.offset = { 0, 0 };
+				renderPassInfo.renderArea.extent.width = myFrameBuffer.frameWidth;
+				renderPassInfo.renderArea.extent.height = myFrameBuffer.frameHeight;
+				renderPassInfo.clearValueCount = clearValues.size();
+				renderPassInfo.pClearValues = clearValues.data();
+
+				VkCommandBuffer buffer = oneTimeCommandBuffer.myCommandBuffers[0];
+
+				vkCmdBeginRenderPass(buffer, &renderPassInfo, VK_SUBPASS_CONTENTS_INLINE);
+
+				VkViewport viewport;
+				viewport.height = dimentions;
+				viewport.width = dimentions;
+				viewport.minDepth = 0.0f;
+				viewport.maxDepth = 1.0f;
+				viewport.x = 0;
+				viewport.y = 0;
+				vkCmdSetViewport(buffer, 0, 1, &viewport);
+
+				VkRect2D scissor;
+				scissor.extent.width = dimentions;
+				scissor.extent.height = dimentions;
+				scissor.offset.x = 0;
+				scissor.offset.y = 0;
+				vkCmdSetScissor(buffer, 0, 1, &scissor);
+
+				vkCmdBindPipeline(buffer, VK_PIPELINE_BIND_POINT_GRAPHICS, myPipeline.pipeline);
+
+				vkCmdDraw(buffer, 3, 1, 0, 0);
+
+				vkCmdEndRenderPass(buffer);
 			}
 		}
 	}

@@ -1,8 +1,8 @@
 #include "adgrafx.h"
 #include "VulkanGraphicsCore.h"
 
-#include "VulkanValidator.h"
-#include "VulkanExtensionsManager.h"
+#include "../Common/VulkanValidator.h"
+#include "../Common/VulkanExtensionsManager.h"
 #include "VulkanGraphicsFunctions.h"
 #include "defines.h"
 

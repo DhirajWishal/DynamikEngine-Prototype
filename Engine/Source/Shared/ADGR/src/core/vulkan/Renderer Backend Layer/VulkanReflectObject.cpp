@@ -453,7 +453,6 @@ namespace Dynamik {
 
 				VkWriteDescriptorSet _writes1;
 				_writes1.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
-				_writes1.dstSet = myRenderData.descriptors.descriptorSet;
 				_writes1.dstBinding = 0;
 				_writes1.dstArrayElement = 0;
 				_writes1.descriptorType = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;
@@ -475,7 +474,6 @@ namespace Dynamik {
 
 						VkWriteDescriptorSet _writes2;
 						_writes2.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
-						_writes2.dstSet = myRenderData.descriptors.descriptorSet;
 						_writes2.dstBinding = 1;
 						_writes2.dstArrayElement = 0;
 						_writes2.descriptorType = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;

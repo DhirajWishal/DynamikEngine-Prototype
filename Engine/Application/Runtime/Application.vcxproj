@@ -144,6 +144,19 @@
   <ItemGroup>
     <None Include="Application.lua" />
     <None Include="paths.txt" />
+    <None Include="Shaders\BRDF\frag.spv" />
+    <None Include="Shaders\BRDF\shader.genbrdflut.frag" />
+    <None Include="Shaders\BRDF\shader.genbrdflut.vert" />
+    <None Include="Shaders\BRDF\vert.spv" />
+    <None Include="Shaders\compileShaders.bat" />
+    <None Include="Shaders\Irradiance\frag.spv" />
+    <None Include="Shaders\Irradiance\shader.frag" />
+    <None Include="Shaders\Irradiance\shader.vert" />
+    <None Include="Shaders\Irradiance\vert.spv" />
+    <None Include="Shaders\Prefiltered\frag.spv" />
+    <None Include="Shaders\Prefiltered\shader.frag" />
+    <None Include="Shaders\Prefiltered\shader.vert" />
+    <None Include="Shaders\Prefiltered\vert.spv" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Source\Runtime\Dynamik.vcxproj">

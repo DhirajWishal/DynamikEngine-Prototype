@@ -18,6 +18,7 @@ namespace Dynamik {
 
 			struct ADGRVulkanDescriptorSetsInitInfo {
 				ARRAY<VkWriteDescriptorSet> descriptorWrites;
+				UI32 setCount = 1;
 			};
 
 			class VulkanDescriptor {
@@ -27,13 +28,15 @@ namespace Dynamik {
 
 				virtual void initializeLayout(VkDevice logicalDevice, ADGRVulkanDescriptorSetLayoutInitInfo info);
 				virtual void initializePool(VkDevice logicalDevice, ADGRVulkanDescriptorPoolInitInfo info);
+				virtual void allocateSets(VkDevice logicalDevice, UI32 setCount = 1);
 				virtual void initializeSets(VkDevice logicalDevice, ADGRVulkanDescriptorSetsInitInfo info);
+				virtual void updateSet(VkDevice logicalDevice, ARRAY<VkWriteDescriptorSet> writes);
 
 				virtual void terminate(VkDevice logicalDevice);
 
 				VkDescriptorSetLayout layout = VK_NULL_HANDLE;
 				VkDescriptorPool pool = VK_NULL_HANDLE;
-				VkDescriptorSet descriptorSet = VK_NULL_HANDLE;
+				ARRAY<VkDescriptorSet> descriptorSets;
 			};
 		}
 	}

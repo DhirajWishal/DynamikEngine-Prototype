@@ -5,6 +5,10 @@
 #include "Graphics/VulkanGraphicsRenderableObject.h"
 #include "Graphics/VulkanGraphicsPushConstant.h"
 
+#include "VulkanIrradianceCube.h"
+#include "VulkanPrefilteredCube.h"
+#include "VulkanBRDF.h"
+
 namespace Dynamik {
 	namespace ADGR {
 		namespace Backend {
@@ -35,6 +39,10 @@ namespace Dynamik {
 					_FragmentPushConstant();
 					~_FragmentPushConstant() {}
 				} fragPushConstant;
+
+				VulkanBRDF myBRDF;
+				VulkanIrradianceCube myIrradianceCube;
+				VulkanPrefilteredCube myPreFilteredCube;
 			};
 		}
 	}

@@ -547,21 +547,6 @@ namespace Dynamik {
 
 			void VulkanSkyBox::initializeDescriptorSets()
 			{
-				VkDescriptorSetLayout _layout = VK_NULL_HANDLE;
-				if (myRenderData.textures.size())
-					_layout = myRenderData.descriptors.layout;
-				else
-					_layout = noTextureDescriptorSetLayout;
-
-				VkDescriptorSetAllocateInfo allocInfo = {};
-				allocInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_ALLOCATE_INFO;
-				allocInfo.descriptorPool = myRenderData.descriptors.pool;
-				allocInfo.descriptorSetCount = 1;
-				allocInfo.pSetLayouts = &_layout;
-
-				if (vkAllocateDescriptorSets(logicalDevice, &allocInfo, &myRenderData.descriptors.descriptorSet) != VK_SUCCESS)
-					DMK_CORE_FATAL("failed to allocate descriptor sets!");
-
 				ARRAY<VkWriteDescriptorSet> descriptorWrites = {};
 				ARRAY<VkDescriptorBufferInfo> bufferInfos;
 
@@ -579,7 +564,6 @@ namespace Dynamik {
 
 				VkWriteDescriptorSet _writes1;
 				_writes1.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
-				_writes1.dstSet = myRenderData.descriptors.descriptorSet;
 				_writes1.dstBinding = 0;
 				_writes1.dstArrayElement = 0;
 				_writes1.descriptorType = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;
@@ -601,7 +585,6 @@ namespace Dynamik {
 
 						VkWriteDescriptorSet _writes2;
 						_writes2.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
-						_writes2.dstSet = myRenderData.descriptors.descriptorSet;
 						_writes2.dstBinding = 1;
 						_writes2.dstArrayElement = 0;
 						_writes2.descriptorType = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;

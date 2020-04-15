@@ -163,10 +163,13 @@
     <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsFrameBuffer.h" />
     <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsPipeline.h" />
     <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsPushConstant.h" />
+    <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsSupportObject.h" />
     <ClInclude Include="src\core\vulkan\Renderer Backend Layer\VulkanAnimationManager.h" />
     <ClInclude Include="src\core\vulkan\Renderer Backend Layer\VulkanBRDF.h" />
+    <ClInclude Include="src\core\vulkan\Renderer Backend Layer\VulkanIrradianceCube.h" />
     <ClInclude Include="src\core\vulkan\Renderer Backend Layer\VulkanOffsceenFrameBuffer.h" />
     <ClInclude Include="src\core\vulkan\Renderer Backend Layer\VulkanPBRObject.h" />
+    <ClInclude Include="src\core\vulkan\Renderer Backend Layer\VulkanPrefilteredCube.h" />
     <ClInclude Include="src\Layers\layer.h" />
     <ClInclude Include="src\Layers\layerStack.h" />
     <ClInclude Include="src\Renderer.h" />
@@ -197,15 +200,15 @@
     <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Graphics\VulkanControlHeader.h" />
     <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsCore.h" />
     <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsDepthBuffer.h" />
-    <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Graphics\VulkanExtensionsManager.h" />
+    <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Common\VulkanExtensionsManager.h" />
     <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsFunctions.h" />
-    <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsOneTimeCommandBufferManager.h" />
+    <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsOneTimeCommandBuffer.h" />
     <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsRBLIndex.h" />
     <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsRenderableObject.h" />
     <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsShader.h" />
     <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsSwapChain.h" />
-    <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Graphics\VulkanUtilities.h" />
-    <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Graphics\VulkanValidator.h" />
+    <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Common\VulkanUtilities.h" />
+    <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Common\VulkanValidator.h" />
     <ClInclude Include="src\core\vulkan\Renderer Backend Layer\VulkanObject2D.h" />
     <ClInclude Include="src\core\vulkan\Renderer Backend Layer\VulkanObject3D.h" />
     <ClInclude Include="src\core\vulkan\Renderer Backend Layer\VulkanReflectObject.h" />
@@ -241,8 +244,10 @@
     <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsPushConstant.cpp" />
     <ClCompile Include="src\core\vulkan\Renderer Backend Layer\VulkanAnimationManager.cpp" />
     <ClCompile Include="src\core\vulkan\Renderer Backend Layer\VulkanBRDF.cpp" />
+    <ClCompile Include="src\core\vulkan\Renderer Backend Layer\VulkanIrradianceCube.cpp" />
     <ClCompile Include="src\core\vulkan\Renderer Backend Layer\VulkanOffscreenFrameBuffer.cpp" />
     <ClCompile Include="src\core\vulkan\Renderer Backend Layer\VulkanPBRObject.cpp" />
+    <ClCompile Include="src\core\vulkan\Renderer Backend Layer\VulkanPrefilteredCube.cpp" />
     <ClCompile Include="src\Layers\layer.cpp" />
     <ClCompile Include="src\Layers\layerStack.cpp" />
     <ClCompile Include="src\Renderer.cpp" />
@@ -269,14 +274,14 @@
     <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsCommandBuffer.cpp" />
     <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsCore.cpp" />
     <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsDepthBuffer.cpp" />
-    <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Graphics\VulkanExtensionsManager.cpp" />
+    <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Common\VulkanExtensionsManager.cpp" />
     <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsFunctions.cpp" />
-    <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsOneTimeCommandBufferManager.cpp" />
+    <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsOneTimeCommandBuffer.cpp" />
     <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsRenderableObject.cpp" />
     <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsShader.cpp" />
     <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsSwapChain.cpp" />
-    <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Graphics\VulkanUtilities.cpp" />
-    <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Graphics\VulkanValidator.cpp" />
+    <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Common\VulkanUtilities.cpp" />
+    <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Common\VulkanValidator.cpp" />
     <ClCompile Include="src\core\vulkan\Renderer Backend Layer\VulkanReflectObject.cpp" />
     <ClCompile Include="src\core\vulkan\Renderer Backend Layer\VulkanSkyBox.cpp" />
     <ClCompile Include="src\core\vulkan\Renderer Backend Layer\VulkanGraphicsSwapChain3D.cpp" />
@@ -289,6 +294,15 @@
   <ItemGroup>
     <None Include="ADGR.lua" />
     <None Include="src\core\vulkan\Renderer Backend Layer\External\stb_font_consolas_24_latin1.inl" />
+    <None Include="src\core\vulkan\Renderer Backend Layer\Shaders\BRDF\shader.genbrdflut.frag" />
+    <None Include="src\core\vulkan\Renderer Backend Layer\Shaders\BRDF\shader.genbrdflut.vert" />
+    <None Include="src\core\vulkan\Renderer Backend Layer\Shaders\BRDF\vert.spv" />
+    <None Include="src\core\vulkan\Renderer Backend Layer\Shaders\Irradiance\shader.frag" />
+    <None Include="src\core\vulkan\Renderer Backend Layer\Shaders\Irradiance\shader.vert" />
+    <None Include="src\core\vulkan\Renderer Backend Layer\Shaders\Irradiance\vert.spv" />
+    <None Include="src\core\vulkan\Renderer Backend Layer\Shaders\Prefiltered\shader.frag" />
+    <None Include="src\core\vulkan\Renderer Backend Layer\Shaders\Prefiltered\shader.vert" />
+    <None Include="src\core\vulkan\Renderer Backend Layer\Shaders\Prefiltered\vert.spv" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Events\Events.vcxproj">

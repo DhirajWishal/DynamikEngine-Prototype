@@ -37,8 +37,18 @@ namespace Dynamik {
 
 				virtual void terminate(VkDevice logicalDevice);
 
+				static VkFramebuffer createFrameBuffer(
+					VkDevice logicalDevice,
+					VkRenderPass renderPass,
+					ARRAY<VkImageView> attachments,
+					VkExtent2D extent,
+					UI32 layerCount = 1);
+				static void terminateFrameBuffer(VkDevice logicalDevice, VkFramebuffer buffer);
+
 				VkRenderPass renderPass = VK_NULL_HANDLE;
 				ARRAY<VkFramebuffer> buffers;
+				UI32 frameWidth = 0;
+				UI32 frameHeight = 0;
 			};
 		}
 	}

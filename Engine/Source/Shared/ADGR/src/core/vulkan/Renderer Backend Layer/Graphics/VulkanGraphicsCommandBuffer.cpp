@@ -20,8 +20,8 @@ namespace Dynamik {
 						vkCmdBindVertexBuffers(buffer, 0, 1, &object->vertexBuffers[i], offsets);
 
 						// binding descriptor set(s)
-						if (object->descriptors.descriptorSet != VK_NULL_HANDLE)
-							vkCmdBindDescriptorSets(buffer, VK_PIPELINE_BIND_POINT_GRAPHICS, object->pipelineContainers[_itr].layout, 0, 1, &object->descriptors.descriptorSet, 0, nullptr);
+						for (VkDescriptorSet _set : object->descriptors.descriptorSets)
+							vkCmdBindDescriptorSets(buffer, VK_PIPELINE_BIND_POINT_GRAPHICS, object->pipelineContainers[_itr].layout, 0, 1, &_set, 0, nullptr);
 
 						// draw command
 						vkCmdDraw(buffer, object->vertexCount, 1, 0, 1);
@@ -41,8 +41,8 @@ namespace Dynamik {
 						vkCmdBindVertexBuffers(buffer, 0, 1, &object->vertexBuffers[i], offsets);
 
 						// binding descriptor set(s)
-						if (object->descriptors.descriptorSet != VK_NULL_HANDLE)
-							vkCmdBindDescriptorSets(buffer, VK_PIPELINE_BIND_POINT_GRAPHICS, object->pipelineContainers[_itr].layout, 0, 1, &object->descriptors.descriptorSet, 0, nullptr);
+						for (VkDescriptorSet _set : object->descriptors.descriptorSets)
+							vkCmdBindDescriptorSets(buffer, VK_PIPELINE_BIND_POINT_GRAPHICS, object->pipelineContainers[_itr].layout, 0, 1, &_set, 0, nullptr);
 
 						// index buffer bind
 						if (object->indexbufferObjectTypeSize == sizeof(UI8))
@@ -72,8 +72,8 @@ namespace Dynamik {
 						vkCmdBindVertexBuffers(buffer, 0, 1, &object->vertexBuffers[i], offsets);
 
 						// binding descriptor set(s)
-						if (object->descriptors.descriptorSet != VK_NULL_HANDLE)
-							vkCmdBindDescriptorSets(buffer, VK_PIPELINE_BIND_POINT_GRAPHICS, object->pipelineContainers[_itr].layout, 0, 1, &object->descriptors.descriptorSet, 0, nullptr);
+						for (VkDescriptorSet _set : object->descriptors.descriptorSets)
+							vkCmdBindDescriptorSets(buffer, VK_PIPELINE_BIND_POINT_GRAPHICS, object->pipelineContainers[_itr].layout, 0, 1, &_set, 0, nullptr);
 
 						// index buffer bind
 						if (object->indexbufferObjectTypeSize == sizeof(UI8))

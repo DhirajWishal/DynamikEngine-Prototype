@@ -1,19 +1,19 @@
 #pragma once
-#ifndef _DYNAMIK_ADGR_VULKAN_GRAPHICS_ONE_TIME_COMMAND_BUFFER_MANAGER_H
-#define _DYNAMIK_ADGR_VULKAN_GRAPHICS_ONE_TIME_COMMAND_BUFFER_MANAGER_H
+#ifndef _DYNAMIK_ADGR_VULKAN_GRAPHICS_ONE_TIME_COMMAND_BUFFER_H
+#define _DYNAMIK_ADGR_VULKAN_GRAPHICS_ONE_TIME_COMMAND_BUFFER_H
 
 namespace Dynamik {
 	namespace ADGR {
 		namespace Backend {
-			class VulkanGraphicsOneTimeCommandBufferManager {
+			class VulkanGraphicsOneTimeCommandBuffer {
 			public:
-				VulkanGraphicsOneTimeCommandBufferManager(
+				VulkanGraphicsOneTimeCommandBuffer(
 					VkDevice logicalDevice,
 					VkCommandPool commandPool,
 					VkQueue graphicsQueue,
 					VkQueue presentQueue,
 					UI32 count = 1);
-				~VulkanGraphicsOneTimeCommandBufferManager();
+				~VulkanGraphicsOneTimeCommandBuffer();
 
 				ARRAY<VkCommandBuffer> myCommandBuffers;
 			private:

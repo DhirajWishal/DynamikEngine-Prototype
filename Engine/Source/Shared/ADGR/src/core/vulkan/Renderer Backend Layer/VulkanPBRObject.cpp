@@ -13,6 +13,51 @@ namespace Dynamik {
 
 			ADGRVulkanRenderData VulkanPBRObject::initializeObject(VkDevice logicalDevice, ADGRVulkan3DObjectData _object, VkSampleCountFlagBits msaaSamples)
 			{
+				ARRAY<ADGRVulkanTextureInitInfo> textureInitInfos;
+
+				// initialize textures
+				for (UI32 _itr = 0; _itr < _object.texturePaths.size(); _itr++)
+				{
+					ADGRVulkanTextureInitInfo initInfo;
+					initInfo.path = _object.texturePaths[_itr];
+					initInfo.format = VK_FORMAT_R8G8B8A8_UNORM;
+					initInfo.mipLevels = 1;
+					initInfo.modeU = VK_SAMPLER_ADDRESS_MODE_REPEAT;
+					initInfo.modeV = VK_SAMPLER_ADDRESS_MODE_REPEAT;
+					initInfo.modeW = VK_SAMPLER_ADDRESS_MODE_REPEAT;
+					initInfo.magFilter = VK_FILTER_LINEAR;
+					initInfo.minFilter = VK_FILTER_LINEAR;
+					initInfo.aspectFlags = VK_IMAGE_ASPECT_COLOR_BIT;
+					textureInitInfos.pushBack(initInfo);
+				}
+
+				initializeTextures(textureInitInfos);
+
+				// initialize vertex buffers
+				for (UI32 _itr = 0; _itr < _object.vertexBufferObjects->size(); _itr++)
+					initializeVertexBuffer(&_object.vertexBufferObjects->at(_itr));
+
+				// initialize index buffers
+				for (UI32 _itr = 0; _itr < _object.indexBufferObjects->size(); _itr++)
+					initializeIndexBufferUI32(&_object.indexBufferObjects->at(_itr));
+
+				ADGRVulkanGraphicsSupportObjectInitInfo supportObjectInitInfo;
+				supportObjectInitInfo.logicalDevice = logicalDevice;
+				supportObjectInitInfo.physicalDevice = physicalDevice;
+				supportObjectInitInfo.commandPool = commandPool;
+				supportObjectInitInfo.graphicsQueue = graphicsQueue;
+				supportObjectInitInfo.presentQueue = presentQueue;
+				myBRDF = VulkanBRDF(supportObjectInitInfo);
+				myBRDF.initialize();
+
+				myIrradianceCube = VulkanIrradianceCube(supportObjectInitInfo);
+				myIrradianceCube.skyboxRenderData = myRenderData;
+				myIrradianceCube.initialize();
+
+				myPreFilteredCube = VulkanPrefilteredCube(supportObjectInitInfo);
+				myPreFilteredCube.skyboxRenderData = myRenderData;
+				myPreFilteredCube.initialize();
+
 				ADGRVulkanDescriptorSetLayoutInitInfo layoutInitInfo;
 
 				VkDescriptorSetLayoutBinding uboLayoutBinding = {};
@@ -127,34 +172,6 @@ namespace Dynamik {
 
 				for (VulkanGraphicsShader _shader : _shaders)
 					_shader.terminate(logicalDevice);
-
-				ARRAY<ADGRVulkanTextureInitInfo> textureInitInfos;
-
-				// initialize textures
-				for (UI32 _itr = 0; _itr < _object.texturePaths.size(); _itr++)
-				{
-					ADGRVulkanTextureInitInfo initInfo;
-					initInfo.path = _object.texturePaths[_itr];
-					initInfo.format = VK_FORMAT_R8G8B8A8_UNORM;
-					initInfo.mipLevels = 1;
-					initInfo.modeU = VK_SAMPLER_ADDRESS_MODE_REPEAT;
-					initInfo.modeV = VK_SAMPLER_ADDRESS_MODE_REPEAT;
-					initInfo.modeW = VK_SAMPLER_ADDRESS_MODE_REPEAT;
-					initInfo.magFilter = VK_FILTER_LINEAR;
-					initInfo.minFilter = VK_FILTER_LINEAR;
-					initInfo.aspectFlags = VK_IMAGE_ASPECT_COLOR_BIT;
-					textureInitInfos.pushBack(initInfo);
-				}
-				
-				initializeTextures(textureInitInfos);
-
-				// initialize vertex buffers
-				for (UI32 _itr = 0; _itr < _object.vertexBufferObjects->size(); _itr++)
-					initializeVertexBuffer(&_object.vertexBufferObjects->at(_itr));
-
-				// initialize index buffers
-				for (UI32 _itr = 0; _itr < _object.indexBufferObjects->size(); _itr++)
-					initializeIndexBufferUI32(&_object.indexBufferObjects->at(_itr));
 
 				// initialize uniform buffers
 				initializeUniformBuffer();
@@ -493,89 +510,91 @@ namespace Dynamik {
 
 				VkDescriptorPoolSize _poolSize1;
 				_poolSize1.type = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;
-				_poolSize1.descriptorCount = myRenderData.uniformBufferContainers.size();
+				_poolSize1.descriptorCount = 1;
+				poolSizes.push_back(_poolSize1);
+
+				_poolSize1.type = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;
+				_poolSize1.descriptorCount = 1;
 				poolSizes.push_back(_poolSize1);
 
 				if (myRenderData.textures.size())
 				{
 					VkDescriptorPoolSize _poolSize2;
 					_poolSize2.type = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
-					_poolSize2.descriptorCount = myRenderData.textures.size();
+					_poolSize2.descriptorCount = 1;
+
+					poolSizes.push_back(_poolSize2);
+
+					_poolSize2.type = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
+					_poolSize2.descriptorCount = 1;
+
+					poolSizes.push_back(_poolSize2);
+
+					_poolSize2.type = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
+					_poolSize2.descriptorCount = 1;
 
 					poolSizes.push_back(_poolSize2);
 				}
 
 				ADGRVulkanDescriptorPoolInitInfo initInfo;
 				initInfo.poolSizes = poolSizes;
+				initInfo.maxDescriptorSets = 3;
 				myRenderData.descriptors.initializePool(logicalDevice, initInfo);
 			}
 
 			void VulkanPBRObject::initializeDescriptorSets()
 			{
-				ARRAY<VkWriteDescriptorSet> descriptorWrites = {};
-				ARRAY<VkDescriptorBufferInfo> bufferInfos1;
-				ARRAY<VkDescriptorBufferInfo> bufferInfos2;
+				myRenderData.descriptors.allocateSets(logicalDevice, myRenderData.uniformBufferContainers[0].buffers.size());
 
-				ADGRVulkanUnformBufferContainer _container1 = myRenderData.uniformBufferContainers[0];
-
-				for (UI32 itr = 0; itr < _container1.buffers.size(); itr++)
+				for (UI32 index = 0; index < myRenderData.uniformBufferContainers[0].buffers.size(); index++)
 				{
-					VkDescriptorBufferInfo bufferInfo = {};
-					bufferInfo.buffer = _container1.buffers[itr];
-					bufferInfo.offset = 0;
-					bufferInfo.range = sizeof(UBO_MVPC);
-					bufferInfos1.pushBack(bufferInfo);
-				}
+					ARRAY<VkWriteDescriptorSet> descriptorWrites = {};
 
-				ADGRVulkanUnformBufferContainer _container2 = myRenderData.uniformBufferContainers[1];
+					VkDescriptorBufferInfo bufferInfo1 = {};
+					bufferInfo1.buffer = myRenderData.uniformBufferContainers[0].buffers[index];
+					bufferInfo1.offset = 0;
+					bufferInfo1.range = sizeof(UBO_MVPC);
 
-				for (UI32 itr = 0; itr < _container2.buffers.size(); itr++)
-				{
-					VkDescriptorBufferInfo bufferInfo = {};
-					bufferInfo.buffer = _container2.buffers[itr];
-					bufferInfo.offset = 0;
-					bufferInfo.range = sizeof(UBO_L4EG);
-					bufferInfos2.pushBack(bufferInfo);
-				}
+					VkDescriptorBufferInfo bufferInfo2 = {};
+					bufferInfo2.buffer = myRenderData.uniformBufferContainers[1].buffers[index];
+					bufferInfo2.offset = sizeof(UBO_MVPC);
+					bufferInfo2.range = sizeof(UBO_L4EG);
 
-				VkWriteDescriptorSet _writes1;
-				_writes1.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
-				_writes1.dstSet = myRenderData.descriptors.descriptorSet;
-				_writes1.dstBinding = 0;
-				_writes1.dstArrayElement = 0;
-				_writes1.descriptorType = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;
-				_writes1.descriptorCount = 1;
-				_writes1.pBufferInfo = bufferInfos1.data();
-				_writes1.pNext = VK_NULL_HANDLE;
-				_writes1.pImageInfo = VK_NULL_HANDLE;
-				_writes1.pTexelBufferView = VK_NULL_HANDLE;
-				descriptorWrites.push_back(_writes1);
+					VkWriteDescriptorSet _writes1;
+					_writes1.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
+					_writes1.dstBinding = 0;
+					_writes1.dstSet = myRenderData.descriptors.descriptorSets[index];
+					_writes1.dstArrayElement = 0;
+					_writes1.descriptorType = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;
+					_writes1.descriptorCount = 1;
+					_writes1.pBufferInfo = &bufferInfo1;
+					_writes1.pNext = VK_NULL_HANDLE;
+					_writes1.pImageInfo = VK_NULL_HANDLE;
+					_writes1.pTexelBufferView = VK_NULL_HANDLE;
+					descriptorWrites.push_back(_writes1);
 
-				_writes1.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
-				_writes1.dstSet = myRenderData.descriptors.descriptorSet;
-				_writes1.dstBinding = 1;
-				_writes1.dstArrayElement = 0;
-				_writes1.descriptorType = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;
-				_writes1.descriptorCount = 1;
-				_writes1.pBufferInfo = bufferInfos2.data();
-				_writes1.pNext = VK_NULL_HANDLE;
-				_writes1.pImageInfo = VK_NULL_HANDLE;
-				_writes1.pTexelBufferView = VK_NULL_HANDLE;
-				descriptorWrites.push_back(_writes1);
+					_writes1.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
+					_writes1.dstBinding = 1;
+					_writes1.dstSet = myRenderData.descriptors.descriptorSets[index];
+					_writes1.dstArrayElement = 0;
+					_writes1.descriptorType = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;
+					_writes1.descriptorCount = 1;
+					_writes1.pBufferInfo = &bufferInfo2;
+					_writes1.pNext = VK_NULL_HANDLE;
+					_writes1.pImageInfo = VK_NULL_HANDLE;
+					_writes1.pTexelBufferView = VK_NULL_HANDLE;
+					descriptorWrites.push_back(_writes1);
 
-				if (myRenderData.textures.size())
-				{
-					for (UI32 _texIndex = 0; _texIndex < myRenderData.textures.size(); _texIndex++)
 					{
 						VkDescriptorImageInfo imageInfo = {};
 						imageInfo.imageLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
-						imageInfo.imageView = myRenderData.textures[_texIndex].imageView;
-						imageInfo.sampler = myRenderData.textures[_texIndex].imageSampler;
+						imageInfo.imageView = myIrradianceCube.myTextureContainer.imageView;
+						imageInfo.sampler = myIrradianceCube.myTextureContainer.imageSampler;
 
 						VkWriteDescriptorSet _writes2;
 						_writes2.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
-						_writes2.dstSet = myRenderData.descriptors.descriptorSet;
 						_writes2.dstBinding = 2;
+						_writes2.dstSet = myRenderData.descriptors.descriptorSets[index];
 						_writes2.dstArrayElement = 0;
 						_writes2.descriptorType = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
 						_writes2.descriptorCount = 1;
@@ -585,11 +604,48 @@ namespace Dynamik {
 						_writes2.pBufferInfo = VK_NULL_HANDLE;
 						descriptorWrites.push_back(_writes2);
 					}
-				}
 
-				ADGRVulkanDescriptorSetsInitInfo initInfo;
-				initInfo.descriptorWrites = descriptorWrites;
-				myRenderData.descriptors.initializeSets(logicalDevice, initInfo);
+					{
+						VkDescriptorImageInfo imageInfo = {};
+						imageInfo.imageLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
+						imageInfo.imageView = myBRDF.myTextureContainer.imageView;
+						imageInfo.sampler = myBRDF.myTextureContainer.imageSampler;
+
+						VkWriteDescriptorSet _writes2;
+						_writes2.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
+						_writes2.dstBinding = 3;
+						_writes2.dstSet = myRenderData.descriptors.descriptorSets[index];
+						_writes2.dstArrayElement = 0;
+						_writes2.descriptorType = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
+						_writes2.descriptorCount = 1;
+						_writes2.pImageInfo = &imageInfo;
+						_writes2.pNext = VK_NULL_HANDLE;
+						_writes2.pTexelBufferView = VK_NULL_HANDLE;
+						_writes2.pBufferInfo = VK_NULL_HANDLE;
+						descriptorWrites.push_back(_writes2);
+					}
+
+					{
+						VkDescriptorImageInfo imageInfo = {};
+						imageInfo.imageLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
+						imageInfo.imageView = myPreFilteredCube.myTextureContainer.imageView;
+						imageInfo.sampler = myPreFilteredCube.myTextureContainer.imageSampler;
+
+						VkWriteDescriptorSet _writes2;
+						_writes2.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
+						_writes2.dstBinding = 4;
+						_writes2.dstSet = myRenderData.descriptors.descriptorSets[index];
+						_writes2.dstArrayElement = 0;
+						_writes2.descriptorType = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
+						_writes2.descriptorCount = 1;
+						_writes2.pImageInfo = &imageInfo;
+						_writes2.pNext = VK_NULL_HANDLE;
+						_writes2.pTexelBufferView = VK_NULL_HANDLE;
+						_writes2.pBufferInfo = VK_NULL_HANDLE;
+						descriptorWrites.push_back(_writes2);
+					}
+					myRenderData.descriptors.updateSet(logicalDevice, descriptorWrites);
+				}
 			}
 
 			VulkanPBRObject::_VertexPushConstant::_VertexPushConstant()

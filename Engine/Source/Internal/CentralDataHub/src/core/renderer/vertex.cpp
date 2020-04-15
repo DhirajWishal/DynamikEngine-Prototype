@@ -278,4 +278,31 @@ namespace Dynamik {
 
 		return attributeDescriptions;
 	}
+	
+	ARRAY<VkVertexInputBindingDescription> VertexL::getBindingDescription(int bindCount)
+	{
+		ARRAY<VkVertexInputBindingDescription> bindingDescription(bindCount);
+
+		for (int i = 0; i < bindCount; i++) {
+			bindingDescription[i].binding = i;
+			bindingDescription[i].stride = sizeof(VertexPNU);
+			bindingDescription[i].inputRate = VK_VERTEX_INPUT_RATE_VERTEX;
+		}
+
+		return bindingDescription;
+	}
+	
+	ARRAY<VkVertexInputAttributeDescription> VertexL::getAttributeDescriptions()
+	{
+		ARRAY<VkVertexInputAttributeDescription> attributeDescriptions;
+
+		VkVertexInputAttributeDescription _description = {};
+		_description.binding = 0;
+		_description.location = 0;
+		_description.format = VK_FORMAT_R32G32B32_SFLOAT;
+		_description.offset = offsetof(VertexPNU, Position);
+		attributeDescriptions.pushBack(_description);
+
+		return attributeDescriptions;
+	}
 }

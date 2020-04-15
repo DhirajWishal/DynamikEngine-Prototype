@@ -113,9 +113,12 @@ namespace Dynamik {
 				/* TEXTURE FUNCTIONS */
 				static void createImage(VkDevice logicalDevice, VkPhysicalDevice physicalDevice, ADGRVulkanCreateImageInfo info);
 				static void transitionImageLayout(VkDevice logicalDevice, VkCommandPool commandPool, VkQueue graphicsQueue, VkQueue presentQueue, ADGRVulkanTransitionImageLayoutInfo info);
+				static void transitionImageLayout(VkDevice logicalDevice, VkCommandBuffer commandBuffer, ADGRVulkanTransitionImageLayoutInfo info);
 				static VkImageView createImageView(VkDevice device, ADGRVulkanCreateImageViewInfo info);
 				static void copyBufferToImage(VkDevice logicalDevice, VkCommandPool commandPool, VkQueue graphicsQueue, VkQueue presentQueue, ADGRVulkanCopyBufferToImageInfo info);
+				static void copyBufferToImage(VkDevice logicalDevice, VkCommandBuffer commandBuffer, ADGRVulkanCopyBufferToImageInfo info);
 				static void copyBufferToImageOverride(VkDevice logicalDevice, VkCommandPool commandPool, VkQueue graphicsQueue, VkQueue presentQueue, ADGRVulkanCopyBufferToImageInfo info, ARRAY<VkBufferImageCopy> copyRegions);
+				static void copyBufferToImageOverride(VkDevice logicalDevice, VkCommandBuffer commandBuffer, ADGRVulkanCopyBufferToImageInfo info, ARRAY<VkBufferImageCopy> copyRegions);
 				static VkSampler createImageSampler(VkDevice logicalDevice, ADGRVulkanTextureSamplerInitInfo info);
 
 				static ADGRVulkanUnformBufferContainer createUniformBuffers(VkDevice logicalDevice, VkPhysicalDevice physicalDevice, VkDeviceSize bufferSize, UI32 count);

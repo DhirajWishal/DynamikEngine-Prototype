@@ -95,26 +95,6 @@ namespace Dynamik {
 				for (VulkanGraphicsShader _shader : _shaders)
 					_shader.terminate(logicalDevice);
 
-				ARRAY<ADGRVulkanTextureInitInfo> textureInitInfos;
-
-				// initialize textures
-				for (UI32 _itr = 0; _itr < _object.texturePaths.size(); _itr++)
-				{
-					ADGRVulkanTextureInitInfo initInfo;
-					initInfo.path = _object.texturePaths[_itr];
-					initInfo.format = VK_FORMAT_R8G8B8A8_UNORM;
-					initInfo.mipLevels = 1;
-					initInfo.modeU = VK_SAMPLER_ADDRESS_MODE_REPEAT;
-					initInfo.modeV = VK_SAMPLER_ADDRESS_MODE_REPEAT;
-					initInfo.modeW = VK_SAMPLER_ADDRESS_MODE_REPEAT;
-					initInfo.magFilter = VK_FILTER_LINEAR;
-					initInfo.minFilter = VK_FILTER_LINEAR;
-					initInfo.aspectFlags = VK_IMAGE_ASPECT_COLOR_BIT;
-					textureInitInfos.pushBack(initInfo);
-				}
-
-				initializeTextures(textureInitInfos);
-
 				// initialize vertex buffers
 				for (UI32 _itr = 0; _itr < _object.vertexBufferObjects->size(); _itr++)
 					initializeVertexBuffer(&_object.vertexBufferObjects->at(_itr));

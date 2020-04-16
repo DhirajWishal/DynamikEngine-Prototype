@@ -13,7 +13,7 @@ namespace Dynamik {
 		std::string path = "";
 
 		ARRAY<Vertex>* vertices = {};
-		ARRAY<uint32_t>* indices = {};
+		ARRAY<UI32>* indices = {};
 
 		ARRAY<float> vertexOffset = { 0.0f, 0.0f, 0.0f };	// x, y, z
 	};

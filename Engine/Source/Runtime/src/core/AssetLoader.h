@@ -16,6 +16,8 @@ namespace Dynamik {
 
 		void loadAsset(FSTR path);
 		void loadAsset(FSTR path, DMKAssetExtension ext);
+
+		static void loadAssets(ARRAY<DMKModelLoadInfo> loadInfos);
 	};
 }
 

@@ -36,7 +36,7 @@ namespace Dynamik {
 		//}
 
 		template<typename Alloc>
-		void loadObject(std::string& path, ARRAY<Alloc>* vertices, ARRAY<uint32_t>* indices) {
+		void loadObject(std::string& path, ARRAY<Alloc>* vertices, ARRAY<UI32>* indices) {
 			tinyobj::attrib_t attrib;
 			ARRAY<tinyobj::shape_t> shapes;
 			ARRAY<tinyobj::material_t> materials;
@@ -45,7 +45,7 @@ namespace Dynamik {
 			if (!tinyobj::LoadObj(&attrib, &shapes, &materials, &warn, &err, path.c_str()))
 				DMK_CORE_FATAL(warn + err);
 
-			std::unordered_map<Alloc, uint32_t> uniqueVertices = {};
+			std::unordered_map<Alloc, UI32> uniqueVertices = {};
 
 			for (const auto& shape : shapes) {
 				for (const auto& index : shape.mesh.indices) {
@@ -65,7 +65,7 @@ namespace Dynamik {
 					vertex.color = { 1.0f, 1.0f, 1.0f };
 
 					if (uniqueVertices.count(vertex) == 0) {
-						uniqueVertices[vertex] = static_cast<uint32_t>(vertices.size());
+						uniqueVertices[vertex] = static_cast<UI32>(vertices.size());
 						vertices.push_back(vertex);
 					}
 
@@ -82,23 +82,23 @@ namespace Dynamik {
 				return ARRAY<DMKObjectDataContainer>();
 
 			ARRAY<DMKObjectDataContainer> _containers = {};
-			uint32_t _objectIndex = 0;
+			UI32 _objectIndex = 0;
 			ARRAY<float> _positionData = {};
 			ARRAY<float> _texData = {};
 			ARRAY<float> _normalData = {};
 			ARRAY<float> _PSData = {};
-			ARRAY<uint32_t> _lineElementsData = {};
+			ARRAY<UI32> _lineElementsData = {};
 			ARRAY<std::string> _splits = {};
 			ARRAY<std::string> _subSplits = {};
 
 			bool _singePass = true;
-			uint32_t _vertexTotalCount = 0;
-			uint32_t _vertexCount = 0;
+			UI32 _vertexTotalCount = 0;
+			UI32 _vertexCount = 0;
 
 			std::string _line = "";
 			_containers.push_back(DMKObjectDataContainer{});
 			while (myObjectFile.getline(_line.data(), '\n')) {
-				uint32_t _lineSize = _line.size();
+				UI32 _lineSize = _line.size();
 
 				if (_lineSize < _DEFAULT_EMPTY_LINE) continue; // empty line
 				else if (_line[_FIRST_INDEX] == '#') continue;	// comment
@@ -189,36 +189,36 @@ namespace Dynamik {
 		}
 
 		void loadObjFileData(InternalFormat* myInternalFormat) {
-			uint32_t _objectCount = myInternalFormat->myGameObject->myProperties.objectPath.size();
+			UI32 _objectCount = myInternalFormat->myGameObject->myProperties.objectPath.size();
 			myInternalFormat->myVertexBufferObjects.resize(_objectCount);
 			myInternalFormat->myVertexCounts.resize(_objectCount);
 			myInternalFormat->myIndexBufferObjects.resize(_objectCount);
 			myInternalFormat->myIndexCounts.resize(_objectCount);
 
-			for (uint32_t _itr = 0; _itr < _objectCount; _itr++) {
+			for (UI32 _itr = 0; _itr < _objectCount; _itr++) {
 				std::ifstream _objectFile(myInternalFormat->myGameObject->myProperties.objectPath[_itr]);
 				if (!_objectFile)
 					continue;
 
 				ARRAY<DMKObjectDataContainer> _containers = {};
-				uint32_t _localIndex = 0;
-				uint32_t _objectIndex = 0;
+				UI32 _localIndex = 0;
+				UI32 _objectIndex = 0;
 				ARRAY<float> _positionData = {};
 				ARRAY<float> _texData = {};
 				ARRAY<float> _normalData = {};
 				ARRAY<float> _PSData = {};
-				ARRAY<uint32_t> _lineElementsData = {};
+				ARRAY<UI32> _lineElementsData = {};
 				ARRAY<std::string> _splits = {};
 				ARRAY<std::string> _subSplits = {};
 
 				bool _singePass = true;
-				uint32_t _vertexTotalCount = 0;
-				uint32_t _vertexCount = 0;
+				UI32 _vertexTotalCount = 0;
+				UI32 _vertexCount = 0;
 
 				std::string _line = "";
 				_containers.push_back(DMKObjectDataContainer{});
 				while (_objectFile.getline(_line.data(), '\n')) {
-					uint32_t _lineSize = _line.size();
+					UI32 _lineSize = _line.size();
 					Vertex _localVertex = {};
 
 					if (_lineSize < _DEFAULT_EMPTY_LINE) continue; // empty line

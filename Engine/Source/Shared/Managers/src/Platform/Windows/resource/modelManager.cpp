@@ -39,7 +39,7 @@ namespace Dynamik {
 			//DMK_CORE_FATAL((warn + err).c_str());
 			;
 
-		std::unordered_map<Vertex, uint32_t> uniqueVertices = {};
+		std::unordered_map<Vertex, UI32> uniqueVertices = {};
 
 		for (const auto& shape : shapes) {
 			for (const auto& index : shape.mesh.indices) {
@@ -79,7 +79,7 @@ namespace Dynamik {
 				}
 
 				if (uniqueVertices.count(vertices) == 0) {
-					uniqueVertices[vertices] = static_cast<uint32_t>(info.vertices->size());
+					uniqueVertices[vertices] = static_cast<UI32>(info.vertices->size());
 					info.vertices->push_back(vertices);
 				}
 

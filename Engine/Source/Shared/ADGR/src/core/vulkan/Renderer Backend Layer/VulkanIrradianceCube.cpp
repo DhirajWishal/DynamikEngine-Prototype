@@ -11,7 +11,7 @@ namespace Dynamik {
 			void VulkanIrradianceCube::_initializeTexture()
 			{
 				myTextureContainer.format = VK_FORMAT_R32G32B32A32_SFLOAT;
-				myTextureContainer.mipLevels = static_cast<uint32_t>(floor(log2(dimentions))) + 1;
+				myTextureContainer.mipLevels = static_cast<UI32>(floor(log2(dimentions))) + 1;
 				myTextureContainer.width = dimentions;
 				myTextureContainer.height = dimentions;
 
@@ -287,8 +287,8 @@ namespace Dynamik {
 				transitionInfo.layerCount = 6;
 				VulkanGraphicsFunctions::transitionImageLayout(logicalDevice, commandPool, graphicsQueue, presentQueue, transitionInfo);
 
-				for (uint32_t m = 0; m < myTextureContainer.mipLevels; m++) {
-					for (uint32_t f = 0; f < 6; f++) {
+				for (UI32 m = 0; m < myTextureContainer.mipLevels; m++) {
+					for (UI32 f = 0; f < 6; f++) {
 						viewport.width = static_cast<float>(dimentions * std::pow(0.5f, m));
 						viewport.height = static_cast<float>(dimentions * std::pow(0.5f, m));
 						vkCmdSetViewport(buffer, 0, 1, &viewport);
@@ -337,8 +337,8 @@ namespace Dynamik {
 						copyRegion.dstSubresource.layerCount = 1;
 						copyRegion.dstOffset = { 0, 0, 0 };
 
-						copyRegion.extent.width = static_cast<uint32_t>(viewport.width);
-						copyRegion.extent.height = static_cast<uint32_t>(viewport.height);
+						copyRegion.extent.width = static_cast<UI32>(viewport.width);
+						copyRegion.extent.height = static_cast<UI32>(viewport.height);
 						copyRegion.extent.depth = 1;
 
 						{

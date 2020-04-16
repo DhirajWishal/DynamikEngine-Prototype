@@ -135,6 +135,23 @@ namespace Dynamik {
 				// initialize descriptor sets
 				initializeDescriptorSets();
 
+				ADGRVulkanGraphicsSupportObjectInitInfo supportObjectInitInfo;
+				supportObjectInitInfo.logicalDevice = logicalDevice;
+				supportObjectInitInfo.physicalDevice = physicalDevice;
+				supportObjectInitInfo.commandPool = commandPool;
+				supportObjectInitInfo.graphicsQueue = graphicsQueue;
+				supportObjectInitInfo.presentQueue = presentQueue;
+				myBRDF = VulkanBRDF(supportObjectInitInfo);
+				myBRDF.initialize();
+
+				myIrradianceCube = VulkanIrradianceCube(supportObjectInitInfo);
+				myIrradianceCube.skyboxRenderData = myRenderData;
+				myIrradianceCube.initialize();
+
+				myPreFilteredCube = VulkanPrefilteredCube(supportObjectInitInfo);
+				myPreFilteredCube.skyboxRenderData = myRenderData;
+				myPreFilteredCube.initialize();
+
 				return myRenderData;
 			}
 

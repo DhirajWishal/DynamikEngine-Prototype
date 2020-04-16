@@ -7,7 +7,7 @@
 namespace Dynamik {
 	void RendererThread::init()
 	{
-		myRenderer.setRendererFormats(_internalFormats);
+		//myRenderer.setRendererFormats(_internalFormats);
 		myRenderer.initRenderer();
 	}
 

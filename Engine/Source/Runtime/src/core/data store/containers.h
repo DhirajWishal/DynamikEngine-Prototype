@@ -29,7 +29,7 @@ namespace Dynamik {
 	struct DMKEventContainer {
 		DMKEventType eventType = DMKEventType::DMK_EVENT_TYPE_UNKNOWN;
 		int32_t code = -1;
-		uint32_t count = 0;
+		UI32 count = 0;
 
 		float xAxis = 0.0f;
 		float yAxis = 0.0f;

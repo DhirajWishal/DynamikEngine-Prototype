@@ -63,8 +63,8 @@ namespace Dynamik {
 			rendererCore.initStageThree();
 		}
 
-		void Renderer::setRendererFormats(ARRAY<InternalFormat*>& internalFormats) {
-			loadData(internalFormats, &myRendererFormats);
+		void Renderer::setRendererFormats(ARRAY<DMKAssetIndexContainer>& containers) {
+			loadData(containers, &myRendererFormats);
 			rendererCore.setFormats(myRendererFormats);
 		}
 
@@ -85,8 +85,8 @@ namespace Dynamik {
 			draw();
 		}
 
-		void Renderer::loadDataToUpdate(ARRAY<InternalFormat*>& internalFormats) {
-			loadData(internalFormats, &myTemporaryFormats);
+		void Renderer::loadDataToUpdate(ARRAY<DMKAssetIndexContainer>& containers) {
+			loadData(containers, &myTemporaryFormats);
 		}
 
 		void Renderer::updateRendererFormats() {
@@ -95,13 +95,21 @@ namespace Dynamik {
 			myTemporaryFormats.clear();
 		}
 
-		void Renderer::loadData(ARRAY<InternalFormat*>& internalFormats, ARRAY<RendererFormat>* formats) {
-			for (auto format : internalFormats)
-				formats->push_back(RendererFormat(format));
+		void Renderer::loadData(ARRAY<DMKAssetIndexContainer>& containers, ARRAY<RendererFormat>* formats) {
+			for (auto format : containers)
+			{
+				auto _gameObject = (GameObject*)format.address;
+				auto _internalFormat = InternalFormat(_gameObject);
+				auto _renderFormat = RendererFormat(&_internalFormat);
+				formats->push_back(_renderFormat);
+			}
+
+			auto _debug1 = formats->at(0);
+			auto _debug2 = formats->at(1);
 
 			{
 				ARRAY<std::future<void>, DMKArrayDestructorCallMode::DMK_ARRAY_DESTRUCTOR_CALL_MODE_DESTRUCT_ALL> threads = {};
-				for (I32 i = 0; i < internalFormats.size(); i++) {
+				for (I32 i = 0; i < formats->size(); i++) {
 					B1 isInitiated = false;
 					RendererFormat* _localFormat = &formats->at(i);
 					if (_localFormat->myInternalFormat->myGameObject->myProperties.type == DMKObjectType::DMK_OBJECT_TYPE_SKELETAL_ANIMATION)

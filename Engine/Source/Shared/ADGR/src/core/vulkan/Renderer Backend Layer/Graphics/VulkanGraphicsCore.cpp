@@ -217,11 +217,11 @@ namespace Dynamik {
 
 			VkResult VulkanGraphicsCore::submitQueues(ARRAY<VkSwapchainKHR> swapChains, UI32 index, UI32 frame, ARRAY<VkCommandBuffer> buffers)
 			{
-				// submit info
-				submitInfo.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO;
-
 				if (!buffers.size())
 					DMK_CORE_FATAL("No command buffers were submitted!");
+
+				// submit info
+				submitInfo.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO;
 
 				// wait for semaphores
 				waitSemaphores[0] = { imageAvailables[frame] };

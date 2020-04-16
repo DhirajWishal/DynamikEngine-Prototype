@@ -60,8 +60,8 @@ namespace Dynamik {
 	struct AudioProperties {
 		DMKAudioOutputOptions outputOptions = DMKAudioOutputOptions::DMK_AUDIO_OUTPUT_DEFAULT;
 		DMKAudioPriorityOptions priority = DMKAudioPriorityOptions::DMK_AUDIO_PRIORITY_DEFAULT;
-		uint32_t volume = 100;
-		uint32_t pitch = 1;
+		UI32 volume = 100;
+		UI32 pitch = 1;
 		int32_t stereoPan = 0;
 
 		bool isMute = false;
@@ -76,8 +76,8 @@ namespace Dynamik {
 
 	// Video
 	struct VideoProperties {
-		uint32_t width = 0;
-		uint32_t height = 0;
+		UI32 width = 0;
+		UI32 height = 0;
 	};
 
 	// Camera
@@ -111,7 +111,7 @@ namespace Dynamik {
 		// Object info:
 		std::string name = "New Object";
 		std::string ID = "0000";
-		uint32_t instanceCount = 1;
+		UI32 instanceCount = 1;
 
 		// Location data:
 		std::string location = "";
@@ -154,15 +154,15 @@ namespace Dynamik {
 	};
 
 	struct DMKVertexInputBindingDescription {
-		uint32_t binding = 0;
-		uint32_t stride = 0;
+		UI32 binding = 0;
+		UI32 stride = 0;
 	};
 
 	struct DMKVertexInputAttributeDescription {
-		uint32_t binding = 0;
-		uint32_t location = 0;
+		UI32 binding = 0;
+		UI32 location = 0;
 		DMKFormat format;
-		uint32_t offset = 0;
+		UI32 offset = 0;
 	};
 
 	// vertex Data
@@ -173,7 +173,7 @@ namespace Dynamik {
 		virtual void setVertexData(DMKObjectVertexDataType dataType, ARRAY<float> data) {}
 		virtual void setVertexDataF(DMKObjectVertexDataType& dataType, ARRAY<float>& data) {}
 		virtual void setVertexDataI(DMKObjectVertexDataType& dataType, ARRAY<int32_t>& data) {}
-		virtual void setVertexDataUI(DMKObjectVertexDataType& dataType, ARRAY<uint32_t>& data) {}
+		virtual void setVertexDataUI(DMKObjectVertexDataType& dataType, ARRAY<UI32>& data) {}
 
 		virtual ARRAY<DMKVertexInputBindingDescription> getVertexInputBindingDescription(int bindCount) {
 			return ARRAY<DMKVertexInputBindingDescription>();

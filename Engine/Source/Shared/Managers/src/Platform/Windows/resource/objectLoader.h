@@ -22,7 +22,7 @@ namespace Dynamik {
 		//};
 
 		template<typename Alloc>
-		void loadObject(std::string& path, ARRAY<Alloc>* vertices, ARRAY<uint32_t>* indices);
+		void loadObject(std::string& path, ARRAY<Alloc>* vertices, ARRAY<UI32>* indices);
 	}
 	namespace utils {
 		// Object data container
@@ -31,13 +31,13 @@ namespace Dynamik {
 			ARRAY<ARRAY<float>> myTextureCoordinates = {};
 			ARRAY<ARRAY<float>> myNormals = {};
 			ARRAY<ARRAY<float>> myParameterSpaces = {};
-			ARRAY<ARRAY<uint32_t>> myLineElements = {};
+			ARRAY<ARRAY<UI32>> myLineElements = {};
 			ARRAY<std::string> myMTLFile = {};
 
-			ARRAY<uint32_t> myVertexIndex = {};
-			ARRAY<uint32_t> myTextureCoordinateIndex = {};
-			ARRAY<uint32_t> myNormalIndex = {};
-			uint32_t myIndexCount = 0;
+			ARRAY<UI32> myVertexIndex = {};
+			ARRAY<UI32> myTextureCoordinateIndex = {};
+			ARRAY<UI32> myNormalIndex = {};
+			UI32 myIndexCount = 0;
 		};
 
 		// obj file loader

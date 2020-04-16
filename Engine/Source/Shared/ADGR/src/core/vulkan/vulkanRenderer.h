@@ -29,6 +29,7 @@
 #include "Renderer Backend Layer/VulkanGraphicsSwapChain3D.h"
 #include "Renderer Backend Layer/VulkanTextOverlay.h"
 #include "Renderer Backend Layer/VulkanPBRObject.h"
+#include "Renderer Backend Layer/VulkanSkyBox.h"
 
 #include "Renderer Backend Layer/Animations/VulkanSkeletalAnimation.h"
 
@@ -214,6 +215,8 @@ namespace Dynamik {
 			ARRAY<ADGRVulkanRenderData> renderDatas;
 			ARRAY<ADGRVulkanSkeletalAnimationData> animationDatas;
 			ARRAY<ADGRVulkan3DObjectData> rawObjects;
+
+			ARRAY<VulkanSkyBox> mySkyboxes;
 
 			ADGRVulkanSkeletalAnimationData _skeletalData;
 			VulkanSkeletalAnimation* myAnimation;

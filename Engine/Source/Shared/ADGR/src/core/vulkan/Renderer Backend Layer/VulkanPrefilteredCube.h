@@ -23,7 +23,7 @@ namespace Dynamik {
 				struct PushBlock {
 					glm::mat4 mvp;
 					float roughness;
-					uint32_t numSamples = 32u;
+					UI32 numSamples = 32u;
 				} pushBlock;
 			};
 		}

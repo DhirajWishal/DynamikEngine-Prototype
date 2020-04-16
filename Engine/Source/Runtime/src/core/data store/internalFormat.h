@@ -30,15 +30,15 @@ namespace Dynamik {
 		ARRAY<std::string> myShaderPaths = {};
 
 		// Textures
-		uint32_t myMipLevel = 1.0f;
+		UI32 myMipLevel = 1.0f;
 
 		// Vertex buffers
 		ARRAY<ARRAY<Vertex>> myVertexBufferObjects = {};
-		ARRAY<uint32_t> myVertexCounts;
+		ARRAY<UI32> myVertexCounts;
 
 		// Index buffers
-		ARRAY<ARRAY<uint32_t>> myIndexBufferObjects = {};
-		ARRAY<uint32_t> myIndexCounts;
+		ARRAY<ARRAY<UI32>> myIndexBufferObjects = {};
+		ARRAY<UI32> myIndexCounts;
 
 		bool isInitializedPrimary = false;
 	};

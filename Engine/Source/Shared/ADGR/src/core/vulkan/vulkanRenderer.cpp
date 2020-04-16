@@ -18,7 +18,6 @@
 #include "CentralDataHub.h"
 #include "Platform.h"
 
-#include "Renderer Backend Layer/VulkanSkyBox.h"
 #include "Renderer Backend Layer/VulkanReflectObject.h"
 #include "Renderer Backend Layer/VulkanPBRObject.h"
 
@@ -97,6 +96,8 @@ namespace Dynamik {
 		// object loading and initialization
 		void vulkanRenderer::initStageTwo() {
 			initializeObjects();
+
+			renderDatas.pushBack(mySkyboxes[0].myRenderData);
 
 			ADGRVulkanGraphicsCommandBufferInitInfo commandBufferInitInfo;
 			commandBufferInitInfo.objects = renderDatas;
@@ -247,6 +248,11 @@ namespace Dynamik {
 						_renderObject.setSwapChainContainer(&mySwapChain3D.swapChainContainer);
 						_renderObject.setFrameBufferContainer(&myFrameBuffer);
 						_renderObject.myRenderData.materialDescriptor = myRenderableMeterials[_object.materialName];
+
+						_renderObject.myRenderData.textures = mySkyboxes[0].myRenderData.textures;
+						_renderObject.myBRDF = mySkyboxes[0].myBRDF;
+						_renderObject.myIrradianceCube = mySkyboxes[0].myIrradianceCube;
+						_renderObject.myPreFilteredCube = mySkyboxes[0].myPreFilteredCube;
 
 						renderDatas.push_back(_renderObject.initializeObject(myVulkanGraphicsCore.logicalDevice, _object, myVulkanGraphicsCore.msaaSamples));
 					}
@@ -582,7 +588,10 @@ namespace Dynamik {
 			_renderObject.setSwapChainContainer(&mySwapChain3D.swapChainContainer);
 			_renderObject.setFrameBufferContainer(&myFrameBuffer);
 
-			return _renderObject.initializeObject(myVulkanGraphicsCore.logicalDevice, _object, myVulkanGraphicsCore.msaaSamples);
+			auto _dataContainer = _renderObject.initializeObject(myVulkanGraphicsCore.logicalDevice, _object, myVulkanGraphicsCore.msaaSamples);
+			mySkyboxes.pushBack(_renderObject);
+
+			return _dataContainer;
 		}
 
 		ADGRVulkanRenderData vulkanRenderer::initializeReflectObject(ADGRVulkan3DObjectData _object)
@@ -591,6 +600,7 @@ namespace Dynamik {
 
 			_renderObject.setSwapChainContainer(&mySwapChain3D.swapChainContainer);
 			_renderObject.setFrameBufferContainer(&myFrameBuffer);
+			_renderObject.myRenderData.textures = mySkyboxes[0].myRenderData.textures;
 
 			return _renderObject.initializeObject(myVulkanGraphicsCore.logicalDevice, _object, myVulkanGraphicsCore.msaaSamples);
 		}

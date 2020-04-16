@@ -79,7 +79,7 @@ namespace Dynamik {
 
 			UI32 getBestTransferQueue(VkPhysicalDevice physicalDevice)
 			{
-				uint32_t queueFamilyPropertiesCount = 0;
+				UI32 queueFamilyPropertiesCount = 0;
 				vkGetPhysicalDeviceQueueFamilyProperties(physicalDevice, &queueFamilyPropertiesCount, 0);
 
 				VkQueueFamilyProperties queueFamilyProperties;
@@ -87,7 +87,7 @@ namespace Dynamik {
 				vkGetPhysicalDeviceQueueFamilyProperties(physicalDevice, &queueFamilyPropertiesCount, &queueFamilyProperties);
 
 				// first try and find a queue that has just the transfer bit set
-				for (uint32_t i = 0; i < queueFamilyPropertiesCount; i++) {
+				for (UI32 i = 0; i < queueFamilyPropertiesCount; i++) {
 					// mask out the sparse binding bit that we aren't caring about (yet!)
 					const VkQueueFlags maskedFlags = (~VK_QUEUE_SPARSE_BINDING_BIT & ((VkQueueFamilyProperties*)&queueFamilyProperties)[i].queueFlags);
 
@@ -99,7 +99,7 @@ namespace Dynamik {
 
 				// otherwise we'll prefer using a compute-only queue,
 				// remember that having compute on the queue implicitly enables transfer!
-				for (uint32_t i = 0; i < queueFamilyPropertiesCount; i++) {
+				for (UI32 i = 0; i < queueFamilyPropertiesCount; i++) {
 					// mask out the sparse binding bit that we aren't caring about (yet!)
 					const VkQueueFlags maskedFlags = (~VK_QUEUE_SPARSE_BINDING_BIT & ((VkQueueFamilyProperties*)&queueFamilyProperties)[i].queueFlags);
 
@@ -109,7 +109,7 @@ namespace Dynamik {
 				}
 
 				// lastly get any queue that'll work for us (graphics, compute or transfer bit set)
-				for (uint32_t i = 0; i < queueFamilyPropertiesCount; i++) {
+				for (UI32 i = 0; i < queueFamilyPropertiesCount; i++) {
 					// mask out the sparse binding bit that we aren't caring about (yet!)
 					const VkQueueFlags maskedFlags = (~VK_QUEUE_SPARSE_BINDING_BIT & ((VkQueueFamilyProperties*)&queueFamilyProperties)[i].queueFlags);
 
@@ -123,7 +123,7 @@ namespace Dynamik {
 
 			UI32 getBestComputeQueue(VkPhysicalDevice physicalDevice)
 			{
-				uint32_t queueFamilyPropertiesCount = 0;
+				UI32 queueFamilyPropertiesCount = 0;
 				vkGetPhysicalDeviceQueueFamilyProperties(physicalDevice, &queueFamilyPropertiesCount, 0);
 
 				VkQueueFamilyProperties queueFamilyProperties;
@@ -131,7 +131,7 @@ namespace Dynamik {
 				vkGetPhysicalDeviceQueueFamilyProperties(physicalDevice, &queueFamilyPropertiesCount, &queueFamilyProperties);
 
 				// first try and find a queue that has just the compute bit set
-				for (uint32_t i = 0; i < queueFamilyPropertiesCount; i++) {
+				for (UI32 i = 0; i < queueFamilyPropertiesCount; i++) {
 					// mask out the sparse binding bit that we aren't caring about (yet!) and the transfer bit
 					const VkQueueFlags maskedFlags = (~(VK_QUEUE_TRANSFER_BIT | VK_QUEUE_SPARSE_BINDING_BIT) &
 						((VkQueueFamilyProperties*)&queueFamilyProperties)[i].queueFlags);
@@ -142,7 +142,7 @@ namespace Dynamik {
 				}
 
 				// lastly get any queue that'll work for us
-				for (uint32_t i = 0; i < queueFamilyPropertiesCount; i++) {
+				for (UI32 i = 0; i < queueFamilyPropertiesCount; i++) {
 					// mask out the sparse binding bit that we aren't caring about (yet!) and the transfer bit
 					const VkQueueFlags maskedFlags = (~(VK_QUEUE_TRANSFER_BIT | VK_QUEUE_SPARSE_BINDING_BIT) &
 						((VkQueueFamilyProperties*)&queueFamilyProperties)[i].queueFlags);

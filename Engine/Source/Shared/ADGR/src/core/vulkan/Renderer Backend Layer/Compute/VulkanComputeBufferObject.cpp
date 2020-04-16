@@ -10,7 +10,7 @@ namespace Dynamik {
 			{
 				const int32_t bufferLength = 16384;
 
-				const uint32_t bufferSize = sizeof(int32_t) * bufferLength;
+				const UI32 bufferSize = sizeof(int32_t) * bufferLength;
 
 				// we are going to need two buffers from this one memory
 				const VkDeviceSize memorySize = bufferSize * 2;

@@ -68,7 +68,7 @@ namespace Dynamik {
 		sample() { DMK_CORE_INFO("Bye!"); }
 	};
 
-	uint32_t progress = 0;
+	UI32 progress = 0;
 	static bool shouldClose = false;
 	// threads
 	SampleThread thr;
@@ -82,14 +82,24 @@ namespace Dynamik {
 
 		myEngine.Initialize();
 
-		FSTR fstr = std::string("Hello World").c_str();
-
 		gameObjectInitialization();
 
 		std::thread myThread(Application::showProgress);
+		_loadAssets();
 
 		myRenderingEngine.setProgress(&progress);
-		myRenderingEngine.setRendererFormats(internalFormatsBase);
+		auto _debug = myDataStore.getScene(0, 0).assets;
+		ARRAY<DMKAssetIndexContainer> renderableAssets;
+		for (DMKAssetIndexContainer _asset : _debug)
+		{
+			if (renderableObjectCheck(_asset))
+			{
+				renderableAssets.pushBack(_asset);
+			}
+		}
+		myRenderingEngine.setRendererFormats(renderableAssets);
+
+
 		myRenderingEngine.initRenderer();
 
 		//rendererThread.addProgress(&progress);
@@ -183,16 +193,16 @@ namespace Dynamik {
 						}
 						}, this, &canFinish);
 
-					getObjectPaths(&myObject);
 					initAudioControllers(&myObject);
 					ARRAY<InternalFormat*> _localInternalFormatBases;
-					initRendererFormats(&_localInternalFormatBases);
-					myRenderingEngine.loadDataToUpdate(_localInternalFormatBases);
-					canFinish = true;
-					_threadOne.join();
-					myRenderingEngine.updateRendererFormats();
-					internalFormatsBase = _localInternalFormatBases;
-
+					//initRendererFormats(&_localInternalFormatBases);
+					//canFinish = true;
+					//_threadOne.join();
+					//myRenderingEngine.updateRendererFormats();
+					//getObjectPaths(&myObject);
+					//myRenderingEngine.loadDataToUpdate(myDataStore.getBlock(DMK_INDEX_BLOCK_GAME_OBJECT));
+					//internalFormatsBase = _localInternalFormatBases;
+					//
 					//std::thread _threadOne([](Application* application, GameObject* myObject, bool* canFinish) {
 					//	application->getObjectPaths(myObject);
 					//	application->initAudioControllers(myObject);
@@ -217,7 +227,7 @@ namespace Dynamik {
 					//	for (auto layer : layerStack)
 					//		layer->update();
 					//}
-
+					//
 					//if (!_threadOne.joinable())
 					//	_threadOne.join();
 
@@ -235,7 +245,7 @@ namespace Dynamik {
 	}
 
 	void Application::showProgress() {
-		static uint32_t old = 0;
+		static UI32 old = 0;
 		static uint8_t count = 0;
 		static float percentage = 0.0f;
 
@@ -265,18 +275,38 @@ namespace Dynamik {
 	}
 
 	void Application::gameObjectInitialization() {
+		gameObjects = scenes[sceneCount]->myGameObjects;
+
+		myDataStore.addLevel(DMKLevelDataContainer());
+
+		ARRAY<DMKAssetIndexContainer> _assets;
+		for (UI32 _itr = 0; _itr < gameObjects.size(); _itr++)
+		{
+			DMKAssetIndexContainer _container;
+			_container.address = gameObjects[_itr];
+			_container.byteSize = sizeof(*gameObjects[_itr]);
+			_container.type = gameObjects[_itr]->myProperties.type;
+			_assets.pushBack(_container);
+		}
+
+		DMKSceneDataContainer _scene;
+		_scene.assets = _assets;
+
+		myDataStore.addScene(_scene, 0);
+
 		getObjectPaths();
 		//initAudioControllers();
-		//loadObjectData();
+		loadObjectData();
 		initRendererFormats();
 	}
 
 	void Application::getObjectPaths() {
-		gameObjects = scenes[sceneCount]->myGameObjects;
+		auto objects = myDataStore.getScene(0, 0).assets;
 
-		for (int itr = 0; itr < gameObjects.size(); itr++) {
-			if (renderableObjectCheck(gameObjects[itr])) {
-				GameObject* gameObject = gameObjects[itr];	// inner array initialization
+		for (int itr = 0; itr < objects.size(); itr++) {
+
+			if (renderableObjectCheck(objects[itr])) {
+				GameObject* gameObject = objects[itr].address;	// inner array initialization
 
 				utils::daiManager fileManager;
 
@@ -318,121 +348,75 @@ namespace Dynamik {
 					(fileManager.getData(utils::DMK_DAI_FILE_DATA_TYPE_FRAGMENT).size() > 0) ?
 					basePath + fileManager.getData(utils::DMK_DAI_FILE_DATA_TYPE_FRAGMENT)[0] : "NONE"
 					);	// fragment shader
+
+				renderableObjectContainer.pushBack(objects[itr]);
 			}
 
 			internalFormats.push_back(internalFormat(gameObjects[itr]));
 		}
+
+		DMKSceneDataContainer _container;
+		_container.assets = objects;
+		myDataStore.updateScene(_container, 0, 0);
 	}
 
-	void Application::getObjectPaths(GameObject* object) {
-		if (
-			(object->myProperties.type == DMKObjectType::DMK_OBJECT_TYPE_MESH)
-			|| (object->myProperties.type == DMKObjectType::DMK_OBJECT_TYPE_STATIC_OBJECT)
-			|| (object->myProperties.type == DMKObjectType::DMK_OBJECT_TYPE_INTERACTIVE_OBJECT)
-			|| (object->myProperties.type == DMKObjectType::DMK_OBJECT_TYPE_PLAYER)
-			|| (object->myProperties.type == DMKObjectType::DMK_OBJECT_TYPE_NPC)
-			|| (object->myProperties.type == DMKObjectType::DMK_OBJECT_TYPE_CUSTOM)
-			) {
-			GameObject* gameObject = object;
+	void Application::loadObjectData() 
+	{
+		auto objects = myDataStore.getScene(0, 0).assets;
+		ARRAY<DMKAssetIndexContainer> newIndexes(renderableObjectContainer.size());
+		UI32 index = 0;
 
-			utils::daiManager fileManager;
-			fileManager.open(gameObject->myProperties.location + (
-				(gameObject->myProperties.location[gameObject->myProperties.location.size() - 1] == '/')
-				? "modelData.dai" : "/modelData.dai"));
-
-			if (!fileManager.isOpen())
-				DMK_CORE_FATAL("modelData.dai file not found --> " + gameObject->myProperties.location);
-
-			std::string basePath = "";
-			if (gameObject->myProperties.location[gameObject->myProperties.location.size() - 1] == '/')
-				basePath = gameObject->myProperties.location;
-			else
-				basePath = gameObject->myProperties.location + '/';
-
-			// get model paths
-			for (auto modelPath : fileManager.getData(utils::DMK_DAI_FILE_DATA_TYPE_MODEL))
-				gameObject->myProperties.objectPath.push_back(basePath + modelPath);
-
-			// get texture paths
-			for (auto texturePath : fileManager.getData(utils::DMK_DAI_FILE_DATA_TYPE_TEXTURE))
-				gameObject->myProperties.texturePaths.push_back(basePath + texturePath);
-
-			// get shader paths
-			gameObject->myProperties.renderableObjectProperties.vertexShaderPath = (
-				(fileManager.getData(utils::DMK_DAI_FILE_DATA_TYPE_VERTEX).size() > 0) ?
-				basePath + fileManager.getData(utils::DMK_DAI_FILE_DATA_TYPE_VERTEX)[0] : "NONE"
-				);	// vertex shader
-			gameObject->myProperties.renderableObjectProperties.tessellationShaderPath = (
-				(fileManager.getData(utils::DMK_DAI_FILE_DATA_TYPE_TESSELLATION).size() > 0) ?
-				basePath + fileManager.getData(utils::DMK_DAI_FILE_DATA_TYPE_TESSELLATION)[0] : "NONE"
-				);	// tessellation shader
-			gameObject->myProperties.renderableObjectProperties.geometryShaderPath = (
-				(fileManager.getData(utils::DMK_DAI_FILE_DATA_TYPE_GEOMETRY).size() > 0) ?
-				basePath + fileManager.getData(utils::DMK_DAI_FILE_DATA_TYPE_GEOMETRY)[0] : "NONE"
-				);	// geometry shader
-			gameObject->myProperties.renderableObjectProperties.fragmentShaderPath = (
-				(fileManager.getData(utils::DMK_DAI_FILE_DATA_TYPE_FRAGMENT).size() > 0) ?
-				basePath + fileManager.getData(utils::DMK_DAI_FILE_DATA_TYPE_FRAGMENT)[0] : "NONE"
-				);	// fragment shader
-		}
-
-		internalFormats.push_back(internalFormat(object));
-	}
-
-	void Application::loadObjectData() {
 		{
 			ARRAY<std::future<void>, DMKArrayDestructorCallMode::DMK_ARRAY_DESTRUCTOR_CALL_MODE_DESTRUCT_ALL> threads = {};
-			for (int i = 0; i < internalFormats.size(); i++) {
-				if (renderableObjectCheck(internalFormats[i])) {
-					internalFormats[i].myVertexBufferObjects.resize(1);
-					internalFormats[i].myIndexBufferObjects.resize(1);
+			for (int i = 0; i < 3; i++) 
+			{
+				if (renderableObjectCheck(objects[i])) 
+				{
+					internalFormat _format = internalFormat((GameObject*)objects[i].address);
 
-					//DMKModelLoadInfo loadInfo = {};
-					//loadInfo.path = internalFormats[i].myGameObject->myProperties.objectPath[0];
-					//loadInfo.vertices = &internalFormats[i].myVertexBufferObjects[0];
-					//loadInfo.indices = &internalFormats[i].myIndexBufferObjects[0];
-					//loadInfo.vertexOffset = internalFormats[i].myGameObject->myProperties.transformProperties.location;
+					newIndexes[index].address = &_format;
+					newIndexes[index].byteSize = sizeof(_format);
+					newIndexes[index].type = _format.myGameObject->myProperties.type;
+					index++;
 
-					//threads.push_back(std::async(std::launch::async, loadModel, loadInfo));
-					//threads.push_back(std::async(std::launch::async, utils::loadObjFileData, &internalFormats[i]));
-					//.push_back(std::async(std::launch::async, loadModel, loadInfo));
-					//utils::loadObjFileData(&internalFormats[i]);
-					//
-					//internalFormats[i].myVertexBufferObjects.resize(1);
-					//internalFormats[i].myIndexBufferObjects.resize(1);
-					//
-					//DMKModelLoadInfo loadInfo = {};
-					//loadInfo.path = internalFormats[i].myGameObject->myProperties.objectPath[0];
-					//loadInfo.vertices = &internalFormats[i].myVertexBufferObjects[0];
-					//loadInfo.indices = &internalFormats[i].myIndexBufferObjects[0];
-					//loadInfo.vertexOffset = internalFormats[i].myGameObject->myProperties.transformProperties.location;
-					//loadModel(loadInfo);
+					_format.myVertexBufferObjects.resize(1);
+					_format.myIndexBufferObjects.resize(1);
+
+					DMKModelLoadInfo loadInfo = {};
+					loadInfo.path = _format.myGameObject->myProperties.objectPath[0];
+					loadInfo.vertices = &_format.myVertexBufferObjects[0];
+					loadInfo.indices = &_format.myIndexBufferObjects[0];
+					loadInfo.vertexOffset = _format.myGameObject->myProperties.transformProperties.location;
+
+					threads.push_back(std::async(std::launch::async, loadModel, loadInfo));
 				}
 			}
 		}
 
-		for (int i = 0; i < internalFormats.size(); i++) {
-			if (renderableObjectCheck(internalFormats[i])) {
-				internalFormats[i].myVertexCounts.resize(1);
-				internalFormats[i].myVertexCounts[0] = internalFormats[i].myVertexBufferObjects[0].size();
-				internalFormats[i].myIndexCounts.resize(1);
-				internalFormats[i].myIndexCounts[0] = internalFormats[i].myIndexBufferObjects[0].size();
+		for (int i = 0; i < 3; i++) 
+		{
+			if (renderableObjectCheck(objects[i])) 
+			{
+				internalFormat _format = internalFormat((GameObject*)objects[i].address);
+				_format.myVertexCounts.resize(1);
+				_format.myVertexCounts[0] = _format.myVertexBufferObjects[0].size();
+				_format.myIndexCounts.resize(1);
+				_format.myIndexCounts[0] = _format.myIndexBufferObjects[0].size();
 			}
 		}
 	}
 
 	void Application::initRendererFormats() {
-		internalFormatsBase.clear();
-		for (int i = 0; i < internalFormats.size(); i++)
-			if (renderableObjectCheck(internalFormats[i])) {
+		for (int i = 0; i < renderableObjectContainer.size(); i++)
+			if (renderableObjectCheck(renderableObjectContainer[i])) {
 				internalFormats[i].isInitializedPrimary = true;
-				internalFormatsBase.push_back(&internalFormats[i]);
+				//internalFormatsBase.push_back(&internalFormats[i]);
 			}
 	}
 
 	void Application::initRendererFormats(ARRAY<InternalFormat*>* formats) {
-		for (int i = 0; i < internalFormats.size(); i++)
-			if (renderableObjectCheck(internalFormats[i])) {
+		for (int i = 0; i < renderableObjectContainer.size(); i++)
+			if (renderableObjectCheck(renderableObjectContainer[i])) {
 				internalFormats[i].isInitializedPrimary = true;
 				formats->push_back(&internalFormats[i]);
 			}
@@ -449,7 +433,15 @@ namespace Dynamik {
 			audioControllers.push_back(Audio::BasicAudioController((object->myProperties.objectPath[0])));
 	}
 
-	bool Application::renderableObjectCheck(internalFormat format) {
-		return (format.myGameObject->myProperties.type <= DMKObjectType::DMK_OBJECT_TYPE_MAX_RENDERABLE_TYPES);
+	bool Application::renderableObjectCheck(DMKAssetIndexContainer container) {
+		return (container.type <= DMKObjectType::DMK_OBJECT_TYPE_MAX_RENDERABLE_TYPES);
+	}
+
+	void Application::_loadAssets()
+	{
+		//for (InternalFormat* _format : internalFormatsBase)
+		//{
+		//
+		//}
 	}
 }

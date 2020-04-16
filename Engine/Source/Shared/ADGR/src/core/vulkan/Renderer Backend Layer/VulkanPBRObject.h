@@ -27,6 +27,10 @@ namespace Dynamik {
 				void initializeDescriptorPool() override;
 				void initializeDescriptorSets() override;
 
+				VulkanBRDF myBRDF;
+				VulkanIrradianceCube myIrradianceCube;
+				VulkanPrefilteredCube myPreFilteredCube;
+
 			private:
 				class _VertexPushConstant : public VulkanGraphicsPushConstant {
 				public:
@@ -39,10 +43,6 @@ namespace Dynamik {
 					_FragmentPushConstant();
 					~_FragmentPushConstant() {}
 				} fragPushConstant;
-
-				VulkanBRDF myBRDF;
-				VulkanIrradianceCube myIrradianceCube;
-				VulkanPrefilteredCube myPreFilteredCube;
 			};
 		}
 	}

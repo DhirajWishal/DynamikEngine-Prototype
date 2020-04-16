@@ -14,7 +14,7 @@ namespace Dynamik {
 		virtual ~Scene() {}
 
 		std::string name = "";
-		uint32_t number = 0;
+		UI32 number = 0;
 		ARRAY<GameObject*> myGameObjects;
 
 		float progress = 0.0f;

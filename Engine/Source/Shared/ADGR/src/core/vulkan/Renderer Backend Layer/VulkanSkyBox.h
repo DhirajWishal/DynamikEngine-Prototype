@@ -4,6 +4,10 @@
 
 #include "Graphics/VulkanGraphicsRenderableObject.h"
 
+#include "VulkanBRDF.h"
+#include "VulkanIrradianceCube.h"
+#include "VulkanPrefilteredCube.h"
+
 namespace Dynamik {
 	namespace ADGR {
 		namespace Backend {
@@ -20,6 +24,10 @@ namespace Dynamik {
 				void updateUniformBuffer(UniformBufferObject uniformBufferObject, UI32 currentImage);
 
 				void initializeDescriptorSets() override;
+
+				VulkanBRDF myBRDF;
+				VulkanIrradianceCube myIrradianceCube;
+				VulkanPrefilteredCube myPreFilteredCube;
 			};
 		}
 	}

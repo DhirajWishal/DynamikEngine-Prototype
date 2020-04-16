@@ -4,45 +4,51 @@
 
 #include <DataTypesLib/Public/Array.h>
 
-/* ASSET INDEX BLOCK
-  ___________________________
- |							 |
- | Game Object Index Address | -----> Index: 00, Address: 0x0000000000000000 
- |___________________________|
- |							 |
- | Engine Data Store Address | -----> Index: 01, Address: 0x000ffad65006acd5 
- |___________________________|
- |							 |
- |  User Data Store Address  | -----> Index: 02, Address: 0x950000ffa6791201 
- |___________________________|
-*/
-
 namespace Dynamik {
 	struct DMKAssetIndexContainer {
 		POINTER<UI32> address;
 		UI32 byteSize = 0;
+		DMKObjectType type = DMKObjectType::DMK_OBJECT_TYPE_STATIC_OBJECT;
+	};
+
+	struct DMKSceneDataContainer {
+		ARRAY<DMKAssetIndexContainer> assets;
+	};
+
+	struct DMKLevelDataContainer {
+		ARRAY<DMKSceneDataContainer> scenes;
+	};
+
+	enum DMKIndexBlock {
+		DMK_INDEX_BLOCK_LEVEL_DATA,
+		DMK_INDEX_BLOCK_ENGINE_DATA,
+		DMK_INDEX_BLOCK_USER_DATA,
+
+		DMK_INDEX_BLOCK_MAX
 	};
 
 	class AssetIndexBlock {
 	public:
-		AssetIndexBlock() {}
-		~AssetIndexBlock() {}
+		AssetIndexBlock();
+		~AssetIndexBlock();
 
-		// Returns ID to the added container
-		UI32 addAssetIndexContainer(DMKAssetIndexContainer container);
-		DMKAssetIndexContainer getAssetIndexContainer(UI32 ID);
+		// return level index
+		UI32 addLevel(DMKLevelDataContainer container);
+		void updateLevel(DMKLevelDataContainer container, UI32 index);
+		DMKLevelDataContainer getLevel(UI32 index);
 
-		B1 isIDValid(UI32 ID);
-		B1 isIndexContainerUsed(UI32 ID);
+		// return scene index
+		UI32 addScene(DMKSceneDataContainer container, UI32 levelIndex);
+		void updateScene(DMKSceneDataContainer container, UI32 sceneIndex = 1, UI32 levelIndex = 1);
+		DMKSceneDataContainer getScene(UI32 sceneIndex, UI32 levelIndex = 1);
+
+		// return object index
+		UI32 addAsset(DMKAssetIndexContainer container, UI32 sceneIndex = 1, UI32 levelIndex = 1);
+		void updateAsset(DMKAssetIndexContainer container, UI32 assetIndex, UI32 sceneIndex = 1, UI32 levelIndex = 1);
+		DMKAssetIndexContainer getAsset(UI32 assetIndex, UI32 sceneIndex = 1, UI32 levelIndex = 1);
 
 	private:
-		struct _AssetIndexContainer_wrapper {
-			DMKAssetIndexContainer container;
-			B1 isInUse = false;
-		};
-
-		ARRAY<_AssetIndexContainer_wrapper> containers;
-		UI32 currentContainerIndex = 0;
+		ARRAY<DMKLevelDataContainer> levelDataContainers;
 	};
 }
 

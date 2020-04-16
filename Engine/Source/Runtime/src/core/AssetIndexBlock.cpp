@@ -2,35 +2,59 @@
 #include "AssetIndexBlock.h"
 
 namespace Dynamik {
-	UI32 AssetIndexBlock::addAssetIndexContainer(DMKAssetIndexContainer container)
+	AssetIndexBlock::AssetIndexBlock()
 	{
-		_AssetIndexContainer_wrapper _wrapper;
-		_wrapper.container = container;
-		_wrapper.isInUse = false;
-		containers.pushBack(_wrapper);
+	}
 
-		return currentContainerIndex++;
-	}
-	
-	DMKAssetIndexContainer AssetIndexBlock::getAssetIndexContainer(UI32 ID)
+	AssetIndexBlock::~AssetIndexBlock()
 	{
-		_AssetIndexContainer_wrapper _wrapper = containers[ID];
-		if (!_wrapper.isInUse)
-		{
-			containers[ID].isInUse = true;
-			return _wrapper.container;
-		}
+	}
 
-		return DMKAssetIndexContainer();
+	UI32 AssetIndexBlock::addLevel(DMKLevelDataContainer container)
+	{
+		levelDataContainers.pushBack(container);
+		return levelDataContainers.size() - 1;
+	}
+
+	void AssetIndexBlock::updateLevel(DMKLevelDataContainer container, UI32 index)
+	{
+		levelDataContainers[index] = container;
 	}
 	
-	B1 AssetIndexBlock::isIDValid(UI32 ID)
+	DMKLevelDataContainer AssetIndexBlock::getLevel(UI32 index)
 	{
-		return ID <= currentContainerIndex;
+		return levelDataContainers[index];
 	}
 	
-	B1 AssetIndexBlock::isIndexContainerUsed(UI32 ID)
+	UI32 AssetIndexBlock::addScene(DMKSceneDataContainer container, UI32 levelIndex)
 	{
-		return containers[ID].isInUse;
+		levelDataContainers[levelIndex].scenes.pushBack(container);
+		return levelDataContainers[levelIndex].scenes.size() - 1;
+	}
+	
+	void AssetIndexBlock::updateScene(DMKSceneDataContainer container, UI32 sceneIndex, UI32 levelIndex)
+	{
+		levelDataContainers[levelIndex].scenes[sceneIndex] = container;
+	}
+	
+	DMKSceneDataContainer AssetIndexBlock::getScene(UI32 sceneIndex, UI32 levelIndex)
+	{
+		return levelDataContainers[levelIndex].scenes[sceneIndex];
+	}
+	
+	UI32 AssetIndexBlock::addAsset(DMKAssetIndexContainer container, UI32 sceneIndex, UI32 levelIndex)
+	{
+		levelDataContainers[levelIndex].scenes[sceneIndex].assets.pushBack(container);
+		return levelDataContainers[levelIndex].scenes[sceneIndex].assets.size() - 1;
+	}
+	
+	void AssetIndexBlock::updateAsset(DMKAssetIndexContainer container, UI32 assetIndex, UI32 sceneIndex, UI32 levelIndex)
+	{
+		levelDataContainers[levelIndex].scenes[sceneIndex].assets[assetIndex] = container;
+	}
+	
+	DMKAssetIndexContainer AssetIndexBlock::getAsset(UI32 assetIndex, UI32 sceneIndex, UI32 levelIndex)
+	{
+		return levelDataContainers[levelIndex].scenes[sceneIndex].assets[assetIndex];
 	}
 }

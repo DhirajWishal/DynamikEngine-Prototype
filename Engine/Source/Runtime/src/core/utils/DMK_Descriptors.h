@@ -16,7 +16,7 @@ namespace Dynamik {
 			ARRAY<std::string>& modelPaths;
 			ARRAY<ARRAY<std::string>>& texturePaths;
 
-			uint32_t* progress = nullptr;
+			UI32* progress = nullptr;
 		};
 	}
 }

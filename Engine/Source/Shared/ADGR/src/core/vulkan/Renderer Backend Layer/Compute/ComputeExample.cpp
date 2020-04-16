@@ -1,4 +1,5 @@
 #include "adgrafx.h"
+using namespace Dynamik;
 
 // This is free and unencumbered software released into the public domain.
 //
@@ -31,8 +32,8 @@
 #define BAIL_ON_BAD_RESULT(result) \
   if (VK_SUCCESS != (result)) { fprintf(stderr, "Failure at %u %s\n", __LINE__, __FILE__); exit(-1); }
 
-VkResult vkGetBestTransferQueueNPH(VkPhysicalDevice physicalDevice, uint32_t* queueFamilyIndex) {
-	uint32_t queueFamilyPropertiesCount = 0;
+VkResult vkGetBestTransferQueueNPH(VkPhysicalDevice physicalDevice, UI32* queueFamilyIndex) {
+	UI32 queueFamilyPropertiesCount = 0;
 	vkGetPhysicalDeviceQueueFamilyProperties(physicalDevice, &queueFamilyPropertiesCount, 0);
 
 	VkQueueFamilyProperties* const queueFamilyProperties = (VkQueueFamilyProperties*)_alloca(
@@ -41,7 +42,7 @@ VkResult vkGetBestTransferQueueNPH(VkPhysicalDevice physicalDevice, uint32_t* qu
 	vkGetPhysicalDeviceQueueFamilyProperties(physicalDevice, &queueFamilyPropertiesCount, queueFamilyProperties);
 
 	// first try and find a queue that has just the transfer bit set
-	for (uint32_t i = 0; i < queueFamilyPropertiesCount; i++) {
+	for (UI32 i = 0; i < queueFamilyPropertiesCount; i++) {
 		// mask out the sparse binding bit that we aren't caring about (yet!)
 		const VkQueueFlags maskedFlags = (~VK_QUEUE_SPARSE_BINDING_BIT & queueFamilyProperties[i].queueFlags);
 
@@ -54,7 +55,7 @@ VkResult vkGetBestTransferQueueNPH(VkPhysicalDevice physicalDevice, uint32_t* qu
 
 	// otherwise we'll prefer using a compute-only queue,
 	// remember that having compute on the queue implicitly enables transfer!
-	for (uint32_t i = 0; i < queueFamilyPropertiesCount; i++) {
+	for (UI32 i = 0; i < queueFamilyPropertiesCount; i++) {
 		// mask out the sparse binding bit that we aren't caring about (yet!)
 		const VkQueueFlags maskedFlags = (~VK_QUEUE_SPARSE_BINDING_BIT & queueFamilyProperties[i].queueFlags);
 
@@ -65,7 +66,7 @@ VkResult vkGetBestTransferQueueNPH(VkPhysicalDevice physicalDevice, uint32_t* qu
 	}
 
 	// lastly get any queue that'll work for us (graphics, compute or transfer bit set)
-	for (uint32_t i = 0; i < queueFamilyPropertiesCount; i++) {
+	for (UI32 i = 0; i < queueFamilyPropertiesCount; i++) {
 		// mask out the sparse binding bit that we aren't caring about (yet!)
 		const VkQueueFlags maskedFlags = (~VK_QUEUE_SPARSE_BINDING_BIT & queueFamilyProperties[i].queueFlags);
 
@@ -78,8 +79,8 @@ VkResult vkGetBestTransferQueueNPH(VkPhysicalDevice physicalDevice, uint32_t* qu
 	return VK_ERROR_INITIALIZATION_FAILED;
 }
 
-VkResult vkGetBestComputeQueueNPH(VkPhysicalDevice physicalDevice, uint32_t* queueFamilyIndex) {
-	uint32_t queueFamilyPropertiesCount = 0;
+VkResult vkGetBestComputeQueueNPH(VkPhysicalDevice physicalDevice, UI32* queueFamilyIndex) {
+	UI32 queueFamilyPropertiesCount = 0;
 	vkGetPhysicalDeviceQueueFamilyProperties(physicalDevice, &queueFamilyPropertiesCount, 0);
 
 	VkQueueFamilyProperties* const queueFamilyProperties = (VkQueueFamilyProperties*)_alloca(
@@ -88,7 +89,7 @@ VkResult vkGetBestComputeQueueNPH(VkPhysicalDevice physicalDevice, uint32_t* que
 	vkGetPhysicalDeviceQueueFamilyProperties(physicalDevice, &queueFamilyPropertiesCount, queueFamilyProperties);
 
 	// first try and find a queue that has just the compute bit set
-	for (uint32_t i = 0; i < queueFamilyPropertiesCount; i++) {
+	for (UI32 i = 0; i < queueFamilyPropertiesCount; i++) {
 		// mask out the sparse binding bit that we aren't caring about (yet!) and the transfer bit
 		const VkQueueFlags maskedFlags = (~(VK_QUEUE_TRANSFER_BIT | VK_QUEUE_SPARSE_BINDING_BIT) &
 			queueFamilyProperties[i].queueFlags);
@@ -100,7 +101,7 @@ VkResult vkGetBestComputeQueueNPH(VkPhysicalDevice physicalDevice, uint32_t* que
 	}
 
 	// lastly get any queue that'll work for us
-	for (uint32_t i = 0; i < queueFamilyPropertiesCount; i++) {
+	for (UI32 i = 0; i < queueFamilyPropertiesCount; i++) {
 		// mask out the sparse binding bit that we aren't caring about (yet!) and the transfer bit
 		const VkQueueFlags maskedFlags = (~(VK_QUEUE_TRANSFER_BIT | VK_QUEUE_SPARSE_BINDING_BIT) &
 			queueFamilyProperties[i].queueFlags);
@@ -142,7 +143,7 @@ int main(int argc, const char* const argv[]) {
 	VkInstance instance;
 	BAIL_ON_BAD_RESULT(vkCreateInstance(&instanceCreateInfo, 0, &instance));
 
-	uint32_t physicalDeviceCount = 0;
+	UI32 physicalDeviceCount = 0;
 	BAIL_ON_BAD_RESULT(vkEnumeratePhysicalDevices(instance, &physicalDeviceCount, 0));
 
 	VkPhysicalDevice* const physicalDevices = (VkPhysicalDevice*)malloc(
@@ -150,8 +151,8 @@ int main(int argc, const char* const argv[]) {
 
 	BAIL_ON_BAD_RESULT(vkEnumeratePhysicalDevices(instance, &physicalDeviceCount, physicalDevices));
 
-	for (uint32_t i = 0; i < physicalDeviceCount; i++) {
-		uint32_t queueFamilyIndex = 0;
+	for (UI32 i = 0; i < physicalDeviceCount; i++) {
+		UI32 queueFamilyIndex = 0;
 		BAIL_ON_BAD_RESULT(vkGetBestComputeQueueNPH(physicalDevices[i], &queueFamilyIndex));
 
 		const float queuePrioritory = 1.0f;
@@ -186,15 +187,15 @@ int main(int argc, const char* const argv[]) {
 
 		const int32_t bufferLength = 16384;
 
-		const uint32_t bufferSize = sizeof(int32_t) * bufferLength;
+		const UI32 bufferSize = sizeof(int32_t) * bufferLength;
 
 		// we are going to need two buffers from this one memory
 		const VkDeviceSize memorySize = bufferSize * 2;
 
 		// set memoryTypeIndex to an invalid entry in the properties.memoryTypes array
-		uint32_t memoryTypeIndex = VK_MAX_MEMORY_TYPES;
+		UI32 memoryTypeIndex = VK_MAX_MEMORY_TYPES;
 
-		for (uint32_t k = 0; k < properties.memoryTypeCount; k++) {
+		for (UI32 k = 0; k < properties.memoryTypeCount; k++) {
 			if ((VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT & properties.memoryTypes[k].propertyFlags) &&
 				(VK_MEMORY_PROPERTY_HOST_COHERENT_BIT & properties.memoryTypes[k].propertyFlags) &&
 				(memorySize < properties.memoryHeaps[properties.memoryTypes[k].heapIndex].size)) {
@@ -218,7 +219,7 @@ int main(int argc, const char* const argv[]) {
 		void* payload;
 		BAIL_ON_BAD_RESULT(vkMapMemory(device, memory, 0, memorySize, 0, &payload));
 
-		for (uint32_t k = 1; k < memorySize / sizeof(int32_t); k++) {
+		for (UI32 k = 1; k < memorySize / sizeof(int32_t); k++) {
 			((uint16_t*)payload)[k] = rand();
 		}
 
@@ -405,7 +406,7 @@ int main(int argc, const char* const argv[]) {
 		  0,
 		  0,
 		  sizeof(shader),
-		  (const uint32_t*)shader
+		  (const UI32*)shader
 		};
 
 		VkShaderModule shader_module;
@@ -603,7 +604,7 @@ int main(int argc, const char* const argv[]) {
 
 		//BAIL_ON_BAD_RESULT(vkMapMemory(device, memory, 0, memorySize, 0, (void*)&payload));
 		//
-		//for (uint32_t k = 0, e = bufferSize / sizeof(int32_t); k < e; k++) {
+		//for (UI32 k = 0, e = bufferSize / sizeof(int32_t); k < e; k++) {
 		//	BAIL_ON_BAD_RESULT(payload[k + e] == payload[k] ? VK_SUCCESS : VK_ERROR_OUT_OF_HOST_MEMORY);
 		//}
 	}

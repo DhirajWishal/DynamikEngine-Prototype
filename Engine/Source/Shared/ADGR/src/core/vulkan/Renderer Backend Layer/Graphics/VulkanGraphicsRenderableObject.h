@@ -49,6 +49,7 @@ namespace Dynamik {
 				struct PushBlock {
 					F32 roughness;
 					F32 metallic;
+					F32 specular = 0.0f;
 					F32 r, g, b;
 				} params;
 

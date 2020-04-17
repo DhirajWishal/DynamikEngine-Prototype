@@ -606,7 +606,7 @@ namespace Dynamik {
 					transitionInfo.image = _container.image;
 					transitionInfo.format = _container.format;
 					transitionInfo.oldLayout = VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL;
-					transitionInfo.newLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
+					transitionInfo.newLayout = VK_IMAGE_LAYOUT_GENERAL;
 					transitionInfo.mipLevels = info.mipLevels;
 					transitionInfo.layerCount = 1;
 					VulkanGraphicsFunctions::transitionImageLayout(logicalDevice, commandPool, graphicsQueue, presentQueue, transitionInfo);

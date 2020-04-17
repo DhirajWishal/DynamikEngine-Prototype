@@ -953,7 +953,7 @@ namespace Dynamik {
 		 * = operator overload.
 		 * Get data from an array and initialize it to this.
 		 *
-		 * @para arr: Array to be initialized to this.
+		 * @param arr: Array to be initialized to this.
 		 */
 		ARRAY<TYPE>& operator=(const ARRAY<TYPE>& arr)
 		{

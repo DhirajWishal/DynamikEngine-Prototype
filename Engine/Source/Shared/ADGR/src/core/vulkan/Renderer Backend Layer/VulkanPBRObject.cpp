@@ -50,25 +50,60 @@ namespace Dynamik {
 				uboLayoutBinding.pImmutableSamplers = nullptr; // Optional
 				uboLayoutBinding.stageFlags = VK_SHADER_STAGE_FRAGMENT_BIT;
 				layoutInitInfo.bindings.pushBack(uboLayoutBinding);
+
+				uboLayoutBinding.binding = 5; // info.bindIndex;
+				uboLayoutBinding.descriptorCount = 1;
+				uboLayoutBinding.descriptorType = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
+				uboLayoutBinding.pImmutableSamplers = nullptr; // Optional
+				uboLayoutBinding.stageFlags = VK_SHADER_STAGE_FRAGMENT_BIT;
+				layoutInitInfo.bindings.pushBack(uboLayoutBinding);
+
+				uboLayoutBinding.binding = 6; // info.bindIndex;
+				uboLayoutBinding.descriptorCount = 1;
+				uboLayoutBinding.descriptorType = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
+				uboLayoutBinding.pImmutableSamplers = nullptr; // Optional
+				uboLayoutBinding.stageFlags = VK_SHADER_STAGE_FRAGMENT_BIT;
+				layoutInitInfo.bindings.pushBack(uboLayoutBinding);
+
+				uboLayoutBinding.binding = 7; // info.bindIndex;
+				uboLayoutBinding.descriptorCount = 1;
+				uboLayoutBinding.descriptorType = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
+				uboLayoutBinding.pImmutableSamplers = nullptr; // Optional
+				uboLayoutBinding.stageFlags = VK_SHADER_STAGE_FRAGMENT_BIT;
+				layoutInitInfo.bindings.pushBack(uboLayoutBinding);
+
+				uboLayoutBinding.binding = 8; // info.bindIndex;
+				uboLayoutBinding.descriptorCount = 1;
+				uboLayoutBinding.descriptorType = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
+				uboLayoutBinding.pImmutableSamplers = nullptr; // Optional
+				uboLayoutBinding.stageFlags = VK_SHADER_STAGE_FRAGMENT_BIT;
+				layoutInitInfo.bindings.pushBack(uboLayoutBinding);
+
+				uboLayoutBinding.binding = 9; // info.bindIndex;
+				uboLayoutBinding.descriptorCount = 1;
+				uboLayoutBinding.descriptorType = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
+				uboLayoutBinding.pImmutableSamplers = nullptr; // Optional
+				uboLayoutBinding.stageFlags = VK_SHADER_STAGE_FRAGMENT_BIT;
+				layoutInitInfo.bindings.pushBack(uboLayoutBinding);
 				myRenderData.descriptors.initializeLayout(logicalDevice, layoutInitInfo);
 
 				ADGRVulkanGraphicsPipelineLayoutInitInfo pipelineLayoutInitInfo;
 				pipelineLayoutInitInfo.layouts = { myRenderData.descriptors.layout };
 
-				VkPushConstantRange pushConstantRange;
-				pushConstantRange.stageFlags = VK_SHADER_STAGE_VERTEX_BIT;
-				pushConstantRange.size = sizeof(glm::vec3);
-				pushConstantRange.offset = 0;
-				pipelineLayoutInitInfo.pushConstantRanges.pushBack(pushConstantRange);
-
-				pushConstantRange.stageFlags = VK_SHADER_STAGE_FRAGMENT_BIT;
-				pushConstantRange.size = sizeof(ADGRVulkanMaterialDescriptor::PushBlock);
-				pushConstantRange.offset = sizeof(glm::vec3);
-				pipelineLayoutInitInfo.pushConstantRanges.pushBack(pushConstantRange);
+				//VkPushConstantRange pushConstantRange;
+				//pushConstantRange.stageFlags = VK_SHADER_STAGE_VERTEX_BIT;
+				//pushConstantRange.size = sizeof(glm::vec3);
+				//pushConstantRange.offset = 0;
+				//pipelineLayoutInitInfo.pushConstantRanges.pushBack(pushConstantRange);
+				//
+				//pushConstantRange.stageFlags = VK_SHADER_STAGE_FRAGMENT_BIT;
+				//pushConstantRange.size = sizeof(ADGRVulkanMaterialDescriptor::PushBlock);
+				//pushConstantRange.offset = sizeof(glm::vec3);
+				//pipelineLayoutInitInfo.pushConstantRanges.pushBack(pushConstantRange);
 				initializePipelineLayout(pipelineLayoutInitInfo);
-
-				myRenderData.pushConstants.pushBack(vertPushConstant);
-				myRenderData.pushConstants.pushBack(fragPushConstant);
+				//
+				//myRenderData.pushConstants.pushBack(vertPushConstant);
+				//myRenderData.pushConstants.pushBack(fragPushConstant);
 
 				ARRAY<VulkanGraphicsShader> _shaders;
 
@@ -146,7 +181,7 @@ namespace Dynamik {
 					textureInitInfos.pushBack(initInfo);
 				}
 
-				//initializeTextures(textureInitInfos);
+				initializeTextures(textureInitInfos);
 
 				// initialize vertex buffers
 				for (UI32 _itr = 0; _itr < _object.vertexBufferObjects->size(); _itr++)
@@ -170,8 +205,7 @@ namespace Dynamik {
 
 			void VulkanPBRObject::initializeTextures(ARRAY<ADGRVulkanTextureInitInfo> infos)
 			{
-				ADGRVulkanTextureContainer _container;
-				if ((infos[0].path.find(".ktx") != std::string::npos) || (infos.size() < 6))
+				if ((infos[0].path.find(".ktx") != std::string::npos) && (infos.size() < 6))
 				{
 					VkPhysicalDeviceFeatures _features;
 					vkGetPhysicalDeviceFeatures(physicalDevice, &_features);
@@ -180,9 +214,7 @@ namespace Dynamik {
 
 					for (const ADGRVulkanTextureInitInfo& info : infos)
 					{
-						if (found)
-							break;
-
+						ADGRVulkanTextureContainer _container;
 						gli::texture ktxTexture;
 
 						if (info.path.find("astc") != std::string::npos)
@@ -310,138 +342,120 @@ namespace Dynamik {
 
 						vkDestroyBuffer(logicalDevice, stagingBuffer, nullptr);
 						vkFreeMemory(logicalDevice, stagingBufferMemory, nullptr);
+
+						myRenderData.textures.pushBack(_container);
 					}
 				}
 				else
 				{
-					StaggingBufferContainer bufferContainer;
-					UI32 width = 0;
-					UI32 height = 0;
-
-					ARRAY<std::string> paths;
 					for (const ADGRVulkanTextureInitInfo& info : infos)
-						paths.pushBack(info.path);
+					{
+						ADGRVulkanTextureContainer _container;
+						_container.format = info.format;
+						_container.mipLevels = info.mipLevels;
 
-					if (paths.size() < 6)
-						DMK_CORE_FATAL("Invalid skybox texture!");
+						resource::TextureData texData;
+						unsigned char* pixels = nullptr;
 
-					resource::TextureData texData;
-					unsigned char* images[6];
+						if (_container.format == VK_FORMAT_R8G8B8A8_UNORM)
+							pixels = texData.loadTexture((info.path), resource::TEXTURE_TYPE_RGBA);
+						else if (_container.format == VK_FORMAT_R8G8B8_UNORM)
+							pixels = texData.loadTexture((info.path), resource::TEXTURE_TYPE_RGB);
+						else
+							DMK_CORE_FATAL("Invalid texture format!");
 
-					for (UI32 _itr = 0; _itr < 6; _itr++)
-						images[_itr] = texData.loadTexture(paths[_itr], resource::TEXTURE_TYPE_RGBA);
+						_container.width = texData.texWidth;
+						_container.height = texData.texHeight;
 
-					width = texData.texWidth;
-					height = texData.texHeight;
+						VkDeviceSize imageSize = texData.size;
 
-					VkDeviceSize totalSize = texData.texWidth * texData.texHeight * 4 * 6;
-					UI32 layerSize = totalSize / 6;
+						if (!pixels)
+							DMK_CORE_FATAL("failed to load texture image!");
 
-					ADGRVulkanCreateBufferInfo bufferInfo;
-					bufferInfo.bufferSize = totalSize;
-					bufferInfo.usage = VK_BUFFER_USAGE_TRANSFER_SRC_BIT;
-					bufferInfo.bufferMemoryPropertyflags = VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT;
-					bufferInfo.buffer = &bufferContainer.buffer;
-					bufferInfo.bufferMemory = &bufferContainer.bufferMemory;
-					VulkanGraphicsFunctions::createBuffer(logicalDevice, physicalDevice, bufferInfo);
+						VkBuffer stagingBuffer = VK_NULL_HANDLE;
+						VkDeviceMemory stagingBufferMemory = VK_NULL_HANDLE;
 
-					_container.mipLevels = 1;
-					_container.format = VK_FORMAT_R8G8B8A8_UNORM;
+						ADGRVulkanCreateBufferInfo bufferInfo;
+						bufferInfo.bufferSize = imageSize;
+						bufferInfo.usage = VK_BUFFER_USAGE_TRANSFER_SRC_BIT;
+						bufferInfo.bufferMemoryPropertyflags = VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT;
+						bufferInfo.buffer = &stagingBuffer;
+						bufferInfo.bufferMemory = &stagingBufferMemory;
 
-					void* data = nullptr;
-					if (vkMapMemory(logicalDevice, bufferContainer.bufferMemory, 0, static_cast<size_t>(totalSize), 0, &data) != VK_SUCCESS)
-						DMK_CORE_FATAL("Failed to map memory!");
-					for (UI32 i = 0; i < 6; i++)
-						memcpy((void*)((UI64(data)) + (layerSize * i)), images[i], static_cast<size_t>(layerSize));
-					vkUnmapMemory(logicalDevice, bufferContainer.bufferMemory);
+						VulkanGraphicsFunctions::createBuffer(logicalDevice, physicalDevice, bufferInfo);
 
-					ADGRVulkanCreateImageInfo cinfo;
-					cinfo.width = width;
-					cinfo.height = height;
-					cinfo.format = VK_FORMAT_R8G8B8A8_UNORM;
-					cinfo.tiling = VK_IMAGE_TILING_OPTIMAL;
-					cinfo.usage = VK_IMAGE_USAGE_TRANSFER_SRC_BIT | VK_IMAGE_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT;
-					cinfo.properties = VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT;
-					cinfo.image = &_container.image;
-					cinfo.imageMemory = &_container.imageMemory;
-					cinfo.mipLevels = _container.mipLevels;
-					cinfo.numSamples = VK_SAMPLE_COUNT_1_BIT;
-					cinfo.arrayLayers = 6;
-					cinfo.flags = VK_IMAGE_CREATE_CUBE_COMPATIBLE_BIT;
-					VulkanGraphicsFunctions::createImage(logicalDevice, physicalDevice, cinfo);
+						void* data;
+						if (vkMapMemory(logicalDevice, stagingBufferMemory, 0, static_cast<size_t>(imageSize), 0, &data) != VK_SUCCESS)
+							DMK_CORE_FATAL("Failed to map memory!");
+						memcpy(data, pixels, static_cast<size_t>(imageSize));
+						vkUnmapMemory(logicalDevice, stagingBufferMemory);
 
-					ADGRVulkanTransitionImageLayoutInfo transitionInfo;
-					transitionInfo.image = _container.image;
-					transitionInfo.format = _container.format;
-					transitionInfo.oldLayout = VK_IMAGE_LAYOUT_UNDEFINED;
-					transitionInfo.newLayout = VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL;
-					transitionInfo.mipLevels = 1;
-					transitionInfo.layerCount = 6;
-					VulkanGraphicsFunctions::transitionImageLayout(logicalDevice, commandPool, graphicsQueue, presentQueue, transitionInfo);
+						texData.freeData(pixels);
 
-					ADGRVulkanCopyBufferToImageInfo cpyInfo;
-					cpyInfo.buffer = bufferContainer.buffer;
-					cpyInfo.image = _container.image;
-					cpyInfo.width = static_cast<UI32>(texData.texWidth);
-					cpyInfo.height = static_cast<UI32>(texData.texHeight);
-					cpyInfo.baseArrayCount = 0;
-					cpyInfo.layerCount = 6;
-					VulkanGraphicsFunctions::copyBufferToImage(logicalDevice, commandPool, graphicsQueue, presentQueue, cpyInfo);
+						ADGRVulkanCreateImageInfo cinfo;
+						cinfo.width = texData.texWidth;
+						cinfo.height = texData.texHeight;
+						cinfo.format = _container.format;
+						cinfo.tiling = VK_IMAGE_TILING_OPTIMAL;
+						cinfo.usage = VK_IMAGE_USAGE_TRANSFER_SRC_BIT | VK_IMAGE_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT;
+						cinfo.properties = VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT;
+						cinfo.image = &_container.image;
+						cinfo.imageMemory = &_container.imageMemory;
+						cinfo.mipLevels = info.mipLevels;
+						cinfo.numSamples = VK_SAMPLE_COUNT_1_BIT;
+						cinfo.flags = NULL;
 
-					transitionInfo.image = _container.image;
-					transitionInfo.format = _container.format;
-					transitionInfo.oldLayout = VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL;
-					transitionInfo.newLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
-					transitionInfo.mipLevels = 1;
-					transitionInfo.layerCount = 6;
-					VulkanGraphicsFunctions::transitionImageLayout(logicalDevice, commandPool, graphicsQueue, presentQueue, transitionInfo);
+						VulkanGraphicsFunctions::createImage(logicalDevice, physicalDevice, cinfo);
 
-					ADGRVulkanTextureSamplerInitInfo samplerInitInfo;
-					samplerInitInfo.magFilter = VK_FILTER_LINEAR;
-					samplerInitInfo.minFilter = VK_FILTER_LINEAR;
-					samplerInitInfo.mipMapMode = VK_SAMPLER_MIPMAP_MODE_LINEAR;
-					samplerInitInfo.maxMipLevels = infos[0].maxMipLevels;
-					samplerInitInfo.minMipLevels = infos[0].minMipLevels;
-					samplerInitInfo.modeU = VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE;
-					samplerInitInfo.modeV = VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE;
-					samplerInitInfo.modeW = VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE;
-					samplerInitInfo.mipLoadBias = 0.0f;
-					samplerInitInfo.compareOp = VK_COMPARE_OP_NEVER;
-					samplerInitInfo.borderColor = VK_BORDER_COLOR_FLOAT_OPAQUE_WHITE;
-					samplerInitInfo.maxAnisotrophy = 1.0f;
-					_container.imageSampler = VulkanGraphicsFunctions::createImageSampler(logicalDevice, samplerInitInfo);
+						ADGRVulkanTransitionImageLayoutInfo transitionInfo;
+						transitionInfo.image = _container.image;
+						transitionInfo.format = _container.format;
+						transitionInfo.oldLayout = VK_IMAGE_LAYOUT_UNDEFINED;
+						transitionInfo.newLayout = VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL;
+						transitionInfo.mipLevels = info.mipLevels;
+						transitionInfo.layerCount = 1;
+						VulkanGraphicsFunctions::transitionImageLayout(logicalDevice, commandPool, graphicsQueue, presentQueue, transitionInfo);
 
-					ADGRVulkanCreateImageViewInfo cinfo2;
-					cinfo2.image = _container.image;
-					cinfo2.format = _container.format;
-					cinfo2.mipLevels = _container.mipLevels;
-					cinfo2.aspectFlags = VK_IMAGE_ASPECT_COLOR_BIT;
-					cinfo2.viewType = VK_IMAGE_VIEW_TYPE_CUBE;
-					cinfo2.layerCount = 6;
-					cinfo2.component = { VK_COMPONENT_SWIZZLE_R, VK_COMPONENT_SWIZZLE_G, VK_COMPONENT_SWIZZLE_B, VK_COMPONENT_SWIZZLE_A };
-					_container.imageView = VulkanGraphicsFunctions::createImageView(logicalDevice, cinfo2);
+						ADGRVulkanCopyBufferToImageInfo cpyInfo;
+						cpyInfo.buffer = stagingBuffer;
+						cpyInfo.image = _container.image;
+						cpyInfo.width = static_cast<UI32>(texData.texWidth);
+						cpyInfo.height = static_cast<UI32>(texData.texHeight);
+						VulkanGraphicsFunctions::copyBufferToImage(logicalDevice, commandPool, graphicsQueue, presentQueue, cpyInfo);
 
-					/*
-					 For cube and cube array image views, the layers of the image view starting
-					 at baseArrayLayer correspond to faces in the order +X, -X, +Y, -Y, +Z, -Z.
-					 For cube arrays, each set of six sequential layers is a single cube, so the
-					 number of cube maps in a cube map array view is layerCount / 6, and image array
-					 layer (baseArrayLayer + i) is face index (i mod 6) of cube i / 6. If the number
-					 of layers in the view, whether set explicitly in layerCount or implied by
-					 VK_REMAINING_ARRAY_LAYERS, is not a multiple of 6, the last cube map in the
-					 array must not be accessed.
+						transitionInfo.image = _container.image;
+						transitionInfo.format = _container.format;
+						transitionInfo.oldLayout = VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL;
+						transitionInfo.newLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
+						transitionInfo.mipLevels = info.mipLevels;
+						transitionInfo.layerCount = 1;
+						VulkanGraphicsFunctions::transitionImageLayout(logicalDevice, commandPool, graphicsQueue, presentQueue, transitionInfo);
 
-					 (https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkImageSubresourceRange.html)
-					*/
+						vkDestroyBuffer(logicalDevice, stagingBuffer, nullptr);
+						vkFreeMemory(logicalDevice, stagingBufferMemory, nullptr);
 
-					vkDestroyBuffer(logicalDevice, bufferContainer.buffer, nullptr);
-					vkFreeMemory(logicalDevice, bufferContainer.bufferMemory, nullptr);
+						generateMipMaps(&_container);
 
-					for (UI32 i = 0; i < 6; i++)
-						texData.freeData(images[i]);
+						ADGRVulkanTextureSamplerInitInfo samplerInitInfo;
+						samplerInitInfo.magFilter = info.magFilter;
+						samplerInitInfo.minFilter = info.minFilter;
+						samplerInitInfo.maxMipLevels = info.maxMipLevels;
+						samplerInitInfo.minMipLevels = info.minMipLevels;
+						samplerInitInfo.modeU = info.modeU;
+						samplerInitInfo.modeV = info.modeV;
+						samplerInitInfo.modeW = info.modeW;
+						_container.imageSampler = VulkanGraphicsFunctions::createImageSampler(logicalDevice, samplerInitInfo);
+
+						ADGRVulkanCreateImageViewInfo cinfo2;
+						cinfo2.image = _container.image;
+						cinfo2.format = _container.format;
+						cinfo2.mipLevels = _container.mipLevels;
+						cinfo2.aspectFlags = info.aspectFlags;
+						_container.imageView = VulkanGraphicsFunctions::createImageView(logicalDevice, cinfo2);
+
+						myRenderData.textures.pushBack(_container);
+					}
 				}
-
-				myRenderData.textures.pushBack(_container);
 			}
 
 			void VulkanPBRObject::initializeUniformBuffer()
@@ -505,17 +519,34 @@ namespace Dynamik {
 					VkDescriptorPoolSize _poolSize2;
 					_poolSize2.type = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
 					_poolSize2.descriptorCount = 1;
-
 					poolSizes.push_back(_poolSize2);
 
 					_poolSize2.type = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
 					_poolSize2.descriptorCount = 1;
-
 					poolSizes.push_back(_poolSize2);
 
 					_poolSize2.type = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
 					_poolSize2.descriptorCount = 1;
+					poolSizes.push_back(_poolSize2);
 
+					_poolSize2.type = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
+					_poolSize2.descriptorCount = 1;
+					poolSizes.push_back(_poolSize2);
+
+					_poolSize2.type = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
+					_poolSize2.descriptorCount = 1;
+					poolSizes.push_back(_poolSize2);
+
+					_poolSize2.type = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
+					_poolSize2.descriptorCount = 1;
+					poolSizes.push_back(_poolSize2);
+
+					_poolSize2.type = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
+					_poolSize2.descriptorCount = 1;
+					poolSizes.push_back(_poolSize2);
+
+					_poolSize2.type = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
+					_poolSize2.descriptorCount = 1;
 					poolSizes.push_back(_poolSize2);
 				}
 
@@ -527,8 +558,6 @@ namespace Dynamik {
 
 			void VulkanPBRObject::initializeDescriptorSets()
 			{
-				//myRenderData.descriptors.allocateSets(logicalDevice, 1);
-
 				ARRAY<VkWriteDescriptorSet> descriptorWrites = {};
 				ARRAY< VkDescriptorBufferInfo> bufferInfos1;
 				ARRAY< VkDescriptorBufferInfo> bufferInfos2;
@@ -547,6 +576,8 @@ namespace Dynamik {
 					bufferInfo2.range = sizeof(UBO_L4);
 					bufferInfos2.pushBack(bufferInfo2);
 				}
+
+				{
 					VkWriteDescriptorSet _writes1;
 					_writes1.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
 					_writes1.dstBinding = 0;
@@ -558,7 +589,10 @@ namespace Dynamik {
 					_writes1.pImageInfo = VK_NULL_HANDLE;
 					_writes1.pTexelBufferView = VK_NULL_HANDLE;
 					descriptorWrites.push_back(_writes1);
+				}
 
+				{
+					VkWriteDescriptorSet _writes1;
 					_writes1.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
 					_writes1.dstBinding = 1;
 					_writes1.dstArrayElement = 0;
@@ -569,82 +603,103 @@ namespace Dynamik {
 					_writes1.pImageInfo = VK_NULL_HANDLE;
 					_writes1.pTexelBufferView = VK_NULL_HANDLE;
 					descriptorWrites.push_back(_writes1);
-
-					{
-						VkDescriptorImageInfo imageInfo = {};
-						imageInfo.imageLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
-						imageInfo.imageView = myIrradianceCube.myTextureContainer.imageView;
-						imageInfo.sampler = myIrradianceCube.myTextureContainer.imageSampler;
-
-						VkWriteDescriptorSet _writes2;
-						_writes2.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
-						_writes2.dstBinding = 2;
-						_writes2.dstArrayElement = 0;
-						_writes2.descriptorType = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
-						_writes2.descriptorCount = 1;
-						_writes2.pImageInfo = &imageInfo;
-						_writes2.pNext = VK_NULL_HANDLE;
-						_writes2.pTexelBufferView = VK_NULL_HANDLE;
-						_writes2.pBufferInfo = VK_NULL_HANDLE;
-						descriptorWrites.push_back(_writes2);
-					}
-
-					{
-						VkDescriptorImageInfo imageInfo = {};
-						imageInfo.imageLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
-						imageInfo.imageView = myBRDF.myTextureContainer.imageView;
-						imageInfo.sampler = myBRDF.myTextureContainer.imageSampler;
-
-						VkWriteDescriptorSet _writes2;
-						_writes2.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
-						_writes2.dstBinding = 3;
-						_writes2.dstArrayElement = 0;
-						_writes2.descriptorType = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
-						_writes2.descriptorCount = 1;
-						_writes2.pImageInfo = &imageInfo;
-						_writes2.pNext = VK_NULL_HANDLE;
-						_writes2.pTexelBufferView = VK_NULL_HANDLE;
-						_writes2.pBufferInfo = VK_NULL_HANDLE;
-						descriptorWrites.push_back(_writes2);
-					}
-
-					{
-						VkDescriptorImageInfo imageInfo = {};
-						imageInfo.imageLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
-						imageInfo.imageView = myPreFilteredCube.myTextureContainer.imageView;
-						imageInfo.sampler = myPreFilteredCube.myTextureContainer.imageSampler;
-
-						VkWriteDescriptorSet _writes2;
-						_writes2.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
-						_writes2.dstBinding = 4;
-						_writes2.dstArrayElement = 0;
-						_writes2.descriptorType = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
-						_writes2.descriptorCount = 1;
-						_writes2.pImageInfo = &imageInfo;
-						_writes2.pNext = VK_NULL_HANDLE;
-						_writes2.pTexelBufferView = VK_NULL_HANDLE;
-						_writes2.pBufferInfo = VK_NULL_HANDLE;
-						descriptorWrites.push_back(_writes2);
-					}
-
-					ADGRVulkanDescriptorSetsInitInfo info;
-					info.descriptorWrites = descriptorWrites;
-					myRenderData.descriptors.initializeSets(logicalDevice, info);
 				}
 
-				VulkanPBRObject::_VertexPushConstant::_VertexPushConstant()
 				{
-					stageFlag = VK_SHADER_STAGE_VERTEX_BIT;
-					offset = 0;
-					byteSize = sizeof(glm::vec3);
+					VkDescriptorImageInfo imageInfo = {};
+					imageInfo.imageLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
+					imageInfo.imageView = myIrradianceCube.myTextureContainer.imageView;
+					imageInfo.sampler = myIrradianceCube.myTextureContainer.imageSampler;
+
+					VkWriteDescriptorSet _writes2;
+					_writes2.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
+					_writes2.dstBinding = 2;
+					_writes2.dstArrayElement = 0;
+					_writes2.descriptorType = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
+					_writes2.descriptorCount = 1;
+					_writes2.pImageInfo = &imageInfo;
+					_writes2.pNext = VK_NULL_HANDLE;
+					_writes2.pTexelBufferView = VK_NULL_HANDLE;
+					_writes2.pBufferInfo = VK_NULL_HANDLE;
+					descriptorWrites.push_back(_writes2);
 				}
 
-				VulkanPBRObject::_FragmentPushConstant::_FragmentPushConstant()
 				{
-					stageFlag = VK_SHADER_STAGE_FRAGMENT_BIT;
-					offset = sizeof(glm::vec3);
-					byteSize = sizeof(ADGRVulkanMaterialDescriptor::PushBlock);
+					VkDescriptorImageInfo imageInfo = {};
+					imageInfo.imageLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
+					imageInfo.imageView = myBRDF.myTextureContainer.imageView;
+					imageInfo.sampler = myBRDF.myTextureContainer.imageSampler;
+
+					VkWriteDescriptorSet _writes2;
+					_writes2.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
+					_writes2.dstBinding = 3;
+					_writes2.dstArrayElement = 0;
+					_writes2.descriptorType = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
+					_writes2.descriptorCount = 1;
+					_writes2.pImageInfo = &imageInfo;
+					_writes2.pNext = VK_NULL_HANDLE;
+					_writes2.pTexelBufferView = VK_NULL_HANDLE;
+					_writes2.pBufferInfo = VK_NULL_HANDLE;
+					descriptorWrites.push_back(_writes2);
 				}
+
+				{
+					VkDescriptorImageInfo imageInfo = {};
+					imageInfo.imageLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
+					imageInfo.imageView = myPreFilteredCube.myTextureContainer.imageView;
+					imageInfo.sampler = myPreFilteredCube.myTextureContainer.imageSampler;
+
+					VkWriteDescriptorSet _writes2;
+					_writes2.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
+					_writes2.dstBinding = 4;
+					_writes2.dstArrayElement = 0;
+					_writes2.descriptorType = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
+					_writes2.descriptorCount = 1;
+					_writes2.pImageInfo = &imageInfo;
+					_writes2.pNext = VK_NULL_HANDLE;
+					_writes2.pTexelBufferView = VK_NULL_HANDLE;
+					_writes2.pBufferInfo = VK_NULL_HANDLE;
+					descriptorWrites.push_back(_writes2);
+				}
+
+				for (UI32 _texIndex = 0; _texIndex < myRenderData.textures.size(); _texIndex++)
+				{
+					VkDescriptorImageInfo imageInfo = {};
+					imageInfo.imageLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
+					imageInfo.imageView = myRenderData.textures[_texIndex].imageView;
+					imageInfo.sampler = myRenderData.textures[_texIndex].imageSampler;
+
+					VkWriteDescriptorSet _writes2;
+					_writes2.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
+					_writes2.dstBinding = 5 + _texIndex;
+					_writes2.dstArrayElement = 0;
+					_writes2.descriptorType = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
+					_writes2.descriptorCount = 1;
+					_writes2.pImageInfo = &imageInfo;
+					_writes2.pNext = VK_NULL_HANDLE;
+					_writes2.pTexelBufferView = VK_NULL_HANDLE;
+					_writes2.pBufferInfo = VK_NULL_HANDLE;
+					descriptorWrites.push_back(_writes2);
+				}
+
+				ADGRVulkanDescriptorSetsInitInfo info;
+				info.descriptorWrites = descriptorWrites;
+				myRenderData.descriptors.initializeSets(logicalDevice, info);
+			}
+
+			VulkanPBRObject::_VertexPushConstant::_VertexPushConstant()
+			{
+				stageFlag = VK_SHADER_STAGE_VERTEX_BIT;
+				offset = 0;
+				byteSize = sizeof(glm::vec3);
+			}
+
+			VulkanPBRObject::_FragmentPushConstant::_FragmentPushConstant()
+			{
+				stageFlag = VK_SHADER_STAGE_FRAGMENT_BIT;
+				offset = sizeof(glm::vec3);
+				byteSize = sizeof(ADGRVulkanMaterialDescriptor::PushBlock);
 			}
 		}
 	}
+}

@@ -145,6 +145,7 @@
   <ItemGroup>
     <ClInclude Include="src\ADGR.h" />
     <ClInclude Include="src\core\Components\Camera\AnimationCamera.h" />
+    <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Common\VulkanAttachment.h" />
     <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Common\VulkanDescriptor.h" />
     <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Compute\VulkanComputeBufferObject.h" />
     <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Compute\VulkanComputeCommandBuffer.h" />
@@ -159,6 +160,9 @@
     <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Compute\VulkanComputeRBLIndex.h" />
     <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Compute\VulkanOneTimeCompute.h" />
     <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Compute\VulkanComputeShader.h" />
+    <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Graphics\Attachments\VulkanGraphicsAttachment.h" />
+    <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Graphics\Attachments\VulkanGraphicsTextureAttachment.h" />
+    <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Graphics\Attachments\VulkanGraphicsTextureAttachment2D.h" />
     <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsDescriptor.h" />
     <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsFrameBuffer.h" />
     <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsPipeline.h" />
@@ -168,6 +172,7 @@
     <ClInclude Include="src\core\vulkan\Renderer Backend Layer\VulkanBRDF.h" />
     <ClInclude Include="src\core\vulkan\Renderer Backend Layer\VulkanIrradianceCube.h" />
     <ClInclude Include="src\core\vulkan\Renderer Backend Layer\VulkanOffsceenFrameBuffer.h" />
+    <ClInclude Include="src\core\vulkan\Renderer Backend Layer\VulkanParticleSystem.h" />
     <ClInclude Include="src\core\vulkan\Renderer Backend Layer\VulkanPBRObject.h" />
     <ClInclude Include="src\core\vulkan\Renderer Backend Layer\VulkanPrefilteredCube.h" />
     <ClInclude Include="src\Layers\layer.h" />
@@ -246,6 +251,7 @@
     <ClCompile Include="src\core\vulkan\Renderer Backend Layer\VulkanBRDF.cpp" />
     <ClCompile Include="src\core\vulkan\Renderer Backend Layer\VulkanIrradianceCube.cpp" />
     <ClCompile Include="src\core\vulkan\Renderer Backend Layer\VulkanOffscreenFrameBuffer.cpp" />
+    <ClCompile Include="src\core\vulkan\Renderer Backend Layer\VulkanParticleSystem.cpp" />
     <ClCompile Include="src\core\vulkan\Renderer Backend Layer\VulkanPBRObject.cpp" />
     <ClCompile Include="src\core\vulkan\Renderer Backend Layer\VulkanPrefilteredCube.cpp" />
     <ClCompile Include="src\Layers\layer.cpp" />

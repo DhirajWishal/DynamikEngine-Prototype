@@ -62,6 +62,8 @@ project "Dynamik"
 		"glfw3dll",
 		"opengl32",
 		"vulkan-1",
+		"assimp",
+		"assimp-vc140-mt",
 		"Debugger",
 		"CentralDataHub",
 		"Managers",

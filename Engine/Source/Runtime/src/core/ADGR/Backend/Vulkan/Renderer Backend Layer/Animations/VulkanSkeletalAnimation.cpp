@@ -3,8 +3,6 @@
 
 #include "../Graphics/VulkanGraphicsFunctions.h"
 
-#include <gli.hpp>
-
 namespace Dynamik {
 	namespace ADGR {
 		namespace Backend {

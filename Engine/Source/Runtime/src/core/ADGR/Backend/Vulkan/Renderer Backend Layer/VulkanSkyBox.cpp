@@ -5,8 +5,6 @@
 
 #include <stb_image.h>
 
-#include <gli.hpp>
-
 namespace Dynamik {
 	namespace ADGR {
 		namespace Backend {
@@ -136,7 +134,7 @@ namespace Dynamik {
 
 				// initialize descriptor sets
 				initializeDescriptorSets();
-
+				/*
 				ADGRVulkanGraphicsSupportObjectInitInfo supportObjectInitInfo;
 				supportObjectInitInfo.logicalDevice = logicalDevice;
 				supportObjectInitInfo.physicalDevice = physicalDevice;
@@ -152,7 +150,7 @@ namespace Dynamik {
 
 				myPreFilteredCube = VulkanPrefilteredCube(supportObjectInitInfo);
 				myPreFilteredCube.skyboxRenderData = myRenderData;
-				myPreFilteredCube.initialize();
+				myPreFilteredCube.initialize();*/
 
 				return myRenderData;
 			}

@@ -59,8 +59,8 @@ int main(int argc, char** argv) {
 		};
 
 		Dynamik::ARRAY<Dynamik::DMKObjectType> objTypes = {
-			Dynamik::DMKObjectType::DMK_OBJECT_TYPE_STATIC_OBJECT,
 			Dynamik::DMKObjectType::DMK_OBJECT_TYPE_DEBUG_OBJECT,
+			Dynamik::DMKObjectType::DMK_OBJECT_TYPE_STATIC_OBJECT,
 			Dynamik::DMKObjectType::DMK_OBJECT_TYPE_SKELETAL_ANIMATION,
 			Dynamik::DMKObjectType::DMK_OBJECT_TYPE_STATIC_OBJECT,
 			Dynamik::DMKObjectType::DMK_OBJECT_TYPE_TEXT_OVERLAY,

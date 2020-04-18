@@ -17,6 +17,8 @@
 
 #include "engineControlUnit.h"
 
+#include "ADGR/RendererThread.h"
+
 /*
  TODO:
 	Dynamik scripting support library

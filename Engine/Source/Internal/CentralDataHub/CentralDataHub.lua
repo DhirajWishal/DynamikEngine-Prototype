@@ -56,7 +56,6 @@ project "CentralDataHub"
 
 	links { 
 		"Utilities",
-		"Managers",
 		"glfw3dll",
 		"opengl32",
 		"vulkan-1",

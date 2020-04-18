@@ -167,9 +167,6 @@
     <ProjectReference Include="..\Utilities\Utilities.vcxproj">
       <Project>{010A8043-6D74-34BA-B6B2-E55F225C120F}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\..\Shared\Managers\Managers.vcxproj">
-      <Project>{B34CFEBD-9F19-59C9-C832-4771B45E8E57}</Project>
-    </ProjectReference>
     <ProjectReference Include="..\..\..\..\Dependencies\Libraries\Internal\CPP\DataTypesLib\DataTypesLib.vcxproj">
       <Project>{6B37DFCD-579A-6E72-0020-A728EC613AF5}</Project>
     </ProjectReference>

@@ -13,11 +13,11 @@
 #include "core/Windows.h"
 #include "data store/containers.h"
 #include "Platform/Windows.h"
-#include "Networking.h"
+#include "Networking/Networking.h"
 
 #include "engineControlUnit.h"
 
-#include "ADGR/RendererThread.h"
+#include "Engines/ADGR/RendererThread.h"
 
 /*
  TODO:

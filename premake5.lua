@@ -88,14 +88,6 @@ group "Engine"	-- Add the Engine to a virtual folder
 include "Engine/Source/Runtime/Dynamik.lua"
 include "Engine/Application/Runtime/Application.lua"
 
-group "Engine/Shared Libraries"	-- Add all the Engine's shared libraries to a virtual folder
-include "Engine/Source/Shared/Audio/Audio.lua"
-include "Engine/Source/Shared/DDE/DDE.lua"
-include "Engine/Source/Shared/Events/Events.lua"
-include "Engine/Source/Shared/Intellect/Intellect.lua"
-include "Engine/Source/Shared/Managers/Managers.lua"
-include "Engine/Source/Shared/Networking/Networking.lua"
-
 group "Engine/Internal Libraries"	-- Add all the Engine's internal libraries to a virtual folder
 include "Engine/Source/Internal/Platform/Platform.lua"
 include "Engine/Source/Internal/Utilities/Utilities.lua"

@@ -55,20 +55,16 @@ project "Dynamik"
 	}
 
 	links { 
-		"Audio",
-		"Events",
-		"Intellect",
 		"Platform",
 		"glfw3dll",
 		"opengl32",
 		"vulkan-1",
+		"irrKlang",
 		"assimp",
 		"assimp-vc140-mt",
 		"Debugger",
 		"CentralDataHub",
-		"Managers",
 		"Utilities",
-		"Networking",
 
 		"DataTypesLib",
 		"MemoryLib",

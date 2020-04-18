@@ -13,65 +13,131 @@
     <Filter Include="src\core">
       <UniqueIdentifier>{C55F2ECF-B12C-89DA-DA45-7782C671BE68}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\core\ADGR">
-      <UniqueIdentifier>{F25101E5-5E12-7D1B-274D-C69893CCC1F7}</UniqueIdentifier>
+    <Filter Include="src\core\Engines">
+      <UniqueIdentifier>{5D908316-4989-A268-72BB-87ED5E138274}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\core\ADGR\Backend">
-      <UniqueIdentifier>{A92A7FF5-1597-3AF0-DE8A-D24D4AB65C58}</UniqueIdentifier>
+    <Filter Include="src\core\Engines\ADGR">
+      <UniqueIdentifier>{8AA1A463-F60D-605E-BF01-F8BB2B2D82C6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\core\ADGR\Backend\Components">
-      <UniqueIdentifier>{1E7446C3-0AC5-3105-3329-20C71FD9C46E}</UniqueIdentifier>
+    <Filter Include="src\core\Engines\ADGR\Backend">
+      <UniqueIdentifier>{4192E4F7-ADAA-CB21-7657-5BBBE22E60BB}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\core\ADGR\Backend\Components\Camera">
-      <UniqueIdentifier>{D67A06E2-420A-C8CC-4B06-A9E4B71403D9}</UniqueIdentifier>
+    <Filter Include="src\core\Engines\ADGR\Backend\Components">
+      <UniqueIdentifier>{B6EC9C57-A269-909A-CBE6-90AEB7C22C2E}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\core\ADGR\Backend\Vulkan">
-      <UniqueIdentifier>{098010A8-F53A-0054-9EF2-789E8A8C4AE4}</UniqueIdentifier>
+    <Filter Include="src\core\Engines\ADGR\Backend\Components\Camera">
+      <UniqueIdentifier>{6E587C9C-DA93-DC5F-E388-59EF4F436190}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\core\ADGR\Backend\Vulkan\Renderer Backend Layer">
-      <UniqueIdentifier>{F48AEBC0-609C-9367-E9ED-25A755FE1CA1}</UniqueIdentifier>
+    <Filter Include="src\core\Engines\ADGR\Backend\Vulkan">
+      <UniqueIdentifier>{A16C922A-8D53-5422-36A4-BA3F226ACD88}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Animations">
-      <UniqueIdentifier>{B621C278-A2F7-4876-8BA1-63C977167C17}</UniqueIdentifier>
+    <Filter Include="src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer">
+      <UniqueIdentifier>{8C8C82FE-F849-2B35-8114-179DEDD09D89}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Common">
-      <UniqueIdentifier>{AC3D5C9C-98FD-EC40-011B-D54BEDF9FF52}</UniqueIdentifier>
+    <Filter Include="src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Animations">
+      <UniqueIdentifier>{4EF4D5AD-3AF6-19BE-2379-10B70F1A1563}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Compute">
-      <UniqueIdentifier>{00B3E527-6C70-8E5E-F53A-7AC661F700B3}</UniqueIdentifier>
+    <Filter Include="src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Common">
+      <UniqueIdentifier>{4484FE52-3070-96C2-99E6-551585F136F3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics">
-      <UniqueIdentifier>{B4E58CA0-A050-4DAC-496C-B21135B6108F}</UniqueIdentifier>
+    <Filter Include="src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Compute">
+      <UniqueIdentifier>{98CCD0B2-0436-6615-8D79-14C0F9E1165A}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\Attachments">
-      <UniqueIdentifier>{3F93815F-2BC0-CD90-54A1-70A1402D2161}</UniqueIdentifier>
+    <Filter Include="src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics">
+      <UniqueIdentifier>{4C32DB88-38C9-1D3E-E17D-943ECDF3E318}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\core\ADGR\Backend\Window">
-      <UniqueIdentifier>{707F8DA9-5C3A-7D55-05F2-F59FF18BC7E5}</UniqueIdentifier>
+    <Filter Include="src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\Attachments">
+      <UniqueIdentifier>{D7830F84-C3DC-7F07-ECD6-61A1D88E2505}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\core\ADGR\Backend\Window\Windows">
-      <UniqueIdentifier>{AA991B1F-9680-DD16-3FD1-43342B97567D}</UniqueIdentifier>
+    <Filter Include="src\core\Engines\ADGR\Backend\Window">
+      <UniqueIdentifier>{086C0F2C-F452-D123-9DA3-374189694A8A}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\core\ADGR\Backend\base">
-      <UniqueIdentifier>{F3244BC3-DF34-F793-48EE-5BB2341DE62C}</UniqueIdentifier>
+    <Filter Include="src\core\Engines\ADGR\Backend\Window\Windows">
+      <UniqueIdentifier>{429EAC74-2EB1-ACCD-D79A-89BAC38C491B}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\core\ADGR\Backend\directx12">
-      <UniqueIdentifier>{EE9B05C0-5A7F-1400-6382-423CCFE4DA50}</UniqueIdentifier>
+    <Filter Include="src\core\Engines\ADGR\Backend\base">
+      <UniqueIdentifier>{8B0BB9B2-7747-BC1C-E059-D413CCB46437}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\core\ADGR\Backend\opengl">
-      <UniqueIdentifier>{1D3403E2-09EF-F28D-B2A6-6BD89E403D1E}</UniqueIdentifier>
+    <Filter Include="src\core\Engines\ADGR\Backend\directx12">
+      <UniqueIdentifier>{8661A340-F2F0-642B-FBEC-454367FB9F37}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\core\ADGR\Backend\opengl\backend">
-      <UniqueIdentifier>{F49F716F-E086-3367-89D7-9984759DACCD}</UniqueIdentifier>
+    <Filter Include="src\core\Engines\ADGR\Backend\opengl">
+      <UniqueIdentifier>{B5208564-A107-475C-4A58-AD79361EC0C2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\core\ADGR\Backend\opengl\backend\data structures">
-      <UniqueIdentifier>{21EC8B10-0D2B-368C-B6AD-12BEA2CBEBF6}</UniqueIdentifier>
+    <Filter Include="src\core\Engines\ADGR\Backend\opengl\backend">
+      <UniqueIdentifier>{8CA402C5-78B7-021E-21A1-DF0A0D939F6B}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\core\ADGR\Layers">
-      <UniqueIdentifier>{7104D01E-5D93-59E8-06B2-6DE3F21F6A8E}</UniqueIdentifier>
+    <Filter Include="src\core\Engines\ADGR\Backend\opengl\backend\data structures">
+      <UniqueIdentifier>{B9200301-A58B-C30C-4EA7-28723AF186EF}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\core\ADGR\Wrapper">
-      <UniqueIdentifier>{C2938C6D-2E00-4868-F7F3-DFC5631F6AD0}</UniqueIdentifier>
+    <Filter Include="src\core\Engines\ADGR\Layers">
+      <UniqueIdentifier>{09D9DAFF-F593-CAAB-9E4B-43F68AE5143C}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\core\Engines\ADGR\Wrapper">
+      <UniqueIdentifier>{5AFBF16F-C613-D999-8FC0-6833FB976D33}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\core\Engines\Audio">
+      <UniqueIdentifier>{1E3054D8-0A2A-7D2A-F396-133BDF2FE396}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\core\Engines\Audio\Backend">
+      <UniqueIdentifier>{D574330A-C19A-FD70-AAE0-823C96A5223D}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\core\Engines\Audio\Backend\AudioObjectControllers">
+      <UniqueIdentifier>{A410D8C8-102D-CAB9-D904-372745E0337B}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\core\Engines\Destruction">
+      <UniqueIdentifier>{204CB200-0C07-A2AC-B5BE-1AF7A158EC3C}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\core\Engines\Destruction\Backend">
+      <UniqueIdentifier>{D772E635-C359-A82D-6CAA-0E4B58702194}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\core\Engines\Destruction\Backend\Integrity Based">
+      <UniqueIdentifier>{440B0223-304A-AC9E-D9CC-88D0C5EA6109}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\core\Engines\Intellect">
+      <UniqueIdentifier>{D098773D-BCA8-230E-2562-882C119112A7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\core\Engines\Intellect\Backend">
+      <UniqueIdentifier>{876FC56E-73AB-C8D8-DCBD-E0CFC81871F3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\core\Engines\Intellect\Backend\Intellect">
+      <UniqueIdentifier>{7AF4113E-6607-1297-0FF1-EE83FBE2AEE4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\core\Engines\Intellect\Backend\Maths">
+      <UniqueIdentifier>{33B91D3A-1F36-117D-48B3-1191348FAD10}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\core\Events">
+      <UniqueIdentifier>{09FC8B37-7587-F9FB-7E98-7CF0EAA255FC}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\core\Managers">
+      <UniqueIdentifier>{42AF0E70-AEC5-0C06-F73C-98276392DD8D}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\core\Managers\Platform">
+      <UniqueIdentifier>{D6356B3F-C245-1710-2BFF-7B2E172E06A9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\core\Managers\Platform\Windows">
+      <UniqueIdentifier>{1056E423-FC91-E78D-65A4-FF8451FF8FA8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\core\Managers\Platform\Windows\file">
+      <UniqueIdentifier>{5FDBE8F6-CB6A-AAE1-D466-8BF94075E5ED}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\core\Managers\Platform\Windows\resource">
+      <UniqueIdentifier>{47A60D9D-B30B-A123-3CE4-42FCA8489692}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\core\Managers\Platform\Windows\thread">
+      <UniqueIdentifier>{97A62675-03C1-8916-4CE3-99AAB83CB11D}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\core\Networking">
+      <UniqueIdentifier>{BCA310BF-2805-EECC-B172-347F1DD3248C}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\core\Networking\Backend">
+      <UniqueIdentifier>{73A680B8-DFB3-AE9E-689A-AA89D4A67A55}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\core\Networking\Backend\client">
+      <UniqueIdentifier>{410BDA0A-2D47-DD74-9659-F56B82B4858F}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\core\Networking\Backend\server">
+      <UniqueIdentifier>{5920B32F-455C-B699-AE6E-CE909AC95EB4}</UniqueIdentifier>
     </Filter>
     <Filter Include="src\core\data store">
       <UniqueIdentifier>{3BB855F0-A719-33FE-3087-79B09CE769BD}</UniqueIdentifier>
@@ -117,254 +183,383 @@
     <ClInclude Include="src\Dynamik.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="src\core\ADGR\Backend\Components\Camera\AnimationCamera.h">
-      <Filter>src\core\ADGR\Backend\Components\Camera</Filter>
-    </ClInclude>
-    <ClInclude Include="src\core\ADGR\Backend\Components\Camera\Camera.h">
-      <Filter>src\core\ADGR\Backend\Components\Camera</Filter>
-    </ClInclude>
-    <ClInclude Include="src\core\ADGR\Backend\Components\Camera\Camera2D.h">
-      <Filter>src\core\ADGR\Backend\Components\Camera</Filter>
-    </ClInclude>
-    <ClInclude Include="src\core\ADGR\Backend\Components\Camera\Camera3D.h">
-      <Filter>src\core\ADGR\Backend\Components\Camera</Filter>
-    </ClInclude>
-    <ClInclude Include="src\core\ADGR\Backend\Components\Camera\CameraReflect.h">
-      <Filter>src\core\ADGR\Backend\Components\Camera</Filter>
-    </ClInclude>
-    <ClInclude Include="src\core\ADGR\Backend\Components\Camera\CameraSkybox.h">
-      <Filter>src\core\ADGR\Backend\Components\Camera</Filter>
-    </ClInclude>
-    <ClInclude Include="src\core\ADGR\Backend\Components\TextOverlay.h">
-      <Filter>src\core\ADGR\Backend\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Animations\VulkanSkeletalAnimation.h">
-      <Filter>src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Animations</Filter>
-    </ClInclude>
-    <ClInclude Include="src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Common\VulkanAttachment.h">
-      <Filter>src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Common</Filter>
-    </ClInclude>
-    <ClInclude Include="src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Common\VulkanDescriptor.h">
-      <Filter>src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Common</Filter>
-    </ClInclude>
-    <ClInclude Include="src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Common\VulkanExtensionsManager.h">
-      <Filter>src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Common</Filter>
-    </ClInclude>
-    <ClInclude Include="src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Common\VulkanUtilities.h">
-      <Filter>src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Common</Filter>
-    </ClInclude>
-    <ClInclude Include="src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Common\VulkanValidator.h">
-      <Filter>src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Common</Filter>
-    </ClInclude>
-    <ClInclude Include="src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Compute\VulkanComputeBufferObject.h">
-      <Filter>src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Compute</Filter>
-    </ClInclude>
-    <ClInclude Include="src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Compute\VulkanComputeCommandBuffer.h">
-      <Filter>src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Compute</Filter>
-    </ClInclude>
-    <ClInclude Include="src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Compute\VulkanComputeCore.h">
-      <Filter>src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Compute</Filter>
-    </ClInclude>
-    <ClInclude Include="src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Compute\VulkanComputeDescriptor.h">
-      <Filter>src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Compute</Filter>
-    </ClInclude>
-    <ClInclude Include="src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Compute\VulkanComputeFunctions.h">
-      <Filter>src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Compute</Filter>
-    </ClInclude>
-    <ClInclude Include="src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Compute\VulkanComputeImageObject.h">
-      <Filter>src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Compute</Filter>
-    </ClInclude>
-    <ClInclude Include="src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Compute\VulkanComputeManager.h">
-      <Filter>src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Compute</Filter>
-    </ClInclude>
-    <ClInclude Include="src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Compute\VulkanComputeObject.h">
-      <Filter>src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Compute</Filter>
-    </ClInclude>
-    <ClInclude Include="src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Compute\VulkanComputeOneTimeCommandBuffer.h">
-      <Filter>src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Compute</Filter>
-    </ClInclude>
-    <ClInclude Include="src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Compute\VulkanComputePipeline.h">
-      <Filter>src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Compute</Filter>
-    </ClInclude>
-    <ClInclude Include="src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Compute\VulkanComputeRBLIndex.h">
-      <Filter>src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Compute</Filter>
-    </ClInclude>
-    <ClInclude Include="src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Compute\VulkanComputeShader.h">
-      <Filter>src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Compute</Filter>
-    </ClInclude>
-    <ClInclude Include="src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Compute\VulkanOneTimeCompute.h">
-      <Filter>src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Compute</Filter>
-    </ClInclude>
-    <ClInclude Include="src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\Attachments\VulkanGraphicsAttachment.h">
-      <Filter>src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\Attachments</Filter>
-    </ClInclude>
-    <ClInclude Include="src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\Attachments\VulkanGraphicsTextureAttachment.h">
-      <Filter>src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\Attachments</Filter>
-    </ClInclude>
-    <ClInclude Include="src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\Attachments\VulkanGraphicsTextureAttachment2D.h">
-      <Filter>src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\Attachments</Filter>
-    </ClInclude>
-    <ClInclude Include="src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanControlHeader.h">
-      <Filter>src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsColorBuffer.h">
-      <Filter>src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsCommandBuffer.h">
-      <Filter>src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsCore.h">
-      <Filter>src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsDepthBuffer.h">
-      <Filter>src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsDescriptor.h">
-      <Filter>src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsFrameBuffer.h">
-      <Filter>src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsFunctions.h">
-      <Filter>src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsOneTimeCommandBuffer.h">
-      <Filter>src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsPipeline.h">
-      <Filter>src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsPushConstant.h">
-      <Filter>src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsRBLIndex.h">
-      <Filter>src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsRenderableObject.h">
-      <Filter>src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsShader.h">
-      <Filter>src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsSupportObject.h">
-      <Filter>src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsSwapChain.h">
-      <Filter>src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\VulkanAnimationManager.h">
-      <Filter>src\core\ADGR\Backend\Vulkan\Renderer Backend Layer</Filter>
-    </ClInclude>
-    <ClInclude Include="src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\VulkanBRDF.h">
-      <Filter>src\core\ADGR\Backend\Vulkan\Renderer Backend Layer</Filter>
-    </ClInclude>
-    <ClInclude Include="src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\VulkanGraphicsSwapChain3D.h">
-      <Filter>src\core\ADGR\Backend\Vulkan\Renderer Backend Layer</Filter>
-    </ClInclude>
-    <ClInclude Include="src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\VulkanIrradianceCube.h">
-      <Filter>src\core\ADGR\Backend\Vulkan\Renderer Backend Layer</Filter>
-    </ClInclude>
-    <ClInclude Include="src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\VulkanObject2D.h">
-      <Filter>src\core\ADGR\Backend\Vulkan\Renderer Backend Layer</Filter>
-    </ClInclude>
-    <ClInclude Include="src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\VulkanObject3D.h">
-      <Filter>src\core\ADGR\Backend\Vulkan\Renderer Backend Layer</Filter>
-    </ClInclude>
-    <ClInclude Include="src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\VulkanOffsceenFrameBuffer.h">
-      <Filter>src\core\ADGR\Backend\Vulkan\Renderer Backend Layer</Filter>
-    </ClInclude>
-    <ClInclude Include="src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\VulkanPBRObject.h">
-      <Filter>src\core\ADGR\Backend\Vulkan\Renderer Backend Layer</Filter>
-    </ClInclude>
-    <ClInclude Include="src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\VulkanParticleSystem.h">
-      <Filter>src\core\ADGR\Backend\Vulkan\Renderer Backend Layer</Filter>
-    </ClInclude>
-    <ClInclude Include="src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\VulkanPrefilteredCube.h">
-      <Filter>src\core\ADGR\Backend\Vulkan\Renderer Backend Layer</Filter>
-    </ClInclude>
-    <ClInclude Include="src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\VulkanReflectObject.h">
-      <Filter>src\core\ADGR\Backend\Vulkan\Renderer Backend Layer</Filter>
-    </ClInclude>
-    <ClInclude Include="src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\VulkanSkyBox.h">
-      <Filter>src\core\ADGR\Backend\Vulkan\Renderer Backend Layer</Filter>
-    </ClInclude>
-    <ClInclude Include="src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\VulkanTextObject.h">
-      <Filter>src\core\ADGR\Backend\Vulkan\Renderer Backend Layer</Filter>
-    </ClInclude>
-    <ClInclude Include="src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\VulkanTextOverlay.h">
-      <Filter>src\core\ADGR\Backend\Vulkan\Renderer Backend Layer</Filter>
-    </ClInclude>
-    <ClInclude Include="src\core\ADGR\Backend\Vulkan\vulkanRenderer.h">
-      <Filter>src\core\ADGR\Backend\Vulkan</Filter>
-    </ClInclude>
-    <ClInclude Include="src\core\ADGR\Backend\Window\Windows\WindowManager.h">
-      <Filter>src\core\ADGR\Backend\Window\Windows</Filter>
-    </ClInclude>
-    <ClInclude Include="src\core\ADGR\Backend\base\RendererBackendBase.h">
-      <Filter>src\core\ADGR\Backend\base</Filter>
-    </ClInclude>
-    <ClInclude Include="src\core\ADGR\Backend\directx12\directx12Renderer.h">
-      <Filter>src\core\ADGR\Backend\directx12</Filter>
-    </ClInclude>
-    <ClInclude Include="src\core\ADGR\Backend\opengl\backend\data structures\opengl.h">
-      <Filter>src\core\ADGR\Backend\opengl\backend\data structures</Filter>
-    </ClInclude>
-    <ClInclude Include="src\core\ADGR\Backend\opengl\backend\openglFormat.h">
-      <Filter>src\core\ADGR\Backend\opengl\backend</Filter>
-    </ClInclude>
-    <ClInclude Include="src\core\ADGR\Backend\opengl\backend\shader.h">
-      <Filter>src\core\ADGR\Backend\opengl\backend</Filter>
-    </ClInclude>
-    <ClInclude Include="src\core\ADGR\Backend\opengl\backend\texture.h">
-      <Filter>src\core\ADGR\Backend\opengl\backend</Filter>
-    </ClInclude>
-    <ClInclude Include="src\core\ADGR\Backend\opengl\backend\vertexAndIndexBuffer.h">
-      <Filter>src\core\ADGR\Backend\opengl\backend</Filter>
-    </ClInclude>
-    <ClInclude Include="src\core\ADGR\Backend\opengl\backend\window.h">
-      <Filter>src\core\ADGR\Backend\opengl\backend</Filter>
-    </ClInclude>
-    <ClInclude Include="src\core\ADGR\Backend\opengl\openglRenderer.h">
-      <Filter>src\core\ADGR\Backend\opengl</Filter>
-    </ClInclude>
-    <ClInclude Include="src\core\ADGR\Layers\layer.h">
-      <Filter>src\core\ADGR\Layers</Filter>
-    </ClInclude>
-    <ClInclude Include="src\core\ADGR\Layers\layerStack.h">
-      <Filter>src\core\ADGR\Layers</Filter>
-    </ClInclude>
-    <ClInclude Include="src\core\ADGR\Renderer.h">
-      <Filter>src\core\ADGR</Filter>
-    </ClInclude>
-    <ClInclude Include="src\core\ADGR\RendererThread.h">
-      <Filter>src\core\ADGR</Filter>
-    </ClInclude>
-    <ClInclude Include="src\core\ADGR\UniformBufferObject.h">
-      <Filter>src\core\ADGR</Filter>
-    </ClInclude>
-    <ClInclude Include="src\core\ADGR\Wrapper\dll_wrapper.h">
-      <Filter>src\core\ADGR\Wrapper</Filter>
-    </ClInclude>
-    <ClInclude Include="src\core\ADGR\Wrapper\internal_wrapper.h">
-      <Filter>src\core\ADGR\Wrapper</Filter>
-    </ClInclude>
-    <ClInclude Include="src\core\ADGR\defines.h">
-      <Filter>src\core\ADGR</Filter>
-    </ClInclude>
-    <ClInclude Include="src\core\ADGR\interface.h">
-      <Filter>src\core\ADGR</Filter>
-    </ClInclude>
-    <ClInclude Include="src\core\ADGR\rendererCommandQueue.h">
-      <Filter>src\core\ADGR</Filter>
-    </ClInclude>
-    <ClInclude Include="src\core\ADGR\rendererFormat.h">
-      <Filter>src\core\ADGR</Filter>
-    </ClInclude>
     <ClInclude Include="src\core\AssetIndexBlock.h">
       <Filter>src\core</Filter>
     </ClInclude>
     <ClInclude Include="src\core\AssetLoader.h">
       <Filter>src\core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Engines\ADGR\Backend\Components\Camera\AnimationCamera.h">
+      <Filter>src\core\Engines\ADGR\Backend\Components\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Engines\ADGR\Backend\Components\Camera\Camera.h">
+      <Filter>src\core\Engines\ADGR\Backend\Components\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Engines\ADGR\Backend\Components\Camera\Camera2D.h">
+      <Filter>src\core\Engines\ADGR\Backend\Components\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Engines\ADGR\Backend\Components\Camera\Camera3D.h">
+      <Filter>src\core\Engines\ADGR\Backend\Components\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Engines\ADGR\Backend\Components\Camera\CameraReflect.h">
+      <Filter>src\core\Engines\ADGR\Backend\Components\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Engines\ADGR\Backend\Components\Camera\CameraSkybox.h">
+      <Filter>src\core\Engines\ADGR\Backend\Components\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Engines\ADGR\Backend\Components\TextOverlay.h">
+      <Filter>src\core\Engines\ADGR\Backend\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Animations\VulkanSkeletalAnimation.h">
+      <Filter>src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Animations</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Common\VulkanAttachment.h">
+      <Filter>src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Common\VulkanDescriptor.h">
+      <Filter>src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Common\VulkanExtensionsManager.h">
+      <Filter>src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Common\VulkanUtilities.h">
+      <Filter>src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Common\VulkanValidator.h">
+      <Filter>src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Compute\VulkanComputeBufferObject.h">
+      <Filter>src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Compute</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Compute\VulkanComputeCommandBuffer.h">
+      <Filter>src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Compute</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Compute\VulkanComputeCore.h">
+      <Filter>src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Compute</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Compute\VulkanComputeDescriptor.h">
+      <Filter>src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Compute</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Compute\VulkanComputeFunctions.h">
+      <Filter>src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Compute</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Compute\VulkanComputeImageObject.h">
+      <Filter>src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Compute</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Compute\VulkanComputeManager.h">
+      <Filter>src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Compute</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Compute\VulkanComputeObject.h">
+      <Filter>src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Compute</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Compute\VulkanComputeOneTimeCommandBuffer.h">
+      <Filter>src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Compute</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Compute\VulkanComputePipeline.h">
+      <Filter>src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Compute</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Compute\VulkanComputeRBLIndex.h">
+      <Filter>src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Compute</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Compute\VulkanComputeShader.h">
+      <Filter>src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Compute</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Compute\VulkanOneTimeCompute.h">
+      <Filter>src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Compute</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\Attachments\VulkanGraphicsAttachment.h">
+      <Filter>src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\Attachments</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\Attachments\VulkanGraphicsTextureAttachment.h">
+      <Filter>src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\Attachments</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\Attachments\VulkanGraphicsTextureAttachment2D.h">
+      <Filter>src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\Attachments</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanControlHeader.h">
+      <Filter>src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsColorBuffer.h">
+      <Filter>src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsCommandBuffer.h">
+      <Filter>src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsCore.h">
+      <Filter>src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsDepthBuffer.h">
+      <Filter>src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsDescriptor.h">
+      <Filter>src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsFrameBuffer.h">
+      <Filter>src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsFunctions.h">
+      <Filter>src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsOneTimeCommandBuffer.h">
+      <Filter>src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsPipeline.h">
+      <Filter>src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsPushConstant.h">
+      <Filter>src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsRBLIndex.h">
+      <Filter>src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsRenderableObject.h">
+      <Filter>src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsShader.h">
+      <Filter>src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsSupportObject.h">
+      <Filter>src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsSwapChain.h">
+      <Filter>src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\VulkanAnimationManager.h">
+      <Filter>src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\VulkanBRDF.h">
+      <Filter>src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\VulkanGraphicsSwapChain3D.h">
+      <Filter>src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\VulkanIrradianceCube.h">
+      <Filter>src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\VulkanObject2D.h">
+      <Filter>src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\VulkanObject3D.h">
+      <Filter>src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\VulkanOffsceenFrameBuffer.h">
+      <Filter>src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\VulkanPBRObject.h">
+      <Filter>src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\VulkanParticleSystem.h">
+      <Filter>src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\VulkanPrefilteredCube.h">
+      <Filter>src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\VulkanReflectObject.h">
+      <Filter>src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\VulkanSkyBox.h">
+      <Filter>src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\VulkanTextObject.h">
+      <Filter>src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\VulkanTextOverlay.h">
+      <Filter>src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Engines\ADGR\Backend\Vulkan\vulkanRenderer.h">
+      <Filter>src\core\Engines\ADGR\Backend\Vulkan</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Engines\ADGR\Backend\Window\Windows\WindowManager.h">
+      <Filter>src\core\Engines\ADGR\Backend\Window\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Engines\ADGR\Backend\base\RendererBackendBase.h">
+      <Filter>src\core\Engines\ADGR\Backend\base</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Engines\ADGR\Backend\directx12\directx12Renderer.h">
+      <Filter>src\core\Engines\ADGR\Backend\directx12</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Engines\ADGR\Backend\opengl\backend\data structures\opengl.h">
+      <Filter>src\core\Engines\ADGR\Backend\opengl\backend\data structures</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Engines\ADGR\Backend\opengl\backend\openglFormat.h">
+      <Filter>src\core\Engines\ADGR\Backend\opengl\backend</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Engines\ADGR\Backend\opengl\backend\shader.h">
+      <Filter>src\core\Engines\ADGR\Backend\opengl\backend</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Engines\ADGR\Backend\opengl\backend\texture.h">
+      <Filter>src\core\Engines\ADGR\Backend\opengl\backend</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Engines\ADGR\Backend\opengl\backend\vertexAndIndexBuffer.h">
+      <Filter>src\core\Engines\ADGR\Backend\opengl\backend</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Engines\ADGR\Backend\opengl\backend\window.h">
+      <Filter>src\core\Engines\ADGR\Backend\opengl\backend</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Engines\ADGR\Backend\opengl\openglRenderer.h">
+      <Filter>src\core\Engines\ADGR\Backend\opengl</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Engines\ADGR\Layers\layer.h">
+      <Filter>src\core\Engines\ADGR\Layers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Engines\ADGR\Layers\layerStack.h">
+      <Filter>src\core\Engines\ADGR\Layers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Engines\ADGR\Renderer.h">
+      <Filter>src\core\Engines\ADGR</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Engines\ADGR\RendererThread.h">
+      <Filter>src\core\Engines\ADGR</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Engines\ADGR\UniformBufferObject.h">
+      <Filter>src\core\Engines\ADGR</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Engines\ADGR\Wrapper\dll_wrapper.h">
+      <Filter>src\core\Engines\ADGR\Wrapper</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Engines\ADGR\Wrapper\internal_wrapper.h">
+      <Filter>src\core\Engines\ADGR\Wrapper</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Engines\ADGR\defines.h">
+      <Filter>src\core\Engines\ADGR</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Engines\ADGR\interface.h">
+      <Filter>src\core\Engines\ADGR</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Engines\ADGR\rendererCommandQueue.h">
+      <Filter>src\core\Engines\ADGR</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Engines\ADGR\rendererFormat.h">
+      <Filter>src\core\Engines\ADGR</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Engines\Audio\Audio.h">
+      <Filter>src\core\Engines\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Engines\Audio\Backend\AudioEngine.h">
+      <Filter>src\core\Engines\Audio\Backend</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Engines\Audio\Backend\AudioLog.h">
+      <Filter>src\core\Engines\Audio\Backend</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Engines\Audio\Backend\AudioObject.h">
+      <Filter>src\core\Engines\Audio\Backend</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Engines\Audio\Backend\AudioObjectController.h">
+      <Filter>src\core\Engines\Audio\Backend</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Engines\Audio\Backend\AudioObjectControllers\BackgroundAudioController.h">
+      <Filter>src\core\Engines\Audio\Backend\AudioObjectControllers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Engines\Audio\Backend\AudioObjectControllers\BasicAudioController.h">
+      <Filter>src\core\Engines\Audio\Backend\AudioObjectControllers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Engines\Destruction\Backend\Integrity Based\DestructionEntity.h">
+      <Filter>src\core\Engines\Destruction\Backend\Integrity Based</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Engines\Destruction\Backend\Integrity Based\ObjectDestructionProperties.h">
+      <Filter>src\core\Engines\Destruction\Backend\Integrity Based</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Engines\Destruction\Backend\Integrity Based\SolidDestruction.h">
+      <Filter>src\core\Engines\Destruction\Backend\Integrity Based</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Engines\Destruction\DDE.h">
+      <Filter>src\core\Engines\Destruction</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Engines\Intellect\Backend\Intellect\Neuron.h">
+      <Filter>src\core\Engines\Intellect\Backend\Intellect</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Engines\Intellect\Backend\Intellect\neuralNetwork.h">
+      <Filter>src\core\Engines\Intellect\Backend\Intellect</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Engines\Intellect\Backend\Maths\Sigmoid.h">
+      <Filter>src\core\Engines\Intellect\Backend\Maths</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Engines\Intellect\Intellect.h">
+      <Filter>src\core\Engines\Intellect</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Events\Events.h">
+      <Filter>src\core\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Events\applicationEvent.h">
+      <Filter>src\core\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Events\event.h">
+      <Filter>src\core\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Events\eventContainer.h">
+      <Filter>src\core\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Events\input.h">
+      <Filter>src\core\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Events\inputHandler.h">
+      <Filter>src\core\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Events\keyCodes.h">
+      <Filter>src\core\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Events\keyEvent.h">
+      <Filter>src\core\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Events\mouseEvent.h">
+      <Filter>src\core\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Managers\Managers.h">
+      <Filter>src\core\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Managers\Platform\Windows.h">
+      <Filter>src\core\Managers\Platform</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Managers\Platform\Windows\file\daiFileManager.h">
+      <Filter>src\core\Managers\Platform\Windows\file</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Managers\Platform\Windows\file\duiFileManager.h">
+      <Filter>src\core\Managers\Platform\Windows\file</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Managers\Platform\Windows\file\fileManager.h">
+      <Filter>src\core\Managers\Platform\Windows\file</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Managers\Platform\Windows\file\readFile.h">
+      <Filter>src\core\Managers\Platform\Windows\file</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Managers\Platform\Windows\resource\imageLoader.h">
+      <Filter>src\core\Managers\Platform\Windows\resource</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Managers\Platform\Windows\resource\loadIcon.h">
+      <Filter>src\core\Managers\Platform\Windows\resource</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Managers\Platform\Windows\resource\modelManager.h">
+      <Filter>src\core\Managers\Platform\Windows\resource</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Managers\Platform\Windows\resource\objectLoader.h">
+      <Filter>src\core\Managers\Platform\Windows\resource</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Managers\Platform\Windows\thread\ExecutionHandle.h">
+      <Filter>src\core\Managers\Platform\Windows\thread</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Managers\Platform\Windows\thread\InternalThread.h">
+      <Filter>src\core\Managers\Platform\Windows\thread</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Managers\Platform\Windows\thread\threadManager.h">
+      <Filter>src\core\Managers\Platform\Windows\thread</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Managers\Platform\Windows\window.h">
+      <Filter>src\core\Managers\Platform\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Networking\Backend\client.h">
+      <Filter>src\core\Networking\Backend</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Networking\Backend\client\Client.h">
+      <Filter>src\core\Networking\Backend\client</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Networking\Backend\server.h">
+      <Filter>src\core\Networking\Backend</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Networking\Backend\server\Server.h">
+      <Filter>src\core\Networking\Backend\server</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Networking\Networking.h">
+      <Filter>src\core\Networking</Filter>
     </ClInclude>
     <ClInclude Include="src\core\application.h">
       <Filter>src\core</Filter>
@@ -428,206 +623,284 @@
     <ClCompile Include="GameLibraries\GameObject.cpp">
       <Filter>GameLibraries</Filter>
     </ClCompile>
-    <ClCompile Include="src\core\ADGR\Backend\Components\Camera\AnimationCamera.cpp">
-      <Filter>src\core\ADGR\Backend\Components\Camera</Filter>
-    </ClCompile>
-    <ClCompile Include="src\core\ADGR\Backend\Components\Camera\Camera.cpp">
-      <Filter>src\core\ADGR\Backend\Components\Camera</Filter>
-    </ClCompile>
-    <ClCompile Include="src\core\ADGR\Backend\Components\Camera\Camera2D.cpp">
-      <Filter>src\core\ADGR\Backend\Components\Camera</Filter>
-    </ClCompile>
-    <ClCompile Include="src\core\ADGR\Backend\Components\Camera\Camera3D.cpp">
-      <Filter>src\core\ADGR\Backend\Components\Camera</Filter>
-    </ClCompile>
-    <ClCompile Include="src\core\ADGR\Backend\Components\Camera\CameraReflect.cpp">
-      <Filter>src\core\ADGR\Backend\Components\Camera</Filter>
-    </ClCompile>
-    <ClCompile Include="src\core\ADGR\Backend\Components\Camera\CameraSkybox.cpp">
-      <Filter>src\core\ADGR\Backend\Components\Camera</Filter>
-    </ClCompile>
-    <ClCompile Include="src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Animations\VulkanSkeletalAnimation.cpp">
-      <Filter>src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Animations</Filter>
-    </ClCompile>
-    <ClCompile Include="src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Common\VulkanDescriptor.cpp">
-      <Filter>src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Common</Filter>
-    </ClCompile>
-    <ClCompile Include="src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Common\VulkanExtensionsManager.cpp">
-      <Filter>src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Common</Filter>
-    </ClCompile>
-    <ClCompile Include="src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Common\VulkanUtilities.cpp">
-      <Filter>src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Common</Filter>
-    </ClCompile>
-    <ClCompile Include="src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Common\VulkanValidator.cpp">
-      <Filter>src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Common</Filter>
-    </ClCompile>
-    <ClCompile Include="src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Compute\ComputeExample.cpp">
-      <Filter>src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Compute</Filter>
-    </ClCompile>
-    <ClCompile Include="src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Compute\VulkanComputeBufferObject.cpp">
-      <Filter>src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Compute</Filter>
-    </ClCompile>
-    <ClCompile Include="src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Compute\VulkanComputeCommandBuffer.cpp">
-      <Filter>src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Compute</Filter>
-    </ClCompile>
-    <ClCompile Include="src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Compute\VulkanComputeCore.cpp">
-      <Filter>src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Compute</Filter>
-    </ClCompile>
-    <ClCompile Include="src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Compute\VulkanComputeDescriptor.cpp">
-      <Filter>src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Compute</Filter>
-    </ClCompile>
-    <ClCompile Include="src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Compute\VulkanComputeFunctions.cpp">
-      <Filter>src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Compute</Filter>
-    </ClCompile>
-    <ClCompile Include="src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Compute\VulkanComputeImageObject.cpp">
-      <Filter>src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Compute</Filter>
-    </ClCompile>
-    <ClCompile Include="src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Compute\VulkanComputeManager.cpp">
-      <Filter>src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Compute</Filter>
-    </ClCompile>
-    <ClCompile Include="src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Compute\VulkanComputeObject.cpp">
-      <Filter>src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Compute</Filter>
-    </ClCompile>
-    <ClCompile Include="src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Compute\VulkanComputeOneTimeCommandBuffer.cpp">
-      <Filter>src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Compute</Filter>
-    </ClCompile>
-    <ClCompile Include="src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Compute\VulkanComputePipeline.cpp">
-      <Filter>src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Compute</Filter>
-    </ClCompile>
-    <ClCompile Include="src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Compute\VulkanComputeShader.cpp">
-      <Filter>src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Compute</Filter>
-    </ClCompile>
-    <ClCompile Include="src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Compute\VulkanOneTimeCompute.cpp">
-      <Filter>src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Compute</Filter>
-    </ClCompile>
-    <ClCompile Include="src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsColorBuffer.cpp">
-      <Filter>src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsCommandBuffer.cpp">
-      <Filter>src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsCore.cpp">
-      <Filter>src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsDepthBuffer.cpp">
-      <Filter>src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsDescriptor.cpp">
-      <Filter>src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsFrameBuffer.cpp">
-      <Filter>src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsFunctions.cpp">
-      <Filter>src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsOneTimeCommandBuffer.cpp">
-      <Filter>src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsPipeline.cpp">
-      <Filter>src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsPushConstant.cpp">
-      <Filter>src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsRenderableObject.cpp">
-      <Filter>src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsShader.cpp">
-      <Filter>src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsSwapChain.cpp">
-      <Filter>src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\VulkanAnimationManager.cpp">
-      <Filter>src\core\ADGR\Backend\Vulkan\Renderer Backend Layer</Filter>
-    </ClCompile>
-    <ClCompile Include="src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\VulkanBRDF.cpp">
-      <Filter>src\core\ADGR\Backend\Vulkan\Renderer Backend Layer</Filter>
-    </ClCompile>
-    <ClCompile Include="src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\VulkanGraphicsSwapChain3D.cpp">
-      <Filter>src\core\ADGR\Backend\Vulkan\Renderer Backend Layer</Filter>
-    </ClCompile>
-    <ClCompile Include="src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\VulkanIrradianceCube.cpp">
-      <Filter>src\core\ADGR\Backend\Vulkan\Renderer Backend Layer</Filter>
-    </ClCompile>
-    <ClCompile Include="src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\VulkanOffscreenFrameBuffer.cpp">
-      <Filter>src\core\ADGR\Backend\Vulkan\Renderer Backend Layer</Filter>
-    </ClCompile>
-    <ClCompile Include="src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\VulkanPBRObject.cpp">
-      <Filter>src\core\ADGR\Backend\Vulkan\Renderer Backend Layer</Filter>
-    </ClCompile>
-    <ClCompile Include="src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\VulkanParticleSystem.cpp">
-      <Filter>src\core\ADGR\Backend\Vulkan\Renderer Backend Layer</Filter>
-    </ClCompile>
-    <ClCompile Include="src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\VulkanPrefilteredCube.cpp">
-      <Filter>src\core\ADGR\Backend\Vulkan\Renderer Backend Layer</Filter>
-    </ClCompile>
-    <ClCompile Include="src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\VulkanReflectObject.cpp">
-      <Filter>src\core\ADGR\Backend\Vulkan\Renderer Backend Layer</Filter>
-    </ClCompile>
-    <ClCompile Include="src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\VulkanSkyBox.cpp">
-      <Filter>src\core\ADGR\Backend\Vulkan\Renderer Backend Layer</Filter>
-    </ClCompile>
-    <ClCompile Include="src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\VulkanTextObject.cpp">
-      <Filter>src\core\ADGR\Backend\Vulkan\Renderer Backend Layer</Filter>
-    </ClCompile>
-    <ClCompile Include="src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\VulkanTextOverlay.cpp">
-      <Filter>src\core\ADGR\Backend\Vulkan\Renderer Backend Layer</Filter>
-    </ClCompile>
-    <ClCompile Include="src\core\ADGR\Backend\Vulkan\vulkanRenderer.cpp">
-      <Filter>src\core\ADGR\Backend\Vulkan</Filter>
-    </ClCompile>
-    <ClCompile Include="src\core\ADGR\Backend\Window\Windows\WindowManager.cpp">
-      <Filter>src\core\ADGR\Backend\Window\Windows</Filter>
-    </ClCompile>
-    <ClCompile Include="src\core\ADGR\Backend\directx12\directx12Renderer.cpp">
-      <Filter>src\core\ADGR\Backend\directx12</Filter>
-    </ClCompile>
-    <ClCompile Include="src\core\ADGR\Backend\opengl\backend\shader.cpp">
-      <Filter>src\core\ADGR\Backend\opengl\backend</Filter>
-    </ClCompile>
-    <ClCompile Include="src\core\ADGR\Backend\opengl\backend\texture.cpp">
-      <Filter>src\core\ADGR\Backend\opengl\backend</Filter>
-    </ClCompile>
-    <ClCompile Include="src\core\ADGR\Backend\opengl\backend\vertexAndIndexBuffer.cpp">
-      <Filter>src\core\ADGR\Backend\opengl\backend</Filter>
-    </ClCompile>
-    <ClCompile Include="src\core\ADGR\Backend\opengl\backend\window.cpp">
-      <Filter>src\core\ADGR\Backend\opengl\backend</Filter>
-    </ClCompile>
-    <ClCompile Include="src\core\ADGR\Backend\opengl\openglRenderer.cpp">
-      <Filter>src\core\ADGR\Backend\opengl</Filter>
-    </ClCompile>
-    <ClCompile Include="src\core\ADGR\Layers\layer.cpp">
-      <Filter>src\core\ADGR\Layers</Filter>
-    </ClCompile>
-    <ClCompile Include="src\core\ADGR\Layers\layerStack.cpp">
-      <Filter>src\core\ADGR\Layers</Filter>
-    </ClCompile>
-    <ClCompile Include="src\core\ADGR\Renderer.cpp">
-      <Filter>src\core\ADGR</Filter>
-    </ClCompile>
-    <ClCompile Include="src\core\ADGR\RendererThread.cpp">
-      <Filter>src\core\ADGR</Filter>
-    </ClCompile>
-    <ClCompile Include="src\core\ADGR\Wrapper\dll_wrapper.cpp">
-      <Filter>src\core\ADGR\Wrapper</Filter>
-    </ClCompile>
-    <ClCompile Include="src\core\ADGR\Wrapper\internal_wrapper.cpp">
-      <Filter>src\core\ADGR\Wrapper</Filter>
-    </ClCompile>
-    <ClCompile Include="src\core\ADGR\rendererCommandQueue.cpp">
-      <Filter>src\core\ADGR</Filter>
-    </ClCompile>
-    <ClCompile Include="src\core\ADGR\rendererFormat.cpp">
-      <Filter>src\core\ADGR</Filter>
-    </ClCompile>
     <ClCompile Include="src\core\AssetIndexBlock.cpp">
       <Filter>src\core</Filter>
     </ClCompile>
     <ClCompile Include="src\core\AssetLoader.cpp">
       <Filter>src\core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\Engines\ADGR\Backend\Components\Camera\AnimationCamera.cpp">
+      <Filter>src\core\Engines\ADGR\Backend\Components\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\Engines\ADGR\Backend\Components\Camera\Camera.cpp">
+      <Filter>src\core\Engines\ADGR\Backend\Components\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\Engines\ADGR\Backend\Components\Camera\Camera2D.cpp">
+      <Filter>src\core\Engines\ADGR\Backend\Components\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\Engines\ADGR\Backend\Components\Camera\Camera3D.cpp">
+      <Filter>src\core\Engines\ADGR\Backend\Components\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\Engines\ADGR\Backend\Components\Camera\CameraReflect.cpp">
+      <Filter>src\core\Engines\ADGR\Backend\Components\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\Engines\ADGR\Backend\Components\Camera\CameraSkybox.cpp">
+      <Filter>src\core\Engines\ADGR\Backend\Components\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Animations\VulkanSkeletalAnimation.cpp">
+      <Filter>src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Animations</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Common\VulkanDescriptor.cpp">
+      <Filter>src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Common\VulkanExtensionsManager.cpp">
+      <Filter>src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Common\VulkanUtilities.cpp">
+      <Filter>src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Common\VulkanValidator.cpp">
+      <Filter>src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Compute\ComputeExample.cpp">
+      <Filter>src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Compute</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Compute\VulkanComputeBufferObject.cpp">
+      <Filter>src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Compute</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Compute\VulkanComputeCommandBuffer.cpp">
+      <Filter>src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Compute</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Compute\VulkanComputeCore.cpp">
+      <Filter>src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Compute</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Compute\VulkanComputeDescriptor.cpp">
+      <Filter>src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Compute</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Compute\VulkanComputeFunctions.cpp">
+      <Filter>src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Compute</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Compute\VulkanComputeImageObject.cpp">
+      <Filter>src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Compute</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Compute\VulkanComputeManager.cpp">
+      <Filter>src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Compute</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Compute\VulkanComputeObject.cpp">
+      <Filter>src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Compute</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Compute\VulkanComputeOneTimeCommandBuffer.cpp">
+      <Filter>src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Compute</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Compute\VulkanComputePipeline.cpp">
+      <Filter>src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Compute</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Compute\VulkanComputeShader.cpp">
+      <Filter>src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Compute</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Compute\VulkanOneTimeCompute.cpp">
+      <Filter>src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Compute</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsColorBuffer.cpp">
+      <Filter>src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsCommandBuffer.cpp">
+      <Filter>src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsCore.cpp">
+      <Filter>src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsDepthBuffer.cpp">
+      <Filter>src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsDescriptor.cpp">
+      <Filter>src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsFrameBuffer.cpp">
+      <Filter>src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsFunctions.cpp">
+      <Filter>src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsOneTimeCommandBuffer.cpp">
+      <Filter>src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsPipeline.cpp">
+      <Filter>src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsPushConstant.cpp">
+      <Filter>src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsRenderableObject.cpp">
+      <Filter>src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsShader.cpp">
+      <Filter>src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsSwapChain.cpp">
+      <Filter>src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\VulkanAnimationManager.cpp">
+      <Filter>src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\VulkanBRDF.cpp">
+      <Filter>src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\VulkanGraphicsSwapChain3D.cpp">
+      <Filter>src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\VulkanIrradianceCube.cpp">
+      <Filter>src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\VulkanOffscreenFrameBuffer.cpp">
+      <Filter>src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\VulkanPBRObject.cpp">
+      <Filter>src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\VulkanParticleSystem.cpp">
+      <Filter>src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\VulkanPrefilteredCube.cpp">
+      <Filter>src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\VulkanReflectObject.cpp">
+      <Filter>src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\VulkanSkyBox.cpp">
+      <Filter>src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\VulkanTextObject.cpp">
+      <Filter>src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\VulkanTextOverlay.cpp">
+      <Filter>src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\Engines\ADGR\Backend\Vulkan\vulkanRenderer.cpp">
+      <Filter>src\core\Engines\ADGR\Backend\Vulkan</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\Engines\ADGR\Backend\Window\Windows\WindowManager.cpp">
+      <Filter>src\core\Engines\ADGR\Backend\Window\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\Engines\ADGR\Backend\directx12\directx12Renderer.cpp">
+      <Filter>src\core\Engines\ADGR\Backend\directx12</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\Engines\ADGR\Backend\opengl\backend\shader.cpp">
+      <Filter>src\core\Engines\ADGR\Backend\opengl\backend</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\Engines\ADGR\Backend\opengl\backend\texture.cpp">
+      <Filter>src\core\Engines\ADGR\Backend\opengl\backend</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\Engines\ADGR\Backend\opengl\backend\vertexAndIndexBuffer.cpp">
+      <Filter>src\core\Engines\ADGR\Backend\opengl\backend</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\Engines\ADGR\Backend\opengl\backend\window.cpp">
+      <Filter>src\core\Engines\ADGR\Backend\opengl\backend</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\Engines\ADGR\Backend\opengl\openglRenderer.cpp">
+      <Filter>src\core\Engines\ADGR\Backend\opengl</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\Engines\ADGR\Layers\layer.cpp">
+      <Filter>src\core\Engines\ADGR\Layers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\Engines\ADGR\Layers\layerStack.cpp">
+      <Filter>src\core\Engines\ADGR\Layers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\Engines\ADGR\Renderer.cpp">
+      <Filter>src\core\Engines\ADGR</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\Engines\ADGR\RendererThread.cpp">
+      <Filter>src\core\Engines\ADGR</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\Engines\ADGR\Wrapper\dll_wrapper.cpp">
+      <Filter>src\core\Engines\ADGR\Wrapper</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\Engines\ADGR\Wrapper\internal_wrapper.cpp">
+      <Filter>src\core\Engines\ADGR\Wrapper</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\Engines\ADGR\rendererCommandQueue.cpp">
+      <Filter>src\core\Engines\ADGR</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\Engines\ADGR\rendererFormat.cpp">
+      <Filter>src\core\Engines\ADGR</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\Engines\Audio\Backend\AudioEngine.cpp">
+      <Filter>src\core\Engines\Audio\Backend</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\Engines\Audio\Backend\AudioObject.cpp">
+      <Filter>src\core\Engines\Audio\Backend</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\Engines\Audio\Backend\AudioObjectController.cpp">
+      <Filter>src\core\Engines\Audio\Backend</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\Engines\Audio\Backend\AudioObjectControllers\BackgroundAudioController.cpp">
+      <Filter>src\core\Engines\Audio\Backend\AudioObjectControllers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\Engines\Audio\Backend\AudioObjectControllers\BasicAudioController.cpp">
+      <Filter>src\core\Engines\Audio\Backend\AudioObjectControllers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\Engines\Intellect\Backend\Intellect\neuralNetwork.cpp">
+      <Filter>src\core\Engines\Intellect\Backend\Intellect</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\Engines\Intellect\Backend\Maths\mathDefinitions.cpp">
+      <Filter>src\core\Engines\Intellect\Backend\Maths</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\Events\applicationEvent.cpp">
+      <Filter>src\core\Events</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\Events\event.cpp">
+      <Filter>src\core\Events</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\Events\inputHandler.cpp">
+      <Filter>src\core\Events</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\Events\keyEvent.cpp">
+      <Filter>src\core\Events</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\Events\mouseEvent.cpp">
+      <Filter>src\core\Events</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\Managers\Platform\Windows\file\daiFileManager.cpp">
+      <Filter>src\core\Managers\Platform\Windows\file</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\Managers\Platform\Windows\file\duiFileManager.cpp">
+      <Filter>src\core\Managers\Platform\Windows\file</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\Managers\Platform\Windows\file\fileManager.cpp">
+      <Filter>src\core\Managers\Platform\Windows\file</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\Managers\Platform\Windows\file\readFile.cpp">
+      <Filter>src\core\Managers\Platform\Windows\file</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\Managers\Platform\Windows\resource\imageLoader.cpp">
+      <Filter>src\core\Managers\Platform\Windows\resource</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\Managers\Platform\Windows\resource\loadIcon.cpp">
+      <Filter>src\core\Managers\Platform\Windows\resource</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\Managers\Platform\Windows\resource\modelManager.cpp">
+      <Filter>src\core\Managers\Platform\Windows\resource</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\Managers\Platform\Windows\resource\objectLoader.cpp">
+      <Filter>src\core\Managers\Platform\Windows\resource</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\Managers\Platform\Windows\thread\ExecutionHandle.cpp">
+      <Filter>src\core\Managers\Platform\Windows\thread</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\Managers\Platform\Windows\thread\InternalThread.cpp">
+      <Filter>src\core\Managers\Platform\Windows\thread</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\Managers\Platform\Windows\thread\threadManager.cpp">
+      <Filter>src\core\Managers\Platform\Windows\thread</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\Managers\Platform\Windows\window.cpp">
+      <Filter>src\core\Managers\Platform\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\Networking\Backend\client.cpp">
+      <Filter>src\core\Networking\Backend</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\Networking\Backend\server.cpp">
+      <Filter>src\core\Networking\Backend</Filter>
     </ClCompile>
     <ClCompile Include="src\core\application.cpp">
       <Filter>src\core</Filter>

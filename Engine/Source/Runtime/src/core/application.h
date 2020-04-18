@@ -14,8 +14,8 @@
 #include "Level.h"
 #include "Events.h"
 
-#include "ADGR/Renderer.h"
-#include "ADGR/Layers/layerStack.h"
+#include "Engines/ADGR/Renderer.h"
+#include "Engines/ADGR/Layers/layerStack.h"
 
 #include "Managers.h"
 

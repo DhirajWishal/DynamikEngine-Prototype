@@ -13,13 +13,6 @@
 #include "Utilities.h"
 #include "Platform.h"
 
-#ifdef min
-#undef min
-#endif
-#ifdef max
-#undef max
-#endif
-
 #ifdef DMK_PLATFORM_WINDOWS
 
 #define GLM_FORCE_RADIANS
@@ -63,6 +56,29 @@
 #include <GLFW/glfw3.h>
 
 #include <load_ktx.hpp>
+
+#undef UNICODE
+
+#define WIN32_LEAN_AND_MEAN
+
+#include <windows.h>
+#include <winsock2.h>
+#include <ws2tcpip.h>
+
+#pragma comment (lib, "Ws2_32.lib")
+
+#ifdef min
+#undef min
+#endif
+#ifdef max
+#undef max
+#endif
+#ifdef near
+#undef near
+#endif
+#ifdef far
+#undef far
+#endif
 
 // ----------
 #endif

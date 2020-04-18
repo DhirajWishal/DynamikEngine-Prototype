@@ -179,15 +179,6 @@
     <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Graphics\VulkanControlHeader.h">
       <Filter>src\core\vulkan\Renderer Backend Layer\Objects</Filter>
     </ClInclude>
-    <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Graphics\VulkanExtensionsManager.h">
-      <Filter>src\core\vulkan\Renderer Backend Layer\Objects</Filter>
-    </ClInclude>
-    <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Graphics\VulkanUtilities.h">
-      <Filter>src\core\vulkan\Renderer Backend Layer\Objects</Filter>
-    </ClInclude>
-    <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Graphics\VulkanValidator.h">
-      <Filter>src\core\vulkan\Renderer Backend Layer\Objects</Filter>
-    </ClInclude>
     <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsColorBuffer.h">
       <Filter>src\core\vulkan\Renderer Backend Layer\Objects</Filter>
     </ClInclude>
@@ -204,15 +195,11 @@
     <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsFunctions.h">
       <Filter>src\core\vulkan\Renderer Backend Layer\Objects</Filter>
     </ClInclude>
-    <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsOneTimeCommandBufferManager.h">
-      <Filter>src\core\vulkan\Renderer Backend Layer\Objects</Filter>
-    </ClInclude>
     <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsPipeline.h" />
     <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsPushConstant.h" />
     <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsRenderableObject.h">
       <Filter>src\core\vulkan\Renderer Backend Layer\Objects</Filter>
     </ClInclude>
-    <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsRenderLayout.h" />
     <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsShader.h">
       <Filter>src\core\vulkan\Renderer Backend Layer\Objects</Filter>
     </ClInclude>
@@ -228,6 +215,24 @@
       <Filter>src\core\vulkan\Renderer Backend Layer\Objects</Filter>
     </ClInclude>
     <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Compute\VulkanComputeRBLIndex.h" />
+    <ClInclude Include="src\core\vulkan\Renderer Backend Layer\VulkanBRDF.h" />
+    <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsDescriptor.h" />
+    <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Common\VulkanDescriptor.h" />
+    <ClInclude Include="src\core\vulkan\Renderer Backend Layer\VulkanIrradianceCube.h" />
+    <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsSupportObject.h" />
+    <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Common\VulkanExtensionsManager.h">
+      <Filter>src\core\vulkan\Renderer Backend Layer\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Common\VulkanUtilities.h">
+      <Filter>src\core\vulkan\Renderer Backend Layer\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Common\VulkanValidator.h">
+      <Filter>src\core\vulkan\Renderer Backend Layer\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsOneTimeCommandBuffer.h">
+      <Filter>src\core\vulkan\Renderer Backend Layer\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\vulkan\Renderer Backend Layer\VulkanPrefilteredCube.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Layers\layer.cpp">
@@ -326,15 +331,6 @@
     <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Compute\VulkanComputeBufferObject.cpp" />
     <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Compute\VulkanComputeImageObject.cpp" />
     <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Compute\VulkanComputeOneTimeCommandBuffer.cpp" />
-    <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Graphics\VulkanExtensionsManager.cpp">
-      <Filter>src\core\vulkan\Renderer Backend Layer\Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Graphics\VulkanUtilities.cpp">
-      <Filter>src\core\vulkan\Renderer Backend Layer\Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Graphics\VulkanValidator.cpp">
-      <Filter>src\core\vulkan\Renderer Backend Layer\Objects</Filter>
-    </ClCompile>
     <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsColorBuffer.cpp">
       <Filter>src\core\vulkan\Renderer Backend Layer\Objects</Filter>
     </ClCompile>
@@ -351,15 +347,11 @@
     <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsFunctions.cpp">
       <Filter>src\core\vulkan\Renderer Backend Layer\Objects</Filter>
     </ClCompile>
-    <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsOneTimeCommandBufferManager.cpp">
-      <Filter>src\core\vulkan\Renderer Backend Layer\Objects</Filter>
-    </ClCompile>
     <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsPipeline.cpp" />
     <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsPushConstant.cpp" />
     <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsRenderableObject.cpp">
       <Filter>src\core\vulkan\Renderer Backend Layer\Objects</Filter>
     </ClCompile>
-    <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsRenderLayout.cpp" />
     <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsShader.cpp">
       <Filter>src\core\vulkan\Renderer Backend Layer\Objects</Filter>
     </ClCompile>
@@ -371,9 +363,35 @@
     </ClCompile>
     <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Compute\VulkanComputeShader.cpp" />
     <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Compute\VulkanComputeFunctions.cpp" />
+    <ClCompile Include="src\core\vulkan\Renderer Backend Layer\VulkanBRDF.cpp" />
+    <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsDescriptor.cpp" />
+    <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Common\VulkanDescriptor.cpp" />
+    <ClCompile Include="src\core\vulkan\Renderer Backend Layer\VulkanIrradianceCube.cpp" />
+    <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Common\VulkanExtensionsManager.cpp">
+      <Filter>src\core\vulkan\Renderer Backend Layer\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Common\VulkanUtilities.cpp">
+      <Filter>src\core\vulkan\Renderer Backend Layer\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Common\VulkanValidator.cpp">
+      <Filter>src\core\vulkan\Renderer Backend Layer\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsOneTimeCommandBuffer.cpp">
+      <Filter>src\core\vulkan\Renderer Backend Layer\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\vulkan\Renderer Backend Layer\VulkanPrefilteredCube.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ADGR.lua" />
     <None Include="src\core\vulkan\Renderer Backend Layer\External\stb_font_consolas_24_latin1.inl" />
+    <None Include="src\core\vulkan\Renderer Backend Layer\Shaders\BRDF\vert.spv" />
+    <None Include="src\core\vulkan\Renderer Backend Layer\Shaders\BRDF\shader.genbrdflut.vert" />
+    <None Include="src\core\vulkan\Renderer Backend Layer\Shaders\BRDF\shader.genbrdflut.frag" />
+    <None Include="src\core\vulkan\Renderer Backend Layer\Shaders\Irradiance\shader.vert" />
+    <None Include="src\core\vulkan\Renderer Backend Layer\Shaders\Irradiance\shader.frag" />
+    <None Include="src\core\vulkan\Renderer Backend Layer\Shaders\Irradiance\vert.spv" />
+    <None Include="src\core\vulkan\Renderer Backend Layer\Shaders\Prefiltered\shader.vert" />
+    <None Include="src\core\vulkan\Renderer Backend Layer\Shaders\Prefiltered\shader.frag" />
+    <None Include="src\core\vulkan\Renderer Backend Layer\Shaders\Prefiltered\vert.spv" />
   </ItemGroup>
 </Project>

@@ -18,7 +18,6 @@
 #include "CentralDataHub.h"
 #include "Platform.h"
 
-#include "Renderer Backend Layer/VulkanSkyBox.h"
 #include "Renderer Backend Layer/VulkanReflectObject.h"
 #include "Renderer Backend Layer/VulkanPBRObject.h"
 
@@ -51,11 +50,8 @@ namespace Dynamik {
 		// Basic one-time initializations
 		void vulkanRenderer::initStageOne()
 		{
-			// initialize the compute instance
-			myComputeCore.initializeInstance();
-
-			// initialize the compute device
-			myComputeCore.initializeDevice();
+			// initialize the compute API
+			//initializeComputeAPI();
 
 			// initialize the window
 			DMKWindowManagerInitInfo windowInitInfo;
@@ -100,6 +96,8 @@ namespace Dynamik {
 		// object loading and initialization
 		void vulkanRenderer::initStageTwo() {
 			initializeObjects();
+
+			renderDatas.pushBack(mySkyboxes[0].myRenderData);
 
 			ADGRVulkanGraphicsCommandBufferInitInfo commandBufferInitInfo;
 			commandBufferInitInfo.objects = renderDatas;
@@ -251,6 +249,11 @@ namespace Dynamik {
 						_renderObject.setFrameBufferContainer(&myFrameBuffer);
 						_renderObject.myRenderData.materialDescriptor = myRenderableMeterials[_object.materialName];
 
+						_renderObject.myRenderData.textures = mySkyboxes[0].myRenderData.textures;
+						_renderObject.myBRDF = mySkyboxes[0].myBRDF;
+						_renderObject.myIrradianceCube = mySkyboxes[0].myIrradianceCube;
+						_renderObject.myPreFilteredCube = mySkyboxes[0].myPreFilteredCube;
+
 						renderDatas.push_back(_renderObject.initializeObject(myVulkanGraphicsCore.logicalDevice, _object, myVulkanGraphicsCore.msaaSamples));
 					}
 					else
@@ -357,12 +360,10 @@ namespace Dynamik {
 				_renderObject.initializeUniformBuffer();
 
 				// initialize descriptor pool
-				ADGRVulkanDescriptorPoolInitInfo descriptorPoolInitInfo;
-				_renderObject.initializeDescriptorPool(descriptorPoolInitInfo);
+				_renderObject.initializeDescriptorPool();
 
 				// initialize descriptor sets
-				ADGRVulkanDescriptorSetsInitInfo descriptorSetsInitInfo;
-				_renderObject.initializeDescriptorSets(descriptorSetsInitInfo);
+				_renderObject.initializeDescriptorSets();
 
 				renderDatas.push_back(_renderObject.getRenderData());
 			}
@@ -587,7 +588,10 @@ namespace Dynamik {
 			_renderObject.setSwapChainContainer(&mySwapChain3D.swapChainContainer);
 			_renderObject.setFrameBufferContainer(&myFrameBuffer);
 
-			return _renderObject.initializeObject(myVulkanGraphicsCore.logicalDevice, _object, myVulkanGraphicsCore.msaaSamples);
+			auto _dataContainer = _renderObject.initializeObject(myVulkanGraphicsCore.logicalDevice, _object, myVulkanGraphicsCore.msaaSamples);
+			mySkyboxes.pushBack(_renderObject);
+
+			return _dataContainer;
 		}
 
 		ADGRVulkanRenderData vulkanRenderer::initializeReflectObject(ADGRVulkan3DObjectData _object)
@@ -596,6 +600,7 @@ namespace Dynamik {
 
 			_renderObject.setSwapChainContainer(&mySwapChain3D.swapChainContainer);
 			_renderObject.setFrameBufferContainer(&myFrameBuffer);
+			_renderObject.myRenderData.textures = mySkyboxes[0].myRenderData.textures;
 
 			return _renderObject.initializeObject(myVulkanGraphicsCore.logicalDevice, _object, myVulkanGraphicsCore.msaaSamples);
 		}
@@ -744,6 +749,18 @@ namespace Dynamik {
 			}
 			else if (result != VK_SUCCESS)
 				DMK_CORE_FATAL("failed to present swap chain image!");
+		}
+
+		void vulkanRenderer::initializeComputeAPI()
+		{
+			// initialize the compute instance
+			myComputeCore.initializeInstance();
+
+			// initialize the compute device
+			myComputeCore.initializeDevice();
+
+			// initialize the compute command pool
+			myComputeCommandBuffer.initializeCommandPool(myComputeCore.logicalDevice, myComputeCore.queueFamilyIndices.computeFamily.value());
 		}
 
 		void vulkanRenderer::_initializeOverlayCommandPool()

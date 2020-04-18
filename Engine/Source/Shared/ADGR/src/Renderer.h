@@ -25,6 +25,7 @@
 #include <deque>
 
 #include "core/utils/DMK_Descriptors.h"
+#include "core/AssetIndexBlock.h"
 
 namespace Dynamik {
 	namespace ADGR {
@@ -38,7 +39,7 @@ namespace Dynamik {
 
 			void setProgress(UI32* progress);
 			void initRenderer();
-			void setRendererFormats(ARRAY<InternalFormat*>& internalFormats);
+			void setRendererFormats(ARRAY<DMKAssetIndexContainer>& containers);
 			void draw();
 
 			void setVertices(ARRAY<Vertex>* vertices);
@@ -46,9 +47,9 @@ namespace Dynamik {
 			void addCommand(RendererCommandQueue commandQueue);
 
 			void run();
-			void loadDataToUpdate(ARRAY<InternalFormat*>& internalFormats);
+			void loadDataToUpdate(ARRAY<DMKAssetIndexContainer>& containers);
 			void updateRendererFormats();
-			void loadData(ARRAY<InternalFormat*>& internalFormats, ARRAY<RendererFormat>* formats);
+			void loadData(ARRAY<DMKAssetIndexContainer>& containers, ARRAY<RendererFormat>* formats);
 
 			void end();
 

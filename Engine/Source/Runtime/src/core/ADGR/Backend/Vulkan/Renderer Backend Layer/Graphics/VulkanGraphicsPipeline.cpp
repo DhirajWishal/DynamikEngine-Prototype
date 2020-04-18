@@ -1,4 +1,4 @@
-#include "dmkafx.h"
+#include "adgrafx.h"
 #include "VulkanGraphicsPipeline.h"
 
 namespace Dynamik {
@@ -175,8 +175,8 @@ namespace Dynamik {
 			
 			void VulkanGraphicsPipeline::terminate(VkDevice device)
 			{
+				vkDestroyPipelineLayout(device, layout, nullptr);
 				vkDestroyPipeline(device, pipeline, nullptr);
-				vkDestroyPipelineLayout(device, layout, nullptr); 
 			}
 		}
 	}

@@ -1,4 +1,4 @@
-#include "dmkafx.h"
+#include "adgrafx.h"
 #include "VulkanComputeBufferObject.h"
 
 #include "../Graphics/VulkanGraphicsFunctions.h"
@@ -45,7 +45,7 @@ namespace Dynamik {
 				uboLayoutBinding.descriptorType = VK_DESCRIPTOR_TYPE_STORAGE_BUFFER;
 				uboLayoutBinding.pImmutableSamplers = nullptr; // Optional
 				uboLayoutBinding.stageFlags = VK_SHADER_STAGE_COMPUTE_BIT;
-				descriptorSetLayoutInitInfo.bindings.push_back(uboLayoutBinding);
+				descriptorSetLayoutInitInfo.additionalBindings.push_back(uboLayoutBinding);
 
 				VkDescriptorSetLayoutBinding samplerLayoutBinding = {};
 				samplerLayoutBinding.binding = 1; // info.bindIndex;
@@ -53,14 +53,15 @@ namespace Dynamik {
 				samplerLayoutBinding.descriptorType = VK_DESCRIPTOR_TYPE_STORAGE_BUFFER;
 				samplerLayoutBinding.pImmutableSamplers = nullptr; // Optional
 				samplerLayoutBinding.stageFlags = VK_SHADER_STAGE_COMPUTE_BIT;
-				descriptorSetLayoutInitInfo.bindings.push_back(samplerLayoutBinding);
-				myComputeData.computeDescriptor.initializeLayout(logicalDevice, descriptorSetLayoutInitInfo);
+				descriptorSetLayoutInitInfo.additionalBindings.push_back(samplerLayoutBinding);
+
+				myComputeData.computeDescriptor.initializeDescriptorSetLayout(logicalDevice, descriptorSetLayoutInitInfo);
 			}
 
 			void VulkanComputeBufferObject::_initializePipelineLayout()
 			{
 				ADGRVulkanGraphicsPipelineLayoutInitInfo pipelineLayoutInitInfo;
-				pipelineLayoutInitInfo.layouts = { myComputeData.computeDescriptor.layout };
+				pipelineLayoutInitInfo.layouts = { myComputeData.computeDescriptor.container.layout };
 				myComputeData.computePipeline.initializePipelineLayout(logicalDevice, pipelineLayoutInitInfo);
 			}
 
@@ -77,8 +78,8 @@ namespace Dynamik {
 				_poolSize1.descriptorCount = 1;
 
 				ADGRVulkanDescriptorPoolInitInfo descriptorPoolInitInfo;
-				descriptorPoolInitInfo.poolSizes.pushBack(_poolSize1);
-				myComputeData.computeDescriptor.initializePool(logicalDevice, descriptorPoolInitInfo);
+				descriptorPoolInitInfo.additionalSizes.pushBack(_poolSize1);
+				myComputeData.computeDescriptor.initializeDescriptorPool(logicalDevice, descriptorPoolInitInfo);
 			}
 
 			void VulkanComputeBufferObject::_initializeDescriptorSets()
@@ -111,8 +112,8 @@ namespace Dynamik {
 				descriptorWrites.push_back(_writes1);
 
 				ADGRVulkanDescriptorSetsInitInfo descriptorSetInitInfo;
-				descriptorSetInitInfo.descriptorWrites = descriptorWrites;
-				myComputeData.computeDescriptor.initializeSets(logicalDevice, descriptorSetInitInfo);
+				descriptorSetInitInfo.additionalWrites = descriptorWrites;
+				myComputeData.computeDescriptor.initializeDescriptorSet(logicalDevice, descriptorSetInitInfo);
 			}
 		}
 	}

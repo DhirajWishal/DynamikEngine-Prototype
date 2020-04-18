@@ -3,7 +3,6 @@
 #define _DYNAMIK_ADGR_VULKAN_SKELETAL_ANIMATION_H
 
 #include "../Graphics/VulkanGraphicsRenderableObject.h"
-#include "../Graphics/Attachments/VulkanGraphicsTextureAttachmentCube.h"
 
 #include <assimp/assimp/Importer.hpp>
 #include <assimp/assimp/scene.h>
@@ -77,6 +76,8 @@ namespace Dynamik {
 
 				void initializeUniformBuffer() override;
 				void updateUniformBuffer(UBO_SKELETAL uniformBufferObject, UI32 currentImage, F32 time);
+
+				void initializeDescriptorSets(ADGRVulkanDescriptorSetsInitInfo info) override;
 
 			public:
 				ADGRVulkanSkeletalAnimationData myAnimationData;

@@ -2,9 +2,9 @@
 #ifndef _DYNAMIK_ADGR_VULKAN_GRAPHICS_ATTACHMENT_H
 #define _DYNAMIK_ADGR_VULKAN_GRAPHICS_ATTACHMENT_H
 
-#include "core/ADGR/Backend/Vulkan/Renderer Backend Layer/Common/VulkanAttachment.h"
-#include "core/ADGR/Backend/Vulkan/Renderer Backend Layer/Graphics/VulkanGraphicsDescriptor.h"
-#include "core/ADGR/Backend/Vulkan/Renderer Backend Layer/Graphics/VulkanGraphicsPipeline.h"
+#include "core/vulkan/Renderer Backend Layer/Common/VulkanAttachment.h"
+#include "core/vulkan/Renderer Backend Layer/Graphics/VulkanGraphicsDescriptor.h"
+#include "core/vulkan/Renderer Backend Layer/Graphics/VulkanGraphicsPipeline.h"
 
 namespace Dynamik {
 	namespace ADGR {

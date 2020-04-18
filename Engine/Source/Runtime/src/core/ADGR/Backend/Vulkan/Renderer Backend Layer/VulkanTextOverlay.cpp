@@ -1,4 +1,4 @@
-#include "dmkafx.h"
+#include "adgrafx.h"
 #include "VulkanTextOverlay.h"
 
 #define TEXTOVERLAY_MAX_CHAR_COUNT 2048
@@ -397,7 +397,7 @@ namespace Dynamik {
 				if (vkCreateDescriptorPool(myCoreObject.logicalDevice, &poolInfo, nullptr, &_localDescriptorPool) != VK_SUCCESS)
 					DMK_CORE_FATAL("failed to create descriptor pool!");
 
-				//myRenderData.descriptors.pool = _localDescriptorPool;
+				myRenderData.descriptors.pool = _localDescriptorPool;
 			}
 
 			void VulkanTextOverlay::_initializeDescriptorSetLayout()
@@ -409,9 +409,9 @@ namespace Dynamik {
 				samplerLayoutBinding.pImmutableSamplers = nullptr; // Optional
 				samplerLayoutBinding.stageFlags = VK_SHADER_STAGE_FRAGMENT_BIT;
 
-				//ADGRVulkanDescriptorSetLayoutInitInfo layoutInitInfo;
-				//layoutInitInfo.additionalBindings = { samplerLayoutBinding };
-				//layoutInitInfo.overrideBindings = true;
+				ADGRVulkanDescriptorSetLayoutInitInfo layoutInitInfo;
+				layoutInitInfo.additionalBindings = { samplerLayoutBinding };
+				layoutInitInfo.overrideBindings = true;
 				//mySwapChainObject.initializeDescriptorSetLayout(layoutInitInfo);
 			}
 
@@ -425,7 +425,7 @@ namespace Dynamik {
 
 				VkDescriptorSetAllocateInfo allocInfo = {};
 				allocInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_ALLOCATE_INFO;
-				//allocInfo.descriptorPool = myRenderData.descriptors.pool;
+				allocInfo.descriptorPool = myRenderData.descriptors.pool;
 				allocInfo.descriptorSetCount = 1;
 				allocInfo.pSetLayouts = &_layout;
 
@@ -451,7 +451,7 @@ namespace Dynamik {
 
 				vkUpdateDescriptorSets(myCoreObject.logicalDevice, 1, &_writes, 0, nullptr);
 
-				//myRenderData.descriptors.descriptorSets.pushBack(_descriptorSet);
+				myRenderData.descriptors.descriptorSet = _descriptorSet;
 			}
 
 			void VulkanTextOverlay::_initializePipelineCache()
@@ -586,7 +586,7 @@ namespace Dynamik {
 
 			void VulkanTextOverlay::_terminateDescriptorPool()
 			{
-				//vkDestroyDescriptorPool(myCoreObject.logicalDevice, myRenderData.descriptors.pool, nullptr);
+				vkDestroyDescriptorPool(myCoreObject.logicalDevice, myRenderData.descriptors.pool, nullptr);
 			}
 
 			void VulkanTextOverlay::_terminatePipeline()
@@ -665,8 +665,8 @@ namespace Dynamik {
 					{
 						//vkCmdBindPipeline(buffers[i], VK_PIPELINE_BIND_POINT_GRAPHICS, _data.pipeline);
 
-						//for (VkDescriptorSet _set : _data.descriptors.descriptorSets)
-						//	vkCmdBindDescriptorSets(buffers[i], VK_PIPELINE_BIND_POINT_COMPUTE,_data.pipelineContainers.layout, 0, 1, &_set, 0, 0);
+						if (_data.descriptors.descriptorSet != VK_NULL_HANDLE);
+							//vkCmdBindDescriptorSets(buffers[i], VK_PIPELINE_BIND_POINT_GRAPHICS, _data.pipelineLayout, 0, 1, &_data.descriptors.descriptorSet, 0, NULL);
 
 						vkCmdBindVertexBuffers(buffers[i], 0, 1, &vertexBuffer, offsets);
 						vkCmdBindVertexBuffers(buffers[i], 1, 1, &vertexBuffer, offsets);

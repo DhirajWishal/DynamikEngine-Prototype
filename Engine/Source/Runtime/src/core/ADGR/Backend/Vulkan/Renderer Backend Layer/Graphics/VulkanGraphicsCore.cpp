@@ -1,10 +1,10 @@
-#include "dmkafx.h"
+#include "adgrafx.h"
 #include "VulkanGraphicsCore.h"
 
-#include "../Common/VulkanValidator.h"
-#include "../Common/VulkanExtensionsManager.h"
+#include "VulkanValidator.h"
+#include "VulkanExtensionsManager.h"
 #include "VulkanGraphicsFunctions.h"
-#include "core/ADGR/defines.h"
+#include "defines.h"
 
 #include "CentralDataHub.h"
 

@@ -204,12 +204,6 @@
     <ClInclude Include="src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\Attachments\VulkanGraphicsTextureAttachment2D.h">
       <Filter>src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\Attachments</Filter>
     </ClInclude>
-    <ClInclude Include="src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\Attachments\VulkanGraphicsTextureAttachmentCube.h">
-      <Filter>src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\Attachments</Filter>
-    </ClInclude>
-    <ClInclude Include="src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\Attachments\VulkanGraphicsUniformBufferAttachment.h">
-      <Filter>src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\Attachments</Filter>
-    </ClInclude>
     <ClInclude Include="src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanControlHeader.h">
       <Filter>src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics</Filter>
     </ClInclude>
@@ -505,21 +499,6 @@
     </ClCompile>
     <ClCompile Include="src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Compute\VulkanOneTimeCompute.cpp">
       <Filter>src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Compute</Filter>
-    </ClCompile>
-    <ClCompile Include="src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\Attachments\VulkanGraphicsAttachment.cpp">
-      <Filter>src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\Attachments</Filter>
-    </ClCompile>
-    <ClCompile Include="src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\Attachments\VulkanGraphicsTextureAttachment.cpp">
-      <Filter>src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\Attachments</Filter>
-    </ClCompile>
-    <ClCompile Include="src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\Attachments\VulkanGraphicsTextureAttachment2D.cpp">
-      <Filter>src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\Attachments</Filter>
-    </ClCompile>
-    <ClCompile Include="src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\Attachments\VulkanGraphicsTextureAttachmentCube.cpp">
-      <Filter>src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\Attachments</Filter>
-    </ClCompile>
-    <ClCompile Include="src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\Attachments\VulkanGraphicsUniformBufferAttachment.cpp">
-      <Filter>src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\Attachments</Filter>
     </ClCompile>
     <ClCompile Include="src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsColorBuffer.cpp">
       <Filter>src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics</Filter>

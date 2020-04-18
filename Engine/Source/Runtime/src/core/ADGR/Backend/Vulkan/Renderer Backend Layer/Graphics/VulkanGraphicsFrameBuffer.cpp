@@ -1,4 +1,4 @@
-#include "adgrafx.h"
+#include "dmkafx.h"
 #include "VulkanGraphicsFrameBuffer.h"
 
 namespace Dynamik {
@@ -38,16 +38,20 @@ namespace Dynamik {
 				if (vkCreateRenderPass(logicalDevice, &renderPassInfo, nullptr, &renderPass) != VK_SUCCESS)
 					DMK_CORE_FATAL("failed to create render pass!");
 			}
-			
+
 			void VulkanGraphicsFrameBuffer::initializeFrameBuffer(VkDevice logicalDevice, ADGRVulkanGraphicsFrameBufferInitInfo info)
 			{
+				frameHeight = info.swapChainExtent.height;
+				frameWidth = info.swapChainExtent.width;
+
 				for (size_t i = 0; i < info.bufferCount; i++)
 				{
 					ARRAY<VkImageView> attachments;
 					for (VkImageView _imageView : info.attachments)
 						attachments.push_back(_imageView);
 
-					attachments.pushBack(info.swapChainImageViews[i]);
+					if ((info.swapChainImageViews[i] != VK_NULL_HANDLE) && (info.swapChainImageViews.size()))
+						attachments.pushBack(info.swapChainImageViews[i]);
 
 					VkFramebufferCreateInfo framebufferInfo = {};
 					framebufferInfo.sType = VK_STRUCTURE_TYPE_FRAMEBUFFER_CREATE_INFO;
@@ -70,7 +74,7 @@ namespace Dynamik {
 					buffers.pushBack(_buffer);
 				}
 			}
-			
+
 			void VulkanGraphicsFrameBuffer::terminate(VkDevice logicalDevice)
 			{
 				if (renderPass != VK_NULL_HANDLE)
@@ -80,6 +84,34 @@ namespace Dynamik {
 					vkDestroyFramebuffer(logicalDevice, buffer, nullptr);
 
 				buffers.clear();
+			}
+
+			VkFramebuffer VulkanGraphicsFrameBuffer::createFrameBuffer(
+				VkDevice logicalDevice,
+				VkRenderPass renderPass,
+				ARRAY<VkImageView> attachments,
+				VkExtent2D extent,
+				UI32 layerCount)
+			{
+				VkFramebufferCreateInfo framebufferInfo = {};
+				framebufferInfo.sType = VK_STRUCTURE_TYPE_FRAMEBUFFER_CREATE_INFO;
+				framebufferInfo.renderPass = renderPass;
+				framebufferInfo.attachmentCount = attachments.size();
+				framebufferInfo.pAttachments = attachments.data();
+				framebufferInfo.width = extent.width;
+				framebufferInfo.height = extent.height;
+				framebufferInfo.layers = layerCount;
+
+				VkFramebuffer _buffer = VK_NULL_HANDLE;
+				if (vkCreateFramebuffer(logicalDevice, &framebufferInfo, nullptr, &_buffer) != VK_SUCCESS)
+					DMK_CORE_FATAL("failed to create framebuffer!");
+
+				return _buffer;
+			}
+
+			void VulkanGraphicsFrameBuffer::terminateFrameBuffer(VkDevice logicalDevice, VkFramebuffer buffer)
+			{
+				vkDestroyFramebuffer(logicalDevice, buffer, nullptr);
 			}
 		}
 	}

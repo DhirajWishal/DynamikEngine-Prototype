@@ -1,4 +1,4 @@
-#include "adgrafx.h"
+#include "dmkafx.h"
 #include "VulkanTextOverlay.h"
 
 #define TEXTOVERLAY_MAX_CHAR_COUNT 2048
@@ -409,9 +409,9 @@ namespace Dynamik {
 				samplerLayoutBinding.pImmutableSamplers = nullptr; // Optional
 				samplerLayoutBinding.stageFlags = VK_SHADER_STAGE_FRAGMENT_BIT;
 
-				ADGRVulkanDescriptorSetLayoutInitInfo layoutInitInfo;
-				layoutInitInfo.additionalBindings = { samplerLayoutBinding };
-				layoutInitInfo.overrideBindings = true;
+				//ADGRVulkanDescriptorSetLayoutInitInfo layoutInitInfo;
+				//layoutInitInfo.additionalBindings = { samplerLayoutBinding };
+				//layoutInitInfo.overrideBindings = true;
 				//mySwapChainObject.initializeDescriptorSetLayout(layoutInitInfo);
 			}
 
@@ -451,7 +451,7 @@ namespace Dynamik {
 
 				vkUpdateDescriptorSets(myCoreObject.logicalDevice, 1, &_writes, 0, nullptr);
 
-				myRenderData.descriptors.descriptorSet = _descriptorSet;
+				myRenderData.descriptors.descriptorSets.pushBack(_descriptorSet);
 			}
 
 			void VulkanTextOverlay::_initializePipelineCache()
@@ -665,8 +665,8 @@ namespace Dynamik {
 					{
 						//vkCmdBindPipeline(buffers[i], VK_PIPELINE_BIND_POINT_GRAPHICS, _data.pipeline);
 
-						if (_data.descriptors.descriptorSet != VK_NULL_HANDLE);
-							//vkCmdBindDescriptorSets(buffers[i], VK_PIPELINE_BIND_POINT_GRAPHICS, _data.pipelineLayout, 0, 1, &_data.descriptors.descriptorSet, 0, NULL);
+						//for (VkDescriptorSet _set : _data.descriptors.descriptorSets)
+						//	vkCmdBindDescriptorSets(buffers[i], VK_PIPELINE_BIND_POINT_COMPUTE,_data.pipelineContainers.layout, 0, 1, &_set, 0, 0);
 
 						vkCmdBindVertexBuffers(buffers[i], 0, 1, &vertexBuffer, offsets);
 						vkCmdBindVertexBuffers(buffers[i], 1, 1, &vertexBuffer, offsets);

@@ -1,6 +1,8 @@
 #include "dmkafx.h"
 #include "WindowManager.h"
 
+#include <GLEW/glew-2.1.0/include/GL/glew.h>
+
 namespace Dynamik {
 	namespace ADGR {
 		void WindowManager::initialize(DMKWindowManagerInitInfo info)

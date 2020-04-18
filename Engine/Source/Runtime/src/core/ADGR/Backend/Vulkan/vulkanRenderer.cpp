@@ -9,7 +9,7 @@
  vulkanRenderer.cpp file
 */
 
-#include "adgrafx.h"
+#include "dmkafx.h"
 #include "vulkanRenderer.h"
 #include "Platform/windows.h"
 #include "keyCodes.h"
@@ -249,7 +249,7 @@ namespace Dynamik {
 						_renderObject.setFrameBufferContainer(&myFrameBuffer);
 						_renderObject.myRenderData.materialDescriptor = myRenderableMeterials[_object.materialName];
 
-						_renderObject.myRenderData.textures = mySkyboxes[0].myRenderData.textures;
+						//_renderObject.myRenderData.textures = mySkyboxes[0].myRenderData.textures;
 						_renderObject.myBRDF = mySkyboxes[0].myBRDF;
 						_renderObject.myIrradianceCube = mySkyboxes[0].myIrradianceCube;
 						_renderObject.myPreFilteredCube = mySkyboxes[0].myPreFilteredCube;
@@ -609,6 +609,7 @@ namespace Dynamik {
 		{
 			myAnimation = new VulkanSkeletalAnimation(RenderableObjectInitInfo());
 			myAnimation->setSwapChainContainer(&mySwapChain3D.swapChainContainer);
+			myAnimation->myRenderData.frameBufferPointer = &myFrameBuffer;
 
 			myAnimation->myAnimationData.scene = myAnimation->myAnimationData.Importer.ReadFile(_object.modelpath.c_str(), 0);
 			myAnimation->setAnimation(0);

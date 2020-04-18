@@ -3,14 +3,14 @@
 #define _DYNAMIK_ADGR_VULKAN_GRAPHICS_RENDERABLE_OBJECT_H
 
 #include <vulkan/vulkan.h>
-#include "UniformBufferObject.h"
+#include "core/ADGR/UniformBufferObject.h"
 
 #include "VulkanGraphicsCore.h"
 #include "VulkanGraphicsShader.h"
 #include "VulkanGraphicsFrameBuffer.h"
-#include "VulkanGraphicsRenderLayout.h"
 #include "VulkanGraphicsPipeline.h"
 #include "VulkanGraphicsPushConstant.h"
+#include "VulkanGraphicsDescriptor.h"
 
 #include <GameObject.h>
 
@@ -45,18 +45,11 @@ namespace Dynamik {
 				VkImageAspectFlags aspectFlags;
 			};
 
-			struct ADGRVulkanDescriptorPoolInitInfo {
-				ARRAY<VkDescriptorPoolSize> additionalSizes;
-			};
-
-			struct ADGRVulkanDescriptorSetsInitInfo {
-				ARRAY<VkWriteDescriptorSet> additionalWrites;
-			};
-
 			struct ADGRVulkanMaterialDescriptor {
 				struct PushBlock {
 					F32 roughness;
 					F32 metallic;
+					F32 specular = 0.0f;
 					F32 r, g, b;
 				} params;
 
@@ -82,12 +75,6 @@ namespace Dynamik {
 				UI32 mipLevels;
 
 				UI32 width, height;
-			};
-
-			struct ADGRVulkanDescrpitorContainer {
-				VkDescriptorSetLayout layout = VK_NULL_HANDLE;
-				VkDescriptorPool pool = VK_NULL_HANDLE;
-				VkDescriptorSet descriptorSet = VK_NULL_HANDLE;
 			};
 
 			struct ADGRVulkanUnformBufferContainer {
@@ -118,7 +105,7 @@ namespace Dynamik {
 
 				ARRAY<ADGRVulkanTextureContainer> textures;
 
-				ADGRVulkanDescrpitorContainer descriptors;
+				VulkanGraphicsDescriptor descriptors;
 
 				ARRAY<VulkanGraphicsPipeline> pipelineContainers;
 
@@ -184,10 +171,10 @@ namespace Dynamik {
 				virtual void initializeIndexBufferUI64(ARRAY<UI64>* indexes);
 				virtual void terminateIndexBuffer();
 
-				virtual void initializeDescriptorPool(ADGRVulkanDescriptorPoolInitInfo info);
+				virtual void initializeDescriptorPool();
 				virtual void terminateDescriptorPool();
 
-				virtual void initializeDescriptorSets(ADGRVulkanDescriptorSetsInitInfo info);
+				virtual void initializeDescriptorSets();
 
 				virtual void initializeUniformBuffer();
 				virtual void updateUniformBuffer(UniformBufferObject uniformBuferObject, UI32 currentImage);

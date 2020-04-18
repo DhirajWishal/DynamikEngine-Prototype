@@ -14,7 +14,7 @@
 #ifndef _DYNAMIK_ADGR_VULKAN_RENDERER_H
 #define _DYNAMIK_ADGR_VULKAN_RENDERER_H
 
-#include "core/base/RendererBackendBase.h"
+#include "../base/RendererBackendBase.h"
 
 #include "GameObject.h"
 #include "debugger.h"
@@ -33,15 +33,17 @@
 
 #include "Renderer Backend Layer/Animations/VulkanSkeletalAnimation.h"
 
-#include "core/Window/Windows/WindowManager.h"
+#include "../Window/Windows/WindowManager.h"
 
-#include "core/Components/Camera/AnimationCamera.h"
-#include "core/Components/Camera/Camera2D.h"
-#include "core/Components/Camera/Camera3D.h"
-#include "core/Components/Camera/CameraReflect.h"
-#include "core/Components/Camera/CameraSkybox.h"
+#include "../Components/Camera/AnimationCamera.h"
+#include "../Components/Camera/Camera2D.h"
+#include "../Components/Camera/Camera3D.h"
+#include "../Components/Camera/CameraReflect.h"
+#include "../Components/Camera/CameraSkybox.h"
 
 #include "Renderer Backend Layer/External/stb_font_consolas_24_latin1.inl"
+
+#include "core/ADGR/rendererFormat.h"
 
 namespace Dynamik {
 	namespace ADGR {
@@ -233,8 +235,10 @@ namespace Dynamik {
 
 			std::map<std::string, ADGRVulkanMaterialDescriptor> myRenderableMeterials;
 
-			private:
-				VulkanComputeCore myComputeCore;
+		private:
+			void initializeComputeAPI();
+			VulkanComputeCore myComputeCore;
+			VulkanComputeCommandBuffer myComputeCommandBuffer;
 
 		private:
 			ADGRVulkanTextOverlayDataContainer overlayContainer;

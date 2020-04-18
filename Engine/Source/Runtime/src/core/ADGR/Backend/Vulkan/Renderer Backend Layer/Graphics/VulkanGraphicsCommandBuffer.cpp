@@ -1,4 +1,4 @@
-#include "adgrafx.h"
+#include "dmkafx.h"
 #include "VulkanGraphicsCommandBuffer.h"
 
 #include "VulkanGraphicsFunctions.h"
@@ -20,8 +20,8 @@ namespace Dynamik {
 						vkCmdBindVertexBuffers(buffer, 0, 1, &object->vertexBuffers[i], offsets);
 
 						// binding descriptor set(s)
-						if (object->descriptors.descriptorSet != VK_NULL_HANDLE)
-							vkCmdBindDescriptorSets(buffer, VK_PIPELINE_BIND_POINT_GRAPHICS, object->pipelineContainers[_itr].layout, 0, 1, &object->descriptors.descriptorSet, 0, nullptr);
+						for (VkDescriptorSet _set : object->descriptors.descriptorSets)
+							vkCmdBindDescriptorSets(buffer, VK_PIPELINE_BIND_POINT_GRAPHICS, object->pipelineContainers[_itr].layout, 0, 1, &_set, 0, nullptr);
 
 						// draw command
 						vkCmdDraw(buffer, object->vertexCount, 1, 0, 1);
@@ -41,8 +41,8 @@ namespace Dynamik {
 						vkCmdBindVertexBuffers(buffer, 0, 1, &object->vertexBuffers[i], offsets);
 
 						// binding descriptor set(s)
-						if (object->descriptors.descriptorSet != VK_NULL_HANDLE)
-							vkCmdBindDescriptorSets(buffer, VK_PIPELINE_BIND_POINT_GRAPHICS, object->pipelineContainers[_itr].layout, 0, 1, &object->descriptors.descriptorSet, 0, nullptr);
+						for (VkDescriptorSet _set : object->descriptors.descriptorSets)
+							vkCmdBindDescriptorSets(buffer, VK_PIPELINE_BIND_POINT_GRAPHICS, object->pipelineContainers[_itr].layout, 0, 1, &_set, 0, nullptr);
 
 						// index buffer bind
 						if (object->indexbufferObjectTypeSize == sizeof(UI8))
@@ -72,8 +72,8 @@ namespace Dynamik {
 						vkCmdBindVertexBuffers(buffer, 0, 1, &object->vertexBuffers[i], offsets);
 
 						// binding descriptor set(s)
-						if (object->descriptors.descriptorSet != VK_NULL_HANDLE)
-							vkCmdBindDescriptorSets(buffer, VK_PIPELINE_BIND_POINT_GRAPHICS, object->pipelineContainers[_itr].layout, 0, 1, &object->descriptors.descriptorSet, 0, nullptr);
+						for (VkDescriptorSet _set : object->descriptors.descriptorSets)
+							vkCmdBindDescriptorSets(buffer, VK_PIPELINE_BIND_POINT_GRAPHICS, object->pipelineContainers[_itr].layout, 0, 1, &_set, 0, nullptr);
 
 						// index buffer bind
 						if (object->indexbufferObjectTypeSize == sizeof(UI8))
@@ -85,12 +85,26 @@ namespace Dynamik {
 						else if (object->indexbufferObjectTypeSize == sizeof(UI64))
 							vkCmdBindIndexBuffer(buffer, object->indexBuffers[i], 0, VK_INDEX_TYPE_UINT32);
 
-						glm::vec3 pos = glm::vec3(0.0f, 0.0f, 1.0f);
-						object->pushConstants[0].data = &pos;
-						object->pushConstants[0].pushData(buffer, object->pipelineContainers[_itr].layout);
-						object->pushConstants[1].data = &object->materialDescriptor.params;
-						object->pushConstants[1].pushData(buffer, object->pipelineContainers[_itr].layout);
 						vkCmdDrawIndexed(buffer, object->indexCount, 1, 0, 0, 0);
+						//for (uint32_t y = 0; y < GRID_DIM; y++) {
+						//	object->materialDescriptor.params.metallic = (float)y / (float)(GRID_DIM);
+						//	for (uint32_t x = 0; x < GRID_DIM; x++) {
+						//		glm::vec3 pos = glm::vec3(float(x - (GRID_DIM / 2.0f)) * 2.5f, 0.0f, float(y - (GRID_DIM / 2.0f)) * 2.5f);
+						//		object->pushConstants[0].data = &pos;
+						//		object->pushConstants[0].pushData(buffer, object->pipelineContainers[_itr].layout);
+						//		object->materialDescriptor.params.roughness = glm::clamp((float)x / (float)(GRID_DIM), 0.05f, 1.0f);
+						//		object->pushConstants[1].data = &object->materialDescriptor.params;
+						//		object->pushConstants[1].pushData(buffer, object->pipelineContainers[_itr].layout);
+						//	}
+						//}
+
+
+						//glm::vec3 pos = glm::vec3(0.0f, 0.0f, 1.0f);
+						//object->pushConstants[0].data = &pos;
+						//object->pushConstants[0].pushData(buffer, object->pipelineContainers[_itr].layout);
+						//object->pushConstants[1].data = &object->materialDescriptor.params;
+						//object->pushConstants[1].pushData(buffer, object->pipelineContainers[_itr].layout);
+						//vkCmdDrawIndexed(buffer, object->indexCount, 1, 0, 0, 0);
 					}
 				}
 			}

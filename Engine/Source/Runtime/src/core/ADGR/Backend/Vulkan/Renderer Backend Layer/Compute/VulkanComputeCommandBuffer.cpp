@@ -1,4 +1,4 @@
-#include "adgrafx.h"
+#include "dmkafx.h"
 #include "VulkanComputeCommandBuffer.h"
 
 namespace Dynamik {
@@ -39,9 +39,8 @@ namespace Dynamik {
 
 					vkCmdBindPipeline(buffers[i], VK_PIPELINE_BIND_POINT_COMPUTE, info.computeDatas[i].computePipeline.pipeline);
 
-					for (VkDescriptorSet _set : info.computeDatas[i].computeDescriptor.container.descriptorSets)
-						vkCmdBindDescriptorSets(buffers[i], VK_PIPELINE_BIND_POINT_COMPUTE,
-							info.computeDatas[i].computePipeline.layout, 0, 1, &_set, 0, 0);
+					for (VkDescriptorSet _set : info.computeDatas[i].computeDescriptor.descriptorSets)
+						vkCmdBindDescriptorSets(buffers[i], VK_PIPELINE_BIND_POINT_COMPUTE, info.computeDatas[i].computePipeline.layout, 0, 1, &_set, 0, 0);
 
 					vkCmdDispatch(buffers[i], info.computeDatas[i].groupCountX, info.computeDatas[i].groupCountY, info.computeDatas[i].groupCountZ);
 

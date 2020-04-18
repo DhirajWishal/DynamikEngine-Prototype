@@ -1,4 +1,4 @@
-#include "adgrafx.h"
+#include "dmkafx.h"
 #include "VulkanComputeManager.h"
 
 namespace Dynamik {
@@ -8,13 +8,13 @@ namespace Dynamik {
 			{
 				myComputeCore.initializeInstance();
 				myComputeCore.initializeDevice();
-				myComputeCommandBuffer.initializeCommandPool(myComputeCore.logicalDevice, myComputeCore.queueFamilyIndex);
+				myComputeCommandBuffer.initializeCommandPool(myComputeCore.logicalDevice, myComputeCore.queueFamilyIndices.computeFamily.value());
 
 				ADGRVulkanComputeObjectInitInfo objectInitInfo;
 				objectInitInfo.logicalDevice = myComputeCore.logicalDevice;
 				objectInitInfo.physicalDevice = myComputeCore.physicalDevice;
 				objectInitInfo.physicalDeviceMemoryProperties = myComputeCore.physicalDeviceMemoryProperties;
-				objectInitInfo.queueFamilyIndex = myComputeCore.queueFamilyIndex;
+				objectInitInfo.queueFamilyIndex = myComputeCore.queueFamilyIndices.computeFamily.value();
 				VulkanComputeObject _object(objectInitInfo);
 				_object.initialize();
 				myComputeDatas.pushBack(_object.myComputeData);

@@ -3,7 +3,7 @@
 #ifndef _DYNAMIK_ADGR_DIRECT_X_12_RENDERER_H
 #define _DYNAMIK_ADGR_DIRECT_X_12_RENDERER_H
 
-#include "core/base/RendererBackendBase.h"
+#include "../base/RendererBackendBase.h"
 
 namespace Dynamik {
 	namespace ADGR {

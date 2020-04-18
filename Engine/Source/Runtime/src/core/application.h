@@ -11,10 +11,11 @@
 
 #include "data store/internalFormat.h"
 #include "object mechanics/loadGameObjects.h"
-#include "AssetIndexBlock.h"
-
 #include "Level.h"
 #include "Events.h"
+
+#include "ADGR/Renderer.h"
+#include "ADGR/Layers/layerStack.h"
 
 #include "Managers.h"
 
@@ -131,17 +132,16 @@ namespace Dynamik {
 
 		void gameObjectInitialization();
 		void getObjectPaths();
+		void getObjectPaths(GameObject* object);
 		void loadObjectData();
 		void initRendererFormats();
 		void initRendererFormats(ARRAY<InternalFormat*>* formats);
 		void initAudioControllers();
 		void initAudioControllers(GameObject* object);
 
-		bool renderableObjectCheck(DMKAssetIndexContainer container);
+		bool renderableObjectCheck(internalFormat format);
 
 	private:
-		void _loadAssets();
-
 		bool initSuccessful = false;
 		bool canDeleteController = false;
 
@@ -149,6 +149,7 @@ namespace Dynamik {
 		ThreadManager myThreadManager;
 
 		ARRAY<internalFormat> internalFormats = {};
+		ARRAY<InternalFormat*> internalFormatsBase = {};
 
 		ARRAY<const void*> references = {};
 
@@ -162,11 +163,11 @@ namespace Dynamik {
 		ADGR::layerStack layerStack;
 		Audio::AudioEngine myEngine;
 
-		UI32 sceneCount = 0;
+		uint32_t sceneCount = 0;
 
-		AssetIndexBlock myDataStore;
-		ARRAY<UI32> gameObjectIndexes;
-		ARRAY<DMKAssetIndexContainer> renderableObjectContainer;
+		/* MANAGERS */
+
+		/* THREADS */
 	};
 
 	// Defined by the Client

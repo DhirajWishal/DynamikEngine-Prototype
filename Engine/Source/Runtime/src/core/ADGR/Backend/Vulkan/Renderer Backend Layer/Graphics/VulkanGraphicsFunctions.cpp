@@ -1,6 +1,6 @@
-#include "adgrafx.h"
+#include "dmkafx.h"
 #include "VulkanGraphicsFunctions.h"
-#include "VulkanGraphicsOneTimeCommandBufferManager.h"
+#include "VulkanGraphicsOneTimeCommandBuffer.h"
 
 namespace Dynamik {
 	namespace ADGR {
@@ -97,7 +97,7 @@ namespace Dynamik {
 
 			void VulkanGraphicsFunctions::copyBuffer(VkDevice logicalDevice, VkCommandPool commandPool, VkQueue graphicsQueue, VkQueue presentQueue, VkBuffer srcBuffer, VkBuffer dstBuffer, VkDeviceSize size)
 			{
-				VulkanGraphicsOneTimeCommandBufferManager oneTimeCommandBuffer(logicalDevice, commandPool, graphicsQueue, presentQueue);
+				VulkanGraphicsOneTimeCommandBuffer oneTimeCommandBuffer(logicalDevice, commandPool, graphicsQueue, presentQueue);
 				VkCommandBuffer commandBuffer = oneTimeCommandBuffer.myCommandBuffers[0];
 
 				VkBufferCopy copyRegion = {};
@@ -144,9 +144,14 @@ namespace Dynamik {
 
 			void VulkanGraphicsFunctions::transitionImageLayout(VkDevice logicalDevice, VkCommandPool commandPool, VkQueue graphicsQueue, VkQueue presentQueue, ADGRVulkanTransitionImageLayoutInfo info)
 			{
-				VulkanGraphicsOneTimeCommandBufferManager oneTimeCommandBuffer(logicalDevice, commandPool, graphicsQueue, presentQueue);
+				VulkanGraphicsOneTimeCommandBuffer oneTimeCommandBuffer(logicalDevice, commandPool, graphicsQueue, presentQueue);
 				VkCommandBuffer commandBuffer = oneTimeCommandBuffer.myCommandBuffers[0];
 
+				transitionImageLayout(logicalDevice, commandBuffer, info);
+			}
+
+			void VulkanGraphicsFunctions::transitionImageLayout(VkDevice logicalDevice, VkCommandBuffer commandBuffer, ADGRVulkanTransitionImageLayoutInfo info)
+			{
 				VkImageMemoryBarrier barrier = {};
 				barrier.sType = VK_STRUCTURE_TYPE_IMAGE_MEMORY_BARRIER;
 				barrier.oldLayout = info.oldLayout;
@@ -173,8 +178,8 @@ namespace Dynamik {
 				barrier.srcAccessMask = 0; // TODO
 				barrier.dstAccessMask = 0; // TODO
 
-				VkPipelineStageFlags sourceStage{};
-				VkPipelineStageFlags destinationStage{};
+				VkPipelineStageFlags sourceStage = VK_PIPELINE_STAGE_ALL_COMMANDS_BIT;
+				VkPipelineStageFlags destinationStage = VK_PIPELINE_STAGE_ALL_COMMANDS_BIT;
 
 				switch (info.oldLayout)
 				{
@@ -284,9 +289,14 @@ namespace Dynamik {
 
 			void VulkanGraphicsFunctions::copyBufferToImage(VkDevice logicalDevice, VkCommandPool commandPool, VkQueue graphicsQueue, VkQueue presentQueue, ADGRVulkanCopyBufferToImageInfo info)
 			{
-				VulkanGraphicsOneTimeCommandBufferManager oneTimeCommandBuffer(logicalDevice, commandPool, graphicsQueue, presentQueue);
+				VulkanGraphicsOneTimeCommandBuffer oneTimeCommandBuffer(logicalDevice, commandPool, graphicsQueue, presentQueue);
 				VkCommandBuffer commandBuffer = oneTimeCommandBuffer.myCommandBuffers[0];
 
+				copyBufferToImage(logicalDevice, commandBuffer, info);
+			}
+
+			void VulkanGraphicsFunctions::copyBufferToImage(VkDevice logicalDevice, VkCommandBuffer commandBuffer, ADGRVulkanCopyBufferToImageInfo info)
+			{
 				VkBufferImageCopy region = {};
 				region.bufferOffset = 0;
 				region.bufferRowLength = 0;
@@ -316,9 +326,14 @@ namespace Dynamik {
 
 			void VulkanGraphicsFunctions::copyBufferToImageOverride(VkDevice logicalDevice, VkCommandPool commandPool, VkQueue graphicsQueue, VkQueue presentQueue, ADGRVulkanCopyBufferToImageInfo info, ARRAY<VkBufferImageCopy> copyRegions)
 			{
-				VulkanGraphicsOneTimeCommandBufferManager oneTimeCommandBuffer(logicalDevice, commandPool, graphicsQueue, presentQueue);
+				VulkanGraphicsOneTimeCommandBuffer oneTimeCommandBuffer(logicalDevice, commandPool, graphicsQueue, presentQueue);
 				VkCommandBuffer commandBuffer = oneTimeCommandBuffer.myCommandBuffers[0];
 
+				copyBufferToImageOverride(logicalDevice, commandBuffer, info, copyRegions);
+			}
+
+			void VulkanGraphicsFunctions::copyBufferToImageOverride(VkDevice logicalDevice, VkCommandBuffer commandBuffer, ADGRVulkanCopyBufferToImageInfo info, ARRAY<VkBufferImageCopy> copyRegions)
+			{
 				vkCmdCopyBufferToImage(
 					commandBuffer,
 					info.buffer,

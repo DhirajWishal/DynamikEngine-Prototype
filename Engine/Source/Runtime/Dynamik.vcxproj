@@ -181,8 +181,6 @@
     <ClInclude Include="src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\Attachments\VulkanGraphicsAttachment.h" />
     <ClInclude Include="src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\Attachments\VulkanGraphicsTextureAttachment.h" />
     <ClInclude Include="src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\Attachments\VulkanGraphicsTextureAttachment2D.h" />
-    <ClInclude Include="src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\Attachments\VulkanGraphicsTextureAttachmentCube.h" />
-    <ClInclude Include="src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\Attachments\VulkanGraphicsUniformBufferAttachment.h" />
     <ClInclude Include="src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanControlHeader.h" />
     <ClInclude Include="src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsColorBuffer.h" />
     <ClInclude Include="src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsCommandBuffer.h" />
@@ -283,11 +281,6 @@
     <ClCompile Include="src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Compute\VulkanComputePipeline.cpp" />
     <ClCompile Include="src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Compute\VulkanComputeShader.cpp" />
     <ClCompile Include="src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Compute\VulkanOneTimeCompute.cpp" />
-    <ClCompile Include="src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\Attachments\VulkanGraphicsAttachment.cpp" />
-    <ClCompile Include="src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\Attachments\VulkanGraphicsTextureAttachment.cpp" />
-    <ClCompile Include="src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\Attachments\VulkanGraphicsTextureAttachment2D.cpp" />
-    <ClCompile Include="src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\Attachments\VulkanGraphicsTextureAttachmentCube.cpp" />
-    <ClCompile Include="src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\Attachments\VulkanGraphicsUniformBufferAttachment.cpp" />
     <ClCompile Include="src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsColorBuffer.cpp" />
     <ClCompile Include="src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsCommandBuffer.cpp" />
     <ClCompile Include="src\core\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsCore.cpp" />

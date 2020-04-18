@@ -8,49 +8,19 @@
 #include "SystemLib/SystemLib.h"
 #include "AlgorithmLib/AlgorithmLib.h"
 
-#include "Audio.h"
-#include "Events.h"
-#include "Intellect.h"
-#include "Managers.h"
-#include "Networking.h"
 #include "CentralDataHub.h"
+#include "Managers.h"
 #include "Utilities.h"
 #include "Platform.h"
 
-#include <iostream>
-#include <stdio.h>
-#include <memory>
-#include <utility>
-#include <algorithm>
-#include <functional>
-#include <cstdint>
-#include <ctime>
-#include <chrono>
-#include <thread>
-#include <optional>
-
-#include <string>
-#include <sstream>
-#include <vector>
-#include <map>
-#include <unordered_map>
-#include <set>
-#include <unordered_set>
-#include <queue>
-#include <deque>
-
-#include <future>
+#ifdef min
+#undef min
+#endif
+#ifdef max
+#undef max
+#endif
 
 #ifdef DMK_PLATFORM_WINDOWS
-#include <fstream>
-
-#include <array>
-#include <optional>
-
-#define GLFW_DLL
-#include <GLFW/glfw3.h>
-
-#endif
 
 #define GLM_FORCE_RADIANS
 #define GLM_FORCE_DEPTH_ZERO_TO_ONE
@@ -65,20 +35,37 @@
 #define GLM_ENABLE_EXPERIMENTAL
 #include <glm/gtx/hash.hpp>
 
+#include <iostream>
+#include <fstream>
+#include <stdexcept>
+#include <algorithm>
+#include <chrono>
+#include <vector>
+#include <cstring>
+#include <cstdlib>
+#include <array>
+#include <optional>
+#include <set>
+#include <unordered_map>
+#include <functional>
+#include <memory>
+#include <tuple>
+#include <thread>
+#include <future>
+#include <mutex>
+#include <deque>
+
+#include "core/log.h"
+#include "CentralDataHub.h"
+
+#if defined(DMK_USE_VULKAN)
+
 #include <GLFW/glfw3.h>
 
-#ifdef DMK_PLATFORM_WINDOWS
-#include <Windows.h>
-
-#ifdef min
-#undef min
-#endif
-
-#ifdef max
-#undef max
-#endif
+#include <load_ktx.hpp>
 
 // ----------
 #endif
 
+#endif // 
 #endif // !_DYNAMIK_PCH

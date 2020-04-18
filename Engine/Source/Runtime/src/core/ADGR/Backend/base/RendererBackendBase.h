@@ -28,7 +28,7 @@
 #include <deque>
 
 #include <CentralDataHub.h>
-#include <rendererFormat.h>
+#include "core/ADGR/rendererFormat.h"
 
 #define INC_PROGRESS					(*myProgress += 1)
 #define MULTIPLE_INC_PROGRESS(count)	for (I32 i_itr__ = 0; i_itr__ < count; i_itr__++) INC_PROGRESS

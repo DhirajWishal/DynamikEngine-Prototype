@@ -5,6 +5,7 @@
 #include "VulkanExtensionsManager.h"
 #include "VulkanGraphicsFunctions.h"
 #include "VulkanGraphicsOneTimeCommandBufferManager.h"
+#include "VulkanGraphicsRenderLayout.h"
 #include "defines.h"
 
 #include "CentralDataHub.h"
@@ -25,27 +26,8 @@ namespace Dynamik {
 
 			ADGRVulkanRenderData VulkanGraphicsRenderableObject::initializeObject(VkDevice logicalDevice, ADGRVulkan3DObjectData _object, VkSampleCountFlagBits msaaSamples)
 			{
-				ARRAY<VkDescriptorSetLayoutBinding> bindings;
-
-				VkDescriptorSetLayoutBinding uboLayoutBinding = {};
-				uboLayoutBinding.binding = 0; // info.bindIndex;
-				uboLayoutBinding.descriptorCount = 1;
-				uboLayoutBinding.descriptorType = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;
-				uboLayoutBinding.pImmutableSamplers = nullptr; // Optional
-				uboLayoutBinding.stageFlags = VK_SHADER_STAGE_VERTEX_BIT;
-				bindings.push_back(uboLayoutBinding);
-
-				VkDescriptorSetLayoutBinding samplerLayoutBinding = {};
-				samplerLayoutBinding.binding = 1; // info.bindIndex;
-				samplerLayoutBinding.descriptorCount = 1;
-				samplerLayoutBinding.descriptorType = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
-				samplerLayoutBinding.pImmutableSamplers = nullptr; // Optional
-				samplerLayoutBinding.stageFlags = VK_SHADER_STAGE_FRAGMENT_BIT;
-				bindings.push_back(samplerLayoutBinding);
-
 				ADGRVulkanDescriptorSetLayoutInitInfo layoutInitInfo;
-				layoutInitInfo.bindings = bindings;
-				myRenderData.descriptors.initializeLayout(logicalDevice, layoutInitInfo);
+				myRenderData.descriptors.layout = VulkanGraphicsRenderLayout::createDescriptorSetLayout(logicalDevice, layoutInitInfo);
 
 				ADGRVulkanGraphicsPipelineLayoutInitInfo pipelineLayoutInitInfo;
 				pipelineLayoutInitInfo.layouts = { myRenderData.descriptors.layout };
@@ -138,10 +120,12 @@ namespace Dynamik {
 				initializeUniformBuffer();
 
 				// initialize descriptor pool
-				initializeDescriptorPool();
+				ADGRVulkanDescriptorPoolInitInfo descriptorPoolInitInfo;
+				initializeDescriptorPool(descriptorPoolInitInfo);
 
 				// initialize descriptor sets
-				initializeDescriptorSets();
+				ADGRVulkanDescriptorSetsInitInfo descriptorSetsInitInfo;
+				initializeDescriptorSets(descriptorSetsInitInfo);
 
 				return myRenderData;
 			}
@@ -731,7 +715,7 @@ namespace Dynamik {
 				}
 			}
 
-			void VulkanGraphicsRenderableObject::initializeDescriptorPool()
+			void VulkanGraphicsRenderableObject::initializeDescriptorPool(ADGRVulkanDescriptorPoolInitInfo info)
 			{
 				ARRAY<VkDescriptorPoolSize> poolSizes = {};
 
@@ -749,9 +733,20 @@ namespace Dynamik {
 					poolSizes.push_back(_poolSize2);
 				}
 
-				ADGRVulkanDescriptorPoolInitInfo initInfo;
-				initInfo.poolSizes = poolSizes;
-				myRenderData.descriptors.initializePool(logicalDevice, initInfo);
+				for (VkDescriptorPoolSize _size : info.additionalSizes)
+					poolSizes.push_back(_size);
+
+				VkDescriptorPoolCreateInfo poolInfo = {};
+				poolInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_POOL_CREATE_INFO;
+				poolInfo.poolSizeCount = poolSizes.size();
+				poolInfo.pPoolSizes = poolSizes.data();
+				poolInfo.maxSets = 1;
+
+				VkDescriptorPool _localDescriptorPool = VK_NULL_HANDLE;
+				if (vkCreateDescriptorPool(logicalDevice, &poolInfo, nullptr, &_localDescriptorPool) != VK_SUCCESS)
+					DMK_CORE_FATAL("failed to create descriptor pool!");
+
+				myRenderData.descriptors.pool = _localDescriptorPool;
 			}
 
 			void VulkanGraphicsRenderableObject::terminateDescriptorPool()
@@ -759,8 +754,23 @@ namespace Dynamik {
 				vkDestroyDescriptorPool(logicalDevice, myRenderData.descriptors.pool, nullptr);
 			}
 
-			void VulkanGraphicsRenderableObject::initializeDescriptorSets()
+			void VulkanGraphicsRenderableObject::initializeDescriptorSets(ADGRVulkanDescriptorSetsInitInfo info)
 			{
+				VkDescriptorSetLayout _layout = VK_NULL_HANDLE;
+				if (myRenderData.textures.size())
+					_layout = myRenderData.descriptors.layout;
+				else
+					_layout = noTextureDescriptorSetLayout;
+
+				VkDescriptorSetAllocateInfo allocInfo = {};
+				allocInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_ALLOCATE_INFO;
+				allocInfo.descriptorPool = myRenderData.descriptors.pool;
+				allocInfo.descriptorSetCount = 1;
+				allocInfo.pSetLayouts = &_layout;
+
+				if (vkAllocateDescriptorSets(logicalDevice, &allocInfo, &myRenderData.descriptors.descriptorSet) != VK_SUCCESS)
+					DMK_CORE_FATAL("failed to allocate descriptor sets!");
+
 				ARRAY<VkWriteDescriptorSet> descriptorWrites = {};
 				ARRAY<VkDescriptorBufferInfo> bufferInfos;
 
@@ -813,9 +823,11 @@ namespace Dynamik {
 					}
 				}
 
-				ADGRVulkanDescriptorSetsInitInfo initInfo;
-				initInfo.descriptorWrites = descriptorWrites;
-				myRenderData.descriptors.initializeSets(logicalDevice, initInfo);
+				for (VkWriteDescriptorSet _write : info.additionalWrites)
+					descriptorWrites.push_back(_write);
+
+				vkUpdateDescriptorSets(logicalDevice, static_cast<UI32>(descriptorWrites.size()),
+					descriptorWrites.data(), 0, nullptr);
 			}
 
 			void VulkanGraphicsRenderableObject::initializeUniformBuffer()

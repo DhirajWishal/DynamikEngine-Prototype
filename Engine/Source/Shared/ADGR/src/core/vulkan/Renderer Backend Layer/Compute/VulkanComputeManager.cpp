@@ -8,13 +8,13 @@ namespace Dynamik {
 			{
 				myComputeCore.initializeInstance();
 				myComputeCore.initializeDevice();
-				myComputeCommandBuffer.initializeCommandPool(myComputeCore.logicalDevice, myComputeCore.queueFamilyIndices.computeFamily.value());
+				myComputeCommandBuffer.initializeCommandPool(myComputeCore.logicalDevice, myComputeCore.queueFamilyIndex);
 
 				ADGRVulkanComputeObjectInitInfo objectInitInfo;
 				objectInitInfo.logicalDevice = myComputeCore.logicalDevice;
 				objectInitInfo.physicalDevice = myComputeCore.physicalDevice;
 				objectInitInfo.physicalDeviceMemoryProperties = myComputeCore.physicalDeviceMemoryProperties;
-				objectInitInfo.queueFamilyIndex = myComputeCore.queueFamilyIndices.computeFamily.value();
+				objectInitInfo.queueFamilyIndex = myComputeCore.queueFamilyIndex;
 				VulkanComputeObject _object(objectInitInfo);
 				_object.initialize();
 				myComputeDatas.pushBack(_object.myComputeData);

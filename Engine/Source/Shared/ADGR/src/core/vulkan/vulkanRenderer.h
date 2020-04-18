@@ -233,10 +233,8 @@ namespace Dynamik {
 
 			std::map<std::string, ADGRVulkanMaterialDescriptor> myRenderableMeterials;
 
-		private:
-			void initializeComputeAPI();
-			VulkanComputeCore myComputeCore;
-			VulkanComputeCommandBuffer myComputeCommandBuffer;
+			private:
+				VulkanComputeCore myComputeCore;
 
 		private:
 			ADGRVulkanTextOverlayDataContainer overlayContainer;

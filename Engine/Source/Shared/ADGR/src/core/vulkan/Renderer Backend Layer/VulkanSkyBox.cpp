@@ -16,27 +16,8 @@ namespace Dynamik {
 
 			ADGRVulkanRenderData VulkanSkyBox::initializeObject(VkDevice logicalDevice, ADGRVulkan3DObjectData _object, VkSampleCountFlagBits msaaSamples)
 			{
-				ARRAY<VkDescriptorSetLayoutBinding> bindings;
-
-				VkDescriptorSetLayoutBinding uboLayoutBinding = {};
-				uboLayoutBinding.binding = 0; // info.bindIndex;
-				uboLayoutBinding.descriptorCount = 1;
-				uboLayoutBinding.descriptorType = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;
-				uboLayoutBinding.pImmutableSamplers = nullptr; // Optional
-				uboLayoutBinding.stageFlags = VK_SHADER_STAGE_VERTEX_BIT;
-				bindings.push_back(uboLayoutBinding);
-
-				VkDescriptorSetLayoutBinding samplerLayoutBinding = {};
-				samplerLayoutBinding.binding = 1; // info.bindIndex;
-				samplerLayoutBinding.descriptorCount = 1;
-				samplerLayoutBinding.descriptorType = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
-				samplerLayoutBinding.pImmutableSamplers = nullptr; // Optional
-				samplerLayoutBinding.stageFlags = VK_SHADER_STAGE_FRAGMENT_BIT;
-				bindings.push_back(samplerLayoutBinding);
-
 				ADGRVulkanDescriptorSetLayoutInitInfo layoutInitInfo;
-				layoutInitInfo.bindings = bindings;
-				myRenderData.descriptors.initializeLayout(logicalDevice, layoutInitInfo);
+				myRenderData.descriptors.layout = VulkanGraphicsRenderLayout::createDescriptorSetLayout(logicalDevice, layoutInitInfo);
 
 				ADGRVulkanGraphicsPipelineLayoutInitInfo pipelineLayoutInitInfo;
 				pipelineLayoutInitInfo.layouts = { myRenderData.descriptors.layout };
@@ -130,10 +111,12 @@ namespace Dynamik {
 				initializeUniformBuffer();
 
 				// initialize descriptor pool
-				initializeDescriptorPool();
+				ADGRVulkanDescriptorPoolInitInfo descriptorPoolInitInfo;
+				initializeDescriptorPool(descriptorPoolInitInfo);
 
 				// initialize descriptor sets
-				initializeDescriptorSets();
+				ADGRVulkanDescriptorSetsInitInfo descriptorSetsInitInfo;
+				initializeDescriptorSets(descriptorSetsInitInfo);
 
 				return myRenderData;
 			}
@@ -545,7 +528,7 @@ namespace Dynamik {
 				}
 			}
 
-			void VulkanSkyBox::initializeDescriptorSets()
+			void VulkanSkyBox::initializeDescriptorSets(ADGRVulkanDescriptorSetsInitInfo info)
 			{
 				VkDescriptorSetLayout _layout = VK_NULL_HANDLE;
 				if (myRenderData.textures.size())
@@ -614,9 +597,11 @@ namespace Dynamik {
 					}
 				}
 
-				ADGRVulkanDescriptorSetsInitInfo initInfo;
-				initInfo.descriptorWrites = descriptorWrites;
-				myRenderData.descriptors.initializeSets(logicalDevice, initInfo);
+				for (VkWriteDescriptorSet _write : info.additionalWrites)
+					descriptorWrites.push_back(_write);
+
+				vkUpdateDescriptorSets(logicalDevice, static_cast<UI32>(descriptorWrites.size()),
+					descriptorWrites.data(), 0, nullptr);
 			}
 		}
 	}

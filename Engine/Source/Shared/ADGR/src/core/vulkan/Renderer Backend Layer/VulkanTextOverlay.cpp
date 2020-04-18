@@ -409,9 +409,9 @@ namespace Dynamik {
 				samplerLayoutBinding.pImmutableSamplers = nullptr; // Optional
 				samplerLayoutBinding.stageFlags = VK_SHADER_STAGE_FRAGMENT_BIT;
 
-				//ADGRVulkanDescriptorSetLayoutInitInfo layoutInitInfo;
-				//layoutInitInfo.additionalBindings = { samplerLayoutBinding };
-				//layoutInitInfo.overrideBindings = true;
+				ADGRVulkanDescriptorSetLayoutInitInfo layoutInitInfo;
+				layoutInitInfo.additionalBindings = { samplerLayoutBinding };
+				layoutInitInfo.overrideBindings = true;
 				//mySwapChainObject.initializeDescriptorSetLayout(layoutInitInfo);
 			}
 

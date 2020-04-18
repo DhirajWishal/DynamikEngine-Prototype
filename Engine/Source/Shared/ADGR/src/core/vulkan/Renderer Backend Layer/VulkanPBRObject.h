@@ -20,9 +20,8 @@ namespace Dynamik {
 				void initializeUniformBuffer() override;
 				void updateUniformBuffer(UBO_MVPC uniformBufferObject, UI32 currentImage);
 
-				VulkanBRDF myBRDF;
-				VulkanIrradianceCube myIrradianceCube;
-				VulkanPrefilteredCube myPreFilteredCube;
+				void initializeDescriptorPool(ADGRVulkanDescriptorPoolInitInfo info) override;
+				void initializeDescriptorSets(ADGRVulkanDescriptorSetsInitInfo info) override;
 
 			private:
 				class _VertexPushConstant : public VulkanGraphicsPushConstant {

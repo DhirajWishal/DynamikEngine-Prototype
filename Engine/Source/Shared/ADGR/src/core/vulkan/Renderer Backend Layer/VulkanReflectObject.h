@@ -18,6 +18,8 @@ namespace Dynamik {
 
 				void initializeUniformBuffer() override;
 				void updateUniformBuffer(UBO_MVPC uniformBufferObject, UI32 currentImage);
+
+				void initializeDescriptorSets(ADGRVulkanDescriptorSetsInitInfo info) override;
 			};
 		}
 	}

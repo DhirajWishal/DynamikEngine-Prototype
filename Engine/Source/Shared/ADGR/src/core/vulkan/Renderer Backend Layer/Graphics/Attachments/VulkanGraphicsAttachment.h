@@ -11,17 +11,20 @@ namespace Dynamik {
 		namespace Backend {
 			class VulkanGraphicsAttachment : public VulkanAttachment {
 			public:
-				VulkanGraphicsAttachment() {}
-				VulkanGraphicsAttachment(ADGRVulkanAttachmentInitInfo info) : VulkanAttachment(info) {}
+				VulkanGraphicsAttachment() { type = ADGRVulkanAttachmentType::ADGR_VULKAN_ATTACHMENT_TYPE_GRAPHICS_DESCRIPTOR; }
+				VulkanGraphicsAttachment(ADGRVulkanAttachmentInitInfo info) : VulkanAttachment(info)
+				{
+					type = ADGRVulkanAttachmentType::ADGR_VULKAN_ATTACHMENT_TYPE_GRAPHICS_DESCRIPTOR;
+				}
 				virtual ~VulkanGraphicsAttachment() {}
 
-				virtual void initializeDescriptor(UI32 destination = 0) {}
+				virtual void initializeDescriptor(UI32 destination, VkShaderStageFlags shaderStage) {}
 				virtual void terminateDescriptor() {}
 
 				VulkanGraphicsDescriptor descriptor;
 
 			protected:
-				virtual void _initializeDescriptorLayout() {}
+				virtual void _initializeDescriptorLayout(UI32 destination, VkDescriptorType descriptorType, VkShaderStageFlags shaderStage);
 				virtual void _initializeDescriptorPool() {}
 				virtual void _initializeDescriptorSets(UI32 destination = 0) {}
 			};

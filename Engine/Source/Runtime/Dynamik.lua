@@ -23,7 +23,6 @@ project "Dynamik"
 		"$(SolutionDir)Dependencies/Libraries/Local",
 		"$(SolutionDir)Engine/Source/Runtime/src",
 		"$(SolutionDir)Engine/Source/Runtime/GameLibraries",
-		"$(SolutionDir)Engine/Source/Shared/ADGR/src",
 		"$(SolutionDir)Engine/Source/Shared/Audio/src",
 		"$(SolutionDir)Engine/Source/Shared/Intellect/src",
 		"$(SolutionDir)Engine/Source/Shared/Events/src",
@@ -42,6 +41,7 @@ project "Dynamik"
 		"%{IncludeDir.irrKlang}",
 		"%{IncludeDir.assimp}",
 		"%{IncludeDir.Vulkan}",
+		"%{IncludeDir.gli}",
 		DynamikInternalLibsPath
 	}
 
@@ -50,11 +50,11 @@ project "Dynamik"
 		"%{IncludeLib.GLFW}",
 		"%{IncludeLib.GLEW}",
 		"%{IncludeLib.Vulkan}",
+		"%{IncludeLib.Assimp}",
 		DynamikInternalBinaries
 	}
 
 	links { 
-		"ADGR",
 		"Audio",
 		"Events",
 		"Intellect",
@@ -83,6 +83,7 @@ project "Dynamik"
 			"DMK_BUILD_DLL",
 			"_WINDLL",
 			"GLFW_INCLUDE_VULKAN",
+			"DMK_USE_VULKAN",
 			"GLFW_INCLUDE_NONE"
 		}
 

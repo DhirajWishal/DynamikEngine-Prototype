@@ -238,6 +238,8 @@
     <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Graphics\Attachments\VulkanGraphicsAttachment.h" />
     <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Graphics\Attachments\VulkanGraphicsTextureAttachment.h" />
     <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Graphics\Attachments\VulkanGraphicsTextureAttachment2D.h" />
+    <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Graphics\Attachments\VulkanGraphicsUniformBufferAttachment.h" />
+    <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Graphics\Attachments\VulkanGraphicsTextureAttachmentCube.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Layers\layer.cpp">
@@ -386,6 +388,11 @@
     </ClCompile>
     <ClCompile Include="src\core\vulkan\Renderer Backend Layer\VulkanPrefilteredCube.cpp" />
     <ClCompile Include="src\core\vulkan\Renderer Backend Layer\VulkanParticleSystem.cpp" />
+    <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Graphics\Attachments\VulkanGraphicsUniformBufferAttachment.cpp" />
+    <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Graphics\Attachments\VulkanGraphicsTextureAttachment2D.cpp" />
+    <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Graphics\Attachments\VulkanGraphicsTextureAttachment.cpp" />
+    <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Graphics\Attachments\VulkanGraphicsTextureAttachmentCube.cpp" />
+    <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Graphics\Attachments\VulkanGraphicsAttachment.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ADGR.lua" />

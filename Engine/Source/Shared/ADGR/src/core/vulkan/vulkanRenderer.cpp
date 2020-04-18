@@ -149,7 +149,7 @@ namespace Dynamik {
 
 				_object.terminateVertexBuffer();
 
-				_object.terminateDescriptorPool();
+				//_object.terminateDescriptorPool();
 			}
 
 			_terminateOverlay();
@@ -358,12 +358,6 @@ namespace Dynamik {
 
 				// initialize uniform buffers
 				_renderObject.initializeUniformBuffer();
-
-				// initialize descriptor pool
-				_renderObject.initializeDescriptorPool();
-
-				// initialize descriptor sets
-				_renderObject.initializeDescriptorSets();
 
 				renderDatas.push_back(_renderObject.getRenderData());
 			}

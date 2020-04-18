@@ -12,11 +12,19 @@
 #include "VulkanGraphicsPushConstant.h"
 #include "VulkanGraphicsDescriptor.h"
 
+#include "Attachments/VulkanGraphicsAttachment.h"
+#include "Attachments/VulkanGraphicsTextureAttachment2D.h"
+#include "Attachments/VulkanGraphicsUniformBufferAttachment.h"
+
 #include <GameObject.h>
 
 namespace Dynamik {
 	namespace ADGR {
 		namespace Backend {
+			class VulkanGraphicsAttachment;
+			struct ADGRVulkanTextureInitInfo;
+			struct ADGRVulkanUnformBufferContainer;
+
 			struct ADGRVulkanGraphicsRenderableObjectInitInfo {
 				VkDevice logicalDevice = VK_NULL_HANDLE;
 				VkPhysicalDevice physicalDevice = VK_NULL_HANDLE;
@@ -30,19 +38,6 @@ namespace Dynamik {
 				std::string tessellationShaderPath = "";
 				std::string geometryShaderPath = "";
 				std::string fragmentShaderPath = "";
-			};
-
-			struct ADGRVulkanTextureInitInfo {
-				std::string path;
-
-				UI32 mipLevels = 0;
-				UI32 minMipLevels = 0;
-				UI32 maxMipLevels = 0;
-
-				VkFormat format;
-				VkFilter magFilter, minFilter;
-				VkSamplerAddressMode modeU, modeV, modeW;
-				VkImageAspectFlags aspectFlags;
 			};
 
 			struct ADGRVulkanMaterialDescriptor {
@@ -64,22 +59,6 @@ namespace Dynamik {
 					params.b = c.b;
 				}
 				~ADGRVulkanMaterialDescriptor() {}
-			};
-
-			struct ADGRVulkanTextureContainer {
-				VkImage image = VK_NULL_HANDLE;
-				VkImageView imageView = VK_NULL_HANDLE;
-				VkDeviceMemory imageMemory = VK_NULL_HANDLE;
-				VkSampler imageSampler = VK_NULL_HANDLE;
-				VkFormat format;
-				UI32 mipLevels;
-
-				UI32 width, height;
-			};
-
-			struct ADGRVulkanUnformBufferContainer {
-				ARRAY<VkBuffer> buffers;
-				ARRAY<VkDeviceMemory> bufferMemories;
 			};
 
 			struct ADGRVulkanPiplineContainer {
@@ -105,11 +84,10 @@ namespace Dynamik {
 
 				ARRAY<ADGRVulkanTextureContainer> textures;
 
-				VulkanGraphicsDescriptor descriptors;
+				ARRAY<VulkanGraphicsAttachment> attachments;
 
 				ARRAY<VulkanGraphicsPipeline> pipelineContainers;
 
-				ARRAY<ADGRVulkanUnformBufferContainer> uniformBufferContainers;
 				ARRAY<VulkanGraphicsPushConstant> pushConstants;
 
 				ADGRVulkanMaterialDescriptor materialDescriptor;
@@ -156,7 +134,6 @@ namespace Dynamik {
 				virtual void terminatePipeline();
 
 				virtual void initializeTextures(ARRAY<ADGRVulkanTextureInitInfo> infos);
-				virtual void generateMipMaps(POINTER<ADGRVulkanTextureContainer> container);
 				virtual void terminateTextures();
 
 				virtual void initializeVertexBuffer(ARRAY<Vertex>* vertexes);
@@ -171,11 +148,6 @@ namespace Dynamik {
 				virtual void initializeIndexBufferUI64(ARRAY<UI64>* indexes);
 				virtual void terminateIndexBuffer();
 
-				virtual void initializeDescriptorPool();
-				virtual void terminateDescriptorPool();
-
-				virtual void initializeDescriptorSets();
-
 				virtual void initializeUniformBuffer();
 				virtual void updateUniformBuffer(UniformBufferObject uniformBuferObject, UI32 currentImage);
 				virtual void terminateUniformBuffer();
@@ -184,7 +156,9 @@ namespace Dynamik {
 				void setFrameBufferContainer(POINTER<VulkanGraphicsFrameBuffer> frameBuffer) { myRenderData.frameBufferPointer = frameBuffer; }
 				void setRenderData(ADGRVulkanRenderData data) { myRenderData = data; }
 				const ADGRVulkanRenderData getRenderData() const { return myRenderData; }
+
 				ADGRVulkanRenderData myRenderData;
+				ARRAY<ADGRVulkanUnformBufferContainer> uniformBuffers;
 
 			protected:
 				virtual void initializeNoTextureDescriptorSetLayout();
@@ -197,6 +171,8 @@ namespace Dynamik {
 				VkQueue presentQueue = VK_NULL_HANDLE;
 
 				VkDescriptorSetLayout noTextureDescriptorSetLayout = VK_NULL_HANDLE;
+
+				UI32 descriptorIndex = 0;
 			};
 		}
 	}

@@ -163,6 +163,8 @@
     <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Graphics\Attachments\VulkanGraphicsAttachment.h" />
     <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Graphics\Attachments\VulkanGraphicsTextureAttachment.h" />
     <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Graphics\Attachments\VulkanGraphicsTextureAttachment2D.h" />
+    <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Graphics\Attachments\VulkanGraphicsTextureAttachmentCube.h" />
+    <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Graphics\Attachments\VulkanGraphicsUniformBufferAttachment.h" />
     <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsDescriptor.h" />
     <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsFrameBuffer.h" />
     <ClInclude Include="src\core\vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsPipeline.h" />
@@ -243,6 +245,11 @@
     <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Compute\VulkanComputePipeline.cpp" />
     <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Compute\VulkanOneTimeCompute.cpp" />
     <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Compute\VulkanComputeShader.cpp" />
+    <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Graphics\Attachments\VulkanGraphicsAttachment.cpp" />
+    <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Graphics\Attachments\VulkanGraphicsTextureAttachment.cpp" />
+    <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Graphics\Attachments\VulkanGraphicsTextureAttachment2D.cpp" />
+    <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Graphics\Attachments\VulkanGraphicsTextureAttachmentCube.cpp" />
+    <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Graphics\Attachments\VulkanGraphicsUniformBufferAttachment.cpp" />
     <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsDescriptor.cpp" />
     <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsFrameBuffer.cpp" />
     <ClCompile Include="src\core\vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsPipeline.cpp" />

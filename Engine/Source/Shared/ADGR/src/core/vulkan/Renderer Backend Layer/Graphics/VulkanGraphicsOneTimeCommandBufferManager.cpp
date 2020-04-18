@@ -1,10 +1,10 @@
 #include "adgrafx.h"
-#include "VulkanGraphicsOneTimeCommandBuffer.h"
+#include "VulkanGraphicsOneTimeCommandBufferManager.h"
 
 namespace Dynamik {
 	namespace ADGR {
 		namespace Backend {
-			VulkanGraphicsOneTimeCommandBuffer::VulkanGraphicsOneTimeCommandBuffer(
+			VulkanGraphicsOneTimeCommandBufferManager::VulkanGraphicsOneTimeCommandBufferManager(
 				VkDevice logicalDevice,
 				VkCommandPool commandPool,
 				VkQueue graphicsQueue,
@@ -31,7 +31,7 @@ namespace Dynamik {
 				}
 			}
 
-			VulkanGraphicsOneTimeCommandBuffer::~VulkanGraphicsOneTimeCommandBuffer()
+			VulkanGraphicsOneTimeCommandBufferManager::~VulkanGraphicsOneTimeCommandBufferManager()
 			{
 				for (I32 i = 0; i < myCount; i++)
 					vkEndCommandBuffer(myCommandBuffers[i]);

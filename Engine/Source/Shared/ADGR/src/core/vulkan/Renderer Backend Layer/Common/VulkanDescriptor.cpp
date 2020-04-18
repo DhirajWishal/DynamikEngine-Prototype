@@ -27,46 +27,25 @@ namespace Dynamik {
 					DMK_CORE_FATAL("failed to create descriptor pool!");
 			}
 
-			void VulkanDescriptor::allocateSets(VkDevice logicalDevice, UI32 setCount)
-			{
-				for (UI32 _i = 0; _i < setCount; _i++)
-				{
-					VkDescriptorSetAllocateInfo allocInfo = {};
-					allocInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_ALLOCATE_INFO;
-					allocInfo.descriptorPool = pool;
-					allocInfo.descriptorSetCount = 1;
-					allocInfo.pSetLayouts = &layout;
-
-					VkDescriptorSet _set = VK_NULL_HANDLE;
-					if (vkAllocateDescriptorSets(logicalDevice, &allocInfo, &_set) != VK_SUCCESS)
-						DMK_CORE_FATAL("failed to allocate descriptor sets!");
-
-					descriptorSets.pushBack(_set);
-				}
-			}
-
 			void VulkanDescriptor::initializeSets(VkDevice logicalDevice, ADGRVulkanDescriptorSetsInitInfo info)
 			{
-				allocateSets(logicalDevice, info.setCount);
+				VkDescriptorSetAllocateInfo allocInfo = {};
+				allocInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_ALLOCATE_INFO;
+				allocInfo.descriptorPool = pool;
+				allocInfo.descriptorSetCount = 1;
+				allocInfo.pSetLayouts = &layout;
 
-				for (UI32 i = 0; i < info.setCount; i++)
-				{
-					for (UI32 _index = 0; _index < info.descriptorWrites.size(); _index++)
-						info.descriptorWrites[_index].dstSet = descriptorSets[i];
+				if (vkAllocateDescriptorSets(logicalDevice, &allocInfo, &descriptorSet) != VK_SUCCESS)
+					DMK_CORE_FATAL("failed to allocate descriptor sets!");
 
-					updateSet(logicalDevice, info.descriptorWrites);
-				}
-			}
+				for (UI32 _index = 0; _index < info.descriptorWrites.size(); _index++)
+					info.descriptorWrites[_index].dstSet = descriptorSet;
 
-			void VulkanDescriptor::updateSet(VkDevice logicalDevice, ARRAY<VkWriteDescriptorSet> writes)
-			{
-				vkUpdateDescriptorSets(logicalDevice, writes.size(), writes.data(), 0, nullptr);
+				vkUpdateDescriptorSets(logicalDevice, info.descriptorWrites.size(), info.descriptorWrites.data(), 0, nullptr);
 			}
 
 			void VulkanDescriptor::terminate(VkDevice logicalDevice)
 			{
-				vkDestroyDescriptorSetLayout(logicalDevice, layout, nullptr);
-				vkDestroyDescriptorPool(logicalDevice, pool, nullptr);
 			}
 		}
 	}

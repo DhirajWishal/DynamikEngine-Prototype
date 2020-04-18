@@ -1,6 +1,6 @@
 #include "adgrafx.h"
 #include "VulkanExtensionsManager.h"
-#include "../Graphics/VulkanControlHeader.h"
+#include "VulkanControlHeader.h"
 
 namespace Dynamik {
 	namespace ADGR {

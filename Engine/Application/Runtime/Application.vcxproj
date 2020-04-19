@@ -131,6 +131,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\renderHandler.h" />
     <ClInclude Include="src\SkyboxDefinition.h" />
     <ClInclude Include="src\engineInstance.h" />
     <ClInclude Include="src\imports.h" />
@@ -140,6 +141,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="src\engineInstance.cpp" />
     <ClCompile Include="src\objectDefinitions.cpp" />
+    <ClCompile Include="src\renderHandler.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Application.lua" />

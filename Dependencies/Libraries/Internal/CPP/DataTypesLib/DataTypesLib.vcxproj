@@ -137,6 +137,7 @@
     <ClInclude Include="Public\DynamicPointer.h" />
     <ClInclude Include="Public\FastString.h" />
     <ClInclude Include="Public\HashMap.h" />
+    <ClInclude Include="Public\HeapStore.h" />
     <ClInclude Include="Public\IndexedArray.h" />
     <ClInclude Include="Public\InitializerList.h" />
     <ClInclude Include="Public\Iterator.h" />

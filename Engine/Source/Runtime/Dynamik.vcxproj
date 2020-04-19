@@ -151,6 +151,15 @@
     <ClInclude Include="GameLibraries\Material.h" />
     <ClInclude Include="GameLibraries\Scene.h" />
     <ClInclude Include="GameLibraries\SkyboxObject.h" />
+    <ClInclude Include="src\core\Engines\ADGR\Renderer3D.h" />
+    <ClInclude Include="src\core\Interface\Events\DMKDropPathEventComponent.h" />
+    <ClInclude Include="src\core\Interface\Events\DMKEventComponent.h" />
+    <ClInclude Include="src\core\Interface\Events\DMKKeyEventComponent.h" />
+    <ClInclude Include="src\core\Interface\Events\DMKMouseButtonEventComponent.h" />
+    <ClInclude Include="src\core\Interface\Events\DMKMouseScrollEventComponent.h" />
+    <ClInclude Include="src\core\Interface\Events\DMKTextEventComponent.h" />
+    <ClInclude Include="src\core\Interface\Events\DMKWindowResizeEventComponent.h" />
+    <ClInclude Include="src\core\Interface\Events\EventManager.h" />
     <ClInclude Include="src\Dynamik.h" />
     <ClInclude Include="src\core\AssetIndexBlock.h" />
     <ClInclude Include="src\core\AssetLoader.h" />
@@ -214,7 +223,7 @@
     <ClInclude Include="src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\VulkanTextObject.h" />
     <ClInclude Include="src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\VulkanTextOverlay.h" />
     <ClInclude Include="src\core\Engines\ADGR\Backend\Vulkan\vulkanRenderer.h" />
-    <ClInclude Include="src\core\Engines\ADGR\Backend\Window\Windows\WindowManager.h" />
+    <ClInclude Include="src\core\Interface\Window\Windows\WindowManager.h" />
     <ClInclude Include="src\core\Engines\ADGR\Backend\base\RendererBackendBase.h" />
     <ClInclude Include="src\core\Engines\ADGR\Backend\directx12\directx12Renderer.h" />
     <ClInclude Include="src\core\Engines\ADGR\Backend\opengl\backend\data structures\opengl.h" />
@@ -352,7 +361,8 @@
     <ClCompile Include="src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\VulkanTextObject.cpp" />
     <ClCompile Include="src\core\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\VulkanTextOverlay.cpp" />
     <ClCompile Include="src\core\Engines\ADGR\Backend\Vulkan\vulkanRenderer.cpp" />
-    <ClCompile Include="src\core\Engines\ADGR\Backend\Window\Windows\WindowManager.cpp" />
+    <ClCompile Include="src\core\Interface\Events\EventManager.cpp" />
+    <ClCompile Include="src\core\Interface\Window\Windows\WindowManager.cpp" />
     <ClCompile Include="src\core\Engines\ADGR\Backend\directx12\directx12Renderer.cpp" />
     <ClCompile Include="src\core\Engines\ADGR\Backend\opengl\backend\shader.cpp" />
     <ClCompile Include="src\core\Engines\ADGR\Backend\opengl\backend\texture.cpp" />
@@ -362,6 +372,7 @@
     <ClCompile Include="src\core\Engines\ADGR\Layers\layer.cpp" />
     <ClCompile Include="src\core\Engines\ADGR\Layers\layerStack.cpp" />
     <ClCompile Include="src\core\Engines\ADGR\Renderer.cpp" />
+    <ClCompile Include="src\core\Engines\ADGR\Renderer3D.cpp" />
     <ClCompile Include="src\core\Engines\ADGR\RendererThread.cpp" />
     <ClCompile Include="src\core\Engines\ADGR\Wrapper\dll_wrapper.cpp" />
     <ClCompile Include="src\core\Engines\ADGR\Wrapper\internal_wrapper.cpp" />

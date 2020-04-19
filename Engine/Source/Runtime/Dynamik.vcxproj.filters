@@ -369,9 +369,6 @@
     <ClInclude Include="src\core\Engines\ADGR\Backend\Vulkan\vulkanRenderer.h">
       <Filter>src\core\Engines\ADGR\Backend\Vulkan</Filter>
     </ClInclude>
-    <ClInclude Include="src\core\Engines\ADGR\Backend\Window\Windows\WindowManager.h">
-      <Filter>src\core\Engines\ADGR\Backend\Window\Windows</Filter>
-    </ClInclude>
     <ClInclude Include="src\core\Engines\ADGR\Backend\base\RendererBackendBase.h">
       <Filter>src\core\Engines\ADGR\Backend\base</Filter>
     </ClInclude>
@@ -476,33 +473,6 @@
     </ClInclude>
     <ClInclude Include="src\core\Engines\Intellect\Intellect.h">
       <Filter>src\core\Engines\Intellect</Filter>
-    </ClInclude>
-    <ClInclude Include="src\core\Events\Events.h">
-      <Filter>src\core\Events</Filter>
-    </ClInclude>
-    <ClInclude Include="src\core\Events\applicationEvent.h">
-      <Filter>src\core\Events</Filter>
-    </ClInclude>
-    <ClInclude Include="src\core\Events\event.h">
-      <Filter>src\core\Events</Filter>
-    </ClInclude>
-    <ClInclude Include="src\core\Events\eventContainer.h">
-      <Filter>src\core\Events</Filter>
-    </ClInclude>
-    <ClInclude Include="src\core\Events\input.h">
-      <Filter>src\core\Events</Filter>
-    </ClInclude>
-    <ClInclude Include="src\core\Events\inputHandler.h">
-      <Filter>src\core\Events</Filter>
-    </ClInclude>
-    <ClInclude Include="src\core\Events\keyCodes.h">
-      <Filter>src\core\Events</Filter>
-    </ClInclude>
-    <ClInclude Include="src\core\Events\keyEvent.h">
-      <Filter>src\core\Events</Filter>
-    </ClInclude>
-    <ClInclude Include="src\core\Events\mouseEvent.h">
-      <Filter>src\core\Events</Filter>
     </ClInclude>
     <ClInclude Include="src\core\Managers\Managers.h">
       <Filter>src\core\Managers</Filter>
@@ -618,6 +588,45 @@
     <ClInclude Include="src\dmkafx.h">
       <Filter>src</Filter>
     </ClInclude>
+    <ClInclude Include="src\core\Engines\ADGR\Renderer3D.h" />
+    <ClInclude Include="src\core\Events\applicationEvent.h">
+      <Filter>src\core\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Events\event.h">
+      <Filter>src\core\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Events\eventContainer.h">
+      <Filter>src\core\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Events\Events.h">
+      <Filter>src\core\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Events\input.h">
+      <Filter>src\core\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Events\inputHandler.h">
+      <Filter>src\core\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Events\keyCodes.h">
+      <Filter>src\core\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Events\keyEvent.h">
+      <Filter>src\core\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Events\mouseEvent.h">
+      <Filter>src\core\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Interface\Window\Windows\WindowManager.h">
+      <Filter>src\core\Engines\ADGR\Backend\Window\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Interface\Events\EventManager.h" />
+    <ClInclude Include="src\core\Interface\Events\DMKEventComponent.h" />
+    <ClInclude Include="src\core\Interface\Events\DMKKeyEventComponent.h" />
+    <ClInclude Include="src\core\Interface\Events\DMKTextEventComponent.h" />
+    <ClInclude Include="src\core\Interface\Events\DMKMouseButtonEventComponent.h" />
+    <ClInclude Include="src\core\Interface\Events\DMKMouseScrollEventComponent.h" />
+    <ClInclude Include="src\core\Interface\Events\DMKDropPathEventComponent.h" />
+    <ClInclude Include="src\core\Interface\Events\DMKWindowResizeEventComponent.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameLibraries\GameObject.cpp">
@@ -779,9 +788,6 @@
     <ClCompile Include="src\core\Engines\ADGR\Backend\Vulkan\vulkanRenderer.cpp">
       <Filter>src\core\Engines\ADGR\Backend\Vulkan</Filter>
     </ClCompile>
-    <ClCompile Include="src\core\Engines\ADGR\Backend\Window\Windows\WindowManager.cpp">
-      <Filter>src\core\Engines\ADGR\Backend\Window\Windows</Filter>
-    </ClCompile>
     <ClCompile Include="src\core\Engines\ADGR\Backend\directx12\directx12Renderer.cpp">
       <Filter>src\core\Engines\ADGR\Backend\directx12</Filter>
     </ClCompile>
@@ -844,21 +850,6 @@
     </ClCompile>
     <ClCompile Include="src\core\Engines\Intellect\Backend\Maths\mathDefinitions.cpp">
       <Filter>src\core\Engines\Intellect\Backend\Maths</Filter>
-    </ClCompile>
-    <ClCompile Include="src\core\Events\applicationEvent.cpp">
-      <Filter>src\core\Events</Filter>
-    </ClCompile>
-    <ClCompile Include="src\core\Events\event.cpp">
-      <Filter>src\core\Events</Filter>
-    </ClCompile>
-    <ClCompile Include="src\core\Events\inputHandler.cpp">
-      <Filter>src\core\Events</Filter>
-    </ClCompile>
-    <ClCompile Include="src\core\Events\keyEvent.cpp">
-      <Filter>src\core\Events</Filter>
-    </ClCompile>
-    <ClCompile Include="src\core\Events\mouseEvent.cpp">
-      <Filter>src\core\Events</Filter>
     </ClCompile>
     <ClCompile Include="src\core\Managers\Platform\Windows\file\daiFileManager.cpp">
       <Filter>src\core\Managers\Platform\Windows\file</Filter>
@@ -932,6 +923,26 @@
     <ClCompile Include="src\dmkafx.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="src\core\Engines\ADGR\Renderer3D.cpp" />
+    <ClCompile Include="src\core\Events\applicationEvent.cpp">
+      <Filter>src\core\Events</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\Events\event.cpp">
+      <Filter>src\core\Events</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\Events\inputHandler.cpp">
+      <Filter>src\core\Events</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\Events\keyEvent.cpp">
+      <Filter>src\core\Events</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\Events\mouseEvent.cpp">
+      <Filter>src\core\Events</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\Interface\Window\Windows\WindowManager.cpp">
+      <Filter>src\core\Engines\ADGR\Backend\Window\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\Interface\Events\EventManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Dynamik.lua" />

@@ -18,6 +18,7 @@
     <ClInclude Include="src\objectDefinitions.h">
       <Filter>src</Filter>
     </ClInclude>
+    <ClInclude Include="src\renderHandler.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -27,6 +28,7 @@
     <ClCompile Include="src\objectDefinitions.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="src\renderHandler.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Application.lua" />

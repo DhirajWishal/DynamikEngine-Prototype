@@ -26,6 +26,8 @@
 #include "core/utils/DMK_Math.h"
 #include "core/utils/safeLock.h"
 
+#include "core/Engines/ADGR/Renderer3D.h"
+
 #include "GameObject.h"
 #include "SkyboxObject.h"
 #include "KeyBingings.h"

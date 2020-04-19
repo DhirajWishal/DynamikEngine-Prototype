@@ -5,19 +5,16 @@
 
 #include "core.h"
 
-#include "inputHandler.h"
-
-#include "Audio.h"
+#include "Engines/Audio/Audio.h"
 
 #include "data store/internalFormat.h"
 #include "object mechanics/loadGameObjects.h"
 #include "Level.h"
-#include "Events.h"
 
 #include "Engines/ADGR/Renderer.h"
 #include "Engines/ADGR/Layers/layerStack.h"
 
-#include "Managers.h"
+#include "Managers/Managers.h"
 
 namespace Dynamik {
 	class DebugObject : public GameObject {
@@ -126,7 +123,7 @@ namespace Dynamik {
 		void pushLayer(ADGR::Layer* layer);
 		void pushOverlay(ADGR::Layer* layer);
 
-		void onEvent(std::deque<DMKEventContainer>* events);
+		//void onEvent(std::deque<DMKEventContainer>* events);
 
 		static void showProgress();
 

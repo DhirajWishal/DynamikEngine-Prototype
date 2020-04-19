@@ -1,18 +1,12 @@
 #include "dmkafx.h"
 #include "application.h"
 
-#include "keyEvent.h"
-#include "mouseEvent.h"
-#include "applicationEvent.h"
-#include "keyCodes.h"
-
 #include "utils/DMK_Descriptors.h"
 
 #include "debugger.h"
 
 #include "core/Windows.h"
 #include "data store/containers.h"
-#include "Platform/Windows.h"
 #include "Networking/Networking.h"
 
 #include "engineControlUnit.h"
@@ -117,12 +111,12 @@ namespace Dynamik {
 			//myThreadManager.run(1);
 
 			while (!myRenderingEngine.getWindowCloseEvent()) {
-				myRenderingEngine.draw();
-				auto events = myRenderingEngine.getEvents();
+				//myRenderingEngine.draw();
+				//auto events = myRenderingEngine.getEvents();
 
 				myEngine.update();
-				if (events->size())
-					onEvent(events);
+				//if (events->size())
+					//onEvent(events);
 
 				for (auto layer : layerStack)
 					layer->update();
@@ -139,7 +133,7 @@ namespace Dynamik {
 	void Application::pushOverlay(ADGR::Layer* layer) {
 		layerStack.pushOverLay(layer);
 	}
-
+	/*
 	void Application::onEvent(std::deque<DMKEventContainer>* events) {
 		for (int i = 0; i < events->size(); i++) {
 			DMKEventContainer eventContainer = events->back();
@@ -234,7 +228,7 @@ namespace Dynamik {
 		//	(*--it)->onEvent(*event.event);
 		//	if (event.event->handled)
 		//		break;
-	}
+	}*/
 
 	void Application::showProgress() {
 		static uint32_t old = 0;

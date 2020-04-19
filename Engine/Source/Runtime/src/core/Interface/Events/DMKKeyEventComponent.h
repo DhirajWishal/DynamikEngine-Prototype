@@ -5,7 +5,7 @@
 #include "DMKEventComponent.h"
 
 namespace Dynamik {
-	class DMKKeyEventComponent : public DMKEventComponent {
+	class DMK_API DMKKeyEventComponent : public DMKEventComponent {
 	public:
 		DMKKeyEventComponent() : DMKEventComponent(DMKEventCategory::DMK_EVENT_CATEGORY_KEY) {}
 		~DMKKeyEventComponent() {}

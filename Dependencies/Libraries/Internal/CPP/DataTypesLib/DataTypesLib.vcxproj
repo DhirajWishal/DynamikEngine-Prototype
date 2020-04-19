@@ -149,7 +149,6 @@
     <ClInclude Include="Public\Stack.h" />
     <ClInclude Include="Public\StaticArray.h" />
     <ClInclude Include="Public\String.h" />
-    <ClInclude Include="Public\Texture.h" />
     <ClInclude Include="Public\Thread.h" />
     <ClInclude Include="Public\constants.h" />
     <ClInclude Include="Public\datatypes.h" />
@@ -160,7 +159,6 @@
     <ClCompile Include="Private\FastString.cpp" />
     <ClCompile Include="Private\IndexedArray.cpp" />
     <ClCompile Include="Private\String.cpp" />
-    <ClCompile Include="Private\Texture.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="DataTypesLib.lua" />

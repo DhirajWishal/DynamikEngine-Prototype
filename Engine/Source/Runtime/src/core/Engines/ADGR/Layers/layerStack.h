@@ -7,7 +7,7 @@
 
 namespace Dynamik {
 	namespace ADGR {
-		class ADGR_API layerStack {
+		class DMK_API layerStack {
 		public:
 			layerStack();
 			~layerStack();

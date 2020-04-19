@@ -6,7 +6,7 @@
 #include "DataTypesLib/Public/Pointer.h"
 
 namespace Dynamik {
-	enum class DMKEventCategory {
+	enum class DMK_API DMKEventCategory {
 		DMK_EVENT_CATEGORY_UNKNOWN,
 
 		DMK_EVENT_CATEGORY_KEY,
@@ -17,7 +17,7 @@ namespace Dynamik {
 		DMK_EVENT_CATEGORY_TEXT,
 	};
 
-	enum class DMKEventType {
+	enum class DMK_API DMKEventType {
 		DMK_EVENT_TYPE_UNKNOWN,
 
 		DMK_EVENT_TYPE_KEY_PRESS,
@@ -35,7 +35,7 @@ namespace Dynamik {
 		DMK_EVENT_TYPE_WINDOW_RESIZE,
 	};
 
-	class DMKEventComponent {
+	class DMK_API DMKEventComponent {
 	public:
 		DMKEventComponent() {}
 		DMKEventComponent(DMKEventCategory cat) : category(cat) {}

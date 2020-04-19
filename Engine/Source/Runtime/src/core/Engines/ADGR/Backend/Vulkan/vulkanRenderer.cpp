@@ -1289,11 +1289,6 @@ namespace Dynamik {
 			overlayContainer.isInitialized = true;
 		}
 
-		// events
-		std::deque<DMKEventContainer>* vulkanRenderer::events() {
-			return &eventContainer;
-		}
-
 		B1 vulkanRenderer::closeEvent()
 		{
 			return myWindowManager.isWindowCloseEvent;

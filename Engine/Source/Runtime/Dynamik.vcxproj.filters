@@ -420,9 +420,6 @@
     <ClInclude Include="src\core\Engines\ADGR\defines.h">
       <Filter>src\core\Engines\ADGR</Filter>
     </ClInclude>
-    <ClInclude Include="src\core\Engines\ADGR\interface.h">
-      <Filter>src\core\Engines\ADGR</Filter>
-    </ClInclude>
     <ClInclude Include="src\core\Engines\ADGR\rendererCommandQueue.h">
       <Filter>src\core\Engines\ADGR</Filter>
     </ClInclude>
@@ -589,33 +586,6 @@
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="src\core\Engines\ADGR\Renderer3D.h" />
-    <ClInclude Include="src\core\Events\applicationEvent.h">
-      <Filter>src\core\Events</Filter>
-    </ClInclude>
-    <ClInclude Include="src\core\Events\event.h">
-      <Filter>src\core\Events</Filter>
-    </ClInclude>
-    <ClInclude Include="src\core\Events\eventContainer.h">
-      <Filter>src\core\Events</Filter>
-    </ClInclude>
-    <ClInclude Include="src\core\Events\Events.h">
-      <Filter>src\core\Events</Filter>
-    </ClInclude>
-    <ClInclude Include="src\core\Events\input.h">
-      <Filter>src\core\Events</Filter>
-    </ClInclude>
-    <ClInclude Include="src\core\Events\inputHandler.h">
-      <Filter>src\core\Events</Filter>
-    </ClInclude>
-    <ClInclude Include="src\core\Events\keyCodes.h">
-      <Filter>src\core\Events</Filter>
-    </ClInclude>
-    <ClInclude Include="src\core\Events\keyEvent.h">
-      <Filter>src\core\Events</Filter>
-    </ClInclude>
-    <ClInclude Include="src\core\Events\mouseEvent.h">
-      <Filter>src\core\Events</Filter>
-    </ClInclude>
     <ClInclude Include="src\core\Interface\Window\Windows\WindowManager.h">
       <Filter>src\core\Engines\ADGR\Backend\Window\Windows</Filter>
     </ClInclude>
@@ -627,6 +597,19 @@
     <ClInclude Include="src\core\Interface\Events\DMKMouseScrollEventComponent.h" />
     <ClInclude Include="src\core\Interface\Events\DMKDropPathEventComponent.h" />
     <ClInclude Include="src\core\Interface\Events\DMKWindowResizeEventComponent.h" />
+    <ClInclude Include="src\core\Interface\Window\DMKWindowComponent.h" />
+    <ClInclude Include="src\core\Interface\Events\keyCodes.h">
+      <Filter>src\core\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Objects\Texture\Texture.h" />
+    <ClInclude Include="src\core\Objects\DMKObject.h" />
+    <ClInclude Include="src\core\Objects\RenderComponent\RenderComponent.h" />
+    <ClInclude Include="src\core\Objects\VertexBufferObject\VertexBufferObject.h" />
+    <ClInclude Include="src\core\Objects\IndexBufferObject\IndexBufferObject.h" />
+    <ClInclude Include="src\core\Objects\IndexBufferObject\IndexBufferObjectUI8.h" />
+    <ClInclude Include="src\core\Objects\IndexBufferObject\IndexBufferObjectUI16.h" />
+    <ClInclude Include="src\core\Objects\IndexBufferObject\IndexBufferObjectUI32.h" />
+    <ClInclude Include="src\core\Objects\UniformBufferObject\UniformBufferObject.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameLibraries\GameObject.cpp">
@@ -924,25 +907,11 @@
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="src\core\Engines\ADGR\Renderer3D.cpp" />
-    <ClCompile Include="src\core\Events\applicationEvent.cpp">
-      <Filter>src\core\Events</Filter>
-    </ClCompile>
-    <ClCompile Include="src\core\Events\event.cpp">
-      <Filter>src\core\Events</Filter>
-    </ClCompile>
-    <ClCompile Include="src\core\Events\inputHandler.cpp">
-      <Filter>src\core\Events</Filter>
-    </ClCompile>
-    <ClCompile Include="src\core\Events\keyEvent.cpp">
-      <Filter>src\core\Events</Filter>
-    </ClCompile>
-    <ClCompile Include="src\core\Events\mouseEvent.cpp">
-      <Filter>src\core\Events</Filter>
-    </ClCompile>
     <ClCompile Include="src\core\Interface\Window\Windows\WindowManager.cpp">
       <Filter>src\core\Engines\ADGR\Backend\Window\Windows</Filter>
     </ClCompile>
     <ClCompile Include="src\core\Interface\Events\EventManager.cpp" />
+    <ClCompile Include="src\core\Objects\Texture\Texture.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Dynamik.lua" />

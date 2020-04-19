@@ -29,6 +29,7 @@
 
 #include <CentralDataHub.h>
 #include "core/Engines/ADGR/rendererFormat.h"
+#include "core/Interface/Events/DMKEventComponent.h"
 
 #define INC_PROGRESS					(*myProgress += 1)
 #define MULTIPLE_INC_PROGRESS(count)	for (I32 i_itr__ = 0; i_itr__ < count; i_itr__++) INC_PROGRESS
@@ -61,7 +62,7 @@ namespace Dynamik {
 			virtual void initStageTwo() {}	// initialize stage two
 			virtual void initStageThree() {}	// initialize stage three
 
-			virtual void drawFrame(std::deque<DMKEventContainer> container) {}	// draw call
+			virtual void drawFrame(ARRAY<DMKEventComponent> component) {}	// draw call
 
 			virtual void shutDown() {}	// shut down the renderer
 			virtual void shutDownStageOne() {}	// shut down stage one
@@ -79,7 +80,6 @@ namespace Dynamik {
 				myTexturePaths = texture;
 			}
 
-			virtual std::deque<DMKEventContainer>* events() { return &std::deque<DMKEventContainer>(); }	// get event containers
 			virtual B1 closeEvent() { return false; }	// get close event
 
 			/* DEFINED FUNCTION(S) */
@@ -88,8 +88,6 @@ namespace Dynamik {
 
 		protected:
 			DMKRendererSettings myRendererSettings = {};	// renderer settings
-
-			std::deque<DMKEventContainer> myEventContainers = {};	// event containers
 
 			ARRAY<std::string> myModelPaths = {};	// model paths
 			ARRAY<ARRAY<std::string>> myTexturePaths = {};	// texture paths

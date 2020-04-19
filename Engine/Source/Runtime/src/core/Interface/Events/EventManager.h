@@ -5,14 +5,13 @@
 #include "DMKEventComponent.h"
 
 namespace Dynamik {
-	struct CursorPosition {
+	struct DMK_API CursorPosition {
 		D64 xOffset = 0.0f;
 		D64 yOffset = 0.0f;
 	};
 
-	class EventManager {
+	class DMK_API EventManager {
 		EventManager() {}
-
 		static EventManager myInstance;
 
 	public:

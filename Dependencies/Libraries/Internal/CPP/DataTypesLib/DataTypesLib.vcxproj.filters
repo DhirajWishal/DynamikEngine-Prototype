@@ -70,9 +70,6 @@
     <ClInclude Include="Public\String.h">
       <Filter>Public</Filter>
     </ClInclude>
-    <ClInclude Include="Public\Texture.h">
-      <Filter>Public</Filter>
-    </ClInclude>
     <ClInclude Include="Public\Thread.h">
       <Filter>Public</Filter>
     </ClInclude>
@@ -98,9 +95,6 @@
       <Filter>Private</Filter>
     </ClCompile>
     <ClCompile Include="Private\String.cpp">
-      <Filter>Private</Filter>
-    </ClCompile>
-    <ClCompile Include="Private\Texture.cpp">
       <Filter>Private</Filter>
     </ClCompile>
   </ItemGroup>

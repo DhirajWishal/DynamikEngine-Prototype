@@ -7,7 +7,7 @@
 #include "DataTypesLib/Public/Array.h"
 
 namespace Dynamik {
-	class DMKDropPathEventComponent : public DMKEventComponent {
+	class DMK_API DMKDropPathEventComponent : public DMKEventComponent {
 	public:
 		DMKDropPathEventComponent() : DMKEventComponent(DMKEventCategory::DMK_EVENT_CATEGORY_APPLICATION) {}
 		~DMKDropPathEventComponent() {}

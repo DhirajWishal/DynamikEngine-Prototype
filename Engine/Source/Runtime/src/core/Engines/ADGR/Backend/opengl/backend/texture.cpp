@@ -1,10 +1,10 @@
 #include "dmkafx.h"
 #include "texture.h"
 
+#ifdef DMK_USE_OPENGL
 #include "Platform/windows/resource/imageLoader.h"
 #include "Platform.h"
 
-#ifdef DMK_USE_OPENGL
 namespace Dynamik {
 	namespace ADGR {
 		namespace core {
@@ -48,5 +48,6 @@ namespace Dynamik {
 			}
 		}
 	}
+
 }
 #endif // DMK_USE_OPENGL

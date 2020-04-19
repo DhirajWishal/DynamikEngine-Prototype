@@ -12,7 +12,6 @@
 #ifndef _DYNAMIK_ADGR_RENDERER_H
 #define _DYNAMIK_ADGR_RENDERER_H
 
-#include "interface.h"
 #include "rendererFormat.h"
 #include "core/core.h"
 #include "rendererCommandQueue.h"
@@ -20,9 +19,7 @@
 #include "Platform.h"
 
 #include "GameObject.h"
-#include "keyEvent.h"
-#include "mouseEvent.h"
-#include <deque>
+#include "core/Interface/Events/DMKEventComponent.h"
 
 #include "core/utils/DMK_Descriptors.h"
 
@@ -31,7 +28,7 @@ namespace Dynamik {
 		/* RENDERER ABSTRACTION LAYER
 		 *
 		 */
-		class ADGR_API Renderer {
+		class DMK_API Renderer {
 		public:
 			Renderer();
 			~Renderer();
@@ -39,13 +36,12 @@ namespace Dynamik {
 			void setProgress(UI32* progress);
 			void initRenderer();
 			void setRendererFormats(ARRAY<InternalFormat*>& internalFormats);
-			void draw();
+			void draw(ARRAY<DMKEventComponent*> events);
 
 			void setVertices(ARRAY<Vertex>* vertices);
 
 			void addCommand(RendererCommandQueue commandQueue);
 
-			void run();
 			void loadDataToUpdate(ARRAY<InternalFormat*>& internalFormats);
 			void updateRendererFormats();
 			void loadData(ARRAY<InternalFormat*>& internalFormats, ARRAY<RendererFormat>* formats);
@@ -53,7 +49,6 @@ namespace Dynamik {
 			void end();
 
 			void bindKeys();
-			std::deque<DMKEventContainer>* getEvents();
 
 			// core functions
 

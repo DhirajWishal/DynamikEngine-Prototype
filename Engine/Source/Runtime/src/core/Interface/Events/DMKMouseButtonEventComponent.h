@@ -5,7 +5,7 @@
 #include "DMKEventComponent.h"
 
 namespace Dynamik {
-	class DMKMouseButtonEventComponent : public DMKEventComponent {
+	class DMK_API DMKMouseButtonEventComponent : public DMKEventComponent {
 	public:
 		DMKMouseButtonEventComponent() : DMKEventComponent(DMKEventCategory::DMK_EVENT_CATEGORY_MOUSE_BUTTON) {}
 		~DMKMouseButtonEventComponent() {}

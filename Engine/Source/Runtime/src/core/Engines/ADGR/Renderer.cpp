@@ -68,7 +68,7 @@ namespace Dynamik {
 			rendererCore.setFormats(myRendererFormats);
 		}
 
-		void Renderer::draw() {
+		void Renderer::draw(ARRAY<DMKEventComponent*> events) {
 			rendererCore.drawFrame();
 		}
 
@@ -79,10 +79,6 @@ namespace Dynamik {
 		void Renderer::addCommand(RendererCommandQueue commandQueue)
 		{
 			myCommandQueue = commandQueue;
-		}
-
-		void Renderer::run() {
-			draw();
 		}
 
 		void Renderer::loadDataToUpdate(ARRAY<InternalFormat*>& internalFormats) {
@@ -146,10 +142,6 @@ namespace Dynamik {
 		}
 
 		void Renderer::bindKeys() {
-		}
-
-		std::deque<DMKEventContainer>* Renderer::getEvents() {
-			return rendererCore.events();
 		}
 	}
 }

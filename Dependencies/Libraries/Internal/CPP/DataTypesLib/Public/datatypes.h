@@ -43,38 +43,47 @@ namespace Dynamik {
 
 	typedef UI8 BYTE;					// byte of data
 	typedef BYTE* BPTR;					// byte pointer
+
+	typedef unsigned char UCHR;			// unsigned char
+
+	/* Function to cast from one type to another */
+	template<class RTYPE, class PTYPE>
+	RTYPE Cast(const PTYPE& data)
+	{
+		return RTYPE(data);
+	}
 }
-#define DMK_UINT_8				::UI8
-#define DMK_UINT_16				::UI16
-#define DMK_UINT_32				::UI32
-#define DMK_UINT_64				::UI64
-
-#define DMK_SINT_8				::SI8
-#define DMK_SINT_16				::SI16
-#define DMK_SINT_32				::SI32
-#define DMK_SINT_64				::SI64
-
-#define DMK_INT_8				::I8
-#define DMK_INT_16				::I16
-#define DMK_INT_32				::I32
-#define DMK_INT_64				::I64
+#define DMK_UINT_8				::Dynamik::UI8
+#define DMK_UINT_16				::Dynamik::UI16
+#define DMK_UINT_32				::Dynamik::UI32
+#define DMK_UINT_64				::Dynamik::UI64
+								 
+#define DMK_SINT_8				::Dynamik::SI8
+#define DMK_SINT_16				::Dynamik::SI16
+#define DMK_SINT_32				::Dynamik::SI32
+#define DMK_SINT_64				::Dynamik::SI64
+								  
+#define DMK_INT_8				::Dynamik::I8
+#define DMK_INT_16				::Dynamik::I16
+#define DMK_INT_32				::Dynamik::I32
+#define DMK_INT_64				::Dynamik::I64
 #define DMK_INT					INT_32
 
-#define DMK_BOOL				::B1
-#define DMK_FLOAT_32			::F32
-#define DMK_DOUBLE_64			::D64
+#define DMK_BOOL				::Dynamik::B1
+#define DMK_FLOAT_32			::Dynamik::F32
+#define DMK_DOUBLE_64			::Dynamik::D64
 #define DMK_FLOAT				FLOAT_32
 #define DMK_DOUBLE				DOUBLE_64
 
-#define DMK_VOID_PTR			::VPTR
-#define DMK_CHAR_PTR			::CPTR
-#define DMK_WCHAR_PTR			::WCPTR
-#define DMK_CONST_CHAR_PTR		::CCPTR
-#define DMK_UNSIGNED_CHAR_PTR	::UCPTR
-#define DMK_CONST_WCHAR_PTR		::CWCPTR
+#define DMK_VOID_PTR			::Dynamik::VPTR
+#define DMK_CHAR_PTR			::Dynamik::CPTR
+#define DMK_WCHAR_PTR			::Dynamik::WCPTR
+#define DMK_CONST_CHAR_PTR		::Dynamik::CCPTR
+#define DMK_UNSIGNED_CHAR_PTR	::Dynamik::UCPTR
+#define DMK_CONST_WCHAR_PTR		::Dynamik::CWCPTR
 
-#define DMK_BYTE				::BYTE
-#define DMK_BYTE_PTR			::BPTR
+#define DMK_BYTE				::Dynamik::BYTE
+#define DMK_BYTE_PTR			::Dynamik::BPTR
 
 #ifdef _UNICODE
 #define DMK_TEXT(...)			__VA_ARGS__

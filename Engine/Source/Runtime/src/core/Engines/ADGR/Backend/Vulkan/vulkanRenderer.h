@@ -148,11 +148,6 @@ namespace Dynamik {
 			void shutDownStageThree() override;
 
 			/* FUNCTION
-			 * Get events.
-			 */
-			std::deque<DMKEventContainer>* events() override;
-
-			/* FUNCTION
 			 * Check for window close event.
 			 */
 			B1 closeEvent() override;
@@ -224,8 +219,6 @@ namespace Dynamik {
 			VulkanSkeletalAnimation* myAnimation;
 
 			WindowManager myWindowManager;
-
-			std::deque<DMKEventContainer> eventContainer;
 
 			UI32 currentFrame = 0;
 			UI32 imageIndex = 0;

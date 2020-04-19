@@ -8,7 +8,7 @@
 
 namespace Dynamik {
 	namespace ADGR {
-		class ADGR_API Layer {
+		class DMK_API Layer {
 		public:
 			Layer(const std::string& name = "Layer 1");
 			virtual ~Layer();

@@ -18,7 +18,9 @@
     <ClInclude Include="src\objectDefinitions.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="src\renderHandler.h" />
+    <ClInclude Include="src\renderHandler.h">
+      <Filter>src</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -28,7 +30,9 @@
     <ClCompile Include="src\objectDefinitions.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="src\renderHandler.cpp" />
+    <ClCompile Include="src\renderHandler.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Application.lua" />

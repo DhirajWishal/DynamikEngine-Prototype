@@ -15,10 +15,10 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{E45AE3AD-D0FC-0D84-B9B7-21D8A5F894D4}</ProjectGuid>
+    <ProjectGuid>{1D2BF0D1-09CD-1AA8-F287-2EFCDEC8A1F8}</ProjectGuid>
     <IgnoreWarnCompileDuplicatedFilename>true</IgnoreWarnCompileDuplicatedFilename>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>DevCon</RootNamespace>
+    <RootNamespace>Studio</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -55,32 +55,32 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <OutDir>$(SolutionDir)Builds\Engine\Binaries\$(ProjectName)\</OutDir>
-    <IntDir>$(SolutionDir)Builds\Engine\Intermediate\$(Configuration)-$(Platform)\$(ProjectName)\Debug\DevCon\</IntDir>
-    <TargetName>DevCon</TargetName>
+    <OutDir>$(SolutionDir)Builds\Studio\Binaries\</OutDir>
+    <IntDir>$(SolutionDir)Builds\Studio\Intermediate\$(ProjectName)\Debug\</IntDir>
+    <TargetName>Studio</TargetName>
     <TargetExt>.exe</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <OutDir>$(SolutionDir)Builds\Engine\Binaries\$(ProjectName)\</OutDir>
-    <IntDir>$(SolutionDir)Builds\Engine\Intermediate\$(Configuration)-$(Platform)\$(ProjectName)\Release\DevCon\</IntDir>
-    <TargetName>DevCon</TargetName>
+    <OutDir>$(SolutionDir)Builds\Studio\Binaries\</OutDir>
+    <IntDir>$(SolutionDir)Builds\Studio\Intermediate\$(ProjectName)\Release\</IntDir>
+    <TargetName>Studio</TargetName>
     <TargetExt>.exe</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Distribution|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <OutDir>$(SolutionDir)Builds\Engine\Binaries\$(ProjectName)\</OutDir>
-    <IntDir>$(SolutionDir)Builds\Engine\Intermediate\$(Configuration)-$(Platform)\$(ProjectName)\Distribution\DevCon\</IntDir>
-    <TargetName>DevCon</TargetName>
+    <OutDir>$(SolutionDir)Builds\Studio\Binaries\</OutDir>
+    <IntDir>$(SolutionDir)Builds\Studio\Intermediate\$(ProjectName)\Distribution\</IntDir>
+    <TargetName>Studio</TargetName>
     <TargetExt>.exe</TargetExt>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
-      <PrecompiledHeaderFile>dcnsafx.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderFile>studioafx.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>DMK_PLATFORM_WINDOWS;DMK_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\Libraries\Local;$(SolutionDir)Engine\Source\Runtime\src;$(SolutionDir)Engine\Source\Runtime\GameLibraries;$(SolutionDir)Dependencies\Libraries\External\glfw\include;$(SolutionDir)Dependencies\GLEW\include;$(SolutionDir)Dependencies\Libraries\External\glm;$(SolutionDir)Dependencies\Libraries\External\stb;$(SolutionDir)Dependencies\Libraries\External\tinyobjloader;$(SolutionDir)Dependencies\Libraries\Local\irrKlang\include;$(SolutionDir)Dependencies\Libraries\Local\assimp;$(SolutionDir)Dependencies\Libraries\External\Vulkan\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>DMK_PLATFORM_WINDOWS;DMK_USE_VULKAN;GLEW_STATIC;GLFW_INCLUDE_VULKAN;DMK_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\Libraries\Local;$(SolutionDir)Engine\Source\Runtime;$(SolutionDir)Engine\Source\Runtime\Core\PCH;$(SolutionDir)Engine\Source\Runtime\Core\Algorithm;$(SolutionDir)Engine\Source\Runtime\Core\DataTypes;$(SolutionDir)Engine\Source\Runtime\Core\Memory;$(SolutionDir)Engine\Source\Runtime\Core\System;$(SolutionDir)Engine\Source\Runtime\GameLibraries;$(SolutionDir)Dependencies\Libraries\External\glfw\include;$(SolutionDir)Dependencies\GLEW\include;$(SolutionDir)Dependencies\Libraries\External\glm;$(SolutionDir)Dependencies\Libraries\External\stb;$(SolutionDir)Dependencies\Libraries\External\tinyobjloader;$(SolutionDir)Dependencies\Libraries\Local\irrKlang\include;$(SolutionDir)Dependencies\Libraries\Local\assimp;$(SolutionDir)Dependencies\Libraries\External\Vulkan\include;$(SolutionDir)Dependencies\Libraries\External\gli\gli;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
@@ -89,15 +89,17 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>glfw3dll.lib;glew32s.lib;opengl32.lib;vulkan-1.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)Dependencies\Libraries\Binaries\GLFW\lib-vc2019;$(SolutionDir)Dependencies\Libraries\Binaries\GLEW\Release\x64;$(SolutionDir)Dependencies\Libraries\Binaries\Vulkan;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
-      <PrecompiledHeaderFile>dcnsafx.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderFile>studioafx.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>DMK_PLATFORM_WINDOWS;DMK_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\Libraries\Local;$(SolutionDir)Engine\Source\Runtime\src;$(SolutionDir)Engine\Source\Runtime\GameLibraries;$(SolutionDir)Dependencies\Libraries\External\glfw\include;$(SolutionDir)Dependencies\GLEW\include;$(SolutionDir)Dependencies\Libraries\External\glm;$(SolutionDir)Dependencies\Libraries\External\stb;$(SolutionDir)Dependencies\Libraries\External\tinyobjloader;$(SolutionDir)Dependencies\Libraries\Local\irrKlang\include;$(SolutionDir)Dependencies\Libraries\Local\assimp;$(SolutionDir)Dependencies\Libraries\External\Vulkan\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>DMK_PLATFORM_WINDOWS;DMK_USE_VULKAN;GLEW_STATIC;GLFW_INCLUDE_VULKAN;DMK_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\Libraries\Local;$(SolutionDir)Engine\Source\Runtime;$(SolutionDir)Engine\Source\Runtime\Core\PCH;$(SolutionDir)Engine\Source\Runtime\Core\Algorithm;$(SolutionDir)Engine\Source\Runtime\Core\DataTypes;$(SolutionDir)Engine\Source\Runtime\Core\Memory;$(SolutionDir)Engine\Source\Runtime\Core\System;$(SolutionDir)Engine\Source\Runtime\GameLibraries;$(SolutionDir)Dependencies\Libraries\External\glfw\include;$(SolutionDir)Dependencies\GLEW\include;$(SolutionDir)Dependencies\Libraries\External\glm;$(SolutionDir)Dependencies\Libraries\External\stb;$(SolutionDir)Dependencies\Libraries\External\tinyobjloader;$(SolutionDir)Dependencies\Libraries\Local\irrKlang\include;$(SolutionDir)Dependencies\Libraries\Local\assimp;$(SolutionDir)Dependencies\Libraries\External\Vulkan\include;$(SolutionDir)Dependencies\Libraries\External\gli\gli;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -110,15 +112,17 @@
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>glfw3dll.lib;glew32s.lib;opengl32.lib;vulkan-1.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)Dependencies\Libraries\Binaries\GLFW\lib-vc2019;$(SolutionDir)Dependencies\Libraries\Binaries\GLEW\Release\x64;$(SolutionDir)Dependencies\Libraries\Binaries\Vulkan;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Distribution|x64'">
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
-      <PrecompiledHeaderFile>dcnsafx.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderFile>studioafx.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>DMK_PLATFORM_WINDOWS;DMK_DISTRIBUTION;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\Libraries\Local;$(SolutionDir)Engine\Source\Runtime\src;$(SolutionDir)Engine\Source\Runtime\GameLibraries;$(SolutionDir)Dependencies\Libraries\External\glfw\include;$(SolutionDir)Dependencies\GLEW\include;$(SolutionDir)Dependencies\Libraries\External\glm;$(SolutionDir)Dependencies\Libraries\External\stb;$(SolutionDir)Dependencies\Libraries\External\tinyobjloader;$(SolutionDir)Dependencies\Libraries\Local\irrKlang\include;$(SolutionDir)Dependencies\Libraries\Local\assimp;$(SolutionDir)Dependencies\Libraries\External\Vulkan\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>DMK_PLATFORM_WINDOWS;DMK_USE_VULKAN;GLEW_STATIC;GLFW_INCLUDE_VULKAN;DMK_DISTRIBUTION;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\Libraries\Local;$(SolutionDir)Engine\Source\Runtime;$(SolutionDir)Engine\Source\Runtime\Core\PCH;$(SolutionDir)Engine\Source\Runtime\Core\Algorithm;$(SolutionDir)Engine\Source\Runtime\Core\DataTypes;$(SolutionDir)Engine\Source\Runtime\Core\Memory;$(SolutionDir)Engine\Source\Runtime\Core\System;$(SolutionDir)Engine\Source\Runtime\GameLibraries;$(SolutionDir)Dependencies\Libraries\External\glfw\include;$(SolutionDir)Dependencies\GLEW\include;$(SolutionDir)Dependencies\Libraries\External\glm;$(SolutionDir)Dependencies\Libraries\External\stb;$(SolutionDir)Dependencies\Libraries\External\tinyobjloader;$(SolutionDir)Dependencies\Libraries\Local\irrKlang\include;$(SolutionDir)Dependencies\Libraries\Local\assimp;$(SolutionDir)Dependencies\Libraries\External\Vulkan\include;$(SolutionDir)Dependencies\Libraries\External\gli\gli;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -131,27 +135,21 @@
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>glfw3dll.lib;glew32s.lib;opengl32.lib;vulkan-1.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)Dependencies\Libraries\Binaries\GLFW\lib-vc2019;$(SolutionDir)Dependencies\Libraries\Binaries\GLEW\Release\x64;$(SolutionDir)Dependencies\Libraries\Binaries\Vulkan;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="src\core\console.h" />
-    <ClInclude Include="src\dcnsafx.h" />
+    <ClInclude Include="..\..\Studio\Core\PCH\studioafx.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="src\core\console.cpp" />
-    <ClCompile Include="src\dcnsafx.cpp" />
+    <ClCompile Include="..\..\Studio\Core\PCH\studioafx.cpp">
+      <PrecompiledHeader>Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\Studio\main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="DevCon.lua" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\Engine\Source\Projects\Dynamik\Dynamik.vcxproj">
-      <Project>{928A7598-FE69-F433-0782-7F0A73E05A95}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\Debugger\Debugger.vcxproj">
-      <Project>{2ACD0289-169A-5D94-3FB3-4B3C2BDF9222}</Project>
-    </ProjectReference>
+    <None Include="Studio.lua" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

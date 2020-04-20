@@ -10,8 +10,6 @@ public:
 		myProperties.location = "E:/Projects/Dynamik Engine/Game Repository/assets/assets/moon";
 		myProperties.transformProperties.location = { 0.0f,	0.0f,	0.0f };
 	}
-
-	void update(Event& currentEvent) override;
 };
 
 class sceneOne : public Scene {
@@ -50,7 +48,6 @@ public:
 		myProperties.name = "Mars";
 	}
 
-	DMKUpdateInfo draw(std::deque<DMKEventContainer>& eventContainers) override;
 	void init() override;
 };
 

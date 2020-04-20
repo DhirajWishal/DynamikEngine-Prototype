@@ -25,7 +25,6 @@
 #include "core/core.h"
 #include "core/utils/DMK_Error.h"
 #include "CentralDataHub.h"
-#include "Events.h"
 
 #include "KeyBingings.h"
 
@@ -214,84 +213,7 @@ namespace Dynamik {
 
 		/* ---------- ########## \\\\\\\\\\ MAIN FUNCTIONS ////////// ########## ---------- */
 		virtual void init() {}
-		virtual DMKUpdateInfo draw(std::deque<DMKEventContainer>& eventContainers)
-		{
-			Dynamik::ARRAY<std::future<void>, DMKArrayDestructorCallMode::DMK_ARRAY_DESTRUCTOR_CALL_MODE_DESTRUCT_ALL> threads;
-
-			for (int i = 0; i < eventContainers.size(); i++) {
-				DMKEventContainer eventContainer = eventContainers.back();
-				eventContainers.pop_back();
-
-				if (eventContainer.eventType == DMKEventType::DMK_EVENT_TYPE_KEY_PRESS)
-					threads.push_back(std::async(std::launch::async, [](DMKEventContainer eventContainer, DMKUpdateInfo* myUpdateProperties) {
-					switch (eventContainer.code) {
-					case DMK_KEY_W:
-						myUpdateProperties->frontBack += myUpdateProperties->movementBiasFrontBack;
-						break;
-					case DMK_KEY_A:
-						myUpdateProperties->leftRight -= myUpdateProperties->movementBiasLeftRight;
-						break;
-					case DMK_KEY_S:
-						myUpdateProperties->frontBack -= myUpdateProperties->movementBiasFrontBack;
-						break;
-					case DMK_KEY_D:
-						myUpdateProperties->leftRight += myUpdateProperties->movementBiasLeftRight;
-						break;
-					case DMK_KEY_UP:
-						myUpdateProperties->upDown -= myUpdateProperties->movementBiasUpDown;
-						break;
-					case DMK_KEY_DOWN:
-						myUpdateProperties->upDown += myUpdateProperties->movementBiasUpDown;
-						break;
-					case DMK_KEY_LEFT:
-						myUpdateProperties->rotationZ -= myUpdateProperties->rotationBias;
-						break;
-					case DMK_KEY_RIGHT:
-						myUpdateProperties->rotationZ += myUpdateProperties->rotationBias;
-						break;
-					}
-						}, eventContainer, &myUpdateProperties));
-				else if (eventContainer.eventType == DMKEventType::DMK_EVENT_TYPE_KEY_REPEAT)
-					threads.push_back(std::async(std::launch::async, [](DMKEventContainer eventContainer, DMKUpdateInfo* myUpdateProperties) {
-					switch (eventContainer.code) {
-					case DMK_KEY_W:
-						myUpdateProperties->frontBack += myUpdateProperties->movementBiasFrontBack;
-						break;
-					case DMK_KEY_A:
-						myUpdateProperties->leftRight -= myUpdateProperties->movementBiasLeftRight;
-						break;
-					case DMK_KEY_S:
-						myUpdateProperties->frontBack -= myUpdateProperties->movementBiasFrontBack;
-						break;
-					case DMK_KEY_D:
-						myUpdateProperties->leftRight += myUpdateProperties->movementBiasLeftRight;
-						break;
-					case DMK_KEY_UP:
-						myUpdateProperties->upDown -= myUpdateProperties->movementBiasUpDown;
-						break;
-					case DMK_KEY_DOWN:
-						myUpdateProperties->upDown += myUpdateProperties->movementBiasUpDown;
-						break;
-					case DMK_KEY_LEFT:
-						myUpdateProperties->rotationZ -= myUpdateProperties->rotationBias;
-						break;
-					case DMK_KEY_RIGHT:
-						myUpdateProperties->rotationZ += myUpdateProperties->rotationBias;
-						break;
-					}
-						}, eventContainer, &myUpdateProperties));
-				else if (eventContainer.eventType == DMKEventType::DMK_EVENT_TYPE_MOUSE_MOVED)
-					threads.push_back(std::async(std::launch::async, [](DMKEventContainer eventContainer, DMKUpdateInfo* myUpdateProperties) {
-					myUpdateProperties->rotationX = eventContainer.xAxis;
-					myUpdateProperties->rotationY = eventContainer.yAxis;
-						}, eventContainer, &myUpdateProperties));
-			}
-
-			return myUpdateProperties;
-		}
-
-		virtual void update(Event& currentEvent) {}
-		virtual void update(DMKUpdateInfo& info) {}
+		virtual void onUpdate() {}
 
 		virtual void logic() {}
 
@@ -334,9 +256,6 @@ namespace Dynamik {
 	public:
 		// object properties
 		GameObjectProperties myProperties = {};
-
-		// Renderable Objects:
-		DMKUpdateInfo myUpdateProperties = {};
 
 		// Data Types
 		VertexDataContainer myVertexDataContainer = {};

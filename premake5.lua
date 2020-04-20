@@ -44,33 +44,6 @@ IncludeLib["boostD"] = "E:/Programming/Modules and Runtime/boost_1_70_0/bin/Depe
 IncludeLib["boostR"] = "E:/Programming/Modules and Runtime/boost_1_70_0/bin/Dependencies/iostreams/build/msvc-14.2/release/address-model-64/link-static/threading-multi"
 IncludeLib["Assimp"] = "$(SolutionDir)Dependencies/Libraries/Binaries/Assimp"
 
---Dynamik Shared Library Includes
-DynamikSharedLibs = {}
-DynamikSharedLibs["ADGR"] =				"$(SolutionDir)Engine/Source/Shared/ADGR/src"
-DynamikSharedLibs["Audio"] =			"$(SolutionDir)Engine/Source/Shared/Audio/src"
-DynamikSharedLibs["Events"] =			"$(SolutionDir)Engine/Source/Shared/Events/src"
-DynamikSharedLibs["Intellect"] =		"$(SolutionDir)Engine/Source/Shared/Intellect/src"
-DynamikSharedLibs["Managers"] =			"$(SolutionDir)Engine/Source/Shared/Managers/src"
-DynamikSharedLibs["Networking"] =		"$(SolutionDir)Engine/Source/Shared/Networking/src"
---Dynamik Shared Library Binaries
-DynamikSharedIncludes = {}
-DynamikSharedIncludes["ADGR"] =			"$(SolutionDir)Builds/Engine/$(Configuration)-$(Platform)"
-DynamikSharedIncludes["Audio"] =		"$(SolutionDir)Builds/Engine/$(Configuration)-$(Platform)"
-DynamikSharedIncludes["Events"] =		"$(SolutionDir)Builds/Engine/$(Configuration)-$(Platform)"
-DynamikSharedIncludes["Intellect"] =	"$(SolutionDir)Builds/Engine/$(Configuration)-$(Platform)"
-DynamikSharedIncludes["Managers"] =		"$(SolutionDir)Builds/Engine/$(Configuration)-$(Platform)"
-DynamikSharedIncludes["Networking"] =	"$(SolutionDir)Builds/Engine/$(Configuration)-$(Platform)"
-
---Dynamik Internal Library Paths
-DynamikInternalLibsPath = "$(SolutionDir)Dependencies/Libraries/Internal/CPP"
-DynamikInternalBinaries = "$(SolutionDir)Builds/Dependencies/Libraries/Internal/CPP/Binaries"
-
-group "Libraies"	-- Add all the libraries to a virtual folder
-group "Libraries/Internal"	-- Add all the project in /Dependencies/Libraries/Internal to a virtual folder
-include "Dependencies/Libraries/Internal/Internal.lua"
-
-group ""
-
 group "Tools"	-- Add all tools to a virtual folder
 group "Tools/Debug"	-- All all the debugging tools to a virtual folder
 include "Dependencies/Programs/Debugger/Debugger.lua"
@@ -82,15 +55,10 @@ group "Launcher"	-- Add the Launcher to a virtual folder
 include "Launcher"
 
 group "Studio"	-- Add the Studio to a virtual folder
-include "Studio/Source/Runtime/Studio.lua"
+include "Engine/Source/Projects/Studio/Studio.lua"
 
 group "Engine"	-- Add the Engine to a virtual folder
-include "Engine/Source/Runtime/Dynamik.lua"
+include "Engine/Source/Projects/Dynamik/Dynamik.lua"
 include "Engine/Application/Runtime/Application.lua"
-
-group "Engine/Internal Libraries"	-- Add all the Engine's internal libraries to a virtual folder
-include "Engine/Source/Internal/Platform/Platform.lua"
-include "Engine/Source/Internal/Utilities/Utilities.lua"
-include "Engine/Source/Internal/CentralDataHub/CentralDataHub.lua"
 
 group ""

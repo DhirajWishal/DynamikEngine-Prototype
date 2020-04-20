@@ -27,6 +27,5 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="DevCon.lua" />
-    <None Include="premake5.lua" />
   </ItemGroup>
 </Project>

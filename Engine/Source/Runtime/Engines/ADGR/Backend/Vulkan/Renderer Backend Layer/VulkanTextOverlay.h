@@ -2,7 +2,7 @@
 #ifndef _DYNAMIK_ADGR_VULKAN_TEXT_OVERLAY_H
 #define _DYNAMIK_ADGR_VULKAN_TEXT_OVERLAY_H
 
-#include "core/Engines/ADGR/Backend/Components/TextOverlay.h"
+#include "Engines/ADGR/Backend/Components/TextOverlay.h"
 #include "Graphics/VulkanGraphicsCommandBuffer.h"
 
 #include "Graphics/VulkanGraphicsColorBuffer.h"

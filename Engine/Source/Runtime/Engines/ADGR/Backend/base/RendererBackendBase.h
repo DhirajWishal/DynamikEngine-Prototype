@@ -28,7 +28,7 @@
 #include <deque>
 
 #include <CentralDataHub.h>
-#include "core/Engines/ADGR/rendererFormat.h"
+#include "Engines/ADGR/rendererFormat.h"
 #include "core/Interface/Events/DMKEventComponent.h"
 
 #define INC_PROGRESS					(*myProgress += 1)

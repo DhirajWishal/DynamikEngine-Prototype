@@ -63,8 +63,8 @@ namespace Dynamik {
 				};
 
 				if (uniqueVertices.count(_store) == 0) {
-					uniqueVertices[_store] = static_cast<UI32>(_mesh.data.size());
-					_mesh.data.push_back(_store);
+					uniqueVertices[_store] = static_cast<UI32>(_mesh.vertexDataStore.size());
+					_mesh.vertexDataStore.push_back(_store);
 				}
 
 				_mesh.indexes.push_back(uniqueVertices[_store]);

@@ -139,6 +139,8 @@
   <ItemGroup>
     <None Include="Application.lua" />
     <None Include="paths.txt" />
+    <None Include="Shaders\Startup\shader.frag" />
+    <None Include="Shaders\Startup\shader.vert" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Source\Projects\Dynamik\Dynamik.vcxproj">

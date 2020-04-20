@@ -43,7 +43,7 @@
 
 #include "Renderer Backend Layer/External/stb_font_consolas_24_latin1.inl"
 
-#include "core/Engines/ADGR/rendererFormat.h"
+#include "Engines/ADGR/rendererFormat.h"
 
 namespace Dynamik {
 	namespace ADGR {

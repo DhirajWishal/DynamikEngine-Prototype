@@ -5,9 +5,9 @@
 #include "../Common/VulkanExtensionsManager.h"
 #include "VulkanGraphicsFunctions.h"
 #include "VulkanGraphicsOneTimeCommandBuffer.h"
-#include "core/Engines/ADGR/defines.h"
+#include "Engines/ADGR/defines.h"
 
-
+#include "../Common/VulkanUtilities.h"
 
 namespace Dynamik {
 	namespace ADGR {
@@ -98,8 +98,8 @@ namespace Dynamik {
 				ADGRVulkanGraphicsPipelineInitInfo pipelineInitInfo;
 				pipelineInitInfo.shaders = _shaders;
 				pipelineInitInfo.multisamplerMsaaSamples = msaaSamples;
-				pipelineInitInfo.vertexBindingDescription = Vertex::getBindingDescription(1);
-				pipelineInitInfo.vertexAttributeDescription = Vertex::getAttributeDescriptions();
+				pipelineInitInfo.vertexBindingDescription = VulkanUtilities::getBindingDescription(1);
+				pipelineInitInfo.vertexAttributeDescription = VulkanUtilities::getAttributeDescriptions(descriptor.vertexAttributes, 1);
 				pipelineInitInfo.isTexturesAvailable = _object.texturePaths.size();
 				initializePipeline(pipelineInitInfo);
 

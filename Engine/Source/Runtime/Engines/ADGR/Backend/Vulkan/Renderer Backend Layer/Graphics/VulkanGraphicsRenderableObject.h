@@ -3,7 +3,7 @@
 #define _DYNAMIK_ADGR_VULKAN_GRAPHICS_RENDERABLE_OBJECT_H
 
 #include <vulkan/vulkan.h>
-#include "core/Engines/ADGR/UniformBufferObject.h"
+#include "Engines/ADGR/UniformBufferObject.h"
 
 #include "VulkanGraphicsCore.h"
 #include "VulkanGraphicsShader.h"
@@ -140,7 +140,7 @@ namespace Dynamik {
 				DMK_ADGR_RENDERING_TECHNOLOGY renderTechnology = DMK_ADGR_RENDERING_TECHNOLOGY::DMK_ADGR_RENDER_INDEXED;
 			};
 
-			class VulkanGraphicsRenderableObject : public GameObject {
+			class VulkanGraphicsRenderableObject : public DMKGameObject {
 			public:
 				VulkanGraphicsRenderableObject() {}
 				VulkanGraphicsRenderableObject(ADGRVulkanGraphicsRenderableObjectInitInfo info)

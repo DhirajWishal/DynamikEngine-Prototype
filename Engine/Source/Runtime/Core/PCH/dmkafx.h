@@ -24,6 +24,7 @@
 #include <glm/gtx/hash.hpp>
 
 #include <iostream>
+#include <sstream>
 #include <fstream>
 #include <stdexcept>
 #include <algorithm>
@@ -48,6 +49,7 @@
 
 #if defined(DMK_USE_VULKAN)
 
+#include <GLEW/glew-2.1.0/include/GL/glew.h>
 #include <GLFW/glfw3.h>
 
 #include <load_ktx.hpp>

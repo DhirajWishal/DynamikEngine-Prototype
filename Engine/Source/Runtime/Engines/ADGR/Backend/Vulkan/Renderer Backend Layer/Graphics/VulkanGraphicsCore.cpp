@@ -4,7 +4,7 @@
 #include "../Common/VulkanValidator.h"
 #include "../Common/VulkanExtensionsManager.h"
 #include "VulkanGraphicsFunctions.h"
-#include "core/Engines/ADGR/defines.h"
+#include "Engines/ADGR/defines.h"
 
 
 

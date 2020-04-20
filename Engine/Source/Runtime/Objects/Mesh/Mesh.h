@@ -3,6 +3,7 @@
 #define _DYNAMIK_MESH_H
 
 #include "Public/Array.h"
+#include "GameObjectDescriptors.h"
 
 namespace Dynamik {
 	struct MeshPointStore {
@@ -22,8 +23,15 @@ namespace Dynamik {
 		~Mesh() {}
 
 		CCPTR name = "";
-		ARRAY<MeshPointStore> data;
+		ARRAY<MeshPointStore> vertexDataStore;
 		ARRAY<UI32> indexes;
+
+		UI32 allocatableSize(ARRAY<DMKVertexAttribute> attributes);
+		void packData(ARRAY<DMKVertexAttribute> attributes, VPTR data);
+
+	private:
+		ARRAY<F32> _getAttributeData(DMKDataType type, ARRAY<F32> data);
+		UI32 _getNextPointerAddress(DMKVertexAttribute attribute);
 	};
 }
 

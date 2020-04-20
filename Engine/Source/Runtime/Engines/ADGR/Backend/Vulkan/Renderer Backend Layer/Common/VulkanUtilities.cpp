@@ -1,36 +1,76 @@
 #include "dmkafx.h"
 #include "VulkanUtilities.h"
 
+#include "GameObjectDescriptors.h"
+
 namespace Dynamik {
 	namespace ADGR {
 		namespace Backend {
-			void _displayVertexData(const Vertex& vertex)
+			ARRAY<VkVertexInputBindingDescription> VulkanUtilities::getBindingDescription(ARRAY<DMKVertexAttribute> attributes, UI32 bindCount)
 			{
-				printf("Position (X, Y, Z): %f %f %f\n", vertex.Position.x, vertex.Position.y, vertex.Position.z);
-				//printf("Color (R, G, B, A): %f %f %f %f\n", vertex.Color.r, vertex.Color.g, vertex.Color.b, vertex.Color.)
-			}
+				ARRAY<VkVertexInputBindingDescription> bindingDescription(bindCount);
 
-			void VulkanUtilities::displayVertexBufferContent(VkDevice logicalDevice, VkBuffer buffer, VkDeviceMemory bufferMemory)
-			{
-				UI32 _baseSize = sizeof(Vertex);
-
-				VkMemoryRequirements _memoryReq;
-				vkGetBufferMemoryRequirements(logicalDevice, buffer, &_memoryReq);
-
-				UI32 _vertexCount = _memoryReq.size / _baseSize;
-
-				void* data = nullptr;
-				if (vkMapMemory(logicalDevice, bufferMemory, 0, _memoryReq.size, 0, &data) != VK_SUCCESS)
-					DMK_CORE_FATAL("Unable to read buffer memory!");
-
-				for (UI32 _itr = 0; _itr < _vertexCount; _itr++)
-				{
-					Vertex* _vertexData = nullptr;
-					memcpy(_vertexData, (void*)((UI64)data + (_baseSize * _itr)), _baseSize);
-					_displayVertexData(*_vertexData);
+				for (int i = 0; i < bindCount; i++) {
+					bindingDescription[i].binding = i;
+					bindingDescription[i].stride = DMKVertexBufferObjectDescriptor::vertexByteSize(attributes);
+					bindingDescription[i].inputRate = VK_VERTEX_INPUT_RATE_VERTEX;
 				}
 
-				vkUnmapMemory(logicalDevice, bufferMemory);
+				return bindingDescription;
+			}
+
+			ARRAY<VkVertexInputAttributeDescription> VulkanUtilities::getAttributeDescriptions(ARRAY<DMKVertexAttribute> attributes, UI32 binding)
+			{
+				ARRAY<VkVertexInputAttributeDescription> attributeDescriptions;
+				UI32 _previousTypeSize = 0;
+
+				for (UI32 _index = 0; _index < attributes.size(); _index++)
+				{
+					VkVertexInputAttributeDescription _description = {};
+					_description.binding = binding;
+					_description.location = _index;
+					_description.format = vertexAttributeTypeToVkFormat(attributes[_index].type);
+					_description.offset = _previousTypeSize;
+					attributeDescriptions.pushBack(_description);
+
+					_previousTypeSize += (UI32)attributes[_index].type;
+				}
+
+				return attributeDescriptions;
+			}
+			
+			VkFormat VulkanUtilities::vertexAttributeTypeToVkFormat(DMKDataType type)
+			{
+				const UI32 _baseByteSize = sizeof(F32);
+
+				switch ((UI32)type)
+				{
+				case (_baseByteSize * 1):
+					return VkFormat::VK_FORMAT_R32_SFLOAT;
+					break;
+
+				case (_baseByteSize * 2):
+					return VkFormat::VK_FORMAT_R32G32_SFLOAT;
+					break;
+
+				case (_baseByteSize * 3):
+					return VkFormat::VK_FORMAT_R32G32B32_SFLOAT;
+					break;
+
+				case (_baseByteSize * 4):
+					return VkFormat::VK_FORMAT_R32G32B32A32_SFLOAT;
+					break;
+
+				case (_baseByteSize * 9):
+					return VkFormat::VK_FORMAT_R32_SFLOAT;
+					break;
+
+				case (_baseByteSize * 16):
+					return VkFormat::VK_FORMAT_R32_SFLOAT;
+					break;
+				}
+
+				return VkFormat::VK_FORMAT_UNDEFINED;
 			}
 		}
 	}

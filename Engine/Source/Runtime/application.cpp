@@ -1,9 +1,15 @@
 #include "dmkafx.h"
 #include "Application.h"
 
+#include "Engines/ADGR/StartupRenderer/StartupRenderer.h"
+
 namespace Dynamik {	
 	void Application::initializeInstance(DMKInstanceDescriptor descriptor)
 	{
+		ADGR::StartupRenderer::initialize();
+		ADGR::StartupRenderer::initializeShaders();
+		ADGR::StartupRenderer::initializeVertexBuffers();
+		ADGR::StartupRenderer::loadTexure("E:/Projects/Dynamik Engine/Versions/Dynamik (Prototype)/Dependencies/Assets/icons/Dynamik.jpg");
 		instance();
 	}
 

@@ -149,6 +149,7 @@
     <ClInclude Include="..\..\Runtime\Core\Algorithm\Public\Sort.h" />
     <ClInclude Include="..\..\Runtime\Core\Algorithm\Public\Swap.h" />
     <ClInclude Include="..\..\Runtime\Core\DataTypes\DataTypesLib.h" />
+    <ClInclude Include="..\..\Runtime\Core\DataTypes\Dynamik\DMKDataType.h" />
     <ClInclude Include="..\..\Runtime\Core\DataTypes\Dynamik\DMKVertex.h" />
     <ClInclude Include="..\..\Runtime\Core\DataTypes\Dynamik\containers.h" />
     <ClInclude Include="..\..\Runtime\Core\DataTypes\Dynamik\internalFormat.h" />
@@ -267,6 +268,9 @@
     <ClInclude Include="..\..\Runtime\Engines\ADGR\Renderer.h" />
     <ClInclude Include="..\..\Runtime\Engines\ADGR\Renderer3D.h" />
     <ClInclude Include="..\..\Runtime\Engines\ADGR\RendererThread.h" />
+    <ClInclude Include="..\..\Runtime\Engines\ADGR\StartupRenderer\Backend\Shader.h" />
+    <ClInclude Include="..\..\Runtime\Engines\ADGR\StartupRenderer\Backend\Texture.h" />
+    <ClInclude Include="..\..\Runtime\Engines\ADGR\StartupRenderer\Backend\VertexBuffer.h" />
     <ClInclude Include="..\..\Runtime\Engines\ADGR\StartupRenderer\StartupRenderer.h" />
     <ClInclude Include="..\..\Runtime\Engines\ADGR\UniformBufferObject.h" />
     <ClInclude Include="..\..\Runtime\Engines\ADGR\Wrapper\dll_wrapper.h" />
@@ -421,6 +425,9 @@
     <ClCompile Include="..\..\Runtime\Engines\ADGR\Renderer.cpp" />
     <ClCompile Include="..\..\Runtime\Engines\ADGR\Renderer3D.cpp" />
     <ClCompile Include="..\..\Runtime\Engines\ADGR\RendererThread.cpp" />
+    <ClCompile Include="..\..\Runtime\Engines\ADGR\StartupRenderer\Backend\Shader.cpp" />
+    <ClCompile Include="..\..\Runtime\Engines\ADGR\StartupRenderer\Backend\Texture.cpp" />
+    <ClCompile Include="..\..\Runtime\Engines\ADGR\StartupRenderer\Backend\VertexBuffer.cpp" />
     <ClCompile Include="..\..\Runtime\Engines\ADGR\StartupRenderer\StartupRenderer.cpp" />
     <ClCompile Include="..\..\Runtime\Engines\ADGR\Wrapper\dll_wrapper.cpp" />
     <ClCompile Include="..\..\Runtime\Engines\ADGR\Wrapper\internal_wrapper.cpp" />
@@ -435,11 +442,14 @@
     <ClCompile Include="..\..\Runtime\Engines\Intellect\Backend\Maths\mathDefinitions.cpp" />
     <ClCompile Include="..\..\Runtime\Events\EventManager.cpp" />
     <ClCompile Include="..\..\Runtime\GameLibraries\GameObject.cpp" />
+    <ClCompile Include="..\..\Runtime\GameLibraries\GameObjectDescriptors.cpp" />
     <ClCompile Include="..\..\Runtime\Managers\Asset\AssetManager.cpp" />
     <ClCompile Include="..\..\Runtime\Networking\Backend\client.cpp" />
     <ClCompile Include="..\..\Runtime\Networking\Backend\server.cpp" />
     <ClCompile Include="..\..\Runtime\Objects\Mesh\Mesh.cpp" />
-    <ClCompile Include="..\..\Runtime\Objects\Texture\Texture.cpp" />
+    <ClCompile Include="..\..\Runtime\Objects\Texture\Texture.cpp">
+      <ObjectFileName>$(IntDir)\Texture1.obj</ObjectFileName>
+    </ClCompile>
     <ClCompile Include="..\..\Runtime\Platform\Windows\Window\WindowManager.cpp" />
     <ClCompile Include="..\..\Runtime\Platform\Windows\file\daiFileManager.cpp" />
     <ClCompile Include="..\..\Runtime\Platform\Windows\file\duiFileManager.cpp" />

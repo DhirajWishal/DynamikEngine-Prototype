@@ -115,6 +115,9 @@
     <Filter Include="Runtime\Engines\ADGR\StartupRenderer">
       <UniqueIdentifier>{E749D32B-D330-9523-7C81-FB4068470E8A}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Runtime\Engines\ADGR\StartupRenderer\Backend">
+      <UniqueIdentifier>{9E477009-8A5A-7062-3344-4D4F1F360DB0}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Runtime\Engines\ADGR\Wrapper">
       <UniqueIdentifier>{5ECB6775-4A86-5721-F33D-D06BDFD7A1B1}</UniqueIdentifier>
     </Filter>
@@ -245,6 +248,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Runtime\Core\DataTypes\DataTypesLib.h">
       <Filter>Runtime\Core\DataTypes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Runtime\Core\DataTypes\Dynamik\DMKDataType.h">
+      <Filter>Runtime\Core\DataTypes\Dynamik</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Runtime\Core\DataTypes\Dynamik\DMKVertex.h">
       <Filter>Runtime\Core\DataTypes\Dynamik</Filter>
@@ -599,6 +605,15 @@
     </ClInclude>
     <ClInclude Include="..\..\Runtime\Engines\ADGR\RendererThread.h">
       <Filter>Runtime\Engines\ADGR</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Runtime\Engines\ADGR\StartupRenderer\Backend\Shader.h">
+      <Filter>Runtime\Engines\ADGR\StartupRenderer\Backend</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Runtime\Engines\ADGR\StartupRenderer\Backend\Texture.h">
+      <Filter>Runtime\Engines\ADGR\StartupRenderer\Backend</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Runtime\Engines\ADGR\StartupRenderer\Backend\VertexBuffer.h">
+      <Filter>Runtime\Engines\ADGR\StartupRenderer\Backend</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Runtime\Engines\ADGR\StartupRenderer\StartupRenderer.h">
       <Filter>Runtime\Engines\ADGR\StartupRenderer</Filter>
@@ -1052,6 +1067,15 @@
     <ClCompile Include="..\..\Runtime\Engines\ADGR\RendererThread.cpp">
       <Filter>Runtime\Engines\ADGR</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Runtime\Engines\ADGR\StartupRenderer\Backend\Shader.cpp">
+      <Filter>Runtime\Engines\ADGR\StartupRenderer\Backend</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Runtime\Engines\ADGR\StartupRenderer\Backend\Texture.cpp">
+      <Filter>Runtime\Engines\ADGR\StartupRenderer\Backend</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Runtime\Engines\ADGR\StartupRenderer\Backend\VertexBuffer.cpp">
+      <Filter>Runtime\Engines\ADGR\StartupRenderer\Backend</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Runtime\Engines\ADGR\StartupRenderer\StartupRenderer.cpp">
       <Filter>Runtime\Engines\ADGR\StartupRenderer</Filter>
     </ClCompile>
@@ -1092,6 +1116,9 @@
       <Filter>Runtime\Events</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Runtime\GameLibraries\GameObject.cpp">
+      <Filter>Runtime\GameLibraries</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Runtime\GameLibraries\GameObjectDescriptors.cpp">
       <Filter>Runtime\GameLibraries</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Runtime\Managers\Asset\AssetManager.cpp">

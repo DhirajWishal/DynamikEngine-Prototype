@@ -4,6 +4,9 @@
 
 #include <vulkan/vulkan.h>
 
+#include "Public/Array.h"
+#include "GameObjectDescriptors.h"
+
 namespace Dynamik {
 	namespace ADGR {
 		namespace Backend {
@@ -13,7 +16,10 @@ namespace Dynamik {
 			public:
 				~VulkanUtilities() {}
 
-				static void displayVertexBufferContent(VkDevice logicalDevice, VkBuffer buffer, VkDeviceMemory bufferMemory);
+				static ARRAY<VkVertexInputBindingDescription> getBindingDescription(ARRAY<DMKVertexAttribute> attributes, UI32 bindCount = 1);
+				static ARRAY<VkVertexInputAttributeDescription> getAttributeDescriptions(ARRAY<DMKVertexAttribute> attributes, UI32 binding = 1);
+
+				static VkFormat vertexAttributeTypeToVkFormat(DMKDataType type);
 			};
 		}
 	}

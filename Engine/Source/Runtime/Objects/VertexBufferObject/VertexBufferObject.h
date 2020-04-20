@@ -2,7 +2,7 @@
 #ifndef _DYNAMIK_VERTEX_BUFFER_OBJECT_H
 #define _DYNAMIK_VERTEX_BUFFER_OBJECT_H
 
-#include "../DMKObject.h"
+#include "../DMKObject/DMKObject.h"
 #include "../IndexBufferObject/IndexBufferObjectUI8.h"
 #include "../IndexBufferObject/IndexBufferObjectUI16.h"
 #include "../IndexBufferObject/IndexBufferObjectUI32.h"

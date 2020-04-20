@@ -16,7 +16,7 @@
 #include "core/core.h"
 #include "rendererCommandQueue.h"
 
-#include "Platform.h"
+
 
 #include "GameObject.h"
 #include "core/Interface/Events/DMKEventComponent.h"

@@ -80,7 +80,7 @@
       <PrecompiledHeaderFile>dmkafx.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>DMK_PLATFORM_WINDOWS;DMK_BUILD_DLL;_WINDLL;GLFW_INCLUDE_VULKAN;DMK_USE_VULKAN;GLFW_INCLUDE_NONE;DMK_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\Libraries\Local;$(SolutionDir)Engine\Source\Runtime;$(SolutionDir)Engine\Source\Runtime\Core\PCH;$(SolutionDir)Engine\Source\Runtime\Core\Algorithm;$(SolutionDir)Engine\Source\Runtime\Core\DataTypes;$(SolutionDir)Engine\Source\Runtime\Core\Memory;$(SolutionDir)Engine\Source\Runtime\Core\System;$(SolutionDir)Engine\Source\Runtime\GameLibraries;$(SolutionDir)Dependencies\Libraries\External\glfw\include;$(SolutionDir)Dependencies\GLEW\include;$(SolutionDir)Dependencies\Libraries\External\glm;$(SolutionDir)Dependencies\Libraries\External\stb;$(SolutionDir)Dependencies\Libraries\External\tinyobjloader;$(SolutionDir)Dependencies\Libraries\Local\irrKlang\include;$(SolutionDir)Dependencies\Libraries\Local\assimp;$(SolutionDir)Dependencies\Libraries\External\Vulkan\include;$(SolutionDir)Dependencies\Libraries\External\gli\gli;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\Libraries\Local;$(SolutionDir)Engine\Source\Runtime;$(SolutionDir)Engine\Source\Runtime\Core\PCH;$(SolutionDir)Engine\Source\Runtime\Core\Algorithm;$(SolutionDir)Engine\Source\Runtime\Core\DataTypes;$(SolutionDir)Engine\Source\Runtime\Core\Memory;$(SolutionDir)Engine\Source\Runtime\Core\System;$(SolutionDir)Engine\Source\Runtime\GameLibraries;$(SolutionDir)Dependencies\Programs\Debugger\src;$(SolutionDir)Dependencies\Programs\DevCon\src;$(SolutionDir)Dependencies\Libraries\External\glfw\include;$(SolutionDir)Dependencies\GLEW\include;$(SolutionDir)Dependencies\Libraries\External\glm;$(SolutionDir)Dependencies\Libraries\External\stb;$(SolutionDir)Dependencies\Libraries\External\tinyobjloader;$(SolutionDir)Dependencies\Libraries\Local\irrKlang\include;$(SolutionDir)Dependencies\Libraries\Local\assimp;$(SolutionDir)Dependencies\Libraries\External\Vulkan\include;$(SolutionDir)Dependencies\Libraries\External\gli\gli;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
@@ -100,7 +100,7 @@
       <PrecompiledHeaderFile>dmkafx.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>DMK_PLATFORM_WINDOWS;DMK_BUILD_DLL;_WINDLL;GLFW_INCLUDE_VULKAN;DMK_USE_VULKAN;GLFW_INCLUDE_NONE;DMK_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\Libraries\Local;$(SolutionDir)Engine\Source\Runtime;$(SolutionDir)Engine\Source\Runtime\Core\PCH;$(SolutionDir)Engine\Source\Runtime\Core\Algorithm;$(SolutionDir)Engine\Source\Runtime\Core\DataTypes;$(SolutionDir)Engine\Source\Runtime\Core\Memory;$(SolutionDir)Engine\Source\Runtime\Core\System;$(SolutionDir)Engine\Source\Runtime\GameLibraries;$(SolutionDir)Dependencies\Libraries\External\glfw\include;$(SolutionDir)Dependencies\GLEW\include;$(SolutionDir)Dependencies\Libraries\External\glm;$(SolutionDir)Dependencies\Libraries\External\stb;$(SolutionDir)Dependencies\Libraries\External\tinyobjloader;$(SolutionDir)Dependencies\Libraries\Local\irrKlang\include;$(SolutionDir)Dependencies\Libraries\Local\assimp;$(SolutionDir)Dependencies\Libraries\External\Vulkan\include;$(SolutionDir)Dependencies\Libraries\External\gli\gli;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\Libraries\Local;$(SolutionDir)Engine\Source\Runtime;$(SolutionDir)Engine\Source\Runtime\Core\PCH;$(SolutionDir)Engine\Source\Runtime\Core\Algorithm;$(SolutionDir)Engine\Source\Runtime\Core\DataTypes;$(SolutionDir)Engine\Source\Runtime\Core\Memory;$(SolutionDir)Engine\Source\Runtime\Core\System;$(SolutionDir)Engine\Source\Runtime\GameLibraries;$(SolutionDir)Dependencies\Programs\Debugger\src;$(SolutionDir)Dependencies\Programs\DevCon\src;$(SolutionDir)Dependencies\Libraries\External\glfw\include;$(SolutionDir)Dependencies\GLEW\include;$(SolutionDir)Dependencies\Libraries\External\glm;$(SolutionDir)Dependencies\Libraries\External\stb;$(SolutionDir)Dependencies\Libraries\External\tinyobjloader;$(SolutionDir)Dependencies\Libraries\Local\irrKlang\include;$(SolutionDir)Dependencies\Libraries\Local\assimp;$(SolutionDir)Dependencies\Libraries\External\Vulkan\include;$(SolutionDir)Dependencies\Libraries\External\gli\gli;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -124,7 +124,7 @@
       <PrecompiledHeaderFile>dmkafx.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>DMK_PLATFORM_WINDOWS;DMK_BUILD_DLL;_WINDLL;GLFW_INCLUDE_VULKAN;DMK_USE_VULKAN;GLFW_INCLUDE_NONE;DMK_DISTRIBUTION;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\Libraries\Local;$(SolutionDir)Engine\Source\Runtime;$(SolutionDir)Engine\Source\Runtime\Core\PCH;$(SolutionDir)Engine\Source\Runtime\Core\Algorithm;$(SolutionDir)Engine\Source\Runtime\Core\DataTypes;$(SolutionDir)Engine\Source\Runtime\Core\Memory;$(SolutionDir)Engine\Source\Runtime\Core\System;$(SolutionDir)Engine\Source\Runtime\GameLibraries;$(SolutionDir)Dependencies\Libraries\External\glfw\include;$(SolutionDir)Dependencies\GLEW\include;$(SolutionDir)Dependencies\Libraries\External\glm;$(SolutionDir)Dependencies\Libraries\External\stb;$(SolutionDir)Dependencies\Libraries\External\tinyobjloader;$(SolutionDir)Dependencies\Libraries\Local\irrKlang\include;$(SolutionDir)Dependencies\Libraries\Local\assimp;$(SolutionDir)Dependencies\Libraries\External\Vulkan\include;$(SolutionDir)Dependencies\Libraries\External\gli\gli;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\Libraries\Local;$(SolutionDir)Engine\Source\Runtime;$(SolutionDir)Engine\Source\Runtime\Core\PCH;$(SolutionDir)Engine\Source\Runtime\Core\Algorithm;$(SolutionDir)Engine\Source\Runtime\Core\DataTypes;$(SolutionDir)Engine\Source\Runtime\Core\Memory;$(SolutionDir)Engine\Source\Runtime\Core\System;$(SolutionDir)Engine\Source\Runtime\GameLibraries;$(SolutionDir)Dependencies\Programs\Debugger\src;$(SolutionDir)Dependencies\Programs\DevCon\src;$(SolutionDir)Dependencies\Libraries\External\glfw\include;$(SolutionDir)Dependencies\GLEW\include;$(SolutionDir)Dependencies\Libraries\External\glm;$(SolutionDir)Dependencies\Libraries\External\stb;$(SolutionDir)Dependencies\Libraries\External\tinyobjloader;$(SolutionDir)Dependencies\Libraries\Local\irrKlang\include;$(SolutionDir)Dependencies\Libraries\Local\assimp;$(SolutionDir)Dependencies\Libraries\External\Vulkan\include;$(SolutionDir)Dependencies\Libraries\External\gli\gli;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -143,8 +143,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\Runtime\AssetIndexBlock.h" />
-    <ClInclude Include="..\..\Runtime\AssetLoader.h" />
+    <ClInclude Include="..\..\Runtime\Application.h" />
     <ClInclude Include="..\..\Runtime\Core\Algorithm\AlgorithmLib.h" />
     <ClInclude Include="..\..\Runtime\Core\Algorithm\Public\CubemapCreator.h" />
     <ClInclude Include="..\..\Runtime\Core\Algorithm\Public\Sort.h" />
@@ -268,6 +267,7 @@
     <ClInclude Include="..\..\Runtime\Engines\ADGR\Renderer.h" />
     <ClInclude Include="..\..\Runtime\Engines\ADGR\Renderer3D.h" />
     <ClInclude Include="..\..\Runtime\Engines\ADGR\RendererThread.h" />
+    <ClInclude Include="..\..\Runtime\Engines\ADGR\StartupRenderer\StartupRenderer.h" />
     <ClInclude Include="..\..\Runtime\Engines\ADGR\UniformBufferObject.h" />
     <ClInclude Include="..\..\Runtime\Engines\ADGR\Wrapper\dll_wrapper.h" />
     <ClInclude Include="..\..\Runtime\Engines\ADGR\Wrapper\internal_wrapper.h" />
@@ -289,63 +289,61 @@
     <ClInclude Include="..\..\Runtime\Engines\Intellect\Backend\Intellect\neuralNetwork.h" />
     <ClInclude Include="..\..\Runtime\Engines\Intellect\Backend\Maths\Sigmoid.h" />
     <ClInclude Include="..\..\Runtime\Engines\Intellect\Intellect.h" />
+    <ClInclude Include="..\..\Runtime\Events\DMKDropPathEventComponent.h" />
+    <ClInclude Include="..\..\Runtime\Events\DMKEventComponent.h" />
+    <ClInclude Include="..\..\Runtime\Events\DMKKeyEventComponent.h" />
+    <ClInclude Include="..\..\Runtime\Events\DMKMouseButtonEventComponent.h" />
+    <ClInclude Include="..\..\Runtime\Events\DMKMouseScrollEventComponent.h" />
+    <ClInclude Include="..\..\Runtime\Events\DMKTextEventComponent.h" />
+    <ClInclude Include="..\..\Runtime\Events\DMKWindowResizeEventComponent.h" />
+    <ClInclude Include="..\..\Runtime\Events\EventManager.h" />
+    <ClInclude Include="..\..\Runtime\Events\keyCodes.h" />
     <ClInclude Include="..\..\Runtime\GameLibraries\Camera.h" />
     <ClInclude Include="..\..\Runtime\GameLibraries\GameObject.h" />
+    <ClInclude Include="..\..\Runtime\GameLibraries\GameObjectDescriptors.h" />
     <ClInclude Include="..\..\Runtime\GameLibraries\KeyBingings.h" />
     <ClInclude Include="..\..\Runtime\GameLibraries\Level.h" />
     <ClInclude Include="..\..\Runtime\GameLibraries\Material.h" />
     <ClInclude Include="..\..\Runtime\GameLibraries\Scene.h" />
     <ClInclude Include="..\..\Runtime\GameLibraries\SkyboxObject.h" />
-    <ClInclude Include="..\..\Runtime\Interface\Events\DMKDropPathEventComponent.h" />
-    <ClInclude Include="..\..\Runtime\Interface\Events\DMKEventComponent.h" />
-    <ClInclude Include="..\..\Runtime\Interface\Events\DMKKeyEventComponent.h" />
-    <ClInclude Include="..\..\Runtime\Interface\Events\DMKMouseButtonEventComponent.h" />
-    <ClInclude Include="..\..\Runtime\Interface\Events\DMKMouseScrollEventComponent.h" />
-    <ClInclude Include="..\..\Runtime\Interface\Events\DMKTextEventComponent.h" />
-    <ClInclude Include="..\..\Runtime\Interface\Events\DMKWindowResizeEventComponent.h" />
-    <ClInclude Include="..\..\Runtime\Interface\Events\EventManager.h" />
-    <ClInclude Include="..\..\Runtime\Interface\Events\keyCodes.h" />
-    <ClInclude Include="..\..\Runtime\Interface\Window\DMKWindowComponent.h" />
-    <ClInclude Include="..\..\Runtime\Interface\Window\Windows\WindowManager.h" />
+    <ClInclude Include="..\..\Runtime\Managers\Asset\AssetManager.h" />
     <ClInclude Include="..\..\Runtime\Managers\Managers.h" />
-    <ClInclude Include="..\..\Runtime\Managers\Platform\Windows.h" />
-    <ClInclude Include="..\..\Runtime\Managers\Platform\Windows\file\daiFileManager.h" />
-    <ClInclude Include="..\..\Runtime\Managers\Platform\Windows\file\duiFileManager.h" />
-    <ClInclude Include="..\..\Runtime\Managers\Platform\Windows\file\fileManager.h" />
-    <ClInclude Include="..\..\Runtime\Managers\Platform\Windows\file\readFile.h" />
-    <ClInclude Include="..\..\Runtime\Managers\Platform\Windows\resource\imageLoader.h" />
-    <ClInclude Include="..\..\Runtime\Managers\Platform\Windows\resource\loadIcon.h" />
-    <ClInclude Include="..\..\Runtime\Managers\Platform\Windows\resource\modelManager.h" />
-    <ClInclude Include="..\..\Runtime\Managers\Platform\Windows\resource\objectLoader.h" />
-    <ClInclude Include="..\..\Runtime\Managers\Platform\Windows\thread\ExecutionHandle.h" />
-    <ClInclude Include="..\..\Runtime\Managers\Platform\Windows\thread\InternalThread.h" />
-    <ClInclude Include="..\..\Runtime\Managers\Platform\Windows\thread\threadManager.h" />
-    <ClInclude Include="..\..\Runtime\Managers\Platform\Windows\window.h" />
     <ClInclude Include="..\..\Runtime\Networking\Backend\client.h" />
     <ClInclude Include="..\..\Runtime\Networking\Backend\client\Client.h" />
     <ClInclude Include="..\..\Runtime\Networking\Backend\server.h" />
     <ClInclude Include="..\..\Runtime\Networking\Backend\server\Server.h" />
     <ClInclude Include="..\..\Runtime\Networking\Networking.h" />
-    <ClInclude Include="..\..\Runtime\Objects\DMKObject.h" />
+    <ClInclude Include="..\..\Runtime\Objects\DMKObject\DMKObject.h" />
     <ClInclude Include="..\..\Runtime\Objects\IndexBufferObject\IndexBufferObject.h" />
     <ClInclude Include="..\..\Runtime\Objects\IndexBufferObject\IndexBufferObjectUI16.h" />
     <ClInclude Include="..\..\Runtime\Objects\IndexBufferObject\IndexBufferObjectUI32.h" />
     <ClInclude Include="..\..\Runtime\Objects\IndexBufferObject\IndexBufferObjectUI8.h" />
+    <ClInclude Include="..\..\Runtime\Objects\InternalFormat\InteralFormat.h" />
+    <ClInclude Include="..\..\Runtime\Objects\Mesh\Mesh.h" />
     <ClInclude Include="..\..\Runtime\Objects\RenderComponent\RenderComponent.h" />
     <ClInclude Include="..\..\Runtime\Objects\Texture\Texture.h" />
     <ClInclude Include="..\..\Runtime\Objects\UniformBufferObject\UniformBufferObject.h" />
     <ClInclude Include="..\..\Runtime\Objects\VertexBufferObject\VertexBufferObject.h" />
     <ClInclude Include="..\..\Runtime\Platform\Windows.h" />
     <ClInclude Include="..\..\Runtime\Platform\Windows\DLLInterface.h" />
-    <ClInclude Include="..\..\Runtime\Platform\Windows\window.h" />
+    <ClInclude Include="..\..\Runtime\Platform\Windows\Window\WindowManager.h" />
+    <ClInclude Include="..\..\Runtime\Platform\Windows\file\daiFileManager.h" />
+    <ClInclude Include="..\..\Runtime\Platform\Windows\file\duiFileManager.h" />
+    <ClInclude Include="..\..\Runtime\Platform\Windows\file\fileManager.h" />
+    <ClInclude Include="..\..\Runtime\Platform\Windows\file\readFile.h" />
+    <ClInclude Include="..\..\Runtime\Platform\Windows\resource\imageLoader.h" />
+    <ClInclude Include="..\..\Runtime\Platform\Windows\resource\loadIcon.h" />
+    <ClInclude Include="..\..\Runtime\Platform\Windows\resource\modelManager.h" />
+    <ClInclude Include="..\..\Runtime\Platform\Windows\resource\objectLoader.h" />
+    <ClInclude Include="..\..\Runtime\Platform\Windows\thread\ExecutionHandle.h" />
+    <ClInclude Include="..\..\Runtime\Platform\Windows\thread\InternalThread.h" />
+    <ClInclude Include="..\..\Runtime\Platform\Windows\thread\threadManager.h" />
     <ClInclude Include="..\..\Runtime\Utilities\Functions\DMK_Functions.h" />
-    <ClInclude Include="..\..\Runtime\application.h" />
     <ClInclude Include="..\..\Runtime\core.h" />
     <ClInclude Include="..\..\Runtime\engineControlUnit.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\Runtime\AssetIndexBlock.cpp" />
-    <ClCompile Include="..\..\Runtime\AssetLoader.cpp" />
+    <ClCompile Include="..\..\Runtime\Application.cpp" />
     <ClCompile Include="..\..\Runtime\Core\Algorithm\Private\CubemapCreator.cpp" />
     <ClCompile Include="..\..\Runtime\Core\DataTypes\Dynamik\internalFormat.cpp" />
     <ClCompile Include="..\..\Runtime\Core\DataTypes\Private\DynamicPointer.cpp" />
@@ -423,6 +421,7 @@
     <ClCompile Include="..\..\Runtime\Engines\ADGR\Renderer.cpp" />
     <ClCompile Include="..\..\Runtime\Engines\ADGR\Renderer3D.cpp" />
     <ClCompile Include="..\..\Runtime\Engines\ADGR\RendererThread.cpp" />
+    <ClCompile Include="..\..\Runtime\Engines\ADGR\StartupRenderer\StartupRenderer.cpp" />
     <ClCompile Include="..\..\Runtime\Engines\ADGR\Wrapper\dll_wrapper.cpp" />
     <ClCompile Include="..\..\Runtime\Engines\ADGR\Wrapper\internal_wrapper.cpp" />
     <ClCompile Include="..\..\Runtime\Engines\ADGR\rendererCommandQueue.cpp" />
@@ -434,31 +433,26 @@
     <ClCompile Include="..\..\Runtime\Engines\Audio\Backend\AudioObjectControllers\BasicAudioController.cpp" />
     <ClCompile Include="..\..\Runtime\Engines\Intellect\Backend\Intellect\neuralNetwork.cpp" />
     <ClCompile Include="..\..\Runtime\Engines\Intellect\Backend\Maths\mathDefinitions.cpp" />
+    <ClCompile Include="..\..\Runtime\Events\EventManager.cpp" />
     <ClCompile Include="..\..\Runtime\GameLibraries\GameObject.cpp" />
-    <ClCompile Include="..\..\Runtime\Interface\Events\EventManager.cpp" />
-    <ClCompile Include="..\..\Runtime\Interface\Window\Windows\WindowManager.cpp" />
-    <ClCompile Include="..\..\Runtime\Managers\Platform\Windows\file\daiFileManager.cpp" />
-    <ClCompile Include="..\..\Runtime\Managers\Platform\Windows\file\duiFileManager.cpp" />
-    <ClCompile Include="..\..\Runtime\Managers\Platform\Windows\file\fileManager.cpp" />
-    <ClCompile Include="..\..\Runtime\Managers\Platform\Windows\file\readFile.cpp" />
-    <ClCompile Include="..\..\Runtime\Managers\Platform\Windows\resource\imageLoader.cpp" />
-    <ClCompile Include="..\..\Runtime\Managers\Platform\Windows\resource\loadIcon.cpp" />
-    <ClCompile Include="..\..\Runtime\Managers\Platform\Windows\resource\modelManager.cpp" />
-    <ClCompile Include="..\..\Runtime\Managers\Platform\Windows\resource\objectLoader.cpp" />
-    <ClCompile Include="..\..\Runtime\Managers\Platform\Windows\thread\ExecutionHandle.cpp" />
-    <ClCompile Include="..\..\Runtime\Managers\Platform\Windows\thread\InternalThread.cpp" />
-    <ClCompile Include="..\..\Runtime\Managers\Platform\Windows\thread\threadManager.cpp" />
-    <ClCompile Include="..\..\Runtime\Managers\Platform\Windows\window.cpp">
-      <ObjectFileName>$(IntDir)\window1.obj</ObjectFileName>
-    </ClCompile>
+    <ClCompile Include="..\..\Runtime\Managers\Asset\AssetManager.cpp" />
     <ClCompile Include="..\..\Runtime\Networking\Backend\client.cpp" />
     <ClCompile Include="..\..\Runtime\Networking\Backend\server.cpp" />
+    <ClCompile Include="..\..\Runtime\Objects\Mesh\Mesh.cpp" />
     <ClCompile Include="..\..\Runtime\Objects\Texture\Texture.cpp" />
-    <ClCompile Include="..\..\Runtime\Platform\Windows\window.cpp">
-      <ObjectFileName>$(IntDir)\window2.obj</ObjectFileName>
-    </ClCompile>
+    <ClCompile Include="..\..\Runtime\Platform\Windows\Window\WindowManager.cpp" />
+    <ClCompile Include="..\..\Runtime\Platform\Windows\file\daiFileManager.cpp" />
+    <ClCompile Include="..\..\Runtime\Platform\Windows\file\duiFileManager.cpp" />
+    <ClCompile Include="..\..\Runtime\Platform\Windows\file\fileManager.cpp" />
+    <ClCompile Include="..\..\Runtime\Platform\Windows\file\readFile.cpp" />
+    <ClCompile Include="..\..\Runtime\Platform\Windows\resource\imageLoader.cpp" />
+    <ClCompile Include="..\..\Runtime\Platform\Windows\resource\loadIcon.cpp" />
+    <ClCompile Include="..\..\Runtime\Platform\Windows\resource\modelManager.cpp" />
+    <ClCompile Include="..\..\Runtime\Platform\Windows\resource\objectLoader.cpp" />
+    <ClCompile Include="..\..\Runtime\Platform\Windows\thread\ExecutionHandle.cpp" />
+    <ClCompile Include="..\..\Runtime\Platform\Windows\thread\InternalThread.cpp" />
+    <ClCompile Include="..\..\Runtime\Platform\Windows\thread\threadManager.cpp" />
     <ClCompile Include="..\..\Runtime\Utilities\Functions\DMK_Functions.cpp" />
-    <ClCompile Include="..\..\Runtime\application.cpp" />
     <ClCompile Include="..\..\Runtime\engineControlUnit.cpp" />
   </ItemGroup>
   <ItemGroup>

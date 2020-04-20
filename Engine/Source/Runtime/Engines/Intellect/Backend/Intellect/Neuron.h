@@ -14,8 +14,8 @@
 #ifndef _DYNAMIK_INTELLECT_NEURON_H
 #define _DYNAMIK_INTELLECT_NEURON_H
 
-#include "CentralDataHub.h"
-#include "Platform.h"
+
+
 
 namespace Dynamik {
 	namespace Intellect {

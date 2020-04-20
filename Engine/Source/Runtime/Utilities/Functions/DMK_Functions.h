@@ -14,9 +14,6 @@
 #ifndef _DYNAMIK_FUNCTIONS_H
 #define _DYNAMIK_FUNCTIONS_H
 
-#include "CentralDataHub.h"
-#include "Platform.h"
-
 #ifdef min
 #undef min
 #endif

@@ -15,7 +15,7 @@
 #include <glm/gtx/hash.hpp>
 
 #include <vulkan/vulkan.h>
-#include "DataTypesLib/Public/Array.h"
+#include "Public/Array.h"
 
 namespace Dynamik {
 	struct Vertex {

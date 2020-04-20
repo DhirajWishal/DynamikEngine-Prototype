@@ -3,7 +3,7 @@
 #define _DYNAMIK_MANAGERS_H
 
 #ifdef DMK_PLATFORM_WINDOWS
-#include "Platform/Windows.h"
+#include "Asset/AssetManager.h"
 
 #endif
 

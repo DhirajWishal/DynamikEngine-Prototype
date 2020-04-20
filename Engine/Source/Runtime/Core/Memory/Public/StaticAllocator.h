@@ -4,9 +4,9 @@
 
 #include "Allocator.h"
 #include "memoryFunctions.h"
-#include "DataTypesLib/Public/constants.h"
-#include "DataTypesLib/Public/datatypes.h"
-#include "DataTypesLib/Public/Pointer.h"
+#include "Public/constants.h"
+#include "Public/datatypes.h"
+#include "Public/Pointer.h"
 #ifdef DMK_MEMORY_USE_NEW
 #include <memory>
 

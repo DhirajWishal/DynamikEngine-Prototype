@@ -3,8 +3,8 @@
 #ifndef _DYNAMIK_KEY_BINDINGS_H
 #define _DYNAMIK_KEY_BINDINGS_H
 
-#include "keyCodes.h"
-#include "core/core.h"
+#include "Events/keyCodes.h"
+#include "core.h"
 
 namespace Dynamik {
 	/* KEY BINDINGS FOR THE DYNAMIK ENGINE */
@@ -117,6 +117,23 @@ namespace Dynamik {
 			openChat(chat), openDevCon(console), sendMessage(send)
 		{
 		}
+	};
+
+	struct DMKEventCommands {
+		CCPTR fireWeapon = "FireWeapon";
+		CCPTR aimWeapon = "AimWeapon";
+		CCPTR changeWeapon_1 = "ChangeWeapon1";
+		CCPTR changeWeapon_2 = "ChangeWeapon2";
+		CCPTR changeWeapon_3 = "ChangeWeapon3";
+		CCPTR changeToMlee = "ChangeToMlee";
+		CCPTR changeMlee_1 = "ChangeToMlee1";
+		CCPTR changeMlee_2 = "ChangeToMlee2";
+		CCPTR changeMlee_3 = "ChangeToMlee3";
+		CCPTR mleeAttack = "MleeAttach";
+		CCPTR reloadWeapon = "ReloadWeapon";
+		CCPTR pickWeapon = "PickWeapon";
+		CCPTR upgreadWeapon = "UpgradeWeapon";
+		CCPTR throwWeapon = "ThrowWeapon";
 	};
 }
 

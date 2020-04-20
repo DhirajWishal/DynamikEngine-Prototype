@@ -1,0 +1,52 @@
+#pragma once
+#ifndef _DYNAMIK_EVENT_COMPONENT_H
+#define _DYNAMIK_EVENT_COMPONENT_H
+
+#include <GLFW/glfw3.h>
+#include "Public/Pointer.h"
+#include "core.h"
+
+namespace Dynamik {
+	enum class DMK_API DMKEventCategory {
+		DMK_EVENT_CATEGORY_UNKNOWN,
+
+		DMK_EVENT_CATEGORY_KEY,
+		DMK_EVENT_CATEGORY_MOUSE_BUTTON,
+		DMK_EVENT_CATEGORY_MOUSE_SCROLL,
+		DMK_EVENT_CATEGORY_APPLICATION,
+		DMK_EVENT_CATEGORY_JOYSTICK,
+		DMK_EVENT_CATEGORY_TEXT,
+	};
+
+	enum class DMK_API DMKEventType {
+		DMK_EVENT_TYPE_UNKNOWN,
+
+		DMK_EVENT_TYPE_KEY_PRESS,
+		DMK_EVENT_TYPE_KEY_REPEAT,
+		DMK_EVENT_TYPE_KEY_RELEASE,
+
+		DMK_EVENT_TYPE_MOUSE_SCROLL,
+
+		DMK_EVENT_TYPE_MOUSE_BUTTON_PRESS,
+		DMK_EVENT_TYPE_MOUSE_BUTTON_REPEAT,
+		DMK_EVENT_TYPE_MOUSE_BUTTON_RELEASE,
+
+		DMK_EVENT_TYPE_WINDOW_ON_FOCUS,
+		DMK_EVENT_TYPE_WINDOW_OUTOF_FOCUS,
+		DMK_EVENT_TYPE_WINDOW_RESIZE,
+	};
+
+	class DMK_API DMKEventComponent {
+	public:
+		DMKEventComponent() {}
+		DMKEventComponent(DMKEventCategory cat) : category(cat) {}
+		virtual ~DMKEventComponent() {}
+
+		DMKEventCategory category = DMKEventCategory::DMK_EVENT_CATEGORY_KEY;
+		DMKEventType type = DMKEventType::DMK_EVENT_TYPE_KEY_PRESS;
+
+		POINTER<GLFWwindow> window;
+	};
+}
+
+#endif // !_DYNAMIK_EVENT_COMPONENT_H

@@ -2,7 +2,7 @@
 #ifndef _DYNAMIK_MEMORY_FUNCTIONS_H
 #define _DYNAMIK_MEMORY_FUNCTIONS_H
 
-#include "DataTypesLib/Public/Pointer.h"
+#include "Public/Pointer.h"
 
 namespace Dynamik {
 	/* FUNCTION

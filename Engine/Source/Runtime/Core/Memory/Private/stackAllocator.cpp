@@ -1,4 +1,5 @@
-#include "MemoryLib/Public/stackAllocator.h"
+#include "dmkafx.h"
+#include "Public/stackAllocator.h"
 
 namespace Dynamik {
 	StackAllocator::StackAllocator(UI32 size) : Allocator(size)

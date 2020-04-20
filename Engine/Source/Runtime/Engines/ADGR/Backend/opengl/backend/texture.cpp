@@ -3,7 +3,7 @@
 
 #ifdef DMK_USE_OPENGL
 #include "Platform/windows/resource/imageLoader.h"
-#include "Platform.h"
+
 
 namespace Dynamik {
 	namespace ADGR {

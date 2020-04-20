@@ -2,9 +2,9 @@
 #ifndef _DYNAMIK_TEXTURE_H
 #define _DYNAMIK_TEXTURE_H
 
-#include "DataTypesLib/Public/Pointer.h"
-#include "DataTypesLib/Public/datatypes.h"
-#include "../DMKObject.h"
+#include "Public/Pointer.h"
+#include "Public/datatypes.h"
+#include "../DMKObject/DMKObject.h"
 
 namespace Dynamik {
 	enum class DMKTextureFormat {

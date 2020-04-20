@@ -3,7 +3,7 @@
 #define _DYNAMIK_ADGR_VULKAN_VALIDATOR_H
 
 #include <vulkan/vulkan.h>
-#include "DataTypesLib/DataTypesLib.h"
+#include "DataTypesLib.h"
 
 namespace Dynamik {
 	namespace ADGR {

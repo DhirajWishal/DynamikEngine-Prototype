@@ -1,4 +1,5 @@
-#include "DataTypesLib/Public/IndexedArray.h"
+#include "dmkafx.h"
+#include "Public/IndexedArray.h"
 
 namespace Dynamik {
 	IndexedArray::IndexedArray() {}

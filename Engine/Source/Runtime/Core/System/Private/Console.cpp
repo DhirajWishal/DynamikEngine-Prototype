@@ -1,4 +1,5 @@
-#include "SystemLib/Public/Console.h"
+#include "dmkafx.h"
+#include "Public/Console.h"
 #include <iostream>
 
 namespace Dynamik {

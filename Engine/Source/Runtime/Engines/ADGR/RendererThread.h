@@ -2,7 +2,7 @@
 #ifndef _DYNAMIK_ADGR_RENDERER_THREAD_H
 #define _DYNAMIK_ADGR_RENDERER_THREAD_H
 
-#include "Managers.h"
+
 #include "Renderer.h"
 
 namespace Dynamik {

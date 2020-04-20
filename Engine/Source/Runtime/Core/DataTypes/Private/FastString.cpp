@@ -1,4 +1,5 @@
-#include "DataTypesLib/Public/FastString.h"
+#include "dmkafx.h"
+#include "Public/FastString.h"
 #include <codecvt>
 
 namespace Dynamik {

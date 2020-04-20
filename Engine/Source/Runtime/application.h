@@ -1,179 +1,73 @@
 #pragma once
-
 #ifndef _DYNAMIK_APPLICATION_H
 #define _DYNAMIK_APPLICATION_H
 
 #include "core.h"
-
-#include "Engines/Audio/Audio.h"
-
-#include "data store/internalFormat.h"
-#include "object mechanics/loadGameObjects.h"
-#include "Level.h"
-
-#include "Engines/ADGR/Renderer.h"
-#include "Engines/ADGR/Layers/layerStack.h"
+#include "GameObject.h"
 
 #include "Managers/Managers.h"
 
 namespace Dynamik {
-	class DebugObject : public GameObject {
-	public:
-		DebugObject() {}
-		DebugObject(GameObjectProperties props) : GameObject(props) {}
-		~DebugObject() {}
+	enum class DMKRenderingAPI {
+		DMK_RENDERING_API_VULKAN,
+		DMK_RENDERING_API_OPENGL,
+		DMK_RENDERING_API_DIRECTX_12,
 	};
 
-	/* Local internal format instance */
-	class internalFormat : public InternalFormat {
-	public:
-		internalFormat(GameObject* object) : InternalFormat(object) {}
-		~internalFormat() {}
+	enum class DMKInstanceMode {
+		DMK_INSTANCE_MODE_DEBUG,
+		DMK_INSTANCE_MODE_RELEASE,
+		DMK_INSTANCE_MODE_DISTRIBUTE,
 	};
 
-	enum class DMKRendererAPI {
-		DMK_RENDERER_API_VULKAN,
-		DMK_RENDERER_API_DIRECT_X_12,
-		DMK_RENDERER_API_OPENGL,
-
-		DMK_RENDERER_API_UNDEFNED
+	enum class DMKEngineValidationMode {
+		DMK_ENGINE_VALIDATION_MODE_NONE,
+		DMK_ENGINE_VALIDATION_MODE_STD_COUT,
+		DMK_ENGINE_VALIDATION_MODE_TEXT_FILE,
 	};
 
-	struct DMKEngineSettings {
-		std::string myInstanceName = "Dynamik Engine";
-		std::string myInstanceID = "01";
+	struct DMKInstanceDescriptor {
+		CCPTR applicationName = "Dynamik";
+		CCPTR windowTitle = "Dynamik Engine";
 
-		DMKRendererAPI myRendererAPI = DMKRendererAPI::DMK_RENDERER_API_VULKAN;
+		DMKRenderingAPI renderingAPI = DMKRenderingAPI::DMK_RENDERING_API_VULKAN;
+		CCPTR iconPath = "";
+
+		DMKInstanceMode mode = DMKInstanceMode::DMK_INSTANCE_MODE_DEBUG;
+		B1 enableEngineValidation = true;
+		DMKEngineValidationMode validationMode = DMKEngineValidationMode::DMK_ENGINE_VALIDATION_MODE_STD_COUT;
+		CCPTR engineValidationTextOutputPath = "";
+
+		ARRAY<CCPTR> engineStartupImages;
 	};
 
 	class DMK_API Application {
+		Application() {}
+
 	public:
-		Application(ARRAY<Scene*>& gameObjects);
-		virtual ~Application();
+		Application(const Application&) = delete;
+		Application(Application&&) = delete;
+		Application& operator=(const Application&) = delete;
+		Application& operator=(Application&&) = delete;
 
-		void run();
+		static void initializeInstance(DMKInstanceDescriptor descriptor);
 
-		void pushLayer(ADGR::Layer* layer);
-		void pushOverlay(ADGR::Layer* layer);
+		static UI32 addLevel(DMKLevelDescriptor level);
+		static void loadLevel(UI32 levelIndex);
 
-		//void onEvent(std::deque<DMKEventContainer>* events);
+		static void loadScene(UI32 sceneIndex);
 
-		static void showProgress();
+		static UI32 addAsset(DMKGameObject* object);
 
-		void gameObjectInitialization();
-		void getObjectPaths();
-		void getObjectPaths(GameObject* object);
-		void loadObjectData();
-		void initRendererFormats();
-		void initRendererFormats(ARRAY<InternalFormat*>* formats);
-		void initAudioControllers();
-		void initAudioControllers(GameObject* object);
-
-		bool renderableObjectCheck(internalFormat format);
+		static void initializeRenderingEngine();
 
 	private:
-		bool initSuccessful = false;
-		bool canDeleteController = false;
+		static Application& instance();
 
-		ADGR::Renderer myRenderingEngine;
-		ThreadManager myThreadManager;
-
-		ARRAY<internalFormat> internalFormats = {};
-		ARRAY<InternalFormat*> internalFormatsBase = {};
-
-		ARRAY<const void*> references = {};
-
-		ARRAY<Level*> levels = {};
-		ARRAY<Scene*> scenes = {};
-		ARRAY<GameObject*> gameObjects = {};
-		DebugObject myObject;
-		ARRAY<ADGR::RendererFormat*> rendererFormats = {};
-		ARRAY<Audio::BasicAudioController> audioControllers = {};
-
-		ADGR::layerStack layerStack;
-		Audio::AudioEngine myEngine;
-
-		uint32_t sceneCount = 0;
-
-		/* MANAGERS */
-
-		/* THREADS */
+		AssetManager myAssetManager;
+		UI32 levelIndex = 0;
+		UI32 sceneIndex = 0;
 	};
-
-	// Defined by the Client
-	//Application* createApplication();
-	Application* createApplication(ARRAY<Dynamik::Scene*>& gameObjects);
-}
-
-#define DYNAMIK_ENGINE_MAIN()																				\
-int main(int argc, char** argv) {																			\
-	try {																									\
-		auto paths = getTexturePath(readFile("E:/Projects/Dynamik Engine/Dynamik/Application/paths.txt"));	\
-																											\
-		ARRAY<Dynamik::GameObject*> gameObjects = {};													\
-																											\
-		ARRAY<ARRAY<float>> locations = {														\
-			{0.0f,	0.0f,	0.0f},																			\
-			{0.0f,	5.0f,	0.0f},																			\
-			{0.0f,	-5.0f,	0.0f},																			\
-			{0.0f,	10.0f,	0.0f},																			\
-			{0.0f,	-10.0f,	0.0f},																			\
-																											\
-			{5.0f,	0.0f,	0.0f},																			\
-			{5.0f,	5.0f,	0.0f},																			\
-			{5.0f,	-5.0f,	0.0f},																			\
-			{5.0f,	10.0f,	0.0f},																			\
-			{5.0f,	-10.0f,	0.0f},																			\
-																											\
-			{-5.0f,	0.0f,	0.0f},																			\
-			{-5.0f,	5.0f,	0.0f},																			\
-			{-5.0f,	-5.0f,	0.0f},																			\
-			{-5.0f,	10.0f,	0.0f},																			\
-			{-5.0f,	-10.0f,	0.0f},																			\
-																											\
-			{10.0f,	0.0f,	0.0f},																			\
-			{10.0f,	5.0f,	0.0f},																			\
-			{10.0f,	-5.0f,	0.0f},																			\
-			{10.0f,	10.0f,	0.0f},																			\
-			{10.0f,	-10.0f,	0.0f},																			\
-																											\
-			{-10.0f,	0.0f,	0.0f},																		\
-			{-10.0f,	5.0f,	0.0f},																		\
-			{-10.0f,	-5.0f,	0.0f},																		\
-			{-10.0f,	10.0f,	0.0f},																		\
-			{-10.0f,	-10.0f,	0.0f},																		\
-		};																									\
-																											\
-		ARRAY<Dynamik::DMKObjectType> objTypes = {													\
-			Dynamik::DMKObjectType::DMK_OBJECT_TYPE_INTERACTIVE_OBJECT,										\			\
-			Dynamik::DMKObjectType::DMK_OBJECT_TYPE_INTERACTIVE_OBJECT,										\			\
-			Dynamik::DMKObjectType::DMK_OBJECT_TYPE_STATIC_OBJECT,											\				\
-			Dynamik::DMKObjectType::DMK_OBJECT_TYPE_AI,														\			\
-			Dynamik::DMKObjectType::DMK_OBJECT_TYPE_STATIC_OBJECT,											\				\
-		};																									\
-																											\
-		for (int i = 0; i < paths.size(); i++) {															\
-			Dynamik::GameObjectProperties props;															\
-			props.name = "Charlet";																			\
-			props.ID = std::to_string(i);																	\
-			props.location = paths[i];																		\
-			props.transformProperties.location = locations[i];												\
-																											\
-			gameObjects.push_back(charlet(props));															\
-		}																									\
-																											\
-		auto application = Dynamik::createApplication(gameObjects);											\
-		application->run();																					\
-																											\
-		delete application;																					\
-	}																										\
-	catch (std::exception & e) {																			\
-		std::cout << e.what();																				\
-																											\
-		return DMK_FAIL;																					\
-	}																										\
-																																				\
-	return DMK_SUCCESS;																						\
 }
 
 #endif // !_DYNAMIK_APPLICATION_H

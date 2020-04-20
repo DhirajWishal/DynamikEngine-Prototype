@@ -17,28 +17,15 @@
 #define _DYNAMIK_H
 
 /* STD INCLUDES(PRE-COMPILED HEADER) */
-#include "core/object mechanics/submitAsset.h"
 
 /* EXTERNAL INCLUDES */
 
 /* CORE INCLUDES */
-#include "core/utils/DMK_Error.h"
-#include "core/utils/DMK_Math.h"
-#include "core/utils/safeLock.h"
-
-#include "core/Engines/ADGR/Renderer3D.h"
+#include "Application.h"
 
 #include "GameObject.h"
 #include "SkyboxObject.h"
 #include "KeyBingings.h"
 
-#include "DataTypesLib/DataTypesLib.h"
-#include "MemoryLib/MemoryLib.h"
-#include "SystemLib/SystemLib.h"
-#include "AlgorithmLib/AlgorithmLib.h"
-
-#include "CentralDataHub.h"
-#include "Utilities.h"
-#include "Platform.h"
 
 #endif // !_DYNAMIK_H

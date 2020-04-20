@@ -5,8 +5,7 @@
 
 #include <WinSock2.h>
 #include <string>
-#include "Platform.h"
-#include "CentralDataHub.h"
+#include "core.h"
 
 constexpr auto DEFAULT_BUFFER_LENGTH = 512;
 

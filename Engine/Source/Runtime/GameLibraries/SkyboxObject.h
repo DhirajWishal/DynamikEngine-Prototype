@@ -5,11 +5,11 @@
 #include "GameObject.h"
 
 namespace Dynamik {
-	class DMKSkyboxObject : public GameObject {
+	class DMKSkyboxObject : public DMKGameObject {
 	public:
 		DMKSkyboxObject()
 		{
-			myProperties.type = DMKObjectType::DMK_OBJECT_TYPE_SKYBOX;
+			type = DMKObjectType::DMK_OBJECT_TYPE_SKYBOX;
 		}
 		~DMKSkyboxObject() {}
 	};

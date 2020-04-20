@@ -3,7 +3,7 @@
 #ifndef _DYNAMIK_ADGR_VULKAN_TYPENAMES_H
 #define _DYNAMIK_ADGR_VULKAN_TYPENAMES_H
 
-#include "DataTypesLib/Public/Array.h"
+#include "Public/Array.h"
 
 namespace Dynamik {
 	namespace ADGR {

@@ -6,33 +6,12 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\SkyboxDefinition.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="src\engineInstance.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="src\imports.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="src\objectDefinitions.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="src\renderHandler.h">
+    <ClInclude Include="src\Skybox.h">
       <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="src\engineInstance.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="src\objectDefinitions.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="src\renderHandler.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Application.lua" />

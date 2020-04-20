@@ -7,18 +7,15 @@
     <Filter Include="Studio\Core">
       <UniqueIdentifier>{95C9E11C-017F-5A12-8A73-54E9F6275116}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Studio\Core\PCH">
-      <UniqueIdentifier>{1FAF41E5-8B3A-AFA9-944B-329E00560BAA}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\Studio\Core\PCH\studioafx.h">
-      <Filter>Studio\Core\PCH</Filter>
+    <ClInclude Include="..\..\Studio\Core\studioafx.h">
+      <Filter>Studio\Core</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\Studio\Core\PCH\studioafx.cpp">
-      <Filter>Studio\Core\PCH</Filter>
+    <ClCompile Include="..\..\Studio\Core\studioafx.cpp">
+      <Filter>Studio\Core</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Studio\main.cpp">
       <Filter>Studio</Filter>

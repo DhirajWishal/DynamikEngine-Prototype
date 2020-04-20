@@ -3,7 +3,7 @@
 #define _DYNAMIK_ADGR_VULKAN_GRAPHICS_SWAP_CHAIN_H
 
 #include <vulkan/vulkan.h>
-#include "DataTypesLib/Public/Array.h"
+#include "Public/Array.h"
 
 namespace Dynamik {
 	namespace ADGR {

@@ -4,7 +4,7 @@
 #define _DYNAMIK_AUDIO_BACKGROUND_AUDIO_CONTROLLER_H
 
 #include "../AudioObjectController.h"
-#include "Platform.h"
+
 
 namespace Dynamik {
 	namespace Audio {

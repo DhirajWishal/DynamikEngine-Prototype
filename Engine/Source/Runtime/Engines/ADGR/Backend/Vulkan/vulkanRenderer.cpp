@@ -15,8 +15,8 @@
 #include "keyCodes.h"
 
 #include "debugger.h"
-#include "CentralDataHub.h"
-#include "Platform.h"
+
+
 
 #include "Renderer Backend Layer/VulkanReflectObject.h"
 #include "Renderer Backend Layer/VulkanPBRObject.h"
@@ -239,7 +239,7 @@ namespace Dynamik {
 		{
 			for (ADGRVulkan3DObjectData _object : rawObjects)
 			{
-				if (_object.type == DMKObjectType::DMK_OBJECT_TYPE_STATIC_OBJECT)
+				if (_object.type == DMKObjectType::DMK_OBJECT_TYPE_STATIC)
 				{
 					if (_object.isPBR)
 					{
@@ -709,7 +709,7 @@ namespace Dynamik {
 					info.aspectRatio = (F32)myWindowManager.windowWidth / (F32)myWindowManager.windowHeight;
 					_renderObject.updateUniformBuffer(myCameraReflect.updateCamera(eventContainer, info), imageIndex);
 				}
-				else if (_object.type == DMKObjectType::DMK_OBJECT_TYPE_STATIC_OBJECT)
+				else if (_object.type == DMKObjectType::DMK_OBJECT_TYPE_STATIC)
 				{
 					if (_object.enableMaterials)
 					{

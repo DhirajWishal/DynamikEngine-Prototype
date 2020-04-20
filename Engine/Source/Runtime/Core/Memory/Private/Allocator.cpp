@@ -1,4 +1,5 @@
-#include "MemoryLib/Public/Allocator.h"
+#include "dmkafx.h"
+#include "Public/Allocator.h"
 #include <memory>
 
 namespace Dynamik {

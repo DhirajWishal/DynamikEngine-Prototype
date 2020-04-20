@@ -2,9 +2,9 @@
 #ifndef _DYNAMIK_SYSTEM_CONSOLE_H
 #define _DYNAMIK_SYSTEM_CONSOLE_H
 
-#include "DataTypesLib/Public/FastString.h"
-#include "DataTypesLib/Public/Array.h"
-#include "DataTypesLib/Public/Dynamic.h"
+#include "Public/FastString.h"
+#include "Public/Array.h"
+#include "Public/Dynamic.h"
 
 #define TO_CONSOLE(x,...) printf(x, ##__VA_ARGS__)
 

@@ -9,6 +9,7 @@
  DMK_Functions.cpp file.
 */
 
+#include "dmkafx.h"
 #include "DMK_Functions.h"
 #include <codecvt>
 

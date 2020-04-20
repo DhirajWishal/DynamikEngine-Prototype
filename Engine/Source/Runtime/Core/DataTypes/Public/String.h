@@ -3,7 +3,7 @@
 #define _DYNAMIK_DATA_TYPES_STRING_H
 
 #include "datatypes.h"
-#include "MemoryLib/Public/StaticAllocator.h"
+#include "Public/StaticAllocator.h"
 #include "Array.h"
 #include <string>
 

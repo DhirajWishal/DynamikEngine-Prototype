@@ -2,7 +2,7 @@
 #ifndef _DYNAMIK_DESTRUCTION_ENGINE_OBJECT_DESTRUCTION_PROPERTIES_H
 #define _DYNAMIK_DESTRUCTION_ENGINE_OBJECT_DESTRUCTION_PROPERTIES_H
 
-#include "DataTypesLib/Public/datatypes.h"
+#include "Public/datatypes.h"
 #include "DestructionEntity.h"
 
 namespace Dynamik {

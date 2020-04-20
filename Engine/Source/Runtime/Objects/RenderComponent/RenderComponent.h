@@ -3,7 +3,7 @@
 #define _DYNAMIK_RENDER_COMPONENT_H
 
 #include "../Texture/Texture.h"
-#include "DataTypesLib/Public/Array.h"
+#include "Public/Array.h"
 #include "../IndexBufferObject/IndexBufferObject.h"
 #include "../VertexBufferObject/VertexBufferObject.h"
 #include "../UniformBufferObject/UniformBufferObject.h"

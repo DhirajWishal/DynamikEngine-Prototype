@@ -1,7 +1,5 @@
-#include "SystemLib/Public/ErrorFlag.h"
-#include <ctime>
-#include <vector>
-#include <iostream>
+#include "dmkafx.h"
+#include "Public/ErrorFlag.h"
 
 namespace Dynamik {
 	const CHR blue[8] = { 0x1b, '[', '1', ';', '3', '4', 'm', 0 };	// core info

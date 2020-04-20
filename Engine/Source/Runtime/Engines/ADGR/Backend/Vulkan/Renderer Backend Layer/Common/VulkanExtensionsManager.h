@@ -2,7 +2,7 @@
 #ifndef _DYNAMIK_ADGR_VULKAN_EXTENSION_MANAGER_H
 #define _DYNAMIK_ADGR_VULKAN_EXTENSION_MANAGER_H
 
-#include "DataTypesLib/Public/Array.h"
+#include "Public/Array.h"
 
 namespace Dynamik {
 	namespace ADGR {

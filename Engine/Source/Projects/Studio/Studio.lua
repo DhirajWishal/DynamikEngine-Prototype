@@ -27,6 +27,8 @@ project "Studio"
 		"$(SolutionDir)Engine/Source/Runtime/Core/Memory",
 		"$(SolutionDir)Engine/Source/Runtime/Core/System",
 		"$(SolutionDir)Engine/Source/Runtime/GameLibraries",
+		"$(SolutionDir)Dependencies/Programs/Debugger/src/",
+		"$(SolutionDir)Dependencies/Programs/DevCon/src/",
 		"%{IncludeDir.GLFW}",
 		"%{IncludeDir.GLEW}",
 		"%{IncludeDir.glm}",

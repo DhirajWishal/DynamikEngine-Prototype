@@ -2,7 +2,7 @@
 #ifndef _DYNAMIK_SYSTEM_ERROR_FLAG_H
 #define _DYNAMIK_SYSTEM_ERROR_FLAG_H
 
-#include "DataTypesLib/Public/FastString.h"
+#include "Public/FastString.h"
 #include "Console.h"
 
 namespace Dynamik {

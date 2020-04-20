@@ -2,8 +2,8 @@
 #ifndef _DYNAMIK_MEMORY_ALLOCATOR_H
 #define _DYNAMIK_MEMORY_ALLOCATOR_H
 
-#include "DataTypesLib/Public/constants.h"
-#include "DataTypesLib/Public/datatypes.h"
+#include "Public/constants.h"
+#include "Public/datatypes.h"
 
 namespace Dynamik {
 	/* MAIN ALLOCATOR CLASS */

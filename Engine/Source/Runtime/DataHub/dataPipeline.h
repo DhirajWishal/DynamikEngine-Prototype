@@ -3,7 +3,7 @@
 #define _DYNAMIK_CENTRAL_DATA_HUB_DATA_PIPELINE_H
 
 #include <vector>
-#include "DataTypesLib/Public/datatypes.h"
+#include "Public/datatypes.h"
 
 namespace Dynamik {
 	class DataPipeline {

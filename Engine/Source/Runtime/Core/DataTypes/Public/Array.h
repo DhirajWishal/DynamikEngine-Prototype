@@ -13,7 +13,7 @@
 
 #include "datatypes.h"
 #include "Pointer.h"
-#include "MemoryLib/Public/StaticAllocator.h"
+#include "Public/StaticAllocator.h"
 #include "InitializerList.h"
 #include "Thread.h"
 

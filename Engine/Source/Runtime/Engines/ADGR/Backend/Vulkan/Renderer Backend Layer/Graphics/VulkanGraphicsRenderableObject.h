@@ -88,7 +88,7 @@ namespace Dynamik {
 			};
 
 			struct ADGRVulkanRenderData {
-				DMKObjectType type = DMKObjectType::DMK_OBJECT_TYPE_STATIC_OBJECT;
+				DMKObjectType type = DMKObjectType::DMK_OBJECT_TYPE_STATIC;
 				DMK_ADGR_RENDERING_TECHNOLOGY renderTechnology = DMK_ADGR_RENDERING_TECHNOLOGY::DMK_ADGR_RENDER_INDEXED;
 
 				POINTER<VulkanGraphicsSwapChain> swapChainPointer;
@@ -122,7 +122,7 @@ namespace Dynamik {
 			};
 
 			struct ADGRVulkan3DObjectData {
-				DMKObjectType type = DMKObjectType::DMK_OBJECT_TYPE_STATIC_OBJECT;
+				DMKObjectType type = DMKObjectType::DMK_OBJECT_TYPE_STATIC;
 				std::string modelpath = "";
 				std::string materialName = "Metal";
 				B1 isPBR = false;

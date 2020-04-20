@@ -1,4 +1,5 @@
-#include "MemoryLib/Public/doubleBufferedStackAllocator.h"
+#include "dmkafx.h"
+#include "Public/doubleBufferedStackAllocator.h"
 
 namespace Dynamik {
 	DoubleBufferedStackAllocator::DoubleBufferedStackAllocator(UI32 size) : DoubleBufferedAllocator(size) {

@@ -2,8 +2,8 @@
 #ifndef _DYNAMIK_ALGORITHM_SORT_H
 #define _DYNAMIK_ALGORITHM_SORT_H
 
-#include "DataTypesLib/Public/datatypes.h"
-#include "DataTypesLib/Public/Array.h"
+#include "Public/datatypes.h"
+#include "Public/Array.h"
 
 namespace Dynamik {
 	/* TEMPLATED FUNCTION

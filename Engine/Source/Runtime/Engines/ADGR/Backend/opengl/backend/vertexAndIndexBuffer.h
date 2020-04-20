@@ -3,7 +3,7 @@
 #define _DYNAMIK_ADGR_OPENGL_VERTEX_AND_INDEX_BUFFER_H
 #ifdef DMK_USE_OPENGL
 
-#include "CentralDataHub.h"
+
 #include "openglFormat.h"
 
 namespace Dynamik {

@@ -3,6 +3,19 @@
 #ifndef _DYNAMIK_DATA_TYPES_DATATYPES_H
 #define _DYNAMIK_DATA_TYPES_DATATYPES_H
 
+#define GLM_FORCE_RADIANS
+#define GLM_FORCE_DEPTH_ZERO_TO_ONE
+#define GLM_FORCE_DEFAULT_ALIGNED_GENTYPES
+#include <glm/glm.hpp>
+#include <glm/vec4.hpp>
+#include <glm/mat4x4.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
+
+#define GLM_ENABLE_EXPERIMENTAL
+#include <glm/gtx/hash.hpp>
+
 namespace Dynamik {
 	/*
 	* Convention:
@@ -52,6 +65,21 @@ namespace Dynamik {
 	{
 		return RTYPE(data);
 	}
+
+	/* GLM WRAPPERS */
+	typedef glm::vec1 VEC1;
+	typedef glm::vec2 VEC2;
+	typedef glm::vec3 VEC3;
+	typedef glm::vec4 VEC4;
+
+	typedef glm::uvec1 UVEC1;
+	typedef glm::uvec2 UVEC2;
+	typedef glm::uvec3 UVEC3;
+	typedef glm::uvec4 UVEC4;
+	
+	typedef glm::mat2 MAT2;
+	typedef glm::mat3 MAT3;
+	typedef glm::mat4 MAT4;
 }
 #define DMK_UINT_8				::Dynamik::UI8
 #define DMK_UINT_16				::Dynamik::UI16

@@ -16,7 +16,7 @@
 #define _DYNAMIK_CENTRAL_DATA_HUB_MANAGER_H
 
 #include <string>
-#include "DataTypesLib/Public/Array.h"
+#include "Public/Array.h"
 #include <deque>
 
 #define _SET_VECTOR(x)	ARRAY<x>

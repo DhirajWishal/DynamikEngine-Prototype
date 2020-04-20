@@ -3,7 +3,7 @@
 #define _DYNAMIK_INDEX_BUFFER_OBJECT_UI8_H
 
 #include "IndexBufferObject.h"
-#include "DataTypesLib/Public/Array.h"
+#include "Public/Array.h"
 
 namespace Dynamik {
 	class IndexBufferObjectUI8 : public IndexBufferObject {

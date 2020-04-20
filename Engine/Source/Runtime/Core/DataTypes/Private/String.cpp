@@ -1,5 +1,6 @@
-#include "DataTypesLib/Public/String.h"
-#include "MemoryLib/Public/oneTimeAllocator.h"
+#include "dmkafx.h"
+#include "Public/String.h"
+#include "Public/oneTimeAllocator.h"
 
 namespace Dynamik {
 	// Default constructor

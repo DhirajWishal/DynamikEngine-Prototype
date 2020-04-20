@@ -2,7 +2,7 @@
 #ifndef _DYNAMIK_ADGR_VULKAN_CONTROL_HEADER_H
 #define _DYNAMIK_ADGR_VULKAN_CONTROL_HEADER_H
 
-#include "DataTypesLib/Public/datatypes.h"
+#include "Public/datatypes.h"
 
 namespace Dynamik {
 	namespace ADGR {

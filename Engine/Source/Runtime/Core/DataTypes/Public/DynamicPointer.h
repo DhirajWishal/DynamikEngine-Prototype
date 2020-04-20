@@ -3,7 +3,7 @@
 #define _DYNAMIK_DATA_TYPES_DYNAMIC_POINTER_H
 
 #include "datatypes.h"
-#include "MemoryLib/Public/StaticAllocator.h"
+#include "Public/StaticAllocator.h"
 #include "Array.h"
 #include "FastString.h"
 #include "Pair.h"

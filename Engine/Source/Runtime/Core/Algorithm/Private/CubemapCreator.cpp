@@ -1,4 +1,5 @@
-#include "AlgorithmLib/Public/CubemapCreator.h"
+#include "dmkafx.h"
+#include "Public/CubemapCreator.h"
 
 namespace Dynamik {
 }

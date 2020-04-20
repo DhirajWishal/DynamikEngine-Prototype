@@ -3,7 +3,7 @@
 #define _DYNAMIK_DATA_TYPES_DOUBLY_LINKED_LIST_H
 
 #include "Pointer.h"
-#include "MemoryLib/Public/StaticAllocator.h"
+#include "Public/StaticAllocator.h"
 
 namespace Dynamik {
 	template<class TYPE>

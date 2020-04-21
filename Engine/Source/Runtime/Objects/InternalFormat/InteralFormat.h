@@ -33,6 +33,9 @@ namespace Dynamik {
 		CCPTR objectPath = "";
 		ARRAY<CCPTR> texturePaths;
 		ShaderPaths shaderPaths;
+
+		/* Uniform buffer data */
+		alignas (16) ARRAY<MAT4> uniformBufferData;
 	};
 }
 

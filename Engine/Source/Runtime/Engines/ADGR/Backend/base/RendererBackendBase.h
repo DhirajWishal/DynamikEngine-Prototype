@@ -27,29 +27,14 @@
 #include <string>
 #include <deque>
 
-#include <CentralDataHub.h>
 #include "Engines/ADGR/rendererFormat.h"
-#include "core/Interface/Events/DMKEventComponent.h"
+#include "Engines/ADGR/Renderer.h"
 
 #define INC_PROGRESS					(*myProgress += 1)
 #define MULTIPLE_INC_PROGRESS(count)	for (I32 i_itr__ = 0; i_itr__ < count; i_itr__++) INC_PROGRESS
 
 namespace Dynamik {
 	namespace ADGR {
-		struct DMKRendererSettings {
-			std::string myWindowTitle = ("Dynamik Engine");
-			UI32 myWindowWidth = 720;
-			UI32 myWindowHeight = 480;
-			ARRAY<std::string> myWindowIconPaths = { ("E:/Projects/Dynamik Engine/Dynamik/core assets/icons/Dynamik.jpg") };
-
-			ARRAY<F32> clearScreenValues = {							// Vulkan clear screen values
-				(2.0f / 256.0f),		// Red
-				(8.0f / 256.0f),		// Green
-				(32.0f / 256.0f),		// Blue
-				(1.00000000f)			// Alpha
-			};	// Dynwamik color code: rgba(2, 8, 32, 1)
-		};
-
 		class RendererBackend {
 		public:
 			RendererBackend() {}	// constructor

@@ -194,29 +194,29 @@ namespace Dynamik {
 						//	vkCmdPushConstants(buffers[i], info.objects.at(_itr).pipelineLayout, VK_SHADER_STAGE_VERTEX_BIT, 0, info.objects.at(_itr).swapChainPointer->pushConstants.size(), info.objects.at(_itr).swapChainPointer->pushConstants.data());
 
 						// Render type selection
-						if (info.objects.at(_itr).renderTechnology == DMK_ADGR_RENDERING_TECHNOLOGY::DMK_ADGR_RENDER_VERTEX) 		// Render as individual vertexes
+						if (info.objects.at(_itr).renderTechnology == DMKRenderingTechnology::DMK_RENDERING_TECHNOLOGY_VERTEX) 		// Render as individual vertexes
 							drawVertex(buffers[i], i, &info.objects.at(_itr), offsets);
 
-						else if (info.objects.at(_itr).renderTechnology == DMK_ADGR_RENDERING_TECHNOLOGY::DMK_ADGR_RENDER_INDEXED) 		// Render as individual indexes
+						else if (info.objects.at(_itr).renderTechnology == DMKRenderingTechnology::DMK_RENDERING_TECHNOLOGY_INDEXED) 		// Render as individual indexes
 						{
 							if (info.objects.at(_itr).enableMaterials)
 								drawIndexedPBR(buffers[i], i, &info.objects.at(_itr), offsets);
 							else
 								drawIndexed(buffers[i], i, &info.objects.at(_itr), offsets);
 						}
-						else if (info.objects.at(_itr).renderTechnology == DMK_ADGR_RENDERING_TECHNOLOGY::DMK_ADGR_RENDER_INDIRECT) {
+						else if (info.objects.at(_itr).renderTechnology == DMKRenderingTechnology::DMK_RENDERING_TECHNOLOGY_INDIRECT) {
 						}
-						else if (info.objects.at(_itr).renderTechnology == DMK_ADGR_RENDERING_TECHNOLOGY::DMK_ADGR_RENDER_INDEXED_INDIRECT) {
+						else if (info.objects.at(_itr).renderTechnology == DMKRenderingTechnology::DMK_RENDERING_TECHNOLOGY_INDEXED_INDIRECT) {
 						}
-						else if (info.objects.at(_itr).renderTechnology == DMK_ADGR_RENDERING_TECHNOLOGY::DMK_ADGR_RENDER_SKYBOX_VERTEX) {		// Render as individual vertexes
+						else if (info.objects.at(_itr).renderTechnology == DMKRenderingTechnology::DMK_RENDERING_TECHNOLOGY_SKYBOX_VERTEX) {		// Render as individual vertexes
 							drawVertex(buffers[i], i, &info.objects.at(_itr), offsets);
 						}
-						else if (info.objects.at(_itr).renderTechnology == DMK_ADGR_RENDERING_TECHNOLOGY::DMK_ADGR_RENDER_SKYBOX_INDEXED) {		// Render as individual indexes
+						else if (info.objects.at(_itr).renderTechnology == DMKRenderingTechnology::DMK_RENDERING_TECHNOLOGY_SKYBOX_INDEXED) {		// Render as individual indexes
 							drawIndexed(buffers[i], i, &info.objects.at(_itr), offsets);
 						}
-						else if (info.objects.at(_itr).renderTechnology == DMK_ADGR_RENDERING_TECHNOLOGY::DMK_ADGR_RENDER_SKYBOX_INDIRECT) {
+						else if (info.objects.at(_itr).renderTechnology == DMKRenderingTechnology::DMK_RENDERING_TECHNOLOGY_SKYBOX_INDIRECT) {
 						}
-						else if (info.objects.at(_itr).renderTechnology == DMK_ADGR_RENDERING_TECHNOLOGY::DMK_ADGR_RENDER_SKYBOX_INDEXED_INDIRECT) {
+						else if (info.objects.at(_itr).renderTechnology == DMKRenderingTechnology::DMK_RENDERING_TECHNOLOGY_SKYBOX_INDEXED_INDIRECT) {
 						}
 						else
 							DMK_CORE_FATAL("Invalid rendering type!");

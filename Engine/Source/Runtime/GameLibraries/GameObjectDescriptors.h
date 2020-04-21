@@ -42,17 +42,8 @@ namespace Dynamik {
 		F32 dissipationFactor = 1.0f;
 	};
 
-	enum class DMKVertexDataName {
-		DMK_VERTEX_DATA_NAME_POSITION,
-		DMK_VERTEX_DATA_NAME_COLOR,
-		DMK_VERTEX_DATA_NAME_TEXTURE_COORDINATE,
-		DMK_VERTEX_DATA_NAME_NORMAL,
-		DMK_VERTEX_DATA_NAME_SPACE,
-		DMK_VERTEX_DATA_NAME_INTEGRITY,
-	};
-
 	struct DMKVertexAttribute {
-		DMKVertexDataName name = DMKVertexDataName::DMK_VERTEX_DATA_NAME_POSITION;
+		DMKVertexData name = DMKVertexData::DMK_VERTEX_DATA_POSITION;
 		DMKDataType type = DMKDataType::DMK_DATA_TYPE_VEC3;
 	};
 

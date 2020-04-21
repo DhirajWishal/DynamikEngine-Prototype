@@ -2,6 +2,7 @@
 #ifndef _DYNAMIK_EVENT_MANAGER_H
 #define _DYNAMIK_EVENT_MANAGER_H
 
+#include "Public/Array.h"
 #include "DMKEventComponent.h"
 #include "core.h"
 
@@ -22,7 +23,7 @@ namespace Dynamik {
 		~EventManager() {}
 
 		static void setEventCallbacks(GLFWwindow* window);
-		static void pollEventsGLFW();
+		static B1 pollEventsGLFW();
 		static CursorPosition getCursorPosition();
 
 		static D64 getTime();
@@ -46,11 +47,14 @@ namespace Dynamik {
 		static void _applicationDropPathCallback(GLFWwindow* window, I32 count, const CHR** strings);
 		static void _applicationResizeCallback(GLFWwindow* window, I32 width, I32 height);
 
+		static void _windowCloseCallback(GLFWwindow* window);
+
 		GLFWwindow* myWindowPointer;
 		CursorPosition myCursorPosition;
 
 		ARRAY<DMKEventComponent*> events;
 		B1 isCursorInThisWindow = false;
+		B1 isWindowClosed = false;
 	};
 }
 

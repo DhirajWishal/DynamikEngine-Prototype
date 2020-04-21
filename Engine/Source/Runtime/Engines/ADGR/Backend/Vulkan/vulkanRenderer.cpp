@@ -12,16 +12,15 @@
 #include "dmkafx.h"
 #include "vulkanRenderer.h"
 #include "Platform/windows.h"
-#include "keyCodes.h"
 
 #include "debugger.h"
-
-
 
 #include "Renderer Backend Layer/VulkanReflectObject.h"
 #include "Renderer Backend Layer/VulkanPBRObject.h"
 
 #include "Renderer Backend Layer/Compute/VulkanComputeCore.h"
+
+#include "Renderer Backend Layer/Common/VulkanUtilities.h"
 
 #define TEXTOVERLAY_MAX_CHAR_COUNT 2048
 
@@ -32,8 +31,6 @@
 
 namespace Dynamik {
 	namespace ADGR {
-		using namespace core;
-
 #ifdef DMK_DEBUG
 		Debugger::benchmark::FPS myFPSCal;
 
@@ -53,17 +50,12 @@ namespace Dynamik {
 			// initialize the compute API
 			//initializeComputeAPI();
 
-			// initialize the window
-			DMKWindowManagerInitInfo windowInitInfo;
-			windowInitInfo.iconPaths = "E:/Projects/Dynamik Engine/Versions/Dynamik (Prototype)/Dependencies/Assets/icons/Dynamik.jpg";
-			myWindowManager.initialize(windowInitInfo);
-
 			// initialize the instance
 			ADGRVulkanInstanceInitInfo instanceInitInfo;
 			instanceInitInfo.applicationName = "Dynamik Engine";
 			instanceInitInfo.engineName = "Dynamik";
 			myVulkanGraphicsCore.initializeInstance(instanceInitInfo);
-			myVulkanGraphicsCore.initializeSurface(&myWindowManager.window);
+			myVulkanGraphicsCore.initializeSurface(myWindow);
 
 			myVulkanGraphicsCore.initializeDevice();
 
@@ -170,18 +162,78 @@ namespace Dynamik {
 		}
 
 		// draw frame
-		void vulkanRenderer::drawFrame() {
+		void vulkanRenderer::drawFrame(DMKRendererDrawFrameInfo info) {
 #ifdef DMK_DEBUG
 			myFPSCal.getFPS();	// FPS calculator
 
  // ----------
 #endif
 			myWindowManager.pollEvents();
-			eventContainer = myWindowManager.getEventContainer();
 
 			myVulkanGraphicsCore.syncFence(currentFrame);
 
-			draw3D(mySwapChain3D.swapChainContainer.swapChain);
+			/* Object updation */
+			// get image index
+			imageIndex = 0;
+			result = myVulkanGraphicsCore.getNextImage(mySwapChain3D.swapChainContainer.swapChain, &imageIndex, currentFrame);
+
+			// recreate swachain if needed
+			if (result == VK_ERROR_OUT_OF_DATE_KHR)
+			{
+				recreateSwapChain();
+				return;
+			}
+			else if (result != VK_SUCCESS && result != VK_SUBOPTIMAL_KHR)
+				DMK_CORE_FATAL("failed to acquire swap chain image!");
+
+			if (info.formats.size() != renderDatas.size())
+				DMK_CORE_FATAL("Trying to draw invalid amount of Internal Formats!");
+
+			// draw call
+			// uniform buffer object update
+			for (UI32 index = 0; index < info.formats.size(); index++)
+			{
+				MAT4 model = glm::mat4(1.0f);
+				MAT4 view = glm::lookAt(info.cameraData.cameraPosition, info.cameraData.cameraPosition + info.cameraData.cameraRight, info.cameraData.cameraUp);
+				MAT4 projection = glm::perspective(glm::radians(info.FOV), info.aspectRatio, info.frustumNear, info.frustumFar);
+
+				POINTER<InternalFormat> object = info.formats[index];
+
+				for (auto _attribute : object->descriptor.uniformBufferObjectDescription.attributes)
+				{
+					switch (_attribute.name)
+					{
+					case DMKUniformDataName::DMK_UNIFORM_DATA_NAME_MODEL:
+						object->uniformBufferData.pushBack(model);
+						break;
+
+					case DMKUniformDataName::DMK_UNIFORM_DATA_NAME_VIEW:
+						object->uniformBufferData.pushBack(view);
+						break;
+
+					case DMKUniformDataName::DMK_UNIFORM_DATA_NAME_PROJECTION:
+						object->uniformBufferData.pushBack(projection);
+						break;
+					}
+				}
+
+				for (auto _container : renderDatas[index].uniformBufferContainers)
+					for (auto _memory : _container.bufferMemories)
+						VulkanUtilities::updateUniformBuffer(myVulkanGraphicsCore.logicalDevice, object->uniformBufferData, _memory);
+			}
+
+			if (overlayContainer.isVisible && overlayContainer.isInitialized)
+				result = myVulkanGraphicsCore.submitQueues({ mySwapChain3D.swapChainContainer.swapChain }, imageIndex, currentFrame, { myCommandBuffer.buffers[imageIndex], _drawOverlay(imageIndex) });
+			else
+				result = myVulkanGraphicsCore.submitQueues({ mySwapChain3D.swapChainContainer.swapChain }, imageIndex, currentFrame, { myCommandBuffer.buffers[imageIndex] });
+
+			// frame buffer resize event
+			if (result == VK_ERROR_OUT_OF_DATE_KHR || result == VK_SUBOPTIMAL_KHR)
+			{
+				recreateSwapChain();
+			}
+			else if (result != VK_SUCCESS)
+				DMK_CORE_FATAL("failed to present swap chain image!");
 
 			// current frame select
 			currentFrame = (currentFrame + 1) % MAX_FRAMES_IN_FLIGHT;
@@ -667,7 +719,7 @@ namespace Dynamik {
 					for (UI32 i = 0; i < 3; i++)
 						indexBuffer.push_back(myAnimation->myAnimationData.scene->mMeshes[m]->mFaces[f].mIndices[i] + indexBase);
 			}
-			myAnimation->initializeIndexBufferUI32(&indexBuffer);
+			myAnimation->initializeIndexBuffer();
 
 			return myAnimation->initializeObject(myVulkanGraphicsCore.logicalDevice, _object, myVulkanGraphicsCore.msaaSamples);
 		}
@@ -689,6 +741,7 @@ namespace Dynamik {
 
 			// draw call
 			// uniform buffer object update
+			/*
 			for (ADGRVulkanRenderData _object : renderDatas)
 			{
 				if (_object.type == DMKObjectType::DMK_OBJECT_TYPE_SKYBOX)
@@ -737,7 +790,7 @@ namespace Dynamik {
 					myAnimation->updateUniformBuffer(myAnimationCamera.updateCamera(eventContainer, info), imageIndex, runningTime);
 				}
 			}
-
+			*/
 			if (overlayContainer.isVisible && overlayContainer.isInitialized)
 				result = myVulkanGraphicsCore.submitQueues({ swapChain }, imageIndex, currentFrame, { myCommandBuffer.buffers[imageIndex], _drawOverlay(imageIndex) });
 			else
@@ -1301,7 +1354,7 @@ namespace Dynamik {
 
 		void vulkanRenderer::setFormats3D(ARRAY<RendererFormat>& rendererFormats) {
 			ARRAY<ADGRVulkan3DObjectData> _objectDatas;
-
+			/*
 			for (UI32 _itr = 0; _itr < rendererFormats.size(); _itr++)
 			{
 				ADGRVulkan3DObjectData _object;
@@ -1324,7 +1377,7 @@ namespace Dynamik {
 
 				_objectDatas.pushBack(_object);
 			}
-
+			*/
 			rawObjects = _objectDatas;
 		}
 
@@ -1403,6 +1456,11 @@ namespace Dynamik {
 				overlayContainer.numberOfLetters++;
 			}
 			_endUpdate();
+		}
+
+		void vulkanRenderer::setWindowHandle(POINTER<GLFWwindow> windowHandle)
+		{
+			myWindow = windowHandle;
 		}
 	}
 }

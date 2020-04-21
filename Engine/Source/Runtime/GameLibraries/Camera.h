@@ -11,6 +11,7 @@ namespace Dynamik {
 	struct DMKCameraData {
 		VEC3 cameraPosition = { 0.0f, 0.0f, 0.0f };
 		VEC3 cameraUp = { 0.0f, 1.0f, 0.0f };
+		VEC3 cameraFront = { 1.0f, 0.0f, 0.0f };
 		VEC3 cameraRight = { 1.0f, 0.0f, 0.0f };
 	};
 

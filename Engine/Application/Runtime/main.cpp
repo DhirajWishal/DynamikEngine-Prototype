@@ -14,14 +14,16 @@
 
 /* -----||||| MAIN LAUNCH SYSTEM |||||----- */
 
+using namespace Dynamik;
 
 #ifdef DMK_PLATFORM_WINDOWS
 /* ---------- ########## ////////// MAIN LOOP \\\\\\\\\\ ########## ---------- */
 int main(int argc, char** argv) {
 	try {
-		//Dynamik::Application::addAsset();
 		OceanSkybox skybox;
-		Dynamik::Application::addAsset(&skybox);
+		DMKEngine::addAsset(&skybox);
+
+		DMKEngine::run();
 	}
 	catch (std::exception& e) {
 		std::cout << e.what();

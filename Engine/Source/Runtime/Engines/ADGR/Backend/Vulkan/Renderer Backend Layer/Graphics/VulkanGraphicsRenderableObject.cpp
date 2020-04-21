@@ -12,8 +12,6 @@
 namespace Dynamik {
 	namespace ADGR {
 		namespace Backend {
-			using namespace core;
-
 			void VulkanGraphicsRenderableObject::initializeResources(ADGRVulkanGraphicsRenderableObjectInitInfo info)
 			{
 				logicalDevice = info.logicalDevice;
@@ -99,40 +97,29 @@ namespace Dynamik {
 				pipelineInitInfo.shaders = _shaders;
 				pipelineInitInfo.multisamplerMsaaSamples = msaaSamples;
 				pipelineInitInfo.vertexBindingDescription = VulkanUtilities::getBindingDescription(1);
-				pipelineInitInfo.vertexAttributeDescription = VulkanUtilities::getAttributeDescriptions(descriptor.vertexAttributes, 1);
+				pipelineInitInfo.vertexAttributeDescription = VulkanUtilities::getAttributeDescriptions(descriptor.vertexBufferObjectDescription.attributes, 1);
 				pipelineInitInfo.isTexturesAvailable = _object.texturePaths.size();
 				initializePipeline(pipelineInitInfo);
 
 				for (VulkanGraphicsShader _shader : _shaders)
 					_shader.terminate(logicalDevice);
 
-				ARRAY<ADGRVulkanTextureInitInfo> textureInitInfos;
-
-				// initialize textures
-				for (UI32 _itr = 0; _itr < _object.texturePaths.size(); _itr++)
-				{
-					ADGRVulkanTextureInitInfo initInfo;
-					initInfo.path = _object.texturePaths[_itr];
-					initInfo.format = VK_FORMAT_R8G8B8A8_UNORM;
-					initInfo.mipLevels = 1;
-					initInfo.modeU = VK_SAMPLER_ADDRESS_MODE_REPEAT;
-					initInfo.modeV = VK_SAMPLER_ADDRESS_MODE_REPEAT;
-					initInfo.modeW = VK_SAMPLER_ADDRESS_MODE_REPEAT;
-					initInfo.magFilter = VK_FILTER_LINEAR;
-					initInfo.minFilter = VK_FILTER_LINEAR;
-					initInfo.aspectFlags = VK_IMAGE_ASPECT_COLOR_BIT;
-					textureInitInfos.pushBack(initInfo);
-				}
-
-				initializeTextures(textureInitInfos);
+				// initialize texture
+				ADGRVulkanTextureInitInfo initInfo;
+				initInfo.mipLevels = 1;
+				initInfo.modeU = VK_SAMPLER_ADDRESS_MODE_REPEAT;
+				initInfo.modeV = VK_SAMPLER_ADDRESS_MODE_REPEAT;
+				initInfo.modeW = VK_SAMPLER_ADDRESS_MODE_REPEAT;
+				initInfo.magFilter = VK_FILTER_LINEAR;
+				initInfo.minFilter = VK_FILTER_LINEAR;
+				initInfo.aspectFlags = VK_IMAGE_ASPECT_COLOR_BIT;
+				initializeTextures(initInfo);
 
 				// initialize vertex buffers
-				for (UI32 _itr = 0; _itr < _object.vertexBufferObjects->size(); _itr++)
-					initializeVertexBuffer(&_object.vertexBufferObjects->at(_itr));
+				initializeVertexBuffer();
 
 				// initialize index buffers
-				for (UI32 _itr = 0; _itr < _object.indexBufferObjects->size(); _itr++)
-					initializeIndexBufferUI32(&_object.indexBufferObjects->at(_itr));
+				initializeIndexBuffer();
 
 				// initialize uniform buffers
 				initializeUniformBuffer();
@@ -171,31 +158,23 @@ namespace Dynamik {
 					_container.terminate(logicalDevice);
 			}
 
-			void VulkanGraphicsRenderableObject::initializeTextures(ARRAY<ADGRVulkanTextureInitInfo> infos)
+			void VulkanGraphicsRenderableObject::initializeTextures(ADGRVulkanTextureInitInfo info)
 			{
-				for (const ADGRVulkanTextureInitInfo& info : infos)
+				for (auto mesh : meshData)
 				{
 					ADGRVulkanTextureContainer _container;
-					_container.format = info.format;
+
 					_container.mipLevels = info.mipLevels;
 
-					resource::TextureData texData;
-					unsigned char* pixels = nullptr;
+					if (mesh.textureData.format == DMKFormat::DMK_FORMAT_RGBA_8_UNIFORM)
+						_container.format = VK_FORMAT_R8G8B8A8_UNORM;
+					else if (mesh.textureData.format == DMKFormat::DMK_FORMAT_RGB_8_UNIFORM)
+						_container.format = VK_FORMAT_R8G8B8_UNORM;
 
-					if (_container.format == VK_FORMAT_R8G8B8A8_UNORM)
-						pixels = texData.loadTexture((info.path), resource::TEXTURE_TYPE_RGBA);
-					else if (_container.format == VK_FORMAT_R8G8B8_UNORM)
-						pixels = texData.loadTexture((info.path), resource::TEXTURE_TYPE_RGB);
-					else
-						DMK_CORE_FATAL("Invalid texture format!");
+					_container.width = mesh.textureData.width;
+					_container.height = mesh.textureData.height;
 
-					_container.width = texData.texWidth;
-					_container.height = texData.texHeight;
-
-					VkDeviceSize imageSize = texData.size;
-
-					if (!pixels)
-						DMK_CORE_FATAL("failed to load texture image!");
+					VkDeviceSize imageSize = mesh.textureData.size();
 
 					VkBuffer stagingBuffer = VK_NULL_HANDLE;
 					VkDeviceMemory stagingBufferMemory = VK_NULL_HANDLE;
@@ -212,14 +191,12 @@ namespace Dynamik {
 					void* data;
 					if (vkMapMemory(logicalDevice, stagingBufferMemory, 0, static_cast<size_t>(imageSize), 0, &data) != VK_SUCCESS)
 						DMK_CORE_FATAL("Failed to map memory!");
-					memcpy(data, pixels, static_cast<size_t>(imageSize));
+					memcpy(data, mesh.textureData.textureData, static_cast<size_t>(imageSize));
 					vkUnmapMemory(logicalDevice, stagingBufferMemory);
 
-					texData.freeData(pixels);
-
 					ADGRVulkanCreateImageInfo cinfo;
-					cinfo.width = texData.texWidth;
-					cinfo.height = texData.texHeight;
+					cinfo.width = _container.width;
+					cinfo.height = _container.height;
 					cinfo.format = _container.format;
 					cinfo.tiling = VK_IMAGE_TILING_OPTIMAL;
 					cinfo.usage = VK_IMAGE_USAGE_TRANSFER_SRC_BIT | VK_IMAGE_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT;
@@ -244,8 +221,8 @@ namespace Dynamik {
 					ADGRVulkanCopyBufferToImageInfo cpyInfo;
 					cpyInfo.buffer = stagingBuffer;
 					cpyInfo.image = _container.image;
-					cpyInfo.width = static_cast<UI32>(texData.texWidth);
-					cpyInfo.height = static_cast<UI32>(texData.texHeight);
+					cpyInfo.width = _container.width;
+					cpyInfo.height = _container.height;
 					VulkanGraphicsFunctions::copyBufferToImage(logicalDevice, commandPool, graphicsQueue, presentQueue, cpyInfo);
 
 					transitionInfo.image = _container.image;
@@ -365,176 +342,50 @@ namespace Dynamik {
 				}
 			}
 
-			void VulkanGraphicsRenderableObject::initializeVertexBuffer(ARRAY<Vertex>* vertexes)
+			void VulkanGraphicsRenderableObject::initializeVertexBuffer()
 			{
-				VkBuffer _buffer = VK_NULL_HANDLE;
-				VkDeviceMemory _bufferMemory = VK_NULL_HANDLE;
+				for (auto mesh : meshData)
+				{
+					VkBuffer _buffer = VK_NULL_HANDLE;
+					VkDeviceMemory _bufferMemory = VK_NULL_HANDLE;
 
-				myRenderData.vertexCount = vertexes->size();
-				VkDeviceSize bufferSize = myRenderData.vertexCount * vertexes->typeSize();
+					myRenderData.vertexCount = mesh.vertexDataStore.size();
+					VkDeviceSize bufferSize = myRenderData.vertexCount * DMKVertexBufferObjectDescriptor::vertexByteSize(descriptor.vertexBufferObjectDescription.attributes);
 
-				VkBuffer stagingBuffer;
-				VkDeviceMemory stagingBufferMemory;
+					VkBuffer stagingBuffer;
+					VkDeviceMemory stagingBufferMemory;
 
-				ADGRVulkanCreateBufferInfo bufferInfo;
-				bufferInfo.bufferSize = bufferSize;
-				bufferInfo.usage = VK_BUFFER_USAGE_TRANSFER_SRC_BIT;
-				bufferInfo.bufferMemoryPropertyflags = VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT;
-				bufferInfo.buffer = &stagingBuffer;
-				bufferInfo.bufferMemory = &stagingBufferMemory;
+					ADGRVulkanCreateBufferInfo bufferInfo;
+					bufferInfo.bufferSize = bufferSize;
+					bufferInfo.usage = VK_BUFFER_USAGE_TRANSFER_SRC_BIT;
+					bufferInfo.bufferMemoryPropertyflags = VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT;
+					bufferInfo.buffer = &stagingBuffer;
+					bufferInfo.bufferMemory = &stagingBufferMemory;
 
-				VulkanGraphicsFunctions::createBuffer(logicalDevice, physicalDevice, bufferInfo);
+					VulkanGraphicsFunctions::createBuffer(logicalDevice, physicalDevice, bufferInfo);
 
-				void* data = nullptr;
-				vkMapMemory(logicalDevice, stagingBufferMemory, 0, bufferSize, 0, &data);
-				memcpy(data, vertexes->data(), (size_t)bufferSize);
-				vkUnmapMemory(logicalDevice, stagingBufferMemory);
+					void* data = nullptr;
+					vkMapMemory(logicalDevice, stagingBufferMemory, 0, bufferSize, 0, &data);
+					mesh.packData(descriptor.vertexBufferObjectDescription.attributes, data);
+					vkUnmapMemory(logicalDevice, stagingBufferMemory);
 
-				ADGRVulkanCreateBufferInfo vertBufferInfo;
-				vertBufferInfo.bufferSize = bufferSize;
-				vertBufferInfo.usage = (VkBufferUsageFlagBits)(VK_BUFFER_USAGE_TRANSFER_DST_BIT | VK_BUFFER_USAGE_VERTEX_BUFFER_BIT);
-				vertBufferInfo.bufferMemoryPropertyflags = VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT;
-				vertBufferInfo.buffer = &_buffer;
-				vertBufferInfo.bufferMemory = &_bufferMemory;
+					ADGRVulkanCreateBufferInfo vertBufferInfo;
+					vertBufferInfo.bufferSize = bufferSize;
+					vertBufferInfo.usage = (VkBufferUsageFlagBits)(VK_BUFFER_USAGE_TRANSFER_DST_BIT | VK_BUFFER_USAGE_VERTEX_BUFFER_BIT);
+					vertBufferInfo.bufferMemoryPropertyflags = VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT;
+					vertBufferInfo.buffer = &_buffer;
+					vertBufferInfo.bufferMemory = &_bufferMemory;
 
-				VulkanGraphicsFunctions::createBuffer(logicalDevice, physicalDevice, vertBufferInfo);
+					VulkanGraphicsFunctions::createBuffer(logicalDevice, physicalDevice, vertBufferInfo);
 
-				VulkanGraphicsFunctions::copyBuffer(logicalDevice, commandPool, graphicsQueue, presentQueue, stagingBuffer, _buffer, bufferSize);
+					VulkanGraphicsFunctions::copyBuffer(logicalDevice, commandPool, graphicsQueue, presentQueue, stagingBuffer, _buffer, bufferSize);
 
-				vkDestroyBuffer(logicalDevice, stagingBuffer, nullptr);
-				vkFreeMemory(logicalDevice, stagingBufferMemory, nullptr);
+					vkDestroyBuffer(logicalDevice, stagingBuffer, nullptr);
+					vkFreeMemory(logicalDevice, stagingBufferMemory, nullptr);
 
-				myRenderData.vertexBuffers.pushBack(_buffer);
-				myRenderData.vertexBufferMemories.pushBack(_bufferMemory);
-			}
-
-			void VulkanGraphicsRenderableObject::initializeVertex2DBuffer(ARRAY<vertex2D>* vertexes)
-			{
-				VkBuffer _buffer = VK_NULL_HANDLE;
-				VkDeviceMemory _bufferMemory = VK_NULL_HANDLE;
-
-				myRenderData.vertexCount = vertexes->size();
-				VkDeviceSize bufferSize = myRenderData.vertexCount * vertexes->typeSize();
-
-				VkBuffer stagingBuffer;
-				VkDeviceMemory stagingBufferMemory;
-
-				ADGRVulkanCreateBufferInfo bufferInfo;
-				bufferInfo.bufferSize = bufferSize;
-				bufferInfo.usage = VK_BUFFER_USAGE_TRANSFER_SRC_BIT;
-				bufferInfo.bufferMemoryPropertyflags = VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT;
-				bufferInfo.buffer = &stagingBuffer;
-				bufferInfo.bufferMemory = &stagingBufferMemory;
-
-				VulkanGraphicsFunctions::createBuffer(logicalDevice, physicalDevice, bufferInfo);
-
-				void* data = nullptr;
-				vkMapMemory(logicalDevice, stagingBufferMemory, 0, bufferSize, 0, &data);
-				memcpy(data, vertexes->data(), (size_t)bufferSize);
-				vkUnmapMemory(logicalDevice, stagingBufferMemory);
-
-				ADGRVulkanCreateBufferInfo vertBufferInfo;
-				vertBufferInfo.bufferSize = bufferSize;
-				vertBufferInfo.usage = (VkBufferUsageFlagBits)(VK_BUFFER_USAGE_TRANSFER_DST_BIT | VK_BUFFER_USAGE_VERTEX_BUFFER_BIT);
-				vertBufferInfo.bufferMemoryPropertyflags = VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT;
-				vertBufferInfo.buffer = &_buffer;
-				vertBufferInfo.bufferMemory = &_bufferMemory;
-
-				VulkanGraphicsFunctions::createBuffer(logicalDevice, physicalDevice, vertBufferInfo);
-
-				VulkanGraphicsFunctions::copyBuffer(logicalDevice, commandPool, graphicsQueue, presentQueue, stagingBuffer, _buffer, bufferSize);
-
-				vkDestroyBuffer(logicalDevice, stagingBuffer, nullptr);
-				vkFreeMemory(logicalDevice, stagingBufferMemory, nullptr);
-
-				myRenderData.vertexBuffers.pushBack(_buffer);
-				myRenderData.vertexBufferMemories.pushBack(_bufferMemory);
-			}
-
-			void VulkanGraphicsRenderableObject::initializeVertexBufferP(ARRAY<VertexP>* vertexes)
-			{
-				VkBuffer _buffer = VK_NULL_HANDLE;
-				VkDeviceMemory _bufferMemory = VK_NULL_HANDLE;
-
-				myRenderData.vertexCount = vertexes->size();
-				VkDeviceSize bufferSize = myRenderData.vertexCount * vertexes->typeSize();
-
-				VkBuffer stagingBuffer;
-				VkDeviceMemory stagingBufferMemory;
-
-				ADGRVulkanCreateBufferInfo bufferInfo;
-				bufferInfo.bufferSize = bufferSize;
-				bufferInfo.usage = VK_BUFFER_USAGE_TRANSFER_SRC_BIT;
-				bufferInfo.bufferMemoryPropertyflags = VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT;
-				bufferInfo.buffer = &stagingBuffer;
-				bufferInfo.bufferMemory = &stagingBufferMemory;
-
-				VulkanGraphicsFunctions::createBuffer(logicalDevice, physicalDevice, bufferInfo);
-
-				void* data = nullptr;
-				vkMapMemory(logicalDevice, stagingBufferMemory, 0, bufferSize, 0, &data);
-				memcpy(data, vertexes->data(), (size_t)bufferSize);
-				vkUnmapMemory(logicalDevice, stagingBufferMemory);
-
-				ADGRVulkanCreateBufferInfo vertBufferInfo;
-				vertBufferInfo.bufferSize = bufferSize;
-				vertBufferInfo.usage = (VkBufferUsageFlagBits)(VK_BUFFER_USAGE_TRANSFER_DST_BIT | VK_BUFFER_USAGE_VERTEX_BUFFER_BIT);
-				vertBufferInfo.bufferMemoryPropertyflags = VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT;
-				vertBufferInfo.buffer = &_buffer;
-				vertBufferInfo.bufferMemory = &_bufferMemory;
-
-				VulkanGraphicsFunctions::createBuffer(logicalDevice, physicalDevice, vertBufferInfo);
-
-				VulkanGraphicsFunctions::copyBuffer(logicalDevice, commandPool, graphicsQueue, presentQueue, stagingBuffer, _buffer, bufferSize);
-
-				vkDestroyBuffer(logicalDevice, stagingBuffer, nullptr);
-				vkFreeMemory(logicalDevice, stagingBufferMemory, nullptr);
-
-				myRenderData.vertexBuffers.pushBack(_buffer);
-				myRenderData.vertexBufferMemories.pushBack(_bufferMemory);
-			}
-
-			void VulkanGraphicsRenderableObject::initializeVertexBufferPN(ARRAY<VertexPN>* vertexes)
-			{
-				VkBuffer _buffer = VK_NULL_HANDLE;
-				VkDeviceMemory _bufferMemory = VK_NULL_HANDLE;
-
-				myRenderData.vertexCount = vertexes->size();
-				VkDeviceSize bufferSize = myRenderData.vertexCount * vertexes->typeSize();
-
-				VkBuffer stagingBuffer;
-				VkDeviceMemory stagingBufferMemory;
-
-				ADGRVulkanCreateBufferInfo bufferInfo;
-				bufferInfo.bufferSize = bufferSize;
-				bufferInfo.usage = VK_BUFFER_USAGE_TRANSFER_SRC_BIT;
-				bufferInfo.bufferMemoryPropertyflags = VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT;
-				bufferInfo.buffer = &stagingBuffer;
-				bufferInfo.bufferMemory = &stagingBufferMemory;
-
-				VulkanGraphicsFunctions::createBuffer(logicalDevice, physicalDevice, bufferInfo);
-
-				void* data = nullptr;
-				vkMapMemory(logicalDevice, stagingBufferMemory, 0, bufferSize, 0, &data);
-				memcpy(data, vertexes->data(), (size_t)bufferSize);
-				vkUnmapMemory(logicalDevice, stagingBufferMemory);
-
-				ADGRVulkanCreateBufferInfo vertBufferInfo;
-				vertBufferInfo.bufferSize = bufferSize;
-				vertBufferInfo.usage = (VkBufferUsageFlagBits)(VK_BUFFER_USAGE_TRANSFER_DST_BIT | VK_BUFFER_USAGE_VERTEX_BUFFER_BIT);
-				vertBufferInfo.bufferMemoryPropertyflags = VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT;
-				vertBufferInfo.buffer = &_buffer;
-				vertBufferInfo.bufferMemory = &_bufferMemory;
-
-				VulkanGraphicsFunctions::createBuffer(logicalDevice, physicalDevice, vertBufferInfo);
-
-				VulkanGraphicsFunctions::copyBuffer(logicalDevice, commandPool, graphicsQueue, presentQueue, stagingBuffer, _buffer, bufferSize);
-
-				vkDestroyBuffer(logicalDevice, stagingBuffer, nullptr);
-				vkFreeMemory(logicalDevice, stagingBufferMemory, nullptr);
-
-				myRenderData.vertexBuffers.pushBack(_buffer);
-				myRenderData.vertexBufferMemories.pushBack(_bufferMemory);
+					myRenderData.vertexBuffers.pushBack(_buffer);
+					myRenderData.vertexBufferMemories.pushBack(_bufferMemory);
+				}
 			}
 
 			void VulkanGraphicsRenderableObject::terminateVertexBuffer()
@@ -546,180 +397,51 @@ namespace Dynamik {
 				}
 			}
 
-			void VulkanGraphicsRenderableObject::initializeIndexBufferUI8(ARRAY<UI8>* indexes)
+			void VulkanGraphicsRenderableObject::initializeIndexBuffer()
 			{
-				myRenderData.indexbufferObjectTypeSize = sizeof(UI8);
-				VkBuffer _buffer = VK_NULL_HANDLE;
-				VkDeviceMemory _bufferMemory = VK_NULL_HANDLE;
+				for (auto mesh : meshData)
+				{
+					myRenderData.indexbufferObjectTypeSize = (UI32)descriptor.indexBufferType;
+					VkBuffer _buffer = VK_NULL_HANDLE;
+					VkDeviceMemory _bufferMemory = VK_NULL_HANDLE;
 
-				myRenderData.indexCount = indexes->size();
-				VkDeviceSize bufferSize = myRenderData.indexCount * indexes->typeSize();
+					myRenderData.indexCount = mesh.indexes.size();
+					VkDeviceSize bufferSize = myRenderData.indexCount * myRenderData.indexbufferObjectTypeSize;
 
-				VkBuffer stagingBuffer;
-				VkDeviceMemory stagingBufferMemory;
+					VkBuffer stagingBuffer;
+					VkDeviceMemory stagingBufferMemory;
 
-				ADGRVulkanCreateBufferInfo bufferInfo;
-				bufferInfo.bufferSize = bufferSize;
-				bufferInfo.usage = VK_BUFFER_USAGE_TRANSFER_SRC_BIT;
-				bufferInfo.bufferMemoryPropertyflags = VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT;
-				bufferInfo.buffer = &stagingBuffer;
-				bufferInfo.bufferMemory = &stagingBufferMemory;
+					ADGRVulkanCreateBufferInfo bufferInfo;
+					bufferInfo.bufferSize = bufferSize;
+					bufferInfo.usage = VK_BUFFER_USAGE_TRANSFER_SRC_BIT;
+					bufferInfo.bufferMemoryPropertyflags = VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT;
+					bufferInfo.buffer = &stagingBuffer;
+					bufferInfo.bufferMemory = &stagingBufferMemory;
 
-				VulkanGraphicsFunctions::createBuffer(logicalDevice, physicalDevice, bufferInfo);
+					VulkanGraphicsFunctions::createBuffer(logicalDevice, physicalDevice, bufferInfo);
 
-				void* data = nullptr;
-				vkMapMemory(logicalDevice, stagingBufferMemory, 0, bufferSize, 0, &data);
-				memcpy(data, indexes->data(), (size_t)bufferSize);
-				vkUnmapMemory(logicalDevice, stagingBufferMemory);
+					void* data = nullptr;
+					vkMapMemory(logicalDevice, stagingBufferMemory, 0, bufferSize, 0, &data);
+					memcpy(data, mesh.indexes.data(), (size_t)bufferSize);
+					vkUnmapMemory(logicalDevice, stagingBufferMemory);
 
-				ADGRVulkanCreateBufferInfo indexBufferInfo;
-				indexBufferInfo.bufferSize = bufferSize;
-				indexBufferInfo.usage = (VkBufferUsageFlagBits)(VK_BUFFER_USAGE_TRANSFER_DST_BIT | VK_BUFFER_USAGE_INDEX_BUFFER_BIT);
-				indexBufferInfo.bufferMemoryPropertyflags = VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT;
-				indexBufferInfo.buffer = &_buffer;
-				indexBufferInfo.bufferMemory = &_bufferMemory;
+					ADGRVulkanCreateBufferInfo indexBufferInfo;
+					indexBufferInfo.bufferSize = bufferSize;
+					indexBufferInfo.usage = (VkBufferUsageFlagBits)(VK_BUFFER_USAGE_TRANSFER_DST_BIT | VK_BUFFER_USAGE_INDEX_BUFFER_BIT);
+					indexBufferInfo.bufferMemoryPropertyflags = VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT;
+					indexBufferInfo.buffer = &_buffer;
+					indexBufferInfo.bufferMemory = &_bufferMemory;
 
-				VulkanGraphicsFunctions::createBuffer(logicalDevice, physicalDevice, indexBufferInfo);
+					VulkanGraphicsFunctions::createBuffer(logicalDevice, physicalDevice, indexBufferInfo);
 
-				VulkanGraphicsFunctions::copyBuffer(logicalDevice, commandPool, graphicsQueue, presentQueue, stagingBuffer, _buffer, bufferSize);
+					VulkanGraphicsFunctions::copyBuffer(logicalDevice, commandPool, graphicsQueue, presentQueue, stagingBuffer, _buffer, bufferSize);
 
-				vkDestroyBuffer(logicalDevice, stagingBuffer, nullptr);
-				vkFreeMemory(logicalDevice, stagingBufferMemory, nullptr);
+					vkDestroyBuffer(logicalDevice, stagingBuffer, nullptr);
+					vkFreeMemory(logicalDevice, stagingBufferMemory, nullptr);
 
-				myRenderData.indexBuffers.pushBack(_buffer);
-				myRenderData.indexBufferMemories.pushBack(_bufferMemory);
-			}
-
-			void VulkanGraphicsRenderableObject::initializeIndexBufferUI16(ARRAY<UI16>* indexes)
-			{
-				myRenderData.indexbufferObjectTypeSize = sizeof(UI16);
-				VkBuffer _buffer = VK_NULL_HANDLE;
-				VkDeviceMemory _bufferMemory = VK_NULL_HANDLE;
-
-				myRenderData.indexCount = indexes->size();
-				VkDeviceSize bufferSize = myRenderData.indexCount * indexes->typeSize();
-
-				VkBuffer stagingBuffer;
-				VkDeviceMemory stagingBufferMemory;
-
-				ADGRVulkanCreateBufferInfo bufferInfo;
-				bufferInfo.bufferSize = bufferSize;
-				bufferInfo.usage = VK_BUFFER_USAGE_TRANSFER_SRC_BIT;
-				bufferInfo.bufferMemoryPropertyflags = VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT;
-				bufferInfo.buffer = &stagingBuffer;
-				bufferInfo.bufferMemory = &stagingBufferMemory;
-
-				VulkanGraphicsFunctions::createBuffer(logicalDevice, physicalDevice, bufferInfo);
-
-				void* data = nullptr;
-				vkMapMemory(logicalDevice, stagingBufferMemory, 0, bufferSize, 0, &data);
-				memcpy(data, indexes->data(), (size_t)bufferSize);
-				vkUnmapMemory(logicalDevice, stagingBufferMemory);
-
-				ADGRVulkanCreateBufferInfo indexBufferInfo;
-				indexBufferInfo.bufferSize = bufferSize;
-				indexBufferInfo.usage = (VkBufferUsageFlagBits)(VK_BUFFER_USAGE_TRANSFER_DST_BIT | VK_BUFFER_USAGE_INDEX_BUFFER_BIT);
-				indexBufferInfo.bufferMemoryPropertyflags = VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT;
-				indexBufferInfo.buffer = &_buffer;
-				indexBufferInfo.bufferMemory = &_bufferMemory;
-
-				VulkanGraphicsFunctions::createBuffer(logicalDevice, physicalDevice, indexBufferInfo);
-
-				VulkanGraphicsFunctions::copyBuffer(logicalDevice, commandPool, graphicsQueue, presentQueue, stagingBuffer, _buffer, bufferSize);
-
-				vkDestroyBuffer(logicalDevice, stagingBuffer, nullptr);
-				vkFreeMemory(logicalDevice, stagingBufferMemory, nullptr);
-
-				myRenderData.indexBuffers.pushBack(_buffer);
-				myRenderData.indexBufferMemories.pushBack(_bufferMemory);
-			}
-
-			void VulkanGraphicsRenderableObject::initializeIndexBufferUI32(ARRAY<UI32>* indexes)
-			{
-				myRenderData.indexbufferObjectTypeSize = sizeof(UI32);
-				VkBuffer _buffer = VK_NULL_HANDLE;
-				VkDeviceMemory _bufferMemory = VK_NULL_HANDLE;
-
-				myRenderData.indexCount = indexes->size();
-				VkDeviceSize bufferSize = myRenderData.indexCount * indexes->typeSize();
-
-				VkBuffer stagingBuffer;
-				VkDeviceMemory stagingBufferMemory;
-
-				ADGRVulkanCreateBufferInfo bufferInfo;
-				bufferInfo.bufferSize = bufferSize;
-				bufferInfo.usage = VK_BUFFER_USAGE_TRANSFER_SRC_BIT;
-				bufferInfo.bufferMemoryPropertyflags = VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT;
-				bufferInfo.buffer = &stagingBuffer;
-				bufferInfo.bufferMemory = &stagingBufferMemory;
-
-				VulkanGraphicsFunctions::createBuffer(logicalDevice, physicalDevice, bufferInfo);
-
-				void* data = nullptr;
-				vkMapMemory(logicalDevice, stagingBufferMemory, 0, bufferSize, 0, &data);
-				memcpy(data, indexes->data(), (size_t)bufferSize);
-				vkUnmapMemory(logicalDevice, stagingBufferMemory);
-
-				ADGRVulkanCreateBufferInfo indexBufferInfo;
-				indexBufferInfo.bufferSize = bufferSize;
-				indexBufferInfo.usage = (VkBufferUsageFlagBits)(VK_BUFFER_USAGE_TRANSFER_DST_BIT | VK_BUFFER_USAGE_INDEX_BUFFER_BIT);
-				indexBufferInfo.bufferMemoryPropertyflags = VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT;
-				indexBufferInfo.buffer = &_buffer;
-				indexBufferInfo.bufferMemory = &_bufferMemory;
-
-				VulkanGraphicsFunctions::createBuffer(logicalDevice, physicalDevice, indexBufferInfo);
-
-				VulkanGraphicsFunctions::copyBuffer(logicalDevice, commandPool, graphicsQueue, presentQueue, stagingBuffer, _buffer, bufferSize);
-
-				vkDestroyBuffer(logicalDevice, stagingBuffer, nullptr);
-				vkFreeMemory(logicalDevice, stagingBufferMemory, nullptr);
-
-				myRenderData.indexBuffers.pushBack(_buffer);
-				myRenderData.indexBufferMemories.pushBack(_bufferMemory);
-			}
-
-			void VulkanGraphicsRenderableObject::initializeIndexBufferUI64(ARRAY<UI64>* indexes)
-			{
-				myRenderData.indexbufferObjectTypeSize = sizeof(UI64);
-				VkBuffer _buffer = VK_NULL_HANDLE;
-				VkDeviceMemory _bufferMemory = VK_NULL_HANDLE;
-
-				myRenderData.indexCount = indexes->size();
-				VkDeviceSize bufferSize = myRenderData.indexCount * indexes->typeSize();
-
-				VkBuffer stagingBuffer;
-				VkDeviceMemory stagingBufferMemory;
-
-				ADGRVulkanCreateBufferInfo bufferInfo;
-				bufferInfo.bufferSize = bufferSize;
-				bufferInfo.usage = VK_BUFFER_USAGE_TRANSFER_SRC_BIT;
-				bufferInfo.bufferMemoryPropertyflags = VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT;
-				bufferInfo.buffer = &stagingBuffer;
-				bufferInfo.bufferMemory = &stagingBufferMemory;
-
-				VulkanGraphicsFunctions::createBuffer(logicalDevice, physicalDevice, bufferInfo);
-
-				void* data = nullptr;
-				vkMapMemory(logicalDevice, stagingBufferMemory, 0, bufferSize, 0, &data);
-				memcpy(data, indexes->data(), (size_t)bufferSize);
-				vkUnmapMemory(logicalDevice, stagingBufferMemory);
-
-				ADGRVulkanCreateBufferInfo indexBufferInfo;
-				indexBufferInfo.bufferSize = bufferSize;
-				indexBufferInfo.usage = (VkBufferUsageFlagBits)(VK_BUFFER_USAGE_TRANSFER_DST_BIT | VK_BUFFER_USAGE_INDEX_BUFFER_BIT);
-				indexBufferInfo.bufferMemoryPropertyflags = VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT;
-				indexBufferInfo.buffer = &_buffer;
-				indexBufferInfo.bufferMemory = &_bufferMemory;
-
-				VulkanGraphicsFunctions::createBuffer(logicalDevice, physicalDevice, indexBufferInfo);
-
-				VulkanGraphicsFunctions::copyBuffer(logicalDevice, commandPool, graphicsQueue, presentQueue, stagingBuffer, _buffer, bufferSize);
-
-				vkDestroyBuffer(logicalDevice, stagingBuffer, nullptr);
-				vkFreeMemory(logicalDevice, stagingBufferMemory, nullptr);
-
-				myRenderData.indexBuffers.pushBack(_buffer);
-				myRenderData.indexBufferMemories.pushBack(_bufferMemory);
+					myRenderData.indexBuffers.pushBack(_buffer);
+					myRenderData.indexBufferMemories.pushBack(_bufferMemory);
+				}
 			}
 
 			void VulkanGraphicsRenderableObject::terminateIndexBuffer()

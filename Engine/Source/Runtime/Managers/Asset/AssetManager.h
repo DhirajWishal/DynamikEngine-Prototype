@@ -31,6 +31,8 @@ namespace Dynamik {
 
 	/* Asset manager for the Dynamik Engine */
 	class AssetManager : public DMKObject {
+		using STORE = ARRAY<AssetContainer>;
+
 	public:
 		AssetManager() {}
 		~AssetManager() {}
@@ -53,10 +55,15 @@ namespace Dynamik {
 		/* Loads a scene data to the memory */
 		void loadScene(UI32 sceneIndex, UI32 levelIndex);
 
+		/* Filter renderable assets and return them */
+		ARRAY<AssetContainer> getRenderableAssets(UI32 sceneIndex, UI32 levelIndex);
+		ARRAY<POINTER<InternalFormat>> getRenderablesAsInternalFormats(UI32 sceneIndex, UI32 levelIndex);
+
 	private:
 		ARRAY<ARRAY<ARRAY<AssetContainer>>> assets;
+		ARRAY<ARRAY<ARRAY<AssetContainer>>> renderableObjects;
 
-		ARRAY<AssetContainer> _initializeSceneData(ARRAY<AssetContainer> scene);
+		STORE _initializeSceneData(ARRAY<AssetContainer> scene);
 	};
 }
 

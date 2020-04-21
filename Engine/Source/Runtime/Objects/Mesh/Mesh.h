@@ -4,6 +4,7 @@
 
 #include "Public/Array.h"
 #include "GameObjectDescriptors.h"
+#include "../Texture/Texture.h"
 
 namespace Dynamik {
 	struct MeshPointStore {
@@ -25,6 +26,7 @@ namespace Dynamik {
 		CCPTR name = "";
 		ARRAY<MeshPointStore> vertexDataStore;
 		ARRAY<UI32> indexes;
+		Texture textureData;
 
 		UI32 allocatableSize(ARRAY<DMKVertexAttribute> attributes);
 		void packData(ARRAY<DMKVertexAttribute> attributes, VPTR data);

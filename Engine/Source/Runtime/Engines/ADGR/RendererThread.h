@@ -23,10 +23,10 @@ namespace Dynamik {
 		B1 loopEndCommand() override;
 
 		void addProgress(UI32* progress);
-		void addInternalFormats(ARRAY<InternalFormat*> formats);
+		void addInternalFormats(ARRAY<POINTER<InternalFormat>> formats);
 
 		ADGR::Renderer myRenderer;
-		ARRAY<InternalFormat*> _internalFormats;
+		ARRAY<POINTER<InternalFormat>> _internalFormats;
 	};
 }
 

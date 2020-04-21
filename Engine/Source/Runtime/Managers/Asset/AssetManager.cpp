@@ -55,13 +55,13 @@ namespace Dynamik {
 
 	void AssetManager::loadScene(UI32 sceneIndex, UI32 levelIndex)
 	{
-		ARRAY<AssetContainer> _scene = _initializeSceneData(assets[levelIndex][sceneIndex]);
+		STORE _scene = _initializeSceneData(assets[levelIndex][sceneIndex]);
 
 		{
 			ARRAY<std::future<void>, DMKArrayDestructorCallMode::DMK_ARRAY_DESTRUCTOR_CALL_MODE_DESTRUCT_ALL> threads;
 			for (UI32 index = 0; index < _scene.size(); index++)
 			{
-				InternalFormat* _format = (InternalFormat*)_scene[index].address;
+				POINTER<InternalFormat> _format = (POINTER<InternalFormat>)_scene[index].address;
 
 				DMKModelLoadInfo info;
 				info.path = _format->descriptor.assetDescription.dynamikResouceFilePath;
@@ -78,13 +78,39 @@ namespace Dynamik {
 		updateScene(_scene, sceneIndex, levelIndex);
 	}
 
-	ARRAY<AssetContainer> AssetManager::_initializeSceneData(ARRAY<AssetContainer> scene)
+	ARRAY<AssetContainer> AssetManager::getRenderableAssets(UI32 sceneIndex, UI32 levelIndex)
+	{
+		ARRAY<AssetContainer>_assets;
+
+		for (AssetContainer _asset : assets[levelIndex][sceneIndex])
+			if (_asset.type <= DMKObjectType::DMK_OBJECT_TYPE_CAMERA)
+				_assets.pushBack(_asset);
+
+		return _assets;
+	}
+
+	ARRAY<POINTER<InternalFormat>> AssetManager::getRenderablesAsInternalFormats(UI32 sceneIndex, UI32 levelIndex)
+	{
+		ARRAY<POINTER<InternalFormat>> _formats;
+
+		for (AssetContainer _asset : assets[levelIndex][sceneIndex])
+		{
+			if (_asset.type <= DMKObjectType::DMK_OBJECT_TYPE_CAMERA) 
+			{
+				_formats.pushBack((POINTER<InternalFormat>)_asset.address);
+			}
+		}
+
+		return _formats;
+	}
+
+	AssetManager::STORE AssetManager::_initializeSceneData(ARRAY<AssetContainer> scene)
 	{
 		for (UI32 index = 0; index < scene.size(); index++)
 		{
-			/* Update addresses from DMKGameObject* to InternalFormat* */
-			scene[index].address = (InternalFormat*)scene[index].address;
-			InternalFormat* _format = (InternalFormat*)scene[index].address;
+			/* Update addresses from DMKGameObject* to POINTER<InternalFormat> */
+			scene[index].address = (POINTER<InternalFormat>)scene[index].address;
+			POINTER<InternalFormat> _format = (POINTER<InternalFormat>)scene[index].address;
 
 			/* Instantiate a dai file manager */
 			utils::daiManager daiManager;
@@ -116,11 +142,11 @@ namespace Dynamik {
 			/* Tessellation shader path */
 			if (daiManager.getData(utils::DMK_DAI_FILE_DATA_TYPE_TESSELLATION).size())
 				_format->shaderPaths.tessellationShader = (_basePath + daiManager.getData(utils::DMK_DAI_FILE_DATA_TYPE_TESSELLATION)[0]).c_str();
-		
+
 			/* Geometry shader path */
 			if (daiManager.getData(utils::DMK_DAI_FILE_DATA_TYPE_GEOMETRY).size())
 				_format->shaderPaths.grometryShader = (_basePath + daiManager.getData(utils::DMK_DAI_FILE_DATA_TYPE_GEOMETRY)[0]).c_str();
-		
+
 			/* Fragment shader path */
 			if (daiManager.getData(utils::DMK_DAI_FILE_DATA_TYPE_FRAGMENT).size())
 				_format->shaderPaths.fragmentShader = (_basePath + daiManager.getData(utils::DMK_DAI_FILE_DATA_TYPE_FRAGMENT)[0]).c_str();

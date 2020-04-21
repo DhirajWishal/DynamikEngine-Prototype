@@ -38,6 +38,16 @@ namespace Dynamik {
 
 				return attributeDescriptions;
 			}
+
+			void VulkanUtilities::updateUniformBuffer(VkDevice device, ARRAY<MAT4> uniformData, VkDeviceMemory uniformBufferMemory)
+			{
+				UI32 _bufferSize = uniformData.typeSize() * uniformData.size();
+
+				VPTR data = nullptr;
+				vkMapMemory(device, uniformBufferMemory, 0, _bufferSize, 0, &data);
+				memcpy(data, uniformData.data(), _bufferSize);
+				vkUnmapMemory(device, uniformBufferMemory);
+			}
 			
 			VkFormat VulkanUtilities::vertexAttributeTypeToVkFormat(DMKDataType type)
 			{

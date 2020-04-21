@@ -13,53 +13,92 @@
 #define _DYNAMIK_ADGR_RENDERER_H
 
 #include "rendererFormat.h"
-#include "core/core.h"
+#include "core.h"
 #include "rendererCommandQueue.h"
 
-
-
 #include "GameObject.h"
-#include "core/Interface/Events/DMKEventComponent.h"
+#include "Objects/InternalFormat/InteralFormat.h"
+#include "Managers/Asset/AssetManager.h"
 
-#include "core/utils/DMK_Descriptors.h"
+#include "Camera.h"
 
 namespace Dynamik {
 	namespace ADGR {
+		enum class DMK_API DMKRenderingAPI {
+			DMK_RENDERING_API_VULKAN,
+			DMK_RENDERING_API_OPENGL,
+			DMK_RENDERING_API_DIRECTX_12,
+		};
+
+		struct DMK_API DMKRendererSettings {
+			std::string myWindowTitle = ("Dynamik Engine");
+			UI32 myWindowWidth = 720;
+			UI32 myWindowHeight = 480;
+			ARRAY<std::string> myWindowIconPaths = { ("E:/Projects/Dynamik Engine/Dynamik/core assets/icons/Dynamik.jpg") };
+
+			ARRAY<F32> clearScreenValues = {							// Vulkan clear screen values
+				(2.0f / 256.0f),		// Red
+				(8.0f / 256.0f),		// Green
+				(32.0f / 256.0f),		// Blue
+				(1.00000000f)			// Alpha
+			};	// Dynwamik color code: rgba(2, 8, 32, 1)
+		};
+
+		struct DMK_API DMKRendererDrawFrameInfo {
+			DMKCameraData cameraData;
+			F32 FOV = 60.0f;
+			F32 aspectRatio = 1.0f;
+			F32 frustumNear = 0.001f;
+			F32 frustumFar = 256.0f;
+
+			ARRAY<POINTER<InternalFormat>> formats;
+		};
+
 		/* RENDERER ABSTRACTION LAYER
-		 *
+		 * Singleton
 		 */
 		class DMK_API Renderer {
+			Renderer() {}
+
+			static Renderer instance;
+
+			struct UniformBufferLocationContainer {
+				POINTER<MAT4> location;
+				UI32 byteSize = 0;
+			};
+
 		public:
-			Renderer();
-			~Renderer();
+			Renderer(const Renderer&) = delete;
+			Renderer(Renderer&&) = delete;
+			Renderer& operator=(const Renderer&) = delete;
+			Renderer& operator=(Renderer&&) = delete;
 
-			void setProgress(UI32* progress);
-			void initRenderer();
-			void setRendererFormats(ARRAY<InternalFormat*>& internalFormats);
-			void draw(ARRAY<DMKEventComponent*> events);
+			~Renderer() {}
 
-			void setVertices(ARRAY<Vertex>* vertices);
+			/* Initializing */
+			static void initializeStageOne(DMKRenderingAPI selectedAPI, DMKRendererSettings settings);
+			static void initializeStageTwo();
+			static void initializeStageThree();
 
-			void addCommand(RendererCommandQueue commandQueue);
+			/* Setting containers and assets */
+			static void setProgressPointer(POINTER<UI32> progress);
+			static void setWindowHandle(POINTER<GLFWwindow> window);
+			static void setRenderableObjects(ARRAY<POINTER<InternalFormat>> formats);
+			static void submitLoadedAssets();
 
-			void loadDataToUpdate(ARRAY<InternalFormat*>& internalFormats);
-			void updateRendererFormats();
-			void loadData(ARRAY<InternalFormat*>& internalFormats, ARRAY<RendererFormat>* formats);
+			static void addToRenderQueue(POINTER<InternalFormat> format);
 
-			void end();
+			/* Draw call */
+			static void drawFrame(DMKRendererDrawFrameInfo info);
 
-			void bindKeys();
-
-			// core functions
-
-			B1 getWindowCloseEvent();
-			void idleCall();
-
-			ARRAY<RendererFormat> myRendererFormats = {};
-			ARRAY<RendererFormat> myTemporaryFormats;
-
-			ARRAY<Vertex> localContainer;
-			RendererCommandQueue myCommandQueue;
+			/* Termination */
+			static void frameCleanup();
+			static void terminate();
+			
+		private:
+			POINTER<UI32> progressPtr;
+			ARRAY<POINTER<InternalFormat>> inFlightAssets;
+			ARRAY<POINTER<InternalFormat>> submitPendingAssets;
 		};
 	}
 }

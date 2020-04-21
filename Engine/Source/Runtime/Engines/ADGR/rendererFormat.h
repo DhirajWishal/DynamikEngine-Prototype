@@ -13,14 +13,14 @@ namespace Dynamik {
 		class RendererFormat {
 		public:
 			RendererFormat() {}
-			RendererFormat(InternalFormat* internalFormat) : myInternalFormat(internalFormat) {}
+			RendererFormat(POINTER<InternalFormat> internalFormat) : myInternalFormat(internalFormat) {}
 			virtual ~RendererFormat() {}
 
 			// Internal formats
-			InternalFormat* myInternalFormat = nullptr;
+			POINTER<InternalFormat> myInternalFormat = nullptr;
 
 			// Rendering technology
-			DMK_ADGR_RENDERING_TECHNOLOGY myRenderTechnology = DMK_ADGR_RENDERING_TECHNOLOGY::DMK_ADGR_RENDER_INDEXED;
+			DMKRenderingTechnology myRenderTechnology = DMKRenderingTechnology::DMK_RENDERING_TECHNOLOGY_INDEXED;
 		};
 	}
 }

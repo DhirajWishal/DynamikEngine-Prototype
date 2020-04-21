@@ -19,6 +19,8 @@ namespace Dynamik {
 				static ARRAY<VkVertexInputBindingDescription> getBindingDescription(ARRAY<DMKVertexAttribute> attributes, UI32 bindCount = 1);
 				static ARRAY<VkVertexInputAttributeDescription> getAttributeDescriptions(ARRAY<DMKVertexAttribute> attributes, UI32 binding = 1);
 
+				static void updateUniformBuffer(VkDevice device, ARRAY<MAT4> uniformData, VkDeviceMemory uniformBufferMemory);
+
 				static VkFormat vertexAttributeTypeToVkFormat(DMKDataType type);
 			};
 		}

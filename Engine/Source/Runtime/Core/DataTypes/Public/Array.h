@@ -894,6 +894,40 @@ namespace Dynamik {
 			return myEndPtr;
 		}
 
+		/* FUNCTION
+		 * Find a given value in this array.
+		 *
+		 * @param data: Data to be searched for.
+		 * @return: Array of indexes which the gived data is found.
+		 */
+		ARRAY<UI32> find(const TYPE& data)
+		{
+			ARRAY<UI32> _indexContainer;
+
+			for (UI32 _itr = 0; _itr < size(); _itr++)
+				if (this->at(_itr) == data)
+					_indexContainer.pushBack(_itr);
+
+			return _indexContainer;
+		}
+
+		/* FUNCTION
+		 * Find a given value in this array.
+		 *
+		 * @param data: Data to be searched for.
+		 * @return: Array of indexes which the gived data is found.
+		 */
+		ARRAY<UI32> find(TYPE&& data)
+		{
+			ARRAY<UI32> _indexContainer;
+
+			for (UI32 _itr = 0; _itr < size(); _itr++)
+				if (this->at(_itr) == data)
+					_indexContainer.pushBack(_itr);
+
+			return _indexContainer;
+		}
+
 		/* PUBLIC OPERATORS */
 	public:
 		/* OPERATOR

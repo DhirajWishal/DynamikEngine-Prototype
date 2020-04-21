@@ -193,9 +193,6 @@
     <Filter Include="Runtime\Objects\Mesh">
       <UniqueIdentifier>{FE531049-EAE2-9912-9301-AE0D7F6FAAB8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Runtime\Objects\RenderComponent">
-      <UniqueIdentifier>{A4EFD202-10D3-E142-19D6-0F7F8538A893}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Runtime\Objects\Texture">
       <UniqueIdentifier>{627459B8-CEAB-A14F-D7B5-0573436CC848}</UniqueIdentifier>
     </Filter>
@@ -231,9 +228,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\Runtime\Application.h">
-      <Filter>Runtime</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Runtime\Core\Algorithm\AlgorithmLib.h">
       <Filter>Runtime\Core\Algorithm</Filter>
     </ClInclude>
@@ -774,9 +768,6 @@
     <ClInclude Include="..\..\Runtime\Objects\Mesh\Mesh.h">
       <Filter>Runtime\Objects\Mesh</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Runtime\Objects\RenderComponent\RenderComponent.h">
-      <Filter>Runtime\Objects\RenderComponent</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Runtime\Objects\Texture\Texture.h">
       <Filter>Runtime\Objects\Texture</Filter>
     </ClInclude>
@@ -839,9 +830,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\Runtime\Application.cpp">
-      <Filter>Runtime</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Runtime\Core\Algorithm\Private\CubemapCreator.cpp">
       <Filter>Runtime\Core\Algorithm\Private</Filter>
     </ClCompile>
@@ -901,6 +889,9 @@
     </ClCompile>
     <ClCompile Include="..\..\Runtime\DataHub\renderer\vertex.cpp">
       <Filter>Runtime\DataHub\renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Runtime\Dynamik.cpp">
+      <Filter>Runtime</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Animations\VulkanSkeletalAnimation.cpp">
       <Filter>Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Animations</Filter>

@@ -48,8 +48,8 @@ namespace Dynamik {
 		
 		void StartupRenderer::initializeShaders()
 		{
-			CCPTR vertShaderPath = "Shaders/Startup/shader.vert";
-			CCPTR fragShaderPath = "Shaders/Startup/shader.frag";
+			CCPTR vertShaderPath = "E:/Projects/Dynamik Engine/Versions/Dynamik (Prototype)/Engine/Application/Runtime/Shaders/Startup/shader.vert";
+			CCPTR fragShaderPath = "E:/Projects/Dynamik Engine/Versions/Dynamik (Prototype)/Engine/Application/Runtime/Shaders/Startup/shader.frag";
 
 			myInstance.myShaderManager = Shader(vertShaderPath, fragShaderPath);
 		}

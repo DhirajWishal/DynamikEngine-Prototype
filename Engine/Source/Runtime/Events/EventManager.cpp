@@ -8,6 +8,8 @@
 #include "DMKDropPathEventComponent.h"
 #include "DMKWindowResizeEventComponent.h"
 
+#include "keyCodes.h"
+
 #define LOCK_AND_ADD_COMPONENT(component)	{														\
 												std::lock_guard<std::mutex> _lockGuard(myMutex);	\
 												myInstance.events.pushBack(&component);				\
@@ -34,12 +36,17 @@ namespace Dynamik {
 		glfwSetDropCallback(window, _applicationDropPathCallback);
 
 		glfwSetFramebufferSizeCallback(window, _applicationResizeCallback);
+
+		glfwSetWindowCloseCallback(window, _windowCloseCallback);
 	}
 
-	void EventManager::pollEventsGLFW()
+	/* Returns false if the GLFW window is closed */
+	B1 EventManager::pollEventsGLFW()
 	{
 		myInstance.events.clear();
 		glfwPollEvents();
+
+		return !myInstance.isWindowClosed;
 	}
 	
 	CursorPosition EventManager::getCursorPosition()
@@ -197,5 +204,10 @@ namespace Dynamik {
 		_component.height = height;
 
 		LOCK_AND_ADD_COMPONENT(_component)
+	}
+	
+	void EventManager::_windowCloseCallback(GLFWwindow* window)
+	{
+		myInstance.isWindowClosed = true;
 	}
 }

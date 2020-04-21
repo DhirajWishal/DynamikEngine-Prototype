@@ -143,7 +143,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\Runtime\Application.h" />
     <ClInclude Include="..\..\Runtime\Core\Algorithm\AlgorithmLib.h" />
     <ClInclude Include="..\..\Runtime\Core\Algorithm\Public\CubemapCreator.h" />
     <ClInclude Include="..\..\Runtime\Core\Algorithm\Public\Sort.h" />
@@ -324,7 +323,6 @@
     <ClInclude Include="..\..\Runtime\Objects\IndexBufferObject\IndexBufferObjectUI8.h" />
     <ClInclude Include="..\..\Runtime\Objects\InternalFormat\InteralFormat.h" />
     <ClInclude Include="..\..\Runtime\Objects\Mesh\Mesh.h" />
-    <ClInclude Include="..\..\Runtime\Objects\RenderComponent\RenderComponent.h" />
     <ClInclude Include="..\..\Runtime\Objects\Texture\Texture.h" />
     <ClInclude Include="..\..\Runtime\Objects\UniformBufferObject\UniformBufferObject.h" />
     <ClInclude Include="..\..\Runtime\Objects\VertexBufferObject\VertexBufferObject.h" />
@@ -347,7 +345,6 @@
     <ClInclude Include="..\..\Runtime\engineControlUnit.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\Runtime\Application.cpp" />
     <ClCompile Include="..\..\Runtime\Core\Algorithm\Private\CubemapCreator.cpp" />
     <ClCompile Include="..\..\Runtime\Core\DataTypes\Dynamik\internalFormat.cpp" />
     <ClCompile Include="..\..\Runtime\Core\DataTypes\Private\DynamicPointer.cpp" />
@@ -370,6 +367,7 @@
     <ClCompile Include="..\..\Runtime\DataHub\dataPipeline.cpp" />
     <ClCompile Include="..\..\Runtime\DataHub\network\messageData.cpp" />
     <ClCompile Include="..\..\Runtime\DataHub\renderer\vertex.cpp" />
+    <ClCompile Include="..\..\Runtime\Dynamik.cpp" />
     <ClCompile Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Animations\VulkanSkeletalAnimation.cpp" />
     <ClCompile Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Common\VulkanDescriptor.cpp" />
     <ClCompile Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Common\VulkanExtensionsManager.cpp" />

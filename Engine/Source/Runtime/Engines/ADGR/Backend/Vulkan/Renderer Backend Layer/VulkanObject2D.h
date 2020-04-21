@@ -18,7 +18,7 @@ namespace Dynamik {
 
 				ARRAY<std::string> texturePaths;
 
-				DMK_ADGR_RENDERING_TECHNOLOGY renderTechnology = DMK_ADGR_RENDERING_TECHNOLOGY::DMK_ADGR_RENDER_INDEXED;
+				DMKRenderingTechnology renderTechnology = DMKRenderingTechnology::DMK_RENDERING_TECHNOLOGY_INDEXED;
 			};
 
 			class VulkanObject2D : public VulkanGraphicsRenderableObject {

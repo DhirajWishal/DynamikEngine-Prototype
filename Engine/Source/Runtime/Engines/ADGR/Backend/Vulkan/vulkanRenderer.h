@@ -19,7 +19,7 @@
 #include "GameObject.h"
 #include "debugger.h"
 
-#include "core/data store/internalFormat.h"
+#include "Managers/Asset/AssetManager.h"
 
 #include "Renderer Backend Layer/Graphics/VulkanGraphicsRBLIndex.h"
 #include "Renderer Backend Layer/Compute/VulkanComputeRBLIndex.h"
@@ -33,21 +33,12 @@
 
 #include "Renderer Backend Layer/Animations/VulkanSkeletalAnimation.h"
 
-#include "core/Interface/Window/Windows/WindowManager.h"
-
-#include "../Components/Camera/AnimationCamera.h"
-#include "../Components/Camera/Camera2D.h"
-#include "../Components/Camera/Camera3D.h"
-#include "../Components/Camera/CameraReflect.h"
-#include "../Components/Camera/CameraSkybox.h"
-
 #include "Renderer Backend Layer/External/stb_font_consolas_24_latin1.inl"
 
 #include "Engines/ADGR/rendererFormat.h"
 
 namespace Dynamik {
 	namespace ADGR {
-		using namespace core;
 		using namespace Backend;
 
 		struct ADGRVulkanTextOverlayDataContainer {
@@ -125,7 +116,7 @@ namespace Dynamik {
 			/* FUNCTION
 			 * Draw frame function.
 			 */
-			void drawFrame();
+			void drawFrame(DMKRendererDrawFrameInfo info);
 
 			/* FUNCTION
 			 * Full Shut down function.
@@ -169,6 +160,8 @@ namespace Dynamik {
 
 			void addText(std::string string, F32 x, F32 y, DMKTextAlign align);
 
+			void setWindowHandle(POINTER<GLFWwindow> windowHandle);
+
 			/* PRIVATE FUNCTIONS */
 		private:
 			void recreateSwapChain();
@@ -195,11 +188,7 @@ namespace Dynamik {
 
 			void draw3D(VkSwapchainKHR swapChain);
 
-			AnimationCamera myAnimationCamera;
-			Camera2D myCamera2D;
-			Camera3D myCamera3D;
-			CameraReflect myCameraReflect;
-			CameraSkybox myCameraSkybox;
+			POINTER<GLFWwindow> myWindow;
 
 			VulkanGraphicsCore myVulkanGraphicsCore;
 			VulkanGraphicsSwapChain3D mySwapChain3D;
@@ -261,4 +250,4 @@ namespace Dynamik {
 	}
 }
 
-#endif	//	_DMK_ADGR_RENDER_H
+#endif	//	_DMK_RENDERING_TECHNOLOGY_H

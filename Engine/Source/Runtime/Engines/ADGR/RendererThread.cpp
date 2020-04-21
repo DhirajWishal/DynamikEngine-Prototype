@@ -7,7 +7,7 @@
 namespace Dynamik {
 	void RendererThread::init()
 	{
-		//myRenderer.setRendererFormats(_internalFormats);
+		//myRenderer.setRenderComponents(_internalFormats);
 		myRenderer.initRenderer();
 	}
 
@@ -36,7 +36,7 @@ namespace Dynamik {
 		myRenderer.setProgress(progress);
 	}
 
-	void RendererThread::addInternalFormats(ARRAY<InternalFormat*> formats)
+	void RendererThread::addInternalFormats(ARRAY<POINTER<InternalFormat>> formats)
 	{
 		_internalFormats = formats;
 	}

@@ -12,7 +12,7 @@
 #include "VulkanGraphicsPushConstant.h"
 #include "VulkanGraphicsDescriptor.h"
 
-#include <GameObject.h>
+#include "Objects/InternalFormat/InteralFormat.h"
 
 namespace Dynamik {
 	namespace ADGR {
@@ -33,13 +33,10 @@ namespace Dynamik {
 			};
 
 			struct ADGRVulkanTextureInitInfo {
-				std::string path;
-
 				UI32 mipLevels = 0;
 				UI32 minMipLevels = 0;
 				UI32 maxMipLevels = 0;
 
-				VkFormat format;
 				VkFilter magFilter, minFilter;
 				VkSamplerAddressMode modeU, modeV, modeW;
 				VkImageAspectFlags aspectFlags;
@@ -89,7 +86,7 @@ namespace Dynamik {
 
 			struct ADGRVulkanRenderData {
 				DMKObjectType type = DMKObjectType::DMK_OBJECT_TYPE_STATIC;
-				DMK_ADGR_RENDERING_TECHNOLOGY renderTechnology = DMK_ADGR_RENDERING_TECHNOLOGY::DMK_ADGR_RENDER_INDEXED;
+				DMKRenderingTechnology renderTechnology = DMKRenderingTechnology::DMK_RENDERING_TECHNOLOGY_INDEXED;
 
 				POINTER<VulkanGraphicsSwapChain> swapChainPointer;
 				POINTER<VulkanGraphicsFrameBuffer> frameBufferPointer;
@@ -127,7 +124,6 @@ namespace Dynamik {
 				std::string materialName = "Metal";
 				B1 isPBR = false;
 
-				POINTER<ARRAY<ARRAY<Vertex>>> vertexBufferObjects;
 				POINTER<ARRAY<ARRAY<UI32>>> indexBufferObjects;
 
 				std::string vertexShaderPath = "";
@@ -137,10 +133,10 @@ namespace Dynamik {
 
 				ARRAY<std::string> texturePaths;
 
-				DMK_ADGR_RENDERING_TECHNOLOGY renderTechnology = DMK_ADGR_RENDERING_TECHNOLOGY::DMK_ADGR_RENDER_INDEXED;
+				DMKRenderingTechnology renderTechnology = DMKRenderingTechnology::DMK_RENDERING_TECHNOLOGY_INDEXED;
 			};
 
-			class VulkanGraphicsRenderableObject : public DMKGameObject {
+			class VulkanGraphicsRenderableObject : public InternalFormat {
 			public:
 				VulkanGraphicsRenderableObject() {}
 				VulkanGraphicsRenderableObject(ADGRVulkanGraphicsRenderableObjectInitInfo info)
@@ -155,20 +151,14 @@ namespace Dynamik {
 				virtual void initializePipeline(ADGRVulkanGraphicsPipelineInitInfo info);
 				virtual void terminatePipeline();
 
-				virtual void initializeTextures(ARRAY<ADGRVulkanTextureInitInfo> infos);
+				virtual void initializeTextures(ADGRVulkanTextureInitInfo info);
 				virtual void generateMipMaps(POINTER<ADGRVulkanTextureContainer> container);
 				virtual void terminateTextures();
 
-				virtual void initializeVertexBuffer(ARRAY<Vertex>* vertexes);
-				virtual void initializeVertex2DBuffer(ARRAY<vertex2D>* vertexes);
-				virtual void initializeVertexBufferP(ARRAY<VertexP>* vertexes);
-				virtual void initializeVertexBufferPN(ARRAY<VertexPN>* vertexes);
+				virtual void initializeVertexBuffer();
 				virtual void terminateVertexBuffer();
 
-				virtual void initializeIndexBufferUI8(ARRAY<UI8>* indexes);
-				virtual void initializeIndexBufferUI16(ARRAY<UI16>* indexes);
-				virtual void initializeIndexBufferUI32(ARRAY<UI32>* indexes);
-				virtual void initializeIndexBufferUI64(ARRAY<UI64>* indexes);
+				virtual void initializeIndexBuffer();
 				virtual void terminateIndexBuffer();
 
 				virtual void initializeDescriptorPool();

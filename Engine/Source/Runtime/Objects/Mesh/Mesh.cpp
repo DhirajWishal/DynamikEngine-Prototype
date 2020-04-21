@@ -21,37 +21,37 @@ namespace Dynamik {
 
 				switch (attribute.name)
 				{
-				case DMKVertexDataName::DMK_VERTEX_DATA_NAME_POSITION:
+				case DMKVertexData::DMK_VERTEX_DATA_NAME_POSITION:
 					_tempArray = _getAttributeData(attribute.type, _store.position);
 					moveBytes(nextPtr, _tempArray.begin(), _tempArray.end());
 					nextPtr += _getNextPointerAddress(attribute);
 					break;
 
-				case DMKVertexDataName::DMK_VERTEX_DATA_NAME_COLOR:
+				case DMKVertexData::DMK_VERTEX_DATA_NAME_COLOR:
 					_tempArray = _getAttributeData(attribute.type, _store.color);
 					moveBytes(nextPtr, _tempArray.begin(), _tempArray.end());
 					nextPtr += _getNextPointerAddress(attribute);
 					break;
 
-				case DMKVertexDataName::DMK_VERTEX_DATA_NAME_TEXTURE_COORDINATE:
+				case DMKVertexData::DMK_VERTEX_DATA_NAME_TEXTURE_COORDINATE:
 					_tempArray = _getAttributeData(attribute.type, _store.textureCoordinate);
 					moveBytes(nextPtr, _tempArray.begin(), _tempArray.end());
 					nextPtr += _getNextPointerAddress(attribute);
 					break;
 
-				case DMKVertexDataName::DMK_VERTEX_DATA_NAME_NORMAL:
+				case DMKVertexData::DMK_VERTEX_DATA_NAME_NORMAL:
 					_tempArray = _getAttributeData(attribute.type, _store.normal);
 					moveBytes(nextPtr, _tempArray.begin(), _tempArray.end());
 					nextPtr += _getNextPointerAddress(attribute);
 					break;
 
-				case DMKVertexDataName::DMK_VERTEX_DATA_NAME_SPACE:
+				case DMKVertexData::DMK_VERTEX_DATA_NAME_SPACE:
 					_tempArray = _getAttributeData(attribute.type, _store.space);
 					moveBytes(nextPtr, _tempArray.begin(), _tempArray.end());
 					nextPtr += _getNextPointerAddress(attribute);
 					break;
 
-				case DMKVertexDataName::DMK_VERTEX_DATA_NAME_INTEGRITY:
+				case DMKVertexData::DMK_VERTEX_DATA_NAME_INTEGRITY:
 					_tempArray = _getAttributeData(attribute.type, _store.integrity);
 					moveBytes(nextPtr, _tempArray.begin(), _tempArray.end());
 					nextPtr += _getNextPointerAddress(attribute);

@@ -5,7 +5,6 @@
 
 #include <irrKlang.h>
 #include "AudioObjectController.h"
-#include <Platform.h>
 
 namespace Dynamik {
 	namespace Audio {

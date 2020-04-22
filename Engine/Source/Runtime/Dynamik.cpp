@@ -32,6 +32,8 @@ namespace Dynamik {
 
 	UI32 DMKEngine::addLevel(DMKLevelDescriptor level)
 	{
+		/* Since each level consists of one or more scenes, we pack the given scenes to a wrapper.	*/
+		/* After wrapping them in scene wrappers, we add the assets to it.							*/
 		ARRAY<ARRAY<AssetContainer>> scenes;
 		for (auto scene : level.scenes)
 		{
@@ -47,6 +49,7 @@ namespace Dynamik {
 			scenes.pushBack(assets);
 		}
 
+		/* Add the scenes to a new level and return its index. */
 		return instance.myAssetManager.addLevel(scenes);
 	}
 
@@ -63,11 +66,13 @@ namespace Dynamik {
 
 	UI32 DMKEngine::addAsset(DMKGameObject* object)
 	{
+		/* Create a new Asset Container for the new object. */
 		AssetContainer _container;
 		_container.address = object;
 		_container.byteSize = sizeof(*object);
 		_container.type = object->type;
 
+		/* Add the asset to the Asset Manager and return its index. */
 		return instance.myAssetManager.addAsset(_container, instance.sceneIndex, instance.levelIndex);
 	}
 
@@ -145,7 +150,10 @@ namespace Dynamik {
 		_container.byteSize = sizeof(*object);
 		_container.type = object->type;
 
+		/* Submit the asset to the Asset Manager. */
 		instance.myAssetManager.addAsset(_container, instance.sceneIndex, instance.levelIndex);
+
+		/* Submit the asset to the render queue */
 		ADGR::Renderer::addToRenderQueue((InternalFormat*)object);
 	}
 
@@ -201,6 +209,7 @@ namespace Dynamik {
 	
 	inline void DMKEngine::cleanUniformBuffers()
 	{
+		/* Clean all the uniform buffer data to add new uniform data. */
 		for (auto _format : instance.internalFormats)
 			_format->uniformBufferData = {};
 	}

@@ -14,7 +14,7 @@ namespace Dynamik {
 	void RendererThread::loop()
 	{
 		myRenderer.getEvents();
-		myRenderer.draw();
+		myRenderer.drawFrame();
 	}
 
 	DMKThreadTreminateReason RendererThread::shutdown()

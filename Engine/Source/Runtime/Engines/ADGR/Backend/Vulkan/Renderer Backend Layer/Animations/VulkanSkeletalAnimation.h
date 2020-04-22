@@ -63,7 +63,7 @@ namespace Dynamik {
 				VulkanSkeletalAnimation(ADGRVulkanGraphicsRenderableObjectInitInfo info);
 				virtual ~VulkanSkeletalAnimation() {}
 
-				ADGRVulkanRenderData initializeObject(VkDevice logicalDevice, ADGRVulkan3DObjectData _object, VkSampleCountFlagBits msaaSamples) override;
+				ADGRVulkanRenderData initializeObject(VkDevice logicalDevice, POINTER<InternalFormat> _object, VkSampleCountFlagBits msaaSamples) override;
 
 				void setAnimation(UI32 animationIndex);
 				void loadBones(const aiMesh* pMesh, UI32 vertexOffset, ARRAY<ADGRVulkanSkeletalBoneData>& bones);

@@ -2,8 +2,8 @@
 #ifndef _DYNAMIK_INTELLECT_SIGMOID_H
 #define _DYNAMIK_INTELLECT_SIGMOID_H
 
-
-
+#include "core.h"
+#include "Public/datatypes.h"
 
 namespace Dynamik {
 	namespace Math {

@@ -11,7 +11,7 @@ namespace Dynamik {
 				myRenderData.enableMaterials = true;
 			}
 
-			ADGRVulkanRenderData VulkanPBRObject::initializeObject(VkDevice logicalDevice, ADGRVulkan3DObjectData _object, VkSampleCountFlagBits msaaSamples)
+			ADGRVulkanRenderData VulkanPBRObject::initializeObject(VkDevice logicalDevice, POINTER<InternalFormat> _object, VkSampleCountFlagBits msaaSamples)
 			{
 				ADGRVulkanDescriptorSetLayoutInitInfo layoutInitInfo;
 

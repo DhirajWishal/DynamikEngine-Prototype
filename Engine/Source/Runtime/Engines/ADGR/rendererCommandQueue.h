@@ -3,7 +3,6 @@
 #define _DMK_ADGR_RENDERER_COMMAND_QUEUE_H
 
 #include <queue>
-#include <CentralDataHub.h>
 
 namespace Dynamik {
 	namespace ADGR {

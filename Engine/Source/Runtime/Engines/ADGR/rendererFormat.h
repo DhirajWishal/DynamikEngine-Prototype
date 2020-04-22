@@ -3,7 +3,7 @@
 #ifndef _DYNAMIK_ADGR_RENDERER_FORMAT_H
 #define _DYNAMIK_ADGR_RENDERER_FORMAT_H
 
-#include "core/data store/internalFormat.h"
+#include "Objects/InternalFormat/InteralFormat.h"
 
 #include <vector>
 #include <GLFW/glfw3.h>
@@ -17,7 +17,7 @@ namespace Dynamik {
 			virtual ~RendererFormat() {}
 
 			// Internal formats
-			POINTER<InternalFormat> myInternalFormat = nullptr;
+			POINTER<InternalFormat> myInternalFormat;
 
 			// Rendering technology
 			DMKRenderingTechnology myRenderTechnology = DMKRenderingTechnology::DMK_RENDERING_TECHNOLOGY_INDEXED;

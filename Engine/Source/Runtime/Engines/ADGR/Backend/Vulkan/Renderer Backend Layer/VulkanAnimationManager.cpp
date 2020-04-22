@@ -4,7 +4,7 @@
 namespace Dynamik {
 	namespace ADGR {
 		namespace Backend {
-			void VulkanAnimationManager::addInitializedAnimation(VkDevice logicalDevice, ADGRVulkan3DObjectData _object, VkSampleCountFlagBits msaaSamples, VulkanGraphicsRenderableObject* animation)
+			void VulkanAnimationManager::addInitializedAnimation(VkDevice logicalDevice, POINTER<InternalFormat> _object, VkSampleCountFlagBits msaaSamples, VulkanGraphicsRenderableObject* animation)
 			{
 			}
 

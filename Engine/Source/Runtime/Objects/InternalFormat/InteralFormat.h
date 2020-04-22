@@ -3,16 +3,15 @@
 #define _DYNAMIK_INTERNAL_FORMAT_H
 
 #include "GameObject.h"
-#include "DataHub/renderer/vertex.h"
 #include "../Texture/Texture.h"
 #include "../Mesh/Mesh.h"
 
 namespace Dynamik {
 	struct ShaderPaths {
-		CCPTR vertexShader = "";
-		CCPTR tessellationShader = "";
-		CCPTR grometryShader = "";
-		CCPTR fragmentShader = "";
+		std::string vertexShader = "";
+		std::string tessellationShader = "";
+		std::string geometryShader = "";
+		std::string fragmentShader = "";
 	};
 
 	/* INTERNAL GAME OBJECT FORMAT

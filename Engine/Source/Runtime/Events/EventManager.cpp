@@ -81,7 +81,9 @@ namespace Dynamik {
 
 	ARRAY<DMKEventComponent*> EventManager::getEventComponents()
 	{
-		return myInstance.events;
+		auto _events = myInstance.events;
+		myInstance.events = {};
+		return _events;
 	}
 
 	B1 EventManager::isCursorOnCurrent()

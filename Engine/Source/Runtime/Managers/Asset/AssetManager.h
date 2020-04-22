@@ -6,6 +6,7 @@
 #include "Public/Array.h"
 #include "GameObject.h"
 #include "core.h"
+#include "Objects/InternalFormat/InteralFormat.h"
 
 namespace Dynamik {
 	/* Scene data descriptor */

@@ -12,6 +12,8 @@
 #include "VulkanGraphicsPushConstant.h"
 #include "VulkanGraphicsDescriptor.h"
 
+#include "../Common/VulkanUtilities.h"
+
 #include "Objects/InternalFormat/InteralFormat.h"
 
 namespace Dynamik {
@@ -63,17 +65,6 @@ namespace Dynamik {
 				~ADGRVulkanMaterialDescriptor() {}
 			};
 
-			struct ADGRVulkanTextureContainer {
-				VkImage image = VK_NULL_HANDLE;
-				VkImageView imageView = VK_NULL_HANDLE;
-				VkDeviceMemory imageMemory = VK_NULL_HANDLE;
-				VkSampler imageSampler = VK_NULL_HANDLE;
-				VkFormat format;
-				UI32 mipLevels;
-
-				UI32 width, height;
-			};
-
 			struct ADGRVulkanUnformBufferContainer {
 				ARRAY<VkBuffer> buffers;
 				ARRAY<VkDeviceMemory> bufferMemories;
@@ -118,24 +109,6 @@ namespace Dynamik {
 				VkDeviceMemory bufferMemory = VK_NULL_HANDLE;
 			};
 
-			struct ADGRVulkan3DObjectData {
-				DMKObjectType type = DMKObjectType::DMK_OBJECT_TYPE_STATIC;
-				std::string modelpath = "";
-				std::string materialName = "Metal";
-				B1 isPBR = false;
-
-				POINTER<ARRAY<ARRAY<UI32>>> indexBufferObjects;
-
-				std::string vertexShaderPath = "";
-				std::string tessellationShaderPath = "";
-				std::string geometryShaderPath = "";
-				std::string fragmentShaderPath = "";
-
-				ARRAY<std::string> texturePaths;
-
-				DMKRenderingTechnology renderTechnology = DMKRenderingTechnology::DMK_RENDERING_TECHNOLOGY_INDEXED;
-			};
-
 			class VulkanGraphicsRenderableObject : public InternalFormat {
 			public:
 				VulkanGraphicsRenderableObject() {}
@@ -145,7 +118,7 @@ namespace Dynamik {
 
 				virtual void initializeResources(ADGRVulkanGraphicsRenderableObjectInitInfo info);
 
-				virtual ADGRVulkanRenderData initializeObject(VkDevice logicalDevice, ADGRVulkan3DObjectData _object, VkSampleCountFlagBits msaaSamples);
+				virtual ADGRVulkanRenderData initializeObject(VkDevice logicalDevice, POINTER<InternalFormat> format, VkSampleCountFlagBits msaaSamples);
 
 				virtual void initializePipelineLayout(ADGRVulkanGraphicsPipelineLayoutInitInfo info);
 				virtual void initializePipeline(ADGRVulkanGraphicsPipelineInitInfo info);

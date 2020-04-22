@@ -3,6 +3,7 @@
 #define _DYNAMIK_KEY_EVENT_COMPONENT_H
 
 #include "DMKEventComponent.h"
+#include "keyCodes.h"
 
 namespace Dynamik {
 	class DMK_API DMKKeyEventComponent : public DMKEventComponent {

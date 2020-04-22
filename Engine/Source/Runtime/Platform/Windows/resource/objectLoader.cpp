@@ -11,6 +11,7 @@
 
 #include "dmkafx.h"
 #include "objectLoader.h"
+#include "Utilities/Functions/DMK_Functions.h"
 
 #define TINYOBJLOADER_IMPLEMENTATION
 #include <tiny_obj_loader.h>
@@ -187,7 +188,7 @@ namespace Dynamik {
 			myObjectFile.close();
 			return _containers;
 		}
-
+		/*
 		void loadObjFileData(POINTER<InternalFormat> myInternalFormat) {
 			UI32 _objectCount = myInternalFormat->myGameObject->myProperties.objectPath.size();
 			myInternalFormat->myVertexBufferObjects.resize(_objectCount);
@@ -344,7 +345,6 @@ namespace Dynamik {
 				}
 
 				_objectFile.close();
-			}
-		}
+			}*/
 	}
 }

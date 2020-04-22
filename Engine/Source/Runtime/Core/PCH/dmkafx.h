@@ -3,10 +3,10 @@
 #ifndef _DYNAMIK_PCH
 #define _DYNAMIK_PCH
 
-#include "DataTypes/DataTypesLib.h"
-#include "Algorithm/AlgorithmLib.h"
-#include "Memory/MemoryLib.h"
-#include "System/SystemLib.h"
+#include "DataTypesLib.h"
+#include "AlgorithmLib.h"
+#include "MemoryLib.h"
+#include "SystemLib.h"
 
 #ifdef DMK_PLATFORM_WINDOWS
 

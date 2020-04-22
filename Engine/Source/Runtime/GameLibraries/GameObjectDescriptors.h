@@ -4,12 +4,31 @@
 
 #include "Public/Array.h"
 #include "Dynamik/DMKDataType.h"
+#include "Dynamik/objectSpecifications.h"
 
 namespace Dynamik {
+	enum class DMKTextureType {
+		DMK_TEXTURE_TYPE_2D,
+		DMK_TEXTURE_TYPE_3D,
+		DMK_TEXTURE_TYPE_CUBEMAP,
+	};
+
+	enum class DMKTextureInputType {
+		DMK_TEXTURE_INPUT_TYPE_IMAGES,
+		DMK_TEXTURE_INPUT_TYPE_KTX,
+		DMK_TEXTURE_INPUT_TYPE_HDRI,
+		DMK_TEXTURE_INPUT_TYPE_AUTO,
+	};
+
 	struct AssetDescriptor {
 		CCPTR dynamikResouceFilePath = "";
 
 		F32 integrty = 1.0f;
+		B1 physicallyBased = false;
+		std::string materialName = "";
+
+		DMKTextureType textureType = DMKTextureType::DMK_TEXTURE_TYPE_2D;
+		DMKTextureInputType textureInputType = DMKTextureInputType::DMK_TEXTURE_INPUT_TYPE_AUTO;
 	};
 
 	struct TransformDescriptor {

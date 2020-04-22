@@ -7,8 +7,8 @@
 #include <fstream>
 #include <vector>
 
-
-#include "core/data store/internalFormat.h"
+#include "Public/Array.h"
+#include "Objects/InternalFormat/InteralFormat.h"
 
 namespace Dynamik {
 	namespace resources {
@@ -42,7 +42,7 @@ namespace Dynamik {
 
 		// obj file loader
 		//ARRAY<DMKObjectDataContainer> loadObjFileData(std::string_view path);
-		void loadObjFileData(POINTER<InternalFormat> myInternalFormat = nullptr);
+		void loadObjFileData(POINTER<InternalFormat> myInternalFormat);
 	}
 }
 

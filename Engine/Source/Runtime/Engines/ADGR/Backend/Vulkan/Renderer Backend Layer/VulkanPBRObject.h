@@ -17,7 +17,7 @@ namespace Dynamik {
 				VulkanPBRObject(ADGRVulkanGraphicsRenderableObjectInitInfo initInfo);
 				virtual ~VulkanPBRObject() {}
 
-				virtual ADGRVulkanRenderData initializeObject(VkDevice logicalDevice, ADGRVulkan3DObjectData _object, VkSampleCountFlagBits msaaSamples) override;
+				virtual ADGRVulkanRenderData initializeObject(VkDevice logicalDevice, POINTER<InternalFormat> _object, VkSampleCountFlagBits msaaSamples) override;
 
 				void initializeTextures(ARRAY<ADGRVulkanTextureInitInfo> infos) override;
 

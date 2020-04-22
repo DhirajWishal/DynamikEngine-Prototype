@@ -12,7 +12,7 @@ namespace Dynamik {
 				myRenderData.type = DMKObjectType::DMK_OBJECT_TYPE_DEBUG_OBJECT;
 			}
 
-			ADGRVulkanRenderData VulkanReflectObject::initializeObject(VkDevice logicalDevice, ADGRVulkan3DObjectData _object, VkSampleCountFlagBits msaaSamples)
+			ADGRVulkanRenderData VulkanReflectObject::initializeObject(VkDevice logicalDevice, POINTER<InternalFormat> _object, VkSampleCountFlagBits msaaSamples)
 			{
 				ARRAY<VkDescriptorSetLayoutBinding> bindings;
 

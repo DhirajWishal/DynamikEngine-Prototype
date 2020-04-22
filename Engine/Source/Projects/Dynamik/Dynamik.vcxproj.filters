@@ -252,9 +252,6 @@
     <ClInclude Include="..\..\Runtime\Core\DataTypes\Dynamik\containers.h">
       <Filter>Runtime\Core\DataTypes\Dynamik</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Runtime\Core\DataTypes\Dynamik\internalFormat.h">
-      <Filter>Runtime\Core\DataTypes\Dynamik</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Runtime\Core\DataTypes\Dynamik\internalObjectFormat.h">
       <Filter>Runtime\Core\DataTypes\Dynamik</Filter>
     </ClInclude>
@@ -369,9 +366,6 @@
     <ClInclude Include="..\..\Runtime\Core\System\Public\Console.h">
       <Filter>Runtime\Core\System\Public</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Runtime\Core\System\Public\ErrorFlag.h">
-      <Filter>Runtime\Core\System\Public</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Runtime\Core\System\SystemLib.h">
       <Filter>Runtime\Core\System</Filter>
     </ClInclude>
@@ -390,9 +384,6 @@
     <ClInclude Include="..\..\Runtime\DataHub\renderer\typenames.h">
       <Filter>Runtime\DataHub\renderer</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Runtime\DataHub\renderer\vertex.h">
-      <Filter>Runtime\DataHub\renderer</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Runtime\Dynamik.h">
       <Filter>Runtime</Filter>
     </ClInclude>
@@ -405,10 +396,19 @@
     <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Common\VulkanAttachment.h">
       <Filter>Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Common</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Common\VulkanBufferFactory.h">
+      <Filter>Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Common</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Common\VulkanDescriptor.h">
       <Filter>Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Common</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Common\VulkanExtensionsManager.h">
+      <Filter>Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Common\VulkanOneTimeCommandBuffer.h">
+      <Filter>Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Common\VulkanTextureFactory.h">
       <Filter>Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Common</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Common\VulkanUtilities.h">
@@ -833,9 +833,6 @@
     <ClCompile Include="..\..\Runtime\Core\Algorithm\Private\CubemapCreator.cpp">
       <Filter>Runtime\Core\Algorithm\Private</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Runtime\Core\DataTypes\Dynamik\internalFormat.cpp">
-      <Filter>Runtime\Core\DataTypes\Dynamik</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Runtime\Core\DataTypes\Private\DynamicPointer.cpp">
       <Filter>Runtime\Core\DataTypes\Private</Filter>
     </ClCompile>
@@ -878,17 +875,11 @@
     <ClCompile Include="..\..\Runtime\Core\System\Private\Console.cpp">
       <Filter>Runtime\Core\System\Private</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Runtime\Core\System\Private\ErrorFlag.cpp">
-      <Filter>Runtime\Core\System\Private</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Runtime\DataHub\dataPipeline.cpp">
       <Filter>Runtime\DataHub</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Runtime\DataHub\network\messageData.cpp">
       <Filter>Runtime\DataHub\network</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Runtime\DataHub\renderer\vertex.cpp">
-      <Filter>Runtime\DataHub\renderer</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Runtime\Dynamik.cpp">
       <Filter>Runtime</Filter>
@@ -896,10 +887,19 @@
     <ClCompile Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Animations\VulkanSkeletalAnimation.cpp">
       <Filter>Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Animations</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Common\VulkanBufferFactory.cpp">
+      <Filter>Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Common</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Common\VulkanDescriptor.cpp">
       <Filter>Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Common</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Common\VulkanExtensionsManager.cpp">
+      <Filter>Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Common\VulkanOneTimeCommandBuffer.cpp">
+      <Filter>Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Common\VulkanTextureFactory.cpp">
       <Filter>Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Common</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Common\VulkanUtilities.cpp">

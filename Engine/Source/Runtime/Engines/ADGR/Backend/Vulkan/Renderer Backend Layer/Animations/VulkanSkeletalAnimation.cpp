@@ -30,7 +30,7 @@ namespace Dynamik {
 				myRenderData.type = DMKObjectType::DMK_OBJECT_TYPE_SKELETAL_ANIMATION;
 			}
 
-			ADGRVulkanRenderData VulkanSkeletalAnimation::initializeObject(VkDevice logicalDevice, ADGRVulkan3DObjectData _object, VkSampleCountFlagBits msaaSamples)
+			ADGRVulkanRenderData VulkanSkeletalAnimation::initializeObject(VkDevice logicalDevice, POINTER<InternalFormat> _object, VkSampleCountFlagBits msaaSamples)
 			{
 				ARRAY<VkDescriptorSetLayoutBinding> bindings;
 

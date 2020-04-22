@@ -3,6 +3,8 @@
 
 #include "Graphics/VulkanGraphicsFunctions.h"
 
+#include "Objects/InternalFormat/InteralFormat.h"
+
 #include <stb_image.h>
 
 namespace Dynamik {
@@ -14,7 +16,7 @@ namespace Dynamik {
 				myRenderData.type = DMKObjectType::DMK_OBJECT_TYPE_SKYBOX;
 			}
 
-			ADGRVulkanRenderData VulkanSkyBox::initializeObject(VkDevice logicalDevice, ADGRVulkan3DObjectData _object, VkSampleCountFlagBits msaaSamples)
+			ADGRVulkanRenderData VulkanSkyBox::initializeObject(VkDevice logicalDevice, POINTER<InternalFormat> _object, VkSampleCountFlagBits msaaSamples)
 			{
 				ARRAY<VkDescriptorSetLayoutBinding> bindings;
 
@@ -42,48 +44,7 @@ namespace Dynamik {
 				pipelineLayoutInitInfo.layouts = { myRenderData.descriptors.layout };
 				initializePipelineLayout(pipelineLayoutInitInfo);
 
-				ARRAY<VulkanGraphicsShader> _shaders;
-
-				if (_object.vertexShaderPath.size() && _object.vertexShaderPath != "NONE")
-				{
-					ADGRVulkanGraphicsShaderInitInfo _initInfo;
-					_initInfo.path = _object.vertexShaderPath;
-					_initInfo.type = ADGRVulkanGraphicsShaderType::ADGR_VULKAN_SHADER_TYPE_VERTEX;
-
-					VulkanGraphicsShader _shader;
-					_shader.initialize(logicalDevice, _initInfo);
-					_shaders.pushBack(_shader);
-				}
-				if (_object.tessellationShaderPath.size() && _object.tessellationShaderPath != "NONE")
-				{
-					ADGRVulkanGraphicsShaderInitInfo _initInfo;
-					_initInfo.path = _object.tessellationShaderPath;
-					_initInfo.type = ADGRVulkanGraphicsShaderType::ADGR_VULKAN_SHADER_TYPE_TESSELLATION;
-
-					VulkanGraphicsShader _shader;
-					_shader.initialize(logicalDevice, _initInfo);
-					_shaders.pushBack(_shader);
-				}
-				if (_object.geometryShaderPath.size() && _object.geometryShaderPath != "NONE")
-				{
-					ADGRVulkanGraphicsShaderInitInfo _initInfo;
-					_initInfo.path = _object.geometryShaderPath;
-					_initInfo.type = ADGRVulkanGraphicsShaderType::ADGR_VULKAN_SHADER_TYPE_GEOMETRY;
-
-					VulkanGraphicsShader _shader;
-					_shader.initialize(logicalDevice, _initInfo);
-					_shaders.pushBack(_shader);
-				}
-				if (_object.fragmentShaderPath.size() && _object.fragmentShaderPath != "NONE")
-				{
-					ADGRVulkanGraphicsShaderInitInfo _initInfo;
-					_initInfo.path = _object.fragmentShaderPath;
-					_initInfo.type = ADGRVulkanGraphicsShaderType::ADGR_VULKAN_SHADER_TYPE_FRAGMENT;
-
-					VulkanGraphicsShader _shader;
-					_shader.initialize(logicalDevice, _initInfo);
-					_shaders.pushBack(_shader);
-				}
+				ARRAY<VulkanGraphicsShader> _shaders = VulkanUtilities::getGraphicsShaders(logicalDevice, _object);
 
 				// initialize pipeline
 				ADGRVulkanGraphicsPipelineInitInfo pipelineInitInfo;
@@ -91,21 +52,18 @@ namespace Dynamik {
 				pipelineInitInfo.multisamplerMsaaSamples = msaaSamples;
 				pipelineInitInfo.vertexBindingDescription = Vertex::getBindingDescription(1);
 				pipelineInitInfo.vertexAttributeDescription = Vertex::getAttributeDescriptions();
-				pipelineInitInfo.isTexturesAvailable = _object.texturePaths.size();
+				pipelineInitInfo.isTexturesAvailable = _object->texturePaths.size();
 				pipelineInitInfo.rasterizerFrontFace = VK_FRONT_FACE_CLOCKWISE;
 				initializePipeline(pipelineInitInfo);
 
-				for (VulkanGraphicsShader _shader : _shaders)
-					_shader.terminate(logicalDevice);
+				VulkanUtilities::terminateGraphicsShaders(logicalDevice, _shaders);
 
 				ARRAY<ADGRVulkanTextureInitInfo> textureInitInfos;
 
 				// initialize textures
-				for (UI32 _itr = 0; _itr < _object.texturePaths.size(); _itr++)
+				for (UI32 _itr = 0; _itr < _object->texturePaths.size(); _itr++)
 				{
 					ADGRVulkanTextureInitInfo initInfo;
-					initInfo.path = _object.texturePaths[_itr];
-					initInfo.format = VK_FORMAT_R8G8B8A8_UNORM;
 					initInfo.mipLevels = 1;
 					initInfo.modeU = VK_SAMPLER_ADDRESS_MODE_REPEAT;
 					initInfo.modeV = VK_SAMPLER_ADDRESS_MODE_REPEAT;
@@ -119,12 +77,10 @@ namespace Dynamik {
 				initializeTextures(textureInitInfos);
 
 				// initialize vertex buffers
-				for (UI32 _itr = 0; _itr < _object.vertexBufferObjects->size(); _itr++)
-					initializeVertexBuffer(&_object.vertexBufferObjects->at(_itr));
+				initializeVertexBuffer();
 
 				// initialize index buffers
-				for (UI32 _itr = 0; _itr < _object.indexBufferObjects->size(); _itr++)
-					initializeIndexBufferUI32(&_object.indexBufferObjects->at(_itr));
+				initializeIndexBuffer();
 
 				// initialize uniform buffers
 				initializeUniformBuffer();

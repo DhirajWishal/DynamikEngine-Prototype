@@ -148,15 +148,15 @@ namespace Dynamik {
 			 *
 			 * @param rendererFormats: An ARRAY of renderer formats.
 			 */
-			void setFormats(ARRAY<RendererFormat>& rendererFormats);
-			void setFormats3D(ARRAY<RendererFormat>& rendererFormats) override;
+			void setFormats(ARRAY<POINTER<InternalFormat>>& rendererFormats);
+			void setFormats3D(ARRAY<POINTER<InternalFormat>>& rendererFormats);
 
 			/* FUNCTION
 			 * Update the renderer formats.
 			 *
 			 * @param rendererFormats: An ARRAY of renderer formats.
 			 */
-			void updateFormats3D(ARRAY<RendererFormat>& rendererFormats) override;
+			void updateFormats3D(ARRAY<POINTER<InternalFormat>>& rendererFormats);
 
 			void addText(std::string string, F32 x, F32 y, DMKTextAlign align);
 
@@ -173,8 +173,6 @@ namespace Dynamik {
 			void initializeOverlay();
 			void addOverlay();
 
-			std::pair<ARRAY<Vertex>, ARRAY<UI32>> _skyBoxTest();
-
 			ADGRVulkanGraphicsRenderableObjectInitInfo RenderableObjectInitInfo();
 
 			void initializeSwapChain();
@@ -182,9 +180,9 @@ namespace Dynamik {
 			void initializeColorBuffer();
 			void initializeDepthBuffer();
 
-			ADGRVulkanRenderData initializeSkyboxObject(ADGRVulkan3DObjectData _object);
-			ADGRVulkanRenderData initializeReflectObject(ADGRVulkan3DObjectData _object);
-			ADGRVulkanRenderData initializeSkeletalAnimation(ADGRVulkan3DObjectData _object);
+			ADGRVulkanRenderData initializeSkyboxObject(POINTER<InternalFormat> _object);
+			ADGRVulkanRenderData initializeReflectObject(POINTER<InternalFormat> _object);
+			ADGRVulkanRenderData initializeSkeletalAnimation(POINTER<InternalFormat> _object);
 
 			void draw3D(VkSwapchainKHR swapChain);
 
@@ -200,7 +198,7 @@ namespace Dynamik {
 
 			ARRAY<ADGRVulkanRenderData> renderDatas;
 			ARRAY<ADGRVulkanSkeletalAnimationData> animationDatas;
-			ARRAY<ADGRVulkan3DObjectData> rawObjects;
+			ARRAY<POINTER<InternalFormat>> rawObjects;
 
 			ARRAY<VulkanSkyBox> mySkyboxes;
 

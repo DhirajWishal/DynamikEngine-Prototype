@@ -5,7 +5,7 @@
 
 #include <irrKlang.h>
 #include <string>
-#include <Platform.h>
+#include "core.h"
 
 namespace Dynamik {
 	namespace Audio {

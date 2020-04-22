@@ -3,8 +3,8 @@
 #ifndef _DYNAMIK_ADGR_LAYER_H
 #define _DYNAMIK_ADGR_LAYER_H
 
-#include "event.h"
-#include "../interface.h"
+#include "Events/DMKEventComponent.h"
+#include "core.h"
 
 namespace Dynamik {
 	namespace ADGR {
@@ -16,7 +16,7 @@ namespace Dynamik {
 			virtual void attach() {}
 			virtual void detach() {}
 			virtual void update() {}
-			virtual void onEvent(Event& event) {}
+			virtual void onEvent(DMKEventComponent& event) {}
 
 			inline const std::string& getName() const { return debugName; }
 

@@ -7,6 +7,8 @@
 
 #if defined(DMK_PLATFORM_WINDOWS)
 
+#include <string>
+
 namespace Dynamik {
 	enum Calls {
 		INFO_L,

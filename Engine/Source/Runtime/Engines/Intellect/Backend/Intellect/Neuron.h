@@ -14,8 +14,7 @@
 #ifndef _DYNAMIK_INTELLECT_NEURON_H
 #define _DYNAMIK_INTELLECT_NEURON_H
 
-
-
+#include "core.h"
 
 namespace Dynamik {
 	namespace Intellect {

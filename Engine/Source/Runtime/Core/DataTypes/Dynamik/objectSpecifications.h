@@ -19,7 +19,7 @@ namespace Dynamik {
 		DMK_OBJECT_TYPE_DEBUG_OBJECT,
 
 		DMK_OBJECT_TYPE_MESH,					// per object ubo
-		DMK_OBJECT_TYPE_STATIC,			// terrain ubo
+		DMK_OBJECT_TYPE_STATIC,					// terrain ubo
 		DMK_OBJECT_TYPE_INTERACTIVE_OBJECT,		// per object ubo
 		DMK_OBJECT_TYPE_PLAYER,					// per object ubo
 		DMK_OBJECT_TYPE_NPC,					// per object ubo
@@ -502,6 +502,7 @@ namespace Dynamik {
 		DMK_VERTEX_DATA_BLEND_WEIGHTS,				// Blend weights
 		DMK_VERTEX_DATA_BLEND_SHAPES,				// Blend shapes
 		DMK_VERTEX_DATA_BOND_WEIGHTS,				// Bond weights
+		DMK_VERTEX_DATA_SPACE_VECTORS,				// Space vectors
 
 		DMK_VERTEX_DATA_INTEGRITY,					// Dynamik specific data (destruction)
 

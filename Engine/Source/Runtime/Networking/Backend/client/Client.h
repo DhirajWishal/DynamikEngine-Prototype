@@ -6,6 +6,7 @@
 #include <string>
 #include <queue>
 
+#include "core.h"
 
 namespace Dynamik {
 	namespace Networking {

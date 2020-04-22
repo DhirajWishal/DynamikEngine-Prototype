@@ -151,7 +151,6 @@
     <ClInclude Include="..\..\Runtime\Core\DataTypes\Dynamik\DMKDataType.h" />
     <ClInclude Include="..\..\Runtime\Core\DataTypes\Dynamik\DMKVertex.h" />
     <ClInclude Include="..\..\Runtime\Core\DataTypes\Dynamik\containers.h" />
-    <ClInclude Include="..\..\Runtime\Core\DataTypes\Dynamik\internalFormat.h" />
     <ClInclude Include="..\..\Runtime\Core\DataTypes\Dynamik\internalObjectFormat.h" />
     <ClInclude Include="..\..\Runtime\Core\DataTypes\Dynamik\objectSpecifications.h" />
     <ClInclude Include="..\..\Runtime\Core\DataTypes\Public\Array.h" />
@@ -190,20 +189,21 @@
     <ClInclude Include="..\..\Runtime\Core\Memory\Public\stackAllocator.h" />
     <ClInclude Include="..\..\Runtime\Core\PCH\dmkafx.h" />
     <ClInclude Include="..\..\Runtime\Core\System\Public\Console.h" />
-    <ClInclude Include="..\..\Runtime\Core\System\Public\ErrorFlag.h" />
     <ClInclude Include="..\..\Runtime\Core\System\SystemLib.h" />
     <ClInclude Include="..\..\Runtime\DataHub\base\Manager.h" />
     <ClInclude Include="..\..\Runtime\DataHub\dataPipeline.h" />
     <ClInclude Include="..\..\Runtime\DataHub\network\messageData.h" />
     <ClInclude Include="..\..\Runtime\DataHub\network\messageType.h" />
     <ClInclude Include="..\..\Runtime\DataHub\renderer\typenames.h" />
-    <ClInclude Include="..\..\Runtime\DataHub\renderer\vertex.h" />
     <ClInclude Include="..\..\Runtime\Dynamik.h" />
     <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\Components\TextOverlay.h" />
     <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Animations\VulkanSkeletalAnimation.h" />
     <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Common\VulkanAttachment.h" />
+    <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Common\VulkanBufferFactory.h" />
     <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Common\VulkanDescriptor.h" />
     <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Common\VulkanExtensionsManager.h" />
+    <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Common\VulkanOneTimeCommandBuffer.h" />
+    <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Common\VulkanTextureFactory.h" />
     <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Common\VulkanUtilities.h" />
     <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Common\VulkanValidator.h" />
     <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Compute\VulkanComputeBufferObject.h" />
@@ -346,7 +346,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Runtime\Core\Algorithm\Private\CubemapCreator.cpp" />
-    <ClCompile Include="..\..\Runtime\Core\DataTypes\Dynamik\internalFormat.cpp" />
     <ClCompile Include="..\..\Runtime\Core\DataTypes\Private\DynamicPointer.cpp" />
     <ClCompile Include="..\..\Runtime\Core\DataTypes\Private\FastString.cpp" />
     <ClCompile Include="..\..\Runtime\Core\DataTypes\Private\IndexedArray.cpp" />
@@ -363,14 +362,15 @@
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="..\..\Runtime\Core\System\Private\Console.cpp" />
-    <ClCompile Include="..\..\Runtime\Core\System\Private\ErrorFlag.cpp" />
     <ClCompile Include="..\..\Runtime\DataHub\dataPipeline.cpp" />
     <ClCompile Include="..\..\Runtime\DataHub\network\messageData.cpp" />
-    <ClCompile Include="..\..\Runtime\DataHub\renderer\vertex.cpp" />
     <ClCompile Include="..\..\Runtime\Dynamik.cpp" />
     <ClCompile Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Animations\VulkanSkeletalAnimation.cpp" />
+    <ClCompile Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Common\VulkanBufferFactory.cpp" />
     <ClCompile Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Common\VulkanDescriptor.cpp" />
     <ClCompile Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Common\VulkanExtensionsManager.cpp" />
+    <ClCompile Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Common\VulkanOneTimeCommandBuffer.cpp" />
+    <ClCompile Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Common\VulkanTextureFactory.cpp" />
     <ClCompile Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Common\VulkanUtilities.cpp" />
     <ClCompile Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Common\VulkanValidator.cpp" />
     <ClCompile Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Compute\ComputeExample.cpp" />

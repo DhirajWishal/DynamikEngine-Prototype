@@ -7,7 +7,6 @@
 #include "AudioObject.h"
 #include "AudioObjectController.h"
 #include <list>
-#include <Platform.h>
 
 namespace Dynamik {
 	namespace Audio {

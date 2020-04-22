@@ -145,7 +145,7 @@ namespace Dynamik {
 
 			/* Geometry shader path */
 			if (daiManager.getData(utils::DMK_DAI_FILE_DATA_TYPE_GEOMETRY).size())
-				_format->shaderPaths.grometryShader = (_basePath + daiManager.getData(utils::DMK_DAI_FILE_DATA_TYPE_GEOMETRY)[0]).c_str();
+				_format->shaderPaths.geometryShader = (_basePath + daiManager.getData(utils::DMK_DAI_FILE_DATA_TYPE_GEOMETRY)[0]).c_str();
 
 			/* Fragment shader path */
 			if (daiManager.getData(utils::DMK_DAI_FILE_DATA_TYPE_FRAGMENT).size())

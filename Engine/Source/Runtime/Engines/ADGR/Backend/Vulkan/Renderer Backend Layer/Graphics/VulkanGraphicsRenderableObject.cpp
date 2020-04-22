@@ -21,7 +21,7 @@ namespace Dynamik {
 				commandPool = info.commandPool;
 			}
 
-			ADGRVulkanRenderData VulkanGraphicsRenderableObject::initializeObject(VkDevice logicalDevice, ADGRVulkan3DObjectData _object, VkSampleCountFlagBits msaaSamples)
+			ADGRVulkanRenderData VulkanGraphicsRenderableObject::initializeObject(VkDevice logicalDevice, POINTER<InternalFormat> format, VkSampleCountFlagBits msaaSamples)
 			{
 				ARRAY<VkDescriptorSetLayoutBinding> bindings;
 
@@ -49,48 +49,7 @@ namespace Dynamik {
 				pipelineLayoutInitInfo.layouts = { myRenderData.descriptors.layout };
 				initializePipelineLayout(pipelineLayoutInitInfo);
 
-				ARRAY<VulkanGraphicsShader> _shaders;
-
-				if (_object.vertexShaderPath.size() && _object.vertexShaderPath != "NONE")
-				{
-					ADGRVulkanGraphicsShaderInitInfo _initInfo;
-					_initInfo.path = _object.vertexShaderPath;
-					_initInfo.type = ADGRVulkanGraphicsShaderType::ADGR_VULKAN_SHADER_TYPE_VERTEX;
-
-					VulkanGraphicsShader _shader;
-					_shader.initialize(logicalDevice, _initInfo);
-					_shaders.pushBack(_shader);
-				}
-				if (_object.tessellationShaderPath.size() && _object.tessellationShaderPath != "NONE")
-				{
-					ADGRVulkanGraphicsShaderInitInfo _initInfo;
-					_initInfo.path = _object.tessellationShaderPath;
-					_initInfo.type = ADGRVulkanGraphicsShaderType::ADGR_VULKAN_SHADER_TYPE_TESSELLATION;
-
-					VulkanGraphicsShader _shader;
-					_shader.initialize(logicalDevice, _initInfo);
-					_shaders.pushBack(_shader);
-				}
-				if (_object.geometryShaderPath.size() && _object.geometryShaderPath != "NONE")
-				{
-					ADGRVulkanGraphicsShaderInitInfo _initInfo;
-					_initInfo.path = _object.geometryShaderPath;
-					_initInfo.type = ADGRVulkanGraphicsShaderType::ADGR_VULKAN_SHADER_TYPE_GEOMETRY;
-
-					VulkanGraphicsShader _shader;
-					_shader.initialize(logicalDevice, _initInfo);
-					_shaders.pushBack(_shader);
-				}
-				if (_object.fragmentShaderPath.size() && _object.fragmentShaderPath != "NONE")
-				{
-					ADGRVulkanGraphicsShaderInitInfo _initInfo;
-					_initInfo.path = _object.fragmentShaderPath;
-					_initInfo.type = ADGRVulkanGraphicsShaderType::ADGR_VULKAN_SHADER_TYPE_FRAGMENT;
-
-					VulkanGraphicsShader _shader;
-					_shader.initialize(logicalDevice, _initInfo);
-					_shaders.pushBack(_shader);
-				}
+				ARRAY<VulkanGraphicsShader> _shaders = VulkanUtilities::getGraphicsShaders(logicalDevice, format);
 
 				// initialize pipeline
 				ADGRVulkanGraphicsPipelineInitInfo pipelineInitInfo;
@@ -98,11 +57,10 @@ namespace Dynamik {
 				pipelineInitInfo.multisamplerMsaaSamples = msaaSamples;
 				pipelineInitInfo.vertexBindingDescription = VulkanUtilities::getBindingDescription(1);
 				pipelineInitInfo.vertexAttributeDescription = VulkanUtilities::getAttributeDescriptions(descriptor.vertexBufferObjectDescription.attributes, 1);
-				pipelineInitInfo.isTexturesAvailable = _object.texturePaths.size();
+				pipelineInitInfo.isTexturesAvailable = format->texturePaths.size();
 				initializePipeline(pipelineInitInfo);
 
-				for (VulkanGraphicsShader _shader : _shaders)
-					_shader.terminate(logicalDevice);
+				VulkanUtilities::terminateGraphicsShaders(logicalDevice, _shaders);
 
 				// initialize texture
 				ADGRVulkanTextureInitInfo initInfo;
@@ -160,7 +118,7 @@ namespace Dynamik {
 
 			void VulkanGraphicsRenderableObject::initializeTextures(ADGRVulkanTextureInitInfo info)
 			{
-				for (auto mesh : meshData)
+				for (auto mesh : meshDatas)
 				{
 					ADGRVulkanTextureContainer _container;
 
@@ -344,7 +302,7 @@ namespace Dynamik {
 
 			void VulkanGraphicsRenderableObject::initializeVertexBuffer()
 			{
-				for (auto mesh : meshData)
+				for (auto mesh : meshDatas)
 				{
 					VkBuffer _buffer = VK_NULL_HANDLE;
 					VkDeviceMemory _bufferMemory = VK_NULL_HANDLE;
@@ -399,7 +357,7 @@ namespace Dynamik {
 
 			void VulkanGraphicsRenderableObject::initializeIndexBuffer()
 			{
-				for (auto mesh : meshData)
+				for (auto mesh : meshDatas)
 				{
 					myRenderData.indexbufferObjectTypeSize = (UI32)descriptor.indexBufferType;
 					VkBuffer _buffer = VK_NULL_HANDLE;

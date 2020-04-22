@@ -70,12 +70,12 @@ namespace Dynamik {
 			std::string_view path = paths;
 			GLFWimage icon;
 			Texture myTexture;
-			myTexture.loadTexture(path.data());
+			myTexture.loadTexture(path.data(), DMKTextureType::DMK_TEXTURE_TYPE_2D, DMKTextureInputType::DMK_TEXTURE_INPUT_TYPE_IMAGES);
 
 			if (!myTexture.textureData.isValid())
 				DMK_CORE_ERROR("Icon not Loaded!");
 
-			icon.pixels = myTexture.textureData.get();
+			icon.pixels = myTexture.textureData;
 			icon.height = myTexture.height;
 			icon.width = myTexture.width;
 			icons.push_back(icon);

@@ -289,24 +289,25 @@ namespace Dynamik {
 
 		void vulkanRenderer::initializeObjects()
 		{
-			for (ADGRVulkan3DObjectData _object : rawObjects)
+			for (auto _object : rawObjects)
 			{
-				if (_object.type == DMKObjectType::DMK_OBJECT_TYPE_STATIC)
+				if (_object->type == DMKObjectType::DMK_OBJECT_TYPE_STATIC)
 				{
-					if (_object.isPBR)
+					if (_object->descriptor.assetDescription.physicallyBased)
 					{
-						VulkanPBRObject _renderObject(RenderableObjectInitInfo());
+						POINTER<VulkanPBRObject> _renderObject = (POINTER<VulkanPBRObject>)_object;
+						_renderObject->initializeResources((RenderableObjectInitInfo()));
 
-						_renderObject.setSwapChainContainer(&mySwapChain3D.swapChainContainer);
-						_renderObject.setFrameBufferContainer(&myFrameBuffer);
-						_renderObject.myRenderData.materialDescriptor = myRenderableMeterials[_object.materialName];
+						_renderObject->setSwapChainContainer(&mySwapChain3D.swapChainContainer);
+						_renderObject->setFrameBufferContainer(&myFrameBuffer);
+						_renderObject->myRenderData.materialDescriptor = myRenderableMeterials[_object->descriptor.assetDescription.materialName];
 
 						//_renderObject.myRenderData.textures = mySkyboxes[0].myRenderData.textures;
-						_renderObject.myBRDF = mySkyboxes[0].myBRDF;
-						_renderObject.myIrradianceCube = mySkyboxes[0].myIrradianceCube;
-						_renderObject.myPreFilteredCube = mySkyboxes[0].myPreFilteredCube;
+						_renderObject->myBRDF = mySkyboxes[0].myBRDF;
+						_renderObject->myIrradianceCube = mySkyboxes[0].myIrradianceCube;
+						_renderObject->myPreFilteredCube = mySkyboxes[0].myPreFilteredCube;
 
-						renderDatas.push_back(_renderObject.initializeObject(myVulkanGraphicsCore.logicalDevice, _object, myVulkanGraphicsCore.msaaSamples));
+						renderDatas.push_back(_renderObject->initializeObject(myVulkanGraphicsCore.logicalDevice, _object, myVulkanGraphicsCore.msaaSamples));
 					}
 					else
 					{
@@ -318,25 +319,25 @@ namespace Dynamik {
 						renderDatas.push_back(_renderObject.initializeObject(myVulkanGraphicsCore.logicalDevice, _object, myVulkanGraphicsCore.msaaSamples));
 					}
 				}
-				else if (_object.type == DMKObjectType::DMK_OBJECT_TYPE_SKYBOX)
+				else if (_object->type == DMKObjectType::DMK_OBJECT_TYPE_SKYBOX)
 				{
 					renderDatas.push_back(initializeSkyboxObject(_object));
 				}
-				else if (_object.type == DMKObjectType::DMK_OBJECT_TYPE_DEBUG_OBJECT)
+				else if (_object->type == DMKObjectType::DMK_OBJECT_TYPE_DEBUG_OBJECT)
 				{
 					renderDatas.push_back(initializeReflectObject(_object));
 				}
-				else if (_object.type == DMKObjectType::DMK_OBJECT_TYPE_TEXT_OVERLAY)
+				else if (_object->type == DMKObjectType::DMK_OBJECT_TYPE_TEXT_OVERLAY)
 				{
 					ADGRVulkanGraphicsShaderPathContainer shaderContainer;
-					shaderContainer.vertexShaderPath = _object.vertexShaderPath;
-					shaderContainer.tessellationShaderPath = _object.tessellationShaderPath;
-					shaderContainer.geometryShaderPath = _object.geometryShaderPath;
-					shaderContainer.fragmentShaderPath = _object.fragmentShaderPath;
+					shaderContainer.vertexShaderPath = _object->shaderPaths.vertexShader;
+					shaderContainer.tessellationShaderPath = _object->shaderPaths.tessellationShader;
+					shaderContainer.geometryShaderPath = _object->shaderPaths.geometryShader;
+					shaderContainer.fragmentShaderPath = _object->shaderPaths.fragmentShader;
 					_initializeOverlayStageTwo(shaderContainer);
 					addText("Hello World", 15.0f, 15.0f, DMKTextAlign::DMK_TEXT_ALIGN_LEFT);
 				}
-				else if (_object.type == DMKObjectType::DMK_OBJECT_TYPE_SKELETAL_ANIMATION)
+				else if (_object->type == DMKObjectType::DMK_OBJECT_TYPE_SKELETAL_ANIMATION)
 				{
 					renderDatas.pushBack(initializeSkeletalAnimation(_object));
 				}
@@ -347,54 +348,13 @@ namespace Dynamik {
 
 		void vulkanRenderer::initializeObjectsBasic()
 		{
-			for (ADGRVulkan3DObjectData _object : rawObjects)
+			for (auto _object : rawObjects)
 			{
 				VulkanObject3D _renderObject(RenderableObjectInitInfo());
 
 				_renderObject.setSwapChainContainer(&mySwapChain3D.swapChainContainer);
 
-				ARRAY<VulkanGraphicsShader> _shaders;
-
-				if (_object.vertexShaderPath.size() && _object.vertexShaderPath != "NONE")
-				{
-					ADGRVulkanGraphicsShaderInitInfo _initInfo;
-					_initInfo.path = _object.vertexShaderPath;
-					_initInfo.type = ADGRVulkanGraphicsShaderType::ADGR_VULKAN_SHADER_TYPE_VERTEX;
-
-					VulkanGraphicsShader _shader;
-					_shader.initialize(myVulkanGraphicsCore.logicalDevice, _initInfo);
-					_shaders.pushBack(_shader);
-				}
-				if (_object.tessellationShaderPath.size() && _object.tessellationShaderPath != "NONE")
-				{
-					ADGRVulkanGraphicsShaderInitInfo _initInfo;
-					_initInfo.path = _object.tessellationShaderPath;
-					_initInfo.type = ADGRVulkanGraphicsShaderType::ADGR_VULKAN_SHADER_TYPE_TESSELLATION;
-
-					VulkanGraphicsShader _shader;
-					_shader.initialize(myVulkanGraphicsCore.logicalDevice, _initInfo);
-					_shaders.pushBack(_shader);
-				}
-				if (_object.geometryShaderPath.size() && _object.geometryShaderPath != "NONE")
-				{
-					ADGRVulkanGraphicsShaderInitInfo _initInfo;
-					_initInfo.path = _object.geometryShaderPath;
-					_initInfo.type = ADGRVulkanGraphicsShaderType::ADGR_VULKAN_SHADER_TYPE_GEOMETRY;
-
-					VulkanGraphicsShader _shader;
-					_shader.initialize(myVulkanGraphicsCore.logicalDevice, _initInfo);
-					_shaders.pushBack(_shader);
-				}
-				if (_object.fragmentShaderPath.size() && _object.fragmentShaderPath != "NONE")
-				{
-					ADGRVulkanGraphicsShaderInitInfo _initInfo;
-					_initInfo.path = _object.fragmentShaderPath;
-					_initInfo.type = ADGRVulkanGraphicsShaderType::ADGR_VULKAN_SHADER_TYPE_FRAGMENT;
-
-					VulkanGraphicsShader _shader;
-					_shader.initialize(myVulkanGraphicsCore.logicalDevice, _initInfo);
-					_shaders.pushBack(_shader);
-				}
+				ARRAY<VulkanGraphicsShader> _shaders = VulkanUtilities::getGraphicsShaders(myVulkanGraphicsCore.logicalDevice, _object);
 
 				// initialize pipeline
 				ADGRVulkanGraphicsPipelineInitInfo pipelineInitInfo;
@@ -402,11 +362,10 @@ namespace Dynamik {
 				pipelineInitInfo.multisamplerMsaaSamples = myVulkanGraphicsCore.msaaSamples;
 				pipelineInitInfo.vertexBindingDescription = Vertex::getBindingDescription(1);
 				pipelineInitInfo.vertexAttributeDescription = Vertex::getAttributeDescriptions();
-				pipelineInitInfo.isTexturesAvailable = _object.texturePaths.size();
+				pipelineInitInfo.isTexturesAvailable = _object->texturePaths.size();
 				_renderObject.initializePipeline(pipelineInitInfo);
 
-				for (VulkanGraphicsShader _shader : _shaders)
-					_shader.terminate(myVulkanGraphicsCore.logicalDevice);
+				VulkanUtilities::terminateGraphicsShaders(myVulkanGraphicsCore.logicalDevice, _shaders);
 
 				// initialize uniform buffers
 				_renderObject.initializeUniformBuffer();
@@ -633,20 +592,21 @@ namespace Dynamik {
 				myVulkanGraphicsCore.msaaSamples);
 		}
 
-		ADGRVulkanRenderData vulkanRenderer::initializeSkyboxObject(ADGRVulkan3DObjectData _object)
+		ADGRVulkanRenderData vulkanRenderer::initializeSkyboxObject(POINTER<InternalFormat> _object)
 		{
-			VulkanSkyBox _renderObject(RenderableObjectInitInfo());
+			POINTER<VulkanSkyBox> _renderObject = (POINTER<VulkanSkyBox>)_object;
+			_renderObject->initializeResources(RenderableObjectInitInfo());
 
-			_renderObject.setSwapChainContainer(&mySwapChain3D.swapChainContainer);
-			_renderObject.setFrameBufferContainer(&myFrameBuffer);
+			_renderObject->setSwapChainContainer(&mySwapChain3D.swapChainContainer);
+			_renderObject->setFrameBufferContainer(&myFrameBuffer);
 
-			auto _dataContainer = _renderObject.initializeObject(myVulkanGraphicsCore.logicalDevice, _object, myVulkanGraphicsCore.msaaSamples);
+			auto _dataContainer = _renderObject->initializeObject(myVulkanGraphicsCore.logicalDevice, _object, myVulkanGraphicsCore.msaaSamples);
 			mySkyboxes.pushBack(_renderObject);
 
 			return _dataContainer;
 		}
 
-		ADGRVulkanRenderData vulkanRenderer::initializeReflectObject(ADGRVulkan3DObjectData _object)
+		ADGRVulkanRenderData vulkanRenderer::initializeReflectObject(POINTER<InternalFormat> _object)
 		{
 			VulkanReflectObject _renderObject(RenderableObjectInitInfo());
 
@@ -657,7 +617,7 @@ namespace Dynamik {
 			return _renderObject.initializeObject(myVulkanGraphicsCore.logicalDevice, _object, myVulkanGraphicsCore.msaaSamples);
 		}
 
-		ADGRVulkanRenderData vulkanRenderer::initializeSkeletalAnimation(ADGRVulkan3DObjectData _object)
+		ADGRVulkanRenderData vulkanRenderer::initializeSkeletalAnimation(POINTER<InternalFormat> _object)
 		{
 			myAnimation = new VulkanSkeletalAnimation(RenderableObjectInitInfo());
 			myAnimation->setSwapChainContainer(&mySwapChain3D.swapChainContainer);
@@ -1347,41 +1307,16 @@ namespace Dynamik {
 			return myWindowManager.isWindowCloseEvent;
 		}
 
-		void vulkanRenderer::setFormats(ARRAY<RendererFormat>& rendererFormats)
+		void vulkanRenderer::setFormats(ARRAY<POINTER<InternalFormat>>& rendererFormats)
 		{
 			setFormats3D(rendererFormats);
 		}
 
-		void vulkanRenderer::setFormats3D(ARRAY<RendererFormat>& rendererFormats) {
-			ARRAY<ADGRVulkan3DObjectData> _objectDatas;
-			/*
-			for (UI32 _itr = 0; _itr < rendererFormats.size(); _itr++)
-			{
-				ADGRVulkan3DObjectData _object;
-				_object.modelpath = rendererFormats[_itr].myInternalFormat->myGameObject->myProperties.objectPath[0];
-
-				_object.materialName = rendererFormats[_itr].myInternalFormat->myGameObject->myProperties.materialProperties.materialName;
-				if (rendererFormats[_itr].myInternalFormat->myGameObject->myProperties.materialProperties.enablePBR)
-					_object.isPBR = true;
-
-				_object.vertexShaderPath = rendererFormats[_itr].myInternalFormat->myGameObject->myProperties.renderableObjectProperties.vertexShaderPath;
-				_object.tessellationShaderPath = rendererFormats[_itr].myInternalFormat->myGameObject->myProperties.renderableObjectProperties.tessellationShaderPath;
-				_object.geometryShaderPath = rendererFormats[_itr].myInternalFormat->myGameObject->myProperties.renderableObjectProperties.geometryShaderPath;
-				_object.fragmentShaderPath = rendererFormats[_itr].myInternalFormat->myGameObject->myProperties.renderableObjectProperties.fragmentShaderPath;
-
-				_object.texturePaths = rendererFormats[_itr].myInternalFormat->myGameObject->myProperties.texturePaths;
-
-				_object.vertexBufferObjects = &rendererFormats[_itr].myInternalFormat->myVertexBufferObjects;
-				_object.indexBufferObjects = &rendererFormats[_itr].myInternalFormat->myIndexBufferObjects;
-				_object.type = rendererFormats[_itr].myInternalFormat->myGameObject->myProperties.type;
-
-				_objectDatas.pushBack(_object);
-			}
-			*/
-			rawObjects = _objectDatas;
+		void vulkanRenderer::setFormats3D(ARRAY<POINTER<InternalFormat>>& rendererFormats) {
+			rawObjects = rendererFormats;
 		}
 
-		void vulkanRenderer::updateFormats3D(ARRAY<RendererFormat>& rendererFormats)
+		void vulkanRenderer::updateFormats3D(ARRAY<POINTER<InternalFormat>>& rendererFormats)
 		{
 			setFormats3D(rendererFormats);
 		}

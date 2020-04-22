@@ -1,7 +1,7 @@
 #include "dmkafx.h"
 #include "VulkanComputeObject.h"
 
-#include "../Graphics/VulkanGraphicsFunctions.h"
+#include "../Graphics/VulkanUtilities.h"
 
 namespace Dynamik {
 	namespace ADGR {

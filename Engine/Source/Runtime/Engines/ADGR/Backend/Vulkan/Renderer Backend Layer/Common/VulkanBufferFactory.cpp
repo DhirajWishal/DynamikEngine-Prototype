@@ -1,7 +1,7 @@
 #include "dmkafx.h"
 #include "VulkanBufferFactory.h"
 
-#include "../Graphics/VulkanGraphicsFunctions.h"
+#include"../Common/VulkanUtilities.h"
 
 namespace Dynamik {
 	namespace ADGR {
@@ -23,7 +23,7 @@ namespace Dynamik {
 				bufferInfo.buffer = &stagingBuffer;
 				bufferInfo.bufferMemory = &stagingBufferMemory;
 
-				VulkanGraphicsFunctions::createBuffer(info.logicalDevice, info.physicalDevice, bufferInfo);
+				VulkanUtilities::createBuffer(info.logicalDevice, info.physicalDevice, bufferInfo);
 
 				void* data = nullptr;
 				vkMapMemory(info.logicalDevice, stagingBufferMemory, 0, bufferSize, 0, &data);
@@ -37,9 +37,9 @@ namespace Dynamik {
 				vertBufferInfo.buffer = &buffer;
 				vertBufferInfo.bufferMemory = &bufferMemory;
 
-				VulkanGraphicsFunctions::createBuffer(info.logicalDevice, info.physicalDevice, vertBufferInfo);
+				VulkanUtilities::createBuffer(info.logicalDevice, info.physicalDevice, vertBufferInfo);
 
-				VulkanGraphicsFunctions::copyBuffer(info.logicalDevice, info.commandPool, info.processQueue, info.utilityQueue, stagingBuffer, buffer, bufferSize);
+				VulkanUtilities::copyBuffer(info.logicalDevice, info.commandPool, info.processQueue, info.utilityQueue, stagingBuffer, buffer, bufferSize);
 
 				vkDestroyBuffer(info.logicalDevice, stagingBuffer, nullptr);
 				vkFreeMemory(info.logicalDevice, stagingBufferMemory, nullptr);
@@ -76,7 +76,7 @@ namespace Dynamik {
 				bufferInfo.buffer = &stagingBuffer;
 				bufferInfo.bufferMemory = &stagingBufferMemory;
 
-				VulkanGraphicsFunctions::createBuffer(info.logicalDevice, info.physicalDevice, bufferInfo);
+				VulkanUtilities::createBuffer(info.logicalDevice, info.physicalDevice, bufferInfo);
 
 				void* data = nullptr;
 				vkMapMemory(info.logicalDevice, stagingBufferMemory, 0, bufferSize, 0, &data);
@@ -90,9 +90,9 @@ namespace Dynamik {
 				vertBufferInfo.buffer = &buffer;
 				vertBufferInfo.bufferMemory = &bufferMemory;
 
-				VulkanGraphicsFunctions::createBuffer(info.logicalDevice, info.physicalDevice, vertBufferInfo);
+				VulkanUtilities::createBuffer(info.logicalDevice, info.physicalDevice, vertBufferInfo);
 
-				VulkanGraphicsFunctions::copyBuffer(info.logicalDevice, info.commandPool, info.processQueue, info.utilityQueue, stagingBuffer, buffer, bufferSize);
+				VulkanUtilities::copyBuffer(info.logicalDevice, info.commandPool, info.processQueue, info.utilityQueue, stagingBuffer, buffer, bufferSize);
 
 				vkDestroyBuffer(info.logicalDevice, stagingBuffer, nullptr);
 				vkFreeMemory(info.logicalDevice, stagingBufferMemory, nullptr);
@@ -115,7 +115,7 @@ namespace Dynamik {
 				bufferInfo.buffer = &stagingBuffer;
 				bufferInfo.bufferMemory = &stagingBufferMemory;
 
-				VulkanGraphicsFunctions::createBuffer(info.logicalDevice, info.physicalDevice, bufferInfo);
+				VulkanUtilities::createBuffer(info.logicalDevice, info.physicalDevice, bufferInfo);
 
 				void* data = nullptr;
 				vkMapMemory(info.logicalDevice, stagingBufferMemory, 0, bufferSize, 0, &data);
@@ -129,9 +129,9 @@ namespace Dynamik {
 				vertBufferInfo.buffer = &buffer;
 				vertBufferInfo.bufferMemory = &bufferMemory;
 
-				VulkanGraphicsFunctions::createBuffer(info.logicalDevice, info.physicalDevice, vertBufferInfo);
+				VulkanUtilities::createBuffer(info.logicalDevice, info.physicalDevice, vertBufferInfo);
 
-				VulkanGraphicsFunctions::copyBuffer(info.logicalDevice, info.commandPool, info.processQueue, info.utilityQueue, stagingBuffer, buffer, bufferSize);
+				VulkanUtilities::copyBuffer(info.logicalDevice, info.commandPool, info.processQueue, info.utilityQueue, stagingBuffer, buffer, bufferSize);
 
 				vkDestroyBuffer(info.logicalDevice, stagingBuffer, nullptr);
 				vkFreeMemory(info.logicalDevice, stagingBufferMemory, nullptr);
@@ -147,7 +147,7 @@ namespace Dynamik {
 				bufferInfo.buffer = &buffer;
 				bufferInfo.bufferMemory = &bufferMemory;
 
-				VulkanGraphicsFunctions::createBuffer(info.logicalDevice, info.physicalDevice, bufferInfo);
+				VulkanUtilities::createBuffer(info.logicalDevice, info.physicalDevice, bufferInfo);
 			}
 			
 			/* Vulkan Buffer Factory: Create buffer function */

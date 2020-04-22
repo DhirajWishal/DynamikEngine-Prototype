@@ -4,7 +4,9 @@
 namespace Dynamik {
 	namespace ADGR {
 		namespace Backend {
-
+			void VulkanTexture::generateMipMap()
+			{
+			}
 		}
 	}
 }

@@ -4,7 +4,7 @@
 
 #include "VulkanControlHeader.h"
 
-#include "VulkanGraphicsFunctions.h"
+#include "VulkanUtilities.h"
 #include "VulkanGraphicsOneTimeCommandBuffer.h"
 
 #include "VulkanGraphicsColorBuffer.h"

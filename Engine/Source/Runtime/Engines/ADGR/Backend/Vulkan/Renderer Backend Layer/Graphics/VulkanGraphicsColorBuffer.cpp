@@ -1,7 +1,7 @@
 #include "dmkafx.h"
 #include "VulkanGraphicsColorBuffer.h"
 
-#include "VulkanGraphicsFunctions.h"
+#include "VulkanUtilities.h"
 
 namespace Dynamik {
 	namespace ADGR {
@@ -31,7 +31,7 @@ namespace Dynamik {
 				cinfo.numSamples = msaaSamples;
 				cinfo.flags = NULL;
 
-				VulkanGraphicsFunctions::createImage(logicalDevice, physicalDevice, cinfo);
+				VulkanUtilities::createImage(logicalDevice, physicalDevice, cinfo);
 
 				ADGRVulkanCreateImageViewInfo viewInfo;
 				viewInfo.image = image;
@@ -39,7 +39,7 @@ namespace Dynamik {
 				viewInfo.aspectFlags = VK_IMAGE_ASPECT_COLOR_BIT;
 				viewInfo.mipLevels = 1;
 
-				imageView = VulkanGraphicsFunctions::createImageView(logicalDevice, viewInfo);
+				imageView = VulkanUtilities::createImageView(logicalDevice, viewInfo);
 
 				ADGRVulkanTransitionImageLayoutInfo transitionInfo;
 				transitionInfo.image = image;
@@ -49,7 +49,7 @@ namespace Dynamik {
 				transitionInfo.newLayout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
 				transitionInfo.layerCount = 1;
 
-				VulkanGraphicsFunctions::transitionImageLayout(logicalDevice, commandPool, graphicsQueue, presentQueue, transitionInfo);
+				VulkanUtilities::transitionImageLayout(logicalDevice, commandPool, graphicsQueue, presentQueue, transitionInfo);
 			}
 
 			void VulkanGraphicsColorBuffer::terminate(VkDevice logicalDevice)

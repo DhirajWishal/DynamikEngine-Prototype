@@ -1,7 +1,7 @@
 #include "dmkafx.h"
 #include "VulkanGraphicsSwapChain.h"
 
-#include "VulkanGraphicsFunctions.h"
+#include "VulkanUtilities.h"
 #include "VulkanGraphicsCore.h"
 
 namespace Dynamik {
@@ -151,7 +151,7 @@ namespace Dynamik {
 					info.aspectFlags = VK_IMAGE_ASPECT_COLOR_BIT;
 					info.mipLevels = 1;
 
-					swapChainImageViews.at(i) = VulkanGraphicsFunctions::createImageView(logicalDevice, info);
+					swapChainImageViews.at(i) = VulkanUtilities::createImageView(logicalDevice, info);
 				}
 			}
 

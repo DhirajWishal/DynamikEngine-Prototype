@@ -69,7 +69,7 @@ namespace Dynamik {
 				samplerInitInfo.modeU = VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_BORDER;
 				samplerInitInfo.modeV = VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_BORDER;
 				samplerInitInfo.modeW = VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_BORDER;
-				myOutputTextureContainer.imageSampler = VulkanGraphicsFunctions::createImageSampler(logicalDevice, samplerInitInfo);
+				myOutputTextureContainer.imageSampler = VulkanUtilities::createImageSampler(logicalDevice, samplerInitInfo);
 
 				ADGRVulkanCreateImageViewInfo cinfo2;
 				cinfo2.image = myOutputTextureContainer.image;

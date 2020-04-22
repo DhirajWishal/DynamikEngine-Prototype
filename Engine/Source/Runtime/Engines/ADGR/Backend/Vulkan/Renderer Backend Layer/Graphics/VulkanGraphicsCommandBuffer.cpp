@@ -1,7 +1,7 @@
 #include "dmkafx.h"
 #include "VulkanGraphicsCommandBuffer.h"
 
-#include "VulkanGraphicsFunctions.h"
+#include "VulkanUtilities.h"
 
 #define GRID_DIM 7
 

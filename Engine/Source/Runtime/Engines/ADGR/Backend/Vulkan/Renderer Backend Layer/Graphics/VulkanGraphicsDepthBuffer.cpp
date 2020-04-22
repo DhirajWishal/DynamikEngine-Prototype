@@ -1,7 +1,7 @@
 #include "dmkafx.h"
 #include "VulkanGraphicsDepthBuffer.h"
 
-#include "VulkanGraphicsFunctions.h"
+#include "VulkanUtilities.h"
 
 namespace Dynamik {
 	namespace ADGR {
@@ -15,7 +15,7 @@ namespace Dynamik {
 				VkExtent2D swapChainExtent,
 				VkSampleCountFlagBits msaaSamples)
 			{
-				VkFormat depthFormat = VulkanGraphicsFunctions::findDepthFormat(physicalDevice);
+				VkFormat depthFormat = VulkanUtilities::findDepthFormat(physicalDevice);
 
 				ADGRVulkanCreateImageInfo cinfo;
 				cinfo.width = swapChainExtent.width;
@@ -30,7 +30,7 @@ namespace Dynamik {
 				cinfo.numSamples = msaaSamples;
 				cinfo.flags = NULL;
 
-				VulkanGraphicsFunctions::createImage(logicalDevice, physicalDevice, cinfo);
+				VulkanUtilities::createImage(logicalDevice, physicalDevice, cinfo);
 
 				ADGRVulkanCreateImageViewInfo viewInfo;
 				viewInfo.image = image;
@@ -38,7 +38,7 @@ namespace Dynamik {
 				viewInfo.aspectFlags = VK_IMAGE_ASPECT_DEPTH_BIT;
 				viewInfo.mipLevels = 1;
 
-				imageView = VulkanGraphicsFunctions::createImageView(logicalDevice, viewInfo);
+				imageView = VulkanUtilities::createImageView(logicalDevice, viewInfo);
 
 				ADGRVulkanTransitionImageLayoutInfo transitionInfo;
 				transitionInfo.image = image;
@@ -48,7 +48,7 @@ namespace Dynamik {
 				transitionInfo.newLayout = VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL;
 				transitionInfo.layerCount = 2;
 
-				VulkanGraphicsFunctions::transitionImageLayout(logicalDevice, commandPool, graphicsQueue, presentQueue, transitionInfo);
+				VulkanUtilities::transitionImageLayout(logicalDevice, commandPool, graphicsQueue, presentQueue, transitionInfo);
 			}
 
 			void VulkanGraphicsDepthBuffer::terminate(VkDevice logicalDevice)

@@ -3,7 +3,7 @@
 
 #include "../Common/VulkanValidator.h"
 #include "../Common/VulkanExtensionsManager.h"
-#include "VulkanGraphicsFunctions.h"
+#include "VulkanUtilities.h"
 #include "Engines/ADGR/defines.h"
 
 
@@ -307,7 +307,7 @@ namespace Dynamik {
 						else
 							physicalDevice = device;
 
-						msaaSamples = VulkanGraphicsFunctions::getMaxUsableSampleCount(physicalDevice);
+						msaaSamples = VulkanUtilities::getMaxUsableSampleCount(physicalDevice);
 						break;
 					}
 

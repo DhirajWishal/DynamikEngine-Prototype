@@ -65,11 +65,6 @@ namespace Dynamik {
 				~ADGRVulkanMaterialDescriptor() {}
 			};
 
-			struct ADGRVulkanUnformBufferContainer {
-				ARRAY<VkBuffer> buffers;
-				ARRAY<VkDeviceMemory> bufferMemories;
-			};
-
 			struct ADGRVulkanPiplineContainer {
 				VkPipeline pipeline = VK_NULL_HANDLE;
 				VkPipelineLayout layout = VK_NULL_HANDLE;

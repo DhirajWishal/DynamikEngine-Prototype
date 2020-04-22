@@ -1,7 +1,7 @@
 #include "dmkafx.h"
 #include "VulkanComputeBufferObject.h"
 
-#include "../Graphics/VulkanGraphicsFunctions.h"
+#include "../Graphics/VulkanUtilities.h"
 
 namespace Dynamik {
 	namespace ADGR {
@@ -20,13 +20,13 @@ namespace Dynamik {
 				info.bufferMemory = &inputBufferMemory;
 				info.bufferMemoryPropertyflags = VK_BUFFER_USAGE_STORAGE_BUFFER_BIT;
 				info.bufferSize = bufferSize;
-				VulkanGraphicsFunctions::createBuffer(logicalDevice, physicalDevice, info);
+				VulkanUtilities::createBuffer(logicalDevice, physicalDevice, info);
 
 				info.buffer = &outputBuffer;
 				info.bufferMemory = &outputBufferMemory;
 				info.bufferMemoryPropertyflags = VK_BUFFER_USAGE_STORAGE_BUFFER_BIT;
 				info.bufferSize = bufferSize;
-				VulkanGraphicsFunctions::createBuffer(logicalDevice, physicalDevice, info);
+				VulkanUtilities::createBuffer(logicalDevice, physicalDevice, info);
 
 				_initializeDescriptorSetLayout();
 				_initializePipelineLayout();

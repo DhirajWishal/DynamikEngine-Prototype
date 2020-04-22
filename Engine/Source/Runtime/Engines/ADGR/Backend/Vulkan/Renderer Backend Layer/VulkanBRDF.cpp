@@ -1,7 +1,7 @@
 #include "dmkafx.h"
 #include "VulkanBRDF.h"
 
-#include "Graphics/VulkanGraphicsFunctions.h"
+#include "Graphics/VulkanUtilities.h"
 #include "Graphics/VulkanGraphicsOneTimeCommandBuffer.h"
 
 namespace Dynamik {
@@ -46,7 +46,7 @@ namespace Dynamik {
 				cinfo.mipLevels = 1;
 				cinfo.numSamples = VK_SAMPLE_COUNT_1_BIT;
 				cinfo.flags = NULL;
-				VulkanGraphicsFunctions::createImage(logicalDevice, physicalDevice, cinfo);
+				VulkanUtilities::createImage(logicalDevice, physicalDevice, cinfo);
 
 				ADGRVulkanTextureSamplerInitInfo samplerInitInfo;
 				samplerInitInfo.magFilter = VK_FILTER_LINEAR;
@@ -56,14 +56,14 @@ namespace Dynamik {
 				samplerInitInfo.modeU = VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE;
 				samplerInitInfo.modeV = VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE;
 				samplerInitInfo.modeW = VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE;
-				myTextureContainer.imageSampler = VulkanGraphicsFunctions::createImageSampler(logicalDevice, samplerInitInfo);
+				myTextureContainer.imageSampler = VulkanUtilities::createImageSampler(logicalDevice, samplerInitInfo);
 
 				ADGRVulkanCreateImageViewInfo cinfo2;
 				cinfo2.image = myTextureContainer.image;
 				cinfo2.format = myTextureContainer.format;
 				cinfo2.mipLevels = myTextureContainer.mipLevels;
 				cinfo2.aspectFlags = VK_IMAGE_ASPECT_COLOR_BIT;
-				myTextureContainer.imageView = VulkanGraphicsFunctions::createImageView(logicalDevice, cinfo2);
+				myTextureContainer.imageView = VulkanUtilities::createImageView(logicalDevice, cinfo2);
 			}
 
 			void VulkanBRDF::_initializeRenderPass()

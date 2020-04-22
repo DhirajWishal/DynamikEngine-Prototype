@@ -441,9 +441,6 @@
     <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Compute\VulkanComputeObject.h">
       <Filter>Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Compute</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Compute\VulkanComputeOneTimeCommandBuffer.h">
-      <Filter>Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Compute</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Compute\VulkanComputePipeline.h">
       <Filter>Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Compute</Filter>
     </ClInclude>
@@ -484,12 +481,6 @@
       <Filter>Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsFrameBuffer.h">
-      <Filter>Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsFunctions.h">
-      <Filter>Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsOneTimeCommandBuffer.h">
       <Filter>Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsPipeline.h">
@@ -717,6 +708,9 @@
     <ClInclude Include="..\..\Runtime\GameLibraries\Level.h">
       <Filter>Runtime\GameLibraries</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Runtime\GameLibraries\Light.h">
+      <Filter>Runtime\GameLibraries</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Runtime\GameLibraries\Material.h">
       <Filter>Runtime\GameLibraries</Filter>
     </ClInclude>
@@ -935,9 +929,6 @@
     <ClCompile Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Compute\VulkanComputeObject.cpp">
       <Filter>Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Compute</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Compute\VulkanComputeOneTimeCommandBuffer.cpp">
-      <Filter>Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Compute</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Compute\VulkanComputePipeline.cpp">
       <Filter>Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Compute</Filter>
     </ClCompile>
@@ -963,12 +954,6 @@
       <Filter>Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsFrameBuffer.cpp">
-      <Filter>Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsFunctions.cpp">
-      <Filter>Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsOneTimeCommandBuffer.cpp">
       <Filter>Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsPipeline.cpp">

@@ -16,6 +16,14 @@ namespace Dynamik {
 				virtual void initialize() {}
 				virtual void update() {}
 				virtual void terminate() {}
+
+				VkImage image = VK_NULL_HANDLE;
+				VkDeviceMemory imageMemory = VK_NULL_HANDLE;
+				VkImageView imageView = VK_NULL_HANDLE;
+				VkSampler imageSampler = VK_NULL_HANDLE;
+
+			protected:
+				virtual void generateMipMap();
 			};
 
 			/* Texture 2D */

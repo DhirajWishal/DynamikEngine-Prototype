@@ -34,7 +34,7 @@ namespace Dynamik {
 				VkMemoryAllocateInfo allocInfo = {};
 				allocInfo.sType = VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO;
 				allocInfo.allocationSize = memRequirements.size;
-				allocInfo.memoryTypeIndex = VulkanGraphicsFunctions::findMemoryType(memRequirements.memoryTypeBits,
+				allocInfo.memoryTypeIndex = VulkanUtilities::findMemoryType(memRequirements.memoryTypeBits,
 					VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT, physicalDevice);
 
 				if (vkAllocateMemory(logicalDevice, &allocInfo, nullptr, info.imageMemory) != VK_SUCCESS)
@@ -58,7 +58,7 @@ namespace Dynamik {
 				if (info.newLayout == VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL) {
 					barrier.subresourceRange.aspectMask = VK_IMAGE_ASPECT_DEPTH_BIT;
 
-					if (VulkanGraphicsFunctions::hasStencilComponent(info.format)) {
+					if (VulkanUtilities::hasStencilComponent(info.format)) {
 						barrier.subresourceRange.aspectMask |= VK_IMAGE_ASPECT_STENCIL_BIT;
 					}
 				}

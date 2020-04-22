@@ -214,7 +214,6 @@
     <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Compute\VulkanComputeImageObject.h" />
     <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Compute\VulkanComputeManager.h" />
     <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Compute\VulkanComputeObject.h" />
-    <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Compute\VulkanComputeOneTimeCommandBuffer.h" />
     <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Compute\VulkanComputePipeline.h" />
     <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Compute\VulkanComputeRBLIndex.h" />
     <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Compute\VulkanComputeShader.h" />
@@ -229,8 +228,6 @@
     <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsDepthBuffer.h" />
     <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsDescriptor.h" />
     <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsFrameBuffer.h" />
-    <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsFunctions.h" />
-    <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsOneTimeCommandBuffer.h" />
     <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsPipeline.h" />
     <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsPushConstant.h" />
     <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsRBLIndex.h" />
@@ -306,6 +303,7 @@
     <ClInclude Include="..\..\Runtime\GameLibraries\GameObjectDescriptors.h" />
     <ClInclude Include="..\..\Runtime\GameLibraries\KeyBingings.h" />
     <ClInclude Include="..\..\Runtime\GameLibraries\Level.h" />
+    <ClInclude Include="..\..\Runtime\GameLibraries\Light.h" />
     <ClInclude Include="..\..\Runtime\GameLibraries\Material.h" />
     <ClInclude Include="..\..\Runtime\GameLibraries\Scene.h" />
     <ClInclude Include="..\..\Runtime\GameLibraries\SkyboxObject.h" />
@@ -382,7 +380,6 @@
     <ClCompile Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Compute\VulkanComputeImageObject.cpp" />
     <ClCompile Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Compute\VulkanComputeManager.cpp" />
     <ClCompile Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Compute\VulkanComputeObject.cpp" />
-    <ClCompile Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Compute\VulkanComputeOneTimeCommandBuffer.cpp" />
     <ClCompile Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Compute\VulkanComputePipeline.cpp" />
     <ClCompile Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Compute\VulkanComputeShader.cpp" />
     <ClCompile Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Compute\VulkanOneTimeCompute.cpp" />
@@ -392,8 +389,6 @@
     <ClCompile Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsDepthBuffer.cpp" />
     <ClCompile Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsDescriptor.cpp" />
     <ClCompile Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsFrameBuffer.cpp" />
-    <ClCompile Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsFunctions.cpp" />
-    <ClCompile Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsOneTimeCommandBuffer.cpp" />
     <ClCompile Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsPipeline.cpp" />
     <ClCompile Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsPushConstant.cpp" />
     <ClCompile Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsRenderableObject.cpp" />

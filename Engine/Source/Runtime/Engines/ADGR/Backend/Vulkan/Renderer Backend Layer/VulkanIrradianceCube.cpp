@@ -1,7 +1,7 @@
 #include "dmkafx.h"
 #include "VulkanIrradianceCube.h"
 
-#include "Graphics/VulkanGraphicsFunctions.h"
+#include "Graphics/VulkanUtilities.h"
 #include "Graphics/VulkanGraphicsShader.h"
 #include "Graphics/VulkanGraphicsOneTimeCommandBuffer.h"
 
@@ -28,7 +28,7 @@ namespace Dynamik {
 				cinfo.numSamples = VK_SAMPLE_COUNT_1_BIT;
 				cinfo.arrayLayers = 6;
 				cinfo.flags = VK_IMAGE_CREATE_CUBE_COMPATIBLE_BIT;
-				VulkanGraphicsFunctions::createImage(logicalDevice, physicalDevice, cinfo);
+				VulkanUtilities::createImage(logicalDevice, physicalDevice, cinfo);
 
 				ADGRVulkanTextureSamplerInitInfo samplerInitInfo;
 				samplerInitInfo.magFilter = VK_FILTER_LINEAR;
@@ -41,7 +41,7 @@ namespace Dynamik {
 				samplerInitInfo.mipLoadBias = 0.0f;
 				samplerInitInfo.compareOp = VK_COMPARE_OP_NEVER;
 				samplerInitInfo.borderColor = VK_BORDER_COLOR_FLOAT_OPAQUE_WHITE;
-				myTextureContainer.imageSampler = VulkanGraphicsFunctions::createImageSampler(logicalDevice, samplerInitInfo);
+				myTextureContainer.imageSampler = VulkanUtilities::createImageSampler(logicalDevice, samplerInitInfo);
 
 				ADGRVulkanCreateImageViewInfo cinfo2;
 				cinfo2.image = myTextureContainer.image;
@@ -51,7 +51,7 @@ namespace Dynamik {
 				cinfo2.viewType = VK_IMAGE_VIEW_TYPE_CUBE;
 				cinfo2.layerCount = 6;
 				cinfo2.component = { VK_COMPONENT_SWIZZLE_R, VK_COMPONENT_SWIZZLE_G, VK_COMPONENT_SWIZZLE_B, VK_COMPONENT_SWIZZLE_A };
-				myTextureContainer.imageView = VulkanGraphicsFunctions::createImageView(logicalDevice, cinfo2);
+				myTextureContainer.imageView = VulkanUtilities::createImageView(logicalDevice, cinfo2);
 			}
 
 			void VulkanIrradianceCube::_initializeRenderPass()
@@ -112,14 +112,14 @@ namespace Dynamik {
 				cinfo.mipLevels = 1;
 				cinfo.numSamples = VK_SAMPLE_COUNT_1_BIT;
 				cinfo.flags = NULL;
-				VulkanGraphicsFunctions::createImage(logicalDevice, physicalDevice, cinfo);
+				VulkanUtilities::createImage(logicalDevice, physicalDevice, cinfo);
 
 				ADGRVulkanCreateImageViewInfo cinfo2;
 				cinfo2.image = offscreenContainer.image;
 				cinfo2.format = myTextureContainer.format;
 				cinfo2.mipLevels = 1;
 				cinfo2.aspectFlags = VK_IMAGE_ASPECT_COLOR_BIT;
-				offscreenContainer.imageView = VulkanGraphicsFunctions::createImageView(logicalDevice, cinfo2);
+				offscreenContainer.imageView = VulkanUtilities::createImageView(logicalDevice, cinfo2);
 
 				offscreenContainer.frameBuffer = VulkanGraphicsFrameBuffer::createFrameBuffer(
 					logicalDevice,
@@ -134,7 +134,7 @@ namespace Dynamik {
 				transitionInfo.newLayout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
 				transitionInfo.mipLevels = 1;
 				transitionInfo.layerCount = 1;
-				VulkanGraphicsFunctions::transitionImageLayout(logicalDevice, commandPool, graphicsQueue, presentQueue, transitionInfo);
+				VulkanUtilities::transitionImageLayout(logicalDevice, commandPool, graphicsQueue, presentQueue, transitionInfo);
 			}
 
 			void VulkanIrradianceCube::_initializeFrameBuffer()
@@ -285,7 +285,7 @@ namespace Dynamik {
 				transitionInfo.newLayout = VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL;
 				transitionInfo.mipLevels = myTextureContainer.mipLevels;
 				transitionInfo.layerCount = 6;
-				VulkanGraphicsFunctions::transitionImageLayout(logicalDevice, commandPool, graphicsQueue, presentQueue, transitionInfo);
+				VulkanUtilities::transitionImageLayout(logicalDevice, commandPool, graphicsQueue, presentQueue, transitionInfo);
 
 				for (UI32 m = 0; m < myTextureContainer.mipLevels; m++) {
 					for (UI32 f = 0; f < 6; f++) {
@@ -320,7 +320,7 @@ namespace Dynamik {
 						transitionInfo.newLayout = VK_IMAGE_LAYOUT_TRANSFER_SRC_OPTIMAL;
 						transitionInfo.mipLevels = 1;
 						transitionInfo.layerCount = 1;
-						VulkanGraphicsFunctions::transitionImageLayout(logicalDevice, commandPool, graphicsQueue, presentQueue, transitionInfo);
+						VulkanUtilities::transitionImageLayout(logicalDevice, commandPool, graphicsQueue, presentQueue, transitionInfo);
 
 						// Copy region for transfer from framebuffer to cube face
 						VkImageCopy copyRegion = {};
@@ -361,7 +361,7 @@ namespace Dynamik {
 						transitionInfo.newLayout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
 						transitionInfo.mipLevels = 1;
 						transitionInfo.layerCount = 1;
-						VulkanGraphicsFunctions::transitionImageLayout(logicalDevice, commandPool, graphicsQueue, presentQueue, transitionInfo);
+						VulkanUtilities::transitionImageLayout(logicalDevice, commandPool, graphicsQueue, presentQueue, transitionInfo);
 					}
 				}
 
@@ -371,7 +371,7 @@ namespace Dynamik {
 				transitionInfo.newLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
 				transitionInfo.mipLevels = myTextureContainer.mipLevels;
 				transitionInfo.layerCount = 6;
-				VulkanGraphicsFunctions::transitionImageLayout(logicalDevice, commandPool, graphicsQueue, presentQueue, transitionInfo);
+				VulkanUtilities::transitionImageLayout(logicalDevice, commandPool, graphicsQueue, presentQueue, transitionInfo);
 			}
 		}
 	}

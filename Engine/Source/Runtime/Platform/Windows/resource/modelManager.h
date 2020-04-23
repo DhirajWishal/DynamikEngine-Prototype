@@ -3,7 +3,6 @@
 #ifndef _DYNAMIK_MANAGERS_WINDOWS_MODEL_MANAGER_H
 #define _DYNAMIK_MANAGERS_WINDOWS_MODEL_MANAGER_H
 
-#include "DataHub/renderer/vertex.h"
 #include "core.h"
 #include "Objects/Mesh/Mesh.h"
 

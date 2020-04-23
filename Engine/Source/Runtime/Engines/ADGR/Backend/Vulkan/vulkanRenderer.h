@@ -35,31 +35,19 @@
 
 #include "Renderer Backend Layer/External/stb_font_consolas_24_latin1.inl"
 
-#include "Engines/ADGR/rendererFormat.h"
-
 namespace Dynamik {
 	namespace ADGR {
 		using namespace Backend;
 
-		struct ADGRVulkanTextOverlayDataContainer {
-			VkBuffer vertexBuffer = VK_NULL_HANDLE;
-			VkDeviceMemory vertexBufferMemory = VK_NULL_HANDLE;
-			ADGRVulkanTextureContainer textureContainer;
+		enum class ADGRVulkanResourceState {
+			ADGR_VULKAN_RESOURCE_STATE_HOST_VISIBLE,		/* Resource which the application has and not yet submitted */
+			ADGR_VULKAN_RESOURCE_STATE_CLIENT_VISIBLE,		/* Resource which is submitted */
+		};
 
-			VkDescriptorSetLayout descriptorSetLayout = VK_NULL_HANDLE;
-			VkDescriptorPool descriptorPool = VK_NULL_HANDLE;
-			VkDescriptorSet descriptorSet = VK_NULL_HANDLE;
-
-			VkRenderPass renderPass = VK_NULL_HANDLE;
-			VkPipeline pipeline = VK_NULL_HANDLE;
-			VkPipelineLayout pipelineLayout = VK_NULL_HANDLE;
-
-			glm::vec4* mapped = nullptr;
-			stb_fontchar stbFontData[STB_FONT_consolas_24_latin1_NUM_CHARS];
-			UI32 numberOfLetters = 0;
-
-			B1 isInitialized = false;
-			B1 isVisible = true;
+		struct ADGRVulkanRenderResourceContainer {
+			VulkanGraphicsCommandBuffer commandBuffer;
+			ARRAY<ADGRVulkanRenderData> renderData;
+			ADGRVulkanResourceState state = ADGRVulkanResourceState::ADGR_VULKAN_RESOURCE_STATE_HOST_VISIBLE;
 		};
 
 		/* RENDERER BACKEND LAYER
@@ -72,178 +60,52 @@ namespace Dynamik {
 		  * @warn: Only one instance should be created.
 		 */
 		class vulkanRenderer : public RendererBackend {
-			/* DEFAULTS */
-		public:
-			/* CONSTRUCTOR
-			 * Default constructor of the Vulkan Renderer.
-			 */
 			vulkanRenderer() {}
 
-			/* CONSTRUCTOR
-			 * Default constructor of the Vulkan Renderer.
-			 *
-			 * @param settings: Renderer Backend settings container.
-			 */
-			vulkanRenderer(DMKRendererSettings settings) : RendererBackend(settings) {}
-
-			/* DESTRUCTOR
-			 * Default destructor of the Vulkan Renderer.
-			 */
+			static vulkanRenderer instance;
+		public:
 			~vulkanRenderer() {}
 
-			/* PUBLIC FUNCTIONS */
+			static void setWindowHandle(POINTER<GLFWwindow> windowHandle);
+			static void setWindowExtent(UI32 width, UI32 height);
+			static void setProgress(POINTER<UI32> progress);
+
+			static void initializeGraphicsCore();
+			static void initializeComputeCore();
+
+			static void addObject(POINTER<InternalFormat> format);
+			static void addObjects(ARRAY<POINTER<InternalFormat>> formats);
+
+			static void drawFrame(DMKRendererDrawFrameInfo info);
+
+		private:
+			void _initializeRenderPass();	/* Initialize the render pass */
+			void _prepareRenderDataContainer(UI32 index);	/* Prepare the next container to be used */
+			ADGRVulkanGraphicsRenderableObjectInitInfo _getBasicInitInfo();	/* Return the basic init info */
+
 		public:
-			/* FUNCTION
-			 * Full initialization function.
-			 */
-			void init() override;
-
-			/* FUNCTION
-			 * Stage One initialization.
-			 */
-			void initStageOne() override;
-
-			/* FUNCTION
-			 * Stage Two initialization.
-			 */
-			void initStageTwo() override;
-
-			/* FUNCTION
-			 * Stage Three initialization.
-			 */
-			void initStageThree() override;
-
-			/* FUNCTION
-			 * Draw frame function.
-			 */
-			void drawFrame(DMKRendererDrawFrameInfo info);
-
-			/* FUNCTION
-			 * Full Shut down function.
-			 */
-			void shutDown() override;
-
-			/* FUNCTION
-			 * Shut down stage one.
-			 */
-			void shutDownStageOne() override;
-
-			/* FUNCTION
-			 * Shut down stage two.
-			 */
-			void shutDownStageTwo() override;
-
-			/* FUNCTION
-			 * Shut down stage three.
-			 */
-			void shutDownStageThree() override;
-
-			/* FUNCTION
-			 * Check for window close event.
-			 */
-			B1 closeEvent() override;
-
-			/* FUNCTION
-			 * Set Renderer formats to the renderer.
-			 *
-			 * @param rendererFormats: An ARRAY of renderer formats.
-			 */
-			void setFormats(ARRAY<POINTER<InternalFormat>>& rendererFormats);
-			void setFormats3D(ARRAY<POINTER<InternalFormat>>& rendererFormats);
-
-			/* FUNCTION
-			 * Update the renderer formats.
-			 *
-			 * @param rendererFormats: An ARRAY of renderer formats.
-			 */
-			void updateFormats3D(ARRAY<POINTER<InternalFormat>>& rendererFormats);
-
-			void addText(std::string string, F32 x, F32 y, DMKTextAlign align);
-
-			void setWindowHandle(POINTER<GLFWwindow> windowHandle);
-
-			/* PRIVATE FUNCTIONS */
-		private:
-			void recreateSwapChain();
-			void initializeObjects();
-			void initializeObjectsBasic();
-
-			void initializeMaterials();
-
-			void initializeOverlay();
-			void addOverlay();
-
-			ADGRVulkanGraphicsRenderableObjectInitInfo RenderableObjectInitInfo();
-
-			void initializeSwapChain();
-
-			void initializeColorBuffer();
-			void initializeDepthBuffer();
-
-			ADGRVulkanRenderData initializeSkyboxObject(POINTER<InternalFormat> _object);
-			ADGRVulkanRenderData initializeReflectObject(POINTER<InternalFormat> _object);
-			ADGRVulkanRenderData initializeSkeletalAnimation(POINTER<InternalFormat> _object);
-
-			void draw3D(VkSwapchainKHR swapChain);
-
-			POINTER<GLFWwindow> myWindow;
-
-			VulkanGraphicsCore myVulkanGraphicsCore;
-			VulkanGraphicsSwapChain3D mySwapChain3D;
-			VulkanGraphicsCommandBuffer myCommandBuffer;
-			VulkanGraphicsFrameBuffer myFrameBuffer;
-
-			VulkanGraphicsColorBuffer myColorBuffer;
-			VulkanGraphicsDepthBuffer myDepthBuffer;
-
-			ARRAY<ADGRVulkanRenderData> renderDatas;
-			ARRAY<ADGRVulkanSkeletalAnimationData> animationDatas;
-			ARRAY<POINTER<InternalFormat>> rawObjects;
-
-			ARRAY<VulkanSkyBox> mySkyboxes;
-
-			ADGRVulkanSkeletalAnimationData _skeletalData;
-			VulkanSkeletalAnimation* myAnimation;
-
-			WindowManager myWindowManager;
-
-			UI32 currentFrame = 0;
-			UI32 imageIndex = 0;
-			VkResult result = VkResult::VK_ERROR_UNKNOWN;
-
-			F32 runningTime = 1.0f;
-
-			std::map<std::string, ADGRVulkanMaterialDescriptor> myRenderableMeterials;
+			/* Initialize the object as a SkyBox */
+			ADGRVulkanRenderData _initializeSkyBox(POINTER<InternalFormat> format);
 
 		private:
-			void initializeComputeAPI();
-			VulkanComputeCore myComputeCore;
-			VulkanComputeCommandBuffer myComputeCommandBuffer;
+			POINTER<UI32> myProgress;
 
-		private:
-			ADGRVulkanTextOverlayDataContainer overlayContainer;
-			VulkanGraphicsCommandBuffer overlayCommandBuffer;
-			void _initializeOverlayCommandPool();
-			void _initializeOverlayDescriptorSetLayout();
-			void _initializeOverlayPipelineLayout();
-			void _initializeOverlayRenderPass();
+			POINTER<GLFWwindow> myWindowHandle;	/* Window handle for vulkan to submit frames */
+			UI32 windowWidth = 0;	/* Window width */
+			UI32 windowHeight = 0;	/* Window height */
 
-			void _initializeOverlayVertexBuffer();
-			void _initializeOverlayTextureImage();
-			void _initializeOverlayPipeline(ADGRVulkanGraphicsShaderPathContainer shaderContainer);
-			void _initializeOverlayDescriptorPool();
-			void _initializeOverlayDescriptorSets();
+			VulkanGraphicsCore myGraphicsCore;	/* Contains the Vulkan's core components */
 
-			VkCommandBuffer _drawOverlay(UI32 imageIndex);
+			/* Contains the command buffers and render datas */
+			ADGRVulkanRenderResourceContainer myResourceContainers[2];	/* Host visible and client visible */
+			B1 inUseIndex = false;	/* Resource index of the container which is currently being used (client visible) */
 
-			void _beginUpdate();
-			void _endUpdate();
+			VulkanGraphicsSwapChain3D mySwapChain;	/* 3D Swap Chain */
 
-			void _initializeOverlayCommandBuffers(ADGRVulkanGraphicsCommandBufferInitInfo info);
+			VulkanGraphicsColorBuffer myColorBuffer;	/* Core Vulkan attachments */
+			VulkanGraphicsDepthBuffer myDepthBuffer;	/* Core Vulkan attachments */
 
-			void _initializeOverlayStageOne();
-			void _initializeOverlayStageTwo(ADGRVulkanGraphicsShaderPathContainer shaderContainer);
-			void _terminateOverlay();
+			VulkanGraphicsFrameBuffer myFrameBuffer;	/* Graphics frame buffer */
 		};
 	}
 }

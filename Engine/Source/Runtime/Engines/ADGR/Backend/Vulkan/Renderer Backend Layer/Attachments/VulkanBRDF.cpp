@@ -1,8 +1,8 @@
 #include "dmkafx.h"
 #include "VulkanBRDF.h"
 
-#include "Graphics/VulkanUtilities.h"
-#include "Graphics/VulkanGraphicsOneTimeCommandBuffer.h"
+#include "../Common/VulkanUtilities.h"
+#include "../Common/VulkanOneTimeCommandBuffer.h"
 
 namespace Dynamik {
 	namespace ADGR {
@@ -176,7 +176,7 @@ namespace Dynamik {
 
 			void VulkanBRDF::_initializeCommandBuffers()
 			{
-				VulkanGraphicsOneTimeCommandBuffer oneTimeCommandBuffer(logicalDevice, commandPool, graphicsQueue, presentQueue);
+				VulkanOneTimeCommandBuffer oneTimeCommandBuffer(logicalDevice, commandPool, graphicsQueue, presentQueue);
 				std::array<VkClearValue, 1> clearValues;
 				clearValues[0].color = { { 0.0f, 0.0f, 0.0f, 1.0f } };
 
@@ -190,7 +190,7 @@ namespace Dynamik {
 				renderPassInfo.clearValueCount = clearValues.size();
 				renderPassInfo.pClearValues = clearValues.data();
 
-				VkCommandBuffer buffer = oneTimeCommandBuffer.myCommandBuffers[0];
+				VkCommandBuffer buffer = oneTimeCommandBuffer.buffer;
 
 				vkCmdBeginRenderPass(buffer, &renderPassInfo, VK_SUBPASS_CONTENTS_INLINE);
 

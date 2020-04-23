@@ -2,17 +2,15 @@
 #include "modelManager.h"
 #include <tiny_obj_loader.h>
 
-namespace std {
-	template<>
-	struct hash<Dynamik::MeshPointStore> {
-		size_t operator() (const Dynamik::MeshPointStore& other)
-		{
-			return (((hash<Dynamik::F32>()(other.position[0] * other.position[1] * other.position[2])
-				^ (hash<Dynamik::F32>()(other.color[0] * other.color[1] * other.color[2]) << 1)) >> 1 ^
-				(hash<Dynamik::F32>()(other.textureCoordinate[0] * other.textureCoordinate[1]) >> 1)) * other.integrity);
-		}
-	};
-}
+//namespace std {
+//	template<>
+//	struct hash<Dynamik::MeshPointStore> {
+//		size_t operator() (Dynamik::MeshPointStore other)
+//		{
+//			return (size_t)other.position.hash() ^ (size_t)other.color.hash() ^ (size_t)other.textureCoordinate.hash();
+//		}
+//	};
+//}
 
 float RandomFloat(float a, float b) {
 	float random = ((float)rand()) / (float)RAND_MAX;
@@ -32,7 +30,6 @@ namespace Dynamik {
 			DMK_CORE_FATAL((warn + err).c_str());
 
 		MeshPointStore _store;
-		std::unordered_map<MeshPointStore, UI32> uniqueVertices = {};
 
 		for (const auto& shape : shapes) {
 			Mesh _mesh;
@@ -62,12 +59,8 @@ namespace Dynamik {
 					attributes.normals[index.normal_index + 2]
 				};
 
-				if (uniqueVertices.count(_store) == 0) {
-					uniqueVertices[_store] = static_cast<UI32>(_mesh.vertexDataStore.size());
-					_mesh.vertexDataStore.push_back(_store);
-				}
-
-				_mesh.indexes.push_back(uniqueVertices[_store]);
+				_mesh.vertexDataStore.push_back(_store);
+				_mesh.indexes.push_back(_mesh.vertexDataStore.size() - 1);
 			}
 
 			info.meshes->pushBack(_mesh);

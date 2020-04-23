@@ -63,16 +63,13 @@ namespace Dynamik {
 				VulkanSkeletalAnimation(ADGRVulkanGraphicsRenderableObjectInitInfo info);
 				virtual ~VulkanSkeletalAnimation() {}
 
-				ADGRVulkanRenderData initializeObject(VkDevice logicalDevice, POINTER<InternalFormat> _object, VkSampleCountFlagBits msaaSamples) override;
+				ADGRVulkanRenderData initializeObject(POINTER<InternalFormat> _object, VkSampleCountFlagBits msaaSamples) override;
 
 				void setAnimation(UI32 animationIndex);
 				void loadBones(const aiMesh* pMesh, UI32 vertexOffset, ARRAY<ADGRVulkanSkeletalBoneData>& bones);
 				void update(F32 time);
 
 				void draw(F32 time);
-
-				void initializeVertexBuffer(ARRAY<SkeletalVertex>* vertexBufferObject);
-				void initializeTextures(ARRAY<ADGRVulkanTextureInitInfo> infos) override;
 
 				void initializeUniformBuffer() override;
 				void updateUniformBuffer(UBO_SKELETAL uniformBufferObject, UI32 currentImage, F32 time);

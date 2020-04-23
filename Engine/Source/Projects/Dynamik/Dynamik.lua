@@ -49,6 +49,8 @@ project "Dynamik"
 	}
 
 	links { 
+		"glew32",
+		"glew32s",
 		"glfw3dll",
 		"opengl32",
 		"vulkan-1",

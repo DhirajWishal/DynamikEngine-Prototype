@@ -928,6 +928,23 @@ namespace Dynamik {
 			return _indexContainer;
 		}
 
+		/* FUNCTION
+		 * Returns a hash for the content stored in the array.
+		 */
+		UI64 hash()
+		{
+			UI64 _hashInt = 0;
+			ITERATOR begin = myBeginPtr;
+
+			while (begin != end())
+			{
+				_hashInt = _hashInt ^ begin.getPointerAsInteger();
+				begin++;
+			}
+
+			return _hashInt;
+		}
+
 		/* PUBLIC OPERATORS */
 	public:
 		/* OPERATOR

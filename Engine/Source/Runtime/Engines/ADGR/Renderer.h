@@ -12,7 +12,6 @@
 #ifndef _DYNAMIK_ADGR_RENDERER_H
 #define _DYNAMIK_ADGR_RENDERER_H
 
-#include "rendererFormat.h"
 #include "core.h"
 #include "rendererCommandQueue.h"
 

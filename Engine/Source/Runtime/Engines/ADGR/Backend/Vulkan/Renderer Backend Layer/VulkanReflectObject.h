@@ -12,9 +12,7 @@ namespace Dynamik {
 				VulkanReflectObject(ADGRVulkanGraphicsRenderableObjectInitInfo info);
 				~VulkanReflectObject() {}
 
-				ADGRVulkanRenderData initializeObject(VkDevice logicalDevice, POINTER<InternalFormat> _object, VkSampleCountFlagBits msaaSamples) override;
-
-				void initializeTextures(ARRAY<ADGRVulkanTextureInitInfo> infos) override;
+				ADGRVulkanRenderData initializeObject(POINTER<InternalFormat> _object, VkSampleCountFlagBits msaaSamples) override;
 
 				void initializeUniformBuffer() override;
 				void updateUniformBuffer(UBO_MVPC uniformBufferObject, UI32 currentImage);

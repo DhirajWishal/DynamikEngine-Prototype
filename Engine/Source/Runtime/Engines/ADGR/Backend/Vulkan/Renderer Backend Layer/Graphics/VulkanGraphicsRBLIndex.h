@@ -4,9 +4,6 @@
 
 #include "VulkanControlHeader.h"
 
-#include "VulkanUtilities.h"
-#include "VulkanGraphicsOneTimeCommandBuffer.h"
-
 #include "VulkanGraphicsColorBuffer.h"
 #include "VulkanGraphicsDepthBuffer.h"
 #include "VulkanGraphicsShader.h"

@@ -46,13 +46,10 @@
 
 #include "core/log.h"
 
-
 #if defined(DMK_USE_VULKAN)
 
 #include <GLEW/glew-2.1.0/include/GL/glew.h>
 #include <GLFW/glfw3.h>
-
-#include <load_ktx.hpp>
 
 #undef UNICODE
 

@@ -2,7 +2,7 @@
 #ifndef _DYNAMIK_ADGR_VULKAN_IRRADIANCE_CUBE_H
 #define _DYNAMIK_ADGR_VULKAN_IRRADIANCE_CUBE_H
 
-#include "Graphics/VulkanGraphicsSupportObject.h"
+#include "../Graphics/VulkanGraphicsSupportObject.h"
 
 #define M_PI       3.14159265358979323846
 

@@ -1,30 +1,16 @@
 #include "dmkafx.h"
-#include "VulkanPrefilteredCube.h"
+#include "VulkanIrradianceCube.h"
 
-#include "Graphics/VulkanUtilities.h"
-#include "Graphics/VulkanGraphicsOneTimeCommandBuffer.h"
+#include "../Common/VulkanUtilities.h"
+#include "../Graphics/VulkanGraphicsShader.h"
+#include "../Common/VulkanOneTimeCommandBuffer.h"
 
 namespace Dynamik {
 	namespace ADGR {
 		namespace Backend {
-			void VulkanPrefilteredCube::initialize()
+			void VulkanIrradianceCube::_initializeTexture()
 			{
-				myTextureContainer.format = VK_FORMAT_R16G16B16A16_SFLOAT;
-				dimentions = 512;
-
-				_initializeTexture();
-				_initializeRenderPass();
-				_initializeFrameBuffer();
-				_initializeDescriptorSetLayout();
-				_initializeDescriptorPool();
-				_initializeDescriptorSets();
-				_initializePipelineLayout();
-				_initializePipeline();
-				_initializeCommandBuffers();
-			}
-
-			void VulkanPrefilteredCube::_initializeTexture()
-			{
+				myTextureContainer.format = VK_FORMAT_R32G32B32A32_SFLOAT;
 				myTextureContainer.mipLevels = static_cast<UI32>(floor(log2(dimentions))) + 1;
 				myTextureContainer.width = dimentions;
 				myTextureContainer.height = dimentions;
@@ -34,7 +20,7 @@ namespace Dynamik {
 				cinfo.height = myTextureContainer.height;
 				cinfo.format = myTextureContainer.format;
 				cinfo.tiling = VK_IMAGE_TILING_OPTIMAL;
-				cinfo.usage = VK_IMAGE_USAGE_SAMPLED_BIT | VK_IMAGE_USAGE_TRANSFER_DST_BIT;
+				cinfo.usage = VK_IMAGE_USAGE_TRANSFER_SRC_BIT | VK_IMAGE_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT;
 				cinfo.properties = VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT;
 				cinfo.image = &myTextureContainer.image;
 				cinfo.imageMemory = &myTextureContainer.imageMemory;
@@ -68,7 +54,143 @@ namespace Dynamik {
 				myTextureContainer.imageView = VulkanUtilities::createImageView(logicalDevice, cinfo2);
 			}
 
-			void VulkanPrefilteredCube::_initializePipelineLayout()
+			void VulkanIrradianceCube::_initializeRenderPass()
+			{
+				VkAttachmentDescription attDesc = {};
+				// Color attachment
+				attDesc.format = myTextureContainer.format;
+				attDesc.samples = VK_SAMPLE_COUNT_1_BIT;
+				attDesc.loadOp = VK_ATTACHMENT_LOAD_OP_CLEAR;
+				attDesc.storeOp = VK_ATTACHMENT_STORE_OP_STORE;
+				attDesc.stencilLoadOp = VK_ATTACHMENT_LOAD_OP_DONT_CARE;
+				attDesc.stencilStoreOp = VK_ATTACHMENT_STORE_OP_DONT_CARE;
+				attDesc.initialLayout = VK_IMAGE_LAYOUT_UNDEFINED;
+				attDesc.finalLayout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
+				VkAttachmentReference colorReference = { 0, VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL };
+
+				VkSubpassDescription subpassDescription = {};
+				subpassDescription.pipelineBindPoint = VK_PIPELINE_BIND_POINT_GRAPHICS;
+				subpassDescription.colorAttachmentCount = 1;
+				subpassDescription.pColorAttachments = &colorReference;
+
+				// Use subpass dependencies for layout transitions
+				std::array<VkSubpassDependency, 2> dependencies;
+				dependencies[0].srcSubpass = VK_SUBPASS_EXTERNAL;
+				dependencies[0].dstSubpass = 0;
+				dependencies[0].srcStageMask = VK_PIPELINE_STAGE_BOTTOM_OF_PIPE_BIT;
+				dependencies[0].dstStageMask = VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT;
+				dependencies[0].srcAccessMask = VK_ACCESS_MEMORY_READ_BIT;
+				dependencies[0].dstAccessMask = VK_ACCESS_COLOR_ATTACHMENT_READ_BIT | VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT;
+				dependencies[0].dependencyFlags = VK_DEPENDENCY_BY_REGION_BIT;
+				dependencies[1].srcSubpass = 0;
+				dependencies[1].dstSubpass = VK_SUBPASS_EXTERNAL;
+				dependencies[1].srcStageMask = VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT;
+				dependencies[1].dstStageMask = VK_PIPELINE_STAGE_BOTTOM_OF_PIPE_BIT;
+				dependencies[1].srcAccessMask = VK_ACCESS_COLOR_ATTACHMENT_READ_BIT | VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT;
+				dependencies[1].dstAccessMask = VK_ACCESS_MEMORY_READ_BIT;
+				dependencies[1].dependencyFlags = VK_DEPENDENCY_BY_REGION_BIT;
+
+				ADGRVulkanRenderPassInitInfo initInfo;
+				initInfo.attachments = { attDesc };
+				initInfo.subPasses = { subpassDescription };
+				initInfo.additionalSubPassDependencies = { dependencies[0], dependencies[1] };
+				initInfo.overrideDependencies = true;
+				myFrameBuffer.initializeRenderPass(logicalDevice, initInfo);
+			}
+
+			void VulkanIrradianceCube::_initializeOffscreenFrameBuffer()
+			{
+				ADGRVulkanCreateImageInfo cinfo;
+				cinfo.width = dimentions;
+				cinfo.height = dimentions;
+				cinfo.format = myTextureContainer.format;
+				cinfo.tiling = VK_IMAGE_TILING_OPTIMAL;
+				cinfo.usage = VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT | VK_IMAGE_USAGE_TRANSFER_SRC_BIT;
+				cinfo.properties = VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT;
+				cinfo.image = &offscreenContainer.image;
+				cinfo.imageMemory = &offscreenContainer.imageMemory;
+				cinfo.mipLevels = 1;
+				cinfo.numSamples = VK_SAMPLE_COUNT_1_BIT;
+				cinfo.flags = NULL;
+				VulkanUtilities::createImage(logicalDevice, physicalDevice, cinfo);
+
+				ADGRVulkanCreateImageViewInfo cinfo2;
+				cinfo2.image = offscreenContainer.image;
+				cinfo2.format = myTextureContainer.format;
+				cinfo2.mipLevels = 1;
+				cinfo2.aspectFlags = VK_IMAGE_ASPECT_COLOR_BIT;
+				offscreenContainer.imageView = VulkanUtilities::createImageView(logicalDevice, cinfo2);
+
+				offscreenContainer.frameBuffer = VulkanGraphicsFrameBuffer::createFrameBuffer(
+					logicalDevice,
+					myFrameBuffer.renderPass,
+					{ offscreenContainer.imageView },
+					{ dimentions, dimentions });
+
+				ADGRVulkanTransitionImageLayoutInfo transitionInfo;
+				transitionInfo.image = offscreenContainer.image;
+				transitionInfo.format = myTextureContainer.format;
+				transitionInfo.oldLayout = VK_IMAGE_LAYOUT_UNDEFINED;
+				transitionInfo.newLayout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
+				transitionInfo.mipLevels = 1;
+				transitionInfo.layerCount = 1;
+				VulkanUtilities::transitionImageLayout(logicalDevice, commandPool, graphicsQueue, presentQueue, transitionInfo);
+			}
+
+			void VulkanIrradianceCube::_initializeFrameBuffer()
+			{
+				_initializeOffscreenFrameBuffer();
+			}
+
+			void VulkanIrradianceCube::_initializeDescriptorSetLayout()
+			{
+				VkDescriptorSetLayoutBinding uboLayoutBinding = {};
+				uboLayoutBinding.binding = 0; // info.bindIndex;
+				uboLayoutBinding.descriptorCount = 1;
+				uboLayoutBinding.descriptorType = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
+				uboLayoutBinding.pImmutableSamplers = nullptr; // Optional
+				uboLayoutBinding.stageFlags = VK_SHADER_STAGE_FRAGMENT_BIT;
+
+				ADGRVulkanDescriptorSetLayoutInitInfo initInfo;
+				initInfo.bindings = { uboLayoutBinding };
+				myDescriptorContainer.initializeLayout(logicalDevice, initInfo);
+			}
+
+			void VulkanIrradianceCube::_initializeDescriptorPool()
+			{
+				VkDescriptorPoolSize size;
+				size.type = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
+				size.descriptorCount = 1;
+
+				ADGRVulkanDescriptorPoolInitInfo initInfo;
+				initInfo.poolSizes = { size };
+				myDescriptorContainer.initializePool(logicalDevice, initInfo);
+			}
+
+			void VulkanIrradianceCube::_initializeDescriptorSets()
+			{
+				VkDescriptorImageInfo imageInfo = {};
+				imageInfo.imageLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
+				imageInfo.imageView = myTextureContainer.imageView;
+				imageInfo.sampler = myTextureContainer.imageSampler;
+
+				VkWriteDescriptorSet _writes2;
+				_writes2.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
+				_writes2.dstBinding = 0;
+				_writes2.dstArrayElement = 0;
+				_writes2.descriptorType = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
+				_writes2.descriptorCount = 1;
+				_writes2.pImageInfo = &imageInfo;
+				_writes2.pNext = VK_NULL_HANDLE;
+				_writes2.pTexelBufferView = VK_NULL_HANDLE;
+				_writes2.pBufferInfo = VK_NULL_HANDLE;
+
+				ADGRVulkanDescriptorSetsInitInfo initInfo;
+				initInfo.descriptorWrites = { _writes2 };
+				myDescriptorContainer.initializeSets(logicalDevice, initInfo);
+			}
+
+			void VulkanIrradianceCube::_initializePipelineLayout()
 			{
 				VkPushConstantRange pushBlockRange;
 				pushBlockRange.size = sizeof(PushBlock);
@@ -81,24 +203,24 @@ namespace Dynamik {
 				myPipeline.initializePipelineLayout(logicalDevice, initInfo);
 			}
 
-			void VulkanPrefilteredCube::_initializePipeline()
+			void VulkanIrradianceCube::_initializePipeline()
 			{
 				ADGRVulkanGraphicsShaderInitInfo VSInitInfo;
-				VSInitInfo.path = "Shaders/Prefiltered/vert.spv";
+				VSInitInfo.path = "Shaders/Irradiance/vert.spv";
 				VSInitInfo.type = ADGRVulkanGraphicsShaderType::ADGR_VULKAN_SHADER_TYPE_VERTEX;
 				VulkanGraphicsShader VS;
 				VS.initialize(logicalDevice, VSInitInfo);
 
 				ADGRVulkanGraphicsShaderInitInfo FSInitInfo;
-				FSInitInfo.path = "Shaders/Prefiltered/frag.spv";
+				FSInitInfo.path = "Shaders/Irradiance/frag.spv";
 				FSInitInfo.type = ADGRVulkanGraphicsShaderType::ADGR_VULKAN_SHADER_TYPE_FRAGMENT;
 				VulkanGraphicsShader FS;
 				FS.initialize(logicalDevice, FSInitInfo);
 
 				ADGRVulkanGraphicsPipelineInitInfo initInfo;
 				initInfo.shaders = { VS, FS };
-				initInfo.vertexAttributeDescription = VertexP::getAttributeDescriptions();
-				initInfo.vertexBindingDescription = VertexP::getBindingDescription(1);
+				//initInfo.vertexAttributeDescription = VertexP::getAttributeDescriptions();
+				//initInfo.vertexBindingDescription = VertexP::getBindingDescription(1);
 				initInfo.swapChainExtent.width = dimentions;
 				initInfo.swapChainExtent.height = dimentions;
 				initInfo.inputAssemblyTopology = VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST;
@@ -107,7 +229,7 @@ namespace Dynamik {
 				myPipeline.initializePipeline(logicalDevice, initInfo);
 			}
 
-			void VulkanPrefilteredCube::_initializeCommandBuffers()
+			void VulkanIrradianceCube::_initializeCommandBuffers()
 			{
 				std::vector<glm::mat4> matrices = {
 					// POSITIVE_X
@@ -124,9 +246,9 @@ namespace Dynamik {
 					glm::rotate(glm::mat4(1.0f), glm::radians(180.0f), glm::vec3(0.0f, 0.0f, 1.0f)),
 				};
 
-				VulkanGraphicsOneTimeCommandBuffer oneTimeCommandBuffer(logicalDevice, commandPool, graphicsQueue, presentQueue);
+				VulkanOneTimeCommandBuffer oneTimeCommandBuffer(logicalDevice, commandPool, graphicsQueue, presentQueue);
 				std::array<VkClearValue, 1> clearValues;
-				clearValues[0].color = { { 0.0f, 0.0f, 0.2f, 0.0f } };
+				clearValues[0].color = { { 0.0f, 0.0f, 0.0f, 1.0f } };
 
 				VkRenderPassBeginInfo renderPassInfo = {};
 				renderPassInfo.sType = VK_STRUCTURE_TYPE_RENDER_PASS_BEGIN_INFO;
@@ -138,7 +260,7 @@ namespace Dynamik {
 				renderPassInfo.clearValueCount = clearValues.size();
 				renderPassInfo.pClearValues = clearValues.data();
 
-				VkCommandBuffer buffer = oneTimeCommandBuffer.myCommandBuffers[0];
+				VkCommandBuffer buffer = oneTimeCommandBuffer.buffer;
 
 				VkViewport viewport;
 				viewport.height = dimentions;
@@ -220,10 +342,10 @@ namespace Dynamik {
 						copyRegion.extent.depth = 1;
 
 						{
-							VulkanGraphicsOneTimeCommandBuffer oneTimeBuffer(logicalDevice, commandPool, graphicsQueue, presentQueue);
+							VulkanOneTimeCommandBuffer oneTimeBuffer(logicalDevice, commandPool, graphicsQueue, presentQueue);
 
 							vkCmdCopyImage(
-								oneTimeBuffer.myCommandBuffers[0],
+								oneTimeBuffer.buffer,
 								offscreenContainer.image,
 								VK_IMAGE_LAYOUT_TRANSFER_SRC_OPTIMAL,
 								myTextureContainer.image,

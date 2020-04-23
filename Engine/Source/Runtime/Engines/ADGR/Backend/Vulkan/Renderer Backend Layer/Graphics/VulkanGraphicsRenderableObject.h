@@ -113,20 +113,23 @@ namespace Dynamik {
 
 				virtual void initializeResources(ADGRVulkanGraphicsRenderableObjectInitInfo info);
 
-				virtual ADGRVulkanRenderData initializeObject(VkDevice logicalDevice, POINTER<InternalFormat> format, VkSampleCountFlagBits msaaSamples);
+				virtual ADGRVulkanRenderData initializeObject(POINTER<InternalFormat> format, VkSampleCountFlagBits msaaSamples);
 
 				virtual void initializePipelineLayout(ADGRVulkanGraphicsPipelineLayoutInitInfo info);
 				virtual void initializePipeline(ADGRVulkanGraphicsPipelineInitInfo info);
 				virtual void terminatePipeline();
 
-				virtual void initializeTextures(ADGRVulkanTextureInitInfo info);
+				/* Initialize the object resources (vertex buffer, index buffer, textures) */
+				virtual void initializeObjectResources();
+
+				virtual void initializeTextures(Mesh mesh, ADGRVulkanTextureInitInfo info);
 				virtual void generateMipMaps(POINTER<ADGRVulkanTextureContainer> container);
 				virtual void terminateTextures();
 
-				virtual void initializeVertexBuffer();
+				virtual void initializeVertexBuffer(Mesh mesh);
 				virtual void terminateVertexBuffer();
 
-				virtual void initializeIndexBuffer();
+				virtual void initializeIndexBuffer(Mesh mesh);
 				virtual void terminateIndexBuffer();
 
 				virtual void initializeDescriptorPool();

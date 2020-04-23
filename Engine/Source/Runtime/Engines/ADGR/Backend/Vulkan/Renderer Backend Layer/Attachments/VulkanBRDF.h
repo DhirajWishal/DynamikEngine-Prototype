@@ -2,7 +2,7 @@
 #ifndef _DYNAMIK_ADGR_VULKAN_BIDIRECTIONAL_REFLECTANCE_DESTRIBUTION_FUNCTION_H
 #define _DYNAMIK_ADGR_VULKAN_BIDIRECTIONAL_REFLECTANCE_DESTRIBUTION_FUNCTION_H
 
-#include "Graphics/VulkanGraphicsSupportObject.h"
+#include "../Graphics/VulkanGraphicsSupportObject.h"
 
 namespace Dynamik {
 	namespace ADGR {

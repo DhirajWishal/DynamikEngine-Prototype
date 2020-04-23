@@ -10,7 +10,7 @@ namespace Dynamik {
 		class directx12Renderer : public RendererBackend {
 		public:
 			directx12Renderer();
-			directx12Renderer(DMKRendererSettings settings) : RendererBackend(settings) {}
+			directx12Renderer(DMKRendererSettings settings) : RendererBackend() {}
 			~directx12Renderer();
 		};
 	}

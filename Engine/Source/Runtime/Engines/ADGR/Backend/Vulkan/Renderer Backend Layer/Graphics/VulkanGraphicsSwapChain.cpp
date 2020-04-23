@@ -1,7 +1,7 @@
 #include "dmkafx.h"
 #include "VulkanGraphicsSwapChain.h"
 
-#include "VulkanUtilities.h"
+#include "../Common/VulkanUtilities.h"
 #include "VulkanGraphicsCore.h"
 
 namespace Dynamik {

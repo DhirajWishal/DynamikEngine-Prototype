@@ -1,7 +1,7 @@
 #include "dmkafx.h"
 #include "VulkanComputeFunctions.h"
 
-#include "VulkanComputeOneTimeCommandBuffer.h"
+#include "../Common/VulkanOneTimeCommandBuffer.h"
 
 namespace Dynamik {
 	namespace ADGR {
@@ -45,7 +45,7 @@ namespace Dynamik {
 			
 			void VulkanComputeFunctions::transitionImageLayout(VkDevice logicalDevice, VkCommandPool commandPool, VkQueue computeQueue, ADGRVulkanTransitionImageLayoutInfo info)
 			{
-				VulkanComputeOneTimeCommandBuffer oneTimeCommandBuffer(logicalDevice, commandPool, computeQueue);
+				//VulkanOneTimeCommandBuffer oneTimeCommandBuffer(logicalDevice, commandPool, computeQueue);
 
 				VkImageMemoryBarrier barrier = {};
 				barrier.sType = VK_STRUCTURE_TYPE_IMAGE_MEMORY_BARRIER;
@@ -151,14 +151,14 @@ namespace Dynamik {
 					break;
 				}
 
-				vkCmdPipelineBarrier(
-					oneTimeCommandBuffer.buffer,
-					sourceStage, destinationStage,
-					0,
-					0, nullptr,
-					0, nullptr,
-					1, &barrier
-					);
+				//vkCmdPipelineBarrier(
+				//	oneTimeCommandBuffer.buffer,
+				//	sourceStage, destinationStage,
+				//	0,
+				//	0, nullptr,
+				//	0, nullptr,
+				//	1, &barrier
+				//	);
 			}
 			
 			VkImageView VulkanComputeFunctions::createImageView(VkDevice device, ADGRVulkanCreateImageViewInfo info)
@@ -184,7 +184,7 @@ namespace Dynamik {
 			
 			void VulkanComputeFunctions::copyBufferToImage(VkDevice logicalDevice, VkCommandPool commandPool, VkQueue computeQueue, ADGRVulkanCopyBufferToImageInfo info)
 			{
-				VulkanComputeOneTimeCommandBuffer oneTimeCommandBuffer(logicalDevice, commandPool, computeQueue);
+				//VulkanComputeOneTimeCommandBuffer oneTimeCommandBuffer(logicalDevice, commandPool, computeQueue);
 
 				VkBufferImageCopy region = {};
 				region.bufferOffset = 0;
@@ -203,27 +203,27 @@ namespace Dynamik {
 					1
 				};
 
-				vkCmdCopyBufferToImage(
-					oneTimeCommandBuffer.buffer,
-					info.buffer,
-					info.image,
-					info.destinationImageLayout,
-					1,
-					&region
-					);
+				//vkCmdCopyBufferToImage(
+				//	oneTimeCommandBuffer.buffer,
+				//	info.buffer,
+				//	info.image,
+				//	info.destinationImageLayout,
+				//	1,
+				//	&region
+				//	);
 			}
 			
 			void VulkanComputeFunctions::copyBufferToImageOverride(VkDevice logicalDevice, VkCommandPool commandPool, VkQueue computeQueue, ADGRVulkanCopyBufferToImageInfo info, ARRAY<VkBufferImageCopy> copyRegions)
 			{
-				VulkanComputeOneTimeCommandBuffer oneTimeCommandBuffer(logicalDevice, commandPool, computeQueue);
-
-				vkCmdCopyBufferToImage(
-					oneTimeCommandBuffer.buffer,
-					info.buffer,
-					info.image,
-					info.destinationImageLayout,
-					copyRegions.size(),
-					copyRegions.data());
+				//VulkanComputeOneTimeCommandBuffer oneTimeCommandBuffer(logicalDevice, commandPool, computeQueue);
+				//
+				//vkCmdCopyBufferToImage(
+				//	oneTimeCommandBuffer.buffer,
+				//	info.buffer,
+				//	info.image,
+				//	info.destinationImageLayout,
+				//	copyRegions.size(),
+				//	copyRegions.data());
 			}
 			
 			VkSampler VulkanComputeFunctions::createImageSampler(VkDevice logicalDevice, ADGRVulkanTextureSamplerInitInfo info)

@@ -6,7 +6,7 @@
 
 namespace Dynamik {
 	using namespace ADGR;
-
+	/*
 	enum class DMKRendererBackendLayer {
 		DMK_RBL_VULKAN,
 		DMK_RBL_OPENGL,
@@ -29,9 +29,9 @@ namespace Dynamik {
 		static void initializeStageTwoRBL();
 		static void initializeStageThreeRBL();
 
-		static void addObject(GameObject* object);
+		static void addObject(DMKGameObject* object);
 
-	};
+	};*/
 }
 
 #endif // !_DYNAMIK_ADGR_RENDERER_3D_H

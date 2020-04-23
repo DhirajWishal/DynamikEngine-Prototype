@@ -2,6 +2,7 @@
 #include "Texture.h"
 
 #include <stb_image.h>
+#include "load_ktx.hpp"
 
 namespace Dynamik {
 	void Texture::loadTexture(std::string path, DMKTextureType type, DMKTextureInputType inputType)
@@ -32,18 +33,18 @@ namespace Dynamik {
 		if (inputType == DMKTextureInputType::DMK_TEXTURE_INPUT_TYPE_KTX)
 		{
 			gli::texture ktxFile = gli::load_ktx(paths[0]);
-
+			
 			if (ktxFile.empty())
 				DMK_CORE_FATAL("Failed to load the *.ktx file!");
-
+			
 			textureData.set((UCHR*)ktxFile.data());
-
+			
 			switch (ktxFile.format())
 			{
 			case gli::texture::format_type::FORMAT_RGBA8_UNORM_PACK8:
 				fileChannels = 4;
 				break;
-
+			
 			case gli::texture::format_type::FORMAT_RGB8_UNORM_PACK8:
 				fileChannels = 3;
 				break;

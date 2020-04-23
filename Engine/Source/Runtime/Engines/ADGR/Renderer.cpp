@@ -20,17 +20,15 @@
 namespace Dynamik {
 	namespace ADGR {
 		/* RBL declaration */
-		static vulkanRenderer myVulkanRenderer;
 
 		/* Renderer instance definition */
 		Renderer Renderer::instance;
-		
+
 		void Renderer::initializeStageOne(DMKRenderingAPI selectedAPI, DMKRendererSettings settings)
 		{
 			switch (selectedAPI)
 			{
 			case Dynamik::ADGR::DMKRenderingAPI::DMK_RENDERING_API_VULKAN:
-				myVulkanRenderer = vulkanRenderer(settings);
 				break;
 			case Dynamik::ADGR::DMKRenderingAPI::DMK_RENDERING_API_OPENGL:
 				break;
@@ -41,34 +39,44 @@ namespace Dynamik {
 				break;
 			}
 
-			myVulkanRenderer.initStageOne();
+			vulkanRenderer::initializeGraphicsCore();
 		}
 
 		void Renderer::initializeStageTwo()
 		{
-			myVulkanRenderer.initStageTwo();
 		}
 
 		void Renderer::initializeStageThree()
 		{
-			myVulkanRenderer.initStageThree();
 		}
 
 		void Renderer::setProgressPointer(POINTER<UI32> progress)
 		{
 			instance.progressPtr = progress;
-			myVulkanRenderer.setProgress(progress.get());
+			vulkanRenderer::setProgress(progress);
 		}
 
 		void Renderer::setWindowHandle(POINTER<GLFWwindow> window)
 		{
 		}
-		
+
 		void Renderer::setRenderableObjects(ARRAY<POINTER<InternalFormat>> formats)
 		{
-			instance.submitPendingAssets = formats;
+			for (auto format : formats)
+			{
+
+				if (format->type == DMKObjectType::DMK_OBJECT_TYPE_STATIC)
+				{
+					format->renderAttachments.pushBack(DMKRenderAttachment::DMK_RENDER_ATTACHMENT_SKYBOX);
+					format->renderAttachments.pushBack(DMKRenderAttachment::DMK_RENDER_ATTACHMENT_BRDF_TABLE);
+					format->renderAttachments.pushBack(DMKRenderAttachment::DMK_RENDER_ATTACHMENT_IRRADIANCE_CUBE);
+					format->renderAttachments.pushBack(DMKRenderAttachment::DMK_RENDER_ATTACHMENT_PREFILTERED_CUBE);
+				}
+
+				instance.submitPendingAssets.pushBack(format);
+			}
 		}
-		
+
 		void Renderer::submitLoadedAssets()
 		{
 		}
@@ -80,17 +88,15 @@ namespace Dynamik {
 
 		void Renderer::drawFrame(DMKRendererDrawFrameInfo info)
 		{
-			myVulkanRenderer.drawFrame(info);
+			vulkanRenderer::drawFrame(info);
 		}
-		
+
 		void Renderer::frameCleanup()
 		{
 		}
 
 		void Renderer::terminate()
 		{
-			for (auto _container : instance.uniformBufferLocations)
-				StaticAllocator<MAT4>::deAllocate(_container.location, _container.byteSize);
 		}
 	}
 }

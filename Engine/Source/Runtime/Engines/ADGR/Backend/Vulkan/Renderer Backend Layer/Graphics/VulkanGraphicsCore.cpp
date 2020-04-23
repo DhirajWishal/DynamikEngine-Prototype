@@ -3,7 +3,7 @@
 
 #include "../Common/VulkanValidator.h"
 #include "../Common/VulkanExtensionsManager.h"
-#include "VulkanUtilities.h"
+#include "../Common/VulkanUtilities.h"
 #include "Engines/ADGR/defines.h"
 
 

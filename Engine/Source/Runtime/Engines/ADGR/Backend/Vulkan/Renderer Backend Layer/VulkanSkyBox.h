@@ -4,9 +4,9 @@
 
 #include "Graphics/VulkanGraphicsRenderableObject.h"
 
-#include "VulkanBRDF.h"
-#include "VulkanIrradianceCube.h"
-#include "VulkanPrefilteredCube.h"
+#include "Attachments/VulkanBRDF.h"
+#include "Attachments/VulkanIrradianceCube.h"
+#include "Attachments/VulkanPrefilteredCube.h"
 
 namespace Dynamik {
 	namespace ADGR {
@@ -16,9 +16,7 @@ namespace Dynamik {
 				VulkanSkyBox(ADGRVulkanGraphicsRenderableObjectInitInfo info);
 				~VulkanSkyBox() {}
 
-				ADGRVulkanRenderData initializeObject(VkDevice logicalDevice, POINTER<InternalFormat> _object, VkSampleCountFlagBits msaaSamples) override;
-
-				void initializeTextures(ARRAY<ADGRVulkanTextureInitInfo> infos) override;
+				ADGRVulkanRenderData initializeObject(POINTER<InternalFormat> _object, VkSampleCountFlagBits msaaSamples) override;
 
 				void initializeUniformBuffer() override;
 				void updateUniformBuffer(UniformBufferObject uniformBufferObject, UI32 currentImage);

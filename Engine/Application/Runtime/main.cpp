@@ -20,6 +20,9 @@ using namespace Dynamik;
 /* ---------- ########## ////////// MAIN LOOP \\\\\\\\\\ ########## ---------- */
 int main(int argc, char** argv) {
 	try {
+		DMKInstanceDescriptor engineInstance;
+		DMKEngine::initializeInstance(engineInstance);
+
 		OceanSkybox skybox;
 		DMKEngine::addAsset(&skybox);
 

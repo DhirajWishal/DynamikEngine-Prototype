@@ -3,7 +3,7 @@
 #define _DYNAMIK_ADGR_VULKAN_COMPUTE_FUNCTIONS_H
 
 #include <vulkan/vulkan.h>
-#include "../Graphics/VulkanUtilities.h"
+#include "../Common/VulkanUtilities.h"
 
 namespace Dynamik {
 	namespace ADGR {

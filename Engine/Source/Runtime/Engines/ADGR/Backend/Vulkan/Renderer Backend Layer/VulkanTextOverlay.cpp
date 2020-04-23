@@ -3,7 +3,7 @@
 
 #define TEXTOVERLAY_MAX_CHAR_COUNT 2048
 
-#include "Graphics/VulkanUtilities.h"
+#include "Common/VulkanUtilities.h"
 
 namespace Dynamik {
 	namespace ADGR {
@@ -542,8 +542,8 @@ namespace Dynamik {
 				initInfo.multisamplerMsaaSamples = VK_SAMPLE_COUNT_1_BIT;
 				initInfo.dynamicStateEnable = true;
 				initInfo.dynamicStateFlags = 0;
-				initInfo.vertexBindingDescription = VertexP2N2::getBindingDescription(1);
-				initInfo.vertexAttributeDescription = VertexP2N2::getAttributeDescriptions();
+				//initInfo.vertexBindingDescription = VertexP2N2::getBindingDescription(1);
+				//initInfo.vertexAttributeDescription = VertexP2N2::getAttributeDescriptions();
 				initInfo.shaders = _shaders;
 				initInfo.pipelineCache = pipelineCache;
 				_object.initializePipeline(initInfo);

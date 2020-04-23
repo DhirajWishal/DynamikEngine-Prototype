@@ -2,7 +2,7 @@
 #ifndef _DYNAMIK_ADGR_RENDERER_THREAD_H
 #define _DYNAMIK_ADGR_RENDERER_THREAD_H
 
-
+#include "core.h"
 #include "Renderer.h"
 
 namespace Dynamik {
@@ -25,7 +25,6 @@ namespace Dynamik {
 		void addProgress(UI32* progress);
 		void addInternalFormats(ARRAY<POINTER<InternalFormat>> formats);
 
-		ADGR::Renderer myRenderer;
 		ARRAY<POINTER<InternalFormat>> _internalFormats;
 	};
 }

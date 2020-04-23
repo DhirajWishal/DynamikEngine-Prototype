@@ -17,6 +17,4 @@
 
 #include "VulkanComputeManager.h"
 
-#include "VulkanComputeOneTimeCommandBuffer.h"
-
 #endif // !_DYNAMIK_ADGR_VULKAN_COMPUTE_RENDERER_BACKEND_LAYER_INDEX_H

@@ -1,7 +1,7 @@
 #include "dmkafx.h"
 #include "VulkanPBRObject.h"
 
-#include "Graphics/VulkanUtilities.h"
+#include "Common/VulkanUtilities.h"
 
 namespace Dynamik {
 	namespace ADGR {
@@ -11,7 +11,7 @@ namespace Dynamik {
 				myRenderData.enableMaterials = true;
 			}
 
-			ADGRVulkanRenderData VulkanPBRObject::initializeObject(VkDevice logicalDevice, POINTER<InternalFormat> _object, VkSampleCountFlagBits msaaSamples)
+			ADGRVulkanRenderData VulkanPBRObject::initializeObject(POINTER<InternalFormat> _object, VkSampleCountFlagBits msaaSamples)
 			{
 				ADGRVulkanDescriptorSetLayoutInitInfo layoutInitInfo;
 
@@ -105,56 +105,15 @@ namespace Dynamik {
 				//myRenderData.pushConstants.pushBack(vertPushConstant);
 				//myRenderData.pushConstants.pushBack(fragPushConstant);
 
-				ARRAY<VulkanGraphicsShader> _shaders;
-
-				if (_object.vertexShaderPath.size() && _object.vertexShaderPath != "NONE")
-				{
-					ADGRVulkanGraphicsShaderInitInfo _initInfo;
-					_initInfo.path = _object.vertexShaderPath;
-					_initInfo.type = ADGRVulkanGraphicsShaderType::ADGR_VULKAN_SHADER_TYPE_VERTEX;
-
-					VulkanGraphicsShader _shader;
-					_shader.initialize(logicalDevice, _initInfo);
-					_shaders.pushBack(_shader);
-				}
-				if (_object.tessellationShaderPath.size() && _object.tessellationShaderPath != "NONE")
-				{
-					ADGRVulkanGraphicsShaderInitInfo _initInfo;
-					_initInfo.path = _object.tessellationShaderPath;
-					_initInfo.type = ADGRVulkanGraphicsShaderType::ADGR_VULKAN_SHADER_TYPE_TESSELLATION;
-
-					VulkanGraphicsShader _shader;
-					_shader.initialize(logicalDevice, _initInfo);
-					_shaders.pushBack(_shader);
-				}
-				if (_object.geometryShaderPath.size() && _object.geometryShaderPath != "NONE")
-				{
-					ADGRVulkanGraphicsShaderInitInfo _initInfo;
-					_initInfo.path = _object.geometryShaderPath;
-					_initInfo.type = ADGRVulkanGraphicsShaderType::ADGR_VULKAN_SHADER_TYPE_GEOMETRY;
-
-					VulkanGraphicsShader _shader;
-					_shader.initialize(logicalDevice, _initInfo);
-					_shaders.pushBack(_shader);
-				}
-				if (_object.fragmentShaderPath.size() && _object.fragmentShaderPath != "NONE")
-				{
-					ADGRVulkanGraphicsShaderInitInfo _initInfo;
-					_initInfo.path = _object.fragmentShaderPath;
-					_initInfo.type = ADGRVulkanGraphicsShaderType::ADGR_VULKAN_SHADER_TYPE_FRAGMENT;
-
-					VulkanGraphicsShader _shader;
-					_shader.initialize(logicalDevice, _initInfo);
-					_shaders.pushBack(_shader);
-				}
+				ARRAY<VulkanGraphicsShader> _shaders = VulkanUtilities::getGraphicsShaders(logicalDevice, _object);
 
 				// initialize pipeline
 				ADGRVulkanGraphicsPipelineInitInfo pipelineInitInfo;
 				pipelineInitInfo.shaders = _shaders;
 				pipelineInitInfo.multisamplerMsaaSamples = msaaSamples;
-				pipelineInitInfo.vertexBindingDescription = Vertex::getBindingDescription(1);
-				pipelineInitInfo.vertexAttributeDescription = Vertex::getAttributeDescriptions();
-				pipelineInitInfo.isTexturesAvailable = _object.texturePaths.size();
+				pipelineInitInfo.vertexBindingDescription = VulkanUtilities::getBindingDescription(descriptor.vertexBufferObjectDescription.attributes, 1);
+				pipelineInitInfo.vertexAttributeDescription = VulkanUtilities::getAttributeDescriptions(descriptor.vertexBufferObjectDescription.attributes, 1);
+				pipelineInitInfo.isTexturesAvailable = _object->texturePaths.size();
 				pipelineInitInfo.depthStencilTestEnable = VK_TRUE;
 				pipelineInitInfo.depthStencilWriteEnable = VK_TRUE;
 				pipelineInitInfo.rasterizerCullMode = VK_CULL_MODE_FRONT_BIT;
@@ -163,33 +122,7 @@ namespace Dynamik {
 				for (VulkanGraphicsShader _shader : _shaders)
 					_shader.terminate(logicalDevice);
 
-				ARRAY<ADGRVulkanTextureInitInfo> textureInitInfos;
-
-				// initialize textures
-				for (UI32 _itr = 0; _itr < _object.texturePaths.size(); _itr++)
-				{
-					ADGRVulkanTextureInitInfo initInfo;
-					initInfo.path = _object.texturePaths[_itr];
-					initInfo.format = VK_FORMAT_R8G8B8A8_UNORM;
-					initInfo.mipLevels = 1;
-					initInfo.modeU = VK_SAMPLER_ADDRESS_MODE_REPEAT;
-					initInfo.modeV = VK_SAMPLER_ADDRESS_MODE_REPEAT;
-					initInfo.modeW = VK_SAMPLER_ADDRESS_MODE_REPEAT;
-					initInfo.magFilter = VK_FILTER_LINEAR;
-					initInfo.minFilter = VK_FILTER_LINEAR;
-					initInfo.aspectFlags = VK_IMAGE_ASPECT_COLOR_BIT;
-					textureInitInfos.pushBack(initInfo);
-				}
-
-				initializeTextures(textureInitInfos);
-
-				// initialize vertex buffers
-				for (UI32 _itr = 0; _itr < _object.vertexBufferObjects->size(); _itr++)
-					initializeVertexBuffer(&_object.vertexBufferObjects->at(_itr));
-
-				// initialize index buffers
-				for (UI32 _itr = 0; _itr < _object.indexBufferObjects->size(); _itr++)
-					initializeIndexBufferUI32(&_object.indexBufferObjects->at(_itr));
+				initializeObjectResources();
 
 				// initialize uniform buffers
 				initializeUniformBuffer();
@@ -201,261 +134,6 @@ namespace Dynamik {
 				initializeDescriptorSets();
 
 				return myRenderData;
-			}
-
-			void VulkanPBRObject::initializeTextures(ARRAY<ADGRVulkanTextureInitInfo> infos)
-			{
-				if ((infos[0].path.find(".ktx") != std::string::npos) && (infos.size() < 6))
-				{
-					VkPhysicalDeviceFeatures _features;
-					vkGetPhysicalDeviceFeatures(physicalDevice, &_features);
-
-					bool found = false;
-
-					for (const ADGRVulkanTextureInitInfo& info : infos)
-					{
-						ADGRVulkanTextureContainer _container;
-						gli::texture ktxTexture;
-
-						if (info.path.find("astc") != std::string::npos)
-						{
-							if (!_features.textureCompressionASTC_LDR)
-								continue;
-
-							_container.format = VK_FORMAT_ASTC_8x8_UNORM_BLOCK;
-						}
-						else if (info.path.find("bc3") != std::string::npos)
-						{
-							if (!_features.textureCompressionBC)
-								continue;
-
-							_container.format = VK_FORMAT_BC2_UNORM_BLOCK;
-						}
-						else if (info.path.find("etx2") != std::string::npos)
-						{
-							if (!_features.textureCompressionETC2)
-								continue;
-
-							_container.format = VK_FORMAT_ETC2_R8G8B8_UNORM_BLOCK;
-						}
-						found = true;
-
-						ktxTexture = gli::load_ktx(info.path.c_str());
-
-						if (ktxTexture.empty())
-							DMK_CORE_FATAL("Invalid texture format!");
-
-						_container.mipLevels = 1;
-						_container.width = ktxTexture.extent().x;
-						_container.height = ktxTexture.extent().y;
-
-						VkBuffer stagingBuffer = VK_NULL_HANDLE;
-						VkDeviceMemory stagingBufferMemory = VK_NULL_HANDLE;
-
-						ADGRVulkanCreateBufferInfo bufferInfo;
-						bufferInfo.bufferSize = ktxTexture.size();
-						bufferInfo.usage = VK_BUFFER_USAGE_TRANSFER_SRC_BIT;
-						bufferInfo.bufferMemoryPropertyflags = VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT;
-						bufferInfo.buffer = &stagingBuffer;
-						bufferInfo.bufferMemory = &stagingBufferMemory;
-
-						VulkanUtilities::createBuffer(logicalDevice, physicalDevice, bufferInfo);
-
-						void* data;
-						if (vkMapMemory(logicalDevice, stagingBufferMemory, 0, static_cast<size_t>(ktxTexture.size()), 0, &data) != VK_SUCCESS)
-							DMK_CORE_FATAL("Failed to map memory!");
-						memcpy(data, ktxTexture.data(), static_cast<size_t>(ktxTexture.size()));
-						vkUnmapMemory(logicalDevice, stagingBufferMemory);
-
-						ADGRVulkanCreateImageInfo cinfo;
-						cinfo.width = _container.width;
-						cinfo.height = _container.height;
-						cinfo.format = _container.format;
-						cinfo.tiling = VK_IMAGE_TILING_OPTIMAL;
-						cinfo.usage = VK_IMAGE_USAGE_TRANSFER_SRC_BIT | VK_IMAGE_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT;
-						cinfo.properties = VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT;
-						cinfo.image = &_container.image;
-						cinfo.imageMemory = &_container.imageMemory;
-						cinfo.mipLevels = _container.mipLevels;
-						cinfo.numSamples = VK_SAMPLE_COUNT_1_BIT;
-						cinfo.arrayLayers = ktxTexture.max_face() + 1;
-						cinfo.flags = VK_IMAGE_CREATE_CUBE_COMPATIBLE_BIT;
-
-						VulkanUtilities::createImage(logicalDevice, physicalDevice, cinfo);
-
-						std::vector<VkBufferImageCopy> bufferCopyRegions;
-						for (UI32 face = 0; face < ktxTexture.max_face() + 1; face++)
-						{
-							for (UI32 level = 0; level < _container.mipLevels; level++)
-							{
-								// Calculate offset into staging buffer for the current mip level and face
-								VkBufferImageCopy bufferCopyRegion = {};
-								bufferCopyRegion.imageSubresource.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
-								bufferCopyRegion.imageSubresource.mipLevel = level;
-								bufferCopyRegion.imageSubresource.baseArrayLayer = face;
-								bufferCopyRegion.imageSubresource.layerCount = 1;
-								bufferCopyRegion.imageExtent.width = ktxTexture.extent().x >> level;
-								bufferCopyRegion.imageExtent.height = ktxTexture.extent().y >> level;
-								bufferCopyRegion.imageExtent.depth = 1;
-								bufferCopyRegion.bufferOffset = 0;
-								bufferCopyRegions.push_back(bufferCopyRegion);
-							}
-						}
-
-						ADGRVulkanTransitionImageLayoutInfo transitionInfo;
-						transitionInfo.image = _container.image;
-						transitionInfo.format = _container.format;
-						transitionInfo.oldLayout = VK_IMAGE_LAYOUT_UNDEFINED;
-						transitionInfo.newLayout = VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL;
-						transitionInfo.mipLevels = info.mipLevels;
-						transitionInfo.layerCount = ktxTexture.max_face() + 1;
-						VulkanUtilities::transitionImageLayout(logicalDevice, commandPool, graphicsQueue, presentQueue, transitionInfo);
-
-						ADGRVulkanCopyBufferToImageInfo cpyInfo;
-						cpyInfo.buffer = stagingBuffer;
-						cpyInfo.image = _container.image;
-						cpyInfo.destinationImageLayout = VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL;
-						VulkanUtilities::copyBufferToImageOverride(logicalDevice, commandPool, graphicsQueue, presentQueue, cpyInfo, bufferCopyRegions);
-
-						ADGRVulkanTextureSamplerInitInfo samplerInitInfo;
-						samplerInitInfo.magFilter = info.magFilter;
-						samplerInitInfo.minFilter = info.minFilter;
-						samplerInitInfo.maxMipLevels = info.maxMipLevels;
-						samplerInitInfo.minMipLevels = info.minMipLevels;
-						samplerInitInfo.modeU = info.modeU;
-						samplerInitInfo.modeV = info.modeV;
-						samplerInitInfo.modeW = info.modeW;
-						samplerInitInfo.mipLoadBias = 0.0f;
-						samplerInitInfo.compareOp = VK_COMPARE_OP_NEVER;
-						samplerInitInfo.borderColor = VK_BORDER_COLOR_FLOAT_OPAQUE_WHITE;
-						_container.imageSampler = VulkanUtilities::createImageSampler(logicalDevice, samplerInitInfo);
-
-						ADGRVulkanCreateImageViewInfo cinfo2;
-						cinfo2.image = _container.image;
-						cinfo2.format = _container.format;
-						cinfo2.mipLevels = _container.mipLevels;
-						cinfo2.aspectFlags = VK_IMAGE_ASPECT_COLOR_BIT;
-						cinfo2.viewType = VK_IMAGE_VIEW_TYPE_CUBE;
-						cinfo2.layerCount = 6;
-						cinfo2.component = { VK_COMPONENT_SWIZZLE_R, VK_COMPONENT_SWIZZLE_G, VK_COMPONENT_SWIZZLE_B, VK_COMPONENT_SWIZZLE_A };
-						_container.imageView = VulkanUtilities::createImageView(logicalDevice, cinfo2);
-
-						vkDestroyBuffer(logicalDevice, stagingBuffer, nullptr);
-						vkFreeMemory(logicalDevice, stagingBufferMemory, nullptr);
-
-						myRenderData.textures.pushBack(_container);
-					}
-				}
-				else
-				{
-					for (const ADGRVulkanTextureInitInfo& info : infos)
-					{
-						ADGRVulkanTextureContainer _container;
-						_container.format = info.format;
-						_container.mipLevels = info.mipLevels;
-
-						resource::TextureData texData;
-						unsigned char* pixels = nullptr;
-
-						if (_container.format == VK_FORMAT_R8G8B8A8_UNORM)
-							pixels = texData.loadTexture((info.path), resource::TEXTURE_TYPE_RGBA);
-						else if (_container.format == VK_FORMAT_R8G8B8_UNORM)
-							pixels = texData.loadTexture((info.path), resource::TEXTURE_TYPE_RGB);
-						else
-							DMK_CORE_FATAL("Invalid texture format!");
-
-						_container.width = texData.texWidth;
-						_container.height = texData.texHeight;
-
-						VkDeviceSize imageSize = texData.size;
-
-						if (!pixels)
-							DMK_CORE_FATAL("failed to load texture image!");
-
-						VkBuffer stagingBuffer = VK_NULL_HANDLE;
-						VkDeviceMemory stagingBufferMemory = VK_NULL_HANDLE;
-
-						ADGRVulkanCreateBufferInfo bufferInfo;
-						bufferInfo.bufferSize = imageSize;
-						bufferInfo.usage = VK_BUFFER_USAGE_TRANSFER_SRC_BIT;
-						bufferInfo.bufferMemoryPropertyflags = VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT;
-						bufferInfo.buffer = &stagingBuffer;
-						bufferInfo.bufferMemory = &stagingBufferMemory;
-
-						VulkanUtilities::createBuffer(logicalDevice, physicalDevice, bufferInfo);
-
-						void* data;
-						if (vkMapMemory(logicalDevice, stagingBufferMemory, 0, static_cast<size_t>(imageSize), 0, &data) != VK_SUCCESS)
-							DMK_CORE_FATAL("Failed to map memory!");
-						memcpy(data, pixels, static_cast<size_t>(imageSize));
-						vkUnmapMemory(logicalDevice, stagingBufferMemory);
-
-						texData.freeData(pixels);
-
-						ADGRVulkanCreateImageInfo cinfo;
-						cinfo.width = texData.texWidth;
-						cinfo.height = texData.texHeight;
-						cinfo.format = _container.format;
-						cinfo.tiling = VK_IMAGE_TILING_OPTIMAL;
-						cinfo.usage = VK_IMAGE_USAGE_TRANSFER_SRC_BIT | VK_IMAGE_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT;
-						cinfo.properties = VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT;
-						cinfo.image = &_container.image;
-						cinfo.imageMemory = &_container.imageMemory;
-						cinfo.mipLevels = info.mipLevels;
-						cinfo.numSamples = VK_SAMPLE_COUNT_1_BIT;
-						cinfo.flags = NULL;
-
-						VulkanUtilities::createImage(logicalDevice, physicalDevice, cinfo);
-
-						ADGRVulkanTransitionImageLayoutInfo transitionInfo;
-						transitionInfo.image = _container.image;
-						transitionInfo.format = _container.format;
-						transitionInfo.oldLayout = VK_IMAGE_LAYOUT_UNDEFINED;
-						transitionInfo.newLayout = VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL;
-						transitionInfo.mipLevels = info.mipLevels;
-						transitionInfo.layerCount = 1;
-						VulkanUtilities::transitionImageLayout(logicalDevice, commandPool, graphicsQueue, presentQueue, transitionInfo);
-
-						ADGRVulkanCopyBufferToImageInfo cpyInfo;
-						cpyInfo.buffer = stagingBuffer;
-						cpyInfo.image = _container.image;
-						cpyInfo.width = static_cast<UI32>(texData.texWidth);
-						cpyInfo.height = static_cast<UI32>(texData.texHeight);
-						VulkanUtilities::copyBufferToImage(logicalDevice, commandPool, graphicsQueue, presentQueue, cpyInfo);
-
-						transitionInfo.image = _container.image;
-						transitionInfo.format = _container.format;
-						transitionInfo.oldLayout = VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL;
-						transitionInfo.newLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
-						transitionInfo.mipLevels = info.mipLevels;
-						transitionInfo.layerCount = 1;
-						VulkanUtilities::transitionImageLayout(logicalDevice, commandPool, graphicsQueue, presentQueue, transitionInfo);
-
-						vkDestroyBuffer(logicalDevice, stagingBuffer, nullptr);
-						vkFreeMemory(logicalDevice, stagingBufferMemory, nullptr);
-
-						generateMipMaps(&_container);
-
-						ADGRVulkanTextureSamplerInitInfo samplerInitInfo;
-						samplerInitInfo.magFilter = info.magFilter;
-						samplerInitInfo.minFilter = info.minFilter;
-						samplerInitInfo.maxMipLevels = info.maxMipLevels;
-						samplerInitInfo.minMipLevels = info.minMipLevels;
-						samplerInitInfo.modeU = info.modeU;
-						samplerInitInfo.modeV = info.modeV;
-						samplerInitInfo.modeW = info.modeW;
-						_container.imageSampler = VulkanUtilities::createImageSampler(logicalDevice, samplerInitInfo);
-
-						ADGRVulkanCreateImageViewInfo cinfo2;
-						cinfo2.image = _container.image;
-						cinfo2.format = _container.format;
-						cinfo2.mipLevels = _container.mipLevels;
-						cinfo2.aspectFlags = info.aspectFlags;
-						_container.imageView = VulkanUtilities::createImageView(logicalDevice, cinfo2);
-
-						myRenderData.textures.pushBack(_container);
-					}
-				}
 			}
 
 			void VulkanPBRObject::initializeUniformBuffer()

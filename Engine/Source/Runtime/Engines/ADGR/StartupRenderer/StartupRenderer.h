@@ -10,10 +10,9 @@ namespace Dynamik {
 		class StartupRenderer {
 			StartupRenderer() {}
 
-			static StartupRenderer myInstance;
+			static StartupRenderer& instance();
 
 		public:
-			StartupRenderer() = delete;
 			StartupRenderer(const StartupRenderer&) = delete;
 			StartupRenderer(StartupRenderer&&) = delete;
 
@@ -31,7 +30,7 @@ namespace Dynamik {
 
 			Shader myShaderManager;
 			UI32 textureIndex = 0;
-			UI32 VBO, VAO, EBO;
+			UI32 VBO = 0, VAO = 0, EBO = 0;
 		};
 	}
 }

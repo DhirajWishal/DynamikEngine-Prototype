@@ -3,7 +3,7 @@
 
 namespace Dynamik {
 	namespace ADGR {
-		Shader::Shader(const char* vertexPath, const char* fragmentPath, const char* geometryPath = nullptr) {
+		Shader::Shader(const char* vertexPath, const char* fragmentPath, const char* geometryPath) {
             // 1. retrieve the vertex/fragment source code from filePath
             std::string vertexCode;
             std::string fragmentCode;

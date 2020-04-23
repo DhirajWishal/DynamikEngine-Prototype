@@ -21,13 +21,12 @@ namespace Dynamik {
 
 	void DMKEngine::initializeInstance(DMKInstanceDescriptor descriptor)
 	{
-		/* Initialize the startup renderer to render basic data while the main renderer is activated.
-		   This way the user is not presented with a blank screen while all the scene data are loaded. */
+		/* Initialize the startup renderer to render basic data while the main renderer is activated.  */
+		/* This way the user is not presented with a blank screen while all the scene data are loaded. */
 		ADGR::StartupRenderer::initialize();
 		ADGR::StartupRenderer::initializeShaders();
 		ADGR::StartupRenderer::initializeVertexBuffers();
 		ADGR::StartupRenderer::loadTexure("E:/Projects/Dynamik Engine/Versions/Dynamik (Prototype)/Dependencies/Assets/icons/Dynamik.jpg");
-		instance;
 	}
 
 	UI32 DMKEngine::addLevel(DMKLevelDescriptor level)

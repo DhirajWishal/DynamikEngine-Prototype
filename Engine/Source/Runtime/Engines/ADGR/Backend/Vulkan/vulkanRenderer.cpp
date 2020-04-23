@@ -133,44 +133,80 @@ namespace Dynamik {
             /* Check the object type of the format and initialize it accordingly */
             switch (format->type)
             {
+                /* 2D image initialization */
             case Dynamik::DMKObjectType::DMK_OBJECT_TYPE_IMAGE_2D:
                 break;
+
+                /* Debug object initialization */
             case Dynamik::DMKObjectType::DMK_OBJECT_TYPE_DEBUG_OBJECT:
                 break;
+
+                /* Mesh object initialization */
             case Dynamik::DMKObjectType::DMK_OBJECT_TYPE_MESH:
                 break;
+
+                /* Static object initialization */
             case Dynamik::DMKObjectType::DMK_OBJECT_TYPE_STATIC:
                 break;
+
+                /* Interavtive object initialization */
             case Dynamik::DMKObjectType::DMK_OBJECT_TYPE_INTERACTIVE_OBJECT:
                 break;
+
+                /* Player object initialization */
             case Dynamik::DMKObjectType::DMK_OBJECT_TYPE_PLAYER:
                 break;
+
+                /* Non Player Character object initialization */
             case Dynamik::DMKObjectType::DMK_OBJECT_TYPE_NPC:
                 break;
+
+                /* Texture UI object initialization */
             case Dynamik::DMKObjectType::DMK_OBJECT_TYPE_TEXTURE_UI:
                 break;
+
+                /* SkyBox object initialization */
             case Dynamik::DMKObjectType::DMK_OBJECT_TYPE_SKYBOX:
-                instance._initializeSkyBox(format);
+                instance.myResourceContainers[instance.inUseIndex].renderData.pushBack(instance._initializeSkyBox(format));
                 break;
+
+                /* Sprite sheet object initialization */
             case Dynamik::DMKObjectType::DMK_OBJECT_TYPE_SPRITES:
                 break;
+
+                /* Font sheet object initialization */
             case Dynamik::DMKObjectType::DMK_OBJECT_TYPE_FONT:
                 break;
+
+                /* Text overlay initialization */
             case Dynamik::DMKObjectType::DMK_OBJECT_TYPE_TEXT_OVERLAY:
                 break;
+
+                /* Particle system initialization */
             case Dynamik::DMKObjectType::DMK_OBJECT_TYPE_PARTICLE:
                 break;
+
+                /* Destruction entity initialization */
             case Dynamik::DMKObjectType::DMK_OBJECT_TYPE_DESTRUCTION:
                 break;
+
+                /* Destructor entity initialization */
             case Dynamik::DMKObjectType::DMK_OBJECT_TYPE_DESTRUCTOR:
                 break;
+
+                /* Skeletal animation object initialization */
             case Dynamik::DMKObjectType::DMK_OBJECT_TYPE_SKELETAL_ANIMATION:
                 break;
+
+                /* Light object initialization */
             case Dynamik::DMKObjectType::DMK_OBJECT_TYPE_LIGHT:
                 break;
+
+                /* Camera object initialization */
             case Dynamik::DMKObjectType::DMK_OBJECT_TYPE_CAMERA:
                 break;
             default:
+                DMK_CORE_FATAL("Invalid Object Type!");
                 break;
             }
         }

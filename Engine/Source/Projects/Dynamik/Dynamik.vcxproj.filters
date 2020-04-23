@@ -387,6 +387,12 @@
     <ClInclude Include="..\..\Runtime\Dynamik.h">
       <Filter>Runtime</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\Components\FrameBuffer.h">
+      <Filter>Runtime\Engines\ADGR\Backend\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\Components\SwapChain.h">
+      <Filter>Runtime\Engines\ADGR\Backend\Components</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\Components\TextOverlay.h">
       <Filter>Runtime\Engines\ADGR\Backend\Components</Filter>
     </ClInclude>

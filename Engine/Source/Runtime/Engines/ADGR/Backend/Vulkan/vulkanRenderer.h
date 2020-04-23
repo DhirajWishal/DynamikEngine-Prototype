@@ -106,6 +106,8 @@ namespace Dynamik {
 			VulkanGraphicsDepthBuffer myDepthBuffer;	/* Core Vulkan attachments */
 
 			VulkanGraphicsFrameBuffer myFrameBuffer;	/* Graphics frame buffer */
+
+			/* Attachment container */
 		};
 	}
 }

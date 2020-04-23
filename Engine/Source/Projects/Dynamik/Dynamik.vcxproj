@@ -196,6 +196,8 @@
     <ClInclude Include="..\..\Runtime\DataHub\network\messageType.h" />
     <ClInclude Include="..\..\Runtime\DataHub\renderer\typenames.h" />
     <ClInclude Include="..\..\Runtime\Dynamik.h" />
+    <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\Components\FrameBuffer.h" />
+    <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\Components\SwapChain.h" />
     <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\Components\TextOverlay.h" />
     <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Animations\VulkanSkeletalAnimation.h" />
     <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Attachments\VulkanBRDF.h" />

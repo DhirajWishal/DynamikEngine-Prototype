@@ -55,9 +55,11 @@ namespace Dynamik {
 
 	void AssetManager::loadScene(UI32 sceneIndex, UI32 levelIndex)
 	{
+		/* Initialize the scene data to get the required data from .dai file */
 		STORE _scene = _initializeSceneData(assets[levelIndex][sceneIndex]);
 
 		{
+			/* Run each object loading function in a separate thread to make things faster */
 			ARRAY<std::future<void>, DMKArrayDestructorCallMode::DMK_ARRAY_DESTRUCTOR_CALL_MODE_DESTRUCT_ALL> threads;
 			for (UI32 index = 0; index < _scene.size(); index++)
 			{
@@ -75,6 +77,7 @@ namespace Dynamik {
 			}
 		}
 
+		/* Update the scene data */
 		updateScene(_scene, sceneIndex, levelIndex);
 	}
 
@@ -93,6 +96,7 @@ namespace Dynamik {
 	{
 		ARRAY<POINTER<InternalFormat>> _formats;
 
+		/* Go through all the assets and return the renderable objects in the scene */
 		for (AssetContainer _asset : assets[levelIndex][sceneIndex])
 		{
 			if (_asset.type <= DMKObjectType::DMK_OBJECT_TYPE_CAMERA) 

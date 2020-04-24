@@ -42,7 +42,7 @@ namespace Dynamik {
 				void terminate();
 
 				void initializeInstance(ADGRVulkanInstanceInitInfo info);
-				void initializeSurface(POINTER<GLFWwindow*> windowPtr);
+				void initializeSurface(POINTER<GLFWwindow> windowPtr);
 				void terminateInstance();
 
 				void initializeDebugger();

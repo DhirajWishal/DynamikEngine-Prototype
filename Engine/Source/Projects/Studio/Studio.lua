@@ -20,8 +20,8 @@ project "Studio"
 
 	includedirs {
 		"$(SolutionDir)Dependencies/Libraries/Local",
-		"$(SolutionDir)Engine/Source/Runtime/",
-		"$(SolutionDir)Engine/Source/Runtime/Core/PCH/",
+		"$(SolutionDir)Engine/Source/Studio/",
+		"$(SolutionDir)Engine/Source/Studio/Core/PCH/",
 		"$(SolutionDir)Engine/Source/Runtime/Core/Algorithm",
 		"$(SolutionDir)Engine/Source/Runtime/Core/DataTypes",
 		"$(SolutionDir)Engine/Source/Runtime/Core/Memory",

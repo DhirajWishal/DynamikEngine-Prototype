@@ -30,11 +30,11 @@ namespace Dynamik {
 					VkVertexInputAttributeDescription _description = {};
 					_description.binding = binding;
 					_description.location = _index;
-					_description.format = vertexAttributeTypeToVkFormat(attributes[_index].type);
+					_description.format = vertexAttributeTypeToVkFormat(attributes[_index].dataType);
 					_description.offset = _previousTypeSize;
 					attributeDescriptions.pushBack(_description);
 
-					_previousTypeSize += (UI32)attributes[_index].type;
+					_previousTypeSize += (UI32)attributes[_index].dataType;
 				}
 
 				return attributeDescriptions;
@@ -250,15 +250,7 @@ namespace Dynamik {
 				void* data;
 				if (vkMapMemory(info.logicalDevice, stagingBufferMemory, 0, static_cast<size_t>(imageSize), 0, &data) != VK_SUCCESS)
 					DMK_CORE_FATAL("Failed to map memory!");
-
-				if (texture.type == DMKTextureType::DMK_TEXTURE_TYPE_CUBEMAP)
-				{
-					for (UI32 i = 0; i < 6; i++)
-						memcpy((void*)((UI64(data)) + (layerSize * i)), texture.textureData[i], static_cast<size_t>(layerSize));
-				}
-				else
-					memcpy(data, texture.textureData, static_cast<size_t>(imageSize));
-
+				memcpy(data, texture.textureData.get(), static_cast<size_t>(imageSize / 6));
 				vkUnmapMemory(info.logicalDevice, stagingBufferMemory);
 
 				ADGRVulkanCreateImageInfo cinfo;
@@ -273,7 +265,7 @@ namespace Dynamik {
 				cinfo.mipLevels = info.mipLevels;
 				cinfo.numSamples = VK_SAMPLE_COUNT_1_BIT;
 				cinfo.flags = createImageFlags;
-
+				cinfo.arrayLayers = arrayLayers;
 				VulkanUtilities::createImage(info.logicalDevice, info.physicalDevice, cinfo);
 
 				ADGRVulkanTransitionImageLayoutInfo transitionInfo;
@@ -728,6 +720,83 @@ namespace Dynamik {
 				vkMapMemory(device, uniformBufferMemory, 0, _bufferSize, 0, &data);
 				memcpy(data, uniformData.data(), _bufferSize);
 				vkUnmapMemory(device, uniformBufferMemory);
+			}
+
+			VkDescriptorType VulkanUtilities::getDescriptorType(DMKUniformType type)
+			{
+				VkDescriptorType _descriptorType;
+
+				switch (type)
+				{
+				case Dynamik::DMKUniformType::DMK_UNIFORM_TYPE_BUFFER_OBJECT:
+					_descriptorType = VkDescriptorType::VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;
+					break;
+
+				case Dynamik::DMKUniformType::DMK_UNIFORM_TYPE_IMAGE_SAMPLER_2D:
+					_descriptorType = VkDescriptorType::VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
+					break;
+
+				case Dynamik::DMKUniformType::DMK_UNIFORM_TYPE_IMAGE_SAMPLER_3D:
+					_descriptorType = VkDescriptorType::VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
+					break;
+
+				case Dynamik::DMKUniformType::DMK_UNIFORM_TYPE_IMAGE_SAMPLER_CUBEMAP:
+					_descriptorType = VkDescriptorType::VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
+					break;
+
+				case Dynamik::DMKUniformType::DMK_UNIFORM_TYPE_CONSTANT:
+					break;
+				}
+
+				return _descriptorType;
+			}
+
+			VkShaderStageFlagBits VulkanUtilities::getDescriptorFlag(DMKAttributeLocation location)
+			{
+				VkShaderStageFlagBits _flag;
+
+				switch (location)
+				{
+				case Dynamik::DMKAttributeLocation::DMK_ATTRIBUTE_LOCATION_VERTEX:
+					_flag = VkShaderStageFlagBits::VK_SHADER_STAGE_VERTEX_BIT;
+					break;
+
+				case Dynamik::DMKAttributeLocation::DMK_ATTRIBUTE_LOCATION_TESSELLATION:
+					_flag = VkShaderStageFlagBits::VK_SHADER_STAGE_TESSELLATION_CONTROL_BIT;
+					break;
+
+				case Dynamik::DMKAttributeLocation::DMK_ATTRIBUTE_LOCATION_GEOMETRY:
+					_flag = VkShaderStageFlagBits::VK_SHADER_STAGE_GEOMETRY_BIT;
+					break;
+
+				case Dynamik::DMKAttributeLocation::DMK_ATTRIBUTE_LOCATION_FRAGMENT:
+					_flag = VkShaderStageFlagBits::VK_SHADER_STAGE_FRAGMENT_BIT;
+					break;
+
+				case Dynamik::DMKAttributeLocation::DMK_ATTRIBUTE_LOCATION_COMPUTE:
+					_flag = VkShaderStageFlagBits::VK_SHADER_STAGE_COMPUTE_BIT;
+					break;
+				}
+
+				return _flag;
+			}
+
+			ARRAY<VkDescriptorSetLayoutBinding> VulkanUtilities::getDescriptorSetBindings(ARRAY<DMKUniformBufferObjectDescriptor> descriptors)
+			{
+				ARRAY<VkDescriptorSetLayoutBinding> bindings;
+
+				for (UI32 binding = 0; binding < descriptors.size(); binding++)
+				{
+					VkDescriptorSetLayoutBinding uboLayoutBinding = {};
+					uboLayoutBinding.binding = binding; // info.bindIndex;
+					uboLayoutBinding.descriptorCount = 1;
+					uboLayoutBinding.descriptorType = getDescriptorType(descriptors[binding].type);
+					uboLayoutBinding.pImmutableSamplers = nullptr; // Optional
+					uboLayoutBinding.stageFlags = getDescriptorFlag(descriptors[binding].location);
+					bindings.pushBack(uboLayoutBinding);
+				}
+
+				return bindings;
 			}
 		}
 	}

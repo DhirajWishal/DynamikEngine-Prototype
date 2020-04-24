@@ -13,6 +13,7 @@ namespace Dynamik {
 		namespace Backend {
 			class VulkanSkyBox : public VulkanGraphicsRenderableObject {
 			public:
+				VulkanSkyBox() {}
 				VulkanSkyBox(ADGRVulkanGraphicsRenderableObjectInitInfo info);
 				~VulkanSkyBox() {}
 
@@ -20,8 +21,6 @@ namespace Dynamik {
 
 				void initializeUniformBuffer() override;
 				void updateUniformBuffer(UniformBufferObject uniformBufferObject, UI32 currentImage);
-
-				void initializeDescriptorSets() override;
 
 				VulkanBRDF myBRDF;
 				VulkanIrradianceCube myIrradianceCube;

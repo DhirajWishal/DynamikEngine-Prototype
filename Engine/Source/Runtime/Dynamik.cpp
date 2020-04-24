@@ -27,6 +27,8 @@ namespace Dynamik {
 		ADGR::StartupRenderer::initializeShaders();
 		ADGR::StartupRenderer::initializeVertexBuffers();
 		ADGR::StartupRenderer::loadTexure("E:/Projects/Dynamik Engine/Versions/Dynamik (Prototype)/Dependencies/Assets/icons/Dynamik.jpg");
+
+		instance.myStartypRendererThread.swap(std::thread(ADGR::StartupRenderer::draw));
 	}
 
 	UI32 DMKEngine::addLevel(DMKLevelDescriptor level)
@@ -38,13 +40,8 @@ namespace Dynamik {
 		{
 			ARRAY<AssetContainer> assets;
 			for (auto object : scene.assets)
-			{
-				AssetContainer _container;
-				_container.address = object;
-				_container.byteSize = sizeof(*object);
-				_container.type = object->type;
-				assets.pushBack(_container);
-			}
+				assets.pushBack(AssetManager::createAssetContainer(object));
+
 			scenes.pushBack(assets);
 		}
 
@@ -65,14 +62,8 @@ namespace Dynamik {
 
 	UI32 DMKEngine::addAsset(DMKGameObject* object)
 	{
-		/* Create a new Asset Container for the new object. */
-		AssetContainer _container;
-		_container.address = object;
-		_container.byteSize = sizeof(*object);
-		_container.type = object->type;
-
 		/* Add the asset to the Asset Manager and return its index. */
-		return instance.myAssetManager.addAsset(_container, instance.sceneIndex, instance.levelIndex);
+		return instance.myAssetManager.addAsset(object, instance.sceneIndex, instance.levelIndex);
 	}
 
 	void DMKEngine::updateSceneIndex(UI32 index)
@@ -100,7 +91,7 @@ namespace Dynamik {
 		instance.animationSpeed = speed;
 	}
 
-	void DMKEngine::setupCamera(Camera* camera)
+	void DMKEngine::setupCamera(DMKCamera* camera)
 	{
 		instance.myCamera = camera;
 	}
@@ -123,6 +114,7 @@ namespace Dynamik {
 		/* Set basic initializing data to the rendering engine */
 		ADGR::Renderer::setProgressPointer(&instance.progress);
 		ADGR::Renderer::setWindowHandle(instance.myWindowManager.window);
+		ADGR::Renderer::setWindowExtent(instance.myWindowManager.windowWidth, instance.myWindowManager.windowHeight);
 
 		/* Get the renderable assets */
 		ADGR::Renderer::setRenderableObjects(instance.myAssetManager.getRenderablesAsInternalFormats(instance.sceneIndex, instance.levelIndex));
@@ -134,23 +126,19 @@ namespace Dynamik {
 	void DMKEngine::genarateRenderables()
 	{
 		/* Get the renderable assets in the AIB as POINTER<InternalFormat> */
+		instance.myAssetManager.loadScene(instance.sceneIndex, instance.levelIndex);
 		instance.internalFormats = instance.myAssetManager.getRenderablesAsInternalFormats(instance.sceneIndex, instance.levelIndex);
-		
+
 		/* Submit the assets to the renderer */
 		ADGR::Renderer::setRenderableObjects(instance.internalFormats);
 		ADGR::Renderer::initializeStageTwo();
+		ADGR::Renderer::submitLoadedAssets();
 	}
 
 	void DMKEngine::addToRenderingQueue(DMKGameObject* object)
 	{
-		/* Create a new Asset Container, add it to the Asset Manager and submit to the rendering queue */
-		AssetContainer _container;
-		_container.address = (InternalFormat*)object;
-		_container.byteSize = sizeof(*object);
-		_container.type = object->type;
-
 		/* Submit the asset to the Asset Manager. */
-		instance.myAssetManager.addAsset(_container, instance.sceneIndex, instance.levelIndex);
+		instance.myAssetManager.addAsset(object, instance.sceneIndex, instance.levelIndex);
 
 		/* Submit the asset to the render queue */
 		ADGR::Renderer::addToRenderQueue((InternalFormat*)object);
@@ -205,7 +193,7 @@ namespace Dynamik {
 	{
 		return asset.type <= DMKObjectType::DMK_OBJECT_TYPE_CAMERA;
 	}
-	
+
 	inline void DMKEngine::cleanUniformBuffers()
 	{
 		/* Clean all the uniform buffer data to add new uniform data. */

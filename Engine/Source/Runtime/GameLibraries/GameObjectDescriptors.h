@@ -61,9 +61,10 @@ namespace Dynamik {
 		F32 dissipationFactor = 1.0f;
 	};
 
+	/* Binding indexes are assigned in the same order as the vertex attributes are submitted. */
 	struct DMKVertexAttribute {
 		DMKVertexData name = DMKVertexData::DMK_VERTEX_DATA_POSITION;
-		DMKDataType type = DMKDataType::DMK_DATA_TYPE_VEC3;
+		DMKDataType dataType = DMKDataType::DMK_DATA_TYPE_VEC3;
 	};
 
 	class DMKVertexBufferObjectDescriptor {
@@ -76,15 +77,9 @@ namespace Dynamik {
 		ARRAY<DMKVertexAttribute> attributes;
 	};
 
-	enum class DMKUniformDataName {
-		DMK_UNIFORM_DATA_NAME_MODEL,
-		DMK_UNIFORM_DATA_NAME_VIEW,
-		DMK_UNIFORM_DATA_NAME_PROJECTION,
-	};
-
 	struct DMKUniformAttribute {
-		DMKUniformDataName name = DMKUniformDataName::DMK_UNIFORM_DATA_NAME_MODEL;
-		DMKDataType type = DMKDataType::DMK_DATA_TYPE_MAT4;
+		DMKUniformData name = DMKUniformData::DMK_UNIFORM_DATA_MODEL;
+		DMKDataType dataType = DMKDataType::DMK_DATA_TYPE_MAT4;
 	};
 
 	class DMKUniformBufferObjectDescriptor {
@@ -94,6 +89,8 @@ namespace Dynamik {
 
 		static UI32 uniformByteSize(ARRAY<DMKUniformAttribute> attributes);
 
+		DMKUniformType type = DMKUniformType::DMK_UNIFORM_TYPE_BUFFER_OBJECT;
+		DMKAttributeLocation location = DMKAttributeLocation::DMK_ATTRIBUTE_LOCATION_VERTEX;
 		ARRAY<DMKUniformAttribute> attributes;
 	};
 
@@ -110,7 +107,7 @@ namespace Dynamik {
 
 		DMKVertexBufferObjectDescriptor vertexBufferObjectDescription;
 		DMKDataType indexBufferType = DMKDataType::DMK_DATA_TYPE_UI32;
-		DMKUniformBufferObjectDescriptor uniformBufferObjectDescription;
+		ARRAY<DMKUniformBufferObjectDescriptor> uniformBufferObjectDescriptions;
 	};
 }
 

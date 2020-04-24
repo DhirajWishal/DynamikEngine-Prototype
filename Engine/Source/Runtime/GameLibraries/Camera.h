@@ -19,14 +19,14 @@ namespace Dynamik {
 	/* DYNAMIK CAMERA PARENT CLASS
 	 * User defined camera class for the renderer.
 	 */
-	class Camera {
+	class DMKCamera {
 	public:
-		Camera() {}
-		Camera(DMKCameraType ty) : type(ty) {}
-		virtual ~Camera() {}
+		DMKCamera() {}
+		DMKCamera(DMKCameraType ty) : type(ty) {}
+		virtual ~DMKCamera() {}
 
-		virtual DMKCameraData update(ARRAY<DMKEventComponent*> eventComponents) {}
-		virtual MAT4 getViewMatrix() {}
+		virtual DMKCameraData update(ARRAY<DMKEventComponent*> eventComponents) { return DMKCameraData(); }
+		virtual MAT4 getViewMatrix() { return MAT4(); }
 
 	public:
 		DMKCameraType type = DMKCameraType::DMK_CAMERA_TYPE_FRUSTUM;

@@ -9,7 +9,9 @@ namespace Dynamik {
 	{
 		if (type == DMKTextureType::DMK_TEXTURE_TYPE_2D)
 		{
-			textureData.set(stbi_load(path.c_str(), &width, &height, &fileChannels, NULL));
+			stbi_set_flip_vertically_on_load(true);
+			auto data = stbi_load(path.c_str(), &width, &height, &fileChannels, NULL);
+			textureData = data;
 		}
 		else if (type == DMKTextureType::DMK_TEXTURE_TYPE_3D)
 		{
@@ -20,6 +22,8 @@ namespace Dynamik {
 
 	void Texture::loadCubemap(ARRAY<std::string> paths, DMKTextureInputType inputType)
 	{
+		type = DMKTextureType::DMK_TEXTURE_TYPE_CUBEMAP;
+
 		if (inputType == DMKTextureInputType::DMK_TEXTURE_INPUT_TYPE_AUTO)
 		{
 			if ((paths[0].find(".ktx") != std::string::npos) && (paths.size() < 6))
@@ -37,7 +41,7 @@ namespace Dynamik {
 			if (ktxFile.empty())
 				DMK_CORE_FATAL("Failed to load the *.ktx file!");
 			
-			textureData.set((UCHR*)ktxFile.data());
+			textureData = (UCHR*)ktxFile.data();
 			
 			switch (ktxFile.format())
 			{
@@ -59,11 +63,15 @@ namespace Dynamik {
 		else if (inputType == DMKTextureInputType::DMK_TEXTURE_INPUT_TYPE_IMAGES && paths.size() == 6)
 		{
 			imageCount = 6;
-			POINTER<UCHR*> _pool[6] = { };
+			POINTER<UCHR> _pool[6] = { };
 			for (UI32 index = 0; index < paths.size(); index++)
-				_pool[index].set(stbi_load(paths[index].c_str(), &width, &height, &fileChannels, NULL));
+				_pool[index] = stbi_load(paths[index].c_str(), &width, &height, &fileChannels, NULL);
 
-			textureData = _pool->get();
+			textureData = StaticAllocator<UCHR>::allocate(size());
+			UI32 layerSize = size() / 6;
+
+			for (UI32 itr = 0; itr < paths.size(); itr++)
+				memcpy((void*)((UI64(textureData.get())) + (layerSize * itr)), _pool[itr], layerSize);
 		}
 
 		_getFormatFromChannels();

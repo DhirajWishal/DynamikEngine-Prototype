@@ -36,285 +36,384 @@ namespace Dynamik {
 
 		// ----------
 #endif
-        vulkanRenderer vulkanRenderer::instance;
-        
-        void vulkanRenderer::setWindowHandle(POINTER<GLFWwindow> windowHandle)
-        {
-            instance.myWindowHandle = windowHandle;
-        }
+		vulkanRenderer vulkanRenderer::instance;
 
-        void vulkanRenderer::setWindowExtent(UI32 width, UI32 height)
-        {
-            instance.windowWidth = width;
-            instance.windowHeight = height;
-        }
+		void vulkanRenderer::setWindowHandle(POINTER<GLFWwindow> windowHandle)
+		{
+			instance.myWindowHandle = windowHandle;
+		}
 
-        void vulkanRenderer::setProgress(POINTER<UI32> progress)
-        {
-            instance.myProgress = progress;
-        }
+		void vulkanRenderer::setWindowExtent(UI32 width, UI32 height)
+		{
+			instance.windowWidth = width;
+			instance.windowHeight = height;
+		}
 
-        void vulkanRenderer::initializeGraphicsCore()
-        {
-            /* Initialize the instance */
-            ADGRVulkanInstanceInitInfo instanceInitInfo;
-            instanceInitInfo.applicationName = "Dynamik Engine";
-            instanceInitInfo.engineName = "Dynamik";
-            instance.myGraphicsCore.initializeInstance(instanceInitInfo);
+		void vulkanRenderer::setProgress(POINTER<UI32> progress)
+		{
+			instance.myProgress = progress;
+		}
 
-            /* Initialize the window surface */
-            instance.myGraphicsCore.initializeSurface(instance.myWindowHandle);
+		void vulkanRenderer::initializeGraphicsCore()
+		{
+			/* Initialize the instance */
+			ADGRVulkanInstanceInitInfo instanceInitInfo;
+			instanceInitInfo.applicationName = "Dynamik Engine";
+			instanceInitInfo.engineName = "Dynamik";
+			instance.myGraphicsCore.initializeInstance(instanceInitInfo);
 
-            /* Initialize the device (physical and logical) */
-            instance.myGraphicsCore.initializeDevice();
+			/* Initialize the window surface */
+			instance.myGraphicsCore.initializeSurface(instance.myWindowHandle);
 
-            /* Initialize command pools (both host visible and client visible) */
-            ADGRVulkanGraphicsCommandBufferInitResources commandBufferResourceInitInfo;
-            commandBufferResourceInitInfo.logicalDevice = instance.myGraphicsCore.logicalDevice;
-            commandBufferResourceInitInfo.physicalDevice = instance.myGraphicsCore.physicalDevice;
-            commandBufferResourceInitInfo.surface = instance.myGraphicsCore.surface;
-            instance.myResourceContainers[0].commandBuffer.initializeResources(commandBufferResourceInitInfo);
-            instance.myResourceContainers[0].commandBuffer.initializeCommandPool();
-            instance.myResourceContainers[1].commandBuffer.initializeResources(commandBufferResourceInitInfo);
-            instance.myResourceContainers[1].commandBuffer.initializeCommandPool();
+			/* Initialize the device (physical and logical) */
+			instance.myGraphicsCore.initializeDevice();
 
-            /* Initialize the SwapChain */
-            instance.mySwapChain.basicInitialize(
-                instance.myGraphicsCore.logicalDevice,
-                instance.myGraphicsCore.physicalDevice,
-                instance.myGraphicsCore.surface,
-                instance.myGraphicsCore.surfaceCapabilities);
-            instance.mySwapChain.initializeSwapChain(instance.windowWidth, instance.windowHeight);
+			/* Initialize command pools (both host visible and client visible) */
+			ADGRVulkanGraphicsCommandBufferInitResources commandBufferResourceInitInfo;
+			commandBufferResourceInitInfo.logicalDevice = instance.myGraphicsCore.logicalDevice;
+			commandBufferResourceInitInfo.physicalDevice = instance.myGraphicsCore.physicalDevice;
+			commandBufferResourceInitInfo.surface = instance.myGraphicsCore.surface;
+			instance.myResourceContainers[0].commandBuffer.initializeResources(commandBufferResourceInitInfo);
+			instance.myResourceContainers[0].commandBuffer.initializeCommandPool();
+			instance.myResourceContainers[1].commandBuffer.initializeResources(commandBufferResourceInitInfo);
+			instance.myResourceContainers[1].commandBuffer.initializeCommandPool();
 
-            /* Initialize Render pass */
-            instance._initializeRenderPass();
+			/* Initialize the SwapChain */
+			instance.mySwapChain.basicInitialize(
+				instance.myGraphicsCore.logicalDevice,
+				instance.myGraphicsCore.physicalDevice,
+				instance.myGraphicsCore.surface,
+				instance.myGraphicsCore.surfaceCapabilities);
+			instance.mySwapChain.initializeSwapChain(instance.windowWidth, instance.windowHeight);
 
-            /* Initialize attachments */
-            /* Initialize color buffer */
-            instance.myColorBuffer.initialize(
-                instance.myGraphicsCore.logicalDevice,
-                instance.myGraphicsCore.physicalDevice,
-                instance.myResourceContainers[instance.inUseIndex].commandBuffer.pool,
-                instance.myGraphicsCore.graphicsQueue,
-                instance.myGraphicsCore.presentQueue,
-                instance.mySwapChain.swapChainContainer.swapChainImageFormat,
-                instance.mySwapChain.swapChainContainer.swapChainExtent,
-                instance.myGraphicsCore.msaaSamples);
+			/* Initialize Render pass */
+			instance._initializeRenderPass();
 
-            /* Initialize color buffer */
-            instance.myDepthBuffer.initialize(
-                instance.myGraphicsCore.logicalDevice,
-                instance.myGraphicsCore.physicalDevice,
-                instance.myResourceContainers[instance.inUseIndex].commandBuffer.pool,
-                instance.myGraphicsCore.graphicsQueue,
-                instance.myGraphicsCore.presentQueue,
-                instance.mySwapChain.swapChainContainer.swapChainExtent,
-                instance.myGraphicsCore.msaaSamples);
+			/* Initialize attachments */
+			/* Initialize color buffer */
+			instance.myColorBuffer.initialize(
+				instance.myGraphicsCore.logicalDevice,
+				instance.myGraphicsCore.physicalDevice,
+				instance.myResourceContainers[instance.inUseIndex].commandBuffer.pool,
+				instance.myGraphicsCore.graphicsQueue,
+				instance.myGraphicsCore.presentQueue,
+				instance.mySwapChain.swapChainContainer.swapChainImageFormat,
+				instance.mySwapChain.swapChainContainer.swapChainExtent,
+				instance.myGraphicsCore.msaaSamples);
 
-            /* Initialize Frame Buffer */
-            ADGRVulkanGraphicsFrameBufferInitInfo frameBufferInitInfo;
-            frameBufferInitInfo.attachments.pushBack(instance.myColorBuffer.imageView);
-            frameBufferInitInfo.attachments.pushBack(instance.myDepthBuffer.imageView);
-            frameBufferInitInfo.swapChainImageViews = instance.mySwapChain.swapChainContainer.swapChainImageViews;
-            frameBufferInitInfo.bufferCount = instance.mySwapChain.swapChainContainer.swapChainImages.size();
-            frameBufferInitInfo.swapChainExtent = instance.mySwapChain.swapChainContainer.swapChainExtent;
-            instance.myFrameBuffer.initializeFrameBuffer(instance.myGraphicsCore.logicalDevice, frameBufferInitInfo);
+			/* Initialize color buffer */
+			instance.myDepthBuffer.initialize(
+				instance.myGraphicsCore.logicalDevice,
+				instance.myGraphicsCore.physicalDevice,
+				instance.myResourceContainers[instance.inUseIndex].commandBuffer.pool,
+				instance.myGraphicsCore.graphicsQueue,
+				instance.myGraphicsCore.presentQueue,
+				instance.mySwapChain.swapChainContainer.swapChainExtent,
+				instance.myGraphicsCore.msaaSamples);
 
-            /* Initialize the overlay */
-            /* TODO: Overlay */
-        }
-        
-        void vulkanRenderer::initializeComputeCore()
-        {
-        }
+			/* Initialize Frame Buffer */
+			ADGRVulkanGraphicsFrameBufferInitInfo frameBufferInitInfo;
+			frameBufferInitInfo.attachments.pushBack(instance.myColorBuffer.imageView);
+			frameBufferInitInfo.attachments.pushBack(instance.myDepthBuffer.imageView);
+			frameBufferInitInfo.swapChainImageViews = instance.mySwapChain.swapChainContainer.swapChainImageViews;
+			frameBufferInitInfo.bufferCount = instance.mySwapChain.swapChainContainer.swapChainImages.size();
+			frameBufferInitInfo.swapChainExtent = instance.mySwapChain.swapChainContainer.swapChainExtent;
+			instance.myFrameBuffer.initializeFrameBuffer(instance.myGraphicsCore.logicalDevice, frameBufferInitInfo);
 
-        void vulkanRenderer::addObject(POINTER<InternalFormat> format)
-        {
-            /* Check the object type of the format and initialize it accordingly */
-            switch (format->type)
-            {
-                /* 2D image initialization */
-            case Dynamik::DMKObjectType::DMK_OBJECT_TYPE_IMAGE_2D:
-                break;
+			/* Initialize the overlay */
+			/* TODO: Overlay */
+		}
 
-                /* Debug object initialization */
-            case Dynamik::DMKObjectType::DMK_OBJECT_TYPE_DEBUG_OBJECT:
-                break;
+		void vulkanRenderer::initializeComputeCore()
+		{
+		}
 
-                /* Mesh object initialization */
-            case Dynamik::DMKObjectType::DMK_OBJECT_TYPE_MESH:
-                break;
+		void vulkanRenderer::addObject(POINTER<InternalFormat> format)
+		{
+			/* Check the object type of the format and initialize it accordingly */
+			switch (format->type)
+			{
+				/* 2D image initialization */
+			case Dynamik::DMKObjectType::DMK_OBJECT_TYPE_IMAGE_2D:
+				break;
 
-                /* Static object initialization */
-            case Dynamik::DMKObjectType::DMK_OBJECT_TYPE_STATIC:
-                break;
+				/* Debug object initialization */
+			case Dynamik::DMKObjectType::DMK_OBJECT_TYPE_DEBUG_OBJECT:
+				break;
 
-                /* Interavtive object initialization */
-            case Dynamik::DMKObjectType::DMK_OBJECT_TYPE_INTERACTIVE_OBJECT:
-                break;
+				/* Mesh object initialization */
+			case Dynamik::DMKObjectType::DMK_OBJECT_TYPE_MESH:
+				break;
 
-                /* Player object initialization */
-            case Dynamik::DMKObjectType::DMK_OBJECT_TYPE_PLAYER:
-                break;
+				/* Static object initialization */
+			case Dynamik::DMKObjectType::DMK_OBJECT_TYPE_STATIC:
+				instance.myResourceContainers[instance.inUseIndex].renderData.pushBack(instance._initializeStaticObject(format));
+				break;
 
-                /* Non Player Character object initialization */
-            case Dynamik::DMKObjectType::DMK_OBJECT_TYPE_NPC:
-                break;
+				/* Interavtive object initialization */
+			case Dynamik::DMKObjectType::DMK_OBJECT_TYPE_INTERACTIVE_OBJECT:
+				break;
 
-                /* Texture UI object initialization */
-            case Dynamik::DMKObjectType::DMK_OBJECT_TYPE_TEXTURE_UI:
-                break;
+				/* Player object initialization */
+			case Dynamik::DMKObjectType::DMK_OBJECT_TYPE_PLAYER:
+				break;
 
-                /* SkyBox object initialization */
-            case Dynamik::DMKObjectType::DMK_OBJECT_TYPE_SKYBOX:
-                instance.myResourceContainers[instance.inUseIndex].renderData.pushBack(instance._initializeSkyBox(format));
-                break;
+				/* Non Player Character object initialization */
+			case Dynamik::DMKObjectType::DMK_OBJECT_TYPE_NPC:
+				break;
 
-                /* Sprite sheet object initialization */
-            case Dynamik::DMKObjectType::DMK_OBJECT_TYPE_SPRITES:
-                break;
+				/* Texture UI object initialization */
+			case Dynamik::DMKObjectType::DMK_OBJECT_TYPE_TEXTURE_UI:
+				break;
 
-                /* Font sheet object initialization */
-            case Dynamik::DMKObjectType::DMK_OBJECT_TYPE_FONT:
-                break;
+				/* SkyBox object initialization */
+			case Dynamik::DMKObjectType::DMK_OBJECT_TYPE_SKYBOX:
+				instance.myResourceContainers[instance.inUseIndex].renderData.pushBack(instance._initializeSkyBox(format));
+				break;
 
-                /* Text overlay initialization */
-            case Dynamik::DMKObjectType::DMK_OBJECT_TYPE_TEXT_OVERLAY:
-                break;
+				/* Sprite sheet object initialization */
+			case Dynamik::DMKObjectType::DMK_OBJECT_TYPE_SPRITES:
+				break;
 
-                /* Particle system initialization */
-            case Dynamik::DMKObjectType::DMK_OBJECT_TYPE_PARTICLE:
-                break;
+				/* Font sheet object initialization */
+			case Dynamik::DMKObjectType::DMK_OBJECT_TYPE_FONT:
+				break;
 
-                /* Destruction entity initialization */
-            case Dynamik::DMKObjectType::DMK_OBJECT_TYPE_DESTRUCTION:
-                break;
+				/* Text overlay initialization */
+			case Dynamik::DMKObjectType::DMK_OBJECT_TYPE_TEXT_OVERLAY:
+				break;
 
-                /* Destructor entity initialization */
-            case Dynamik::DMKObjectType::DMK_OBJECT_TYPE_DESTRUCTOR:
-                break;
+				/* Particle system initialization */
+			case Dynamik::DMKObjectType::DMK_OBJECT_TYPE_PARTICLE:
+				break;
 
-                /* Skeletal animation object initialization */
-            case Dynamik::DMKObjectType::DMK_OBJECT_TYPE_SKELETAL_ANIMATION:
-                break;
+				/* Destruction entity initialization */
+			case Dynamik::DMKObjectType::DMK_OBJECT_TYPE_DESTRUCTION:
+				break;
 
-                /* Light object initialization */
-            case Dynamik::DMKObjectType::DMK_OBJECT_TYPE_LIGHT:
-                break;
+				/* Destructor entity initialization */
+			case Dynamik::DMKObjectType::DMK_OBJECT_TYPE_DESTRUCTOR:
+				break;
 
-                /* Camera object initialization */
-            case Dynamik::DMKObjectType::DMK_OBJECT_TYPE_CAMERA:
-                break;
-            default:
-                DMK_CORE_FATAL("Invalid Object Type!");
-                break;
-            }
-        }
+				/* Skeletal animation object initialization */
+			case Dynamik::DMKObjectType::DMK_OBJECT_TYPE_SKELETAL_ANIMATION:
+				break;
 
-        void vulkanRenderer::addObjects(ARRAY<POINTER<InternalFormat>> formats)
-        {
-            for (auto format : formats)
-                addObject(format);
-        }
+				/* Light object initialization */
+			case Dynamik::DMKObjectType::DMK_OBJECT_TYPE_LIGHT:
+				break;
 
-        void vulkanRenderer::drawFrame(DMKRendererDrawFrameInfo info)
-        {
-        }
-        
-        void vulkanRenderer::_initializeRenderPass()
-        {
-            ARRAY<VkAttachmentDescription> attachments;
+				/* Camera object initialization */
+			case Dynamik::DMKObjectType::DMK_OBJECT_TYPE_CAMERA:
+				break;
+			default:
+				DMK_CORE_FATAL("Invalid Object Type!");
+				break;
+			}
+		}
 
-            // attachment descriptions
-            VkAttachmentDescription colorAttachment = {};
-            colorAttachment.format = mySwapChain.swapChainContainer.swapChainImageFormat;
-            colorAttachment.samples = myGraphicsCore.msaaSamples;
-            colorAttachment.loadOp = VK_ATTACHMENT_LOAD_OP_CLEAR;
-            colorAttachment.storeOp = VK_ATTACHMENT_STORE_OP_STORE;
-            colorAttachment.stencilLoadOp = VK_ATTACHMENT_LOAD_OP_DONT_CARE;
-            colorAttachment.stencilStoreOp = VK_ATTACHMENT_STORE_OP_DONT_CARE;
-            colorAttachment.initialLayout = VK_IMAGE_LAYOUT_UNDEFINED;
-            colorAttachment.finalLayout = VK_IMAGE_LAYOUT_PRESENT_SRC_KHR;
-            attachments.push_back(colorAttachment);
+		void vulkanRenderer::addObjects(ARRAY<POINTER<InternalFormat>> formats)
+		{
+			for (auto format : formats)
+			{
+				if (format.isValid())
+					addObject(format);
 
-            VkAttachmentReference colorAttachmentRef = {};
-            colorAttachmentRef.attachment = 0;
-            colorAttachmentRef.layout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
+				break;
+			}
+		}
 
-            // sub passes
-            VkSubpassDescription subpass = {};
-            subpass.pipelineBindPoint = VK_PIPELINE_BIND_POINT_GRAPHICS;
-            subpass.colorAttachmentCount = 1;
-            subpass.pColorAttachments = &colorAttachmentRef;
+		void vulkanRenderer::drawFrame(DMKRendererDrawFrameInfo info)
+		{
+			/* Check if the number of update objects are equal to the in-flight objects */
+			if (info.formats.size() != instance.myResourceContainers[instance.inUseIndex].renderData.size())
+				DMK_CORE_FATAL("Invalid amount of update formats sent to the Draw call!");
 
-            VkAttachmentDescription depthAttachment = {};
-            depthAttachment.format = VulkanUtilities::findDepthFormat(myGraphicsCore.physicalDevice);
-            depthAttachment.samples = myGraphicsCore.msaaSamples;
-            depthAttachment.loadOp = VK_ATTACHMENT_LOAD_OP_CLEAR;
-            depthAttachment.storeOp = VK_ATTACHMENT_STORE_OP_DONT_CARE;
-            depthAttachment.stencilLoadOp = VK_ATTACHMENT_LOAD_OP_DONT_CARE;
-            depthAttachment.stencilStoreOp = VK_ATTACHMENT_STORE_OP_DONT_CARE;
-            depthAttachment.initialLayout = VK_IMAGE_LAYOUT_UNDEFINED;
-            depthAttachment.finalLayout = VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL;
-            attachments.push_back(depthAttachment);
+			/* Get the current image index */
+			instance.imageIndex = 0;
+			instance.result = instance.myGraphicsCore.getNextImage(instance.mySwapChain.swapChainContainer.swapChain, &instance.imageIndex, instance.currentFrame);
 
-            VkAttachmentReference depthAttachmentRef = {};
-            depthAttachmentRef.attachment = 1;
-            depthAttachmentRef.layout = VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL;
-            subpass.pDepthStencilAttachment = &depthAttachmentRef;
+			/* Check if any errors were encountered */
+			if (instance.result == VK_ERROR_OUT_OF_DATE_KHR)
+			{
+				recreateSwapChain();
+				return;
+			}
+			else if (instance.result != VK_SUCCESS && instance.result != VK_SUBOPTIMAL_KHR)
+				DMK_CORE_FATAL("Failed to acquire Swap Chain image!");
 
-            VkAttachmentDescription colorAttachmentResolve = {};
-            colorAttachmentResolve.format = mySwapChain.swapChainContainer.swapChainImageFormat;
-            colorAttachmentResolve.samples = VK_SAMPLE_COUNT_1_BIT;
-            colorAttachmentResolve.loadOp = VK_ATTACHMENT_LOAD_OP_DONT_CARE;
-            colorAttachmentResolve.storeOp = VK_ATTACHMENT_STORE_OP_STORE;
-            colorAttachmentResolve.stencilLoadOp = VK_ATTACHMENT_LOAD_OP_DONT_CARE;
-            colorAttachmentResolve.stencilStoreOp = VK_ATTACHMENT_STORE_OP_DONT_CARE;
-            colorAttachmentResolve.initialLayout = VK_IMAGE_LAYOUT_UNDEFINED;
-            colorAttachmentResolve.finalLayout = VK_IMAGE_LAYOUT_PRESENT_SRC_KHR;
-            attachments.push_back(colorAttachmentResolve);
+			/* Update the objects using the Draw Frame Info structure */
+			for (UI32 index = 0; index = info.formats.size(); index++)
+			{
+				/* Update the common uniform buffer object */
+				instance.commonUBO.view = glm::lookAt(info.cameraData.cameraPosition, info.cameraData.cameraPosition + info.cameraData.cameraRight, info.cameraData.cameraUp);
+				instance.commonUBO.proj = glm::perspective(glm::radians(info.FOV), info.aspectRatio, info.frustumNear, info.frustumFar);
 
-            VkAttachmentReference colorAttachmentResolveRef = {};
-            colorAttachmentResolveRef.attachment = 2;
-            colorAttachmentResolveRef.layout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
-            subpass.pResolveAttachments = &colorAttachmentResolveRef;
+				/* Check for the Uniform buffer attributes and add the data to the container */
+				POINTER<InternalFormat> object = info.formats[index];
+				for (auto _description : object->descriptor.uniformBufferObjectDescriptions)
+				{
+					/* Currently the Vulkan RBL supports vertex shader uniform buffer updation only */
+					if (_description.location != DMKAttributeLocation::DMK_ATTRIBUTE_LOCATION_VERTEX)
+						continue;
 
-            ARRAY<VkSubpassDescription> subPasses;
-            subPasses.push_back(subpass);
+					for (auto _attribute : _description.attributes)
+					{
+						switch (_attribute.name)
+						{
+						case DMKUniformData::DMK_UNIFORM_DATA_MODEL:
+							object->uniformBufferData.pushBack(instance.commonUBO.model);
+							break;
 
-            ADGRVulkanRenderPassInitInfo renderPassInitInfo;
-            renderPassInitInfo.attachments = attachments;
-            renderPassInitInfo.subPasses = subPasses;
-            myFrameBuffer.initializeRenderPass(myGraphicsCore.logicalDevice, renderPassInitInfo);
-        }
-        
-        void vulkanRenderer::_prepareRenderDataContainer(UI32 index)
-        {
-            myResourceContainers[index].commandBuffer.terminateCommandBuffers();
-            myResourceContainers[index].renderData = {};
-        }
+						case DMKUniformData::DMK_UNIFORM_DATA_VIEW:
+							object->uniformBufferData.pushBack(instance.commonUBO.view);
+							break;
 
-        ADGRVulkanGraphicsRenderableObjectInitInfo vulkanRenderer::_getBasicInitInfo()
-        {
-            ADGRVulkanGraphicsRenderableObjectInitInfo _info;
-            _info.logicalDevice = myGraphicsCore.logicalDevice;
-            _info.physicalDevice = myGraphicsCore.physicalDevice;
-            _info.commandPool = myResourceContainers[inUseIndex].commandBuffer.pool;
-            _info.graphicsQueue = myGraphicsCore.graphicsQueue;
-            _info.presentQueue = myGraphicsCore.presentQueue;
+						case DMKUniformData::DMK_UNIFORM_DATA_PROJECTION:
+							object->uniformBufferData.pushBack(instance.commonUBO.proj);
+							break;
+						}
+					}
+				}
 
-            return _info;
-        }
-        
-        ADGRVulkanRenderData vulkanRenderer::_initializeSkyBox(POINTER<InternalFormat> format)
-        {
-            VulkanSkyBox* _renderObject = Cast<VulkanSkyBox*>(format.get());
-            _renderObject->initializeResources(_getBasicInitInfo());
+				/* Update the objects uniform buffer memory */
+				for (auto _container : instance.myResourceContainers[instance.inUseIndex].renderData[index].uniformBufferContainers)
+					VulkanUtilities::updateUniformBuffer(instance.myGraphicsCore.logicalDevice, object->uniformBufferData, _container.bufferMemories[instance.imageIndex]);
+			}
 
-            _renderObject->setSwapChainContainer(&mySwapChain.swapChainContainer);
-            _renderObject->setFrameBufferContainer(&myFrameBuffer);
+			/* Submit queues */
+			instance.result = instance.myGraphicsCore.submitQueues(
+				{ instance.mySwapChain.swapChainContainer.swapChain },
+				instance.imageIndex, instance.currentFrame,
+				instance.myResourceContainers[instance.inUseIndex].commandBuffer.buffers);
 
-            return _renderObject->initializeObject(format, myGraphicsCore.msaaSamples);
-        }
-    }
+			if (instance.result == VK_ERROR_OUT_OF_DATE_KHR || instance.result == VK_SUBOPTIMAL_KHR)
+			{
+				recreateSwapChain();
+			}
+			else if (instance.result != VK_SUCCESS)
+				DMK_CORE_FATAL("failed to present swap chain image!");
+
+			/* Update the current frame number */
+			instance.currentFrame = (instance.currentFrame + 1) % MAX_FRAMES_IN_FLIGHT;
+		}
+
+		void vulkanRenderer::recreateSwapChain()
+		{
+		}
+
+		void vulkanRenderer::_initializeRenderPass()
+		{
+			ARRAY<VkAttachmentDescription> attachments;
+
+			// attachment descriptions
+			VkAttachmentDescription colorAttachment = {};
+			colorAttachment.format = mySwapChain.swapChainContainer.swapChainImageFormat;
+			colorAttachment.samples = myGraphicsCore.msaaSamples;
+			colorAttachment.loadOp = VK_ATTACHMENT_LOAD_OP_CLEAR;
+			colorAttachment.storeOp = VK_ATTACHMENT_STORE_OP_STORE;
+			colorAttachment.stencilLoadOp = VK_ATTACHMENT_LOAD_OP_DONT_CARE;
+			colorAttachment.stencilStoreOp = VK_ATTACHMENT_STORE_OP_DONT_CARE;
+			colorAttachment.initialLayout = VK_IMAGE_LAYOUT_UNDEFINED;
+			colorAttachment.finalLayout = VK_IMAGE_LAYOUT_PRESENT_SRC_KHR;
+			attachments.push_back(colorAttachment);
+
+			VkAttachmentReference colorAttachmentRef = {};
+			colorAttachmentRef.attachment = 0;
+			colorAttachmentRef.layout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
+
+			// sub passes
+			VkSubpassDescription subpass = {};
+			subpass.pipelineBindPoint = VK_PIPELINE_BIND_POINT_GRAPHICS;
+			subpass.colorAttachmentCount = 1;
+			subpass.pColorAttachments = &colorAttachmentRef;
+
+			VkAttachmentDescription depthAttachment = {};
+			depthAttachment.format = VulkanUtilities::findDepthFormat(myGraphicsCore.physicalDevice);
+			depthAttachment.samples = myGraphicsCore.msaaSamples;
+			depthAttachment.loadOp = VK_ATTACHMENT_LOAD_OP_CLEAR;
+			depthAttachment.storeOp = VK_ATTACHMENT_STORE_OP_DONT_CARE;
+			depthAttachment.stencilLoadOp = VK_ATTACHMENT_LOAD_OP_DONT_CARE;
+			depthAttachment.stencilStoreOp = VK_ATTACHMENT_STORE_OP_DONT_CARE;
+			depthAttachment.initialLayout = VK_IMAGE_LAYOUT_UNDEFINED;
+			depthAttachment.finalLayout = VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL;
+			attachments.push_back(depthAttachment);
+
+			VkAttachmentReference depthAttachmentRef = {};
+			depthAttachmentRef.attachment = 1;
+			depthAttachmentRef.layout = VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL;
+			subpass.pDepthStencilAttachment = &depthAttachmentRef;
+
+			VkAttachmentDescription colorAttachmentResolve = {};
+			colorAttachmentResolve.format = mySwapChain.swapChainContainer.swapChainImageFormat;
+			colorAttachmentResolve.samples = VK_SAMPLE_COUNT_1_BIT;
+			colorAttachmentResolve.loadOp = VK_ATTACHMENT_LOAD_OP_DONT_CARE;
+			colorAttachmentResolve.storeOp = VK_ATTACHMENT_STORE_OP_STORE;
+			colorAttachmentResolve.stencilLoadOp = VK_ATTACHMENT_LOAD_OP_DONT_CARE;
+			colorAttachmentResolve.stencilStoreOp = VK_ATTACHMENT_STORE_OP_DONT_CARE;
+			colorAttachmentResolve.initialLayout = VK_IMAGE_LAYOUT_UNDEFINED;
+			colorAttachmentResolve.finalLayout = VK_IMAGE_LAYOUT_PRESENT_SRC_KHR;
+			attachments.push_back(colorAttachmentResolve);
+
+			VkAttachmentReference colorAttachmentResolveRef = {};
+			colorAttachmentResolveRef.attachment = 2;
+			colorAttachmentResolveRef.layout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
+			subpass.pResolveAttachments = &colorAttachmentResolveRef;
+
+			ARRAY<VkSubpassDescription> subPasses;
+			subPasses.push_back(subpass);
+
+			ADGRVulkanRenderPassInitInfo renderPassInitInfo;
+			renderPassInitInfo.attachments = attachments;
+			renderPassInitInfo.subPasses = subPasses;
+			myFrameBuffer.initializeRenderPass(myGraphicsCore.logicalDevice, renderPassInitInfo);
+		}
+
+		void vulkanRenderer::_prepareRenderDataContainer(UI32 index)
+		{
+			myResourceContainers[index].commandBuffer.terminateCommandBuffers();
+			myResourceContainers[index].renderData = {};
+		}
+
+		ADGRVulkanGraphicsRenderableObjectInitInfo vulkanRenderer::_getBasicInitInfo()
+		{
+			ADGRVulkanGraphicsRenderableObjectInitInfo _info;
+			_info.logicalDevice = myGraphicsCore.logicalDevice;
+			_info.physicalDevice = myGraphicsCore.physicalDevice;
+			_info.commandPool = myResourceContainers[inUseIndex].commandBuffer.pool;
+			_info.graphicsQueue = myGraphicsCore.graphicsQueue;
+			_info.presentQueue = myGraphicsCore.presentQueue;
+
+			return _info;
+		}
+
+		ADGRVulkanRenderData vulkanRenderer::_initializeStaticObject(POINTER<InternalFormat> format)
+		{
+			VulkanGraphicsRenderableObject _renderObject(_getBasicInitInfo());
+			_renderObject.setInternalFormat(format);
+
+			_renderObject.setSwapChainContainer(&mySwapChain.swapChainContainer);
+			_renderObject.setFrameBufferContainer(&myFrameBuffer);
+
+			return _renderObject.initializeObject(format, myGraphicsCore.msaaSamples);
+		}
+
+		ADGRVulkanRenderData vulkanRenderer::_initializeSkyBox(POINTER<InternalFormat> format)
+		{
+			VulkanSkyBox _renderObject(_getBasicInitInfo());
+			_renderObject.setInternalFormat(format);
+
+			_renderObject.setSwapChainContainer(&mySwapChain.swapChainContainer);
+			_renderObject.setFrameBufferContainer(&myFrameBuffer);
+
+			return _renderObject.initializeObject(format, myGraphicsCore.msaaSamples);
+		}
+
+		ADGRVulkanRenderData vulkanRenderer::_initializeSkeletalAnimation(POINTER<InternalFormat> format)
+		{
+			VulkanSkeletalAnimation* _renderObject = Cast<VulkanSkeletalAnimation*>(format.get());
+
+			return ADGRVulkanRenderData();
+		}
+	}
 }

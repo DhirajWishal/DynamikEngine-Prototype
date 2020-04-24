@@ -4,4 +4,9 @@
 
 #include <iostream>
 
+#ifdef DMK_DEBUG
+#include <Windows.h>
+
+#endif
+
 #endif // !_STUDIO_PCH

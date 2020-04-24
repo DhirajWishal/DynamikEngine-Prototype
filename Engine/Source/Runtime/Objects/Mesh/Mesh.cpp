@@ -22,37 +22,37 @@ namespace Dynamik {
 				switch (attribute.name)
 				{
 				case DMKVertexData::DMK_VERTEX_DATA_POSITION:
-					_tempArray = _getAttributeData(attribute.type, _store.position);
+					_tempArray = _getAttributeData(attribute.dataType, _store.position);
 					moveBytes(nextPtr, _tempArray.begin(), _tempArray.end());
 					nextPtr += _getNextPointerAddress(attribute);
 					break;
 
 				case DMKVertexData::DMK_VERTEX_DATA_COLOR:
-					_tempArray = _getAttributeData(attribute.type, _store.color);
+					_tempArray = _getAttributeData(attribute.dataType, _store.color);
 					moveBytes(nextPtr, _tempArray.begin(), _tempArray.end());
 					nextPtr += _getNextPointerAddress(attribute);
 					break;
 
 				case DMKVertexData::DMK_VERTEX_DATA_TEXTURE_COORDINATES:
-					_tempArray = _getAttributeData(attribute.type, _store.textureCoordinate);
+					_tempArray = _getAttributeData(attribute.dataType, _store.textureCoordinate);
 					moveBytes(nextPtr, _tempArray.begin(), _tempArray.end());
 					nextPtr += _getNextPointerAddress(attribute);
 					break;
 
 				case DMKVertexData::DMK_VERTEX_DATA_NORMAL_VECTORS:
-					_tempArray = _getAttributeData(attribute.type, _store.normal);
+					_tempArray = _getAttributeData(attribute.dataType, _store.normal);
 					moveBytes(nextPtr, _tempArray.begin(), _tempArray.end());
 					nextPtr += _getNextPointerAddress(attribute);
 					break;
 
 				case DMKVertexData::DMK_VERTEX_DATA_SPACE_VECTORS:
-					_tempArray = _getAttributeData(attribute.type, _store.space);
+					_tempArray = _getAttributeData(attribute.dataType, _store.space);
 					moveBytes(nextPtr, _tempArray.begin(), _tempArray.end());
 					nextPtr += _getNextPointerAddress(attribute);
 					break;
 
 				case DMKVertexData::DMK_VERTEX_DATA_INTEGRITY:
-					_tempArray = _getAttributeData(attribute.type, _store.integrity);
+					_tempArray = _getAttributeData(attribute.dataType, _store.integrity);
 					moveBytes(nextPtr, _tempArray.begin(), _tempArray.end());
 					nextPtr += _getNextPointerAddress(attribute);
 					break;
@@ -90,6 +90,6 @@ namespace Dynamik {
 
 	UI32 Mesh::_getNextPointerAddress(DMKVertexAttribute attribute)
 	{
-		return sizeof(F32) / (UI32)attribute.type;
+		return sizeof(F32) / (UI32)attribute.dataType;
 	}
 }

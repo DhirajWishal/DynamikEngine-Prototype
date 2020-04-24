@@ -510,6 +510,33 @@ namespace Dynamik {
 		DMK_VERTEX_DATA_CUSTOM,						// Custom data type
 		DMK_VERTEX_DATA_UNKNOWN						// Unknown
 	};
+
+	/* UNIFORM TYPE ENUM */
+	enum class DMKUniformType {
+		DMK_UNIFORM_TYPE_BUFFER_OBJECT,
+		DMK_UNIFORM_TYPE_IMAGE_SAMPLER_2D,
+		DMK_UNIFORM_TYPE_IMAGE_SAMPLER_3D,
+		DMK_UNIFORM_TYPE_IMAGE_SAMPLER_CUBEMAP,
+		DMK_UNIFORM_TYPE_CONSTANT,
+	};
+
+	/* UNIFORM DATA TYPE ENUM */
+	enum class DMKUniformData {
+		DMK_UNIFORM_DATA_MODEL,						// Model matrix
+		DMK_UNIFORM_DATA_VIEW,						// View matrix
+		DMK_UNIFORM_DATA_PROJECTION,				// Projection matrix
+		DMK_UNIFORM_DATA_CUSTOM						// Custom data input
+	};
+
+	/* Dynamik Game Object Attribute Location enum */
+	/* Location to which the data are bount to     */
+	enum class DMKAttributeLocation {
+		DMK_ATTRIBUTE_LOCATION_VERTEX,
+		DMK_ATTRIBUTE_LOCATION_TESSELLATION,
+		DMK_ATTRIBUTE_LOCATION_GEOMETRY,
+		DMK_ATTRIBUTE_LOCATION_FRAGMENT,
+		DMK_ATTRIBUTE_LOCATION_COMPUTE,
+	};
 }
 
 #endif // !_DYNAMIK_CENTRAL_DATA_HUB_OBJECT_SPECIFICATIONS_H

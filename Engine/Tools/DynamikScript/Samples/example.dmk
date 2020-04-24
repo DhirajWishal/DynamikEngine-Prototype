@@ -1,0 +1,37 @@
+# Dynamik Script: Example file
+/* This file contains all the necessay script codes to describe a simple skybox object */
+
+# This is a single line comment
+/*
+ This is a multi line comment
+*/
+
+import { SkyBox.h, GameObject.h };	# import statement
+
+/* Engine assets are named asset */
+asset OceanBox : base SkyBox {
+visibility: public;		# this statement is equal to public: in C++
+	func _constructor() 
+	{	# constructor of a class is denoted by "func _constructor(@param) {@body}"
+		
+	}
+
+	func _destructor() 
+	{	# destructor of the class
+	}
+
+	visibility: private;	# this statement is equal to the private: statement in C++
+};
+
+func main(var value, var:string name)
+{
+	while value < 10 {
+		if value == 5 {
+			break;
+		}
+		else
+		{
+			continue;
+		}
+	}
+}

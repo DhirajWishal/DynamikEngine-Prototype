@@ -6,7 +6,7 @@
 #include "Public/Array.h"
 #include "GameObject.h"
 #include "core.h"
-#include "Objects/InternalFormat/InteralFormat.h"
+#include "Objects/InternalFormat/InternalFormat.h"
 
 namespace Dynamik {
 	/* Scene data descriptor */
@@ -25,8 +25,7 @@ namespace Dynamik {
 	};
 
 	struct AssetContainer {
-		VPTR address;
-		UI32 byteSize = 0;
+		POINTER<InternalFormat> address;
 		DMKObjectType type = DMKObjectType::DMK_OBJECT_TYPE_STATIC;
 	};
 
@@ -36,7 +35,7 @@ namespace Dynamik {
 
 	public:
 		AssetManager() {}
-		~AssetManager() {}
+		~AssetManager();
 
 		/* Returns the level index */
 		UI32 addLevel(ARRAY<ARRAY<AssetContainer>> containers);
@@ -49,8 +48,8 @@ namespace Dynamik {
 		ARRAY<AssetContainer> getScene(UI32 sceneIndex, UI32 levelIndex);
 
 		/* Returns the object index */
-		UI32 addAsset(AssetContainer container, UI32 sceneIndex, UI32 levelIndex);
-		void updateAsset(AssetContainer container, UI32 assetIndex, UI32 sceneIndex, UI32 levelIndex);
+		UI32 addAsset(POINTER<DMKGameObject> object, UI32 sceneIndex, UI32 levelIndex);
+		void updateAsset(POINTER<DMKGameObject> object, UI32 assetIndex, UI32 sceneIndex, UI32 levelIndex);
 		AssetContainer getAsset(UI32 assetIndex, UI32 sceneIndex, UI32 levelIndex);
 
 		/* Loads a scene data to the memory */
@@ -59,6 +58,10 @@ namespace Dynamik {
 		/* Filter renderable assets and return them */
 		ARRAY<AssetContainer> getRenderableAssets(UI32 sceneIndex, UI32 levelIndex);
 		ARRAY<POINTER<InternalFormat>> getRenderablesAsInternalFormats(UI32 sceneIndex, UI32 levelIndex);
+
+		/* Create an Asset Container statically */
+		static AssetContainer createAssetContainer(POINTER<DMKGameObject> object);
+		static void copyToAssetContainer(POINTER<AssetContainer> container, POINTER<InternalFormat> format);
 
 	private:
 		ARRAY<ARRAY<ARRAY<AssetContainer>>> assets;

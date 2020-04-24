@@ -2,9 +2,17 @@
 #include "AssetManager.h"
 
 #include "Platform/Windows.h"
-#include "Objects/InternalFormat/InteralFormat.h"
+#include "Objects/InternalFormat/InternalFormat.h"
 
 namespace Dynamik {
+	AssetManager::~AssetManager()
+	{
+		for (auto level : assets)
+			for (auto scene : level)
+				for (auto asset : scene)
+					StaticAllocator<InternalFormat>::deAllocate(asset.address);
+	}
+
 	UI32 AssetManager::addLevel(ARRAY<ARRAY<AssetContainer>> containers)
 	{
 		assets.pushBack(containers);
@@ -37,15 +45,16 @@ namespace Dynamik {
 		return assets[levelIndex][sceneIndex];
 	}
 
-	UI32 AssetManager::addAsset(AssetContainer container, UI32 sceneIndex, UI32 levelIndex)
+	UI32 AssetManager::addAsset(POINTER<DMKGameObject> object, UI32 sceneIndex, UI32 levelIndex)
 	{
-		assets[levelIndex][sceneIndex].pushBack(container);
+
+		assets[levelIndex][sceneIndex].pushBack(createAssetContainer(object));
 		return assets[levelIndex][sceneIndex].size() - 1;
 	}
 
-	void AssetManager::updateAsset(AssetContainer container, UI32 assetIndex, UI32 sceneIndex, UI32 levelIndex)
+	void AssetManager::updateAsset(POINTER<DMKGameObject> object, UI32 assetIndex, UI32 sceneIndex, UI32 levelIndex)
 	{
-		assets[levelIndex][sceneIndex][assetIndex] = container;
+		assets[levelIndex][sceneIndex][assetIndex] = createAssetContainer(object);
 	}
 
 	AssetContainer AssetManager::getAsset(UI32 assetIndex, UI32 sceneIndex, UI32 levelIndex)
@@ -63,10 +72,27 @@ namespace Dynamik {
 			ARRAY<std::future<void>, DMKArrayDestructorCallMode::DMK_ARRAY_DESTRUCTOR_CALL_MODE_DESTRUCT_ALL> threads;
 			for (UI32 index = 0; index < _scene.size(); index++)
 			{
-				POINTER<InternalFormat> _format = (POINTER<InternalFormat>)_scene[index].address;
+				POINTER<InternalFormat> _format = _scene[index].address;
+
+
+				if (_format->descriptor.assetDescription.textureType == DMKTextureType::DMK_TEXTURE_TYPE_CUBEMAP)
+				{
+					Texture _localTexture;
+					_localTexture.loadCubemap(_format->texturePaths, _format->descriptor.assetDescription.textureInputType);
+					_format->textures.pushBack(_localTexture);
+				}
+				else
+				{
+					for (auto path : _format->texturePaths)
+					{
+						Texture _localTexture;
+						_localTexture.loadTexture(path, _format->descriptor.assetDescription.textureType, _format->descriptor.assetDescription.textureInputType);
+						_format->textures.pushBack(_localTexture);
+					}
+				}
 
 				DMKModelLoadInfo info;
-				info.path = _format->descriptor.assetDescription.dynamikResouceFilePath;
+				info.path = _format->objectPath;
 				info.vertexOffset = {
 					_format->descriptor.transformDescriptor.location[0],
 					_format->descriptor.transformDescriptor.location[1],
@@ -99,13 +125,35 @@ namespace Dynamik {
 		/* Go through all the assets and return the renderable objects in the scene */
 		for (AssetContainer _asset : assets[levelIndex][sceneIndex])
 		{
-			if (_asset.type <= DMKObjectType::DMK_OBJECT_TYPE_CAMERA) 
-			{
-				_formats.pushBack((POINTER<InternalFormat>)_asset.address);
-			}
+			if (!_asset.address.isValid() || (I32)_asset.type < 0)
+				continue;
+
+			if (_asset.type <= DMKObjectType::DMK_OBJECT_TYPE_CAMERA)
+				_formats.pushBack(_asset.address);
 		}
 
 		return _formats;
+	}
+
+	AssetContainer AssetManager::createAssetContainer(POINTER<DMKGameObject> object)
+	{
+		/* Create a new Asset Container */
+		AssetContainer _container;
+
+		/* Heap allocate a memory block and move the data in the Dynamik Game Object to it */
+		_container.address = StaticAllocator<InternalFormat>::allocate(sizeof(InternalFormat));
+		StaticAllocator<InternalFormat>::set(_container.address, InternalFormat());
+		memcpy(_container.address.get(), object.get(), object.getTypeSize());
+
+		_container.type = object->type;
+
+		return _container;
+	}
+
+	void AssetManager::copyToAssetContainer(POINTER<AssetContainer> container, POINTER<InternalFormat> format)
+	{
+		container->type = format->type;
+		memcpy(container->address.get(), format.get(), format.getTypeSize());
 	}
 
 	AssetManager::STORE AssetManager::_initializeSceneData(ARRAY<AssetContainer> scene)
@@ -113,8 +161,7 @@ namespace Dynamik {
 		for (UI32 index = 0; index < scene.size(); index++)
 		{
 			/* Update addresses from DMKGameObject* to POINTER<InternalFormat> */
-			scene[index].address = (POINTER<InternalFormat>)scene[index].address;
-			POINTER<InternalFormat> _format = (POINTER<InternalFormat>)scene[index].address;
+			POINTER<InternalFormat> _format = scene[index].address;
 
 			/* Instantiate a dai file manager */
 			utils::daiManager daiManager;
@@ -132,28 +179,30 @@ namespace Dynamik {
 				DMK_CORE_FATAL("Unable to open the DAI file @ " + _basePath);
 
 			/* Get object path */
-			_format->objectPath = daiManager.getData(utils::DMKDaiFileDataType::DMK_DAI_FILE_DATA_TYPE_MODEL)[0].c_str();
+			_format->objectPath = _basePath + daiManager.getData(utils::DMKDaiFileDataType::DMK_DAI_FILE_DATA_TYPE_MODEL)[0];
 
 			/* Get texture paths */
 			for (auto texturePath : daiManager.getData(utils::DMK_DAI_FILE_DATA_TYPE_TEXTURE))
-				_format->texturePaths.pushBack(texturePath.c_str());
+				_format->texturePaths.pushBack(_basePath + texturePath);
 
 			/* Get shader paths */
 			/* Vertex shader path */
 			if (daiManager.getData(utils::DMK_DAI_FILE_DATA_TYPE_VERTEX).size())
-				_format->shaderPaths.vertexShader = (_basePath + daiManager.getData(utils::DMK_DAI_FILE_DATA_TYPE_VERTEX)[0]).c_str();
+				_format->shaderPaths.vertexShader = _basePath + daiManager.getData(utils::DMK_DAI_FILE_DATA_TYPE_VERTEX)[0];
 
 			/* Tessellation shader path */
 			if (daiManager.getData(utils::DMK_DAI_FILE_DATA_TYPE_TESSELLATION).size())
-				_format->shaderPaths.tessellationShader = (_basePath + daiManager.getData(utils::DMK_DAI_FILE_DATA_TYPE_TESSELLATION)[0]).c_str();
+				_format->shaderPaths.tessellationShader = _basePath + daiManager.getData(utils::DMK_DAI_FILE_DATA_TYPE_TESSELLATION)[0];
 
 			/* Geometry shader path */
 			if (daiManager.getData(utils::DMK_DAI_FILE_DATA_TYPE_GEOMETRY).size())
-				_format->shaderPaths.geometryShader = (_basePath + daiManager.getData(utils::DMK_DAI_FILE_DATA_TYPE_GEOMETRY)[0]).c_str();
+				_format->shaderPaths.geometryShader = _basePath + daiManager.getData(utils::DMK_DAI_FILE_DATA_TYPE_GEOMETRY)[0];
 
 			/* Fragment shader path */
 			if (daiManager.getData(utils::DMK_DAI_FILE_DATA_TYPE_FRAGMENT).size())
-				_format->shaderPaths.fragmentShader = (_basePath + daiManager.getData(utils::DMK_DAI_FILE_DATA_TYPE_FRAGMENT)[0]).c_str();
+				_format->shaderPaths.fragmentShader = _basePath + daiManager.getData(utils::DMK_DAI_FILE_DATA_TYPE_FRAGMENT)[0];
+
+			copyToAssetContainer(&scene[index], _format);
 		}
 
 		return scene;

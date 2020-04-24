@@ -19,7 +19,7 @@ namespace Dynamik {
 		virtual void unloadTexture();
 		virtual UI32 size();
 
-		POINTER<UCHR*> textureData;
+		POINTER<UCHR> textureData;
 		I32 width = 0;
 		I32 height = 0;
 		UI32 mipLevel = 0;

@@ -149,9 +149,7 @@
     <ClInclude Include="..\..\Runtime\Core\Algorithm\Public\Swap.h" />
     <ClInclude Include="..\..\Runtime\Core\DataTypes\DataTypesLib.h" />
     <ClInclude Include="..\..\Runtime\Core\DataTypes\Dynamik\DMKDataType.h" />
-    <ClInclude Include="..\..\Runtime\Core\DataTypes\Dynamik\DMKVertex.h" />
     <ClInclude Include="..\..\Runtime\Core\DataTypes\Dynamik\containers.h" />
-    <ClInclude Include="..\..\Runtime\Core\DataTypes\Dynamik\internalObjectFormat.h" />
     <ClInclude Include="..\..\Runtime\Core\DataTypes\Dynamik\objectSpecifications.h" />
     <ClInclude Include="..\..\Runtime\Core\DataTypes\Public\Array.h" />
     <ClInclude Include="..\..\Runtime\Core\DataTypes\Public\CircularLinkedList.h" />
@@ -317,7 +315,7 @@
     <ClInclude Include="..\..\Runtime\Objects\IndexBufferObject\IndexBufferObjectUI16.h" />
     <ClInclude Include="..\..\Runtime\Objects\IndexBufferObject\IndexBufferObjectUI32.h" />
     <ClInclude Include="..\..\Runtime\Objects\IndexBufferObject\IndexBufferObjectUI8.h" />
-    <ClInclude Include="..\..\Runtime\Objects\InternalFormat\InteralFormat.h" />
+    <ClInclude Include="..\..\Runtime\Objects\InternalFormat\InternalFormat.h" />
     <ClInclude Include="..\..\Runtime\Objects\Mesh\Mesh.h" />
     <ClInclude Include="..\..\Runtime\Objects\Texture\Texture.h" />
     <ClInclude Include="..\..\Runtime\Objects\UniformBufferObject\UniformBufferObject.h" />
@@ -436,6 +434,7 @@
     <ClCompile Include="..\..\Runtime\Managers\Asset\AssetManager.cpp" />
     <ClCompile Include="..\..\Runtime\Networking\Backend\client.cpp" />
     <ClCompile Include="..\..\Runtime\Networking\Backend\server.cpp" />
+    <ClCompile Include="..\..\Runtime\Objects\InternalFormat\InternalFormat.cpp" />
     <ClCompile Include="..\..\Runtime\Objects\Mesh\Mesh.cpp" />
     <ClCompile Include="..\..\Runtime\Objects\Texture\Texture.cpp">
       <ObjectFileName>$(IntDir)\Texture1.obj</ObjectFileName>

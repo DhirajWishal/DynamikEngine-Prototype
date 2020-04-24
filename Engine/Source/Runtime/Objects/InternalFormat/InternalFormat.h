@@ -30,8 +30,8 @@ namespace Dynamik {
 	 */
 	class InternalFormat : public DMKGameObject {
 	public:
-		InternalFormat() {}
-		~InternalFormat() {}
+		InternalFormat();
+		virtual ~InternalFormat() {}
 
 		/* Object meshes */
 		ARRAY<Mesh> meshDatas;
@@ -40,8 +40,8 @@ namespace Dynamik {
 		ARRAY<Texture> textures;
 
 		/* Object data paths */
-		CCPTR objectPath = "";
-		ARRAY<CCPTR> texturePaths;
+		std::string objectPath = "";
+		ARRAY<std::string> texturePaths;
 		ShaderPaths shaderPaths;
 
 		/* Uniform buffer data */

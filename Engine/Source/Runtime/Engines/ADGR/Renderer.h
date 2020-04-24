@@ -16,7 +16,7 @@
 #include "rendererCommandQueue.h"
 
 #include "GameObject.h"
-#include "Objects/InternalFormat/InteralFormat.h"
+#include "Objects/InternalFormat/InternalFormat.h"
 #include "Managers/Asset/AssetManager.h"
 
 #include "Camera.h"
@@ -82,6 +82,7 @@ namespace Dynamik {
 			/* Setting containers and assets */
 			static void setProgressPointer(POINTER<UI32> progress);
 			static void setWindowHandle(POINTER<GLFWwindow> window);
+			static void setWindowExtent(UI32 width, UI32 height);
 			static void setRenderableObjects(ARRAY<POINTER<InternalFormat>> formats);
 			static void submitLoadedAssets();
 

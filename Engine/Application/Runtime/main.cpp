@@ -10,6 +10,7 @@
 #include "Dynamik.h"
 #include "Core/PCH/dmkafx.h"
 
+#include "src/Camera.h"
 #include "src/Skybox.h"
 
 /* -----||||| MAIN LAUNCH SYSTEM |||||----- */
@@ -23,8 +24,28 @@ int main(int argc, char** argv) {
 		DMKInstanceDescriptor engineInstance;
 		DMKEngine::initializeInstance(engineInstance);
 
+		Camera camera;
+		DMKEngine::setupCamera(&camera);
+
 		OceanSkybox skybox;
-		DMKEngine::addAsset(&skybox);
+
+		DMKSceneDescriptor scene1;
+		scene1.sceneID = "S001";
+		scene1.sceneIndex = 0;
+		scene1.assets = { &skybox };
+
+		DMKLevelDescriptor level1;
+		level1.levelID = "001";
+		level1.levelIndex = 0;
+		level1.scenes = { scene1 };
+
+		DMKEngine::addLevel(level1);
+
+		/* Initialize the renderer */
+		DMKEngine::initializeRendererStageOne();
+		DMKEngine::genarateRenderables();
+		DMKEngine::initializeRendererStageTwo();
+		DMKEngine::initializeRendererStageThree();
 
 		DMKEngine::run();
 	}

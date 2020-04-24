@@ -63,6 +63,13 @@ namespace Dynamik {
 			vulkanRenderer() {}
 
 			static vulkanRenderer instance;
+
+			struct _internalUBO {
+				MAT4 model = glm::mat4(1.0f);
+				MAT4 view = glm::mat4(1.0f);
+				MAT4 proj = glm::mat4(1.0f);
+			};
+
 		public:
 			~vulkanRenderer() {}
 
@@ -77,6 +84,7 @@ namespace Dynamik {
 			static void addObjects(ARRAY<POINTER<InternalFormat>> formats);
 
 			static void drawFrame(DMKRendererDrawFrameInfo info);
+			static void recreateSwapChain();
 
 		private:
 			void _initializeRenderPass();	/* Initialize the render pass */
@@ -84,8 +92,14 @@ namespace Dynamik {
 			ADGRVulkanGraphicsRenderableObjectInitInfo _getBasicInitInfo();	/* Return the basic init info */
 
 		public:
+			/* Initialize the object as a Static object */
+			ADGRVulkanRenderData _initializeStaticObject(POINTER<InternalFormat> format);
+
 			/* Initialize the object as a SkyBox */
 			ADGRVulkanRenderData _initializeSkyBox(POINTER<InternalFormat> format);
+
+			/* Initialize the object as s Skeletal animation */
+			ADGRVulkanRenderData _initializeSkeletalAnimation(POINTER<InternalFormat> format);
 
 		private:
 			POINTER<UI32> myProgress;
@@ -106,6 +120,13 @@ namespace Dynamik {
 			VulkanGraphicsDepthBuffer myDepthBuffer;	/* Core Vulkan attachments */
 
 			VulkanGraphicsFrameBuffer myFrameBuffer;	/* Graphics frame buffer */
+
+			/* Draw call variables */
+			UI32 imageIndex = 0;
+			UI32 currentFrame = 0;
+			VkResult result = VkResult::VK_ERROR_UNKNOWN;
+
+			_internalUBO commonUBO;
 
 			/* Attachment container */
 		};

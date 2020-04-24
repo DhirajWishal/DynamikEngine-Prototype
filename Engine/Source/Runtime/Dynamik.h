@@ -98,7 +98,7 @@ namespace Dynamik {
 		static void updateMouseSensitivity(F32 sensitivity);
 		static void updateAnimationSpeed(F32 speed);
 
-		static void setupCamera(Camera* camera);
+		static void setupCamera(DMKCamera* camera);
 
 		static void terminateInstance();
 
@@ -128,7 +128,7 @@ namespace Dynamik {
 
 		DMKInstanceDescriptor myInstanceDescriptor;
 
-		Camera* myCamera;
+		DMKCamera* myCamera;
 		DMKCameraData cameraData;
 		UI32 FOV = 60.0f;
 		UI32 aspectRatio = 0.5f;
@@ -143,6 +143,9 @@ namespace Dynamik {
 		F32 movementSpeed = 1.0f;
 		F32 mouseSensitivity = 1.0f;
 		F32 animationSpeed = 1.0f;
+
+	private:
+		std::thread myStartypRendererThread;
 	};
 }
 

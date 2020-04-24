@@ -58,13 +58,18 @@ namespace Dynamik {
 
 		void Renderer::setWindowHandle(POINTER<GLFWwindow> window)
 		{
+			vulkanRenderer::setWindowHandle(window);
+		}
+
+		void Renderer::setWindowExtent(UI32 width, UI32 height)
+		{
+			vulkanRenderer::setWindowExtent(width, height);
 		}
 
 		void Renderer::setRenderableObjects(ARRAY<POINTER<InternalFormat>> formats)
 		{
 			for (auto format : formats)
 			{
-
 				if (format->type == DMKObjectType::DMK_OBJECT_TYPE_STATIC)
 				{
 					format->renderAttachments.pushBack(DMKRenderAttachment::DMK_RENDER_ATTACHMENT_SKYBOX);
@@ -79,6 +84,9 @@ namespace Dynamik {
 
 		void Renderer::submitLoadedAssets()
 		{
+			instance.inFlightAssets = instance.submitPendingAssets;
+			instance.submitPendingAssets = {};
+			vulkanRenderer::addObjects(instance.inFlightAssets);
 		}
 
 		void Renderer::addToRenderQueue(POINTER<InternalFormat> container)

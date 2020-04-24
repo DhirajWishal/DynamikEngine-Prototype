@@ -42,7 +42,7 @@ namespace Dynamik {
 #endif
 		}
 
-		static void deAllocate(POINTER<TYPE> data, UI32 size = 1, UI32 align = DMK_MEMORY_ALIGN, UI32 offset = 0)
+		static void deAllocate(POINTER<TYPE> data, UI32 size = sizeof(TYPE), UI32 align = DMK_MEMORY_ALIGN, UI32 offset = 0)
 		{
 			//#if defined(DMK_DYNAMIK_MEMORY_USE_MALLOC)
 			//			free((VPTR)data.get());

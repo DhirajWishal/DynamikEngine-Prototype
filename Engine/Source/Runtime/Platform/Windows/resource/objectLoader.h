@@ -8,7 +8,7 @@
 #include <vector>
 
 #include "Public/Array.h"
-#include "Objects/InternalFormat/InteralFormat.h"
+#include "Objects/InternalFormat/InternalFormat.h"
 
 namespace Dynamik {
 	namespace resources {

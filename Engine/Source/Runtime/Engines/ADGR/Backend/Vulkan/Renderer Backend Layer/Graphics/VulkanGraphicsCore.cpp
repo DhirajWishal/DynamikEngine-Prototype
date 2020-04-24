@@ -173,9 +173,9 @@ namespace Dynamik {
 					DMK_CORE_FATAL("Failed to create instance!");
 			}
 
-			void VulkanGraphicsCore::initializeSurface(POINTER<GLFWwindow*> windowPtr)
+			void VulkanGraphicsCore::initializeSurface(POINTER<GLFWwindow> windowPtr)
 			{
-				if (glfwCreateWindowSurface(instance, windowPtr.dereference(), nullptr, &surface) != VK_SUCCESS) {
+				if (glfwCreateWindowSurface(instance, windowPtr.get(), nullptr, &surface) != VK_SUCCESS) {
 					DMK_CORE_FATAL("Failed to create window surface!");
 				}
 			}

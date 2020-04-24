@@ -63,6 +63,20 @@ namespace Dynamik {
 		} while (--_runSize);
 		_iterator--;
 	}
+
+	/* FUNCTION
+	 * Prepare a new pointer to store data.
+	 * This allocates the pointer in heap and is not automatically deleted.
+	 *
+	 * @param size: Size of the pointer to be prepared.
+	 */
+	template<class TYPE>
+	POINTER<TYPE> preparePointer(I32 size = sizeof(TYPE))
+	{
+		POINTER<TYPE> _ptr = StaticAllocator<TYPE>::allocate(size);
+		StaticAllocator<TYPE>::set(_ptr, TYPE());
+		return _ptr;
+	}
 }
 
 #endif // !_DYNAMIK_MEMORY_FUNCTIONS_H

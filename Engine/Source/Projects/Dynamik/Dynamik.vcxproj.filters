@@ -246,13 +246,7 @@
     <ClInclude Include="..\..\Runtime\Core\DataTypes\Dynamik\DMKDataType.h">
       <Filter>Runtime\Core\DataTypes\Dynamik</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Runtime\Core\DataTypes\Dynamik\DMKVertex.h">
-      <Filter>Runtime\Core\DataTypes\Dynamik</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Runtime\Core\DataTypes\Dynamik\containers.h">
-      <Filter>Runtime\Core\DataTypes\Dynamik</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Runtime\Core\DataTypes\Dynamik\internalObjectFormat.h">
       <Filter>Runtime\Core\DataTypes\Dynamik</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Runtime\Core\DataTypes\Dynamik\objectSpecifications.h">
@@ -750,7 +744,7 @@
     <ClInclude Include="..\..\Runtime\Objects\IndexBufferObject\IndexBufferObjectUI8.h">
       <Filter>Runtime\Objects\IndexBufferObject</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Runtime\Objects\InternalFormat\InteralFormat.h">
+    <ClInclude Include="..\..\Runtime\Objects\InternalFormat\InternalFormat.h">
       <Filter>Runtime\Objects\InternalFormat</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Runtime\Objects\Mesh\Mesh.h">
@@ -1096,6 +1090,9 @@
     </ClCompile>
     <ClCompile Include="..\..\Runtime\Networking\Backend\server.cpp">
       <Filter>Runtime\Networking\Backend</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Runtime\Objects\InternalFormat\InternalFormat.cpp">
+      <Filter>Runtime\Objects\InternalFormat</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Runtime\Objects\Mesh\Mesh.cpp">
       <Filter>Runtime\Objects\Mesh</Filter>

@@ -7,15 +7,30 @@
     <Filter Include="Studio\Core">
       <UniqueIdentifier>{95C9E11C-017F-5A12-8A73-54E9F6275116}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Studio\Core\PCH">
+      <UniqueIdentifier>{1FAF41E5-8B3A-AFA9-944B-329E00560BAA}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Studio\Platform">
+      <UniqueIdentifier>{113831D7-7DC3-9E9B-86D4-2190F2DEFA9B}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Studio\Platform\Windows">
+      <UniqueIdentifier>{4B633AF3-B79A-828A-C0A4-E6AD2C5BA983}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\Studio\Core\studioafx.h">
-      <Filter>Studio\Core</Filter>
+    <ClInclude Include="..\..\Studio\Core\PCH\studioafx.h">
+      <Filter>Studio\Core\PCH</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Studio\Platform\Windows\Window.h">
+      <Filter>Studio\Platform\Windows</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\Studio\Core\studioafx.cpp">
-      <Filter>Studio\Core</Filter>
+    <ClCompile Include="..\..\Studio\Core\PCH\studioafx.cpp">
+      <Filter>Studio\Core\PCH</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Studio\Platform\Windows\Window.cpp">
+      <Filter>Studio\Platform\Windows</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Studio\main.cpp">
       <Filter>Studio</Filter>

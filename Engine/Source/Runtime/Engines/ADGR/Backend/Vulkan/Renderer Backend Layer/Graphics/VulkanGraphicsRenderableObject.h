@@ -14,7 +14,7 @@
 
 #include "../Common/VulkanUtilities.h"
 
-#include "Objects/InternalFormat/InteralFormat.h"
+#include "Objects/InternalFormat/InternalFormat.h"
 
 namespace Dynamik {
 	namespace ADGR {
@@ -104,13 +104,14 @@ namespace Dynamik {
 				VkDeviceMemory bufferMemory = VK_NULL_HANDLE;
 			};
 
-			class VulkanGraphicsRenderableObject : public InternalFormat {
+			class VulkanGraphicsRenderableObject {
 			public:
 				VulkanGraphicsRenderableObject() {}
 				VulkanGraphicsRenderableObject(ADGRVulkanGraphicsRenderableObjectInitInfo info)
 					: logicalDevice(info.logicalDevice), physicalDevice(info.physicalDevice), commandPool(info.commandPool), graphicsQueue(info.graphicsQueue), presentQueue(info.presentQueue) {}
 				virtual ~VulkanGraphicsRenderableObject() {}
 
+				void setInternalFormat(POINTER<InternalFormat> format);
 				virtual void initializeResources(ADGRVulkanGraphicsRenderableObjectInitInfo info);
 
 				virtual ADGRVulkanRenderData initializeObject(POINTER<InternalFormat> format, VkSampleCountFlagBits msaaSamples);
@@ -122,7 +123,7 @@ namespace Dynamik {
 				/* Initialize the object resources (vertex buffer, index buffer, textures) */
 				virtual void initializeObjectResources();
 
-				virtual void initializeTextures(Mesh mesh, ADGRVulkanTextureInitInfo info);
+				virtual void initializeTextures(Texture texture, ADGRVulkanTextureInitInfo info);
 				virtual void generateMipMaps(POINTER<ADGRVulkanTextureContainer> container);
 				virtual void terminateTextures();
 
@@ -158,6 +159,8 @@ namespace Dynamik {
 				VkQueue presentQueue = VK_NULL_HANDLE;
 
 				VkDescriptorSetLayout noTextureDescriptorSetLayout = VK_NULL_HANDLE;
+
+				POINTER<InternalFormat> myInternalFormat;
 			};
 		}
 	}

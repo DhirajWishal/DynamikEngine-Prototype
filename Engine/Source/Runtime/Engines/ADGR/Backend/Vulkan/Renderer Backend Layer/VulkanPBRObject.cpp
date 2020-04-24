@@ -111,8 +111,8 @@ namespace Dynamik {
 				ADGRVulkanGraphicsPipelineInitInfo pipelineInitInfo;
 				pipelineInitInfo.shaders = _shaders;
 				pipelineInitInfo.multisamplerMsaaSamples = msaaSamples;
-				pipelineInitInfo.vertexBindingDescription = VulkanUtilities::getBindingDescription(descriptor.vertexBufferObjectDescription.attributes, 1);
-				pipelineInitInfo.vertexAttributeDescription = VulkanUtilities::getAttributeDescriptions(descriptor.vertexBufferObjectDescription.attributes, 1);
+				pipelineInitInfo.vertexBindingDescription = VulkanUtilities::getBindingDescription(myInternalFormat->descriptor.vertexBufferObjectDescription.attributes, 1);
+				pipelineInitInfo.vertexAttributeDescription = VulkanUtilities::getAttributeDescriptions(myInternalFormat->descriptor.vertexBufferObjectDescription.attributes, 1);
 				pipelineInitInfo.isTexturesAvailable = _object->texturePaths.size();
 				pipelineInitInfo.depthStencilTestEnable = VK_TRUE;
 				pipelineInitInfo.depthStencilWriteEnable = VK_TRUE;

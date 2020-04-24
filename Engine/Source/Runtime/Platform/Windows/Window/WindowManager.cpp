@@ -39,13 +39,13 @@ namespace Dynamik {
 
 		EventManager::setEventCallbacks(window);
 
-		glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+		//glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
 		glfwSetWindowUserPointer(window, this);
 
 		//glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
 
-		setIcon(info.iconPaths);
+		//setIcon(info.iconPaths);
 	}
 
 	void WindowManager::terminate()

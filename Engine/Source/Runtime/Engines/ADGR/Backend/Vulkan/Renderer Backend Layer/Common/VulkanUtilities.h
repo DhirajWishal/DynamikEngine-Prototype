@@ -6,7 +6,7 @@
 
 #include "Public/Array.h"
 #include "GameObjectDescriptors.h"
-#include "Objects/InternalFormat/InteralFormat.h"
+#include "Objects/InternalFormat/InternalFormat.h"
 #include "../Graphics/VulkanGraphicsShader.h"
 
 namespace Dynamik {
@@ -142,7 +142,7 @@ namespace Dynamik {
 
 				/* VERTEX FUNCTIONS */
 				static ARRAY<VkVertexInputBindingDescription> getBindingDescription(ARRAY<DMKVertexAttribute> attributes, UI32 bindCount = 1);
-				static ARRAY<VkVertexInputAttributeDescription> getAttributeDescriptions(ARRAY<DMKVertexAttribute> attributes, UI32 binding = 1);
+				static ARRAY<VkVertexInputAttributeDescription> getAttributeDescriptions(ARRAY<DMKVertexAttribute> attributes, UI32 binding = 0);
 				static VkFormat vertexAttributeTypeToVkFormat(DMKDataType type);
 
 				/* SHADER FUNCTIONS */
@@ -175,6 +175,9 @@ namespace Dynamik {
 				/* UNIFORM BUFFER FUNCTIONS */
 				static ADGRVulkanUnformBufferContainer createUniformBuffers(VkDevice logicalDevice, VkPhysicalDevice physicalDevice, VkDeviceSize bufferSize, UI32 count);
 				static void updateUniformBuffer(VkDevice device, ARRAY<MAT4> uniformData, VkDeviceMemory uniformBufferMemory);
+				static VkDescriptorType getDescriptorType(DMKUniformType type);
+				static VkShaderStageFlagBits getDescriptorFlag(DMKAttributeLocation location);
+				static ARRAY<VkDescriptorSetLayoutBinding> getDescriptorSetBindings(ARRAY<DMKUniformBufferObjectDescriptor> descriptors);
 			};
 		}
 	}

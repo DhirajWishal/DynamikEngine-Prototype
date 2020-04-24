@@ -6,10 +6,7 @@
 
 class OceanSkybox : public Dynamik::DMKSkyboxObject {
 public:
-	OceanSkybox() 
-	{
-		type = Dynamik::DMKObjectType::DMK_OBJECT_TYPE_SKYBOX;
-	}
+	OceanSkybox();
 	~OceanSkybox() {}
 };
 

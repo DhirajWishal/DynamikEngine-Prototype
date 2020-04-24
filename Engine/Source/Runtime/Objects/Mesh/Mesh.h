@@ -8,14 +8,16 @@
 
 namespace Dynamik {
 	struct MeshPointStore {
-		ARRAY<F32> position;
-		ARRAY<F32> color;
-		ARRAY<F32> textureCoordinate;
-		ARRAY<F32> normal;
-		ARRAY<F32> space;
+		VEC3 position;
+		VEC3 color;
+		VEC3 textureCoordinate;
+		VEC3 normal;
+		VEC3 space;
 		CCPTR matlabLibrary;
 
 		F32 integrity = 1.0f;
+
+		B1 operator==(const MeshPointStore& other) const;
 	};
 
 	class Mesh {
@@ -32,7 +34,7 @@ namespace Dynamik {
 		void packData(ARRAY<DMKVertexAttribute> attributes, VPTR data);
 
 	private:
-		ARRAY<F32> _getAttributeData(DMKDataType type, ARRAY<F32> data);
+		ARRAY<F32> _getAttributeData(DMKDataType type, VEC3 data);
 		UI32 _getNextPointerAddress(DMKVertexAttribute attribute);
 	};
 }

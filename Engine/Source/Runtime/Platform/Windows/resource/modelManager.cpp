@@ -2,15 +2,20 @@
 #include "modelManager.h"
 #include <tiny_obj_loader.h>
 
-//namespace std {
-//	template<>
-//	struct hash<Dynamik::MeshPointStore> {
-//		size_t operator() (Dynamik::MeshPointStore other)
-//		{
-//			return (size_t)other.position.hash() ^ (size_t)other.color.hash() ^ (size_t)other.textureCoordinate.hash();
-//		}
-//	};
-//}
+namespace std {
+	using namespace Dynamik;
+
+	template<>
+	struct hash<Dynamik::MeshPointStore> {
+		size_t operator() (Dynamik::MeshPointStore const& other) const
+		{
+			return (
+				(hash<VEC3>()(other.position) ^
+					(hash<VEC3>()(other.color) << 1)) >> 1) ^
+				(hash<VEC3>()(other.textureCoordinate) << 1);
+		}
+	};
+}
 
 float RandomFloat(float a, float b) {
 	float random = ((float)rand()) / (float)RAND_MAX;
@@ -31,6 +36,8 @@ namespace Dynamik {
 
 		MeshPointStore _store;
 
+		std::unordered_map<MeshPointStore, UI32> uniqueVertices;
+
 		for (const auto& shape : shapes) {
 			Mesh _mesh;
 			for (const auto& index : shape.mesh.indices) {
@@ -42,7 +49,8 @@ namespace Dynamik {
 
 				_store.textureCoordinate = {
 						attributes.texcoords[2 * index.texcoord_index + 0],
-						1.0f - attributes.texcoords[2 * index.texcoord_index + 1]
+						1.0f - attributes.texcoords[2 * index.texcoord_index + 1],
+						0.0f
 				};
 
 				_store.color = {
@@ -59,8 +67,14 @@ namespace Dynamik {
 					attributes.normals[index.normal_index + 2]
 				};
 
-				_mesh.vertexDataStore.push_back(_store);
-				_mesh.indexes.push_back(_mesh.vertexDataStore.size() - 1);
+
+				if (uniqueVertices.count(_store) == 0)
+				{
+					uniqueVertices[_store] = static_cast<uint32_t>(_mesh.vertexDataStore.size());
+					_mesh.vertexDataStore.push_back(_store);
+				}
+
+				_mesh.indexes.push_back(uniqueVertices[_store]);
 			}
 
 			info.meshes->pushBack(_mesh);

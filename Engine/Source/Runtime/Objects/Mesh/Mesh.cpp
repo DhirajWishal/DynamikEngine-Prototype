@@ -52,7 +52,7 @@ namespace Dynamik {
 					break;
 
 				case DMKVertexData::DMK_VERTEX_DATA_INTEGRITY:
-					_tempArray = _getAttributeData(attribute.dataType, _store.integrity);
+					_tempArray = { _store.integrity };
 					moveBytes(nextPtr, _tempArray.begin(), _tempArray.end());
 					nextPtr += _getNextPointerAddress(attribute);
 					break;
@@ -67,7 +67,7 @@ namespace Dynamik {
 		moveBytes((POINTER<F32>)ptr, _pool, nextPtr);
 	}
 
-	ARRAY<F32> Mesh::_getAttributeData(DMKDataType type, ARRAY<F32> data)
+	ARRAY<F32> Mesh::_getAttributeData(DMKDataType type, VEC3 data)
 	{
 		ARRAY<F32> _attributeData;
 
@@ -79,7 +79,7 @@ namespace Dynamik {
 
 		_dataCount = sizeof(F32) / _typeSize;
 
-		if (_dataCount >= data.size())
+		if (_dataCount >= 4)
 			DMK_CORE_FATAL("Data count is out of bound!");
 
 		for (UI32 _itr = 0; _itr < _dataCount; _itr++)
@@ -91,5 +91,16 @@ namespace Dynamik {
 	UI32 Mesh::_getNextPointerAddress(DMKVertexAttribute attribute)
 	{
 		return sizeof(F32) / (UI32)attribute.dataType;
+	}
+	
+	B1 MeshPointStore::operator==(const MeshPointStore& other) const
+	{
+		return (
+			position == other.position &&
+			color == other.color &&
+			textureCoordinate == other.textureCoordinate &&
+			normal == other.normal &&
+			space == other.space &&
+			integrity == other.integrity);
 	}
 }

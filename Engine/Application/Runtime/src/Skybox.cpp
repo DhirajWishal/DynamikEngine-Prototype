@@ -50,6 +50,12 @@ OceanSkybox::OceanSkybox()
 	uAttribute3.dataType = DMKDataType::DMK_DATA_TYPE_MAT4;
 	UBODescriptor.attributes.pushBack(uAttribute3);
 
+	/* Texture sampler */
+	DMKUniformBufferObjectDescriptor TexSampler;
+	TexSampler.type = DMKUniformType::DMK_UNIFORM_TYPE_IMAGE_SAMPLER_CUBEMAP;
+	TexSampler.location = DMKAttributeLocation::DMK_ATTRIBUTE_LOCATION_FRAGMENT;
+
 	/* Add the uniform descriptior */
 	descriptor.uniformBufferObjectDescriptions.pushBack(UBODescriptor);
+	descriptor.uniformBufferObjectDescriptions.pushBack(TexSampler);
 }

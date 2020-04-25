@@ -83,6 +83,9 @@ namespace Dynamik {
 			static void addObject(POINTER<InternalFormat> format);
 			static void addObjects(ARRAY<POINTER<InternalFormat>> formats);
 
+			static void initializeCommands();
+			static void initializeFinalComponents();
+
 			static void drawFrame(DMKRendererDrawFrameInfo info);
 			static void recreateSwapChain();
 

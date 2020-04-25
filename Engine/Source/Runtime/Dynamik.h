@@ -105,6 +105,7 @@ namespace Dynamik {
 		/* Rendering engine commands */
 		static void initializeRendererStageOne();
 		static void genarateRenderables();
+		static void submitLoadedAssets();
 		static void addToRenderingQueue(DMKGameObject* object);
 		static void initializeRendererStageTwo();
 		static void initializeRendererStageThree();

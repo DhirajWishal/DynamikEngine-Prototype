@@ -44,10 +44,12 @@ namespace Dynamik {
 
 		void Renderer::initializeStageTwo()
 		{
+			vulkanRenderer::initializeCommands();
 		}
 
 		void Renderer::initializeStageThree()
 		{
+			vulkanRenderer::initializeFinalComponents();
 		}
 
 		void Renderer::setProgressPointer(POINTER<UI32> progress)
@@ -96,6 +98,7 @@ namespace Dynamik {
 
 		void Renderer::drawFrame(DMKRendererDrawFrameInfo info)
 		{
+			info.formats = instance.inFlightAssets;
 			vulkanRenderer::drawFrame(info);
 		}
 

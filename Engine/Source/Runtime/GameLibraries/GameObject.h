@@ -29,6 +29,8 @@ namespace Dynamik {
         DMKGameObject() {}
         virtual ~DMKGameObject() {}
 
+        virtual DMKUniformBufferData onUpdate(DMKCameraData data) { return DMKUniformBufferData(); }
+
         DMKObjectType type = DMKObjectType::DMK_OBJECT_TYPE_STATIC;
 
         DMKGameObjectDescriptor descriptor;

@@ -61,6 +61,13 @@ namespace Dynamik {
 		F32 dissipationFactor = 1.0f;
 	};
 
+	struct DMKCameraData {
+		VEC3 cameraPosition = { 0.0f, 0.0f, 0.0f };
+		VEC3 cameraUp = { 0.0f, 1.0f, 0.0f };
+		VEC3 cameraFront = { 1.0f, 0.0f, 0.0f };
+		VEC3 cameraRight = { 1.0f, 0.0f, 0.0f };
+	};
+
 	/* Binding indexes are assigned in the same order as the vertex attributes are submitted. */
 	struct DMKVertexAttribute {
 		DMKVertexData name = DMKVertexData::DMK_VERTEX_DATA_POSITION;
@@ -109,6 +116,9 @@ namespace Dynamik {
 		DMKDataType indexBufferType = DMKDataType::DMK_DATA_TYPE_UI32;
 		ARRAY<DMKUniformBufferObjectDescriptor> uniformBufferObjectDescriptions;
 	};
+
+	/* Uniform buffer data typedef */
+	typedef ARRAY<MAT4> DMKUniformBufferData;
 }
 
 #endif // !_DYNAMIK_GAME_OBJECT_DESCRIPTORS_H

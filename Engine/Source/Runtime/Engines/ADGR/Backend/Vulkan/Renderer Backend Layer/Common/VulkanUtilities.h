@@ -174,7 +174,7 @@ namespace Dynamik {
 
 				/* UNIFORM BUFFER FUNCTIONS */
 				static ADGRVulkanUnformBufferContainer createUniformBuffers(VkDevice logicalDevice, VkPhysicalDevice physicalDevice, VkDeviceSize bufferSize, UI32 count);
-				static void updateUniformBuffer(VkDevice device, ARRAY<MAT4> uniformData, VkDeviceMemory uniformBufferMemory);
+				static void updateUniformBuffer(VkDevice device, ARRAY<MAT4> uniformData, VkDeviceMemory uniformBufferMemory, DMKUniformBufferObjectDescriptor descriptor);
 				static VkDescriptorType getDescriptorType(DMKUniformType type);
 				static VkShaderStageFlagBits getDescriptorFlag(DMKAttributeLocation location);
 				static ARRAY<VkDescriptorSetLayoutBinding> getDescriptorSetBindings(ARRAY<DMKUniformBufferObjectDescriptor> descriptors);

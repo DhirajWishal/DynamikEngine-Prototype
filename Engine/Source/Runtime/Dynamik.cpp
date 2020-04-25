@@ -116,9 +116,6 @@ namespace Dynamik {
 		ADGR::Renderer::setWindowHandle(instance.myWindowManager.window);
 		ADGR::Renderer::setWindowExtent(instance.myWindowManager.windowWidth, instance.myWindowManager.windowHeight);
 
-		/* Get the renderable assets */
-		ADGR::Renderer::setRenderableObjects(instance.myAssetManager.getRenderablesAsInternalFormats(instance.sceneIndex, instance.levelIndex));
-
 		/* Initialize the Renderer: Stage One */
 		ADGR::Renderer::initializeStageOne(instance.myInstanceDescriptor.renderingAPI, instance.myInstanceDescriptor.settings);
 	}
@@ -132,6 +129,10 @@ namespace Dynamik {
 		/* Submit the assets to the renderer */
 		ADGR::Renderer::setRenderableObjects(instance.internalFormats);
 		ADGR::Renderer::initializeStageTwo();
+	}
+
+	void DMKEngine::submitLoadedAssets()
+	{
 		ADGR::Renderer::submitLoadedAssets();
 	}
 
@@ -168,6 +169,9 @@ namespace Dynamik {
 		/* If the window is invalid (closed), it goes to the termination subroutine.	*/
 		while (EventManager::pollEventsGLFW())
 		{
+			/* Clean used variables for a new draw call */
+			cleanUniformBuffers();
+
 			/* Get the events and store them locally */
 			instance.eventComponents = EventManager::getEventComponents();
 
@@ -176,7 +180,6 @@ namespace Dynamik {
 
 			/* Draw the frame using the camera data */
 			info.cameraData = instance.cameraData;
-			info.formats = instance.internalFormats;
 			ADGR::Renderer::drawFrame(info);
 		}
 

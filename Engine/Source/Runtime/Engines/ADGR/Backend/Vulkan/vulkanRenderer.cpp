@@ -215,12 +215,24 @@ namespace Dynamik {
 		void vulkanRenderer::addObjects(ARRAY<POINTER<InternalFormat>> formats)
 		{
 			for (auto format : formats)
-			{
 				if (format.isValid())
 					addObject(format);
+		}
 
-				break;
-			}
+		void vulkanRenderer::initializeCommands()
+		{
+			ADGRVulkanGraphicsCommandBufferInitInfo initInfo;
+			initInfo.count = instance.mySwapChain.swapChainContainer.swapChainImages.size();
+			initInfo.frameBuffer = instance.myFrameBuffer;
+			initInfo.swapChain = instance.mySwapChain.swapChainContainer;
+			initInfo.objects = instance.myResourceContainers[instance.inUseIndex].renderData;
+
+			instance.myResourceContainers[instance.inUseIndex].commandBuffer.initializeCommandBuffers(initInfo);
+		}
+
+		void vulkanRenderer::initializeFinalComponents()
+		{
+			instance.myGraphicsCore.initializeSyncObjects();
 		}
 
 		void vulkanRenderer::drawFrame(DMKRendererDrawFrameInfo info)
@@ -243,15 +255,14 @@ namespace Dynamik {
 				DMK_CORE_FATAL("Failed to acquire Swap Chain image!");
 
 			/* Update the objects using the Draw Frame Info structure */
-			for (UI32 index = 0; index = info.formats.size(); index++)
+			for (UI32 index = 0; index < info.formats.size(); index++)
 			{
 				/* Update the common uniform buffer object */
 				instance.commonUBO.view = glm::lookAt(info.cameraData.cameraPosition, info.cameraData.cameraPosition + info.cameraData.cameraRight, info.cameraData.cameraUp);
 				instance.commonUBO.proj = glm::perspective(glm::radians(info.FOV), info.aspectRatio, info.frustumNear, info.frustumFar);
 
 				/* Check for the Uniform buffer attributes and add the data to the container */
-				POINTER<InternalFormat> object = info.formats[index];
-				for (auto _description : object->descriptor.uniformBufferObjectDescriptions)
+				for (auto _description : info.formats[index]->descriptor.uniformBufferObjectDescriptions)
 				{
 					/* Currently the Vulkan RBL supports vertex shader uniform buffer updation only */
 					if (_description.location != DMKAttributeLocation::DMK_ATTRIBUTE_LOCATION_VERTEX)
@@ -262,30 +273,30 @@ namespace Dynamik {
 						switch (_attribute.name)
 						{
 						case DMKUniformData::DMK_UNIFORM_DATA_MODEL:
-							object->uniformBufferData.pushBack(instance.commonUBO.model);
+							info.formats[index]->uniformBufferData.pushBack(instance.commonUBO.model);
 							break;
 
 						case DMKUniformData::DMK_UNIFORM_DATA_VIEW:
-							object->uniformBufferData.pushBack(instance.commonUBO.view);
+							info.formats[index]->uniformBufferData.pushBack(instance.commonUBO.view);
 							break;
 
 						case DMKUniformData::DMK_UNIFORM_DATA_PROJECTION:
-							object->uniformBufferData.pushBack(instance.commonUBO.proj);
+							info.formats[index]->uniformBufferData.pushBack(instance.commonUBO.proj);
 							break;
 						}
 					}
-				}
 
-				/* Update the objects uniform buffer memory */
-				for (auto _container : instance.myResourceContainers[instance.inUseIndex].renderData[index].uniformBufferContainers)
-					VulkanUtilities::updateUniformBuffer(instance.myGraphicsCore.logicalDevice, object->uniformBufferData, _container.bufferMemories[instance.imageIndex]);
+					/* Update the objects uniform buffer memory */
+					for (auto _container : instance.myResourceContainers[instance.inUseIndex].renderData[index].uniformBufferContainers)
+						VulkanUtilities::updateUniformBuffer(instance.myGraphicsCore.logicalDevice, info.formats[index]->uniformBufferData, _container.bufferMemories[instance.imageIndex], _description);
+				}
 			}
 
 			/* Submit queues */
 			instance.result = instance.myGraphicsCore.submitQueues(
 				{ instance.mySwapChain.swapChainContainer.swapChain },
 				instance.imageIndex, instance.currentFrame,
-				instance.myResourceContainers[instance.inUseIndex].commandBuffer.buffers);
+				{ instance.myResourceContainers[instance.inUseIndex].commandBuffer.buffers[instance.imageIndex] });
 
 			if (instance.result == VK_ERROR_OUT_OF_DATE_KHR || instance.result == VK_SUBOPTIMAL_KHR)
 			{

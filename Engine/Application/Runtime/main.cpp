@@ -20,6 +20,8 @@ using namespace Dynamik;
 #ifdef DMK_PLATFORM_WINDOWS
 /* ---------- ########## ////////// MAIN LOOP \\\\\\\\\\ ########## ---------- */
 int main(int argc, char** argv) {
+	std::cout << sizeof(MAT4);
+
 	try {
 		DMKInstanceDescriptor engineInstance;
 		DMKEngine::initializeInstance(engineInstance);
@@ -44,6 +46,7 @@ int main(int argc, char** argv) {
 		/* Initialize the renderer */
 		DMKEngine::initializeRendererStageOne();
 		DMKEngine::genarateRenderables();
+		DMKEngine::submitLoadedAssets();
 		DMKEngine::initializeRendererStageTwo();
 		DMKEngine::initializeRendererStageThree();
 

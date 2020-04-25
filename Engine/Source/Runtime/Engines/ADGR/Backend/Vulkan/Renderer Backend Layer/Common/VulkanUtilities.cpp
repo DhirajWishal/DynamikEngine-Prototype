@@ -712,9 +712,9 @@ namespace Dynamik {
 				return _container;
 			}
 
-			void VulkanUtilities::updateUniformBuffer(VkDevice device, ARRAY<MAT4> uniformData, VkDeviceMemory uniformBufferMemory)
+			void VulkanUtilities::updateUniformBuffer(VkDevice device, ARRAY<MAT4> uniformData, VkDeviceMemory uniformBufferMemory, DMKUniformBufferObjectDescriptor descriptor)
 			{
-				UI32 _bufferSize = uniformData.typeSize() * uniformData.size();
+				UI32 _bufferSize = DMKUniformBufferObjectDescriptor::uniformByteSize(descriptor.attributes);
 
 				VPTR data = nullptr;
 				vkMapMemory(device, uniformBufferMemory, 0, _bufferSize, 0, &data);

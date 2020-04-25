@@ -81,6 +81,7 @@ namespace Dynamik {
 	typedef glm::mat3 MAT3;
 	typedef glm::mat4 MAT4;
 }
+
 #define DMK_UINT_8				::Dynamik::UI8
 #define DMK_UINT_16				::Dynamik::UI16
 #define DMK_UINT_32				::Dynamik::UI32

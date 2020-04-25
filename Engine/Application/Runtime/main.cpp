@@ -20,7 +20,7 @@ using namespace Dynamik;
 #ifdef DMK_PLATFORM_WINDOWS
 /* ---------- ########## ////////// MAIN LOOP \\\\\\\\\\ ########## ---------- */
 int main(int argc, char** argv) {
-	std::cout << sizeof(MAT4);
+	std::cout << sizeof(VEC4) << std::endl;
 
 	try {
 		DMKInstanceDescriptor engineInstance;

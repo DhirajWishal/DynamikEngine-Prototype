@@ -170,7 +170,7 @@ namespace Dynamik {
 		while (EventManager::pollEventsGLFW())
 		{
 			/* Clean used variables for a new draw call */
-			cleanUniformBuffers();
+			onUpdateCleanup();
 
 			/* Get the events and store them locally */
 			instance.eventComponents = EventManager::getEventComponents();
@@ -202,5 +202,11 @@ namespace Dynamik {
 		/* Clean all the uniform buffer data to add new uniform data. */
 		for (auto _format : instance.internalFormats)
 			_format->uniformBufferData = {};
+	}
+	
+	inline void DMKEngine::onUpdateCleanup()
+	{
+		cleanUniformBuffers();
+		instance.eventComponents = {};
 	}
 }

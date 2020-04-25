@@ -119,6 +119,7 @@ namespace Dynamik {
 	private:
 		inline static B1 isRenderableAsset(AssetContainer asset);
 		inline static void cleanUniformBuffers();
+		inline static void onUpdateCleanup();
 
 		AssetManager myAssetManager;
 		UI32 levelIndex = 0;

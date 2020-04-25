@@ -24,6 +24,7 @@ project "Application"
 		"$(SolutionDir)Engine/Source/Runtime/GameLibraries",
 		"$(SolutionDir)Engine/Source/Runtime/Core/Algorithm",
 		"$(SolutionDir)Engine/Source/Runtime/Core/DataTypes",
+		"$(SolutionDir)Engine/Source/Runtime/Core/Math",
 		"$(SolutionDir)Engine/Source/Runtime/Core/Memory",
 		"$(SolutionDir)Engine/Source/Runtime/Core/System",
 		"$(SolutionDir)Dependencies/Programs/Debugger/src/",

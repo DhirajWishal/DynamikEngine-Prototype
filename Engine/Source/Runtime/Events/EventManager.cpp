@@ -43,7 +43,7 @@ namespace Dynamik {
 	/* Returns false if the GLFW window is closed */
 	B1 EventManager::pollEventsGLFW()
 	{
-		myInstance.events.clear();
+		myInstance.events = {};
 		glfwPollEvents();
 
 		return !myInstance.isWindowClosed;

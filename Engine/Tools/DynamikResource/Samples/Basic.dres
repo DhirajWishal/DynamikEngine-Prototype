@@ -1,0 +1,82 @@
+# This is a single line comment.
+# '>' is a command statement.
+
+> MESH "Random"
+> vertex count = 10
+> vertex attributes:
+Position: VEC3
+Color: VEC3
+Normal: VEC3
+Texture: VEC2
+
+> vertex data:
+{	# vertex 1
+	Position(1.00000, 1.00000, 1.00000)	# Positional Vectors
+	Color(1.00000, 1.00000, 1.00000)	# Color Vectors
+	Normal(1.00000, 1.00000, 1.00000)	# Normal Vectors
+	Texture(1.00000, 1.00000, 1.00000)	# Texture Vectors
+	Integrity(1.00000)					# Integrity Value
+}
+{	# vertex 2
+	Position(1.00000, 1.00000, 1.00000)	# Positional Vectors
+	Color(1.00000, 1.00000, 1.00000)	# Color Vectors
+	Normal(1.00000, 1.00000, 1.00000)	# Normal Vectors
+	Texture(1.00000, 1.00000, 1.00000)	# Texture Vectors
+	Integrity(1.00000)					# Integrity Value
+}
+{	# vertex 3
+	Position(1.00000, 1.00000, 1.00000)	# Positional Vectors
+	Color(1.00000, 1.00000, 1.00000)	# Color Vectors
+	Normal(1.00000, 1.00000, 1.00000)	# Normal Vectors
+	Texture(1.00000, 1.00000, 1.00000)	# Texture Vectors
+	Integrity(1.00000)					# Integrity Value
+}
+{	# vertex 4
+	Position(1.00000, 1.00000, 1.00000)	# Positional Vectors
+	Color(1.00000, 1.00000, 1.00000)	# Color Vectors
+	Normal(1.00000, 1.00000, 1.00000)	# Normal Vectors
+	Texture(1.00000, 1.00000, 1.00000)	# Texture Vectors
+	Integrity(1.00000)					# Integrity Value
+}
+{	# vertex 5
+	Position(1.00000, 1.00000, 1.00000)	# Positional Vectors
+	Color(1.00000, 1.00000, 1.00000)	# Color Vectors
+	Normal(1.00000, 1.00000, 1.00000)	# Normal Vectors
+	Texture(1.00000, 1.00000, 1.00000)	# Texture Vectors
+	Integrity(1.00000)					# Integrity Value
+}
+{	# vertex 6
+	Position(1.00000, 1.00000, 1.00000)	# Positional Vectors
+	Color(1.00000, 1.00000, 1.00000)	# Color Vectors
+	Normal(1.00000, 1.00000, 1.00000)	# Normal Vectors
+	Texture(1.00000, 1.00000, 1.00000)	# Texture Vectors
+	Integrity(1.00000)					# Integrity Value
+}
+{	# vertex 7
+	Position(1.00000, 1.00000, 1.00000)	# Positional Vectors
+	Color(1.00000, 1.00000, 1.00000)	# Color Vectors
+	Normal(1.00000, 1.00000, 1.00000)	# Normal Vectors
+	Texture(1.00000, 1.00000, 1.00000)	# Texture Vectors
+	Integrity(1.00000)					# Integrity Value
+}
+{	# vertex 8
+	Position(1.00000, 1.00000, 1.00000)	# Positional Vectors
+	Color(1.00000, 1.00000, 1.00000)	# Color Vectors
+	Normal(1.00000, 1.00000, 1.00000)	# Normal Vectors
+	Texture(1.00000, 1.00000, 1.00000)	# Texture Vectors
+	Integrity(1.00000)					# Integrity Value
+}
+{	# vertex 9
+	Position(1.00000, 1.00000, 1.00000)	# Positional Vectors
+	Color(1.00000, 1.00000, 1.00000)	# Color Vectors
+	Normal(1.00000, 1.00000, 1.00000)	# Normal Vectors
+	Texture(1.00000, 1.00000, 1.00000)	# Texture Vectors
+	Integrity(1.00000)					# Integrity Value
+}
+{	# vertex 10
+	Position(1.00000, 1.00000, 1.00000)	# Positional Vectors
+	Color(1.00000, 1.00000, 1.00000)	# Color Vectors
+	Normal(1.00000, 1.00000, 1.00000)	# Normal Vectors
+	Texture(1.00000, 1.00000, 1.00000)	# Texture Vectors
+	Integrity(1.00000)					# Integrity Value
+}

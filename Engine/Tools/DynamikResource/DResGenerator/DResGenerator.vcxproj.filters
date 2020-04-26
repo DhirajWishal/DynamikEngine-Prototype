@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Samples">
+      <UniqueIdentifier>{3A6719E3-A646-987E-AF5E-23551BBDFEDF}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Samples\Basic.dres">
+      <Filter>Samples</Filter>
+    </None>
+    <None Include="DResGenerator.lua" />
+  </ItemGroup>
+</Project>

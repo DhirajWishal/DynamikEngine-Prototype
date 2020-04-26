@@ -76,7 +76,7 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <PrecompiledHeader>Create</PrecompiledHeader>
+      <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>dmkafx.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>DMK_PLATFORM_WINDOWS;DMK_BUILD_DLL;_WINDLL;GLFW_INCLUDE_VULKAN;DMK_USE_VULKAN;GLFW_INCLUDE_NONE;DMK_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -96,7 +96,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
-      <PrecompiledHeader>Create</PrecompiledHeader>
+      <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>dmkafx.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>DMK_PLATFORM_WINDOWS;DMK_BUILD_DLL;_WINDLL;GLFW_INCLUDE_VULKAN;DMK_USE_VULKAN;GLFW_INCLUDE_NONE;DMK_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -120,7 +120,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Distribution|x64'">
     <ClCompile>
-      <PrecompiledHeader>Create</PrecompiledHeader>
+      <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>dmkafx.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>DMK_PLATFORM_WINDOWS;DMK_BUILD_DLL;_WINDLL;GLFW_INCLUDE_VULKAN;DMK_USE_VULKAN;GLFW_INCLUDE_NONE;DMK_DISTRIBUTION;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -335,6 +335,8 @@
     <ClInclude Include="..\..\Runtime\Platform\Windows\thread\ExecutionHandle.h" />
     <ClInclude Include="..\..\Runtime\Platform\Windows\thread\InternalThread.h" />
     <ClInclude Include="..\..\Runtime\Platform\Windows\thread\threadManager.h" />
+    <ClInclude Include="..\..\Runtime\Tools\DynamikResource\DRLoader.h" />
+    <ClInclude Include="..\..\Runtime\Tools\DynamikResource\DResFile.h" />
     <ClInclude Include="..\..\Runtime\Utilities\Functions\DMK_Functions.h" />
     <ClInclude Include="..\..\Runtime\core.h" />
     <ClInclude Include="..\..\Runtime\engineControlUnit.h" />
@@ -452,6 +454,8 @@
     <ClCompile Include="..\..\Runtime\Platform\Windows\thread\ExecutionHandle.cpp" />
     <ClCompile Include="..\..\Runtime\Platform\Windows\thread\InternalThread.cpp" />
     <ClCompile Include="..\..\Runtime\Platform\Windows\thread\threadManager.cpp" />
+    <ClCompile Include="..\..\Runtime\Tools\DynamikResource\DRLoader.cpp" />
+    <ClCompile Include="..\..\Runtime\Tools\DynamikResource\DResFile.cpp" />
     <ClCompile Include="..\..\Runtime\Utilities\Functions\DMK_Functions.cpp" />
     <ClCompile Include="..\..\Runtime\engineControlUnit.cpp" />
   </ItemGroup>

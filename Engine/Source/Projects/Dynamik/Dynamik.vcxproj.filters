@@ -220,6 +220,12 @@
     <Filter Include="Runtime\Platform\Windows\thread">
       <UniqueIdentifier>{9ED12E2A-0AB5-3D6A-13B8-6BA67F1A04BB}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Runtime\Tools">
+      <UniqueIdentifier>{89ECE28C-F5AC-5EC3-BEE7-A7402A67A39F}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Runtime\Tools\DynamikResource">
+      <UniqueIdentifier>{EDBFF509-59D8-DC33-2285-6CCD8E5C71CD}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Runtime\Utilities">
       <UniqueIdentifier>{F4A89C29-60BF-9ABF-A936-26E1158C6B47}</UniqueIdentifier>
     </Filter>
@@ -804,6 +810,12 @@
     <ClInclude Include="..\..\Runtime\Platform\Windows\thread\threadManager.h">
       <Filter>Runtime\Platform\Windows\thread</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Runtime\Tools\DynamikResource\DRLoader.h">
+      <Filter>Runtime\Tools\DynamikResource</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Runtime\Tools\DynamikResource\DResFile.h">
+      <Filter>Runtime\Tools\DynamikResource</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Runtime\Utilities\Functions\DMK_Functions.h">
       <Filter>Runtime\Utilities\Functions</Filter>
     </ClInclude>
@@ -1138,6 +1150,12 @@
     </ClCompile>
     <ClCompile Include="..\..\Runtime\Platform\Windows\thread\threadManager.cpp">
       <Filter>Runtime\Platform\Windows\thread</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Runtime\Tools\DynamikResource\DRLoader.cpp">
+      <Filter>Runtime\Tools\DynamikResource</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Runtime\Tools\DynamikResource\DResFile.cpp">
+      <Filter>Runtime\Tools\DynamikResource</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Runtime\Utilities\Functions\DMK_Functions.cpp">
       <Filter>Runtime\Utilities\Functions</Filter>

@@ -49,6 +49,10 @@ group "Tools/Debug"	-- All all the debugging tools to a virtual folder
 include "Dependencies/Programs/Debugger/Debugger.lua"
 include "Dependencies/Programs/DevConsole/DevCon.lua"
 
+group "Tools/DynamikResource"
+include "Engine/Tools/DynamikResource/DResGenerator/DResGenerator.lua"
+include "Engine/Tools/DynamikResource/DResValidator/DResValidator.lua"
+
 group ""
 
 group "Launcher"	-- Add the Launcher to a virtual folder

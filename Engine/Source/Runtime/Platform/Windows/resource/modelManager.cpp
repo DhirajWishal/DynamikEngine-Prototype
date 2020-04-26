@@ -26,6 +26,8 @@ float RandomFloat(float a, float b) {
 
 namespace Dynamik {
 	void loadModel(DMKModelLoadInfo info) {
+		DMK_BEGIN_PROFILE_TIMER();
+
 		tinyobj::attrib_t attributes;
 		std::vector<tinyobj::shape_t> shapes;
 		std::vector<tinyobj::material_t> materials;
@@ -39,8 +41,12 @@ namespace Dynamik {
 		std::unordered_map<MeshPointStore, UI32> uniqueVertices;
 
 		for (const auto& shape : shapes) {
+			DMK_BEGIN_PROFILE_TIMER();
+
 			Mesh _mesh;
 			for (const auto& index : shape.mesh.indices) {
+				DMK_BEGIN_PROFILE_TIMER();
+
 				_store.position = {
 					attributes.vertices[3 * index.vertex_index + 0] + info.vertexOffset[0],
 					attributes.vertices[3 * index.vertex_index + 1] + info.vertexOffset[1],

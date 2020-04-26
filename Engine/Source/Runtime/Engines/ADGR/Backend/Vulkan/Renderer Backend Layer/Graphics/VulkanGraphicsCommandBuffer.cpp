@@ -9,7 +9,10 @@ namespace Dynamik {
 	namespace ADGR {
 		namespace Backend {
 			// if drawing in vertex
-			void drawVertex(VkCommandBuffer buffer, I32 index, ADGRVulkanRenderData* object, VkDeviceSize* offsets) {
+			void drawVertex(VkCommandBuffer buffer, I32 index, ADGRVulkanRenderData* object, VkDeviceSize* offsets) 
+			{
+				DMK_BEGIN_PROFILE_TIMER();
+
 				for (UI32 i = 0; i < object->vertexBuffers.size(); i++) {
 					for (UI32 _itr = 0; _itr < object->pipelineContainers.size(); _itr++)
 					{
@@ -30,7 +33,10 @@ namespace Dynamik {
 			}
 
 			// if drawing in indexed
-			void drawIndexed(VkCommandBuffer buffer, I32 index, ADGRVulkanRenderData* object, VkDeviceSize* offsets) {
+			void drawIndexed(VkCommandBuffer buffer, I32 index, ADGRVulkanRenderData* object, VkDeviceSize* offsets) 
+			{
+				DMK_BEGIN_PROFILE_TIMER();
+
 				for (UI32 i = 0; i < object->vertexBuffers.size(); i++) {
 					for (UI32 _itr = 0; _itr < object->pipelineContainers.size(); _itr++)
 					{
@@ -62,6 +68,8 @@ namespace Dynamik {
 
 			void drawIndexedPBR(VkCommandBuffer buffer, I32 index, ADGRVulkanRenderData* object, VkDeviceSize* offsets)
 			{
+				DMK_BEGIN_PROFILE_TIMER();
+
 				for (UI32 i = 0; i < object->vertexBuffers.size(); i++) {
 					for (UI32 _itr = 0; _itr < object->pipelineContainers.size(); _itr++)
 					{
@@ -118,6 +126,8 @@ namespace Dynamik {
 
 			void VulkanGraphicsCommandBuffer::initializeCommandPool()
 			{
+				DMK_BEGIN_PROFILE_TIMER();
+
 				ADGRVulkanQueue queueFamilyIndices = VulkanGraphicsCore::findQueueFamilies(physicalDevice, surface);
 
 				VkCommandPoolCreateInfo poolInfo = {};
@@ -136,6 +146,8 @@ namespace Dynamik {
 
 			void VulkanGraphicsCommandBuffer::initializeCommandBuffers(ADGRVulkanGraphicsCommandBufferInitInfo info)
 			{
+				DMK_BEGIN_PROFILE_TIMER();
+
 				buffers.resize(info.count);
 
 				VkCommandBufferAllocateInfo allocInfo = {};
@@ -148,6 +160,8 @@ namespace Dynamik {
 					DMK_CORE_FATAL("failed to allocate command buffers!");
 
 				for (size_t i = 0; i < info.count; i++) {
+					DMK_BEGIN_PROFILE_TIMER();
+
 					VkCommandBufferBeginInfo beginInfo = {};
 					beginInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO;
 					beginInfo.flags = VK_COMMAND_BUFFER_USAGE_SIMULTANEOUS_USE_BIT;
@@ -181,6 +195,8 @@ namespace Dynamik {
 					vkCmdBeginRenderPass(buffers[i], &renderPassInfo, VK_SUBPASS_CONTENTS_INLINE);
 
 					for (I32 _itr = 0; _itr < info.objects.size(); _itr++) {
+						DMK_BEGIN_PROFILE_TIMER();
+
 						/* TODO: pushConstants */
 						// pushConstants[0] = ...
 						// vkCmdPushConstants(commandBuffers[i], &pipelineLayout, VK_SHADER_STAGE_VERTEX_BIT,

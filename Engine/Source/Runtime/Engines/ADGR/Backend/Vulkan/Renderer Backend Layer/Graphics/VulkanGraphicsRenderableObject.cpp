@@ -28,6 +28,8 @@ namespace Dynamik {
 
 			ADGRVulkanRenderData VulkanGraphicsRenderableObject::initializeObject(POINTER<InternalFormat> format, VkSampleCountFlagBits msaaSamples)
 			{
+				DMK_BEGIN_PROFILE_TIMER();
+
 				/* Initialize descriptor set layout */
 				ADGRVulkanDescriptorSetLayoutInitInfo layoutInitInfo;
 				layoutInitInfo.bindings = VulkanUtilities::getDescriptorSetBindings(format->descriptor.uniformBufferObjectDescriptions);
@@ -95,14 +97,20 @@ namespace Dynamik {
 
 			void VulkanGraphicsRenderableObject::initializeObjectResources()
 			{
+				DMK_BEGIN_PROFILE_TIMER();
+
 				for (auto mesh : myInternalFormat->meshDatas)
 				{
+					DMK_BEGIN_PROFILE_TIMER();
+
 					initializeVertexBuffer(mesh);
 					initializeIndexBuffer(mesh);
 				}
 
 				for (auto texture : myInternalFormat->textures)
 				{
+					DMK_BEGIN_PROFILE_TIMER();
+
 					ADGRVulkanTextureInitInfo initInfo;
 					initInfo.mipLevels = 1;
 					initInfo.modeU = VK_SAMPLER_ADDRESS_MODE_REPEAT;
@@ -117,6 +125,8 @@ namespace Dynamik {
 
 			void VulkanGraphicsRenderableObject::initializeTextures(Texture texture, ADGRVulkanTextureInitInfo info)
 			{
+				DMK_BEGIN_PROFILE_TIMER();
+
 				ADGRVulkanUtilitiesTextureInitInfo initInfo;
 				initInfo.logicalDevice = logicalDevice;
 				initInfo.physicalDevice = physicalDevice;

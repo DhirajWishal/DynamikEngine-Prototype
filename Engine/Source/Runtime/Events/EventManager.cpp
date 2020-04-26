@@ -22,6 +22,8 @@ namespace Dynamik {
 	
 	void EventManager::setEventCallbacks(GLFWwindow* window)
 	{
+		DMK_BEGIN_PROFILE_TIMER();
+
 		myInstance.myWindowPointer = window;
 
 		glfwSetKeyCallback(window, _keyCallback);
@@ -81,6 +83,8 @@ namespace Dynamik {
 
 	ARRAY<DMKEventComponent*> EventManager::getEventComponents()
 	{
+		DMK_BEGIN_PROFILE_TIMER();
+
 		auto _events = myInstance.events;
 		myInstance.events = {};
 		return _events;

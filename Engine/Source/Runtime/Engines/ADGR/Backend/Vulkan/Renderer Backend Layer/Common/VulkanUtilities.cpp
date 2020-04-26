@@ -349,6 +349,8 @@ namespace Dynamik {
 
 			ARRAY<VulkanGraphicsShader> VulkanUtilities::getGraphicsShaders(VkDevice logicalDevice, POINTER<InternalFormat> internalFormat)
 			{
+				DMK_BEGIN_PROFILE_TIMER();
+
 				ARRAY<VulkanGraphicsShader> _shaders;
 
 				if (internalFormat->shaderPaths.vertexShader.size() && internalFormat->shaderPaths.vertexShader != "NONE")
@@ -481,6 +483,8 @@ namespace Dynamik {
 
 			ADGRVulkanTextureContainer VulkanUtilities::createTexture(ADGRVulkanUtilitiesTextureInitInfo info, Texture texture)
 			{
+				DMK_BEGIN_PROFILE_TIMER();
+
 				ADGRVulkanTextureContainer _container;
 
 				_container.mipLevels = info.mipLevels;
@@ -987,6 +991,8 @@ namespace Dynamik {
 
 			void VulkanUtilities::updateUniformBuffer(VkDevice device, ARRAY<MAT4> uniformData, VkDeviceMemory uniformBufferMemory, DMKUniformBufferObjectDescriptor descriptor)
 			{
+				DMK_BEGIN_PROFILE_TIMER();
+
 				UI32 _bufferSize = DMKUniformBufferObjectDescriptor::uniformByteSize(descriptor.attributes);
 
 				VPTR data = nullptr;

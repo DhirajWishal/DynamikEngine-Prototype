@@ -2,11 +2,6 @@
 
 /* Update camera data function */
 
-DMKCameraData updateKeyPressData()
-{
-
-}
-
 Camera::Camera()
 {
 }

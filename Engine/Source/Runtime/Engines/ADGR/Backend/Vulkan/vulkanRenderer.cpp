@@ -13,8 +13,6 @@
 #include "vulkanRenderer.h"
 #include "Platform/windows.h"
 
-#include "debugger.h"
-
 #include "Renderer Backend Layer/VulkanReflectObject.h"
 #include "Renderer Backend Layer/VulkanPBRObject.h"
 
@@ -56,6 +54,8 @@ namespace Dynamik {
 
 		void vulkanRenderer::initializeGraphicsCore()
 		{
+			DMK_BEGIN_PROFILE_TIMER();
+
 			/* Initialize the instance */
 			ADGRVulkanInstanceInitInfo instanceInitInfo;
 			instanceInitInfo.applicationName = "Dynamik Engine";
@@ -130,6 +130,8 @@ namespace Dynamik {
 
 		void vulkanRenderer::addObject(POINTER<InternalFormat> format)
 		{
+			DMK_BEGIN_PROFILE_TIMER();
+
 			/* Check the object type of the format and initialize it accordingly */
 			switch (format->type)
 			{
@@ -221,6 +223,8 @@ namespace Dynamik {
 
 		void vulkanRenderer::initializeCommands()
 		{
+			DMK_BEGIN_PROFILE_TIMER();
+
 			ADGRVulkanGraphicsCommandBufferInitInfo initInfo;
 			initInfo.count = instance.mySwapChain.swapChainContainer.swapChainImages.size();
 			initInfo.frameBuffer = instance.myFrameBuffer;
@@ -232,11 +236,15 @@ namespace Dynamik {
 
 		void vulkanRenderer::initializeFinalComponents()
 		{
+			DMK_BEGIN_PROFILE_TIMER();
+
 			instance.myGraphicsCore.initializeSyncObjects();
 		}
 
 		void vulkanRenderer::drawFrame(DMKRendererDrawFrameInfo info)
 		{
+			DMK_BEGIN_PROFILE_TIMER();
+
 			/* Check if the number of update objects are equal to the in-flight objects */
 			if (info.formats.size() != instance.myResourceContainers[instance.inUseIndex].renderData.size())
 				DMK_CORE_FATAL("Invalid amount of update formats sent to the Draw call!");
@@ -260,9 +268,13 @@ namespace Dynamik {
 			/* Update the objects using the Draw Frame Info structure */
 			for (UI32 index = 0; index < info.formats.size(); index++)
 			{
+				DMK_BEGIN_PROFILE_TIMER();
+
 				/* Check for the Uniform buffer attributes and add the data to the container */
 				for (auto _description : info.formats[index]->descriptor.uniformBufferObjectDescriptions)
 				{
+					DMK_BEGIN_PROFILE_TIMER();
+
 					/* Currently the Vulkan RBL supports vertex shader uniform buffer updation only */
 					if (_description.location != DMKAttributeLocation::DMK_ATTRIBUTE_LOCATION_VERTEX)
 						continue;
@@ -297,6 +309,8 @@ namespace Dynamik {
 
 		void vulkanRenderer::_initializeRenderPass()
 		{
+			DMK_BEGIN_PROFILE_TIMER();
+
 			ARRAY<VkAttachmentDescription> attachments;
 
 			// attachment descriptions
@@ -393,6 +407,8 @@ namespace Dynamik {
 
 		ADGRVulkanRenderData vulkanRenderer::_initializeSkyBox(POINTER<InternalFormat> format)
 		{
+			DMK_BEGIN_PROFILE_TIMER();
+
 			VulkanSkyBox _renderObject(_getBasicInitInfo());
 			_renderObject.setInternalFormat(format);
 

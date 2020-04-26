@@ -18,6 +18,8 @@ namespace Dynamik {
 
 			ADGRVulkanRenderData VulkanSkyBox::initializeObject(POINTER<InternalFormat> _object, VkSampleCountFlagBits msaaSamples)
 			{
+				DMK_BEGIN_PROFILE_TIMER();
+
 				ADGRVulkanDescriptorSetLayoutInitInfo layoutInitInfo;
 				layoutInitInfo.bindings = VulkanUtilities::getDescriptorSetBindings(myInternalFormat->descriptor.uniformBufferObjectDescriptions);
 				myRenderData.descriptors.initializeLayout(logicalDevice, layoutInitInfo);

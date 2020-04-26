@@ -70,6 +70,8 @@ namespace Dynamik {
 
 		void Renderer::setRenderableObjects(ARRAY<POINTER<InternalFormat>> formats)
 		{
+			DMK_BEGIN_PROFILE_TIMER();
+
 			for (auto format : formats)
 			{
 				if (format->descriptor.assetDescription.physicallyBased)
@@ -86,6 +88,8 @@ namespace Dynamik {
 
 		void Renderer::submitLoadedAssets()
 		{
+			DMK_BEGIN_PROFILE_TIMER();
+
 			instance.inFlightAssets = instance.submitPendingAssets;
 			instance.submitPendingAssets = {};
 			vulkanRenderer::addObjects(instance.inFlightAssets);
@@ -104,10 +108,14 @@ namespace Dynamik {
 
 		void Renderer::frameCleanup()
 		{
+			DMK_BEGIN_PROFILE_TIMER();
+
 		}
 
 		void Renderer::terminate()
 		{
+			DMK_BEGIN_PROFILE_TIMER();
+
 		}
 	}
 }

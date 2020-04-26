@@ -11,23 +11,19 @@ namespace Dynamik {
 				glfwSetWindowShouldClose(window, true);
 		}
 
-		StartupRenderer& StartupRenderer::instance()
-		{
-			static StartupRenderer instance;
-			return instance;
-		}
+		StartupRenderer StartupRenderer::instance;
 
 		void StartupRenderer::initialize()
 		{
-			instance();
+			DMK_BEGIN_PROFILE_TIMER();
 
 			glfwInit();
-			glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-			glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+			glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
+			glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 5);
 			glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
 #if defined(DMK_DEBUG)
-			instance().window = glfwCreateWindow(instance().windowWidth, instance().windowHeight, "Dynamik Engine", nullptr, nullptr);
+			instance.window = glfwCreateWindow(instance.windowWidth, instance.windowHeight, "Dynamik Engine", nullptr, nullptr);
 
 #else
 			GLFWmonitor* monitor = glfwGetPrimaryMonitor();
@@ -38,15 +34,15 @@ namespace Dynamik {
 			glfwWindowHint(GLFW_BLUE_BITS, mode->blueBits);
 			glfwWindowHint(GLFW_REFRESH_RATE, mode->refreshRate);
 
-			instance().window = glfwCreateWindow(mode->width, mode->height, info.title.c_str(), monitor, NULL);
-			instance().windowWidth = mode->width;
-			instance().windowHeight = mode->height;
+			instance.window = glfwCreateWindow(mode->width, mode->height, info.title.c_str(), monitor, NULL);
+			instance.windowWidth = mode->width;
+			instance.windowHeight = mode->height;
 
 			glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
 
 #endif
 
-			if (instance().window == NULL)
+			if (instance.window == NULL)
 			{
 				DMK_CORE_FATAL("Failed to create window!");
 				glfwTerminate();
@@ -54,7 +50,7 @@ namespace Dynamik {
 			}
 
 			glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
-			glfwMakeContextCurrent(instance().window);
+			glfwMakeContextCurrent(instance.window);
 
 			if (glewInit() != GLEW_OK)
 				DMK_CORE_FATAL("Failed to initialize GLEW");
@@ -62,14 +58,18 @@ namespace Dynamik {
 		
 		void StartupRenderer::initializeShaders()
 		{
+			DMK_BEGIN_PROFILE_TIMER();
+
 			CCPTR vertShaderPath = "E:/Projects/Dynamik Engine/Versions/Dynamik (Prototype)/Engine/Application/Runtime/Shaders/Startup/shader.vert";
 			CCPTR fragShaderPath = "E:/Projects/Dynamik Engine/Versions/Dynamik (Prototype)/Engine/Application/Runtime/Shaders/Startup/shader.frag";
 
-			instance().myShaderManager = Shader(vertShaderPath, fragShaderPath);
+			instance.myShaderManager = Shader(vertShaderPath, fragShaderPath);
 		}
 
 		void StartupRenderer::initializeVertexBuffers()
 		{
+			DMK_BEGIN_PROFILE_TIMER();
+
 			float vertices[] = {
 				// positions          // colors           // texture coords
 				 1.0f,  1.0f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f, // top right
@@ -81,16 +81,16 @@ namespace Dynamik {
 				0, 1, 3, // first triangle
 				1, 2, 3  // second triangle
 			};
-			glGenVertexArrays(1, &instance().VAO);
-			glGenBuffers(1, &instance().VBO);
-			glGenBuffers(1, &instance().EBO);
+			glGenVertexArrays(1, &instance.VAO);
+			glGenBuffers(1, &instance.VBO);
+			glGenBuffers(1, &instance.EBO);
 
-			glBindVertexArray(instance().VAO);
+			glBindVertexArray(instance.VAO);
 
-			glBindBuffer(GL_ARRAY_BUFFER, instance().VBO);
+			glBindBuffer(GL_ARRAY_BUFFER, instance.VBO);
 			glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
-			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, instance().EBO);
+			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, instance.EBO);
 			glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
 			// position attribute
@@ -106,8 +106,10 @@ namespace Dynamik {
 		
 		void StartupRenderer::loadTexure(CCPTR path)
 		{
-			glGenTextures(1, &instance().textureIndex);
-			glBindTexture(GL_TEXTURE_2D, instance().textureIndex);
+			DMK_BEGIN_PROFILE_TIMER();
+
+			glGenTextures(1, &instance.textureIndex);
+			glBindTexture(GL_TEXTURE_2D, instance.textureIndex);
 			// set the texture wrapping parameters
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);	// set texture wrapping to GL_REPEAT (default wrapping method)
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
@@ -130,48 +132,53 @@ namespace Dynamik {
 			}
 			stbi_image_free(data);
 
-			instance().myShaderManager.use(); // don't forget to activate/use the shader before setting uniforms!
+			instance.myShaderManager.use(); // don't forget to activate/use the shader before setting uniforms!
 			// either set it manually like so:
-			glUniform1i(glGetUniformLocation(instance().myShaderManager.ID, "texture1"), 0);
+			glUniform1i(glGetUniformLocation(instance.myShaderManager.ID, "texture1"), 0);
 		}
 		
 		void StartupRenderer::draw()
 		{
+			DMK_BEGIN_PROFILE_TIMER();
+
 			// input
-		// -----
-			processInput(instance().window);
+			// -----
+			processInput(instance.window);
 
 			// render
 			// ------
-			glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+			glClearColor((2.0f / 256.0f), (8.0f / 256.0f), (32.0f / 256.0f), 1.0f);
 			glClear(GL_COLOR_BUFFER_BIT);
 
 			// bind textures on corresponding texture units
 			glActiveTexture(GL_TEXTURE0);
-			glBindTexture(GL_TEXTURE_2D, instance().textureIndex);
+			glBindTexture(GL_TEXTURE_2D, instance.textureIndex);
 
 			// render container
-			instance().myShaderManager.use();
-			glBindVertexArray(instance().VAO);
+			instance.myShaderManager.use();
+			glBindVertexArray(instance.VAO);
 			glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
 			// glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
 			// -------------------------------------------------------------------------------
-			glfwSwapBuffers(instance().window);
+			glfwSwapBuffers(instance.window);
 			glfwPollEvents();
-
 		}
 
 		void StartupRenderer::terminate()
 		{
-			glDeleteVertexArrays(1, &instance().VAO);
-			glDeleteBuffers(1, &instance().VBO);
-			glDeleteBuffers(1, &instance().EBO);
+			DMK_BEGIN_PROFILE_TIMER();
 
-			// glfw: terminate, clearing all previously allocated GLFW resources.
-			// ------------------------------------------------------------------
-			glfwTerminate();
+			glDeleteVertexArrays(1, &instance.VAO);
+			glDeleteBuffers(1, &instance.VBO);
+			glDeleteBuffers(1, &instance.EBO);
 
+			glfwDestroyWindow(instance.window);
+		}
+		
+		void StartupRenderer::makeContextCurrent()
+		{
+			glfwMakeContextCurrent(instance.window);
 		}
 	}
 }

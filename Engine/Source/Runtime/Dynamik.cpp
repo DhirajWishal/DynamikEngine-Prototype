@@ -15,29 +15,55 @@
 
 #include "Events/EventManager.h"
 
+#include "core/benchmark/profiler.h"
+
 namespace Dynamik {
 	/* Dynamik instance */
 	DMKEngine DMKEngine::instance;
 
+	/* For internal use */
+	static B1 finishStartUpRenderer = false;
+
 	void DMKEngine::initializeInstance(DMKInstanceDescriptor descriptor)
 	{
-		/* Initialize the startup renderer to render basic data while the main renderer is activated.  */
-		/* This way the user is not presented with a blank screen while all the scene data are loaded. */
-		ADGR::StartupRenderer::initialize();
-		ADGR::StartupRenderer::initializeShaders();
-		ADGR::StartupRenderer::initializeVertexBuffers();
-		ADGR::StartupRenderer::loadTexure("E:/Projects/Dynamik Engine/Versions/Dynamik (Prototype)/Dependencies/Assets/icons/Dynamik.jpg");
+		DMK_BEGIN_PROFILING();
+		DMK_BEGIN_PROFILE_TIMER();
 
-		instance.myStartypRendererThread.swap(std::thread(ADGR::StartupRenderer::draw));
+		/* Initialize the startup renderer to render basic data while the main renderer is activated.		*/
+		/* This way the user is not presented with a blank screen while all the scene data are loaded.		*/
+		/* The startup renderer is run on a separate thread to make sure that it wont affect the Engine.	*/
+		instance.myStartypRendererThread.swap(std::thread(
+			[](CCPTR iconPath) 
+			{
+				ADGR::StartupRenderer::initialize();
+				ADGR::StartupRenderer::initializeShaders();
+				ADGR::StartupRenderer::initializeVertexBuffers();
+				ADGR::StartupRenderer::loadTexure(iconPath);
+
+				while (!finishStartUpRenderer) 
+				{ 
+					DMK_BEGIN_PROFILE_TIMER();
+
+					ADGR::StartupRenderer::draw();
+				}
+
+				ADGR::StartupRenderer::terminate();
+
+			}, descriptor.iconPath
+		));
 	}
 
 	UI32 DMKEngine::addLevel(DMKLevelDescriptor level)
 	{
+		DMK_BEGIN_PROFILE_TIMER();
+
 		/* Since each level consists of one or more scenes, we pack the given scenes to a wrapper.	*/
 		/* After wrapping them in scene wrappers, we add the assets to it.							*/
 		ARRAY<ARRAY<AssetContainer>> scenes;
 		for (auto scene : level.scenes)
 		{
+			DMK_BEGIN_PROFILE_TIMER();
+
 			ARRAY<AssetContainer> assets;
 			for (auto object : scene.assets)
 				assets.pushBack(AssetManager::createAssetContainer(object));
@@ -62,6 +88,8 @@ namespace Dynamik {
 
 	UI32 DMKEngine::addAsset(DMKGameObject* object)
 	{
+		DMK_BEGIN_PROFILE_TIMER();
+
 		/* Add the asset to the Asset Manager and return its index. */
 		return instance.myAssetManager.addAsset(object, instance.sceneIndex, instance.levelIndex);
 	}
@@ -103,8 +131,7 @@ namespace Dynamik {
 
 	void DMKEngine::initializeRendererStageOne()
 	{
-		/* Terminate the StartupRenderer */
-		ADGR::StartupRenderer::terminate();
+		DMK_BEGIN_PROFILE_TIMER();
 
 		/* Initialize window */
 		DMKWindowManagerInitInfo windowInitInfo;
@@ -122,6 +149,8 @@ namespace Dynamik {
 
 	void DMKEngine::genarateRenderables()
 	{
+		DMK_BEGIN_PROFILE_TIMER();
+
 		/* Get the renderable assets in the AIB as POINTER<InternalFormat> */
 		instance.myAssetManager.loadScene(instance.sceneIndex, instance.levelIndex);
 		instance.internalFormats = instance.myAssetManager.getRenderablesAsInternalFormats(instance.sceneIndex, instance.levelIndex);
@@ -147,16 +176,26 @@ namespace Dynamik {
 
 	void DMKEngine::initializeRendererStageTwo()
 	{
+		DMK_BEGIN_PROFILE_TIMER();
+
 		ADGR::Renderer::initializeStageTwo();
 	}
 
 	void DMKEngine::initializeRendererStageThree()
 	{
+		DMK_BEGIN_PROFILE_TIMER();
+
 		ADGR::Renderer::initializeStageThree();
 	}
 
 	void DMKEngine::run()
 	{
+		DMK_BEGIN_PROFILE_TIMER();
+
+		/* Terminate the StartupRenderer */
+		finishStartUpRenderer = true;
+		instance.myStartypRendererThread.join();
+
 		/* Instanciate draw frame info structure */
 		DMKRendererDrawFrameInfo info;
 
@@ -165,6 +204,8 @@ namespace Dynamik {
 		/* If the window is invalid (closed), it goes to the termination subroutine.	*/
 		while (EventManager::pollEventsGLFW())
 		{
+			DMK_BEGIN_PROFILE_TIMER();
+
 			/* Clean used variables for a new draw call */
 			onUpdateCleanup();
 
@@ -186,6 +227,8 @@ namespace Dynamik {
 	void DMKEngine::terminate()
 	{
 		ADGR::Renderer::terminate();
+
+		DMK_END_PROFILING();
 	}
 
 	inline B1 DMKEngine::isRenderableAsset(AssetContainer asset)

@@ -10,8 +10,7 @@ namespace Dynamik {
 		class StartupRenderer {
 			StartupRenderer() {}
 
-			static StartupRenderer& instance();
-
+			static StartupRenderer instance;
 		public:
 			StartupRenderer(const StartupRenderer&) = delete;
 			StartupRenderer(StartupRenderer&&) = delete;
@@ -20,8 +19,12 @@ namespace Dynamik {
 			static void initializeShaders();
 			static void initializeVertexBuffers();
 			static void loadTexure(CCPTR path);
+
 			static void draw();
+
 			static void terminate();
+
+			static void makeContextCurrent();
 
 		private:
 			GLFWwindow* window = nullptr;

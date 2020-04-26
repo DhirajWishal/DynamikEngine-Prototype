@@ -21,9 +21,8 @@ using namespace Dynamik;
 #ifdef DMK_PLATFORM_WINDOWS
 /* ---------- ########## ////////// MAIN LOOP \\\\\\\\\\ ########## ---------- */
 int main(int argc, char** argv) {
-	std::cout << sizeof(VEC4) << std::endl;
-
-	try {
+	try 
+	{
 		DMKInstanceDescriptor engineInstance;
 		DMKEngine::initializeInstance(engineInstance);
 
@@ -54,8 +53,11 @@ int main(int argc, char** argv) {
 		DMKEngine::initializeRendererStageThree();
 
 		DMKEngine::run();
+
+		DMKEngine::terminate();
 	}
-	catch (std::exception& e) {
+	catch (std::exception& e) 
+	{
 		std::cout << e.what();
 
 		return DMK_FAIL;

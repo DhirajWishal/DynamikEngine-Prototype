@@ -51,7 +51,7 @@ namespace Dynamik {
 		CCPTR windowTitle = "Dynamik Engine";
 
 		DMKRenderingAPI renderingAPI = DMKRenderingAPI::DMK_RENDERING_API_VULKAN;
-		CCPTR iconPath = "";
+		CCPTR iconPath = "E:/Projects/Dynamik Engine/Versions/Dynamik (Prototype)/Dependencies/Assets/icons/Dynamik.jpg";
 		DMKRendererSettings settings;
 
 		DMKInstanceMode mode = DMKInstanceMode::DMK_INSTANCE_MODE_DEBUG;

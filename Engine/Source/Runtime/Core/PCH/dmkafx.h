@@ -45,6 +45,7 @@
 #include <deque>
 
 #include "core/log.h"
+#include "debugger.h"
 
 #if defined(DMK_USE_VULKAN)
 

@@ -12,80 +12,68 @@
 namespace Dynamik {
 	namespace Debugger {
 		namespace benchmark {
-			struct benchmarkResult {
-				std::string name = DMK_TEXT("");
-				long long start = 0, end = 0;
-				uint32_t threadID = 0;
+			struct ProfileResult
+			{
+				std::string Name;
+				long long Start, End;
+				uint32_t ThreadID;
 			};
 
-			// Profiler
-			class Profiler {
-			public:
-				Profiler() {}
-				~Profiler();
+			struct InstrumentationSession
+			{
+				std::string Name;
+			};
 
-				void beginSession(const std::string& filepath = DMK_TEXT("profile.json"));
-				void writeProfile(const benchmarkResult& result);
-				void endSession();
-
-				static Profiler& getProfiler();
-
+			class Profiler
+			{
 			private:
-				void writeHeader();
-				void writeFooter();
+				InstrumentationSession* m_CurrentSession;
+				std::ofstream m_OutputStream;
+				int m_ProfileCount;
+			public:
+				Profiler()
+					: m_CurrentSession(nullptr), m_ProfileCount(0)
+				{
+				}
 
-				std::ofstream outputFile;
-				int profileCount = 0;
+				void BeginSession(const std::string& name, const std::string& filepath = "results.json");
+				void EndSession();
+				void WriteProfile(const ProfileResult& result);
 
-				bool isProfilerClosed = false;
+				void WriteHeader();
+				void WriteFooter();
+
+				static Profiler& Get();
 			};
 
-			// Profile Timer
-			class ProfileTimer {
+			class ProfileTimer
+			{
 			public:
-				ProfileTimer(std::string name);
-				ProfileTimer(std::string name, Profiler* profiler);
+				ProfileTimer(const char* name);
+
 				~ProfileTimer();
 
-				void startTimer();
-				void stopTimer();
-
+				void Stop();
 			private:
-				Profiler* myProfiler = nullptr;
-				std::string myName = DMK_TEXT("");
-				bool isTimerStopped = false;
-
-				std::chrono::time_point<std::chrono::high_resolution_clock> startTimePoint;
+				const char* m_Name;
+				std::chrono::time_point<std::chrono::high_resolution_clock> m_StartTimepoint;
+				bool m_Stopped;
 			};
-
-			void beginProfiler(std::string fileName);
-			void writeToProfiler(const benchmarkResult& result);
-			void endProfiler();
 		}
 	}
 }
 
 //#ifdef DMK_DEBUG
 #if defined(DMK_DEBUG) || defined(DMK_RELEASE)
-#define DMK_DEBUGGER_PROFILER_BEGIN(path)	::Dynamik::Debugger::benchmark::Profiler _##__VA__ARGS__();
-#define DMK_DEBUGGER_PROFILER_BEGIN_PATH(path)	::Dynamik::Debugger::benchmark::Profiler::getProfiler().beginSession(path)
-#define DMK_DEBUGGER_PROFILER_END ::Dynamik::Debugger::benchmark::Profiler::getProfiler().endSession()
 
-#define DMK_DEBUGGER_SET_FUNCTION_NAME(name, ...) timer_##__VA_ARGS__(name)
-#define DMK_DEBUGGER_PROFILER_TIMER_INITIATE(name)	::Dynamik::Debugger::benchmark::ProfileTimer DMK_DEBUGGER_SET_FUNCTION_NAME(name, __LINE__)
-#define DMK_DEBUGGER_PROFILER_TIMER_START(...) 	::Dynamik::Debugger::benchmark::ProfileTimer _##__VA_ARGS__(__FUNCSIG__)
-#define DMK_DEBUGGER_PROFILER_TIMER_BEGIN(profiler, ...) 	::Dynamik::Debugger::benchmark::ProfileTimer _##__VA_ARGS__(__FUNCSIG__, profiler)
-#define DMK_DEBUGGER_PROFILER_TIMER_STOP(...) 	_##__VA_ARGS__.stopTimer()
+#define DMK_BEGIN_PROFILING() ::Dynamik::Debugger::benchmark::Profiler::Get().BeginSession(__FUNCSIG__)
+#define DMK_BEGIN_PROFILE_TIMER() ::Dynamik::Debugger::benchmark::ProfileTimer timer(__FUNCSIG__)
+#define DMK_END_PROFILING() ::Dynamik::Debugger::benchmark::Profiler::Get().EndSession()
 
 #else
-#define DMK_DEBUGGER_PROFILER_BEGIN(name)
-#define DMK_DEBUGGER_PROFILER_BEGIN_PATH(name, path)
-#define DMK_DEBUGGER_PROFILER_END
-
-#define DMK_DEBUGGER_SET_FUNCTION_NAME(...)
-#define DMK_DEBUGGER_PROFILER_TIMER_INITIATE
-#define DMK_DEBUGGER_PROFILER_TIMER_START(...)
-#define DMK_DEBUGGER_PROFILER_TIMER_STOP(...)
+#define DMK_BEGIN_PROFILING() 
+#define DMK_BEGIN_PROFILE_TIMER() 
+#define DMK_END_PROFILING() 
 
 #endif
 

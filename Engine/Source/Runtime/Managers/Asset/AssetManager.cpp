@@ -67,13 +67,16 @@ namespace Dynamik {
 		/* Initialize the scene data to get the required data from .dai file */
 		STORE _scene = _initializeSceneData(assets[levelIndex][sceneIndex]);
 
-		{
+		{			
+			DMK_BEGIN_PROFILE_TIMER();
+
 			/* Run each object loading function in a separate thread to make things faster */
 			ARRAY<std::future<void>, DMKArrayDestructorCallMode::DMK_ARRAY_DESTRUCTOR_CALL_MODE_DESTRUCT_ALL> threads;
 			for (UI32 index = 0; index < _scene.size(); index++)
 			{
-				POINTER<InternalFormat> _format = _scene[index].address;
+				DMK_BEGIN_PROFILE_TIMER();
 
+				POINTER<InternalFormat> _format = _scene[index].address;
 
 				if (_format->descriptor.assetDescription.textureType == DMKTextureType::DMK_TEXTURE_TYPE_CUBEMAP)
 				{
@@ -109,6 +112,8 @@ namespace Dynamik {
 
 	ARRAY<AssetContainer> AssetManager::getRenderableAssets(UI32 sceneIndex, UI32 levelIndex)
 	{
+		DMK_BEGIN_PROFILE_TIMER();
+
 		ARRAY<AssetContainer>_assets;
 
 		for (AssetContainer _asset : assets[levelIndex][sceneIndex])
@@ -120,6 +125,8 @@ namespace Dynamik {
 
 	ARRAY<POINTER<InternalFormat>> AssetManager::getRenderablesAsInternalFormats(UI32 sceneIndex, UI32 levelIndex)
 	{
+		DMK_BEGIN_PROFILE_TIMER();
+
 		ARRAY<POINTER<InternalFormat>> _formats;
 
 		/* Go through all the assets and return the renderable objects in the scene */
@@ -137,6 +144,8 @@ namespace Dynamik {
 
 	AssetContainer AssetManager::createAssetContainer(POINTER<DMKGameObject> object)
 	{
+		DMK_BEGIN_PROFILE_TIMER();
+
 		/* Create a new Asset Container */
 		AssetContainer _container;
 
@@ -158,8 +167,12 @@ namespace Dynamik {
 
 	AssetManager::STORE AssetManager::_initializeSceneData(ARRAY<AssetContainer> scene)
 	{
+		DMK_BEGIN_PROFILE_TIMER();
+
 		for (UI32 index = 0; index < scene.size(); index++)
 		{
+			DMK_BEGIN_PROFILE_TIMER();
+
 			/* Update addresses from DMKGameObject* to POINTER<InternalFormat> */
 			POINTER<InternalFormat> _format = scene[index].address;
 

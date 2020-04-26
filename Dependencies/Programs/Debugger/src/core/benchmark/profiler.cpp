@@ -10,148 +10,84 @@
 namespace Dynamik {
 	namespace Debugger {
 		namespace benchmark {
-			std::mutex profilerMutex;
-
-			/* PROFILER */
-			Profiler::~Profiler() {
-				if (!isProfilerClosed)
-					endSession();
+			void Profiler::BeginSession(const std::string& name, const std::string& filepath)
+			{
+				m_OutputStream.open(filepath);
+				WriteHeader();
+				m_CurrentSession = new InstrumentationSession{ name };
 			}
-
-			void Profiler::beginSession(const std::string& filepath) {
-				outputFile.open(filepath);
-				writeHeader();
+			
+			void Profiler::EndSession()
+			{
+				WriteFooter();
+				m_OutputStream.close();
+				delete m_CurrentSession;
+				m_CurrentSession = nullptr;
+				m_ProfileCount = 0;
 			}
+			
+			void Profiler::WriteProfile(const ProfileResult& result)
+			{
+				if (m_ProfileCount++ > 0)
+					m_OutputStream << ",";
 
-			void Profiler::writeProfile(const benchmarkResult& result) {
-				if (profileCount++ > 0)
-					outputFile << ",";
-
-				std::string name = result.name;
+				std::string name = result.Name;
 				std::replace(name.begin(), name.end(), '"', '\'');
 
-				outputFile << DMK_TEXT("{");
-				outputFile << DMK_TEXT("\"cat\":\"function\",");
-				outputFile << DMK_TEXT("\"dur\":") << (result.end - result.start) << DMK_TEXT(',');
-				outputFile << DMK_TEXT("\"name\":\"") << name.c_str() << DMK_TEXT("\",");
-				outputFile << DMK_TEXT("\"ph\":\"X\",");
-				outputFile << DMK_TEXT("\"pid\":0,");
-				outputFile << DMK_TEXT("\"tid\":") << result.threadID << DMK_TEXT(",");
-				outputFile << DMK_TEXT("\"ts\":") << result.start;
-				outputFile << DMK_TEXT("}");
+				m_OutputStream << "{";
+				m_OutputStream << "\"cat\":\"function\",";
+				m_OutputStream << "\"dur\":" << (result.End - result.Start) << ',';
+				m_OutputStream << "\"name\":\"" << name << "\",";
+				m_OutputStream << "\"ph\":\"X\",";
+				m_OutputStream << "\"pid\":0,";
+				m_OutputStream << "\"tid\":" << result.ThreadID << ",";
+				m_OutputStream << "\"ts\":" << result.Start;
+				m_OutputStream << "}";
 
-				outputFile.flush();
+				m_OutputStream.flush();
 			}
-
-			void Profiler::endSession() {
-				if (!isProfilerClosed) {
-					writeFooter();
-					outputFile.close();
-					profileCount = 0;
-					isProfilerClosed = true;
-				}
+			
+			void Profiler::WriteHeader()
+			{
+				m_OutputStream << "{\"otherData\": {},\"traceEvents\":[";
+				m_OutputStream.flush();
 			}
-
-			Profiler& Profiler::getProfiler() {
-				static Profiler* instance = new Profiler();
-				return *instance;
+			
+			void Profiler::WriteFooter()
+			{
+				m_OutputStream << "]}";
+				m_OutputStream.flush();
 			}
-
-			void Profiler::writeHeader() {
-				outputFile << "{\"otherData\": {},\"traceEvents\":[";
-				outputFile.flush();
+			
+			Profiler& Profiler::Get()
+			{
+				static Profiler instance;
+				return instance;
 			}
-
-			void Profiler::writeFooter() {
-				outputFile << "]}";
-				outputFile.flush();
+			
+			ProfileTimer::ProfileTimer(const char* name)
+				: m_Name(name), m_Stopped(false)
+			{
+				m_StartTimepoint = std::chrono::high_resolution_clock::now();
 			}
-
-			/* PROFILE TIMER */
-			ProfileTimer::ProfileTimer(std::string name) : myName(name) {
-				startTimer();
+			
+			ProfileTimer::~ProfileTimer()
+			{
+				if (!m_Stopped)
+					Stop();
 			}
+			
+			void ProfileTimer::Stop()
+			{
+				auto endTimepoint = std::chrono::high_resolution_clock::now();
 
-			ProfileTimer::ProfileTimer(std::string name, Profiler* profiler) :
-				myName(name), myProfiler(profiler) {
-				startTimer();
-			}
+				long long start = std::chrono::time_point_cast<std::chrono::microseconds>(m_StartTimepoint).time_since_epoch().count();
+				long long end = std::chrono::time_point_cast<std::chrono::microseconds>(endTimepoint).time_since_epoch().count();
 
-			void ProfileTimer::startTimer() {
-				startTimePoint = std::chrono::high_resolution_clock::now();
-			}
+				uint32_t threadID = std::hash<std::thread::id>{}(std::this_thread::get_id());
+				Profiler::Get().WriteProfile({ m_Name, start, end, threadID });
 
-			void ProfileTimer::stopTimer() {
-				auto endTimePoint = std::chrono::high_resolution_clock::now();
-
-				auto start = std::chrono::time_point_cast<std::chrono::microseconds>
-					(startTimePoint).time_since_epoch().count();
-				auto stop = std::chrono::time_point_cast<std::chrono::microseconds>
-					(endTimePoint).time_since_epoch().count();
-
-				uint32_t threadID = (uint32_t)std::hash<std::thread::id>{}(std::this_thread::get_id());
-				benchmarkResult results = {};
-				results.name = myName;
-				results.start = start;
-				results.end = stop;
-				results.threadID = threadID;
-
-				{
-					std::lock_guard<std::mutex> guard(profilerMutex);
-
-					//if (myProfiler == nullptr)
-					//	Profiler::getProfiler().writeProfile(results);
-					//else
-					//	myProfiler->writeProfile(results);
-
-					writeToProfiler(results);
-				}
-
-				isTimerStopped = true;
-			}
-
-			ProfileTimer::~ProfileTimer() {
-				if (!isTimerStopped)
-					stopTimer();
-			}
-
-			/* ------------------------------------------------------ */
-
-			static std::ofstream profilerOutputFile;
-			static int profileCount = 0;
-
-			void beginProfiler(std::string fileName) {
-				profilerOutputFile.open(fileName);
-
-				profilerOutputFile << "{\"otherData\": {},\"traceEvents\":[";
-				profilerOutputFile.flush();
-			}
-
-			void writeToProfiler(const benchmarkResult& result) {
-				if (profileCount++ > 0)
-					profilerOutputFile << ",";
-
-				std::string name = result.name;
-				std::replace(name.begin(), name.end(), '"', '\'');
-
-				profilerOutputFile << DMK_TEXT("{");
-				profilerOutputFile << DMK_TEXT("\"cat\":\"function\",");
-				profilerOutputFile << DMK_TEXT("\"dur\":") << (result.end - result.start) << DMK_TEXT(',');
-				profilerOutputFile << DMK_TEXT("\"name\":\"") << name.c_str() << DMK_TEXT("\",");
-				profilerOutputFile << DMK_TEXT("\"ph\":\"X\",");
-				profilerOutputFile << DMK_TEXT("\"pid\":0,");
-				profilerOutputFile << DMK_TEXT("\"tid\":") << result.threadID << DMK_TEXT(",");
-				profilerOutputFile << DMK_TEXT("\"ts\":") << result.start;
-				profilerOutputFile << DMK_TEXT("}");
-
-				profilerOutputFile.flush();
-			}
-
-			void endProfiler() {
-				profilerOutputFile << "]}";
-
-				profilerOutputFile.flush();
-				profilerOutputFile.close();
+				m_Stopped = true;
 			}
 		}
 	}

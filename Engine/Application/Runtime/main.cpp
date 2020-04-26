@@ -12,6 +12,7 @@
 
 #include "src/Camera.h"
 #include "src/Skybox.h"
+#include "src/Moon.h"
 
 /* -----||||| MAIN LAUNCH SYSTEM |||||----- */
 
@@ -29,12 +30,14 @@ int main(int argc, char** argv) {
 		Camera camera;
 		DMKEngine::setupCamera(&camera);
 
+		/* Level initialization */
 		OceanSkybox skybox;
+		Moon moon;
 
 		DMKSceneDescriptor scene1;
 		scene1.sceneID = "S001";
 		scene1.sceneIndex = 0;
-		scene1.assets = { &skybox };
+		scene1.assets = { &skybox, &moon };
 
 		DMKLevelDescriptor level1;
 		level1.levelID = "001";

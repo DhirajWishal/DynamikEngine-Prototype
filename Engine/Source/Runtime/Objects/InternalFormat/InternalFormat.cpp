@@ -10,7 +10,5 @@ namespace Dynamik {
 		objectPath = std::string();
 		texturePaths = ARRAY<std::string>();
 		shaderPaths = ShaderPaths();
-
-		uniformBufferData = ARRAY<MAT4>();
 	}
 }

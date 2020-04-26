@@ -159,10 +159,6 @@ namespace Dynamik {
 	{
 		/* Instanciate draw frame info structure */
 		DMKRendererDrawFrameInfo info;
-		info.aspectRatio = instance.aspectRatio;
-		info.FOV = instance.FOV;
-		info.frustumFar = instance.frustumFar;
-		info.frustumNear = instance.frustumNear;
 
 		/* Main execution loop of the Dynamik Engine									*/
 		/* First it polls events and checks whether the window is still valid.			*/
@@ -200,8 +196,6 @@ namespace Dynamik {
 	inline void DMKEngine::cleanUniformBuffers()
 	{
 		/* Clean all the uniform buffer data to add new uniform data. */
-		for (auto _format : instance.internalFormats)
-			_format->uniformBufferData = {};
 	}
 	
 	inline void DMKEngine::onUpdateCleanup()

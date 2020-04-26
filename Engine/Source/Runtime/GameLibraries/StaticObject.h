@@ -1,25 +1,25 @@
 #pragma once
-#ifndef _DYNAMIK_SKYBOX_OBJECT_H
-#define _DYNAMIK_SKYBOX_OBJECT_H
+#ifndef _DYNAMIK_STATIC_OBJECT_H
+#define _DYNAMIK_STATIC_OBJECT_H
 
 #include "GameObject.h"
 
 namespace Dynamik {
-	/* Dynamik SkyBox Object
-	 * This contains the basic base features of a Dynamik Skybox object.
+	/* Dynamik Static Object
+	 * The static object is any object that needs to be rendered.
 	 */
-	class DMKSkyboxObject : public DMKGameObject {
+	class DMKStaticObject : public DMKGameObject {
 	public:
-		DMKSkyboxObject()
+		DMKStaticObject() 
 		{
 			/* Basic description */
-			type = DMKObjectType::DMK_OBJECT_TYPE_SKYBOX;
+			type = DMKObjectType::DMK_OBJECT_TYPE_STATIC;
 
 			/* Asset description */
-			descriptor.assetDescription.dynamikResouceFilePath = "E:/Projects/Dynamik Engine/Game Repository/assets/assets/Skybox";
+			descriptor.assetDescription.dynamikResouceFilePath = "E:/Projects/Dynamik Engine/Game Repository/assets/assets/moon";
 			descriptor.assetDescription.physicallyBased = false;
 			descriptor.assetDescription.textureInputType = DMKTextureInputType::DMK_TEXTURE_INPUT_TYPE_IMAGE;
-			descriptor.assetDescription.textureType = DMKTextureType::DMK_TEXTURE_TYPE_CUBEMAP;
+			descriptor.assetDescription.textureType = DMKTextureType::DMK_TEXTURE_TYPE_2D;
 
 			/* Transformation description */
 			descriptor.transformDescriptor.location = { 0.0f, 0.0f, 0.0f };
@@ -31,15 +31,25 @@ namespace Dynamik {
 			descriptor.vertexBufferObjectDescription.attributes.pushBack(vAttribute1);
 
 			DMKVertexAttribute vAttribute2;		/* location = 1 */
-			vAttribute2.name = DMKVertexData::DMK_VERTEX_DATA_TEXTURE_COORDINATES;
-			vAttribute2.dataType = DMKDataType::DMK_DATA_TYPE_VEC2;
+			vAttribute2.name = DMKVertexData::DMK_VERTEX_DATA_COLOR;
+			vAttribute2.dataType = DMKDataType::DMK_DATA_TYPE_VEC3;
 			descriptor.vertexBufferObjectDescription.attributes.pushBack(vAttribute2);
+
+			DMKVertexAttribute vAttribute3;		/* location = 2 */
+			vAttribute3.name = DMKVertexData::DMK_VERTEX_DATA_TEXTURE_COORDINATES;
+			vAttribute3.dataType = DMKDataType::DMK_DATA_TYPE_VEC2;
+			descriptor.vertexBufferObjectDescription.attributes.pushBack(vAttribute3);
+
+			DMKVertexAttribute vAttribute4;		/* location = 3 */
+			vAttribute4.name = DMKVertexData::DMK_VERTEX_DATA_INTEGRITY;
+			vAttribute4.dataType = DMKDataType::DMK_DATA_TYPE_F32;
+			descriptor.vertexBufferObjectDescription.attributes.pushBack(vAttribute4);
 
 			/* Index buffer description */
 			descriptor.indexBufferType = DMKDataType::DMK_DATA_TYPE_UI32;
 
 			/* Uniform attributes description */
-			DMKUniformBufferObjectDescriptor UBODescriptor;		/* binding = 0 */
+			DMKUniformBufferObjectDescriptor UBODescriptor;
 			UBODescriptor.type = DMKUniformType::DMK_UNIFORM_TYPE_BUFFER_OBJECT;
 			UBODescriptor.location = DMKAttributeLocation::DMK_ATTRIBUTE_LOCATION_VERTEX;
 			UBODescriptor.binding = 0;
@@ -61,7 +71,7 @@ namespace Dynamik {
 
 			/* Texture sampler */
 			DMKUniformBufferObjectDescriptor TexSampler;
-			TexSampler.type = DMKUniformType::DMK_UNIFORM_TYPE_IMAGE_SAMPLER_CUBEMAP;
+			TexSampler.type = DMKUniformType::DMK_UNIFORM_TYPE_IMAGE_SAMPLER_2D;
 			TexSampler.location = DMKAttributeLocation::DMK_ATTRIBUTE_LOCATION_FRAGMENT;
 			TexSampler.binding = 1;
 
@@ -69,7 +79,7 @@ namespace Dynamik {
 			descriptor.uniformBufferObjectDescriptions.pushBack(UBODescriptor);
 			descriptor.uniformBufferObjectDescriptions.pushBack(TexSampler);
 		}
-		virtual ~DMKSkyboxObject() {}
+		virtual ~DMKStaticObject() {}
 
 		/* Overridable virtual function */
 		virtual DMKUniformBufferData onUpdate(DMKCameraData data) override
@@ -83,4 +93,4 @@ namespace Dynamik {
 	};
 }
 
-#endif // !_DYNAMIK_SKYBOX_OBJECT_H
+#endif // !_DYNAMIK_STATIC_OBJECT_H

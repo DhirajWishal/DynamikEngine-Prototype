@@ -303,6 +303,7 @@
     <ClInclude Include="..\..\Runtime\GameLibraries\Material.h" />
     <ClInclude Include="..\..\Runtime\GameLibraries\Scene.h" />
     <ClInclude Include="..\..\Runtime\GameLibraries\SkyboxObject.h" />
+    <ClInclude Include="..\..\Runtime\GameLibraries\StaticObject.h" />
     <ClInclude Include="..\..\Runtime\Managers\Asset\AssetManager.h" />
     <ClInclude Include="..\..\Runtime\Managers\Managers.h" />
     <ClInclude Include="..\..\Runtime\Networking\Backend\client.h" />

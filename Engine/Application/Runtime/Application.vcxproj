@@ -132,11 +132,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="src\Camera.h" />
+    <ClInclude Include="src\Moon.h" />
     <ClInclude Include="src\Skybox.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="src\Camera.cpp" />
+    <ClCompile Include="src\Moon.cpp" />
     <ClCompile Include="src\Skybox.cpp" />
   </ItemGroup>
   <ItemGroup>

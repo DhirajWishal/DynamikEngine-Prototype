@@ -72,7 +72,7 @@ namespace Dynamik {
 		{
 			for (auto format : formats)
 			{
-				if (format->type == DMKObjectType::DMK_OBJECT_TYPE_STATIC)
+				if (format->descriptor.assetDescription.physicallyBased)
 				{
 					format->renderAttachments.pushBack(DMKRenderAttachment::DMK_RENDER_ATTACHMENT_SKYBOX);
 					format->renderAttachments.pushBack(DMKRenderAttachment::DMK_RENDER_ATTACHMENT_BRDF_TABLE);

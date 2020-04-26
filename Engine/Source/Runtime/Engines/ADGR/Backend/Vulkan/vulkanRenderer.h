@@ -64,12 +64,6 @@ namespace Dynamik {
 
 			static vulkanRenderer instance;
 
-			struct _internalUBO {
-				MAT4 model = glm::mat4(1.0f);
-				MAT4 view = glm::mat4(1.0f);
-				MAT4 proj = glm::mat4(1.0f);
-			};
-
 		public:
 			~vulkanRenderer() {}
 
@@ -128,8 +122,6 @@ namespace Dynamik {
 			UI32 imageIndex = 0;
 			UI32 currentFrame = 0;
 			VkResult result = VkResult::VK_ERROR_UNKNOWN;
-
-			_internalUBO commonUBO;
 
 			/* Attachment container */
 		};

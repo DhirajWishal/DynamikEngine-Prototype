@@ -28,43 +28,29 @@ namespace Dynamik {
 
 			ADGRVulkanRenderData VulkanGraphicsRenderableObject::initializeObject(POINTER<InternalFormat> format, VkSampleCountFlagBits msaaSamples)
 			{
-				ARRAY<VkDescriptorSetLayoutBinding> bindings;
-
-				VkDescriptorSetLayoutBinding uboLayoutBinding = {};
-				uboLayoutBinding.binding = 0; // info.bindIndex;
-				uboLayoutBinding.descriptorCount = 1;
-				uboLayoutBinding.descriptorType = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;
-				uboLayoutBinding.pImmutableSamplers = nullptr; // Optional
-				uboLayoutBinding.stageFlags = VK_SHADER_STAGE_VERTEX_BIT;
-				bindings.push_back(uboLayoutBinding);
-
-				VkDescriptorSetLayoutBinding samplerLayoutBinding = {};
-				samplerLayoutBinding.binding = 1; // info.bindIndex;
-				samplerLayoutBinding.descriptorCount = 1;
-				samplerLayoutBinding.descriptorType = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
-				samplerLayoutBinding.pImmutableSamplers = nullptr; // Optional
-				samplerLayoutBinding.stageFlags = VK_SHADER_STAGE_FRAGMENT_BIT;
-				bindings.push_back(samplerLayoutBinding);
-
+				/* Initialize descriptor set layout */
 				ADGRVulkanDescriptorSetLayoutInitInfo layoutInitInfo;
-				layoutInitInfo.bindings = bindings;
+				layoutInitInfo.bindings = VulkanUtilities::getDescriptorSetBindings(format->descriptor.uniformBufferObjectDescriptions);
 				myRenderData.descriptors.initializeLayout(logicalDevice, layoutInitInfo);
 
+				/* Initialize pipeline layout */
 				ADGRVulkanGraphicsPipelineLayoutInitInfo pipelineLayoutInitInfo;
 				pipelineLayoutInitInfo.layouts = { myRenderData.descriptors.layout };
 				initializePipelineLayout(pipelineLayoutInitInfo);
 
+				/* Initialize shaders */
 				ARRAY<VulkanGraphicsShader> _shaders = VulkanUtilities::getGraphicsShaders(logicalDevice, format);
 
 				// initialize pipeline
 				ADGRVulkanGraphicsPipelineInitInfo pipelineInitInfo;
 				pipelineInitInfo.shaders = _shaders;
 				pipelineInitInfo.multisamplerMsaaSamples = msaaSamples;
-				pipelineInitInfo.vertexBindingDescription = VulkanUtilities::getBindingDescription(1);
-				pipelineInitInfo.vertexAttributeDescription = VulkanUtilities::getAttributeDescriptions(myInternalFormat->descriptor.vertexBufferObjectDescription.attributes, 1);
+				pipelineInitInfo.vertexBindingDescription = VulkanUtilities::getBindingDescription(myInternalFormat->descriptor.vertexBufferObjectDescription.attributes, 1);
+				pipelineInitInfo.vertexAttributeDescription = VulkanUtilities::getAttributeDescriptions(myInternalFormat->descriptor.vertexBufferObjectDescription.attributes);
 				pipelineInitInfo.isTexturesAvailable = format->texturePaths.size();
 				initializePipeline(pipelineInitInfo);
 
+				/* Terminate shade programs */
 				VulkanUtilities::terminateGraphicsShaders(logicalDevice, _shaders);
 
 				// initialize resources

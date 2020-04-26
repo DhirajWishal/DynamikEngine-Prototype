@@ -12,6 +12,7 @@
     <ClInclude Include="src\Skybox.h">
       <Filter>src</Filter>
     </ClInclude>
+    <ClInclude Include="src\Moon.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -21,6 +22,7 @@
     <ClCompile Include="src\Skybox.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="src\Moon.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Application.lua" />

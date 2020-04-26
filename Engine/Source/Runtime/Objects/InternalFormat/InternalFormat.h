@@ -44,9 +44,6 @@ namespace Dynamik {
 		ARRAY<std::string> texturePaths;
 		ShaderPaths shaderPaths;
 
-		/* Uniform buffer data */
-		alignas (16) ARRAY<MAT4> uniformBufferData;
-
 		/* Filled by the Renderer */
 	public:
 		ARRAY<DMKRenderAttachment> renderAttachments;

@@ -140,6 +140,9 @@ namespace Dynamik {
 			public:
 				~VulkanUtilities() {}
 
+				/* GLOBAL */
+				static VkFormat getFormat(DMKFormat format);
+
 				/* VERTEX FUNCTIONS */
 				static ARRAY<VkVertexInputBindingDescription> getBindingDescription(ARRAY<DMKVertexAttribute> attributes, UI32 bindCount = 1);
 				static ARRAY<VkVertexInputAttributeDescription> getAttributeDescriptions(ARRAY<DMKVertexAttribute> attributes, UI32 binding = 0);

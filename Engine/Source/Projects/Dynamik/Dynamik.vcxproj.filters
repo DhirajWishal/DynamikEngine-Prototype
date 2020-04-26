@@ -708,6 +708,9 @@
     <ClInclude Include="..\..\Runtime\GameLibraries\SkyboxObject.h">
       <Filter>Runtime\GameLibraries</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Runtime\GameLibraries\StaticObject.h">
+      <Filter>Runtime\GameLibraries</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Runtime\Managers\Asset\AssetManager.h">
       <Filter>Runtime\Managers\Asset</Filter>
     </ClInclude>

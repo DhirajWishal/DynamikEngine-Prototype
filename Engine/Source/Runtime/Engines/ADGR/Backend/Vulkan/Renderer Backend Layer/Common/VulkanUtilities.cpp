@@ -7,6 +7,279 @@
 namespace Dynamik {
 	namespace ADGR {
 		namespace Backend {
+			VkFormat VulkanUtilities::getFormat(DMKFormat format)
+			{
+				VkFormat _format = VK_FORMAT_UNDEFINED;
+
+				switch (format)
+				{
+				case Dynamik::DMKFormat::DMK_FORMAT_UNDEFINED:
+					_format = VK_FORMAT_UNDEFINED;
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_R_8_INT:
+					_format = VK_FORMAT_R8_UINT;
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_R_8_UINT:
+					_format = VK_FORMAT_R8_UINT;
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_R_8_SINT:
+					_format = VK_FORMAT_R8_SINT;
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_R_8_F32:
+					_format = VK_FORMAT_R8_UNORM;
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_R_8_UF32:
+					_format = VK_FORMAT_R8_UNORM;
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_R_8_SF32:
+					_format = VK_FORMAT_R8_UNORM;
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_R_8_UNIFORM:
+					_format = VK_FORMAT_R8_UNORM;
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_R_16_INT:
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_R_16_UINT:
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_R_16_SINT:
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_R_16_F32:
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_R_16_UF32:
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_R_16_SF32:
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_R_16_UNIFORM:
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_R_32_INT:
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_R_32_UINT:
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_R_32_SINT:
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_R_32_F32:
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_R_32_UF32:
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_R_32_SF32:
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_R_32_UNIFORM:
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_RG_8_INT:
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_RG_8_UINT:
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_RG_8_SINT:
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_RG_8_F32:
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_RG_8_UF32:
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_RG_8_SF32:
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_RG_8_UNIFORM:
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_RG_16_INT:
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_RG_16_UINT:
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_RG_16_SINT:
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_RG_16_F32:
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_RG_16_UF32:
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_RG_16_SF32:
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_RG_16_UNIFORM:
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_RG_32_INT:
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_RG_32_UINT:
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_RG_32_SINT:
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_RG_32_F32:
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_RG_32_UF32:
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_RG_32_SF32:
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_RG_32_UNIFORM:
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_RGB_8_INT:
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_RGB_8_UINT:
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_RGB_8_SINT:
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_RGB_8_F32:
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_RGB_8_UF32:
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_RGB_8_SF32:
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_RGB_8_UNIFORM:
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_RGB_16_INT:
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_RGB_16_UINT:
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_RGB_16_SINT:
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_RGB_16_F32:
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_RGB_16_UF32:
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_RGB_16_SF32:
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_RGB_16_UNIFORM:
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_RGB_32_INT:
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_RGB_32_UINT:
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_RGB_32_SINT:
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_RGB_32_F32:
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_RGB_32_UF32:
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_RGB_32_SF32:
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_RGB_32_UNIFORM:
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_BGR_8_INT:
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_BGR_8_UINT:
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_BGR_8_SINT:
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_BGR_8_F32:
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_BGR_8_UF32:
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_BGR_8_SF32:
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_BGR_8_UNIFORM:
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_BGR_16_INT:
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_BGR_16_UINT:
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_BGR_16_SINT:
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_BGR_16_F32:
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_BGR_16_UF32:
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_BGR_16_SF32:
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_BGR_16_UNIFORM:
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_BGR_32_INT:
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_BGR_32_UINT:
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_BGR_32_SINT:
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_BGR_32_F32:
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_BGR_32_UF32:
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_BGR_32_SF32:
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_BGR_32_UNIFORM:
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_RGBA_8_INT:
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_RGBA_8_UINT:
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_RGBA_8_SINT:
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_RGBA_8_F32:
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_RGBA_8_UF32:
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_RGBA_8_SF32:
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_RGBA_8_UNIFORM:
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_RGBA_16_INT:
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_RGBA_16_UINT:
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_RGBA_16_SINT:
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_RGBA_16_F32:
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_RGBA_16_UF32:
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_RGBA_16_SF32:
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_RGBA_16_UNIFORM:
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_RGBA_32_INT:
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_RGBA_32_UINT:
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_RGBA_32_SINT:
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_RGBA_32_F32:
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_RGBA_32_UF32:
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_RGBA_32_SF32:
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_RGBA_32_UNIFORM:
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_BGRA_8_INT:
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_BGRA_8_UINT:
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_BGRA_8_SINT:
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_BGRA_8_F32:
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_BGRA_8_UF32:
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_BGRA_8_SF32:
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_BGRA_8_UNIFORM:
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_BGRA_16_INT:
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_BGRA_16_UINT:
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_BGRA_16_SINT:
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_BGRA_16_F32:
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_BGRA_16_UF32:
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_BGRA_16_SF32:
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_BGRA_16_UNIFORM:
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_BGRA_32_INT:
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_BGRA_32_UINT:
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_BGRA_32_SINT:
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_BGRA_32_F32:
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_BGRA_32_UF32:
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_BGRA_32_SF32:
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_BGRA_32_UNIFORM:
+					break;
+				}
+
+				return _format;
+			}
+			
 			ARRAY<VkVertexInputBindingDescription> VulkanUtilities::getBindingDescription(ARRAY<DMKVertexAttribute> attributes, UI32 bindCount)
 			{
 				ARRAY<VkVertexInputBindingDescription> bindingDescription(bindCount);
@@ -788,7 +1061,7 @@ namespace Dynamik {
 				for (UI32 binding = 0; binding < descriptors.size(); binding++)
 				{
 					VkDescriptorSetLayoutBinding uboLayoutBinding = {};
-					uboLayoutBinding.binding = binding; // info.bindIndex;
+					uboLayoutBinding.binding = descriptors[binding].binding; // info.bindIndex;
 					uboLayoutBinding.descriptorCount = 1;
 					uboLayoutBinding.descriptorType = getDescriptorType(descriptors[binding].type);
 					uboLayoutBinding.pImmutableSamplers = nullptr; // Optional

@@ -45,10 +45,6 @@ namespace Dynamik {
 
 		struct DMK_API DMKRendererDrawFrameInfo {
 			DMKCameraData cameraData;
-			F32 FOV = 60.0f;
-			F32 aspectRatio = 1.0f;
-			F32 frustumNear = 0.001f;
-			F32 frustumFar = 256.0f;
 
 			ARRAY<POINTER<InternalFormat>> formats;
 		};

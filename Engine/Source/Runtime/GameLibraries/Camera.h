@@ -14,8 +14,18 @@ namespace Dynamik {
 	 */
 	class DMKCamera {
 	public:
-		DMKCamera() {}
-		DMKCamera(DMKCameraType ty) : type(ty) {}
+		DMKCamera() 
+		{
+			myData.fieldOfView = 60.0f;
+			myData.cameraNear = 0.001f;
+			myData.cameraFar = 256.0f;
+		}
+		DMKCamera(DMKCameraType ty) : type(ty) 
+		{
+			myData.fieldOfView = 60.0f;
+			myData.cameraNear = 0.001f;
+			myData.cameraFar = 256.0f;
+		}
 		virtual ~DMKCamera() {}
 
 		virtual DMKCameraData update(ARRAY<DMKEventComponent*> eventComponents) { return DMKCameraData(); }

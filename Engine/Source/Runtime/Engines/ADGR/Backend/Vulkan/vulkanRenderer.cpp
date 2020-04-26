@@ -241,6 +241,9 @@ namespace Dynamik {
 			if (info.formats.size() != instance.myResourceContainers[instance.inUseIndex].renderData.size())
 				DMK_CORE_FATAL("Invalid amount of update formats sent to the Draw call!");
 
+			/* Sync Vulkan Fences */
+			instance.myGraphicsCore.syncFence(instance.currentFrame);
+
 			/* Get the current image index */
 			instance.imageIndex = 0;
 			instance.result = instance.myGraphicsCore.getNextImage(instance.mySwapChain.swapChainContainer.swapChain, &instance.imageIndex, instance.currentFrame);
@@ -257,10 +260,6 @@ namespace Dynamik {
 			/* Update the objects using the Draw Frame Info structure */
 			for (UI32 index = 0; index < info.formats.size(); index++)
 			{
-				/* Update the common uniform buffer object */
-				instance.commonUBO.view = glm::lookAt(info.cameraData.cameraPosition, info.cameraData.cameraPosition + info.cameraData.cameraRight, info.cameraData.cameraUp);
-				instance.commonUBO.proj = glm::perspective(glm::radians(info.FOV), info.aspectRatio, info.frustumNear, info.frustumFar);
-
 				/* Check for the Uniform buffer attributes and add the data to the container */
 				for (auto _description : info.formats[index]->descriptor.uniformBufferObjectDescriptions)
 				{
@@ -268,27 +267,9 @@ namespace Dynamik {
 					if (_description.location != DMKAttributeLocation::DMK_ATTRIBUTE_LOCATION_VERTEX)
 						continue;
 
-					for (auto _attribute : _description.attributes)
-					{
-						switch (_attribute.name)
-						{
-						case DMKUniformData::DMK_UNIFORM_DATA_MODEL:
-							info.formats[index]->uniformBufferData.pushBack(instance.commonUBO.model);
-							break;
-
-						case DMKUniformData::DMK_UNIFORM_DATA_VIEW:
-							info.formats[index]->uniformBufferData.pushBack(instance.commonUBO.view);
-							break;
-
-						case DMKUniformData::DMK_UNIFORM_DATA_PROJECTION:
-							info.formats[index]->uniformBufferData.pushBack(instance.commonUBO.proj);
-							break;
-						}
-					}
-
 					/* Update the objects uniform buffer memory */
 					for (auto _container : instance.myResourceContainers[instance.inUseIndex].renderData[index].uniformBufferContainers)
-						VulkanUtilities::updateUniformBuffer(instance.myGraphicsCore.logicalDevice, info.formats[index]->uniformBufferData, _container.bufferMemories[instance.imageIndex], _description);
+						VulkanUtilities::updateUniformBuffer(instance.myGraphicsCore.logicalDevice, info.formats[index]->onUpdate(info.cameraData), _container.bufferMemories[instance.imageIndex], _description);
 				}
 			}
 
@@ -298,6 +279,7 @@ namespace Dynamik {
 				instance.imageIndex, instance.currentFrame,
 				{ instance.myResourceContainers[instance.inUseIndex].commandBuffer.buffers[instance.imageIndex] });
 
+			/* Check for any errors */
 			if (instance.result == VK_ERROR_OUT_OF_DATE_KHR || instance.result == VK_SUBOPTIMAL_KHR)
 			{
 				recreateSwapChain();

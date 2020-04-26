@@ -31,7 +31,7 @@ namespace Dynamik {
 			else if ((paths[0].find(".hdri")) && (paths.size() < 6))
 				inputType = DMKTextureInputType::DMK_TEXTURE_INPUT_TYPE_HDRI;
 			else
-				inputType = DMKTextureInputType::DMK_TEXTURE_INPUT_TYPE_IMAGES;
+				inputType = DMKTextureInputType::DMK_TEXTURE_INPUT_TYPE_IMAGE;
 		}
 
 		if (inputType == DMKTextureInputType::DMK_TEXTURE_INPUT_TYPE_KTX)
@@ -60,7 +60,7 @@ namespace Dynamik {
 		{
 			textureData = stbi_load(paths[0].c_str(), &width, &height, &fileChannels, NULL);
 		}
-		else if (inputType == DMKTextureInputType::DMK_TEXTURE_INPUT_TYPE_IMAGES && paths.size() == 6)
+		else if (inputType == DMKTextureInputType::DMK_TEXTURE_INPUT_TYPE_IMAGE && paths.size() == 6)
 		{
 			imageCount = 6;
 			POINTER<UCHR> _pool[6] = { };

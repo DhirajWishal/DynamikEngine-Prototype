@@ -14,7 +14,7 @@ namespace Dynamik {
 	};
 
 	enum class DMKTextureInputType {
-		DMK_TEXTURE_INPUT_TYPE_IMAGES,
+		DMK_TEXTURE_INPUT_TYPE_IMAGE,
 		DMK_TEXTURE_INPUT_TYPE_KTX,
 		DMK_TEXTURE_INPUT_TYPE_HDRI,
 		DMK_TEXTURE_INPUT_TYPE_AUTO,
@@ -27,6 +27,7 @@ namespace Dynamik {
 		B1 physicallyBased = false;
 		std::string materialName = "";
 
+		DMKFormat textureFormat = DMKFormat::DMK_FORMAT_RGBA_8_UNIFORM;
 		DMKTextureType textureType = DMKTextureType::DMK_TEXTURE_TYPE_2D;
 		DMKTextureInputType textureInputType = DMKTextureInputType::DMK_TEXTURE_INPUT_TYPE_AUTO;
 	};
@@ -66,6 +67,11 @@ namespace Dynamik {
 		VEC3 cameraUp = { 0.0f, 1.0f, 0.0f };
 		VEC3 cameraFront = { 1.0f, 0.0f, 0.0f };
 		VEC3 cameraRight = { 1.0f, 0.0f, 0.0f };
+
+		F32 fieldOfView = 60.0f;
+		F32 aspectRatio = 0.5f;
+		F32 cameraFar = 256.0f;
+		F32 cameraNear = 0.001f;
 	};
 
 	/* Binding indexes are assigned in the same order as the vertex attributes are submitted. */
@@ -99,6 +105,7 @@ namespace Dynamik {
 		DMKUniformType type = DMKUniformType::DMK_UNIFORM_TYPE_BUFFER_OBJECT;
 		DMKAttributeLocation location = DMKAttributeLocation::DMK_ATTRIBUTE_LOCATION_VERTEX;
 		ARRAY<DMKUniformAttribute> attributes;
+		UI32 binding = 0;
 	};
 
 	class DMKGameObjectDescriptor {

@@ -86,6 +86,13 @@ namespace Dynamik {
 		instance.myAssetManager.loadScene(sceneIndex, instance.levelIndex);
 	}
 
+	void DMKEngine::loadCurrentScene()
+	{
+		/* Get the renderable assets in the AIB as POINTER<InternalFormat> */
+		instance.myAssetManager.loadScene(instance.sceneIndex, instance.levelIndex);
+		instance.internalFormats = instance.myAssetManager.getRenderablesAsInternalFormats(instance.sceneIndex, instance.levelIndex);
+	}
+
 	UI32 DMKEngine::addAsset(DMKGameObject* object)
 	{
 		DMK_BEGIN_PROFILE_TIMER();
@@ -150,10 +157,6 @@ namespace Dynamik {
 	void DMKEngine::genarateRenderables()
 	{
 		DMK_BEGIN_PROFILE_TIMER();
-
-		/* Get the renderable assets in the AIB as POINTER<InternalFormat> */
-		instance.myAssetManager.loadScene(instance.sceneIndex, instance.levelIndex);
-		instance.internalFormats = instance.myAssetManager.getRenderablesAsInternalFormats(instance.sceneIndex, instance.levelIndex);
 
 		/* Submit the assets to the renderer */
 		ADGR::Renderer::setRenderableObjects(instance.internalFormats);

@@ -11,6 +11,10 @@ namespace Dynamik {
 			public:
 				VulkanGraphicsDescriptor() {}
 				virtual ~VulkanGraphicsDescriptor() {}
+
+				VkDescriptorSetLayout layout = VK_NULL_HANDLE;
+				ARRAY<VkDescriptorPool> pools;
+				ARRAY<VkDescriptorSet> sets;
 			};
 		}
 	}

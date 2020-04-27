@@ -1,0 +1,7 @@
+#pragma once
+#ifndef _DYNAMIK_ADGR_VULKAN_GRAPHICS_PRIMITIVES_H
+#define _DYNAMIK_ADGR_VULKAN_GRAPHICS_PRIMITIVES_H
+
+#include "../../../Components/RenderPrimitive.h"
+
+#endif // !_DYNAMIK_ADGR_VULKAN_GRAPHICS_PRIMITIVES_H

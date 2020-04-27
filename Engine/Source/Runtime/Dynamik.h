@@ -89,6 +89,7 @@ namespace Dynamik {
 		static UI32 addLevel(DMKLevelDescriptor level);
 		static void loadLevel(UI32 levelIndex);
 		static void loadScene(UI32 sceneIndex);
+		static void loadCurrentScene();
 		static UI32 addAsset(DMKGameObject* object);
 
 		static void updateSceneIndex(UI32 index);

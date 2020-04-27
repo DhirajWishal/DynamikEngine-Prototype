@@ -27,6 +27,8 @@ namespace Dynamik {
 			static void makeContextCurrent();
 
 		private:
+			static void _errorCallback(I32 id, CCPTR description);
+
 			GLFWwindow* window = nullptr;
 			UI32 windowWidth = 1280;
 			UI32 windowHeight = 720;

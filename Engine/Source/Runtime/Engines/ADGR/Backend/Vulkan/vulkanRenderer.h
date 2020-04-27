@@ -77,6 +77,13 @@ namespace Dynamik {
 			static void addObject(POINTER<InternalFormat> format);
 			static void addObjects(ARRAY<POINTER<InternalFormat>> formats);
 
+			/* Vulkan Per-Object functions */
+			static void initializeVertexBuffers(POINTER<InternalFormat> format);
+			static void initializeIndexBuffers(POINTER<InternalFormat> format);
+			static void initializeTextures(POINTER<InternalFormat> format);
+			static void initializeUniformBuffers(POINTER<InternalFormat> format);
+			static void initializePipeline(POINTER<InternalFormat> format);
+
 			static void initializeCommands();
 			static void initializeFinalComponents();
 

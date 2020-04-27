@@ -73,6 +73,9 @@
     <Filter Include="Runtime\Engines\ADGR\Backend\Components">
       <UniqueIdentifier>{3A329E69-A6C1-5F54-AFBD-406C1BCC9A60}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Runtime\Engines\ADGR\Backend\Components\Primitives">
+      <UniqueIdentifier>{D597E353-C12B-D9FB-2AF0-32B016A313EE}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Runtime\Engines\ADGR\Backend\Vulkan">
       <UniqueIdentifier>{25906508-9149-D0B2-1AA9-EA8C86618622}</UniqueIdentifier>
     </Filter>
@@ -108,6 +111,15 @@
     </Filter>
     <Filter Include="Runtime\Engines\ADGR\Backend\opengl\backend\data structures">
       <UniqueIdentifier>{3D10BA57-A9CD-628E-3298-4EF69E54D5E2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Runtime\Engines\ADGR\Components">
+      <UniqueIdentifier>{E33DA1A2-4F21-B0E2-5824-DE1EC4867633}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Runtime\Engines\ADGR\Components\Animation">
+      <UniqueIdentifier>{92EE1AE6-FE08-7E87-472B-8E1BB384A58E}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Runtime\Engines\ADGR\Components\Objects">
+      <UniqueIdentifier>{9C0F86B2-089F-479D-119B-28B57DA982A9}</UniqueIdentifier>
     </Filter>
     <Filter Include="Runtime\Engines\ADGR\Layers">
       <UniqueIdentifier>{8DB8143E-F9C5-4224-82AC-3E0FEEB80EDB}</UniqueIdentifier>
@@ -387,14 +399,29 @@
     <ClInclude Include="..\..\Runtime\Dynamik.h">
       <Filter>Runtime</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\Components\FrameBuffer.h">
-      <Filter>Runtime\Engines\ADGR\Backend\Components</Filter>
+    <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\Components\Primitives\FrameBuffer.h">
+      <Filter>Runtime\Engines\ADGR\Backend\Components\Primitives</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\Components\SwapChain.h">
-      <Filter>Runtime\Engines\ADGR\Backend\Components</Filter>
+    <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\Components\Primitives\IndexBuffer.h">
+      <Filter>Runtime\Engines\ADGR\Backend\Components\Primitives</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\Components\TextOverlay.h">
-      <Filter>Runtime\Engines\ADGR\Backend\Components</Filter>
+    <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\Components\Primitives\RenderPass.h">
+      <Filter>Runtime\Engines\ADGR\Backend\Components\Primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\Components\Primitives\RenderPrimitive.h">
+      <Filter>Runtime\Engines\ADGR\Backend\Components\Primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\Components\Primitives\SwapChain.h">
+      <Filter>Runtime\Engines\ADGR\Backend\Components\Primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\Components\Primitives\TextOverlay.h">
+      <Filter>Runtime\Engines\ADGR\Backend\Components\Primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\Components\Primitives\TextureData.h">
+      <Filter>Runtime\Engines\ADGR\Backend\Components\Primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\Components\Primitives\VertexBuffer.h">
+      <Filter>Runtime\Engines\ADGR\Backend\Components\Primitives</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Animations\VulkanSkeletalAnimation.h">
       <Filter>Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Animations</Filter>
@@ -492,6 +519,9 @@
     <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsPipeline.h">
       <Filter>Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsPrimitives.h">
+      <Filter>Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsPushConstant.h">
       <Filter>Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics</Filter>
     </ClInclude>
@@ -572,6 +602,21 @@
     </ClInclude>
     <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\opengl\openglRenderer.h">
       <Filter>Runtime\Engines\ADGR\Backend\opengl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Runtime\Engines\ADGR\Components\Animation\GraphicsAnimation.h">
+      <Filter>Runtime\Engines\ADGR\Components\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Runtime\Engines\ADGR\Components\GraphicsComponent.h">
+      <Filter>Runtime\Engines\ADGR\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Runtime\Engines\ADGR\Components\Objects\GraphicsDebugObject.h">
+      <Filter>Runtime\Engines\ADGR\Components\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Runtime\Engines\ADGR\Components\Objects\GraphicsObject.h">
+      <Filter>Runtime\Engines\ADGR\Components\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Runtime\Engines\ADGR\Components\Objects\GraphicsSkyBox.h">
+      <Filter>Runtime\Engines\ADGR\Components\Objects</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Runtime\Engines\ADGR\Layers\layer.h">
       <Filter>Runtime\Engines\ADGR\Layers</Filter>
@@ -971,6 +1016,9 @@
     <ClCompile Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsPipeline.cpp">
       <Filter>Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsPrimitives.cpp">
+      <Filter>Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsPushConstant.cpp">
       <Filter>Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics</Filter>
     </ClCompile>
@@ -1030,6 +1078,21 @@
     </ClCompile>
     <ClCompile Include="..\..\Runtime\Engines\ADGR\Backend\opengl\openglRenderer.cpp">
       <Filter>Runtime\Engines\ADGR\Backend\opengl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Runtime\Engines\ADGR\Components\Animation\GraphicsAnimation.cpp">
+      <Filter>Runtime\Engines\ADGR\Components\Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Runtime\Engines\ADGR\Components\GraphicsComponent.cpp">
+      <Filter>Runtime\Engines\ADGR\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Runtime\Engines\ADGR\Components\Objects\GraphicsDebugObject.cpp">
+      <Filter>Runtime\Engines\ADGR\Components\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Runtime\Engines\ADGR\Components\Objects\GraphicsObject.cpp">
+      <Filter>Runtime\Engines\ADGR\Components\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Runtime\Engines\ADGR\Components\Objects\GraphicsSkyBox.cpp">
+      <Filter>Runtime\Engines\ADGR\Components\Objects</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Runtime\Engines\ADGR\Layers\layer.cpp">
       <Filter>Runtime\Engines\ADGR\Layers</Filter>

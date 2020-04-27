@@ -46,6 +46,7 @@ int main(int argc, char** argv) {
 		DMKEngine::addLevel(level1);
 
 		/* Initialize the renderer */
+		DMKEngine::loadCurrentScene();
 		DMKEngine::initializeRendererStageOne();
 		DMKEngine::genarateRenderables();
 		DMKEngine::submitLoadedAssets();

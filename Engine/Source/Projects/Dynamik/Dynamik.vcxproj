@@ -194,9 +194,14 @@
     <ClInclude Include="..\..\Runtime\DataHub\network\messageType.h" />
     <ClInclude Include="..\..\Runtime\DataHub\renderer\typenames.h" />
     <ClInclude Include="..\..\Runtime\Dynamik.h" />
-    <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\Components\FrameBuffer.h" />
-    <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\Components\SwapChain.h" />
-    <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\Components\TextOverlay.h" />
+    <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\Components\Primitives\FrameBuffer.h" />
+    <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\Components\Primitives\IndexBuffer.h" />
+    <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\Components\Primitives\RenderPass.h" />
+    <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\Components\Primitives\RenderPrimitive.h" />
+    <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\Components\Primitives\SwapChain.h" />
+    <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\Components\Primitives\TextOverlay.h" />
+    <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\Components\Primitives\TextureData.h" />
+    <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\Components\Primitives\VertexBuffer.h" />
     <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Animations\VulkanSkeletalAnimation.h" />
     <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Attachments\VulkanBRDF.h" />
     <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Attachments\VulkanIrradianceCube.h" />
@@ -229,6 +234,7 @@
     <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsDescriptor.h" />
     <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsFrameBuffer.h" />
     <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsPipeline.h" />
+    <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsPrimitives.h" />
     <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsPushConstant.h" />
     <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsRBLIndex.h" />
     <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsRenderableObject.h" />
@@ -256,6 +262,11 @@
     <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\opengl\backend\vertexAndIndexBuffer.h" />
     <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\opengl\backend\window.h" />
     <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\opengl\openglRenderer.h" />
+    <ClInclude Include="..\..\Runtime\Engines\ADGR\Components\Animation\GraphicsAnimation.h" />
+    <ClInclude Include="..\..\Runtime\Engines\ADGR\Components\GraphicsComponent.h" />
+    <ClInclude Include="..\..\Runtime\Engines\ADGR\Components\Objects\GraphicsDebugObject.h" />
+    <ClInclude Include="..\..\Runtime\Engines\ADGR\Components\Objects\GraphicsObject.h" />
+    <ClInclude Include="..\..\Runtime\Engines\ADGR\Components\Objects\GraphicsSkyBox.h" />
     <ClInclude Include="..\..\Runtime\Engines\ADGR\Layers\layer.h" />
     <ClInclude Include="..\..\Runtime\Engines\ADGR\Layers\layerStack.h" />
     <ClInclude Include="..\..\Runtime\Engines\ADGR\Renderer.h" />
@@ -392,6 +403,7 @@
     <ClCompile Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsDescriptor.cpp" />
     <ClCompile Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsFrameBuffer.cpp" />
     <ClCompile Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsPipeline.cpp" />
+    <ClCompile Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsPrimitives.cpp" />
     <ClCompile Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsPushConstant.cpp" />
     <ClCompile Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsRenderableObject.cpp" />
     <ClCompile Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsShader.cpp" />
@@ -412,6 +424,11 @@
     <ClCompile Include="..\..\Runtime\Engines\ADGR\Backend\opengl\backend\vertexAndIndexBuffer.cpp" />
     <ClCompile Include="..\..\Runtime\Engines\ADGR\Backend\opengl\backend\window.cpp" />
     <ClCompile Include="..\..\Runtime\Engines\ADGR\Backend\opengl\openglRenderer.cpp" />
+    <ClCompile Include="..\..\Runtime\Engines\ADGR\Components\Animation\GraphicsAnimation.cpp" />
+    <ClCompile Include="..\..\Runtime\Engines\ADGR\Components\GraphicsComponent.cpp" />
+    <ClCompile Include="..\..\Runtime\Engines\ADGR\Components\Objects\GraphicsDebugObject.cpp" />
+    <ClCompile Include="..\..\Runtime\Engines\ADGR\Components\Objects\GraphicsObject.cpp" />
+    <ClCompile Include="..\..\Runtime\Engines\ADGR\Components\Objects\GraphicsSkyBox.cpp" />
     <ClCompile Include="..\..\Runtime\Engines\ADGR\Layers\layer.cpp" />
     <ClCompile Include="..\..\Runtime\Engines\ADGR\Layers\layerStack.cpp" />
     <ClCompile Include="..\..\Runtime\Engines\ADGR\Renderer.cpp" />

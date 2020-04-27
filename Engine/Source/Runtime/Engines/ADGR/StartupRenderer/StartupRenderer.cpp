@@ -17,10 +17,13 @@ namespace Dynamik {
 		{
 			DMK_BEGIN_PROFILE_TIMER();
 
+			glfwSetErrorCallback(_errorCallback);
 			glfwInit();
+
 			glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
 			glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 5);
 			glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+			glfwWindowHint(GLFW_ICONIFIED, GLFW_FALSE);
 
 #if defined(DMK_DEBUG)
 			instance.window = glfwCreateWindow(instance.windowWidth, instance.windowHeight, "Dynamik Engine", nullptr, nullptr);
@@ -179,6 +182,11 @@ namespace Dynamik {
 		void StartupRenderer::makeContextCurrent()
 		{
 			glfwMakeContextCurrent(instance.window);
+		}
+		
+		void StartupRenderer::_errorCallback(I32 id, CCPTR description)
+		{
+			std::cout << "GLFW Error: " << description << std::endl;
 		}
 	}
 }

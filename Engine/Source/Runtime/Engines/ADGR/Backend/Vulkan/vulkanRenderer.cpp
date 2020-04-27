@@ -221,6 +221,27 @@ namespace Dynamik {
 					addObject(format);
 		}
 
+		void vulkanRenderer::initializeVertexBuffers(POINTER<InternalFormat> format)
+		{
+
+		}
+
+		void vulkanRenderer::initializeIndexBuffers(POINTER<InternalFormat> format)
+		{
+		}
+
+		void vulkanRenderer::initializeTextures(POINTER<InternalFormat> format)
+		{
+		}
+
+		void vulkanRenderer::initializeUniformBuffers(POINTER<InternalFormat> format)
+		{
+		}
+
+		void vulkanRenderer::initializePipeline(POINTER<InternalFormat> format)
+		{
+		}
+
 		void vulkanRenderer::initializeCommands()
 		{
 			DMK_BEGIN_PROFILE_TIMER();

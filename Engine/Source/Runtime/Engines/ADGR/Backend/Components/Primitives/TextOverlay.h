@@ -2,6 +2,9 @@
 #ifndef _DYNAMIK_ADGR_TEXT_OVERLAY_H
 #define _DYNAMIK_ADGR_TEXT_OVERLAY_H
 
+#include <string>
+#include "Public/datatypes.h"
+
 namespace Dynamik {
 	namespace ADGR {
 		enum class DMKTextAlign {

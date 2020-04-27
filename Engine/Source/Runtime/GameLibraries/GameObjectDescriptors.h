@@ -108,6 +108,16 @@ namespace Dynamik {
 		UI32 binding = 0;
 	};
 
+	/* Render Specifications */
+
+	struct DMKRenderingPipelineDescription {
+		/* TODO: Pipeline specifications (Front Face, Depth testing) */
+	};
+
+	struct DMKRenderSpecification {
+		ARRAY<DMKRenderingPipelineDescription> pipelineDescriptions;
+	};
+
 	class DMKGameObjectDescriptor {
 	public:
 		DMKGameObjectDescriptor() {}
@@ -118,6 +128,8 @@ namespace Dynamik {
 		CameraDescriptor cameraDescriptor;
 		AudioDescriptor audioDescriptor;
 		LightingDescriptor lightingDescriptor;
+
+		DMKRenderSpecification renderSpecification;
 
 		DMKVertexBufferObjectDescriptor vertexBufferObjectDescription;
 		DMKDataType indexBufferType = DMKDataType::DMK_DATA_TYPE_UI32;

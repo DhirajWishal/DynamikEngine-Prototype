@@ -2,11 +2,13 @@
 #ifndef _DYNAMIK_ADGR_SWAP_CHAIN_H
 #define _DYNAMIK_ADGR_SWAP_CHAIN_H
 
+#include "RenderPrimitive.h"
+
 namespace Dynamik {
 	namespace ADGR {
-		class SwapChain {
+		class SwapChain : public RenderPrimitive {
 		public:
-			SwapChain() {}
+			SwapChain() : RenderPrimitive(DMKRenderPrimitiveType::DMK_RENDER_PRIMITIVE_TYPE_SWAPCHAIN) {}
 			virtual ~SwapChain() {}
 		};
 	}

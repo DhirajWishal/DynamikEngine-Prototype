@@ -21,6 +21,12 @@
 
 #include "Camera.h"
 
+#include "Backend/Primitives/IndexBuffer.h"
+#include "Backend/Primitives/Pipeline.h"
+#include "Backend/Primitives/TextureData.h"
+#include "Backend/Primitives/UniformBuffer.h"
+#include "Backend/Primitives/VertexBuffer.h"
+
 namespace Dynamik {
 	namespace ADGR {
 		enum class DMK_API DMKRenderingAPI {
@@ -95,6 +101,8 @@ namespace Dynamik {
 			POINTER<UI32> progressPtr;
 			ARRAY<POINTER<InternalFormat>> inFlightAssets;
 			ARRAY<POINTER<InternalFormat>> submitPendingAssets;
+
+			ARRAY<ADGRRenderComponent> renderingAssets;
 		};
 	}
 }

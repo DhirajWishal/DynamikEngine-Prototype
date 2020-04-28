@@ -15,7 +15,7 @@
 
 #include "Platform/windows.h"
 
-#include "Backend/DynamikRBL.h"
+#include "Backend/Vulkan/VulkanRBL.h"
 
 namespace Dynamik {
 	namespace ADGR {
@@ -67,13 +67,19 @@ namespace Dynamik {
 
 			for (auto format : formats)
 			{
+				ADGRRenderComponent _component;
+
 				for (auto attachment : format->descriptor.renderSpecification.renderAttachments)
 				{
 					switch (attachment)
 					{
 					case Dynamik::DMKRenderAttachment::DMK_RENDER_ATTACHMENT_UNIFORM_BUFFER:
+						for (auto description : format->descriptor.uniformBufferObjectDescriptions)
+							if (description.type == DMKUniformType::DMK_UNIFORM_TYPE_BUFFER_OBJECT)
+								ADGR::Backend::VulkanRBL::initializeUniformBuffer(DMKUniformBufferObjectDescriptor::uniformByteSize(description.attributes));
 						break;
 					case Dynamik::DMKRenderAttachment::DMK_RENDER_ATTACHMENT_TEXTURE:
+
 						break;
 					case Dynamik::DMKRenderAttachment::DMK_RENDER_ATTACHMENT_SKYBOX:
 						break;

@@ -6,7 +6,7 @@ namespace Dynamik {
 	/* Data types enum for the Dynamik Engine 
 	 * DMK_TYPE_NAME = BYTE_SIZE
 	 */
-	enum class DMKDataType {
+	enum class DMKDataType : UI32 {
 		DMK_DATA_TYPE_UNDEFINED = 0,
 
 		DMK_DATA_TYPE_BYTE = 1,

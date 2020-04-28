@@ -14,17 +14,6 @@ namespace Dynamik {
 		std::string fragmentShader = "";
 	};
 
-	/* Directly translated to descriptors and objects */
-	enum class DMKRenderAttachment {
-		DMK_RENDER_ATTACHMENT_SKYBOX,
-		DMK_RENDER_ATTACHMENT_LIGHTING,
-		DMK_RENDER_ATTACHMENT_IRRADIANCE_CUBE,
-		DMK_RENDER_ATTACHMENT_PREFILTERED_CUBE,
-		DMK_RENDER_ATTACHMENT_BRDF_TABLE,
-
-		DMK_RENDER_ATTACHMENT_COMPUTE_TEXTURE,
-	};
-
 	/* INTERNAL GAME OBJECT FORMAT
 	 * This consists the data required by the engine.
 	 */
@@ -43,10 +32,6 @@ namespace Dynamik {
 		std::string objectPath = "";
 		ARRAY<std::string> texturePaths;
 		ShaderPaths shaderPaths;
-
-		/* Filled by the Renderer */
-	public:
-		ARRAY<DMKRenderAttachment> renderAttachments;
 	};
 }
 

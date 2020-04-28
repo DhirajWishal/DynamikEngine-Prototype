@@ -5,6 +5,7 @@
 #include "Public/Array.h"
 #include "Dynamik/DMKDataType.h"
 #include "Dynamik/objectSpecifications.h"
+#include "Dynamik/RenderingSpecifications.h"
 
 namespace Dynamik {
 	enum class DMKTextureType {
@@ -109,13 +110,9 @@ namespace Dynamik {
 	};
 
 	/* Render Specifications */
-
-	struct DMKRenderingPipelineDescription {
-		/* TODO: Pipeline specifications (Front Face, Depth testing) */
-	};
-
 	struct DMKRenderSpecification {
-		ARRAY<DMKRenderingPipelineDescription> pipelineDescriptions;
+		DMKRenderingPipelineDescription pipelineDescriptions;
+		ARRAY<DMKRenderAttachment> renderAttachments;
 	};
 
 	class DMKGameObjectDescriptor {

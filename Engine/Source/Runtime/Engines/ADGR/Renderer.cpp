@@ -15,7 +15,7 @@
 
 #include "Platform/windows.h"
 
-#include "Backend/Vulkan/vulkanRenderer.h"
+#include "Backend/DynamikRBL.h"
 
 namespace Dynamik {
 	namespace ADGR {
@@ -38,34 +38,27 @@ namespace Dynamik {
 				DMK_CORE_FATAL("Unsupported Rendering API!");
 				break;
 			}
-
-			vulkanRenderer::initializeGraphicsCore();
 		}
 
 		void Renderer::initializeStageTwo()
 		{
-			vulkanRenderer::initializeCommands();
 		}
 
 		void Renderer::initializeStageThree()
 		{
-			vulkanRenderer::initializeFinalComponents();
 		}
 
 		void Renderer::setProgressPointer(POINTER<UI32> progress)
 		{
 			instance.progressPtr = progress;
-			vulkanRenderer::setProgress(progress);
 		}
 
 		void Renderer::setWindowHandle(POINTER<GLFWwindow> window)
 		{
-			vulkanRenderer::setWindowHandle(window);
 		}
 
 		void Renderer::setWindowExtent(UI32 width, UI32 height)
 		{
-			vulkanRenderer::setWindowExtent(width, height);
 		}
 
 		void Renderer::setRenderableObjects(ARRAY<POINTER<InternalFormat>> formats)
@@ -74,12 +67,27 @@ namespace Dynamik {
 
 			for (auto format : formats)
 			{
-				if (format->descriptor.assetDescription.physicallyBased)
+				for (auto attachment : format->descriptor.renderSpecification.renderAttachments)
 				{
-					format->renderAttachments.pushBack(DMKRenderAttachment::DMK_RENDER_ATTACHMENT_SKYBOX);
-					format->renderAttachments.pushBack(DMKRenderAttachment::DMK_RENDER_ATTACHMENT_BRDF_TABLE);
-					format->renderAttachments.pushBack(DMKRenderAttachment::DMK_RENDER_ATTACHMENT_IRRADIANCE_CUBE);
-					format->renderAttachments.pushBack(DMKRenderAttachment::DMK_RENDER_ATTACHMENT_PREFILTERED_CUBE);
+					switch (attachment)
+					{
+					case Dynamik::DMKRenderAttachment::DMK_RENDER_ATTACHMENT_UNIFORM_BUFFER:
+						break;
+					case Dynamik::DMKRenderAttachment::DMK_RENDER_ATTACHMENT_TEXTURE:
+						break;
+					case Dynamik::DMKRenderAttachment::DMK_RENDER_ATTACHMENT_SKYBOX:
+						break;
+					case Dynamik::DMKRenderAttachment::DMK_RENDER_ATTACHMENT_LIGHTING:
+						break;
+					case Dynamik::DMKRenderAttachment::DMK_RENDER_ATTACHMENT_IRRADIANCE_CUBE:
+						break;
+					case Dynamik::DMKRenderAttachment::DMK_RENDER_ATTACHMENT_PREFILTERED_CUBE:
+						break;
+					case Dynamik::DMKRenderAttachment::DMK_RENDER_ATTACHMENT_BRDF_TABLE:
+						break;
+					case Dynamik::DMKRenderAttachment::DMK_RENDER_ATTACHMENT_COMPUTE_TEXTURE:
+						break;
+					}
 				}
 
 				instance.submitPendingAssets.pushBack(format);
@@ -92,7 +100,6 @@ namespace Dynamik {
 
 			instance.inFlightAssets = instance.submitPendingAssets;
 			instance.submitPendingAssets = {};
-			vulkanRenderer::addObjects(instance.inFlightAssets);
 		}
 
 		void Renderer::addToRenderQueue(POINTER<InternalFormat> container)
@@ -103,7 +110,6 @@ namespace Dynamik {
 		void Renderer::drawFrame(DMKRendererDrawFrameInfo info)
 		{
 			info.formats = instance.inFlightAssets;
-			vulkanRenderer::drawFrame(info);
 		}
 
 		void Renderer::frameCleanup()

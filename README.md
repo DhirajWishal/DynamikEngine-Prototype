@@ -1,7 +1,5 @@
-# Dynamik Engine
-## Engine and Launcher
-
 ![Dynamik Engine Logo](https://github.com/DhirajWishal/Dynamik/blob/master/Dependencies/Assets/icons/Git/GitLogo3.png)
+## Engine and Launcher
 
 ### First Run:
 1. Double click (run/ execute) the GenProject.bat file.

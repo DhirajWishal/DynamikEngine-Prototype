@@ -49,6 +49,11 @@ namespace Dynamik {
 
 				static void initializeStageOne();
 
+				/* Render Context functions */
+				static VulkanSwapChain createSwapChain();
+				static VulkanRenderPass createRenderPass();
+				static ARRAY<VulkanFrameBuffer> createFrameBuffers();
+
 				/* Per object functions */
 				static VulkanVertexBuffer initializeVertexBuffer(const Mesh& mesh, ARRAY<DMKVertexAttribute> attributes);
 				static VulkanIndexBuffer initializeIndexBuffer(const Mesh& mesh, DMKDataType indexType);

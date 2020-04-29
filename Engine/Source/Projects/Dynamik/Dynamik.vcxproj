@@ -177,12 +177,12 @@
     <ClInclude Include="..\..\Runtime\Core\DataTypes\Public\typecheck.h" />
     <ClInclude Include="..\..\Runtime\Core\Memory\MemoryLib.h" />
     <ClInclude Include="..\..\Runtime\Core\Memory\Public\Allocator.h" />
+    <ClInclude Include="..\..\Runtime\Core\Memory\Public\MemoryManager.h" />
     <ClInclude Include="..\..\Runtime\Core\Memory\Public\StaticAllocator.h" />
     <ClInclude Include="..\..\Runtime\Core\Memory\Public\doubleBufferedAllocator.h" />
     <ClInclude Include="..\..\Runtime\Core\Memory\Public\doubleBufferedPoolAllocator.h" />
     <ClInclude Include="..\..\Runtime\Core\Memory\Public\doubleBufferedStackAllocator.h" />
     <ClInclude Include="..\..\Runtime\Core\Memory\Public\memoryFunctions.h" />
-    <ClInclude Include="..\..\Runtime\Core\Memory\Public\memoryManager.h" />
     <ClInclude Include="..\..\Runtime\Core\Memory\Public\oneTimeAllocator.h" />
     <ClInclude Include="..\..\Runtime\Core\Memory\Public\poolAllocator.h" />
     <ClInclude Include="..\..\Runtime\Core\Memory\Public\stackAllocator.h" />
@@ -200,6 +200,7 @@
     <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\Primitives\IndexBuffer.h" />
     <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\Primitives\Pipeline.h" />
     <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\Primitives\PipelineCache.h" />
+    <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\Primitives\PrimitiveContainer.h" />
     <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\Primitives\RenderPass.h" />
     <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\Primitives\RenderPrimitive.h" />
     <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\Primitives\SwapChain.h" />
@@ -329,10 +330,10 @@
     <ClCompile Include="..\..\Runtime\Core\DataTypes\Private\IndexedArray.cpp" />
     <ClCompile Include="..\..\Runtime\Core\DataTypes\Private\String.cpp" />
     <ClCompile Include="..\..\Runtime\Core\Memory\Private\Allocator.cpp" />
+    <ClCompile Include="..\..\Runtime\Core\Memory\Private\MemoryManager.cpp" />
     <ClCompile Include="..\..\Runtime\Core\Memory\Private\doubleBufferedAllocator.cpp" />
     <ClCompile Include="..\..\Runtime\Core\Memory\Private\doubleBufferedPoolAllocator.cpp" />
     <ClCompile Include="..\..\Runtime\Core\Memory\Private\doubleBufferedStackAllocator.cpp" />
-    <ClCompile Include="..\..\Runtime\Core\Memory\Private\memoryManager.cpp" />
     <ClCompile Include="..\..\Runtime\Core\Memory\Private\oneTimeAllocator.cpp" />
     <ClCompile Include="..\..\Runtime\Core\Memory\Private\poolAllocator.cpp" />
     <ClCompile Include="..\..\Runtime\Core\Memory\Private\stackAllocator.cpp" />

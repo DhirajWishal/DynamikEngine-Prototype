@@ -29,6 +29,21 @@ namespace Dynamik {
 			{
 			}
 
+			VulkanSwapChain VulkanRBL::createSwapChain()
+			{
+				return VulkanSwapChain();
+			}
+
+			VulkanRenderPass VulkanRBL::createRenderPass()
+			{
+				return VulkanRenderPass();
+			}
+
+			ARRAY<VulkanFrameBuffer> VulkanRBL::createFrameBuffers()
+			{
+				return ARRAY<VulkanFrameBuffer>();
+			}
+
 			VulkanVertexBuffer VulkanRBL::initializeVertexBuffer(const Mesh& mesh, ARRAY<DMKVertexAttribute> attributes)
 			{
 				return VulkanGraphicsPrimitiveManager::createVertexBuffer(mesh, attributes);

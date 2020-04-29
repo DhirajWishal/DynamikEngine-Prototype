@@ -1,29 +1,44 @@
 #pragma once
-
-/*
- Types of allocators:
- * Pool Allocator
- * Stack Allocator
- * Double Buffered Pool Allocator
- * Double Buffered Stack Allocator
-*/
-
 #ifndef _DYNAMIK_MEMORY_MANAGER_H
 #define _DYNAMIK_MEMORY_MANAGER_H
 
-#include "Allocator.h"
+#include "Public/Pointer.h"
 
 namespace Dynamik {
-	/* MEMORY MANAGER - Manage a set amount of memory */
-	class  MemoryManager {
-	public:
+	/* Dynamik Memory Manager
+	 * This uses a Double buffered Stack allocator.
+	 */
+	class MemoryManager {
 		MemoryManager() {}
-		MemoryManager(UI32 size) : mySize(size) {}
 		~MemoryManager() {}
 
+		static MemoryManager instance;
+	public:
+		static void allocate(UI32 size);
+		static void extend(UI32 addToSize);
+		static void deallocate();
+
+		template<class TYPE>
+		static POINTER<TYPE> storeOnLow(const TYPE& data)
+		{
+			StaticAllocator<TYPE>::set((POINTER<TYPE>)(TYPE*)(((UI64)instance.lowIndexBufferPointer) + instance.lowIndexSize), (TYPE&&)data);
+			instance.lowIndexSize += sizeof(data);
+		}
+
 	private:
-		UI32 mySize = 0;
-		VPTR myAddress = nullptr;
+		B1 isAllocated = false;
+
+		/* Main memory pool */
+		VPTR myMemoryPool = nullptr;
+		UI32 myMemoryPoolSize = 0;
+
+		/* Double buffer pointers */
+		VPTR lowIndexBufferPointer = nullptr;
+		UI32 lowIndexSize = 0;
+
+		VPTR highIndexBufferPointer = nullptr;
+		VPTR highIndexBeginPointer = nullptr;
+		UI32 highIndexSize = 0;
 	};
 }
 

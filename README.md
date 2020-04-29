@@ -1,4 +1,4 @@
-![Dynamik Engine Logo](https://github.com/DhirajWishal/Dynamik/blob/master/Dependencies/Assets/icons/Git/GitLogo3.png)
+![Dynamik Engine Logo](https://github.com/DhirajWishal/Dynamik/blob/master/Dependencies/Assets/icons/Samples/DynamikL.png)
 ## Engine and Launcher
 
 ### First Run:

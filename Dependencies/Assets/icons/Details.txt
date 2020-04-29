@@ -1,3 +1,0 @@
-Main Colour Hex: #FF3333 
-Font 1: RR Beaver
-Font 2: Sansation Light

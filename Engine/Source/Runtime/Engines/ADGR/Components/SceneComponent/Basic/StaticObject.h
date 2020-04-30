@@ -11,6 +11,10 @@ namespace Dynamik {
 			StaticObject() {}
 			~StaticObject() {}
 
+			void initializeResources() override final;
+			void initializeContext() override final;
+			DMKUniformBufferData update(DMKCameraData cameraData) override final;
+			void terminate() override final;
 		};
 	}
 }

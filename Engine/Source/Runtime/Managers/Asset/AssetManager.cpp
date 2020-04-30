@@ -78,23 +78,7 @@ namespace Dynamik {
 
 				POINTER<InternalFormat> _format = _scene[index].address;
 
-				if (_format->descriptor.assetDescription.textureType == DMKTextureType::DMK_TEXTURE_TYPE_CUBEMAP)
-				{
-					Texture _localTexture;
-					_localTexture.loadCubemap(_format->texturePaths, _format->descriptor.assetDescription.textureInputType);
-					_format->textures.pushBack(_localTexture);
-				}
-				else
-				{
-					for (auto path : _format->texturePaths)
-					{
-						Texture _localTexture;
-						_localTexture.loadTexture(path, _format->descriptor.assetDescription.textureType, _format->descriptor.assetDescription.textureInputType);
-						_format->textures.pushBack(_localTexture);
-					}
-				}
-
-				DMKModelLoadInfo info;
+				DMKAssetLoadInfo info;
 				info.path = _format->objectPath;
 				info.vertexOffset = {
 					_format->descriptor.transformDescriptor.location[0],
@@ -102,6 +86,9 @@ namespace Dynamik {
 					_format->descriptor.transformDescriptor.location[2],
 				};
 				info.meshes = &_format->meshDatas;
+				info.textureType = _format->descriptor.assetDescription.textureType;
+				info.texturePaths = _format->texturePaths;
+				info.textureInputType = _format->descriptor.assetDescription.textureInputType;
 				threads.pushBack(std::async(std::launch::async, loadModel, info));
 			}
 		}

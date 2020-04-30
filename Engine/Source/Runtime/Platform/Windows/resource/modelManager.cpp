@@ -25,7 +25,7 @@ float RandomFloat(float a, float b) {
 }
 
 namespace Dynamik {
-	void loadModel(DMKModelLoadInfo info) {
+	void loadModel(DMKAssetLoadInfo info) {
 		DMK_BEGIN_PROFILE_TIMER();
 
 		tinyobj::attrib_t attributes;
@@ -44,6 +44,23 @@ namespace Dynamik {
 			DMK_BEGIN_PROFILE_TIMER();
 
 			Mesh _mesh;
+
+			if (info.textureType == DMKTextureType::DMK_TEXTURE_TYPE_CUBEMAP)
+			{
+				Texture _localTexture;
+				_localTexture.loadCubemap(info.texturePaths, info.textureInputType);
+				_mesh.textureDatas.pushBack(_localTexture);
+			}
+			else
+			{
+				for (auto path : info.texturePaths)
+				{
+					Texture _localTexture;
+					_localTexture.loadTexture(path, info.textureType, info.textureInputType);
+					_mesh.textureDatas.pushBack(_localTexture);
+				}
+			}
+
 			for (const auto& index : shape.mesh.indices) {
 				DMK_BEGIN_PROFILE_TIMER();
 

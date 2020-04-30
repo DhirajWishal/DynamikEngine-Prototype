@@ -1,6 +1,8 @@
 #include "dmkafx.h"
 #include "VulkanRBL.h"
 
+#include "VulkanPresets.h"
+
 namespace Dynamik {
 	namespace ADGR {
 		namespace Backend {
@@ -25,8 +27,34 @@ namespace Dynamik {
 				instance.myProgressPointer = progress;
 			}
 
+			void VulkanRBL::initializeInstance()
+			{
+				ADGRVulkanInstanceInitInfo initInfo;
+				initInfo.applicationName = "Dynamik Engine";
+				initInfo.engineName = "Dynamik";
+				instance.myGraphicsCore.initializeInstance(initInfo);
+				instance.myGraphicsCore.initializeSurface(instance.myWindowHandle);
+			}
+
+			void VulkanRBL::initializeDevices()
+			{
+				instance.myGraphicsCore.initializeDevice();
+			}
+
 			void VulkanRBL::initializeStageOne()
 			{
+				initializeInstance();
+				initializeDevices();
+			}
+
+			VulkanSwapChain VulkanRBL::initializeSwapChain()
+			{
+				return VulkanGraphicsPrimitiveManager::createSwapChain(instance.windowExtent.width, instance.windowExtent.height);
+			}
+
+			VulkanRenderPass VulkanRBL::initializeRenderPass()
+			{
+				return VulkanGraphicsPrimitiveManager::createRenderPass(VulkanPresets::renderPassPreset3D());
 			}
 
 			VulkanSwapChain VulkanRBL::createSwapChain()

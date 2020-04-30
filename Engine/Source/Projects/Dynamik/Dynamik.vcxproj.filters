@@ -88,6 +88,15 @@
     <Filter Include="Runtime\Engines\ADGR\Components">
       <UniqueIdentifier>{E33DA1A2-4F21-B0E2-5824-DE1EC4867633}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Runtime\Engines\ADGR\Components\Attachments">
+      <UniqueIdentifier>{EEA94C5D-5A0F-E0E3-E3E7-81BC4F4CD552}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Runtime\Engines\ADGR\Components\Attachments\Global">
+      <UniqueIdentifier>{8EC0F8D9-7A54-EE81-E318-4836CFCB2874}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Runtime\Engines\ADGR\Components\Attachments\Internal">
+      <UniqueIdentifier>{DABB8CB9-C6FA-3635-6F7D-13675B9BEC9F}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Runtime\Engines\ADGR\Components\SceneComponent">
       <UniqueIdentifier>{93E45E8A-7F62-AF23-685A-6DBB5477F14B}</UniqueIdentifier>
     </Filter>
@@ -420,6 +429,9 @@
     <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\Primitives\VertexBuffer.h">
       <Filter>Runtime\Engines\ADGR\Backend\Primitives</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Common\VulkanControlHeader.h">
+      <Filter>Runtime\Engines\ADGR\Backend\Vulkan\Common</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Common\VulkanDescriptor.h">
       <Filter>Runtime\Engines\ADGR\Backend\Vulkan\Common</Filter>
     </ClInclude>
@@ -486,8 +498,29 @@
     <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Graphics\VulkanGraphicsShader.h">
       <Filter>Runtime\Engines\ADGR\Backend\Vulkan\Graphics</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\VulkanPresets.h">
+      <Filter>Runtime\Engines\ADGR\Backend\Vulkan</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\VulkanRBL.h">
       <Filter>Runtime\Engines\ADGR\Backend\Vulkan</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Runtime\Engines\ADGR\Components\Attachments\Global\BRDF.h">
+      <Filter>Runtime\Engines\ADGR\Components\Attachments\Global</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Runtime\Engines\ADGR\Components\Attachments\Global\IrradianceCube.h">
+      <Filter>Runtime\Engines\ADGR\Components\Attachments\Global</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Runtime\Engines\ADGR\Components\Attachments\Global\PreFilteredCube.h">
+      <Filter>Runtime\Engines\ADGR\Components\Attachments\Global</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Runtime\Engines\ADGR\Components\Attachments\Internal\ColorAttachment.h">
+      <Filter>Runtime\Engines\ADGR\Components\Attachments\Internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Runtime\Engines\ADGR\Components\Attachments\Internal\DepthAttachment.h">
+      <Filter>Runtime\Engines\ADGR\Components\Attachments\Internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Runtime\Engines\ADGR\Components\Attachments\RenderAttachment.h">
+      <Filter>Runtime\Engines\ADGR\Components\Attachments</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Runtime\Engines\ADGR\Components\SceneComponent\Animation\AnimatedObject.h">
       <Filter>Runtime\Engines\ADGR\Components\SceneComponent\Animation</Filter>
@@ -887,8 +920,26 @@
     <ClCompile Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Graphics\VulkanGraphicsShader.cpp">
       <Filter>Runtime\Engines\ADGR\Backend\Vulkan\Graphics</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\VulkanPresets.cpp">
+      <Filter>Runtime\Engines\ADGR\Backend\Vulkan</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\VulkanRBL.cpp">
       <Filter>Runtime\Engines\ADGR\Backend\Vulkan</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Runtime\Engines\ADGR\Components\Attachments\Global\BRDF.cpp">
+      <Filter>Runtime\Engines\ADGR\Components\Attachments\Global</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Runtime\Engines\ADGR\Components\Attachments\Global\IrradianceCube.cpp">
+      <Filter>Runtime\Engines\ADGR\Components\Attachments\Global</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Runtime\Engines\ADGR\Components\Attachments\Global\PreFilteredCube.cpp">
+      <Filter>Runtime\Engines\ADGR\Components\Attachments\Global</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Runtime\Engines\ADGR\Components\Attachments\Internal\ColorAttachment.cpp">
+      <Filter>Runtime\Engines\ADGR\Components\Attachments\Internal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Runtime\Engines\ADGR\Components\Attachments\Internal\DepthAttachment.cpp">
+      <Filter>Runtime\Engines\ADGR\Components\Attachments\Internal</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Runtime\Engines\ADGR\Components\SceneComponent\Animation\SkeletalAnimation.cpp">
       <Filter>Runtime\Engines\ADGR\Components\SceneComponent\Animation</Filter>

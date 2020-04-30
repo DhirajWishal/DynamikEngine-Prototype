@@ -28,7 +28,7 @@ namespace Dynamik {
 		CCPTR name = "";
 		ARRAY<MeshPointStore> vertexDataStore;
 		ARRAY<UI32> indexes;
-		Texture textureData;
+		ARRAY<Texture> textureDatas;
 
 		UI32 allocatableSize(ARRAY<DMKVertexAttribute> attributes);
 		void packData(ARRAY<DMKVertexAttribute> attributes, VPTR data);

@@ -11,7 +11,7 @@ namespace Dynamik {
 			VertexBuffer() : RenderPrimitive(DMKRenderPrimitiveType::DMK_RENDER_PRIMITIVE_TYPE_VERTEX_BUFFER) {}
 			virtual ~VertexBuffer() {}
 
-			UI32 vertexCount = 0
+			UI32 vertexCount = 0;
 		};
 	}
 }

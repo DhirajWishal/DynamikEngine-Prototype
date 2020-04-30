@@ -17,10 +17,10 @@
 #include "InitializerList.h"
 #include "Thread.h"
 
-#include <vector>
+#include <vector>	/* Required when converting to std::vector<TYPE> */
 
 #include <future>	/* REMOVE AFTER ADDING THE THREAD MANAGER */
-#include <functional>
+#include <functional>	/* Required for Lambdas */
 
 namespace Dynamik {
 	template<class TYPE>
@@ -1018,7 +1018,7 @@ namespace Dynamik {
 		 *
 		 * @para arr: Array to be initialized to this.
 		 */
-		ARRAY<TYPE>& operator=(ARRAY<TYPE>&& arr)
+		ARRAY<TYPE>& operator=(ARRAY<TYPE>&& arr) noexcept
 		{
 			this->set(arr.begin(), arr.end());
 			return *this;

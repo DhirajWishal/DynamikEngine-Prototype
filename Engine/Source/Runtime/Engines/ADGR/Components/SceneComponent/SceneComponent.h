@@ -10,6 +10,8 @@
 #include "../../Backend/Primitives/UniformBuffer.h"
 #include "../../Backend/Primitives/Pipeline.h"
 
+#include "../../Backend/Vulkan/VulkanRBL.h"
+
 namespace Dynamik {
 	namespace ADGR {
 		struct RenderingMeshComponent {
@@ -24,7 +26,11 @@ namespace Dynamik {
 			SceneComponent() {}
 			virtual ~SceneComponent() {}
 
-		protected:
+			virtual void initializeResources() {}
+			virtual void initializeContext() {}
+			virtual DMKUniformBufferData update(DMKCameraData cameraData) { return DMKUniformBufferData(); }
+			virtual void terminate() {}
+
 			POINTER<InternalFormat> myInternalFormat;
 			ARRAY<RenderingMeshComponent> myMeshes;
 		};

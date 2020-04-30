@@ -208,6 +208,7 @@
     <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\Primitives\TextureData.h" />
     <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\Primitives\UniformBuffer.h" />
     <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\Primitives\VertexBuffer.h" />
+    <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Common\VulkanControlHeader.h" />
     <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Common\VulkanDescriptor.h" />
     <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Common\VulkanExtensionsManager.h" />
     <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Common\VulkanOneTimeCommandBuffer.h" />
@@ -230,7 +231,14 @@
     <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Graphics\VulkanGraphicsCore.h" />
     <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Graphics\VulkanGraphicsPrimitiveManager.h" />
     <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Graphics\VulkanGraphicsShader.h" />
+    <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\VulkanPresets.h" />
     <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\VulkanRBL.h" />
+    <ClInclude Include="..\..\Runtime\Engines\ADGR\Components\Attachments\Global\BRDF.h" />
+    <ClInclude Include="..\..\Runtime\Engines\ADGR\Components\Attachments\Global\IrradianceCube.h" />
+    <ClInclude Include="..\..\Runtime\Engines\ADGR\Components\Attachments\Global\PreFilteredCube.h" />
+    <ClInclude Include="..\..\Runtime\Engines\ADGR\Components\Attachments\Internal\ColorAttachment.h" />
+    <ClInclude Include="..\..\Runtime\Engines\ADGR\Components\Attachments\Internal\DepthAttachment.h" />
+    <ClInclude Include="..\..\Runtime\Engines\ADGR\Components\Attachments\RenderAttachment.h" />
     <ClInclude Include="..\..\Runtime\Engines\ADGR\Components\SceneComponent\Animation\AnimatedObject.h" />
     <ClInclude Include="..\..\Runtime\Engines\ADGR\Components\SceneComponent\Animation\SkeletalAnimation.h" />
     <ClInclude Include="..\..\Runtime\Engines\ADGR\Components\SceneComponent\Basic\DebugObject.h" />
@@ -367,7 +375,13 @@
     <ClCompile Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Graphics\VulkanGraphicsCore.cpp" />
     <ClCompile Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Graphics\VulkanGraphicsPrimitiveManager.cpp" />
     <ClCompile Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Graphics\VulkanGraphicsShader.cpp" />
+    <ClCompile Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\VulkanPresets.cpp" />
     <ClCompile Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\VulkanRBL.cpp" />
+    <ClCompile Include="..\..\Runtime\Engines\ADGR\Components\Attachments\Global\BRDF.cpp" />
+    <ClCompile Include="..\..\Runtime\Engines\ADGR\Components\Attachments\Global\IrradianceCube.cpp" />
+    <ClCompile Include="..\..\Runtime\Engines\ADGR\Components\Attachments\Global\PreFilteredCube.cpp" />
+    <ClCompile Include="..\..\Runtime\Engines\ADGR\Components\Attachments\Internal\ColorAttachment.cpp" />
+    <ClCompile Include="..\..\Runtime\Engines\ADGR\Components\Attachments\Internal\DepthAttachment.cpp" />
     <ClCompile Include="..\..\Runtime\Engines\ADGR\Components\SceneComponent\Animation\SkeletalAnimation.cpp" />
     <ClCompile Include="..\..\Runtime\Engines\ADGR\Components\SceneComponent\Basic\DebugObject.cpp" />
     <ClCompile Include="..\..\Runtime\Engines\ADGR\Components\SceneComponent\Basic\SkyBoxObject.cpp" />

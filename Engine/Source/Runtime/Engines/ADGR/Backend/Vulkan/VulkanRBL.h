@@ -47,14 +47,20 @@ namespace Dynamik {
 				static void setWindowExtent(UI32 width, UI32 height);
 				static void setProgressPointer(POINTER<UI32> progress);
 
+				static void initializeInstance();
+				static void initializeDevices();
 				static void initializeStageOne();
+
+				/* Context initialization functions */
+				static VulkanSwapChain initializeSwapChain();
+				static VulkanRenderPass initializeRenderPass();
 
 				/* Render Context functions */
 				static VulkanSwapChain createSwapChain();
 				static VulkanRenderPass createRenderPass();
 				static ARRAY<VulkanFrameBuffer> createFrameBuffers();
 
-				/* Per object functions */
+				/* Resource initialize functions */
 				static VulkanVertexBuffer initializeVertexBuffer(const Mesh& mesh, ARRAY<DMKVertexAttribute> attributes);
 				static VulkanIndexBuffer initializeIndexBuffer(const Mesh& mesh, DMKDataType indexType);
 				static VulkanTextureData initializeTextureData(const Texture& texture);

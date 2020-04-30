@@ -3,6 +3,7 @@
 #define _DYNAMIK_ADGR_INDEX_BUFFER_H
 
 #include "RenderPrimitive.h"
+#include "Dynamik/DMKDataType.h"
 
 namespace Dynamik {
 	namespace ADGR {

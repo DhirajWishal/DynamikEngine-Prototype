@@ -26,6 +26,15 @@
 #include "Backend/Primitives/TextureData.h"
 #include "Backend/Primitives/UniformBuffer.h"
 #include "Backend/Primitives/VertexBuffer.h"
+#include "Backend/Primitives/PrimitiveContainer.h"
+
+#include "Components/SceneComponent/SceneComponent.h"
+#include "Components/SceneComponent/Basic/StaticObject.h"
+#include "Components/SceneComponent/Basic/SkyBoxObject.h"
+#include "Components/SceneComponent/Basic/DebugObject.h"
+#include "Components/SceneComponent/Animation/AnimatedObject.h"
+#include "Components/SceneComponent/Animation/SkeletalAnimation.h"
+#include "Components/SceneComponent/VFX/ParticleSystem.h"
 
 namespace Dynamik {
 	namespace ADGR {
@@ -33,6 +42,13 @@ namespace Dynamik {
 			DMK_RENDERING_API_VULKAN,
 			DMK_RENDERING_API_OPENGL,
 			DMK_RENDERING_API_DIRECTX_12,
+		};
+
+		enum class RenderContextType {
+			RENDER_CONTEXT_TYPE_2D,
+			RENDER_CONTEXT_TYPE_3D,
+			RENDER_CONTEXT_TYPE_DEFAULT,
+			RENDER_CONTEXT_TYPE_OVERLAY,
 		};
 
 		struct DMK_API DMKRendererSettings {
@@ -60,6 +76,7 @@ namespace Dynamik {
 		 */
 		class DMK_API Renderer {
 			Renderer() {}
+			~Renderer() {}
 
 			static Renderer instance;
 
@@ -74,10 +91,9 @@ namespace Dynamik {
 			Renderer& operator=(const Renderer&) = delete;
 			Renderer& operator=(Renderer&&) = delete;
 
-			~Renderer() {}
-
 			/* Initializing */
 			static void initializeStageOne(DMKRenderingAPI selectedAPI, DMKRendererSettings settings);
+			static void initializeRenderContext(RenderContextType type);
 			static void initializeStageTwo();
 			static void initializeStageThree();
 
@@ -96,13 +112,22 @@ namespace Dynamik {
 			/* Termination */
 			static void frameCleanup();
 			static void terminate();
-			
+
+		public:
+			static ADGR::StaticObject initializeStaticObject(POINTER<InternalFormat> format);
+			static ADGR::SkyBoxObject initializeSkyBoxObject(POINTER<InternalFormat> format);
+
+			static ADGR::DebugObject initializeDebugObject(POINTER<InternalFormat> format);
+
 		private:
 			POINTER<UI32> progressPtr;
 			ARRAY<POINTER<InternalFormat>> inFlightAssets;
 			ARRAY<POINTER<InternalFormat>> submitPendingAssets;
 
-			ARRAY<ADGRRenderComponent> renderingAssets;
+			ARRAY<POINTER<SceneComponent>> sceneComponents;
+
+
+			RenderContext defaultContext;
 		};
 	}
 }

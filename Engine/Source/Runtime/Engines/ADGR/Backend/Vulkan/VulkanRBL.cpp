@@ -63,7 +63,6 @@ namespace Dynamik {
 			POINTER<ColorAttachment> VulkanRBL::generateColorAttachment(POINTER<VulkanSwapChain> swapChain)
 			{
 				VulkanTextureData _textureData;
-
 				VkFormat colorFormat = swapChain->swapChainImageFormat;
 
 				ADGRVulkanCreateImageInfo cinfo;
@@ -95,9 +94,10 @@ namespace Dynamik {
 				transitionInfo.newLayout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
 				transitionInfo.layerCount = 1;
 				VulkanUtilities::transitionImageLayout(instance.myGraphicsCore.logicalDevice, instance.submitPendingCommandBuffer.pool, instance.myGraphicsCore.graphicsQueue, instance.myGraphicsCore.presentQueue, transitionInfo);
-			
+
 				auto _colorAttachment = StaticAllocator<ColorAttachment>::allocate();
-				_colorAttachment->colorImage = _textureData;
+				_colorAttachment->image = StaticAllocator<VulkanTextureData>::allocate();
+				StaticAllocator<VulkanTextureData>::set(_colorAttachment->image, (VulkanTextureData&&)_textureData);
 				return _colorAttachment;
 			}
 
@@ -108,7 +108,46 @@ namespace Dynamik {
 
 			POINTER<DepthAttachment> VulkanRBL::generateDepthAttachment()
 			{
-				return POINTER<DepthAttachment>();
+				VulkanTextureData _textureData;
+				VkFormat depthFormat = VulkanUtilities::findDepthFormat(instance.myGraphicsCore.physicalDevice);
+
+				ADGRVulkanCreateImageInfo cinfo;
+				cinfo.width = instance.windowExtent.width;
+				cinfo.height = instance.windowExtent.height;
+				cinfo.format = depthFormat;
+				cinfo.tiling = VK_IMAGE_TILING_OPTIMAL;
+				cinfo.usage = VK_IMAGE_USAGE_DEPTH_STENCIL_ATTACHMENT_BIT;
+				cinfo.properties = VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT;
+				cinfo.image = &_textureData.image;
+				cinfo.imageMemory = &_textureData.imageMemory;
+				cinfo.mipLevels = 1;
+				cinfo.numSamples = instance.myGraphicsCore.msaaSamples;
+				cinfo.flags = NULL;
+
+				VulkanUtilities::createImage(instance.myGraphicsCore.logicalDevice, instance.myGraphicsCore.physicalDevice, cinfo);
+
+				ADGRVulkanCreateImageViewInfo viewInfo;
+				viewInfo.image = _textureData.image;
+				viewInfo.format = depthFormat;
+				viewInfo.aspectFlags = VK_IMAGE_ASPECT_DEPTH_BIT;
+				viewInfo.mipLevels = 1;
+
+				_textureData.imageView = VulkanUtilities::createImageView(instance.myGraphicsCore.logicalDevice, viewInfo);
+
+				ADGRVulkanTransitionImageLayoutInfo transitionInfo;
+				transitionInfo.image = _textureData.image;
+				transitionInfo.format = depthFormat;
+				transitionInfo.oldLayout = VK_IMAGE_LAYOUT_UNDEFINED;
+				transitionInfo.mipLevels = 1;
+				transitionInfo.newLayout = VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL;
+				transitionInfo.layerCount = 2;
+
+				VulkanUtilities::transitionImageLayout(instance.myGraphicsCore.logicalDevice, instance.submitPendingCommandBuffer.pool, instance.myGraphicsCore.graphicsQueue, instance.myGraphicsCore.presentQueue, transitionInfo);
+
+				auto _depthAttachment = StaticAllocator<DepthAttachment>::allocate();
+				_depthAttachment->image = StaticAllocator<VulkanTextureData>::allocate();
+				StaticAllocator<VulkanTextureData>::set(_depthAttachment->image, (VulkanTextureData&&)_textureData);
+				return _depthAttachment;
 			}
 
 			void VulkanRBL::destroyDepthAttachment(POINTER<DepthAttachment> ptr)
@@ -140,12 +179,31 @@ namespace Dynamik {
 				StaticAllocator<VulkanRenderPass>::deAllocate(renderPass);
 			}
 
-			ARRAY<POINTER<VulkanFrameBuffer>> VulkanRBL::initializeFrameBuffers()
+			ARRAY<POINTER<VulkanFrameBuffer>> VulkanRBL::initializeFrameBuffers(POINTER<VulkanSwapChain> swapChain, ARRAY<POINTER<RenderAttachment>> attachments)
 			{
-				return ARRAY<POINTER<VulkanFrameBuffer>>();
+				ADGRVulkanGraphicsFrameBufferInitInfo initInfo;
+				for (auto _attachment : attachments)
+				{
+					POINTER<InternalAttachment> _imageAttachment = _attachment;
+					initInfo.attachments.pushBack(_imageAttachment->image);
+				}
+				initInfo.swapChainImageViews = swapChain->swapChainImageViews;
+				initInfo.bufferCount = swapChain->swapChainImages.size();
+				initInfo.swapChainExtent = swapChain->swapChainExtent;
+				auto _frameBuffers = VulkanGraphicsPrimitiveManager::createFrameBuffers(initInfo);
+
+				ARRAY<POINTER<VulkanFrameBuffer>> _containers;
+				for (auto _buffer : _frameBuffers)
+				{
+					POINTER<VulkanFrameBuffer> _frameBuffer = StaticAllocator<VulkanFrameBuffer>::allocate();
+					StaticAllocator<VulkanFrameBuffer>::set(_frameBuffer, (VulkanFrameBuffer&&)_buffer);
+					_containers.pushBack(_frameBuffer);
+				}
+
+				return _containers;
 			}
 
-			void VulkanRBL::terminateFrameBuffers(ARRAY<POINTER<VulkanFrameBuffer>> frameBuffers)
+			void VulkanRBL::terminateFrameBuffers(ARRAY<POINTER<FrameBuffer>> frameBuffers)
 			{
 				for (auto buffer : frameBuffers)
 				{
@@ -153,7 +211,7 @@ namespace Dynamik {
 				}
 			}
 
-			RenderContext VulkanRBL::createContext(RenderContextType type)
+			RenderContext VulkanRBL::createContext(RenderContextType type, ARRAY<POINTER<RenderAttachment>> attachments)
 			{
 				RenderContext _context;
 				_context.type = type;
@@ -161,7 +219,7 @@ namespace Dynamik {
 				_context.swapChain = initializeSwapChain().get();
 				_context.renderPass = initializeRenderPass().get();
 
-				auto _buffers = initializeFrameBuffers();
+				auto _buffers = initializeFrameBuffers(_context.swapChain, attachments);
 				for (auto _buffer : _buffers)
 					_context.frameBuffers.pushBack(_buffer.get());
 
@@ -170,6 +228,9 @@ namespace Dynamik {
 
 			void VulkanRBL::destroyContext(RenderContext context)
 			{
+				terminateRenderPass(context.renderPass);
+				terminateSwapChain(context.swapChain);
+				terminateFrameBuffers(context.frameBuffers);
 			}
 
 			POINTER<VulkanVertexBuffer> VulkanRBL::initializeVertexBuffer(const Mesh& mesh, ARRAY<DMKVertexAttribute> attributes)

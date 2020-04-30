@@ -2,11 +2,11 @@
 #ifndef _DYNAMIK_ADGR_DEPTH_ATTACHMENT_H
 #define _DYNAMIK_ADGR_DEPTH_ATTACHMENT_H
 
-#include "../RenderAttachment.h"
+#include "InternalAttachment.h"
 
 namespace Dynamik {
 	namespace ADGR {
-		class DepthAttachment : public RenderAttachment {
+		class DepthAttachment : public InternalAttachment {
 		public:
 			DepthAttachment() {}
 			~DepthAttachment() {}

@@ -89,6 +89,7 @@ namespace Dynamik {
 			/* Initializing */
 			static void initializeStageOne(DMKRenderingAPI selectedAPI, DMKRendererSettings settings);
 			static void initializeRenderContext(RenderContextType type);
+			static void initializeAttachment(DMKRenderAttachment attachmentType);
 			static void initializeStageTwo();
 			static void initializeStageThree();
 
@@ -118,9 +119,12 @@ namespace Dynamik {
 			POINTER<UI32> progressPtr;
 			ARRAY<POINTER<InternalFormat>> submitPendingAssets;
 
+			ARRAY<POINTER<RenderAttachment>> attachments;
 			ARRAY<POINTER<SceneComponent>> sceneComponents;
-
 			RenderContext defaultContext;
+			std::unordered_map<DMKRenderAttachment, UI32> attachmentIndex;
+
+			DMKPipelineMSAASamples msaaSamples;
 		};
 	}
 }

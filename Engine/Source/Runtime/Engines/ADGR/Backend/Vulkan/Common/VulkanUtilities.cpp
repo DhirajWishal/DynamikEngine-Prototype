@@ -285,6 +285,38 @@ namespace Dynamik {
 				vkDestroyBuffer(logicalDevice, buffer, nullptr);
 				vkFreeMemory(logicalDevice, bufferMemory, nullptr);
 			}
+
+			VkSampleCountFlagBits VulkanUtilities::getMsaaSamples(DMKPipelineMSAASamples samples)
+			{
+				VkSampleCountFlagBits _flags = VkSampleCountFlagBits::VK_SAMPLE_COUNT_1_BIT;
+
+				switch (samples)
+				{
+				case Dynamik::DMKPipelineMSAASamples::DMK_PIPELINE_MSAA_SAMPLES_1:
+					_flags = VkSampleCountFlagBits::VK_SAMPLE_COUNT_1_BIT;
+					break;
+				case Dynamik::DMKPipelineMSAASamples::DMK_PIPELINE_MSAA_SAMPLES_2:
+					_flags = VkSampleCountFlagBits::VK_SAMPLE_COUNT_2_BIT;
+					break;
+				case Dynamik::DMKPipelineMSAASamples::DMK_PIPELINE_MSAA_SAMPLES_4:
+					_flags = VkSampleCountFlagBits::VK_SAMPLE_COUNT_4_BIT;
+					break;
+				case Dynamik::DMKPipelineMSAASamples::DMK_PIPELINE_MSAA_SAMPLES_8:
+					_flags = VkSampleCountFlagBits::VK_SAMPLE_COUNT_8_BIT;
+					break;
+				case Dynamik::DMKPipelineMSAASamples::DMK_PIPELINE_MSAA_SAMPLES_16:
+					_flags = VkSampleCountFlagBits::VK_SAMPLE_COUNT_16_BIT;
+					break;
+				case Dynamik::DMKPipelineMSAASamples::DMK_PIPELINE_MSAA_SAMPLES_32:
+					_flags = VkSampleCountFlagBits::VK_SAMPLE_COUNT_32_BIT;
+					break;
+				case Dynamik::DMKPipelineMSAASamples::DMK_PIPELINE_MSAA_SAMPLES_64:
+					_flags = VkSampleCountFlagBits::VK_SAMPLE_COUNT_64_BIT;
+					break;
+				}
+
+				return _flags;
+			}
 			
 			ARRAY<VkVertexInputBindingDescription> VulkanUtilities::getBindingDescription(ARRAY<DMKVertexAttribute> attributes, UI32 bindCount)
 			{

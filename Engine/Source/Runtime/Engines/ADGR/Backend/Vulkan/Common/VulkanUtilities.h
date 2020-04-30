@@ -126,6 +126,7 @@ namespace Dynamik {
 				/* GLOBAL */
 				static VkFormat getFormat(DMKFormat format);
 				static void terminateBuffers(VkDevice logicalDevice, VkBuffer buffer, VkDeviceMemory bufferMemory);
+				static VkSampleCountFlagBits getMsaaSamples(DMKPipelineMSAASamples samples);
 
 				/* VERTEX FUNCTIONS */
 				static ARRAY<VkVertexInputBindingDescription> getBindingDescription(ARRAY<DMKVertexAttribute> attributes, UI32 bindCount = 1);

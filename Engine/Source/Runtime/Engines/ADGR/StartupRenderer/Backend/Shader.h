@@ -6,14 +6,14 @@
 
 namespace Dynamik {
 	namespace ADGR {
-        class Shader
+        class Shader_S
         {
         public:
             unsigned int ID;
             // constructor generates the shader on the fly
             // ------------------------------------------------------------------------
-            Shader() {}
-            Shader(const char* vertexPath, const char* fragmentPath, const char* geometryPath = nullptr);
+            Shader_S() {}
+            Shader_S(const char* vertexPath, const char* fragmentPath, const char* geometryPath = nullptr);
            
             // activate the shader
             // ------------------------------------------------------------------------

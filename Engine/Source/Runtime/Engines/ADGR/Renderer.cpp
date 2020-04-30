@@ -45,6 +45,35 @@ namespace Dynamik {
 			instance.defaultContext = VulkanRenderer::createContext(type);
 		}
 
+		void Renderer::initializeAttachment(DMKRenderAttachment attachmentType)
+		{
+			switch (attachmentType)
+			{
+			case Dynamik::DMKRenderAttachment::DMK_RENDER_ATTACHMENT_COLOR:
+				instance.attachments.pushBack(VulkanRenderer::generateColorAttachment(instance.defaultContext.swapChain));
+				instance.attachmentIndex[DMKRenderAttachment::DMK_RENDER_ATTACHMENT_COLOR] = instance.attachments.size() - 1;
+				break;
+			case Dynamik::DMKRenderAttachment::DMK_RENDER_ATTACHMENT_DEPTH:
+				instance.attachments.pushBack(VulkanRenderer::generateDepthAttachment());
+				instance.attachmentIndex[DMKRenderAttachment::DMK_RENDER_ATTACHMENT_DEPTH] = instance.attachments.size() - 1;
+				break;
+			case Dynamik::DMKRenderAttachment::DMK_RENDER_ATTACHMENT_SKYBOX:
+				break;
+			case Dynamik::DMKRenderAttachment::DMK_RENDER_ATTACHMENT_LIGHTING:
+				break;
+			case Dynamik::DMKRenderAttachment::DMK_RENDER_ATTACHMENT_IRRADIANCE_CUBE:
+				break;
+			case Dynamik::DMKRenderAttachment::DMK_RENDER_ATTACHMENT_PREFILTERED_CUBE:
+				break;
+			case Dynamik::DMKRenderAttachment::DMK_RENDER_ATTACHMENT_BRDF_TABLE:
+				break;
+			case Dynamik::DMKRenderAttachment::DMK_RENDER_ATTACHMENT_COMPUTE_TEXTURE:
+				break;
+			case Dynamik::DMKRenderAttachment::DMK_RENDER_ATTACHMENT_CUSTOM:
+				break;
+			}
+		}
+
 		void Renderer::initializeStageTwo()
 		{
 		}

@@ -68,10 +68,10 @@ namespace Dynamik {
 				static void terminateSwapChain(POINTER<VulkanSwapChain> swapChain);
 				static POINTER<VulkanRenderPass> initializeRenderPass();
 				static void terminateRenderPass(POINTER<VulkanRenderPass> renderPass);
-				static ARRAY<POINTER<VulkanFrameBuffer>> initializeFrameBuffers();
+				static ARRAY<POINTER<VulkanFrameBuffer>> initializeFrameBuffers(POINTER<VulkanSwapChain> swapChain, ARRAY<POINTER<RenderAttachment>> attachments);
 				static void terminateFrameBuffers(ARRAY<POINTER<VulkanFrameBuffer>> frameBuffers);
 
-				static RenderContext createContext(RenderContextType type);
+				static RenderContext createContext(RenderContextType type, ARRAY<POINTER<RenderAttachment>> attachments);
 				static void destroyContext(RenderContext context);
 
 				/* Resource initialize functions */

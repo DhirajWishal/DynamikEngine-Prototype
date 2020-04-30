@@ -540,6 +540,9 @@ namespace Dynamik {
 
 	/* Directly translated to descriptors and objects */
 	enum class DMKRenderAttachment {
+		DMK_RENDER_ATTACHMENT_COLOR,
+		DMK_RENDER_ATTACHMENT_DEPTH,
+
 		DMK_RENDER_ATTACHMENT_SKYBOX,
 		DMK_RENDER_ATTACHMENT_LIGHTING,
 		DMK_RENDER_ATTACHMENT_IRRADIANCE_CUBE,

@@ -504,6 +504,9 @@
     <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Graphics\VulkanGraphicsShader.h">
       <Filter>Runtime\Engines\ADGR\Backend\Vulkan\Graphics</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\VulkanAttachment.h">
+      <Filter>Runtime\Engines\ADGR\Backend\Vulkan</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\VulkanPresets.h">
       <Filter>Runtime\Engines\ADGR\Backend\Vulkan</Filter>
     </ClInclude>
@@ -523,6 +526,9 @@
       <Filter>Runtime\Engines\ADGR\Components\Attachments\Internal</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Runtime\Engines\ADGR\Components\Attachments\Internal\DepthAttachment.h">
+      <Filter>Runtime\Engines\ADGR\Components\Attachments\Internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Runtime\Engines\ADGR\Components\Attachments\Internal\InternalAttachment.h">
       <Filter>Runtime\Engines\ADGR\Components\Attachments\Internal</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Runtime\Engines\ADGR\Components\Attachments\RenderAttachment.h">

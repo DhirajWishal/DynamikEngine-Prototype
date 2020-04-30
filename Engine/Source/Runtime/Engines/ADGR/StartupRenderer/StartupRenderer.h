@@ -33,7 +33,7 @@ namespace Dynamik {
 			UI32 windowWidth = 1280;
 			UI32 windowHeight = 720;
 
-			Shader myShaderManager;
+			Shader_S myShaderManager;
 			UI32 textureIndex = 0;
 			UI32 VBO = 0, VAO = 0, EBO = 0;
 		};

@@ -2,16 +2,14 @@
 #ifndef _DYNAMIK_ADGR_COLOR_ATTACHMENT_H
 #define _DYNAMIK_ADGR_COLOR_ATTACHMENT_H
 
-#include "../RenderAttachment.h"
+#include "InternalAttachment.h"
 
 namespace Dynamik {
 	namespace ADGR {
-		class ColorAttachment : public RenderAttachment {
+		class ColorAttachment : public InternalAttachment {
 		public:
 			ColorAttachment() {}
 			~ColorAttachment() {}
-
-			TextureData colorImage;
 		};
 	}
 }

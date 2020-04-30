@@ -66,7 +66,7 @@ namespace Dynamik {
 			CCPTR vertShaderPath = "E:/Projects/Dynamik Engine/Versions/Dynamik (Prototype)/Engine/Application/Runtime/Shaders/Startup/shader.vert";
 			CCPTR fragShaderPath = "E:/Projects/Dynamik Engine/Versions/Dynamik (Prototype)/Engine/Application/Runtime/Shaders/Startup/shader.frag";
 
-			instance.myShaderManager = Shader(vertShaderPath, fragShaderPath);
+			instance.myShaderManager = Shader_S(vertShaderPath, fragShaderPath);
 		}
 
 		void StartupRenderer::initializeVertexBuffers()

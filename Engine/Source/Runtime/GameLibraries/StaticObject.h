@@ -51,7 +51,7 @@ namespace Dynamik {
 			/* Uniform attributes description */
 			DMKUniformBufferObjectDescriptor UBODescriptor;
 			UBODescriptor.type = DMKUniformType::DMK_UNIFORM_TYPE_BUFFER_OBJECT;
-			UBODescriptor.location = DMKAttributeLocation::DMK_ATTRIBUTE_LOCATION_VERTEX;
+			UBODescriptor.location = DMKShaderLocation::DMK_SHADER_LOCATION_VERTEX;
 			UBODescriptor.binding = 0;
 
 			DMKUniformAttribute uAttribute1;
@@ -72,16 +72,12 @@ namespace Dynamik {
 			/* Texture sampler */
 			DMKUniformBufferObjectDescriptor TexSampler;
 			TexSampler.type = DMKUniformType::DMK_UNIFORM_TYPE_IMAGE_SAMPLER_2D;
-			TexSampler.location = DMKAttributeLocation::DMK_ATTRIBUTE_LOCATION_FRAGMENT;
+			TexSampler.location = DMKShaderLocation::DMK_SHADER_LOCATION_FRAGMENT;
 			TexSampler.binding = 1;
 
 			/* Add the uniform descriptior */
 			descriptor.uniformBufferObjectDescriptions.pushBack(UBODescriptor);
 			descriptor.uniformBufferObjectDescriptions.pushBack(TexSampler);
-
-			/* Add render attachments */
-			descriptor.renderSpecification.renderAttachments.pushBack(DMKRenderAttachment::DMK_RENDER_ATTACHMENT_UNIFORM_BUFFER);
-			descriptor.renderSpecification.renderAttachments.pushBack(DMKRenderAttachment::DMK_RENDER_ATTACHMENT_TEXTURE);
 		}
 		virtual ~DMKStaticObject() {}
 

@@ -336,7 +336,7 @@
     <ClInclude Include="..\..\Runtime\Core\Memory\Public\Allocator.h">
       <Filter>Runtime\Core\Memory\Public</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Runtime\Core\Memory\Public\MemoryManager.h">
+    <ClInclude Include="..\..\Runtime\Core\Memory\Public\AutomatedHeap.h">
       <Filter>Runtime\Core\Memory\Public</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Runtime\Core\Memory\Public\StaticAllocator.h">
@@ -352,6 +352,9 @@
       <Filter>Runtime\Core\Memory\Public</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Runtime\Core\Memory\Public\memoryFunctions.h">
+      <Filter>Runtime\Core\Memory\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Runtime\Core\Memory\Public\memoryManager.h">
       <Filter>Runtime\Core\Memory\Public</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Runtime\Core\Memory\Public\oneTimeAllocator.h">
@@ -412,6 +415,9 @@
       <Filter>Runtime\Engines\ADGR\Backend\Primitives</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\Primitives\RenderPrimitive.h">
+      <Filter>Runtime\Engines\ADGR\Backend\Primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\Primitives\Shader.h">
       <Filter>Runtime\Engines\ADGR\Backend\Primitives</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\Primitives\SwapChain.h">
@@ -815,7 +821,7 @@
     <ClCompile Include="..\..\Runtime\Core\Memory\Private\Allocator.cpp">
       <Filter>Runtime\Core\Memory\Private</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Runtime\Core\Memory\Private\MemoryManager.cpp">
+    <ClCompile Include="..\..\Runtime\Core\Memory\Private\AutomatedHeap.cpp">
       <Filter>Runtime\Core\Memory\Private</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Runtime\Core\Memory\Private\doubleBufferedAllocator.cpp">
@@ -825,6 +831,9 @@
       <Filter>Runtime\Core\Memory\Private</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Runtime\Core\Memory\Private\doubleBufferedStackAllocator.cpp">
+      <Filter>Runtime\Core\Memory\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Runtime\Core\Memory\Private\memoryManager.cpp">
       <Filter>Runtime\Core\Memory\Private</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Runtime\Core\Memory\Private\oneTimeAllocator.cpp">

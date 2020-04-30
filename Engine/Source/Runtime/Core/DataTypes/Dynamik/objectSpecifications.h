@@ -528,21 +528,18 @@ namespace Dynamik {
 		DMK_UNIFORM_DATA_CUSTOM						// Custom data input
 	};
 
-	/* Dynamik Game Object Attribute Location enum */
-	/* Location to which the data are bount to     */
-	enum class DMKAttributeLocation {
-		DMK_ATTRIBUTE_LOCATION_VERTEX,
-		DMK_ATTRIBUTE_LOCATION_TESSELLATION,
-		DMK_ATTRIBUTE_LOCATION_GEOMETRY,
-		DMK_ATTRIBUTE_LOCATION_FRAGMENT,
-		DMK_ATTRIBUTE_LOCATION_COMPUTE,
+	/* Dynamik Game Object Shader Location enum		*/
+	/* Location to which the data are bount to		*/
+	enum class DMKShaderLocation {
+		DMK_SHADER_LOCATION_VERTEX,
+		DMK_SHADER_LOCATION_TESSELLATION,
+		DMK_SHADER_LOCATION_GEOMETRY,
+		DMK_SHADER_LOCATION_FRAGMENT,
+		DMK_SHADER_LOCATION_COMPUTE,
 	};
 
 	/* Directly translated to descriptors and objects */
 	enum class DMKRenderAttachment {
-		DMK_RENDER_ATTACHMENT_UNIFORM_BUFFER,
-		DMK_RENDER_ATTACHMENT_TEXTURE,
-
 		DMK_RENDER_ATTACHMENT_SKYBOX,
 		DMK_RENDER_ATTACHMENT_LIGHTING,
 		DMK_RENDER_ATTACHMENT_IRRADIANCE_CUBE,
@@ -550,6 +547,8 @@ namespace Dynamik {
 		DMK_RENDER_ATTACHMENT_BRDF_TABLE,
 
 		DMK_RENDER_ATTACHMENT_COMPUTE_TEXTURE,
+
+		DMK_RENDER_ATTACHMENT_CUSTOM,
 	};
 }
 

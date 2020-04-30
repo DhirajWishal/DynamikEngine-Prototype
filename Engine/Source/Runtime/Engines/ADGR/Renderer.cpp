@@ -42,6 +42,7 @@ namespace Dynamik {
 
 		void Renderer::initializeRenderContext(RenderContextType type)
 		{
+			instance.defaultContext = VulkanRenderer::createContext(type);
 		}
 
 		void Renderer::initializeStageTwo()
@@ -59,10 +60,12 @@ namespace Dynamik {
 
 		void Renderer::setWindowHandle(POINTER<GLFWwindow> window)
 		{
+			VulkanRenderer::setWindowHandle(window);
 		}
 
 		void Renderer::setWindowExtent(UI32 width, UI32 height)
 		{
+			VulkanRenderer::setWindowExtent(width, height);
 		}
 
 		void Renderer::setRenderableObjects(ARRAY<POINTER<InternalFormat>> formats)
@@ -76,6 +79,7 @@ namespace Dynamik {
 				case Dynamik::DMKObjectType::DMK_OBJECT_TYPE_IMAGE_2D:
 					break;
 				case Dynamik::DMKObjectType::DMK_OBJECT_TYPE_DEBUG_OBJECT:
+					initializeDebugObject(format);
 					break;
 				case Dynamik::DMKObjectType::DMK_OBJECT_TYPE_MESH:
 					break;
@@ -91,6 +95,7 @@ namespace Dynamik {
 				case Dynamik::DMKObjectType::DMK_OBJECT_TYPE_TEXTURE_UI:
 					break;
 				case Dynamik::DMKObjectType::DMK_OBJECT_TYPE_SKYBOX:
+					initializeSkyBoxObject(format);
 					break;
 				case Dynamik::DMKObjectType::DMK_OBJECT_TYPE_SPRITES:
 					break;
@@ -131,8 +136,6 @@ namespace Dynamik {
 		void Renderer::submitLoadedAssets()
 		{
 			DMK_BEGIN_PROFILE_TIMER();
-
-			instance.inFlightAssets = instance.submitPendingAssets;
 			instance.submitPendingAssets = {};
 		}
 
@@ -143,7 +146,6 @@ namespace Dynamik {
 
 		void Renderer::drawFrame(DMKRendererDrawFrameInfo info)
 		{
-			info.formats = instance.inFlightAssets;
 		}
 
 		void Renderer::frameCleanup()

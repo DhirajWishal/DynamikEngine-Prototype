@@ -44,13 +44,6 @@ namespace Dynamik {
 			DMK_RENDERING_API_DIRECTX_12,
 		};
 
-		enum class RenderContextType {
-			RENDER_CONTEXT_TYPE_2D,
-			RENDER_CONTEXT_TYPE_3D,
-			RENDER_CONTEXT_TYPE_DEFAULT,
-			RENDER_CONTEXT_TYPE_OVERLAY,
-		};
-
 		struct DMK_API DMKRendererSettings {
 			std::string myWindowTitle = ("Dynamik Engine");
 			UI32 myWindowWidth = 720;
@@ -84,6 +77,8 @@ namespace Dynamik {
 				POINTER<MAT4> location;
 				UI32 byteSize = 0;
 			};
+
+			using VulkanRenderer = ADGR::Backend::VulkanRBL;
 
 		public:
 			Renderer(const Renderer&) = delete;
@@ -121,11 +116,9 @@ namespace Dynamik {
 
 		private:
 			POINTER<UI32> progressPtr;
-			ARRAY<POINTER<InternalFormat>> inFlightAssets;
 			ARRAY<POINTER<InternalFormat>> submitPendingAssets;
 
 			ARRAY<POINTER<SceneComponent>> sceneComponents;
-
 
 			RenderContext defaultContext;
 		};

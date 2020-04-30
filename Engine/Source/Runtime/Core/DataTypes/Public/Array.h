@@ -945,6 +945,20 @@ namespace Dynamik {
 			return _hashInt;
 		}
 
+		/* TEMPLATED FUNCTION
+		 * Casts the data stored in this array to the provided type.
+		 */
+		template<class SUB_TYPE>
+		ARRAY<SUB_TYPE, DestructorCallMode> cast()
+		{
+			ARRAY<SUB_TYPE> _newArr;
+
+			for (auto _elem : *this)
+				_newArr.pushBack(Cast<SUB_TYPE>(_elem));
+
+			return _newArr;
+		}
+
 		/* PUBLIC OPERATORS */
 	public:
 		/* OPERATOR

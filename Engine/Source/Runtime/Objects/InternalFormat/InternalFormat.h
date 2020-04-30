@@ -25,9 +25,6 @@ namespace Dynamik {
 		/* Object meshes */
 		ARRAY<Mesh> meshDatas;
 
-		/* Texture data store */
-		ARRAY<Texture> textures;
-
 		/* Object data paths */
 		std::string objectPath = "";
 		ARRAY<std::string> texturePaths;

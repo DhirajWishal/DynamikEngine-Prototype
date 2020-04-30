@@ -133,7 +133,7 @@ namespace Dynamik {
 				static VkFormat vertexAttributeTypeToVkFormat(DMKDataType type);
 
 				/* SHADER FUNCTIONS */
-				static ARRAY<VulkanGraphicsShader> getGraphicsShaders(VkDevice logicalDevice, POINTER<InternalFormat> internalFormat);
+				static ARRAY<VulkanGraphicsShader> getGraphicsShaders(VkDevice logicalDevice, ShaderPaths shaderPaths);
 				static void terminateGraphicsShaders(VkDevice logicalDevice, ARRAY<VulkanGraphicsShader> shaders);
 
 				/* BUFFER FUNCTIONS */
@@ -158,7 +158,7 @@ namespace Dynamik {
 
 				/* UNIFORM BUFFER FUNCTIONS */
 				static VkDescriptorType getDescriptorType(DMKUniformType type);
-				static VkShaderStageFlagBits getDescriptorFlag(DMKAttributeLocation location);
+				static VkShaderStageFlagBits getDescriptorFlag(DMKShaderLocation location);
 				static ARRAY<VkDescriptorSetLayoutBinding> getDescriptorSetBindings(ARRAY<DMKUniformBufferObjectDescriptor> descriptors);
 			};
 		}

@@ -1,6 +1,8 @@
 #include "dmkafx.h"
 #include "VulkanPresets.h"
 
+#include "Common/VulkanUtilities.h"
+
 namespace Dynamik {
 	namespace ADGR {
 		namespace Backend {
@@ -151,6 +153,13 @@ namespace Dynamik {
 				frameBufferInitInfo.swapChainExtent = bufferExtent;
 				frameBufferInitInfo.bufferCount = bufferCount;
 				return frameBufferInitInfo;
+			}
+			
+			ADGRVulkanGraphicsPipelineInitInfo VulkanPresets::pipelinePreset3D(ARRAY<DMKVertexAttribute> attributes, ShaderPaths shaderPaths)
+			{
+				//auto _shaders = VulkanUtilities::getGraphicsShaders()
+
+				return ADGRVulkanGraphicsPipelineInitInfo();
 			}
 		}
 	}

@@ -353,46 +353,46 @@ namespace Dynamik {
 				return VkFormat::VK_FORMAT_UNDEFINED;
 			}
 
-			ARRAY<VulkanGraphicsShader> VulkanUtilities::getGraphicsShaders(VkDevice logicalDevice, POINTER<InternalFormat> internalFormat)
+			ARRAY<VulkanGraphicsShader> VulkanUtilities::getGraphicsShaders(VkDevice logicalDevice, ShaderPaths shaderPaths)
 			{
 				DMK_BEGIN_PROFILE_TIMER();
 
 				ARRAY<VulkanGraphicsShader> _shaders;
 
-				if (internalFormat->shaderPaths.vertexShader.size() && internalFormat->shaderPaths.vertexShader != "NONE")
+				if (shaderPaths.vertexShader.size() && shaderPaths.vertexShader != "NONE")
 				{
 					ADGRVulkanGraphicsShaderInitInfo _initInfo;
-					_initInfo.path = internalFormat->shaderPaths.vertexShader;
+					_initInfo.path = shaderPaths.vertexShader;
 					_initInfo.type = ADGRVulkanGraphicsShaderType::ADGR_VULKAN_SHADER_TYPE_VERTEX;
 
 					VulkanGraphicsShader _shader;
 					_shader.initialize(logicalDevice, _initInfo);
 					_shaders.pushBack(_shader);
 				}
-				if (internalFormat->shaderPaths.tessellationShader.size() && internalFormat->shaderPaths.tessellationShader != "NONE")
+				if (shaderPaths.tessellationShader.size() && shaderPaths.tessellationShader != "NONE")
 				{
 					ADGRVulkanGraphicsShaderInitInfo _initInfo;
-					_initInfo.path = internalFormat->shaderPaths.tessellationShader;
+					_initInfo.path = shaderPaths.tessellationShader;
 					_initInfo.type = ADGRVulkanGraphicsShaderType::ADGR_VULKAN_SHADER_TYPE_TESSELLATION;
 
 					VulkanGraphicsShader _shader;
 					_shader.initialize(logicalDevice, _initInfo);
 					_shaders.pushBack(_shader);
 				}
-				if (internalFormat->shaderPaths.geometryShader.size() && internalFormat->shaderPaths.geometryShader != "NONE")
+				if (shaderPaths.geometryShader.size() && shaderPaths.geometryShader != "NONE")
 				{
 					ADGRVulkanGraphicsShaderInitInfo _initInfo;
-					_initInfo.path = internalFormat->shaderPaths.geometryShader;
+					_initInfo.path = shaderPaths.geometryShader;
 					_initInfo.type = ADGRVulkanGraphicsShaderType::ADGR_VULKAN_SHADER_TYPE_GEOMETRY;
 
 					VulkanGraphicsShader _shader;
 					_shader.initialize(logicalDevice, _initInfo);
 					_shaders.pushBack(_shader);
 				}
-				if (internalFormat->shaderPaths.fragmentShader.size() && internalFormat->shaderPaths.fragmentShader != "NONE")
+				if (shaderPaths.fragmentShader.size() && shaderPaths.fragmentShader != "NONE")
 				{
 					ADGRVulkanGraphicsShaderInitInfo _initInfo;
-					_initInfo.path = internalFormat->shaderPaths.fragmentShader;
+					_initInfo.path = shaderPaths.fragmentShader;
 					_initInfo.type = ADGRVulkanGraphicsShaderType::ADGR_VULKAN_SHADER_TYPE_FRAGMENT;
 
 					VulkanGraphicsShader _shader;
@@ -800,29 +800,29 @@ namespace Dynamik {
 				return _descriptorType;
 			}
 
-			VkShaderStageFlagBits VulkanUtilities::getDescriptorFlag(DMKAttributeLocation location)
+			VkShaderStageFlagBits VulkanUtilities::getDescriptorFlag(DMKShaderLocation location)
 			{
 				VkShaderStageFlagBits _flag;
 
 				switch (location)
 				{
-				case Dynamik::DMKAttributeLocation::DMK_ATTRIBUTE_LOCATION_VERTEX:
+				case Dynamik::DMKShaderLocation::DMK_SHADER_LOCATION_VERTEX:
 					_flag = VkShaderStageFlagBits::VK_SHADER_STAGE_VERTEX_BIT;
 					break;
 
-				case Dynamik::DMKAttributeLocation::DMK_ATTRIBUTE_LOCATION_TESSELLATION:
+				case Dynamik::DMKShaderLocation::DMK_SHADER_LOCATION_TESSELLATION:
 					_flag = VkShaderStageFlagBits::VK_SHADER_STAGE_TESSELLATION_CONTROL_BIT;
 					break;
 
-				case Dynamik::DMKAttributeLocation::DMK_ATTRIBUTE_LOCATION_GEOMETRY:
+				case Dynamik::DMKShaderLocation::DMK_SHADER_LOCATION_GEOMETRY:
 					_flag = VkShaderStageFlagBits::VK_SHADER_STAGE_GEOMETRY_BIT;
 					break;
 
-				case Dynamik::DMKAttributeLocation::DMK_ATTRIBUTE_LOCATION_FRAGMENT:
+				case Dynamik::DMKShaderLocation::DMK_SHADER_LOCATION_FRAGMENT:
 					_flag = VkShaderStageFlagBits::VK_SHADER_STAGE_FRAGMENT_BIT;
 					break;
 
-				case Dynamik::DMKAttributeLocation::DMK_ATTRIBUTE_LOCATION_COMPUTE:
+				case Dynamik::DMKShaderLocation::DMK_SHADER_LOCATION_COMPUTE:
 					_flag = VkShaderStageFlagBits::VK_SHADER_STAGE_COMPUTE_BIT;
 					break;
 				}

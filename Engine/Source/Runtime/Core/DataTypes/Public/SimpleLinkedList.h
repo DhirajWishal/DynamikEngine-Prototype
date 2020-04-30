@@ -45,6 +45,13 @@ namespace Dynamik {
 			}
 		}
 
+		void add(const TYPE& data)
+		{
+			SimpleNode<TYPE> _node;
+			_node.myData = data;
+			push(_node);
+		}
+
 		void push(const SimpleNode<TYPE>& node)
 		{
 			PTR _nodeAllocation = Allocator::allocate(sizeof(node));
@@ -108,6 +115,9 @@ namespace Dynamik {
 		}
 
 		UI32 size() { return myLinkCount; }
+
+		PTR begin() { return myFirstNode; }
+		PTR end() { return myLastNode; }
 
 	private:
 		PTR myFirstNode;

@@ -1,6 +1,7 @@
 #include "dmkafx.h"
 #include "VulkanRBL.h"
 
+#include "Common/VulkanUtilities.h"
 #include "VulkanPresets.h"
 
 namespace Dynamik {
@@ -45,44 +46,157 @@ namespace Dynamik {
 			{
 				initializeInstance();
 				initializeDevices();
+
+				/* Initialize command buffer resources */
+				ADGRVulkanGraphicsCommandBufferInitResources commandBufferInitResource;
+				commandBufferInitResource.logicalDevice = instance.myGraphicsCore.logicalDevice;
+				commandBufferInitResource.physicalDevice = instance.myGraphicsCore.physicalDevice;
+				commandBufferInitResource.surface = instance.myGraphicsCore.surface;
+				instance.submitPendingCommandBuffer.initializeResources(commandBufferInitResource);
+				instance.inFlightCommandBuffer.initializeResources(commandBufferInitResource);
+
+				/* Initialize command pools */
+				instance.submitPendingCommandBuffer.initializeCommandPool();
+				instance.inFlightCommandBuffer.initializeCommandPool();
 			}
 
-			VulkanSwapChain VulkanRBL::initializeSwapChain()
+			POINTER<ColorAttachment> VulkanRBL::generateColorAttachment(POINTER<VulkanSwapChain> swapChain)
 			{
-				return VulkanGraphicsPrimitiveManager::createSwapChain(instance.windowExtent.width, instance.windowExtent.height);
+				VulkanTextureData _textureData;
+
+				VkFormat colorFormat = swapChain->swapChainImageFormat;
+
+				ADGRVulkanCreateImageInfo cinfo;
+				cinfo.width = swapChain->swapChainExtent.width;
+				cinfo.height = swapChain->swapChainExtent.height;
+				cinfo.format = colorFormat;
+				cinfo.tiling = VK_IMAGE_TILING_OPTIMAL;
+				cinfo.usage = VK_IMAGE_USAGE_TRANSIENT_ATTACHMENT_BIT | VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT;
+				cinfo.properties = VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT;
+				cinfo.image = &_textureData.image;
+				cinfo.imageMemory = &_textureData.imageMemory;
+				cinfo.mipLevels = 1;
+				cinfo.numSamples = instance.myGraphicsCore.msaaSamples;
+				cinfo.flags = NULL;
+				VulkanUtilities::createImage(instance.myGraphicsCore.logicalDevice, instance.myGraphicsCore.physicalDevice, cinfo);
+
+				ADGRVulkanCreateImageViewInfo viewInfo;
+				viewInfo.image = _textureData.image;
+				viewInfo.format = colorFormat;
+				viewInfo.aspectFlags = VK_IMAGE_ASPECT_COLOR_BIT;
+				viewInfo.mipLevels = 1;
+				_textureData.imageView = VulkanUtilities::createImageView(instance.myGraphicsCore.logicalDevice, viewInfo);
+
+				ADGRVulkanTransitionImageLayoutInfo transitionInfo;
+				transitionInfo.image = _textureData.image;
+				transitionInfo.format = colorFormat;
+				transitionInfo.oldLayout = VK_IMAGE_LAYOUT_UNDEFINED;
+				transitionInfo.mipLevels = 1;
+				transitionInfo.newLayout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
+				transitionInfo.layerCount = 1;
+				VulkanUtilities::transitionImageLayout(instance.myGraphicsCore.logicalDevice, instance.submitPendingCommandBuffer.pool, instance.myGraphicsCore.graphicsQueue, instance.myGraphicsCore.presentQueue, transitionInfo);
+			
+				auto _colorAttachment = StaticAllocator<ColorAttachment>::allocate();
+				_colorAttachment->colorImage = _textureData;
+				return _colorAttachment;
 			}
 
-			VulkanRenderPass VulkanRBL::initializeRenderPass()
+			void VulkanRBL::destroyColorAttachment(POINTER<ColorAttachment> ptr)
 			{
-				return VulkanGraphicsPrimitiveManager::createRenderPass(VulkanPresets::renderPassPreset3D());
+				StaticAllocator<ColorAttachment>::deAllocate(ptr);
 			}
 
-			VulkanSwapChain VulkanRBL::createSwapChain()
+			POINTER<DepthAttachment> VulkanRBL::generateDepthAttachment()
 			{
-				return VulkanSwapChain();
+				return POINTER<DepthAttachment>();
 			}
 
-			VulkanRenderPass VulkanRBL::createRenderPass()
+			void VulkanRBL::destroyDepthAttachment(POINTER<DepthAttachment> ptr)
 			{
-				return VulkanRenderPass();
+				StaticAllocator<DepthAttachment>::deAllocate(ptr);
 			}
 
-			ARRAY<VulkanFrameBuffer> VulkanRBL::createFrameBuffers()
+			POINTER<VulkanSwapChain> VulkanRBL::initializeSwapChain()
 			{
-				return ARRAY<VulkanFrameBuffer>();
+				auto _swapChain = StaticAllocator<VulkanSwapChain>::allocate();
+				StaticAllocator<VulkanSwapChain>::set(_swapChain, VulkanGraphicsPrimitiveManager::createSwapChain(instance.windowExtent.width, instance.windowExtent.height));
+				return _swapChain;
 			}
 
-			VulkanVertexBuffer VulkanRBL::initializeVertexBuffer(const Mesh& mesh, ARRAY<DMKVertexAttribute> attributes)
+			void VulkanRBL::terminateSwapChain(POINTER<VulkanSwapChain> swapChain)
 			{
-				return VulkanGraphicsPrimitiveManager::createVertexBuffer(mesh, attributes);
+				StaticAllocator<VulkanSwapChain>::deAllocate(swapChain);
 			}
 
-			VulkanIndexBuffer VulkanRBL::initializeIndexBuffer(const Mesh& mesh, DMKDataType indexType)
+			POINTER<VulkanRenderPass> VulkanRBL::initializeRenderPass()
 			{
-				return VulkanGraphicsPrimitiveManager::createIndexBuffer(mesh, indexType);
+				auto _renderPass = StaticAllocator<VulkanRenderPass>::allocate();
+				StaticAllocator<VulkanRenderPass>::set(_renderPass, VulkanGraphicsPrimitiveManager::createRenderPass(VulkanPresets::renderPassPreset3D(VkFormat(), VkFormat(), VK_SAMPLE_COUNT_1_BIT)));
+				return _renderPass;
 			}
 
-			VulkanTextureData VulkanRBL::initializeTextureData(const Texture& texture)
+			void VulkanRBL::terminateRenderPass(POINTER<VulkanRenderPass> renderPass)
+			{
+				StaticAllocator<VulkanRenderPass>::deAllocate(renderPass);
+			}
+
+			ARRAY<POINTER<VulkanFrameBuffer>> VulkanRBL::initializeFrameBuffers()
+			{
+				return ARRAY<POINTER<VulkanFrameBuffer>>();
+			}
+
+			void VulkanRBL::terminateFrameBuffers(ARRAY<POINTER<VulkanFrameBuffer>> frameBuffers)
+			{
+				for (auto buffer : frameBuffers)
+				{
+					StaticAllocator<VulkanFrameBuffer>::deAllocate(buffer);
+				}
+			}
+
+			RenderContext VulkanRBL::createContext(RenderContextType type)
+			{
+				RenderContext _context;
+				_context.type = type;
+
+				_context.swapChain = initializeSwapChain().get();
+				_context.renderPass = initializeRenderPass().get();
+
+				auto _buffers = initializeFrameBuffers();
+				for (auto _buffer : _buffers)
+					_context.frameBuffers.pushBack(_buffer.get());
+
+				return _context;
+			}
+
+			void VulkanRBL::destroyContext(RenderContext context)
+			{
+			}
+
+			POINTER<VulkanVertexBuffer> VulkanRBL::initializeVertexBuffer(const Mesh& mesh, ARRAY<DMKVertexAttribute> attributes)
+			{
+				auto _vertexBuffer = StaticAllocator<VulkanVertexBuffer>::allocate();
+				StaticAllocator<VulkanVertexBuffer>::set(_vertexBuffer, VulkanGraphicsPrimitiveManager::createVertexBuffer(mesh, attributes));
+				return _vertexBuffer;
+			}
+
+			void VulkanRBL::terminateVertexBuffer(POINTER<VulkanVertexBuffer> buffer)
+			{
+				StaticAllocator<VulkanVertexBuffer>::deAllocate(buffer);
+			}
+
+			POINTER<VulkanIndexBuffer> VulkanRBL::initializeIndexBuffer(const Mesh& mesh, DMKDataType indexType)
+			{
+				auto _indexBuffer = StaticAllocator<VulkanIndexBuffer>::allocate();
+				StaticAllocator<VulkanIndexBuffer>::set(_indexBuffer, VulkanGraphicsPrimitiveManager::createIndexBuffer(mesh, indexType));
+				return _indexBuffer;
+			}
+
+			void VulkanRBL::terminateIndexBuffer(POINTER<VulkanIndexBuffer> buffer)
+			{
+				StaticAllocator<VulkanIndexBuffer>::deAllocate(buffer);
+			}
+
+			POINTER<VulkanTextureData> VulkanRBL::initializeTextureData(const Texture& texture)
 			{
 				ADGRVulkanTextureInitInfo info;
 				info.mipLevels = 1;
@@ -94,7 +208,15 @@ namespace Dynamik {
 				info.magFilter = VK_FILTER_LINEAR;
 				info.minFilter = VK_FILTER_LINEAR;
 				info.aspectFlags = VK_IMAGE_ASPECT_COLOR_BIT;
-				return VulkanGraphicsPrimitiveManager::createTextureData(info, texture);
+
+				auto _textureData = StaticAllocator<VulkanTextureData>::allocate();
+				StaticAllocator<VulkanTextureData>::set(_textureData, VulkanGraphicsPrimitiveManager::createTextureData(info, texture));
+				return _textureData;
+			}
+
+			void VulkanRBL::terminateTextureData(POINTER<VulkanTextureData> texture)
+			{
+				StaticAllocator<VulkanTextureData>::deAllocate(texture);
 			}
 
 			VulkanUniformBuffer VulkanRBL::initializeUniformBuffer(UI32 size)
@@ -102,9 +224,32 @@ namespace Dynamik {
 				return VulkanGraphicsPrimitiveManager::createUniformBuffer(size);
 			}
 
+			void VulkanRBL::terminateUniformBuffer(POINTER<VulkanUniformBuffer> buffer)
+			{
+				StaticAllocator<VulkanUniformBuffer>::deAllocate(buffer);
+			}
+
+			ARRAY<VulkanUniformBuffer> VulkanRBL::initializeUniformBuffers(UI32 size)
+			{
+				return ARRAY<VulkanUniformBuffer>();
+			}
+
+			void VulkanRBL::terminateUniformBuffers(ARRAY<POINTER<VulkanUniformBuffer>> buffers)
+			{
+				for (auto buffer : buffers)
+				{
+					StaticAllocator<VulkanUniformBuffer>::deAllocate(buffer);
+				}
+			}
+
 			VulkanPipeline VulkanRBL::initializePipeline(ADGRVulkanGraphicsPipelineInitInfo info)
 			{
 				return VulkanGraphicsPrimitiveManager::createPipeline(info);
+			}
+
+			void VulkanRBL::terminatePipeline(POINTER<VulkanPipeline> pipeline)
+			{
+				StaticAllocator<VulkanPipeline>::deAllocate(pipeline);
 			}
 
 			void VulkanRBL::addRenderableToQueue(POINTER<InternalFormat> format)

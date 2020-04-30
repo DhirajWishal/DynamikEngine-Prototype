@@ -12,7 +12,6 @@ namespace Dynamik {
 			~ColorAttachment() {}
 
 			TextureData colorImage;
-			FrameBuffer offScreenFrameBuffer;
 		};
 	}
 }

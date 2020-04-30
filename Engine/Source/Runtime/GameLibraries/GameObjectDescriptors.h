@@ -104,7 +104,7 @@ namespace Dynamik {
 		static UI32 uniformByteSize(ARRAY<DMKUniformAttribute> attributes);
 
 		DMKUniformType type = DMKUniformType::DMK_UNIFORM_TYPE_BUFFER_OBJECT;
-		DMKAttributeLocation location = DMKAttributeLocation::DMK_ATTRIBUTE_LOCATION_VERTEX;
+		DMKShaderLocation location = DMKShaderLocation::DMK_SHADER_LOCATION_VERTEX;
 		ARRAY<DMKUniformAttribute> attributes;
 		UI32 binding = 0;
 	};

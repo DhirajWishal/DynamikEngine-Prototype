@@ -3,6 +3,7 @@
 #define _DYNAMIK_MEMORY_H
 
 #include "Public/Allocator.h"
+#include "Public/AutomatedHeap.h"
 #include "Public/doubleBufferedAllocator.h"
 #include "Public/doubleBufferedPoolAllocator.h"
 #include "Public/doubleBufferedStackAllocator.h"

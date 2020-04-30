@@ -33,6 +33,8 @@ namespace Dynamik {
 
 			POINTER<InternalFormat> myInternalFormat;
 			ARRAY<RenderingMeshComponent> myMeshes;
+			POINTER<RenderContext> myRenderContext;
+			POINTER<Pipeline> myPipeline;
 		};
 	}
 }

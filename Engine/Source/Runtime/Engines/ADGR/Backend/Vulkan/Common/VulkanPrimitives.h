@@ -7,6 +7,7 @@
 #include "../../Primitives/Pipeline.h"
 #include "../../Primitives/PipelineCache.h"
 #include "../../Primitives/RenderPass.h"
+#include "../../Primitives/Shader.h"
 #include "../../Primitives/SwapChain.h"
 #include "../../Primitives/TextureData.h"
 #include "../../Primitives/UniformBuffer.h"
@@ -58,6 +59,16 @@ namespace Dynamik {
 				~VulkanRenderPass() {}
 
 				VkRenderPass renderPass = VK_NULL_HANDLE;
+			};
+
+			class VulkanShader : public Shader {
+			public:
+				VulkanShader() {}
+				VulkanShader(DMKShaderLocation loc) : Shader(loc) {}
+				~VulkanShader() {}
+
+				VkShaderModule shaderModule = VK_NULL_HANDLE;
+				VkPipelineShaderStageCreateInfo shaderStage = {};
 			};
 
 			class VulkanSwapChain : public SwapChain {

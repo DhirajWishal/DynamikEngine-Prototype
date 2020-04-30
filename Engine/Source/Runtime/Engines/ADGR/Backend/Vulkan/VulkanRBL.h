@@ -11,6 +11,10 @@
 
 #include "Objects/InternalFormat/InternalFormat.h"
 
+#include "../../Components/Attachments/Internal/ColorAttachment.h"
+#include "../../Components/Attachments/Internal/DepthAttachment.h"
+#include "../Primitives/PrimitiveContainer.h"
+
 namespace Dynamik {
 	namespace ADGR {
 		namespace Backend {
@@ -43,32 +47,50 @@ namespace Dynamik {
 			public:
 				static void basicInternalInitialization();
 
+				/* Basic initializations */
 				static void setWindowHandle(POINTER<GLFWwindow> handle);
 				static void setWindowExtent(UI32 width, UI32 height);
 				static void setProgressPointer(POINTER<UI32> progress);
 
+				/* Core initializations */
 				static void initializeInstance();
 				static void initializeDevices();
 				static void initializeStageOne();
 
-				/* Context initialization functions */
-				static VulkanSwapChain initializeSwapChain();
-				static VulkanRenderPass initializeRenderPass();
+				/* Attachment functions */
+				static POINTER<ColorAttachment> generateColorAttachment(POINTER<VulkanSwapChain> swapChain);
+				static void destroyColorAttachment(POINTER<ColorAttachment> ptr);
+				static POINTER<DepthAttachment> generateDepthAttachment();
+				static void destroyDepthAttachment(POINTER<DepthAttachment> ptr);
 
-				/* Render Context functions */
-				static VulkanSwapChain createSwapChain();
-				static VulkanRenderPass createRenderPass();
-				static ARRAY<VulkanFrameBuffer> createFrameBuffers();
+				/* Context initialization functions */
+				static POINTER<VulkanSwapChain> initializeSwapChain();
+				static void terminateSwapChain(POINTER<VulkanSwapChain> swapChain);
+				static POINTER<VulkanRenderPass> initializeRenderPass();
+				static void terminateRenderPass(POINTER<VulkanRenderPass> renderPass);
+				static ARRAY<POINTER<VulkanFrameBuffer>> initializeFrameBuffers();
+				static void terminateFrameBuffers(ARRAY<POINTER<VulkanFrameBuffer>> frameBuffers);
+
+				static RenderContext createContext(RenderContextType type);
+				static void destroyContext(RenderContext context);
 
 				/* Resource initialize functions */
-				static VulkanVertexBuffer initializeVertexBuffer(const Mesh& mesh, ARRAY<DMKVertexAttribute> attributes);
-				static VulkanIndexBuffer initializeIndexBuffer(const Mesh& mesh, DMKDataType indexType);
-				static VulkanTextureData initializeTextureData(const Texture& texture);
+				static POINTER<VulkanVertexBuffer> initializeVertexBuffer(const Mesh& mesh, ARRAY<DMKVertexAttribute> attributes);
+				static void terminateVertexBuffer(POINTER<VulkanVertexBuffer> buffer);
+				static POINTER<VulkanIndexBuffer> initializeIndexBuffer(const Mesh& mesh, DMKDataType indexType);
+				static void terminateIndexBuffer(POINTER<VulkanIndexBuffer> buffer);
+				static POINTER<VulkanTextureData> initializeTextureData(const Texture& texture);
+				static void terminateTextureData(POINTER<VulkanTextureData> texture);
 
 				/* size = Uniform Buffer byte size */
 				static VulkanUniformBuffer initializeUniformBuffer(UI32 size);
+				static void terminateUniformBuffer(POINTER<VulkanUniformBuffer> buffer);
+				static ARRAY<VulkanUniformBuffer> initializeUniformBuffers(UI32 size);
+				static void terminateUniformBuffers(ARRAY<POINTER<VulkanUniformBuffer>> buffers);
 				static VulkanPipeline initializePipeline(ADGRVulkanGraphicsPipelineInitInfo info);
+				static void terminatePipeline(POINTER<VulkanPipeline> pipeline);
 
+				/* Submit objects */
 				static void addRenderableToQueue(POINTER<InternalFormat> format);
 
 			private:
@@ -77,6 +99,9 @@ namespace Dynamik {
 
 				VulkanGraphicsCore myGraphicsCore;
 				POINTER<UI32> myProgressPointer;
+
+				VulkanGraphicsCommandBuffer submitPendingCommandBuffer;	/* host visible */
+				VulkanGraphicsCommandBuffer inFlightCommandBuffer;	/* client visible */
 			};
 		}
 	}

@@ -2,8 +2,8 @@
 #ifndef _DYNAMIK_ADGR_VULKAN_GRAPHICS_COMMAND_BUFFER_H
 #define _DYNAMIK_ADGR_VULKAN_GRAPHICS_COMMAND_BUFFER_H
 
-#include "VulkanGraphicsRenderableObject.h"
-#include "VulkanGraphicsFrameBuffer.h"
+#include "../../../Components/SceneComponent/SceneComponent.h"
+#include "../../Primitives/PrimitiveContainer.h"
 
 namespace Dynamik {
 	namespace ADGR {
@@ -15,9 +15,7 @@ namespace Dynamik {
 			};
 
 			struct ADGRVulkanGraphicsCommandBufferInitInfo {
-				ARRAY<ADGRVulkanRenderData> objects;
-				VulkanGraphicsSwapChain swapChain;
-				VulkanGraphicsFrameBuffer frameBuffer;
+				RenderContext context;
 				ARRAY<F32> clearValues = {
 					(2.0f / 256.0f),
 					(8.0f / 256.0f),

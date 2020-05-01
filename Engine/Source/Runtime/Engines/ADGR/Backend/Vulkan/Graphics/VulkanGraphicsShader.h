@@ -5,24 +5,20 @@
 #include <vulkan/vulkan.h>
 #include <string>
 
+#include "../../Primitives/Shader.h"
+
 namespace Dynamik {
 	namespace ADGR {
 		namespace Backend {
-			enum class ADGRVulkanGraphicsShaderType {
-				ADGR_VULKAN_SHADER_TYPE_VERTEX,
-				ADGR_VULKAN_SHADER_TYPE_TESSELLATION,
-				ADGR_VULKAN_SHADER_TYPE_GEOMETRY,
-				ADGR_VULKAN_SHADER_TYPE_FRAGMENT
-			};
-
 			struct ADGRVulkanGraphicsShaderInitInfo {
 				std::string path;
-				ADGRVulkanGraphicsShaderType type = ADGRVulkanGraphicsShaderType::ADGR_VULKAN_SHADER_TYPE_VERTEX;
+				DMKShaderLocation location = DMKShaderLocation::DMK_SHADER_LOCATION_VERTEX;
 			};
 
-			class VulkanGraphicsShader {
+			class VulkanGraphicsShader : public Shader {
 			public:
 				VulkanGraphicsShader() {}
+				VulkanGraphicsShader(DMKShaderLocation location) : Shader(location) {}
 				~VulkanGraphicsShader() {}
 
 				void initialize(VkDevice logicalDevice, ADGRVulkanGraphicsShaderInitInfo info);
@@ -30,13 +26,8 @@ namespace Dynamik {
 
 				static VkShaderModule createShaderModule(VkDevice logicalDevice, ARRAY<CHR> code);
 
-				ARRAY<CHR> code;
 				VkShaderModule shaderModule = VK_NULL_HANDLE;
-				ADGRVulkanGraphicsShaderType type;
 				VkPipelineShaderStageCreateInfo stageCreateInfo;
-
-			private:
-				ARRAY<CHR> getCode(std::string path);
 			};
 		}
 	}

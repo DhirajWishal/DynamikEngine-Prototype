@@ -87,7 +87,7 @@ namespace Dynamik {
 				static void terminateUniformBuffer(POINTER<VulkanUniformBuffer> buffer);
 				static ARRAY<VulkanUniformBuffer> initializeUniformBuffers(UI32 size);
 				static void terminateUniformBuffers(ARRAY<POINTER<VulkanUniformBuffer>> buffers);
-				static VulkanPipeline initializePipeline(ADGRVulkanGraphicsPipelineInitInfo info);
+				static VulkanPipeline initializePipeline(DMKRenderingPipelineDescription description);
 				static void terminatePipeline(POINTER<VulkanPipeline> pipeline);
 
 				/* Submit objects */

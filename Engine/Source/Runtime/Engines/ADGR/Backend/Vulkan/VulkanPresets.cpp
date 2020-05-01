@@ -155,7 +155,7 @@ namespace Dynamik {
 				return frameBufferInitInfo;
 			}
 			
-			ADGRVulkanGraphicsPipelineInitInfo VulkanPresets::pipelinePreset3D(ARRAY<DMKVertexAttribute> attributes, ShaderPaths shaderPaths)
+			ADGRVulkanGraphicsPipelineInitInfo VulkanPresets::pipelinePreset3D(ARRAY<DMKVertexAttribute> attributes, ARRAY<Shader> shaders)
 			{
 				//auto _shaders = VulkanUtilities::getGraphicsShaders()
 

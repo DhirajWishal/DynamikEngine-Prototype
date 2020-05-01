@@ -22,13 +22,6 @@ namespace Dynamik {
 		};
 
 		/* BASE CLASS 
-		 * Render Primitive is an object wrapper/ container which is designed to be Platform agnostic.
-		 * These containers does not carry any functions but just the data itselt.
-		 * Each rendering API can have its own functions and classes to properly initialize these 
-		   render primitives (eg: vertex buffer, index buffer, texture, etc...).
-		 * The RendererAPI uses these Primitives to submit object render data to render a given object.
-		 * Render Primitives are not used to initialize/ terminate the primitive resources stored
-		   in them. Each platform must have its own function/ class to perform that operation.
 		 */
 		class RenderPrimitive {
 		public:

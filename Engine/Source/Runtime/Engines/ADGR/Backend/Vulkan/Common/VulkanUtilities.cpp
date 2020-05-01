@@ -395,7 +395,7 @@ namespace Dynamik {
 				{
 					ADGRVulkanGraphicsShaderInitInfo _initInfo;
 					_initInfo.path = shaderPaths.vertexShader;
-					_initInfo.type = ADGRVulkanGraphicsShaderType::ADGR_VULKAN_SHADER_TYPE_VERTEX;
+					_initInfo.location = DMKShaderLocation::DMK_SHADER_LOCATION_VERTEX;
 
 					VulkanGraphicsShader _shader;
 					_shader.initialize(logicalDevice, _initInfo);
@@ -405,7 +405,7 @@ namespace Dynamik {
 				{
 					ADGRVulkanGraphicsShaderInitInfo _initInfo;
 					_initInfo.path = shaderPaths.tessellationShader;
-					_initInfo.type = ADGRVulkanGraphicsShaderType::ADGR_VULKAN_SHADER_TYPE_TESSELLATION;
+					_initInfo.location = DMKShaderLocation::DMK_SHADER_LOCATION_TESSELLATION;
 
 					VulkanGraphicsShader _shader;
 					_shader.initialize(logicalDevice, _initInfo);
@@ -415,7 +415,7 @@ namespace Dynamik {
 				{
 					ADGRVulkanGraphicsShaderInitInfo _initInfo;
 					_initInfo.path = shaderPaths.geometryShader;
-					_initInfo.type = ADGRVulkanGraphicsShaderType::ADGR_VULKAN_SHADER_TYPE_GEOMETRY;
+					_initInfo.location = DMKShaderLocation::DMK_SHADER_LOCATION_GEOMETRY;
 
 					VulkanGraphicsShader _shader;
 					_shader.initialize(logicalDevice, _initInfo);
@@ -425,7 +425,7 @@ namespace Dynamik {
 				{
 					ADGRVulkanGraphicsShaderInitInfo _initInfo;
 					_initInfo.path = shaderPaths.fragmentShader;
-					_initInfo.type = ADGRVulkanGraphicsShaderType::ADGR_VULKAN_SHADER_TYPE_FRAGMENT;
+					_initInfo.location = DMKShaderLocation::DMK_SHADER_LOCATION_FRAGMENT;
 
 					VulkanGraphicsShader _shader;
 					_shader.initialize(logicalDevice, _initInfo);
@@ -538,6 +538,19 @@ namespace Dynamik {
 				VkBufferCopy copyRegion = {};
 				copyRegion.size = size;
 				vkCmdCopyBuffer(commandBuffer, srcBuffer, dstBuffer, 1, &copyRegion);
+			}
+
+			ARRAY<POINTER<VulkanFrameBuffer>> VulkanUtilities::getVulkanFrameBuffers(ARRAY<POINTER<FrameBuffer>> buffers)
+			{
+				ARRAY<POINTER<VulkanFrameBuffer>> _buffers;
+
+				for (auto _buffer : buffers)
+				{
+					POINTER<VulkanFrameBuffer> _frameBuffer = _buffer.get();
+					_buffers.pushBack(_frameBuffer);
+				}
+
+				return _buffers;
 			}
 
 			void VulkanUtilities::createImage(VkDevice logicalDevice, VkPhysicalDevice physicalDevice, ADGRVulkanCreateImageInfo info)

@@ -31,5 +31,6 @@
   <ItemGroup>
     <None Include="Application.lua" />
     <None Include="paths.txt" />
+    <None Include="results.json" />
   </ItemGroup>
 </Project>

@@ -203,7 +203,7 @@ namespace Dynamik {
 				return _containers;
 			}
 
-			void VulkanRBL::terminateFrameBuffers(ARRAY<POINTER<FrameBuffer>> frameBuffers)
+			void VulkanRBL::terminateFrameBuffers(ARRAY<POINTER<VulkanFrameBuffer>> frameBuffers)
 			{
 				for (auto buffer : frameBuffers)
 				{
@@ -230,7 +230,7 @@ namespace Dynamik {
 			{
 				terminateRenderPass(context.renderPass);
 				terminateSwapChain(context.swapChain);
-				terminateFrameBuffers(context.frameBuffers);
+				terminateFrameBuffers(context.frameBuffers.cast<POINTER<VulkanFrameBuffer>>());
 			}
 
 			POINTER<VulkanVertexBuffer> VulkanRBL::initializeVertexBuffer(const Mesh& mesh, ARRAY<DMKVertexAttribute> attributes)
@@ -303,8 +303,10 @@ namespace Dynamik {
 				}
 			}
 
-			VulkanPipeline VulkanRBL::initializePipeline(ADGRVulkanGraphicsPipelineInitInfo info)
+			VulkanPipeline VulkanRBL::initializePipeline(DMKRenderingPipelineDescription description)
 			{
+				ADGRVulkanGraphicsPipelineInitInfo initInfo;
+
 				return VulkanGraphicsPrimitiveManager::createPipeline(info);
 			}
 

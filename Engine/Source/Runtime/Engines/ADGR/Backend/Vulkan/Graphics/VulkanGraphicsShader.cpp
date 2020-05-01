@@ -6,18 +6,17 @@ namespace Dynamik {
 		namespace Backend {
 			void VulkanGraphicsShader::initialize(VkDevice logicalDevice, ADGRVulkanGraphicsShaderInitInfo info)
 			{
-				type = info.type;
 				code = getCode(info.path);
 
 				shaderModule = createShaderModule(logicalDevice, code);
 
-				if (type == ADGRVulkanGraphicsShaderType::ADGR_VULKAN_SHADER_TYPE_VERTEX)
+				if (location == DMKShaderLocation::DMK_SHADER_LOCATION_VERTEX)
 					stageCreateInfo.stage = VK_SHADER_STAGE_VERTEX_BIT;
-				else if (type == ADGRVulkanGraphicsShaderType::ADGR_VULKAN_SHADER_TYPE_TESSELLATION)
+				else if (location == DMKShaderLocation::DMK_SHADER_LOCATION_TESSELLATION)
 					stageCreateInfo.stage = VK_SHADER_STAGE_TESSELLATION_CONTROL_BIT;
-				else if (type == ADGRVulkanGraphicsShaderType::ADGR_VULKAN_SHADER_TYPE_GEOMETRY)
+				else if (location == DMKShaderLocation::DMK_SHADER_LOCATION_GEOMETRY)
 					stageCreateInfo.stage = VK_SHADER_STAGE_GEOMETRY_BIT;
-				else if (type == ADGRVulkanGraphicsShaderType::ADGR_VULKAN_SHADER_TYPE_FRAGMENT)
+				else if (location == DMKShaderLocation::DMK_SHADER_LOCATION_FRAGMENT)
 					stageCreateInfo.stage = VK_SHADER_STAGE_FRAGMENT_BIT;
 
 				stageCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
@@ -45,22 +44,6 @@ namespace Dynamik {
 					DMK_CORE_FATAL("Failed to create Shader module!");
 
 				return shaderModule;
-			}
-
-			ARRAY<CHR> VulkanGraphicsShader::getCode(std::string path)
-			{
-				std::ifstream file(path, std::ios::ate | std::ios::binary);
-
-				if (!file.is_open())
-					throw std::runtime_error("Failed to Open file!");
-
-				size_t fileSize = (size_t)file.tellg();
-				ARRAY<char> buffer(fileSize);
-				file.seekg(0);
-				file.read(buffer.data(), fileSize);
-
-				file.close();
-				return buffer;
 			}
 		}
 	}

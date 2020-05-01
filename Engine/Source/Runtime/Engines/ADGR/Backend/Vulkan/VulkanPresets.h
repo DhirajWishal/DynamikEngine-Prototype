@@ -24,7 +24,7 @@ namespace Dynamik {
 				static ADGRVulkanGraphicsFrameBufferInitInfo frameBufferPreset3D(VkImageView colorImage, VkImageView depthImage, ARRAY<VkImageView> swapChainImageViews, VkExtent2D bufferExtent, UI32 bufferCount);
 
 				/* Pipeline presets */
-				static ADGRVulkanGraphicsPipelineInitInfo pipelinePreset3D(ARRAY<DMKVertexAttribute> attributes, ShaderPaths shaderPaths);
+				static ADGRVulkanGraphicsPipelineInitInfo pipelinePreset3D(ARRAY<DMKVertexAttribute> attributes, ARRAY<Shader> shaders);
 			};
 		}
 	}

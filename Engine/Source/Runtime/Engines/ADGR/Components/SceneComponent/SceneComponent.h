@@ -35,6 +35,8 @@ namespace Dynamik {
 			ARRAY<RenderingMeshComponent> myMeshes;
 			POINTER<RenderContext> myRenderContext;
 			POINTER<Pipeline> myPipeline;
+
+			DMKRenderingTechnology renderingTechnology = DMKRenderingTechnology::DMK_RENDERING_TECHNOLOGY_INDEXED;
 		};
 	}
 }

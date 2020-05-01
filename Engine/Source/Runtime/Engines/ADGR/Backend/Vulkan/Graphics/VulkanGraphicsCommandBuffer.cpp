@@ -9,11 +9,11 @@ namespace Dynamik {
 	namespace ADGR {
 		namespace Backend {
 			// if drawing in vertex
-			void drawVertex(VkCommandBuffer buffer, I32 index, ADGRVulkanRenderData* object, VkDeviceSize* offsets) 
+			void drawVertex(VkCommandBuffer buffer, I32 index, POINTER<SceneComponent> object, VkDeviceSize* offsets) 
 			{
 				DMK_BEGIN_PROFILE_TIMER();
 
-				for (UI32 i = 0; i < object->vertexBuffers.size(); i++) {
+				for (UI32 i = 0; i < object->myMeshes.size(); i++) {
 					for (UI32 _itr = 0; _itr < object->pipelineContainers.size(); _itr++)
 					{
 						// bind pipeline
@@ -169,12 +169,16 @@ namespace Dynamik {
 					if (vkBeginCommandBuffer(buffers[i], &beginInfo) != VK_SUCCESS)
 						DMK_CORE_FATAL("failed to begin recording command commandBuffers[i]!");
 
+					POINTER<VulkanRenderPass> _renderPass = info.context.renderPass.get();
+					auto _frameBuffers = VulkanUtilities::getVulkanFrameBuffers(info.context.frameBuffers);
+
 					VkRenderPassBeginInfo renderPassInfo = {};
 					renderPassInfo.sType = VK_STRUCTURE_TYPE_RENDER_PASS_BEGIN_INFO;
-					renderPassInfo.renderPass = info.frameBuffer.renderPass;
-					renderPassInfo.framebuffer = info.frameBuffer.buffers[i];
+					renderPassInfo.renderPass = _renderPass->renderPass;
+					renderPassInfo.framebuffer = _frameBuffers[i]->buffer;
 					renderPassInfo.renderArea.offset = { 0, 0 };
-					renderPassInfo.renderArea.extent = info.swapChain.swapChainExtent;
+					renderPassInfo.renderArea.extent.width = info.context.swapChain->extent.width;
+					renderPassInfo.renderArea.extent.height = info.context.swapChain->extent.height;
 
 					std::array<VkClearValue, 2> clearValues = {};
 
@@ -194,7 +198,7 @@ namespace Dynamik {
 					// begin render pass
 					vkCmdBeginRenderPass(buffers[i], &renderPassInfo, VK_SUBPASS_CONTENTS_INLINE);
 
-					for (I32 _itr = 0; _itr < info.objects.size(); _itr++) {
+					for (I32 _itr = 0; _itr < info.context.sceneComponents.size(); _itr++) {
 						DMK_BEGIN_PROFILE_TIMER();
 
 						/* TODO: pushConstants */
@@ -206,33 +210,23 @@ namespace Dynamik {
 						// w component = light radius scale
 
 						/* DRAW COMMANDS */
-						//if (info.objects.at(_itr).swapChainPointer->getPushConstantCount())
-						//	vkCmdPushConstants(buffers[i], info.objects.at(_itr).pipelineLayout, VK_SHADER_STAGE_VERTEX_BIT, 0, info.objects.at(_itr).swapChainPointer->pushConstants.size(), info.objects.at(_itr).swapChainPointer->pushConstants.data());
+						//if (info.context.sceneComponents.at(_itr).swapChainPointer->getPushConstantCount())
+						//	vkCmdPushConstants(buffers[i], info.context.sceneComponents.at(_itr).pipelineLayout, VK_SHADER_STAGE_VERTEX_BIT, 0, info.context.sceneComponents.at(_itr).swapChainPointer->pushConstants.size(), info.context.sceneComponents.at(_itr).swapChainPointer->pushConstants.data());
 
 						// Render type selection
-						if (info.objects.at(_itr).renderTechnology == DMKRenderingTechnology::DMK_RENDERING_TECHNOLOGY_VERTEX) 		// Render as individual vertexes
-							drawVertex(buffers[i], i, &info.objects.at(_itr), offsets);
+						if (info.context.sceneComponents.at(_itr)->renderingTechnology == DMKRenderingTechnology::DMK_RENDERING_TECHNOLOGY_VERTEX) 		// Render as individual vertexes
+							drawVertex(buffers[i], i, &info.context.sceneComponents.at(_itr), offsets);
 
-						else if (info.objects.at(_itr).renderTechnology == DMKRenderingTechnology::DMK_RENDERING_TECHNOLOGY_INDEXED) 		// Render as individual indexes
+						else if (info.context.sceneComponents.at(_itr)->renderingTechnology == DMKRenderingTechnology::DMK_RENDERING_TECHNOLOGY_INDEXED) 		// Render as individual indexes
 						{
-							if (info.objects.at(_itr).enableMaterials)
-								drawIndexedPBR(buffers[i], i, &info.objects.at(_itr), offsets);
+							if (info.context.sceneComponents.at(_itr).enableMaterials)
+								drawIndexedPBR(buffers[i], i, &info.context.sceneComponents.at(_itr), offsets);
 							else
-								drawIndexed(buffers[i], i, &info.objects.at(_itr), offsets);
+								drawIndexed(buffers[i], i, &info.context.sceneComponents.at(_itr), offsets);
 						}
-						else if (info.objects.at(_itr).renderTechnology == DMKRenderingTechnology::DMK_RENDERING_TECHNOLOGY_INDIRECT) {
+						else if (info.context.sceneComponents.at(_itr)->renderingTechnology == DMKRenderingTechnology::DMK_RENDERING_TECHNOLOGY_INDIRECT) {
 						}
-						else if (info.objects.at(_itr).renderTechnology == DMKRenderingTechnology::DMK_RENDERING_TECHNOLOGY_INDEXED_INDIRECT) {
-						}
-						else if (info.objects.at(_itr).renderTechnology == DMKRenderingTechnology::DMK_RENDERING_TECHNOLOGY_SKYBOX_VERTEX) {		// Render as individual vertexes
-							drawVertex(buffers[i], i, &info.objects.at(_itr), offsets);
-						}
-						else if (info.objects.at(_itr).renderTechnology == DMKRenderingTechnology::DMK_RENDERING_TECHNOLOGY_SKYBOX_INDEXED) {		// Render as individual indexes
-							drawIndexed(buffers[i], i, &info.objects.at(_itr), offsets);
-						}
-						else if (info.objects.at(_itr).renderTechnology == DMKRenderingTechnology::DMK_RENDERING_TECHNOLOGY_SKYBOX_INDIRECT) {
-						}
-						else if (info.objects.at(_itr).renderTechnology == DMKRenderingTechnology::DMK_RENDERING_TECHNOLOGY_SKYBOX_INDEXED_INDIRECT) {
+						else if (info.context.sceneComponents.at(_itr)->renderingTechnology == DMKRenderingTechnology::DMK_RENDERING_TECHNOLOGY_INDEXED_INDIRECT) {
 						}
 						else
 							DMK_CORE_FATAL("Invalid rendering type!");

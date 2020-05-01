@@ -97,7 +97,7 @@ namespace Dynamik {
 			static void setProgressPointer(POINTER<UI32> progress);
 			static void setWindowHandle(POINTER<GLFWwindow> window);
 			static void setWindowExtent(UI32 width, UI32 height);
-			static void setRenderableObjects(ARRAY<POINTER<InternalFormat>> formats);
+			static void setRenderableObjects(ARRAY<POINTER<InternalFormat>> formats, RenderContextType context = RenderContextType::RENDER_CONTEXT_TYPE_DEFAULT);
 			static void submitLoadedAssets();
 
 			static void addToRenderQueue(POINTER<InternalFormat> format);
@@ -114,6 +114,14 @@ namespace Dynamik {
 			static ADGR::SkyBoxObject initializeSkyBoxObject(POINTER<InternalFormat> format);
 
 			static ADGR::DebugObject initializeDebugObject(POINTER<InternalFormat> format);
+
+		public:
+			struct RenderUtilities {
+				RenderUtilities() = delete;
+				~RenderUtilities() = delete;
+
+				static ARRAY<Shader> getShaders(ShaderPaths paths);
+			};
 
 		private:
 			POINTER<UI32> progressPtr;

@@ -8,6 +8,7 @@
 #include "GameObjectDescriptors.h"
 #include "Objects/InternalFormat/InternalFormat.h"
 #include "../Graphics/VulkanGraphicsShader.h"
+#include "VulkanPrimitives.h"
 
 namespace Dynamik {
 	namespace ADGR {
@@ -145,6 +146,8 @@ namespace Dynamik {
 				static VkFormat findSupportedFormat(const ARRAY<VkFormat>& candidates, VkImageTiling tiling, VkFormatFeatureFlags features, VkPhysicalDevice physicalDevice);
 				static VkFormat findDepthFormat(VkPhysicalDevice physicalDevice);
 				static void copyBuffer(VkDevice logicalDevice, VkCommandPool commandPool, VkQueue graphicsQueue, VkQueue presentQueue, VkBuffer srcBuffer, VkBuffer dstBuffer, VkDeviceSize size);
+
+				static ARRAY<POINTER<VulkanFrameBuffer>> getVulkanFrameBuffers(ARRAY<POINTER<FrameBuffer>> buffers);
 
 				/* TEXTURE FUNCTIONS */
 				static void createImage(VkDevice logicalDevice, VkPhysicalDevice physicalDevice, ADGRVulkanCreateImageInfo info);

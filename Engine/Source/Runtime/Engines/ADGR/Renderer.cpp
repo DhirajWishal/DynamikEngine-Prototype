@@ -16,6 +16,7 @@
 #include "Platform/windows.h"
 
 #include "Backend/Vulkan/VulkanRBL.h"
+#include "Backend/Vulkan/VulkanPresets.h"
 
 namespace Dynamik {
 	namespace ADGR {
@@ -38,11 +39,13 @@ namespace Dynamik {
 				DMK_CORE_FATAL("Unsupported Rendering API!");
 				break;
 			}
+
+			VulkanRenderer::initializeStageOne();
 		}
 
 		void Renderer::initializeRenderContext(RenderContextType type)
 		{
-			instance.defaultContext = VulkanRenderer::createContext(type);
+			instance.defaultContext = VulkanRenderer::createContext(type, instance.attachments);
 		}
 
 		void Renderer::initializeAttachment(DMKRenderAttachment attachmentType)
@@ -97,7 +100,7 @@ namespace Dynamik {
 			VulkanRenderer::setWindowExtent(width, height);
 		}
 
-		void Renderer::setRenderableObjects(ARRAY<POINTER<InternalFormat>> formats)
+		void Renderer::setRenderableObjects(ARRAY<POINTER<InternalFormat>> formats, RenderContextType context)
 		{
 			DMK_BEGIN_PROFILE_TIMER();
 
@@ -194,7 +197,53 @@ namespace Dynamik {
 			ADGR::StaticObject _object;
 			_object.myInternalFormat = format;
 
-			_object.initializeResources();
+			/* Generate Vertex Buffers, Index Buffers and Textures  */
+			for (auto _mesh : _object.myInternalFormat->meshDatas)
+			{
+				ADGR::RenderingMeshComponent _component;
+				_component.vertexBuffer = ADGR::Backend::VulkanRBL::initializeVertexBuffer(_mesh, _object.myInternalFormat->descriptor.vertexBufferObjectDescription.attributes).get();
+				_component.indexBuffer = ADGR::Backend::VulkanRBL::initializeIndexBuffer(_mesh, _object.myInternalFormat->descriptor.indexBufferType).get();
+
+				for (auto _texture : _mesh.textureDatas)
+					_component.textureData = ADGR::Backend::VulkanRBL::initializeTextureData(_texture).get();
+
+				_object.myMeshes.pushBack(_component);
+			}
+
+			/* Initialize uniform buffers */
+			for (auto description : _object.myInternalFormat->descriptor.uniformBufferObjectDescriptions)
+				if (description.type == DMKUniformType::DMK_UNIFORM_TYPE_BUFFER_OBJECT)
+					ADGR::Backend::VulkanRBL::initializeUniformBuffer(DMKUniformBufferObjectDescriptor::uniformByteSize(description.attributes));
+
+			/* Resolve Attachments */
+			for (auto attachment : _object.myInternalFormat->descriptor.renderSpecification.renderAttachments)
+			{
+				switch (attachment)
+				{
+				case Dynamik::DMKRenderAttachment::DMK_RENDER_ATTACHMENT_SKYBOX:
+					break;
+				case Dynamik::DMKRenderAttachment::DMK_RENDER_ATTACHMENT_LIGHTING:
+					break;
+				case Dynamik::DMKRenderAttachment::DMK_RENDER_ATTACHMENT_IRRADIANCE_CUBE:
+					break;
+				case Dynamik::DMKRenderAttachment::DMK_RENDER_ATTACHMENT_PREFILTERED_CUBE:
+					break;
+				case Dynamik::DMKRenderAttachment::DMK_RENDER_ATTACHMENT_BRDF_TABLE:
+					break;
+				case Dynamik::DMKRenderAttachment::DMK_RENDER_ATTACHMENT_COMPUTE_TEXTURE:
+					break;
+				}
+			}
+
+			/* Pipeline creation */
+			_object.myPipeline = ADGR::Backend::VulkanRBL::initializePipeline(
+				Backend::VulkanPresets::pipelinePreset3D(
+					format->descriptor.vertexBufferObjectDescription.attributes,
+					RenderUtilities::getShaders(format->shaderPaths)));
+
+			POINTER<StaticObject> _sceneComponent = StaticAllocator<StaticObject>::allocate();
+			StaticAllocator<StaticObject>::set(_sceneComponent, (StaticObject&&)_object);
+			instance.sceneComponents.pushBack(_sceneComponent);
 		}
 		
 		ADGR::SkyBoxObject Renderer::initializeSkyBoxObject(POINTER<InternalFormat> format)
@@ -205,6 +254,30 @@ namespace Dynamik {
 		ADGR::DebugObject Renderer::initializeDebugObject(POINTER<InternalFormat> format)
 		{
 			return ADGR::DebugObject();
+		}
+		
+		ARRAY<Shader> Renderer::RenderUtilities::getShaders(ShaderPaths paths)
+		{
+			ARRAY<Shader> _shaders;
+
+			if (paths.vertexShader.size() && paths.vertexShader != "NONE")
+			{
+				Shader _shader(DMKShaderLocation::DMK_SHADER_LOCATION_VERTEX, paths.vertexShader);
+			}
+			else if (paths.tessellationShader.size() && paths.tessellationShader != "NONE")
+			{
+				Shader _shader(DMKShaderLocation::DMK_SHADER_LOCATION_TESSELLATION, paths.tessellationShader);
+			}
+			else if (paths.geometryShader.size() && paths.geometryShader != "NONE")
+			{
+				Shader _shader(DMKShaderLocation::DMK_SHADER_LOCATION_GEOMETRY, paths.geometryShader);
+			}
+			else if (paths.fragmentShader.size() && paths.fragmentShader != "NONE")
+			{
+				Shader _shader(DMKShaderLocation::DMK_SHADER_LOCATION_FRAGMENT, paths.fragmentShader);
+			}
+			else
+				DMK_CORE_ERROR("Invalid shader type!");
 		}
 	}
 }

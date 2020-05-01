@@ -11,6 +11,8 @@
 #include "UniformBuffer.h"
 #include "VertexBuffer.h"
 
+#include "../../Components/SceneComponent/SceneComponent.h"
+
 namespace Dynamik {
 	namespace ADGR {
 		enum class RenderContextType {
@@ -18,6 +20,16 @@ namespace Dynamik {
 			RENDER_CONTEXT_TYPE_3D,
 			RENDER_CONTEXT_TYPE_DEFAULT,
 			RENDER_CONTEXT_TYPE_OVERLAY,
+		};
+
+		/* Renderable Mesh Container
+		 * This container stores all the data necessary to render a mesh.
+		 * It containes vertex buffers, index buffers and textures.
+		 */
+		struct RenderableMeshContainer {
+			POINTER<VertexBuffer> vertexBuffer;
+			POINTER<IndexBuffer> indexBuffer;
+			POINTER<TextureData> textureData;
 		};
 
 		/* Render Context
@@ -30,17 +42,9 @@ namespace Dynamik {
 			POINTER<RenderPass> renderPass;
 			ARRAY<POINTER<FrameBuffer>> frameBuffers;
 
-			RenderContextType type = RenderContextType::RENDER_CONTEXT_TYPE_DEFAULT;
-		};
+			ARRAY<POINTER<SceneComponent>> sceneComponents;
 
-		/* Renderable Mesh Container
-		 * This container stores all the data necessary to render a mesh.
-		 * It containes vertex buffers, index buffers and textures.
-		 */
-		struct RenderableMeshContainer {
-			POINTER<VertexBuffer> vertexBuffer;
-			POINTER<IndexBuffer> indexBuffer;
-			POINTER<TextureData> textureData;
+			RenderContextType type = RenderContextType::RENDER_CONTEXT_TYPE_DEFAULT;
 		};
 
 		/* Renderable Uniform Buffer Container

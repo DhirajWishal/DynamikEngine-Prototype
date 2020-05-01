@@ -111,7 +111,14 @@ namespace Dynamik {
 
 	/* Render Specifications */
 	struct DMKRenderSpecification {
-		DMKRenderingPipelineDescription pipelineDescriptions;
+		DMKSwapChainType swapChainType = DMKSwapChainType::DMK_SWAPCHAIN_TYPE_DEFAULT;
+		DMKRenderPassType renderPassType = DMKRenderPassType::DMK_RENDER_PASS_TYPE_DEFAULT;
+		DMKFrameBufferType frameBufferType = DMKFrameBufferType::DMK_FRAME_BUFFER_TYPE_MAIN;
+		DMKPipelineMSAASamples msaaSamples = DMKPipelineMSAASamples::DMK_PIPELINE_MSAA_SAMPLES_1;
+		DMKPipelineFrontFace pipelineFrontFace = DMKPipelineFrontFace::DMK_PIPELINE_FRONT_FACE_POSITIVE;
+		DMKPipelinePolygonMode pipelinePolygonMode = DMKPipelinePolygonMode::DMK_PIPELINE_POLYGON_MODE_FILL;
+		DMKPipelineTopology pipelineTopology = DMKPipelineTopology::DMK_PIPELINE_TOPOLOGY_TRIANGLE_LIST;
+
 		ARRAY<DMKRenderAttachment> renderAttachments;
 	};
 

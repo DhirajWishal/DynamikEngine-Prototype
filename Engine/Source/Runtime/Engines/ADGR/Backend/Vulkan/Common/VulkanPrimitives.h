@@ -61,16 +61,6 @@ namespace Dynamik {
 				VkRenderPass renderPass = VK_NULL_HANDLE;
 			};
 
-			class VulkanShader : public Shader {
-			public:
-				VulkanShader() {}
-				VulkanShader(DMKShaderLocation loc) : Shader(loc) {}
-				~VulkanShader() {}
-
-				VkShaderModule shaderModule = VK_NULL_HANDLE;
-				VkPipelineShaderStageCreateInfo shaderStage = {};
-			};
-
 			class VulkanSwapChain : public SwapChain {
 			public:
 				VulkanSwapChain() {}

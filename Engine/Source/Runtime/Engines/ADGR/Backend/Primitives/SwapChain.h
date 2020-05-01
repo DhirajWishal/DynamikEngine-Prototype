@@ -13,6 +13,12 @@ namespace Dynamik {
 
 			virtual void initialize(UI32 width, UI32 height) {}
 			virtual void terminate() {}
+
+			struct Extent2D
+			{
+				UI32 width = 0;
+				UI32 height = 0;
+			} extent;
 		};
 	}
 }

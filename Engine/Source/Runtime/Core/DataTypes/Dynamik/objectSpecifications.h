@@ -481,11 +481,6 @@ namespace Dynamik {
 		DMK_RENDERING_TECHNOLOGY_INDIRECT,						// Render indirectly (only if supported)
 		DMK_RENDERING_TECHNOLOGY_INDEXED_INDIRECT,				// Render indexed vertexes indirectly (only if supported)
 
-		DMK_RENDERING_TECHNOLOGY_SKYBOX_VERTEX,					// Render skybox individual vertexes
-		DMK_RENDERING_TECHNOLOGY_SKYBOX_INDEXED,				// Render skybox indexed vertexes
-		DMK_RENDERING_TECHNOLOGY_SKYBOX_INDIRECT,				// Render skybox indirectly (only if supported)
-		DMK_RENDERING_TECHNOLOGY_SKYBOX_INDEXED_INDIRECT,		// Render skybox indexed vertexes indirectly (only if supported)
-
 		DMK_RENDERING_TECHNOLOGY_VERTEX_MESH_ONLY,				// Render individual vertexes (meshes only)
 		DMK_RENDERING_TECHNOLOGY_INDEXED_MESH_ONLY,				// Render indexed vertexes (meshes only)
 		DMK_RENDERING_TECHNOLOGY_INDIRECT_MESH_ONLY,			// Render indirectly (only if supported) (meshes only)

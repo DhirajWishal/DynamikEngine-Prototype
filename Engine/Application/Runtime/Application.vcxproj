@@ -144,7 +144,6 @@
   <ItemGroup>
     <None Include="Application.lua" />
     <None Include="paths.txt" />
-    <None Include="results.json" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Source\Projects\Dynamik\Dynamik.vcxproj">

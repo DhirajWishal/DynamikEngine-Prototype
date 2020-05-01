@@ -10,7 +10,7 @@
 #include "../../Backend/Primitives/UniformBuffer.h"
 #include "../../Backend/Primitives/Pipeline.h"
 
-#include "../../Backend/Vulkan/VulkanRBL.h"
+//#include "../../Backend/Vulkan/VulkanRBL.h"
 
 namespace Dynamik {
 	namespace ADGR {
@@ -33,7 +33,7 @@ namespace Dynamik {
 
 			POINTER<InternalFormat> myInternalFormat;
 			ARRAY<RenderingMeshComponent> myMeshes;
-			POINTER<RenderContext> myRenderContext;
+			//POINTER<RenderContext> myRenderContext;
 			POINTER<Pipeline> myPipeline;
 
 			DMKRenderingTechnology renderingTechnology = DMKRenderingTechnology::DMK_RENDERING_TECHNOLOGY_INDEXED;

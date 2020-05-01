@@ -21,21 +21,6 @@
 
 #include "Camera.h"
 
-#include "Backend/Primitives/IndexBuffer.h"
-#include "Backend/Primitives/Pipeline.h"
-#include "Backend/Primitives/TextureData.h"
-#include "Backend/Primitives/UniformBuffer.h"
-#include "Backend/Primitives/VertexBuffer.h"
-#include "Backend/Primitives/PrimitiveContainer.h"
-
-#include "Components/SceneComponent/SceneComponent.h"
-#include "Components/SceneComponent/Basic/StaticObject.h"
-#include "Components/SceneComponent/Basic/SkyBoxObject.h"
-#include "Components/SceneComponent/Basic/DebugObject.h"
-#include "Components/SceneComponent/Animation/AnimatedObject.h"
-#include "Components/SceneComponent/Animation/SkeletalAnimation.h"
-#include "Components/SceneComponent/VFX/ParticleSystem.h"
-
 namespace Dynamik {
 	namespace ADGR {
 		enum class DMK_API DMKRenderingAPI {
@@ -69,7 +54,6 @@ namespace Dynamik {
 		 */
 		class DMK_API Renderer {
 			Renderer() {}
-			~Renderer() {}
 
 			static Renderer instance;
 
@@ -78,18 +62,16 @@ namespace Dynamik {
 				UI32 byteSize = 0;
 			};
 
-			using VulkanRenderer = ADGR::Backend::VulkanRBL;
-
 		public:
 			Renderer(const Renderer&) = delete;
 			Renderer(Renderer&&) = delete;
 			Renderer& operator=(const Renderer&) = delete;
 			Renderer& operator=(Renderer&&) = delete;
 
+			~Renderer() {}
+
 			/* Initializing */
 			static void initializeStageOne(DMKRenderingAPI selectedAPI, DMKRendererSettings settings);
-			static void initializeRenderContext(RenderContextType type);
-			static void initializeAttachment(DMKRenderAttachment attachmentType);
 			static void initializeStageTwo();
 			static void initializeStageThree();
 
@@ -97,7 +79,7 @@ namespace Dynamik {
 			static void setProgressPointer(POINTER<UI32> progress);
 			static void setWindowHandle(POINTER<GLFWwindow> window);
 			static void setWindowExtent(UI32 width, UI32 height);
-			static void setRenderableObjects(ARRAY<POINTER<InternalFormat>> formats, RenderContextType context = RenderContextType::RENDER_CONTEXT_TYPE_DEFAULT);
+			static void setRenderableObjects(ARRAY<POINTER<InternalFormat>> formats);
 			static void submitLoadedAssets();
 
 			static void addToRenderQueue(POINTER<InternalFormat> format);
@@ -108,31 +90,11 @@ namespace Dynamik {
 			/* Termination */
 			static void frameCleanup();
 			static void terminate();
-
-		public:
-			static ADGR::StaticObject initializeStaticObject(POINTER<InternalFormat> format);
-			static ADGR::SkyBoxObject initializeSkyBoxObject(POINTER<InternalFormat> format);
-
-			static ADGR::DebugObject initializeDebugObject(POINTER<InternalFormat> format);
-
-		public:
-			struct RenderUtilities {
-				RenderUtilities() = delete;
-				~RenderUtilities() = delete;
-
-				static ARRAY<Shader> getShaders(ShaderPaths paths);
-			};
-
+			
 		private:
 			POINTER<UI32> progressPtr;
+			ARRAY<POINTER<InternalFormat>> inFlightAssets;
 			ARRAY<POINTER<InternalFormat>> submitPendingAssets;
-
-			ARRAY<POINTER<RenderAttachment>> attachments;
-			ARRAY<POINTER<SceneComponent>> sceneComponents;
-			RenderContext defaultContext;
-			std::unordered_map<DMKRenderAttachment, UI32> attachmentIndex;
-
-			DMKPipelineMSAASamples msaaSamples;
 		};
 	}
 }

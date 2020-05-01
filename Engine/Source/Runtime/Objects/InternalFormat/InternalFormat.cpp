@@ -5,7 +5,6 @@ namespace Dynamik {
 	InternalFormat::InternalFormat() : DMKGameObject()
 	{
 		meshDatas = ARRAY<Mesh>();
-		textures = ARRAY<Texture>();
 
 		objectPath = std::string();
 		texturePaths = ARRAY<std::string>();

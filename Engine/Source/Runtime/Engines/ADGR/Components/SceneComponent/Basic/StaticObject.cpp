@@ -1,11 +1,11 @@
 #include "dmkafx.h"
 #include "StaticObject.h"
 
-#include "../../../Backend/Vulkan/VulkanPresets.h"
+//#include "../../../Backend/Vulkan/VulkanPresets.h"
 
 namespace Dynamik {
 	namespace ADGR {
-		using namespace Backend;
+		//using namespace Backend;
 
 		void StaticObject::initializeResources()
 		{

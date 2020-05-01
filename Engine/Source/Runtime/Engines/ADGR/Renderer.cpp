@@ -15,11 +15,12 @@
 
 #include "Platform/windows.h"
 
-#include "Backend/Vulkan/vulkanRenderer.h"
+#include "Backend/Vulkan/VulkanRBL.h"
 
 namespace Dynamik {
 	namespace ADGR {
 		/* RBL declaration */
+		VulkanRBL myRendererBackend;
 
 		/* Renderer instance definition */
 		Renderer Renderer::instance;
@@ -39,33 +40,33 @@ namespace Dynamik {
 				break;
 			}
 
-			vulkanRenderer::initializeGraphicsCore();
+			myRendererBackend.initializeGraphicsCore();
 		}
 
 		void Renderer::initializeStageTwo()
 		{
-			vulkanRenderer::initializeCommands();
+			myRendererBackend.initializeCommands();
 		}
 
 		void Renderer::initializeStageThree()
 		{
-			vulkanRenderer::initializeFinalComponents();
+			myRendererBackend.initializeFinalComponents();
 		}
 
 		void Renderer::setProgressPointer(POINTER<UI32> progress)
 		{
 			instance.progressPtr = progress;
-			vulkanRenderer::setProgress(progress);
+			myRendererBackend.setProgress(progress);
 		}
 
 		void Renderer::setWindowHandle(POINTER<GLFWwindow> window)
 		{
-			vulkanRenderer::setWindowHandle(window);
+			myRendererBackend.setWindowHandle(window);
 		}
 
 		void Renderer::setWindowExtent(UI32 width, UI32 height)
 		{
-			vulkanRenderer::setWindowExtent(width, height);
+			myRendererBackend.setWindowExtent(width, height);
 		}
 
 		void Renderer::setRenderableObjects(ARRAY<POINTER<InternalFormat>> formats)
@@ -92,7 +93,7 @@ namespace Dynamik {
 
 			instance.inFlightAssets = instance.submitPendingAssets;
 			instance.submitPendingAssets = {};
-			vulkanRenderer::addObjects(instance.inFlightAssets);
+			myRendererBackend.addObjects(instance.inFlightAssets);
 		}
 
 		void Renderer::addToRenderQueue(POINTER<InternalFormat> container)
@@ -103,7 +104,7 @@ namespace Dynamik {
 		void Renderer::drawFrame(DMKRendererDrawFrameInfo info)
 		{
 			info.formats = instance.inFlightAssets;
-			vulkanRenderer::drawFrame(info);
+			myRendererBackend.drawFrame(info);
 		}
 
 		void Renderer::frameCleanup()

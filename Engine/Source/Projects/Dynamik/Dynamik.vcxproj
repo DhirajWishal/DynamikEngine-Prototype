@@ -262,7 +262,7 @@
     <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\VulkanSkyBox.h" />
     <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\VulkanTextObject.h" />
     <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\VulkanTextOverlay.h" />
-    <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\vulkanRenderer.h" />
+    <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\VulkanRBL.h" />
     <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\base\RendererBackendBase.h" />
     <ClInclude Include="..\..\Runtime\Engines\ADGR\Components\Attachments\Global\BRDF.h" />
     <ClInclude Include="..\..\Runtime\Engines\ADGR\Components\Attachments\Global\IrradianceCube.h" />
@@ -429,7 +429,7 @@
     <ClCompile Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\VulkanSkyBox.cpp" />
     <ClCompile Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\VulkanTextObject.cpp" />
     <ClCompile Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\VulkanTextOverlay.cpp" />
-    <ClCompile Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\vulkanRenderer.cpp" />
+    <ClCompile Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\VulkanRBL.cpp" />
     <ClCompile Include="..\..\Runtime\Engines\ADGR\Components\Attachments\Global\BRDF.cpp" />
     <ClCompile Include="..\..\Runtime\Engines\ADGR\Components\Attachments\Global\IrradianceCube.cpp" />
     <ClCompile Include="..\..\Runtime\Engines\ADGR\Components\Attachments\Global\PreFilteredCube.cpp" />

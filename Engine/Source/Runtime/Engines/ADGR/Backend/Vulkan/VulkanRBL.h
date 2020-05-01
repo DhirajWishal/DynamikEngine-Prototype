@@ -8,7 +8,7 @@
  Date:		30/07/2019
  IDE:		MS Visual Studio Community 2019
 
- vulkanRenderer.h file
+ VulkanRBL.h file
 */
 
 #ifndef _DYNAMIK_ADGR_VULKAN_RENDERER_H
@@ -59,29 +59,26 @@ namespace Dynamik {
 		  *
 		  * @warn: Only one instance should be created.
 		 */
-		class vulkanRenderer : public RendererBackend {
-			vulkanRenderer() {}
-
-			static vulkanRenderer instance;
-
+		class VulkanRBL : public RendererBackend {
 		public:
-			~vulkanRenderer() {}
+			VulkanRBL() {}
+			~VulkanRBL() {}
 
-			static void setWindowHandle(POINTER<GLFWwindow> windowHandle);
-			static void setWindowExtent(UI32 width, UI32 height);
-			static void setProgress(POINTER<UI32> progress);
+			void setWindowHandle(POINTER<GLFWwindow> windowHandle);
+			void setWindowExtent(UI32 width, UI32 height);
+			void setProgress(POINTER<UI32> progress);
 
-			static void initializeGraphicsCore();
-			static void initializeComputeCore();
+			void initializeGraphicsCore();
+			void initializeComputeCore();
 
-			static void addObject(POINTER<InternalFormat> format);
-			static void addObjects(ARRAY<POINTER<InternalFormat>> formats);
+			void addObject(POINTER<InternalFormat> format);
+			void addObjects(ARRAY<POINTER<InternalFormat>> formats);
 
-			static void initializeCommands();
-			static void initializeFinalComponents();
+			void initializeCommands();
+			void initializeFinalComponents();
 
-			static void drawFrame(DMKRendererDrawFrameInfo info);
-			static void recreateSwapChain();
+			void drawFrame(DMKRendererDrawFrameInfo info);
+			void recreateSwapChain();
 
 		private:
 			void _initializeRenderPass();	/* Initialize the render pass */

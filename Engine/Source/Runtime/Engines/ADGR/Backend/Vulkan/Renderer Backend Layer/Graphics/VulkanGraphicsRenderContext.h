@@ -4,6 +4,7 @@
 
 #include "VulkanGraphicsSwapChain.h"
 #include "VulkanGraphicsFrameBuffer.h"
+#include "VulkanGraphicsCommandBuffer.h"
 
 namespace Dynamik {
 	namespace ADGR {
@@ -16,6 +17,8 @@ namespace Dynamik {
 				VkSurfaceKHR surface = VK_NULL_HANDLE;
 				VulkanGraphicsSwapChain swapChain;
 				VulkanGraphicsFrameBuffer frameBuffer;
+
+				VulkanGraphicsCommandBuffer inFlightCommandBuffer;
 			};
 		}
 	}

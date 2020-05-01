@@ -15,6 +15,9 @@ namespace Dynamik {
 		static AutomatedHeap instance;
 
 		struct _internalPointerContainer {
+			_internalPointerContainer() {}
+			~_internalPointerContainer() {}
+
 			VPTR address = nullptr;
 			UI32 byteSize = 0;
 		};

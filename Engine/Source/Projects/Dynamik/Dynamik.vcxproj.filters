@@ -558,6 +558,9 @@
     <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsRBLIndex.h">
       <Filter>Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsRenderContext.h">
+      <Filter>Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsRenderableObject.h">
       <Filter>Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics</Filter>
     </ClInclude>
@@ -602,6 +605,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\VulkanTextOverlay.h">
       <Filter>Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\VulkanRBL.h">
+      <Filter>Runtime\Engines\ADGR\Backend\Vulkan</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\base\RendererBackendBase.h">
       <Filter>Runtime\Engines\ADGR\Backend\base</Filter>
@@ -900,12 +906,6 @@
     <ClInclude Include="..\..\Runtime\engineControlUnit.h">
       <Filter>Runtime</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsRenderContext.h">
-      <Filter>Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\VulkanRBL.h">
-      <Filter>Runtime\Engines\ADGR\Backend\Vulkan</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Runtime\Core\Algorithm\Private\CubemapCreator.cpp">
@@ -1058,6 +1058,9 @@
     <ClCompile Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsPushConstant.cpp">
       <Filter>Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsRenderContext.cpp">
+      <Filter>Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsRenderableObject.cpp">
       <Filter>Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics</Filter>
     </ClCompile>
@@ -1093,6 +1096,9 @@
     </ClCompile>
     <ClCompile Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\VulkanTextOverlay.cpp">
       <Filter>Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\VulkanRBL.cpp">
+      <Filter>Runtime\Engines\ADGR\Backend\Vulkan</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Runtime\Engines\ADGR\Components\Attachments\Global\BRDF.cpp">
       <Filter>Runtime\Engines\ADGR\Components\Attachments\Global</Filter>
@@ -1255,12 +1261,6 @@
     </ClCompile>
     <ClCompile Include="..\..\Runtime\engineControlUnit.cpp">
       <Filter>Runtime</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsRenderContext.cpp">
-      <Filter>Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\VulkanRBL.cpp">
-      <Filter>Runtime\Engines\ADGR\Backend\Vulkan</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

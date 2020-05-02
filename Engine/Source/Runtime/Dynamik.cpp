@@ -35,7 +35,7 @@ namespace Dynamik {
 		instance.myStartypRendererThread.swap(std::thread(
 			[](CCPTR iconPath) 
 			{
-				ADGR::StartupRenderer::loadTexure("E:/Projects/Dynamik Engine/Versions/Dynamik (Prototype)/Dependencies/Assets/icons/Samples/Dynamik.png");
+				ADGR::StartupRenderer::loadTexure("E:/Projects/Dynamik Engine/Versions/Dynamik/Dependencies/Assets/icons/Samples/Dynamik.png");
 				ADGR::StartupRenderer::initialize();
 				ADGR::StartupRenderer::initializeShaders();
 				ADGR::StartupRenderer::initializeVertexBuffers();
@@ -143,7 +143,7 @@ namespace Dynamik {
 
 		/* Initialize window */
 		DMKWindowManagerInitInfo windowInitInfo;
-		windowInitInfo.iconPaths = "E:/Projects/Dynamik Engine/Versions/Dynamik (Prototype)/Dependencies/Assets/icons/Samples/Dynamik.png";
+		windowInitInfo.iconPaths = "E:/Projects/Dynamik Engine/Versions/Dynamik/Dependencies/Assets/icons/Samples/Dynamik.png";
 		instance.myWindowManager.initialize(windowInitInfo);
 
 		/* Set basic initializing data to the rendering engine */

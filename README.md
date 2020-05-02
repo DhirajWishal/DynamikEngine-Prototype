@@ -1,5 +1,10 @@
 ![Dynamik Engine Logo](https://github.com/DhirajWishal/Dynamik/blob/master/Dependencies/Assets/icons/Samples/DynamikL.png)
-## Engine and Launcher
+## Engine
+Dynamik Engine is a community driven Game Engine currently at its basic stages. This engine is primarily
+designed for 3D FPS games and it has a physically based renderer.
+
+The engine is still basic and could be subjected for some major architectural changes.
+Currently following the rule "Every component is a Game Object".
 
 ### First Run:
 1. Double click (run/ execute) the GenProject.bat file.
@@ -13,4 +18,16 @@
 - [ ] Control Panel Window (Editor).
 - [ ] Fully functional asset loader.
 - [ ] Fully functional animation handler (Vulkan).
-- [x] Vulkan push constant standardization.
+- [ ] Vulkan push constant standardization.
+- [ ] Physics engine integration.
+- [ ] Optimized event system.
+- [ ] Render component standardization.
+- [ ] Render context and multiple render instances implimentation.
+
+
+### Developer notice
+Is anyone is intrested to support this engine, please make sure to send me an email (wishaldhiraj@gmail.com)
+and you can be a contributor of this engine.
+Primarily there will be 3 branches: master, engine-dev and studio-dev and contributors can contribute to any
+of the above branches except for the master branch. Each branch will be merged after a successful release.
+Contributors must write a header for each file as defined in the Header Convention.txt file.

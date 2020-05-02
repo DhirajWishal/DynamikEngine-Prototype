@@ -55,9 +55,6 @@ include "Engine/Tools/DynamikResource/DResValidator/DResValidator.lua"
 
 group ""
 
-group "Launcher"	-- Add the Launcher to a virtual folder
-include "Launcher"
-
 group "Studio"	-- Add the Studio to a virtual folder
 include "Engine/Source/Projects/Studio/Studio.lua"
 

@@ -8,3 +8,13 @@ Include Guards:
 	// file definition
 
 	#endif	// end of _DYNAMIK_<Project name>_<Sub type>_<Class name>_H
+
+Contributor Information:
+	Each contributor who has added a new file to the repository are needed to create a contributor notice
+	on the top of each file.
+	It is mandatory to have the following:
+		Author:		<Author name>
+		Date:		<Date on which the file was created (DD/MM/YYYY)>
+		IDE:		<The IDE you have used>
+
+	It may also have a short description on the functionality the content of the file has.

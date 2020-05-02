@@ -64,8 +64,8 @@ namespace Dynamik {
 		{
 			DMK_BEGIN_PROFILE_TIMER();
 
-			CCPTR vertShaderPath = "E:/Projects/Dynamik Engine/Versions/Dynamik (Prototype)/Engine/Application/Runtime/Shaders/Startup/shader.vert";
-			CCPTR fragShaderPath = "E:/Projects/Dynamik Engine/Versions/Dynamik (Prototype)/Engine/Application/Runtime/Shaders/Startup/shader.frag";
+			CCPTR vertShaderPath = "E:/Projects/Dynamik Engine/Versions/Dynamik/Engine/Application/Runtime/Shaders/Startup/shader.vert";
+			CCPTR fragShaderPath = "E:/Projects/Dynamik Engine/Versions/Dynamik/Engine/Application/Runtime/Shaders/Startup/shader.frag";
 
 			instance.myShaderManager = Shader_S(vertShaderPath, fragShaderPath);
 		}

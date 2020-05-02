@@ -96,7 +96,7 @@ namespace Dynamik {
 			ADGRVulkanRenderData _initializeSkeletalAnimation(POINTER<InternalFormat> format);
 
 		private:
-			POINTER<UI32> myProgress;
+			POINTER<UI32> myProgress;	/* Progress counter */
 
 			POINTER<GLFWwindow> myWindowHandle;	/* Window handle for vulkan to submit frames */
 			UI32 windowWidth = 0;	/* Window width */

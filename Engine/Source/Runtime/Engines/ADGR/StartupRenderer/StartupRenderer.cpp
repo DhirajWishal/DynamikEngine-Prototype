@@ -23,7 +23,6 @@ namespace Dynamik {
 			glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
 			glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 5);
 			glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-			glfwWindowHint(GLFW_ICONIFIED, GLFW_FALSE);
 
 #if defined(DMK_DEBUG)
 			instance.window = glfwCreateWindow(instance.windowWidth, instance.windowHeight, "Dynamik Engine", nullptr, nullptr);
@@ -52,13 +51,15 @@ namespace Dynamik {
 				return;
 			}
 
-			glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
 			glfwMakeContextCurrent(instance.window);
 
 			if (glewInit() != GLEW_OK)
 				DMK_CORE_FATAL("Failed to initialize GLEW");
+
+			glfwWindowHint(GLFW_SAMPLES, 4);
+			glEnable(GL_MULTISAMPLE);
 		}
-		
+
 		void StartupRenderer::initializeShaders()
 		{
 			DMK_BEGIN_PROFILE_TIMER();
@@ -106,11 +107,21 @@ namespace Dynamik {
 			glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
 			glEnableVertexAttribArray(2);
 		}
-		
+
 		void StartupRenderer::loadTexure(CCPTR path)
 		{
 			DMK_BEGIN_PROFILE_TIMER();
 
+			stbi_set_flip_vertically_on_load(true);
+
+			I32 nrChannels = 0;
+			instance.textureData = stbi_load(path, &instance.windowWidth, &instance.windowHeight, &nrChannels, 0);
+			if (!instance.textureData.isValid())
+				DMK_CORE_FATAL("Failed to load Texture!");
+		}
+
+		void StartupRenderer::initializeTextureImage()
+		{
 			glGenTextures(1, &instance.textureIndex);
 			glBindTexture(GL_TEXTURE_2D, instance.textureIndex);
 			// set the texture wrapping parameters
@@ -120,26 +131,18 @@ namespace Dynamik {
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 			// load image, create texture and generate mipmaps
-			stbi_set_flip_vertically_on_load(true);
 
-			I32 width = 0, height = 0, nrChannels = 0;
-			UCHR* data = stbi_load(path, &width, &height, &nrChannels, 0);
-			if (data)
-			{
-				glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
-				glGenerateMipmap(GL_TEXTURE_2D);
-			}
-			else
-			{
-				DMK_CORE_FATAL("Failed to load Texture!");
-			}
-			stbi_image_free(data);
+			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, instance.windowWidth, instance.windowHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, instance.textureData.get());
+			glGenerateMipmap(GL_TEXTURE_2D);
 
 			instance.myShaderManager.use(); // don't forget to activate/use the shader before setting uniforms!
 			// either set it manually like so:
 			glUniform1i(glGetUniformLocation(instance.myShaderManager.ID, "texture1"), 0);
+
+			glEnable(GL_BLEND);
+			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		}
-		
+
 		void StartupRenderer::draw()
 		{
 			DMK_BEGIN_PROFILE_TIMER();
@@ -150,7 +153,7 @@ namespace Dynamik {
 
 			// render
 			// ------
-			glClearColor((2.0f / 256.0f), (8.0f / 256.0f), (32.0f / 256.0f), 1.0f);
+			glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 			glClear(GL_COLOR_BUFFER_BIT);
 
 			// bind textures on corresponding texture units
@@ -172,18 +175,20 @@ namespace Dynamik {
 		{
 			DMK_BEGIN_PROFILE_TIMER();
 
+			stbi_image_free(instance.textureData.get());
+
 			glDeleteVertexArrays(1, &instance.VAO);
 			glDeleteBuffers(1, &instance.VBO);
 			glDeleteBuffers(1, &instance.EBO);
 
 			glfwDestroyWindow(instance.window);
 		}
-		
+
 		void StartupRenderer::makeContextCurrent()
 		{
 			glfwMakeContextCurrent(instance.window);
 		}
-		
+
 		void StartupRenderer::_errorCallback(I32 id, CCPTR description)
 		{
 			std::cout << "GLFW Error: " << description << std::endl;

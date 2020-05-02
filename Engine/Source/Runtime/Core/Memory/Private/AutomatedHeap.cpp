@@ -18,7 +18,7 @@ namespace Dynamik {
 			{
 				StaticAllocator<VPTR>::deAllocate(address, instance.addressStore[_itr].byteSize);
 
-				instance.addressStore.remove(_itr);
+				//instance.addressStore.remove(_itr);
 				return;
 			}
 		}

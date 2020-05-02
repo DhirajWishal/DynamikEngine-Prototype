@@ -269,17 +269,18 @@ namespace Dynamik {
 				DMK_BEGIN_PROFILE_TIMER();
 
 				/* Check for the Uniform buffer attributes and add the data to the container */
-				for (auto _description : info.formats[index]->descriptor.uniformBufferObjectDescriptions)
+				for (UI32 _itr = 0; _itr < info.formats[index]->descriptor.uniformBufferObjectDescriptions.size(); _itr++)
 				{
 					DMK_BEGIN_PROFILE_TIMER();
 
 					/* Currently the Vulkan RBL supports vertex shader uniform buffer updation only */
+					DMKUniformBufferObjectDescriptor _description = info.formats[index]->descriptor.uniformBufferObjectDescriptions[_itr];
 					if (_description.location != DMKShaderLocation::DMK_SHADER_LOCATION_VERTEX)
 						continue;
 
 					/* Update the objects uniform buffer memory */
-					for (auto _container : myResourceContainers[inUseIndex].renderData[index].uniformBufferContainers)
-						VulkanUtilities::updateUniformBuffer(myGraphicsCore.logicalDevice, info.formats[index]->onUpdate(info.cameraData), _container.bufferMemories[imageIndex], _description);
+					ADGRVulkanUnformBufferContainer _container = myResourceContainers[inUseIndex].renderData[index].uniformBufferContainers[_itr];
+					VulkanUtilities::updateUniformBuffer(myGraphicsCore.logicalDevice, info.formats[index]->onUpdate(info.cameraData), _container.bufferMemories[imageIndex], _description);
 				}
 			}
 

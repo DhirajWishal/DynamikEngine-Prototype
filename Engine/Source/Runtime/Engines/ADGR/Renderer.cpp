@@ -25,6 +25,15 @@ namespace Dynamik {
 		/* Renderer instance definition */
 		Renderer Renderer::instance;
 
+		UI32 Renderer::createRenderingInstance()
+		{
+			return UI32();
+		}
+
+		void Renderer::initializeRenderingInstance(UI32 instanceID)
+		{
+		}
+
 		void Renderer::initializeStageOne(DMKRenderingAPI selectedAPI, DMKRendererSettings settings)
 		{
 			switch (selectedAPI)

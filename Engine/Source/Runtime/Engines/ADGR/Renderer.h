@@ -70,6 +70,10 @@ namespace Dynamik {
 
 			~Renderer() {}
 
+			/* Basic functions */
+			static UI32 createRenderingInstance();
+			static void initializeRenderingInstance(UI32 instanceID = 0);
+
 			/* Initializing */
 			static void initializeStageOne(DMKRenderingAPI selectedAPI, DMKRendererSettings settings);
 			static void initializeStageTwo();

@@ -34,6 +34,10 @@ namespace Dynamik {
 
 		// ----------
 #endif
+		void VulkanRBL::setMsaaSamples(DMKPipelineMSAASamples samples)
+		{
+		}
+		
 		void VulkanRBL::setWindowHandle(POINTER<GLFWwindow> windowHandle)
 		{
 			myWindowHandle = windowHandle;

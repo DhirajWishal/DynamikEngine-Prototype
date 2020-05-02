@@ -64,6 +64,7 @@ namespace Dynamik {
 			VulkanRBL() {}
 			~VulkanRBL() {}
 
+			void setMsaaSamples(DMKPipelineMSAASamples samples);
 			void setWindowHandle(POINTER<GLFWwindow> windowHandle);
 			void setWindowExtent(UI32 width, UI32 height);
 			void setProgress(POINTER<UI32> progress);
@@ -103,6 +104,7 @@ namespace Dynamik {
 			UI32 windowHeight = 0;	/* Window height */
 
 			VulkanGraphicsCore myGraphicsCore;	/* Contains the Vulkan's core components */
+			VkSampleCountFlags myMsaaSamples = VkSampleCountFlagBits::VK_SAMPLE_COUNT_1_BIT;
 
 			/* Contains the command buffers and render datas */
 			ADGRVulkanRenderResourceContainer myResourceContainers[2];	/* Host visible and client visible */

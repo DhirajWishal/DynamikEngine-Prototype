@@ -71,6 +71,8 @@ namespace Dynamik {
 			~Renderer() {}
 
 			/* Basic functions */
+			static void setMSAASamples(DMKPipelineMSAASamples samples);
+
 			static UI32 createRenderingInstance();
 			static void initializeRenderingInstance(UI32 instanceID = 0);
 

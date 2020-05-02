@@ -25,6 +25,11 @@ namespace Dynamik {
 		/* Renderer instance definition */
 		Renderer Renderer::instance;
 
+		void Renderer::setMSAASamples(DMKPipelineMSAASamples samples)
+		{
+
+		}
+
 		UI32 Renderer::createRenderingInstance()
 		{
 			return UI32();

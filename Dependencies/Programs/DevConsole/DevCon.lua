@@ -21,8 +21,8 @@ project "DevCon"
 
 	includedirs {
 		"$(SolutionDir)Dependencies/Libraries/Local",
-		"$(SolutionDir)Engine/Source/Runtime/src",
-		"$(SolutionDir)Engine/Source/Runtime/GameLibraries",
+		"$(SolutionDir)Engine/Source/src",
+		"$(SolutionDir)Engine/Source/GameLibraries",
 		"%{IncludeDir.GLFW}",
 		"%{IncludeDir.GLEW}",
 		"%{IncludeDir.glm}",

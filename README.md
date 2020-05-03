@@ -3,8 +3,49 @@
 Dynamik Engine is a community driven game engine currently at its basic stages. This engine is primarily
 designed for 3D FPS games.
 
-The engine is still basic and could be subjected for some major architectural changes.
-Currently following the rule "Every component is a Game Object".
+The Dynamik Engine is a library which consists a list of APIs and Tools which the user can use to 
+develop their software with. 
+
+The list of APIs:
+- Dynamik/ Core:
+  - Resource managers.
+  - Memory managers.
+  - Thread managers.
+- Rendering.
+- Audio.
+- Physics.
+- Intellect.
+- Destruction.
+- Event.
+- Networking.
+- Validation.
+- Game Library
+
+The engine is intended to be compiled to platform specific dynamic link library and will support multiple platforms.
+File structure are yet to be designed.
+
+The Studio is an application which uses the Dynamik Engine library extensively. It is a cross-platform tool
+which can be used to edit objects/ scenes/ levels, edit scripts, etc... The users can also create their own
+studio like software using the Dynamik Engine library with the help of the Studio.
+
+The engine provides samples for users to directly work with. The users are able to chose the sample by the 
+Studio and work on it to create their own product. They can use these samples along with our APIs to create
+their own samples/ templates. 
+
+The clients code is compiled into either a static link library or dynamic link library depending on the user
+preference and will be linked with our executable binary which is platform specific. This way the user can
+export their code to other platforms using the Studio and our executable will be able to execute the users 
+application. 
+
+The Engine does not handle all the resources provided to it by its own. The users are expected to manage them 
+with the help of tools that the engine contains. The main execution loop is given to the user to work with which
+would enable the user to optimize the code according to their preference. By default there will be at least 3 
+threads executed by the engine (Engine Control Thread, Renderer Thread, Utility Thread) which makes a total of
+4 threads depending on the number of threads the user creates during runtime. These threads are managed by the 
+engine and the user would not have direct control over their execution in runtime except for any commands are
+issued.
+
+Further improvements are yet to be made.
 
 ### First Run:
 1. Double click (run/ execute) the GenProject.bat file.
@@ -37,8 +78,3 @@ and you can be a contributor of this engine.
 Primarily there will be 3 branches: master, engine-dev and studio-dev and contributors can contribute to any
 of the above branches except for the master branch. Each branch will be merged after a successful release.
 Contributors must write a header for each file as defined in the Header Convention.txt file.
-
-#### Folder content
-Dependencies: This contains all the dependencies (libraries, binaries, assets) the engine needs.
-Documentation: The engine documentation.
-Engine: Contains all the engine source code.

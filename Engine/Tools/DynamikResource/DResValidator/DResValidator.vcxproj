@@ -79,7 +79,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>DMK_PLATFORM_WINDOWS;DMK_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\Libraries\Local;$(SolutionDir)Engine\Source\Runtime\Core\Algorithm;$(SolutionDir)Engine\Source\Runtime\Core\DataTypes;$(SolutionDir)Engine\Source\Runtime\Core\Math;$(SolutionDir)Engine\Source\Runtime\Core\Memory;$(SolutionDir)Engine\Source\Runtime\Core\System;$(SolutionDir)Dependencies\Programs\Debugger\src;$(SolutionDir)Dependencies\Programs\DevCon\src;$(SolutionDir)Dependencies\Libraries\External\glm;$(SolutionDir)Dependencies\Libraries\External\stb;$(SolutionDir)Dependencies\Libraries\Local\assimp;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\Libraries\Local;$(SolutionDir)Engine\Source\Core\Algorithm;$(SolutionDir)Engine\Source\Core\DataTypes;$(SolutionDir)Engine\Source\Core\Math;$(SolutionDir)Engine\Source\Core\Memory;$(SolutionDir)Engine\Source\Core\System;$(SolutionDir)Dependencies\Programs\Debugger\src;$(SolutionDir)Dependencies\Programs\DevCon\src;$(SolutionDir)Dependencies\Libraries\External\glm;$(SolutionDir)Dependencies\Libraries\External\stb;$(SolutionDir)Dependencies\Libraries\Local\assimp;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
@@ -95,7 +95,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>DMK_PLATFORM_WINDOWS;DMK_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\Libraries\Local;$(SolutionDir)Engine\Source\Runtime\Core\Algorithm;$(SolutionDir)Engine\Source\Runtime\Core\DataTypes;$(SolutionDir)Engine\Source\Runtime\Core\Math;$(SolutionDir)Engine\Source\Runtime\Core\Memory;$(SolutionDir)Engine\Source\Runtime\Core\System;$(SolutionDir)Dependencies\Programs\Debugger\src;$(SolutionDir)Dependencies\Programs\DevCon\src;$(SolutionDir)Dependencies\Libraries\External\glm;$(SolutionDir)Dependencies\Libraries\External\stb;$(SolutionDir)Dependencies\Libraries\Local\assimp;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\Libraries\Local;$(SolutionDir)Engine\Source\Core\Algorithm;$(SolutionDir)Engine\Source\Core\DataTypes;$(SolutionDir)Engine\Source\Core\Math;$(SolutionDir)Engine\Source\Core\Memory;$(SolutionDir)Engine\Source\Core\System;$(SolutionDir)Dependencies\Programs\Debugger\src;$(SolutionDir)Dependencies\Programs\DevCon\src;$(SolutionDir)Dependencies\Libraries\External\glm;$(SolutionDir)Dependencies\Libraries\External\stb;$(SolutionDir)Dependencies\Libraries\Local\assimp;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -115,7 +115,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>DMK_PLATFORM_WINDOWS;DMK_DISTRIBUTION;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\Libraries\Local;$(SolutionDir)Engine\Source\Runtime\Core\Algorithm;$(SolutionDir)Engine\Source\Runtime\Core\DataTypes;$(SolutionDir)Engine\Source\Runtime\Core\Math;$(SolutionDir)Engine\Source\Runtime\Core\Memory;$(SolutionDir)Engine\Source\Runtime\Core\System;$(SolutionDir)Dependencies\Programs\Debugger\src;$(SolutionDir)Dependencies\Programs\DevCon\src;$(SolutionDir)Dependencies\Libraries\External\glm;$(SolutionDir)Dependencies\Libraries\External\stb;$(SolutionDir)Dependencies\Libraries\Local\assimp;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\Libraries\Local;$(SolutionDir)Engine\Source\Core\Algorithm;$(SolutionDir)Engine\Source\Core\DataTypes;$(SolutionDir)Engine\Source\Core\Math;$(SolutionDir)Engine\Source\Core\Memory;$(SolutionDir)Engine\Source\Core\System;$(SolutionDir)Dependencies\Programs\Debugger\src;$(SolutionDir)Dependencies\Programs\DevCon\src;$(SolutionDir)Dependencies\Libraries\External\glm;$(SolutionDir)Dependencies\Libraries\External\stb;$(SolutionDir)Dependencies\Libraries\Local\assimp;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>

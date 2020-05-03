@@ -56,10 +56,10 @@ include "Engine/Tools/DynamikResource/DResValidator/DResValidator.lua"
 group ""
 
 group "Studio"	-- Add the Studio to a virtual folder
-include "Engine/Source/Projects/Studio/Studio.lua"
+include "Engine/Studio/Studio.lua"
 
 group "Engine"	-- Add the Engine to a virtual folder
-include "Engine/Source/Projects/Dynamik/Dynamik.lua"
+include "Engine/Source/Dynamik.lua"
 include "Engine/Application/Runtime/Application.lua"
 
 group ""

@@ -1,0 +1,489 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Distribution|x64">
+      <Configuration>Distribution</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{928A7598-FE69-F433-0782-7F0A73E05A95}</ProjectGuid>
+    <IgnoreWarnCompileDuplicatedFilename>true</IgnoreWarnCompileDuplicatedFilename>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>Dynamik</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Distribution|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Distribution|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
+    <OutDir>$(SolutionDir)Builds\Engine\Binaries\$(Configuration)-$(Platform)\</OutDir>
+    <IntDir>$(SolutionDir)Builds\Engine\Intermediate\$(Configuration)-$(Platform)\$(ProjectName)\Debug\Dynamik\</IntDir>
+    <TargetName>Dynamik</TargetName>
+    <TargetExt>.dll</TargetExt>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(SolutionDir)Builds\Engine\Binaries\$(Configuration)-$(Platform)\</OutDir>
+    <IntDir>$(SolutionDir)Builds\Engine\Intermediate\$(Configuration)-$(Platform)\$(ProjectName)\Release\Dynamik\</IntDir>
+    <TargetName>Dynamik</TargetName>
+    <TargetExt>.dll</TargetExt>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Distribution|x64'">
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(SolutionDir)Builds\Engine\Binaries\$(Configuration)-$(Platform)\</OutDir>
+    <IntDir>$(SolutionDir)Builds\Engine\Intermediate\$(Configuration)-$(Platform)\$(ProjectName)\Distribution\Dynamik\</IntDir>
+    <TargetName>Dynamik</TargetName>
+    <TargetExt>.dll</TargetExt>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PrecompiledHeader>Create</PrecompiledHeader>
+      <PrecompiledHeaderFile>dmkafx.h</PrecompiledHeaderFile>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>DMK_PLATFORM_WINDOWS;DMK_BUILD_DLL;_WINDLL;GLFW_INCLUDE_VULKAN;DMK_USE_VULKAN;GLFW_INCLUDE_NONE;DMK_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\Libraries\Local;$(SolutionDir)Engine\Source;$(SolutionDir)Engine\Source\Core\PCH;$(SolutionDir)Engine\Source\Core\Algorithm;$(SolutionDir)Engine\Source\Core\DataTypes;$(SolutionDir)Engine\Source\Core\Math;$(SolutionDir)Engine\Source\Core\Memory;$(SolutionDir)Engine\Source\Core\System;$(SolutionDir)Engine\Source\GameLibraries;$(SolutionDir)Dependencies\Programs\Debugger\src;$(SolutionDir)Dependencies\Programs\DevCon\src;$(SolutionDir)Dependencies\Libraries\External\glfw\include;$(SolutionDir)Dependencies\GLEW\include;$(SolutionDir)Dependencies\Libraries\External\glm;$(SolutionDir)Dependencies\Libraries\External\stb;$(SolutionDir)Dependencies\Libraries\External\tinyobjloader;$(SolutionDir)Dependencies\Libraries\Local\irrKlang\include;$(SolutionDir)Dependencies\Libraries\Local\assimp;$(SolutionDir)Dependencies\Libraries\External\Vulkan\include;$(SolutionDir)Dependencies\Libraries\External\gli\gli;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <Optimization>Disabled</Optimization>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>glew32.lib;glew32s.lib;glfw3dll.lib;opengl32.lib;vulkan-1.lib;irrKlang.lib;assimp.lib;assimp-vc140-mt.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)Dependencies\Libraries\Binaries\irrKlang;$(SolutionDir)Dependencies\Libraries\Binaries\GLFW\lib-vc2019;$(SolutionDir)Dependencies\Libraries\Binaries\GLEW\Release\x64;$(SolutionDir)Dependencies\Libraries\Binaries\Vulkan;$(SolutionDir)Dependencies\Libraries\Binaries\Assimp;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <ImportLibrary>$(SolutionDir)Builds\Engine\Binaries\$(Configuration)-$(Platform)\Dynamik.lib</ImportLibrary>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <PrecompiledHeader>Create</PrecompiledHeader>
+      <PrecompiledHeaderFile>dmkafx.h</PrecompiledHeaderFile>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>DMK_PLATFORM_WINDOWS;DMK_BUILD_DLL;_WINDLL;GLFW_INCLUDE_VULKAN;DMK_USE_VULKAN;GLFW_INCLUDE_NONE;DMK_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\Libraries\Local;$(SolutionDir)Engine\Source;$(SolutionDir)Engine\Source\Core\PCH;$(SolutionDir)Engine\Source\Core\Algorithm;$(SolutionDir)Engine\Source\Core\DataTypes;$(SolutionDir)Engine\Source\Core\Math;$(SolutionDir)Engine\Source\Core\Memory;$(SolutionDir)Engine\Source\Core\System;$(SolutionDir)Engine\Source\GameLibraries;$(SolutionDir)Dependencies\Programs\Debugger\src;$(SolutionDir)Dependencies\Programs\DevCon\src;$(SolutionDir)Dependencies\Libraries\External\glfw\include;$(SolutionDir)Dependencies\GLEW\include;$(SolutionDir)Dependencies\Libraries\External\glm;$(SolutionDir)Dependencies\Libraries\External\stb;$(SolutionDir)Dependencies\Libraries\External\tinyobjloader;$(SolutionDir)Dependencies\Libraries\Local\irrKlang\include;$(SolutionDir)Dependencies\Libraries\Local\assimp;$(SolutionDir)Dependencies\Libraries\External\Vulkan\include;$(SolutionDir)Dependencies\Libraries\External\gli\gli;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <Optimization>Full</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <StringPooling>true</StringPooling>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>glew32.lib;glew32s.lib;glfw3dll.lib;opengl32.lib;vulkan-1.lib;irrKlang.lib;assimp.lib;assimp-vc140-mt.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)Dependencies\Libraries\Binaries\irrKlang;$(SolutionDir)Dependencies\Libraries\Binaries\GLFW\lib-vc2019;$(SolutionDir)Dependencies\Libraries\Binaries\GLEW\Release\x64;$(SolutionDir)Dependencies\Libraries\Binaries\Vulkan;$(SolutionDir)Dependencies\Libraries\Binaries\Assimp;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <ImportLibrary>$(SolutionDir)Builds\Engine\Binaries\$(Configuration)-$(Platform)\Dynamik.lib</ImportLibrary>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Distribution|x64'">
+    <ClCompile>
+      <PrecompiledHeader>Create</PrecompiledHeader>
+      <PrecompiledHeaderFile>dmkafx.h</PrecompiledHeaderFile>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>DMK_PLATFORM_WINDOWS;DMK_BUILD_DLL;_WINDLL;GLFW_INCLUDE_VULKAN;DMK_USE_VULKAN;GLFW_INCLUDE_NONE;DMK_DISTRIBUTION;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\Libraries\Local;$(SolutionDir)Engine\Source;$(SolutionDir)Engine\Source\Core\PCH;$(SolutionDir)Engine\Source\Core\Algorithm;$(SolutionDir)Engine\Source\Core\DataTypes;$(SolutionDir)Engine\Source\Core\Math;$(SolutionDir)Engine\Source\Core\Memory;$(SolutionDir)Engine\Source\Core\System;$(SolutionDir)Engine\Source\GameLibraries;$(SolutionDir)Dependencies\Programs\Debugger\src;$(SolutionDir)Dependencies\Programs\DevCon\src;$(SolutionDir)Dependencies\Libraries\External\glfw\include;$(SolutionDir)Dependencies\GLEW\include;$(SolutionDir)Dependencies\Libraries\External\glm;$(SolutionDir)Dependencies\Libraries\External\stb;$(SolutionDir)Dependencies\Libraries\External\tinyobjloader;$(SolutionDir)Dependencies\Libraries\Local\irrKlang\include;$(SolutionDir)Dependencies\Libraries\Local\assimp;$(SolutionDir)Dependencies\Libraries\External\Vulkan\include;$(SolutionDir)Dependencies\Libraries\External\gli\gli;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <Optimization>Full</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <StringPooling>true</StringPooling>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>glew32.lib;glew32s.lib;glfw3dll.lib;opengl32.lib;vulkan-1.lib;irrKlang.lib;assimp.lib;assimp-vc140-mt.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)Dependencies\Libraries\Binaries\irrKlang;$(SolutionDir)Dependencies\Libraries\Binaries\GLFW\lib-vc2019;$(SolutionDir)Dependencies\Libraries\Binaries\GLEW\Release\x64;$(SolutionDir)Dependencies\Libraries\Binaries\Vulkan;$(SolutionDir)Dependencies\Libraries\Binaries\Assimp;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <ImportLibrary>$(SolutionDir)Builds\Engine\Binaries\$(Configuration)-$(Platform)\Dynamik.lib</ImportLibrary>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="Audio\Audio.h" />
+    <ClInclude Include="Audio\Backend\AudioEngine.h" />
+    <ClInclude Include="Audio\Backend\AudioLog.h" />
+    <ClInclude Include="Audio\Backend\AudioObject.h" />
+    <ClInclude Include="Audio\Backend\AudioObjectController.h" />
+    <ClInclude Include="Audio\Backend\AudioObjectControllers\BackgroundAudioController.h" />
+    <ClInclude Include="Audio\Backend\AudioObjectControllers\BasicAudioController.h" />
+    <ClInclude Include="Core\Algorithm\AlgorithmLib.h" />
+    <ClInclude Include="Core\Algorithm\Public\CubemapCreator.h" />
+    <ClInclude Include="Core\Algorithm\Public\Sort.h" />
+    <ClInclude Include="Core\Algorithm\Public\Swap.h" />
+    <ClInclude Include="Core\DataTypes\DataTypesLib.h" />
+    <ClInclude Include="Core\DataTypes\Dynamik\DMKDataType.h" />
+    <ClInclude Include="Core\DataTypes\Dynamik\RenderingSpecifications.h" />
+    <ClInclude Include="Core\DataTypes\Dynamik\containers.h" />
+    <ClInclude Include="Core\DataTypes\Dynamik\objectSpecifications.h" />
+    <ClInclude Include="Core\DataTypes\Public\Array.h" />
+    <ClInclude Include="Core\DataTypes\Public\CircularLinkedList.h" />
+    <ClInclude Include="Core\DataTypes\Public\DoublyLinkedList.h" />
+    <ClInclude Include="Core\DataTypes\Public\Dynamic.h" />
+    <ClInclude Include="Core\DataTypes\Public\DynamicPointer.h" />
+    <ClInclude Include="Core\DataTypes\Public\FastString.h" />
+    <ClInclude Include="Core\DataTypes\Public\HashMap.h" />
+    <ClInclude Include="Core\DataTypes\Public\HeapStore.h" />
+    <ClInclude Include="Core\DataTypes\Public\IndexedArray.h" />
+    <ClInclude Include="Core\DataTypes\Public\InitializerList.h" />
+    <ClInclude Include="Core\DataTypes\Public\Iterator.h" />
+    <ClInclude Include="Core\DataTypes\Public\Matrix.h" />
+    <ClInclude Include="Core\DataTypes\Public\Pair.h" />
+    <ClInclude Include="Core\DataTypes\Public\Pointer.h" />
+    <ClInclude Include="Core\DataTypes\Public\Queue.h" />
+    <ClInclude Include="Core\DataTypes\Public\SimpleLinkedList.h" />
+    <ClInclude Include="Core\DataTypes\Public\Stack.h" />
+    <ClInclude Include="Core\DataTypes\Public\StaticArray.h" />
+    <ClInclude Include="Core\DataTypes\Public\String.h" />
+    <ClInclude Include="Core\DataTypes\Public\Thread.h" />
+    <ClInclude Include="Core\DataTypes\Public\constants.h" />
+    <ClInclude Include="Core\DataTypes\Public\datatypes.h" />
+    <ClInclude Include="Core\DataTypes\Public\typecheck.h" />
+    <ClInclude Include="Core\Memory\MemoryLib.h" />
+    <ClInclude Include="Core\Memory\Public\Allocator.h" />
+    <ClInclude Include="Core\Memory\Public\AutomatedHeap.h" />
+    <ClInclude Include="Core\Memory\Public\StaticAllocator.h" />
+    <ClInclude Include="Core\Memory\Public\doubleBufferedAllocator.h" />
+    <ClInclude Include="Core\Memory\Public\doubleBufferedPoolAllocator.h" />
+    <ClInclude Include="Core\Memory\Public\doubleBufferedStackAllocator.h" />
+    <ClInclude Include="Core\Memory\Public\memoryFunctions.h" />
+    <ClInclude Include="Core\Memory\Public\memoryManager.h" />
+    <ClInclude Include="Core\Memory\Public\oneTimeAllocator.h" />
+    <ClInclude Include="Core\Memory\Public\poolAllocator.h" />
+    <ClInclude Include="Core\Memory\Public\stackAllocator.h" />
+    <ClInclude Include="Core\PCH\dmkafx.h" />
+    <ClInclude Include="Core\System\Public\Console.h" />
+    <ClInclude Include="Core\System\SystemLib.h" />
+    <ClInclude Include="DataHub\base\Manager.h" />
+    <ClInclude Include="DataHub\dataPipeline.h" />
+    <ClInclude Include="DataHub\network\messageData.h" />
+    <ClInclude Include="DataHub\network\messageType.h" />
+    <ClInclude Include="DataHub\renderer\typenames.h" />
+    <ClInclude Include="Destruction\Backend\Integrity Based\DestructionEntity.h" />
+    <ClInclude Include="Destruction\Backend\Integrity Based\ObjectDestructionProperties.h" />
+    <ClInclude Include="Destruction\Backend\Integrity Based\SolidDestruction.h" />
+    <ClInclude Include="Destruction\DDE.h" />
+    <ClInclude Include="Dynamik.h" />
+    <ClInclude Include="Events\DMKDropPathEventComponent.h" />
+    <ClInclude Include="Events\DMKEventComponent.h" />
+    <ClInclude Include="Events\DMKKeyEventComponent.h" />
+    <ClInclude Include="Events\DMKMouseButtonEventComponent.h" />
+    <ClInclude Include="Events\DMKMouseScrollEventComponent.h" />
+    <ClInclude Include="Events\DMKTextEventComponent.h" />
+    <ClInclude Include="Events\DMKWindowResizeEventComponent.h" />
+    <ClInclude Include="Events\EventManager.h" />
+    <ClInclude Include="Events\keyCodes.h" />
+    <ClInclude Include="GameLibraries\Camera.h" />
+    <ClInclude Include="GameLibraries\GameObject.h" />
+    <ClInclude Include="GameLibraries\GameObjectDescriptors.h" />
+    <ClInclude Include="GameLibraries\KeyBingings.h" />
+    <ClInclude Include="GameLibraries\Level.h" />
+    <ClInclude Include="GameLibraries\Light.h" />
+    <ClInclude Include="GameLibraries\Material.h" />
+    <ClInclude Include="GameLibraries\Scene.h" />
+    <ClInclude Include="GameLibraries\SkyboxObject.h" />
+    <ClInclude Include="GameLibraries\StaticObject.h" />
+    <ClInclude Include="Intellect\Backend\Intellect\Neuron.h" />
+    <ClInclude Include="Intellect\Backend\Intellect\neuralNetwork.h" />
+    <ClInclude Include="Intellect\Backend\Maths\Sigmoid.h" />
+    <ClInclude Include="Intellect\Intellect.h" />
+    <ClInclude Include="Managers\Asset\AssetManager.h" />
+    <ClInclude Include="Managers\Managers.h" />
+    <ClInclude Include="Networking\Backend\client.h" />
+    <ClInclude Include="Networking\Backend\client\Client.h" />
+    <ClInclude Include="Networking\Backend\server.h" />
+    <ClInclude Include="Networking\Backend\server\Server.h" />
+    <ClInclude Include="Networking\Networking.h" />
+    <ClInclude Include="Objects\DMKObject\DMKObject.h" />
+    <ClInclude Include="Objects\IndexBufferObject\IndexBufferObject.h" />
+    <ClInclude Include="Objects\IndexBufferObject\IndexBufferObjectUI16.h" />
+    <ClInclude Include="Objects\IndexBufferObject\IndexBufferObjectUI32.h" />
+    <ClInclude Include="Objects\IndexBufferObject\IndexBufferObjectUI8.h" />
+    <ClInclude Include="Objects\InternalFormat\InternalFormat.h" />
+    <ClInclude Include="Objects\Mesh\Mesh.h" />
+    <ClInclude Include="Objects\Texture\Texture.h" />
+    <ClInclude Include="Objects\UniformBufferObject\UniformBufferObject.h" />
+    <ClInclude Include="Objects\VertexBufferObject\VertexBufferObject.h" />
+    <ClInclude Include="Platform\Windows.h" />
+    <ClInclude Include="Platform\Windows\DLLInterface.h" />
+    <ClInclude Include="Platform\Windows\Window\WindowManager.h" />
+    <ClInclude Include="Platform\Windows\file\daiFileManager.h" />
+    <ClInclude Include="Platform\Windows\file\duiFileManager.h" />
+    <ClInclude Include="Platform\Windows\file\fileManager.h" />
+    <ClInclude Include="Platform\Windows\file\readFile.h" />
+    <ClInclude Include="Platform\Windows\resource\imageLoader.h" />
+    <ClInclude Include="Platform\Windows\resource\loadIcon.h" />
+    <ClInclude Include="Platform\Windows\resource\modelManager.h" />
+    <ClInclude Include="Platform\Windows\resource\objectLoader.h" />
+    <ClInclude Include="Platform\Windows\thread\ExecutionHandle.h" />
+    <ClInclude Include="Platform\Windows\thread\InternalThread.h" />
+    <ClInclude Include="Platform\Windows\thread\threadManager.h" />
+    <ClInclude Include="Renderer\Backend\Components\FrameBuffer.h" />
+    <ClInclude Include="Renderer\Backend\Components\SwapChain.h" />
+    <ClInclude Include="Renderer\Backend\Components\TextOverlay.h" />
+    <ClInclude Include="Renderer\Backend\Primitives\FrameBuffer.h" />
+    <ClInclude Include="Renderer\Backend\Primitives\IndexBuffer.h" />
+    <ClInclude Include="Renderer\Backend\Primitives\Pipeline.h" />
+    <ClInclude Include="Renderer\Backend\Primitives\PipelineCache.h" />
+    <ClInclude Include="Renderer\Backend\Primitives\PrimitiveContainer.h" />
+    <ClInclude Include="Renderer\Backend\Primitives\RenderPass.h" />
+    <ClInclude Include="Renderer\Backend\Primitives\RenderPrimitive.h" />
+    <ClInclude Include="Renderer\Backend\Primitives\Shader.h" />
+    <ClInclude Include="Renderer\Backend\Primitives\SwapChain.h" />
+    <ClInclude Include="Renderer\Backend\Primitives\TextOverlay.h" />
+    <ClInclude Include="Renderer\Backend\Primitives\TextureData.h" />
+    <ClInclude Include="Renderer\Backend\Primitives\UniformBuffer.h" />
+    <ClInclude Include="Renderer\Backend\Primitives\VertexBuffer.h" />
+    <ClInclude Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Attachments\VulkanBRDF.h" />
+    <ClInclude Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Attachments\VulkanIrradianceCube.h" />
+    <ClInclude Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Attachments\VulkanPrefilteredCube.h" />
+    <ClInclude Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Common\VulkanAttachment.h" />
+    <ClInclude Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Common\VulkanBufferFactory.h" />
+    <ClInclude Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Common\VulkanControlHeader.h" />
+    <ClInclude Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Common\VulkanDescriptor.h" />
+    <ClInclude Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Common\VulkanExtensionsManager.h" />
+    <ClInclude Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Common\VulkanOneTimeCommandBuffer.h" />
+    <ClInclude Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Common\VulkanTextureFactory.h" />
+    <ClInclude Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Common\VulkanUtilities.h" />
+    <ClInclude Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Common\VulkanValidator.h" />
+    <ClInclude Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Compute\VulkanComputeBufferObject.h" />
+    <ClInclude Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Compute\VulkanComputeCommandBuffer.h" />
+    <ClInclude Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Compute\VulkanComputeCore.h" />
+    <ClInclude Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Compute\VulkanComputeDescriptor.h" />
+    <ClInclude Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Compute\VulkanComputeFunctions.h" />
+    <ClInclude Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Compute\VulkanComputeImageObject.h" />
+    <ClInclude Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Compute\VulkanComputeManager.h" />
+    <ClInclude Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Compute\VulkanComputeObject.h" />
+    <ClInclude Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Compute\VulkanComputePipeline.h" />
+    <ClInclude Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Compute\VulkanComputeRBLIndex.h" />
+    <ClInclude Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Compute\VulkanComputeShader.h" />
+    <ClInclude Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Compute\VulkanOneTimeCompute.h" />
+    <ClInclude Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsColorBuffer.h" />
+    <ClInclude Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsCommandBuffer.h" />
+    <ClInclude Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsContainers.h" />
+    <ClInclude Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsCore.h" />
+    <ClInclude Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsDepthBuffer.h" />
+    <ClInclude Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsDescriptor.h" />
+    <ClInclude Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsFrameBuffer.h" />
+    <ClInclude Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsPipeline.h" />
+    <ClInclude Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsPushConstant.h" />
+    <ClInclude Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsRBLIndex.h" />
+    <ClInclude Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsRenderContext.h" />
+    <ClInclude Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsShader.h" />
+    <ClInclude Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsSupportObject.h" />
+    <ClInclude Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsSwapChain.h" />
+    <ClInclude Include="Renderer\Backend\Vulkan\Renderer Backend Layer\VulkanGraphicsSwapChain3D.h" />
+    <ClInclude Include="Renderer\Backend\Vulkan\Renderer Backend Layer\VulkanParticleSystem.h" />
+    <ClInclude Include="Renderer\Backend\Vulkan\Renderer Backend Layer\VulkanTextOverlay.h" />
+    <ClInclude Include="Renderer\Backend\Vulkan\VulkanPresets.h" />
+    <ClInclude Include="Renderer\Backend\Vulkan\VulkanRBL.h" />
+    <ClInclude Include="Renderer\Backend\base\RendererBackendBase.h" />
+    <ClInclude Include="Renderer\Components\Attachments\Global\BRDF.h" />
+    <ClInclude Include="Renderer\Components\Attachments\Global\IrradianceCube.h" />
+    <ClInclude Include="Renderer\Components\Attachments\Global\PreFilteredCube.h" />
+    <ClInclude Include="Renderer\Components\Attachments\Internal\ColorAttachment.h" />
+    <ClInclude Include="Renderer\Components\Attachments\Internal\DepthAttachment.h" />
+    <ClInclude Include="Renderer\Components\Attachments\Internal\InternalAttachment.h" />
+    <ClInclude Include="Renderer\Components\Attachments\RenderAttachment.h" />
+    <ClInclude Include="Renderer\Components\SceneComponent\Animation\AnimatedObject.h" />
+    <ClInclude Include="Renderer\Components\SceneComponent\Animation\SkeletalAnimation.h" />
+    <ClInclude Include="Renderer\Components\SceneComponent\Basic\DebugObject.h" />
+    <ClInclude Include="Renderer\Components\SceneComponent\Basic\SkyBoxObject.h" />
+    <ClInclude Include="Renderer\Components\SceneComponent\Basic\StaticObject.h" />
+    <ClInclude Include="Renderer\Components\SceneComponent\SceneComponent.h" />
+    <ClInclude Include="Renderer\Components\SceneComponent\VFX\ParticleSystem.h" />
+    <ClInclude Include="Renderer\Layers\layer.h" />
+    <ClInclude Include="Renderer\Layers\layerStack.h" />
+    <ClInclude Include="Renderer\Renderer.h" />
+    <ClInclude Include="Renderer\Renderer3D.h" />
+    <ClInclude Include="Renderer\RendererThread.h" />
+    <ClInclude Include="Renderer\StartupRenderer\Backend\Shader.h" />
+    <ClInclude Include="Renderer\StartupRenderer\Backend\Texture.h" />
+    <ClInclude Include="Renderer\StartupRenderer\Backend\VertexBuffer.h" />
+    <ClInclude Include="Renderer\StartupRenderer\StartupRenderer.h" />
+    <ClInclude Include="Renderer\UniformBufferObject.h" />
+    <ClInclude Include="Renderer\Wrapper\dll_wrapper.h" />
+    <ClInclude Include="Renderer\Wrapper\internal_wrapper.h" />
+    <ClInclude Include="Renderer\defines.h" />
+    <ClInclude Include="Renderer\rendererCommandQueue.h" />
+    <ClInclude Include="Tools\DynamikResource\DRLoader.h" />
+    <ClInclude Include="Tools\DynamikResource\DResFile.h" />
+    <ClInclude Include="Utilities\Functions\DMK_Functions.h" />
+    <ClInclude Include="core.h" />
+    <ClInclude Include="engineControlUnit.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Audio\Backend\AudioEngine.cpp" />
+    <ClCompile Include="Audio\Backend\AudioObject.cpp" />
+    <ClCompile Include="Audio\Backend\AudioObjectController.cpp" />
+    <ClCompile Include="Audio\Backend\AudioObjectControllers\BackgroundAudioController.cpp" />
+    <ClCompile Include="Audio\Backend\AudioObjectControllers\BasicAudioController.cpp" />
+    <ClCompile Include="Core\Algorithm\Private\CubemapCreator.cpp" />
+    <ClCompile Include="Core\DataTypes\Private\DynamicPointer.cpp" />
+    <ClCompile Include="Core\DataTypes\Private\FastString.cpp" />
+    <ClCompile Include="Core\DataTypes\Private\IndexedArray.cpp" />
+    <ClCompile Include="Core\DataTypes\Private\String.cpp" />
+    <ClCompile Include="Core\Memory\Private\Allocator.cpp" />
+    <ClCompile Include="Core\Memory\Private\AutomatedHeap.cpp" />
+    <ClCompile Include="Core\Memory\Private\doubleBufferedAllocator.cpp" />
+    <ClCompile Include="Core\Memory\Private\doubleBufferedPoolAllocator.cpp" />
+    <ClCompile Include="Core\Memory\Private\doubleBufferedStackAllocator.cpp" />
+    <ClCompile Include="Core\Memory\Private\memoryManager.cpp" />
+    <ClCompile Include="Core\Memory\Private\oneTimeAllocator.cpp" />
+    <ClCompile Include="Core\Memory\Private\poolAllocator.cpp" />
+    <ClCompile Include="Core\Memory\Private\stackAllocator.cpp" />
+    <ClCompile Include="Core\PCH\dmkafx.cpp">
+      <PrecompiledHeader>Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="Core\System\Private\Console.cpp" />
+    <ClCompile Include="DataHub\dataPipeline.cpp" />
+    <ClCompile Include="DataHub\network\messageData.cpp" />
+    <ClCompile Include="Dynamik.cpp" />
+    <ClCompile Include="Events\EventManager.cpp" />
+    <ClCompile Include="GameLibraries\GameObject.cpp" />
+    <ClCompile Include="GameLibraries\GameObjectDescriptors.cpp" />
+    <ClCompile Include="Intellect\Backend\Intellect\neuralNetwork.cpp" />
+    <ClCompile Include="Intellect\Backend\Maths\mathDefinitions.cpp" />
+    <ClCompile Include="Managers\Asset\AssetManager.cpp" />
+    <ClCompile Include="Networking\Backend\client.cpp" />
+    <ClCompile Include="Networking\Backend\server.cpp" />
+    <ClCompile Include="Objects\InternalFormat\InternalFormat.cpp" />
+    <ClCompile Include="Objects\Mesh\Mesh.cpp" />
+    <ClCompile Include="Objects\Texture\Texture.cpp" />
+    <ClCompile Include="Platform\Windows\Window\WindowManager.cpp" />
+    <ClCompile Include="Platform\Windows\file\daiFileManager.cpp" />
+    <ClCompile Include="Platform\Windows\file\duiFileManager.cpp" />
+    <ClCompile Include="Platform\Windows\file\fileManager.cpp" />
+    <ClCompile Include="Platform\Windows\file\readFile.cpp" />
+    <ClCompile Include="Platform\Windows\resource\imageLoader.cpp" />
+    <ClCompile Include="Platform\Windows\resource\loadIcon.cpp" />
+    <ClCompile Include="Platform\Windows\resource\modelManager.cpp" />
+    <ClCompile Include="Platform\Windows\resource\objectLoader.cpp" />
+    <ClCompile Include="Platform\Windows\thread\ExecutionHandle.cpp" />
+    <ClCompile Include="Platform\Windows\thread\InternalThread.cpp" />
+    <ClCompile Include="Platform\Windows\thread\threadManager.cpp" />
+    <ClCompile Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Attachments\VulkanBRDF.cpp" />
+    <ClCompile Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Attachments\VulkanIrradianceCube.cpp" />
+    <ClCompile Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Attachments\VulkanPrefilteredCube.cpp" />
+    <ClCompile Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Common\VulkanBufferFactory.cpp" />
+    <ClCompile Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Common\VulkanDescriptor.cpp" />
+    <ClCompile Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Common\VulkanExtensionsManager.cpp" />
+    <ClCompile Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Common\VulkanOneTimeCommandBuffer.cpp" />
+    <ClCompile Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Common\VulkanTextureFactory.cpp" />
+    <ClCompile Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Common\VulkanUtilities.cpp" />
+    <ClCompile Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Common\VulkanValidator.cpp" />
+    <ClCompile Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Compute\ComputeExample.cpp" />
+    <ClCompile Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Compute\VulkanComputeBufferObject.cpp" />
+    <ClCompile Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Compute\VulkanComputeCommandBuffer.cpp" />
+    <ClCompile Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Compute\VulkanComputeCore.cpp" />
+    <ClCompile Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Compute\VulkanComputeDescriptor.cpp" />
+    <ClCompile Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Compute\VulkanComputeFunctions.cpp" />
+    <ClCompile Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Compute\VulkanComputeImageObject.cpp" />
+    <ClCompile Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Compute\VulkanComputeManager.cpp" />
+    <ClCompile Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Compute\VulkanComputeObject.cpp" />
+    <ClCompile Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Compute\VulkanComputePipeline.cpp" />
+    <ClCompile Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Compute\VulkanComputeShader.cpp" />
+    <ClCompile Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Compute\VulkanOneTimeCompute.cpp" />
+    <ClCompile Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsColorBuffer.cpp" />
+    <ClCompile Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsCommandBuffer.cpp" />
+    <ClCompile Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsCore.cpp" />
+    <ClCompile Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsDepthBuffer.cpp" />
+    <ClCompile Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsDescriptor.cpp" />
+    <ClCompile Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsFrameBuffer.cpp" />
+    <ClCompile Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsPipeline.cpp" />
+    <ClCompile Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsPushConstant.cpp" />
+    <ClCompile Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsRenderContext.cpp" />
+    <ClCompile Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsShader.cpp" />
+    <ClCompile Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsSwapChain.cpp" />
+    <ClCompile Include="Renderer\Backend\Vulkan\Renderer Backend Layer\VulkanGraphicsSwapChain3D.cpp" />
+    <ClCompile Include="Renderer\Backend\Vulkan\Renderer Backend Layer\VulkanParticleSystem.cpp" />
+    <ClCompile Include="Renderer\Backend\Vulkan\Renderer Backend Layer\VulkanTextOverlay.cpp" />
+    <ClCompile Include="Renderer\Backend\Vulkan\VulkanPresets.cpp" />
+    <ClCompile Include="Renderer\Backend\Vulkan\VulkanRBL.cpp" />
+    <ClCompile Include="Renderer\Components\Attachments\Global\BRDF.cpp" />
+    <ClCompile Include="Renderer\Components\Attachments\Global\IrradianceCube.cpp" />
+    <ClCompile Include="Renderer\Components\Attachments\Global\PreFilteredCube.cpp" />
+    <ClCompile Include="Renderer\Components\Attachments\Internal\ColorAttachment.cpp" />
+    <ClCompile Include="Renderer\Components\Attachments\Internal\DepthAttachment.cpp" />
+    <ClCompile Include="Renderer\Components\SceneComponent\Animation\SkeletalAnimation.cpp" />
+    <ClCompile Include="Renderer\Components\SceneComponent\Basic\DebugObject.cpp" />
+    <ClCompile Include="Renderer\Components\SceneComponent\Basic\SkyBoxObject.cpp" />
+    <ClCompile Include="Renderer\Components\SceneComponent\Basic\StaticObject.cpp" />
+    <ClCompile Include="Renderer\Components\SceneComponent\VFX\ParticleSystem.cpp" />
+    <ClCompile Include="Renderer\Layers\layer.cpp" />
+    <ClCompile Include="Renderer\Layers\layerStack.cpp" />
+    <ClCompile Include="Renderer\Renderer.cpp" />
+    <ClCompile Include="Renderer\Renderer3D.cpp" />
+    <ClCompile Include="Renderer\RendererThread.cpp" />
+    <ClCompile Include="Renderer\StartupRenderer\Backend\Shader.cpp" />
+    <ClCompile Include="Renderer\StartupRenderer\Backend\Texture.cpp">
+      <ObjectFileName>$(IntDir)\Texture1.obj</ObjectFileName>
+    </ClCompile>
+    <ClCompile Include="Renderer\StartupRenderer\Backend\VertexBuffer.cpp" />
+    <ClCompile Include="Renderer\StartupRenderer\StartupRenderer.cpp" />
+    <ClCompile Include="Renderer\Wrapper\dll_wrapper.cpp" />
+    <ClCompile Include="Renderer\Wrapper\internal_wrapper.cpp" />
+    <ClCompile Include="Renderer\rendererCommandQueue.cpp" />
+    <ClCompile Include="Tools\DynamikResource\DRLoader.cpp" />
+    <ClCompile Include="Tools\DynamikResource\DResFile.cpp" />
+    <ClCompile Include="Utilities\Functions\DMK_Functions.cpp" />
+    <ClCompile Include="engineControlUnit.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Audio\Samples\license.txt" />
+    <None Include="Dynamik.lua" />
+    <None Include="IMPORTANT.txt" />
+    <None Include="architecture.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Dependencies\Programs\Debugger\Debugger.vcxproj">
+      <Project>{2ACD0289-169A-5D94-3FB3-4B3C2BDF9222}</Project>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

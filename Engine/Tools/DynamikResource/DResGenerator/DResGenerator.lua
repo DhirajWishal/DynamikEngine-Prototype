@@ -20,11 +20,11 @@ project "DResGenerator"
 
 	includedirs {
 		"$(SolutionDir)Dependencies/Libraries/Local",
-		"$(SolutionDir)Engine/Source/Runtime/Core/Algorithm",
-		"$(SolutionDir)Engine/Source/Runtime/Core/DataTypes",
-		"$(SolutionDir)Engine/Source/Runtime/Core/Math",
-		"$(SolutionDir)Engine/Source/Runtime/Core/Memory",
-		"$(SolutionDir)Engine/Source/Runtime/Core/System",
+		"$(SolutionDir)Engine/Source/Core/Algorithm",
+		"$(SolutionDir)Engine/Source/Core/DataTypes",
+		"$(SolutionDir)Engine/Source/Core/Math",
+		"$(SolutionDir)Engine/Source/Core/Memory",
+		"$(SolutionDir)Engine/Source/Core/System",
 		"$(SolutionDir)Dependencies/Programs/Debugger/src/",
 		"$(SolutionDir)Dependencies/Programs/DevCon/src/",
 		"%{IncludeDir.glm}",

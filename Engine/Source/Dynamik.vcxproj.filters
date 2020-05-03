@@ -1,0 +1,1210 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Audio">
+      <UniqueIdentifier>{9718D90C-032D-01BE-CCAE-A41D3882FDEE}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Audio\Backend">
+      <UniqueIdentifier>{4EC6F157-BA86-6D8E-83C1-B60BEF40B26A}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Audio\Backend\AudioObjectControllers">
+      <UniqueIdentifier>{FD71CC5B-E958-8E53-92A9-F4707E6F07BA}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Audio\Samples">
+      <UniqueIdentifier>{BB9E4775-275F-C3AB-F099-0C295C190888}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core">
+      <UniqueIdentifier>{2EB4837C-1AEB-840D-C3D7-6A10AFED000F}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Algorithm">
+      <UniqueIdentifier>{E4F29163-D0C0-8569-B954-F68FA5C161CE}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Algorithm\Private">
+      <UniqueIdentifier>{CE2D1C46-BA27-4598-A394-DBA88F2DAB04}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Algorithm\Public">
+      <UniqueIdentifier>{92ED5921-FE59-151C-C74D-AD7933793784}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\DataTypes">
+      <UniqueIdentifier>{CCD22960-B8A0-1D66-A134-8E8C8DA1F9CA}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\DataTypes\Dynamik">
+      <UniqueIdentifier>{48E1D155-34DB-FAA7-1D48-91B809E16014}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\DataTypes\Private">
+      <UniqueIdentifier>{B675E9E0-A26F-1233-8BDC-A8437775789F}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\DataTypes\Public">
+      <UniqueIdentifier>{7AD829A2-E644-E59C-AF38-7DFA1B640705}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Memory">
+      <UniqueIdentifier>{D62B9585-42E1-0D7B-CBD5-0752378A047F}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Memory\Private">
+      <UniqueIdentifier>{C0387A11-2C9A-571F-B507-9ED121688EDE}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Memory\Public">
+      <UniqueIdentifier>{4462C93E-3046-8A94-99A6-84E785A97416}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\PCH">
+      <UniqueIdentifier>{383E99C2-240B-F4CD-4D24-E2753950295C}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\System">
+      <UniqueIdentifier>{82670195-EE1C-7A8A-7711-7461E3C5708E}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\System\Private">
+      <UniqueIdentifier>{6C608DBE-D8C1-6ACC-612F-B17ECD8FA18B}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\System\Public">
+      <UniqueIdentifier>{70440025-5C28-C17A-C588-BBCDB18BABFC}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DataHub">
+      <UniqueIdentifier>{9EB2E560-0A92-64FC-13AA-EFD27F08CB5D}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DataHub\base">
+      <UniqueIdentifier>{08EE5D62-F450-ED06-9DD6-25BD8918B989}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DataHub\network">
+      <UniqueIdentifier>{37EBF048-A376-5E0D-AC87-E1011892BA0D}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DataHub\renderer">
+      <UniqueIdentifier>{2464B908-105D-D85A-398F-BDDF25E7B766}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Destruction">
+      <UniqueIdentifier>{59EB8BB1-C5A0-04A7-4E95-FE7DBA49FBAA}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Destruction\Backend">
+      <UniqueIdentifier>{103BA4E9-7C9C-81F7-050A-C8A9716AB8B6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Destruction\Backend\Integrity Based">
+      <UniqueIdentifier>{7D25D39B-E9DE-3D46-723E-5820DEF6F3B5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Events">
+      <UniqueIdentifier>{3A8963B1-262B-8E87-0FE6-A1DBFB2615D8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameLibraries">
+      <UniqueIdentifier>{BC96F661-2857-7298-F191-BB155D11B774}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Intellect">
+      <UniqueIdentifier>{C915BE82-3580-72F9-7EBE-239FEA67504E}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Intellect\Backend">
+      <UniqueIdentifier>{80D5D12D-ECEB-CFC3-3563-5BE5A1B8A04B}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Intellect\Backend\Intellect">
+      <UniqueIdentifier>{B3E5CC86-1FF3-FA6C-A8D9-F65714E6C623}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Intellect\Backend\Maths">
+      <UniqueIdentifier>{ECF586AB-582D-CF42-6137-3366CDEDF53B}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Managers">
+      <UniqueIdentifier>{B34CFEBD-9F19-59C9-C832-4771B45E8E57}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Managers\Asset">
+      <UniqueIdentifier>{827BFB53-6E49-EF59-57DD-5F80434ACBBE}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Networking">
+      <UniqueIdentifier>{6D615D47-5919-9F94-C220-78F0AEF73985}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Networking\Backend">
+      <UniqueIdentifier>{24854436-1069-058C-79C9-FFDE65CCEF0D}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Networking\Backend\client">
+      <UniqueIdentifier>{D2585C7F-3E1B-9009-87CB-1E96F3CC68E7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Networking\Backend\server">
+      <UniqueIdentifier>{EA6D35A4-5630-692E-9FE0-F7BA0BE2410C}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Objects">
+      <UniqueIdentifier>{CF2649B1-3B06-C84C-441E-5323B07C2EAE}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Objects\DMKObject">
+      <UniqueIdentifier>{3179F344-9D8F-F1DA-E606-7DFC525CC262}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Objects\IndexBufferObject">
+      <UniqueIdentifier>{07F6E18B-73B8-1516-BC68-A4A2286AEEF3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Objects\InternalFormat">
+      <UniqueIdentifier>{E419F26A-D013-1BBD-B980-B1CDA5198129}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Objects\Mesh">
+      <UniqueIdentifier>{EB354B71-D798-DA15-801E-13CC6C60A698}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Objects\Texture">
+      <UniqueIdentifier>{2FAB362A-9B36-A4EE-A447-27E3105200EF}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Objects\UniformBufferObject">
+      <UniqueIdentifier>{4F80037F-BB8D-3165-4474-2D50B080FD1B}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Objects\VertexBufferObject">
+      <UniqueIdentifier>{8DAC6468-79BC-1039-E275-7557CEA4FFD1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Platform">
+      <UniqueIdentifier>{2AC788B4-1694-E3BF-3FAD-D1672BD9184E}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Platform\Windows">
+      <UniqueIdentifier>{64FBD71A-50F4-F66C-7926-DCF1657ED678}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Platform\Windows\Window">
+      <UniqueIdentifier>{CBCFF26C-3707-3B04-4011-9F27ACC761FD}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Platform\Windows\file">
+      <UniqueIdentifier>{33F5DCE4-9F61-98DF-6855-303DD480BA47}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Platform\Windows\resource">
+      <UniqueIdentifier>{1B8A6238-874C-96C2-D0FC-244F3CFE6EA0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Platform\Windows\thread">
+      <UniqueIdentifier>{6B8588B0-D7BC-D047-E0C6-346B4C7DF740}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Renderer">
+      <UniqueIdentifier>{7CCE658F-689B-C09A-91B4-AE427DE0F528}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Renderer\Backend">
+      <UniqueIdentifier>{3391B4D5-1F8A-D327-48BC-B8AC3414B333}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Renderer\Backend\Components">
+      <UniqueIdentifier>{6870C052-D47D-EE38-5D64-EA23C970BAEF}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Renderer\Backend\Primitives">
+      <UniqueIdentifier>{2E09393F-9A16-6725-23FD-62108F0933DC}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Renderer\Backend\Vulkan">
+      <UniqueIdentifier>{53E7F330-BF1E-3CC8-C828-A0EB34DF62C1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Renderer\Backend\Vulkan\Renderer Backend Layer">
+      <UniqueIdentifier>{FE6EBF70-EAEC-0F0A-D3E4-CDA1BF015232}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Attachments">
+      <UniqueIdentifier>{895B42D8-751B-D37C-DE38-BB87CA17E68E}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Common">
+      <UniqueIdentifier>{76F2F9BC-E20E-ECAD-ABE6-581B17C2556F}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Compute">
+      <UniqueIdentifier>{0A013A5C-F6AA-6F6B-DF7B-7786CBC40F5A}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Graphics">
+      <UniqueIdentifier>{FEF46A5F-6ADC-5555-73CA-57D1DF30F917}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Renderer\Backend\base">
+      <UniqueIdentifier>{BD31B83C-299E-7337-F291-0B955EBD959F}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Renderer\Components">
+      <UniqueIdentifier>{112E77EE-7D8F-54FC-06FD-9AAE725D8BBB}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Renderer\Components\Attachments">
+      <UniqueIdentifier>{1C4F9E6C-8832-ADAC-9135-DBE8FD9773FD}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Renderer\Components\Attachments\Global">
+      <UniqueIdentifier>{FC053346-E857-0A36-D176-4746BD67231F}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Renderer\Components\Attachments\Internal">
+      <UniqueIdentifier>{C8146E1D-B491-6160-DD0E-6274C9EAFDF3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Renderer\Components\SceneComponent">
+      <UniqueIdentifier>{01A3A3FE-EDDE-A668-56F1-BE5F424C4F83}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Renderer\Components\SceneComponent\Animation">
+      <UniqueIdentifier>{30D1FCE0-1CE4-FC39-C5CD-D926B1BF9987}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Renderer\Components\SceneComponent\Basic">
+      <UniqueIdentifier>{720E1041-5E8B-0384-8708-049873E49F17}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Renderer\Components\SceneComponent\VFX">
+      <UniqueIdentifier>{8478EA1D-70CA-C10D-59E9-FE1D45DADAF6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Renderer\Layers">
+      <UniqueIdentifier>{BBC14DEF-274D-BBB3-305E-3EA89C6817B4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Renderer\StartupRenderer">
+      <UniqueIdentifier>{D5862C66-C1AB-7BE6-EAF6-6076D67A7A04}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Renderer\StartupRenderer\Backend">
+      <UniqueIdentifier>{8C92F602-78E3-E144-A147-D0068DF774AE}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Renderer\Wrapper">
+      <UniqueIdentifier>{4CFAC14D-38F3-E09F-6125-C6244D7DC0AB}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Tools">
+      <UniqueIdentifier>{16CF2D0E-82E3-55BF-4B65-F91EB73852F0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Tools\DynamikResource">
+      <UniqueIdentifier>{7A1CC61A-E688-8115-AF7C-19731BA8A37D}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utilities">
+      <UniqueIdentifier>{010A8043-6D74-34BA-B6B2-E55F225C120F}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utilities\Functions">
+      <UniqueIdentifier>{A97BE25C-15DD-BF6A-9E4A-061D0AABF629}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Audio\Audio.h">
+      <Filter>Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="Audio\Backend\AudioEngine.h">
+      <Filter>Audio\Backend</Filter>
+    </ClInclude>
+    <ClInclude Include="Audio\Backend\AudioLog.h">
+      <Filter>Audio\Backend</Filter>
+    </ClInclude>
+    <ClInclude Include="Audio\Backend\AudioObject.h">
+      <Filter>Audio\Backend</Filter>
+    </ClInclude>
+    <ClInclude Include="Audio\Backend\AudioObjectController.h">
+      <Filter>Audio\Backend</Filter>
+    </ClInclude>
+    <ClInclude Include="Audio\Backend\AudioObjectControllers\BackgroundAudioController.h">
+      <Filter>Audio\Backend\AudioObjectControllers</Filter>
+    </ClInclude>
+    <ClInclude Include="Audio\Backend\AudioObjectControllers\BasicAudioController.h">
+      <Filter>Audio\Backend\AudioObjectControllers</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Algorithm\AlgorithmLib.h">
+      <Filter>Core\Algorithm</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Algorithm\Public\CubemapCreator.h">
+      <Filter>Core\Algorithm\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Algorithm\Public\Sort.h">
+      <Filter>Core\Algorithm\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Algorithm\Public\Swap.h">
+      <Filter>Core\Algorithm\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\DataTypes\DataTypesLib.h">
+      <Filter>Core\DataTypes</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\DataTypes\Dynamik\DMKDataType.h">
+      <Filter>Core\DataTypes\Dynamik</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\DataTypes\Dynamik\RenderingSpecifications.h">
+      <Filter>Core\DataTypes\Dynamik</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\DataTypes\Dynamik\containers.h">
+      <Filter>Core\DataTypes\Dynamik</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\DataTypes\Dynamik\objectSpecifications.h">
+      <Filter>Core\DataTypes\Dynamik</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\DataTypes\Public\Array.h">
+      <Filter>Core\DataTypes\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\DataTypes\Public\CircularLinkedList.h">
+      <Filter>Core\DataTypes\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\DataTypes\Public\DoublyLinkedList.h">
+      <Filter>Core\DataTypes\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\DataTypes\Public\Dynamic.h">
+      <Filter>Core\DataTypes\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\DataTypes\Public\DynamicPointer.h">
+      <Filter>Core\DataTypes\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\DataTypes\Public\FastString.h">
+      <Filter>Core\DataTypes\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\DataTypes\Public\HashMap.h">
+      <Filter>Core\DataTypes\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\DataTypes\Public\HeapStore.h">
+      <Filter>Core\DataTypes\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\DataTypes\Public\IndexedArray.h">
+      <Filter>Core\DataTypes\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\DataTypes\Public\InitializerList.h">
+      <Filter>Core\DataTypes\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\DataTypes\Public\Iterator.h">
+      <Filter>Core\DataTypes\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\DataTypes\Public\Matrix.h">
+      <Filter>Core\DataTypes\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\DataTypes\Public\Pair.h">
+      <Filter>Core\DataTypes\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\DataTypes\Public\Pointer.h">
+      <Filter>Core\DataTypes\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\DataTypes\Public\Queue.h">
+      <Filter>Core\DataTypes\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\DataTypes\Public\SimpleLinkedList.h">
+      <Filter>Core\DataTypes\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\DataTypes\Public\Stack.h">
+      <Filter>Core\DataTypes\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\DataTypes\Public\StaticArray.h">
+      <Filter>Core\DataTypes\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\DataTypes\Public\String.h">
+      <Filter>Core\DataTypes\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\DataTypes\Public\Thread.h">
+      <Filter>Core\DataTypes\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\DataTypes\Public\constants.h">
+      <Filter>Core\DataTypes\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\DataTypes\Public\datatypes.h">
+      <Filter>Core\DataTypes\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\DataTypes\Public\typecheck.h">
+      <Filter>Core\DataTypes\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Memory\MemoryLib.h">
+      <Filter>Core\Memory</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Memory\Public\Allocator.h">
+      <Filter>Core\Memory\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Memory\Public\AutomatedHeap.h">
+      <Filter>Core\Memory\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Memory\Public\StaticAllocator.h">
+      <Filter>Core\Memory\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Memory\Public\doubleBufferedAllocator.h">
+      <Filter>Core\Memory\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Memory\Public\doubleBufferedPoolAllocator.h">
+      <Filter>Core\Memory\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Memory\Public\doubleBufferedStackAllocator.h">
+      <Filter>Core\Memory\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Memory\Public\memoryFunctions.h">
+      <Filter>Core\Memory\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Memory\Public\memoryManager.h">
+      <Filter>Core\Memory\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Memory\Public\oneTimeAllocator.h">
+      <Filter>Core\Memory\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Memory\Public\poolAllocator.h">
+      <Filter>Core\Memory\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Memory\Public\stackAllocator.h">
+      <Filter>Core\Memory\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\PCH\dmkafx.h">
+      <Filter>Core\PCH</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\System\Public\Console.h">
+      <Filter>Core\System\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\System\SystemLib.h">
+      <Filter>Core\System</Filter>
+    </ClInclude>
+    <ClInclude Include="DataHub\base\Manager.h">
+      <Filter>DataHub\base</Filter>
+    </ClInclude>
+    <ClInclude Include="DataHub\dataPipeline.h">
+      <Filter>DataHub</Filter>
+    </ClInclude>
+    <ClInclude Include="DataHub\network\messageData.h">
+      <Filter>DataHub\network</Filter>
+    </ClInclude>
+    <ClInclude Include="DataHub\network\messageType.h">
+      <Filter>DataHub\network</Filter>
+    </ClInclude>
+    <ClInclude Include="DataHub\renderer\typenames.h">
+      <Filter>DataHub\renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="Destruction\Backend\Integrity Based\DestructionEntity.h">
+      <Filter>Destruction\Backend\Integrity Based</Filter>
+    </ClInclude>
+    <ClInclude Include="Destruction\Backend\Integrity Based\ObjectDestructionProperties.h">
+      <Filter>Destruction\Backend\Integrity Based</Filter>
+    </ClInclude>
+    <ClInclude Include="Destruction\Backend\Integrity Based\SolidDestruction.h">
+      <Filter>Destruction\Backend\Integrity Based</Filter>
+    </ClInclude>
+    <ClInclude Include="Destruction\DDE.h">
+      <Filter>Destruction</Filter>
+    </ClInclude>
+    <ClInclude Include="Dynamik.h" />
+    <ClInclude Include="Events\DMKDropPathEventComponent.h">
+      <Filter>Events</Filter>
+    </ClInclude>
+    <ClInclude Include="Events\DMKEventComponent.h">
+      <Filter>Events</Filter>
+    </ClInclude>
+    <ClInclude Include="Events\DMKKeyEventComponent.h">
+      <Filter>Events</Filter>
+    </ClInclude>
+    <ClInclude Include="Events\DMKMouseButtonEventComponent.h">
+      <Filter>Events</Filter>
+    </ClInclude>
+    <ClInclude Include="Events\DMKMouseScrollEventComponent.h">
+      <Filter>Events</Filter>
+    </ClInclude>
+    <ClInclude Include="Events\DMKTextEventComponent.h">
+      <Filter>Events</Filter>
+    </ClInclude>
+    <ClInclude Include="Events\DMKWindowResizeEventComponent.h">
+      <Filter>Events</Filter>
+    </ClInclude>
+    <ClInclude Include="Events\EventManager.h">
+      <Filter>Events</Filter>
+    </ClInclude>
+    <ClInclude Include="Events\keyCodes.h">
+      <Filter>Events</Filter>
+    </ClInclude>
+    <ClInclude Include="GameLibraries\Camera.h">
+      <Filter>GameLibraries</Filter>
+    </ClInclude>
+    <ClInclude Include="GameLibraries\GameObject.h">
+      <Filter>GameLibraries</Filter>
+    </ClInclude>
+    <ClInclude Include="GameLibraries\GameObjectDescriptors.h">
+      <Filter>GameLibraries</Filter>
+    </ClInclude>
+    <ClInclude Include="GameLibraries\KeyBingings.h">
+      <Filter>GameLibraries</Filter>
+    </ClInclude>
+    <ClInclude Include="GameLibraries\Level.h">
+      <Filter>GameLibraries</Filter>
+    </ClInclude>
+    <ClInclude Include="GameLibraries\Light.h">
+      <Filter>GameLibraries</Filter>
+    </ClInclude>
+    <ClInclude Include="GameLibraries\Material.h">
+      <Filter>GameLibraries</Filter>
+    </ClInclude>
+    <ClInclude Include="GameLibraries\Scene.h">
+      <Filter>GameLibraries</Filter>
+    </ClInclude>
+    <ClInclude Include="GameLibraries\SkyboxObject.h">
+      <Filter>GameLibraries</Filter>
+    </ClInclude>
+    <ClInclude Include="GameLibraries\StaticObject.h">
+      <Filter>GameLibraries</Filter>
+    </ClInclude>
+    <ClInclude Include="Intellect\Backend\Intellect\Neuron.h">
+      <Filter>Intellect\Backend\Intellect</Filter>
+    </ClInclude>
+    <ClInclude Include="Intellect\Backend\Intellect\neuralNetwork.h">
+      <Filter>Intellect\Backend\Intellect</Filter>
+    </ClInclude>
+    <ClInclude Include="Intellect\Backend\Maths\Sigmoid.h">
+      <Filter>Intellect\Backend\Maths</Filter>
+    </ClInclude>
+    <ClInclude Include="Intellect\Intellect.h">
+      <Filter>Intellect</Filter>
+    </ClInclude>
+    <ClInclude Include="Managers\Asset\AssetManager.h">
+      <Filter>Managers\Asset</Filter>
+    </ClInclude>
+    <ClInclude Include="Managers\Managers.h">
+      <Filter>Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="Networking\Backend\client.h">
+      <Filter>Networking\Backend</Filter>
+    </ClInclude>
+    <ClInclude Include="Networking\Backend\client\Client.h">
+      <Filter>Networking\Backend\client</Filter>
+    </ClInclude>
+    <ClInclude Include="Networking\Backend\server.h">
+      <Filter>Networking\Backend</Filter>
+    </ClInclude>
+    <ClInclude Include="Networking\Backend\server\Server.h">
+      <Filter>Networking\Backend\server</Filter>
+    </ClInclude>
+    <ClInclude Include="Networking\Networking.h">
+      <Filter>Networking</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\DMKObject\DMKObject.h">
+      <Filter>Objects\DMKObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\IndexBufferObject\IndexBufferObject.h">
+      <Filter>Objects\IndexBufferObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\IndexBufferObject\IndexBufferObjectUI16.h">
+      <Filter>Objects\IndexBufferObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\IndexBufferObject\IndexBufferObjectUI32.h">
+      <Filter>Objects\IndexBufferObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\IndexBufferObject\IndexBufferObjectUI8.h">
+      <Filter>Objects\IndexBufferObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\InternalFormat\InternalFormat.h">
+      <Filter>Objects\InternalFormat</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\Mesh\Mesh.h">
+      <Filter>Objects\Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\Texture\Texture.h">
+      <Filter>Objects\Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\UniformBufferObject\UniformBufferObject.h">
+      <Filter>Objects\UniformBufferObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\VertexBufferObject\VertexBufferObject.h">
+      <Filter>Objects\VertexBufferObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Platform\Windows.h">
+      <Filter>Platform</Filter>
+    </ClInclude>
+    <ClInclude Include="Platform\Windows\DLLInterface.h">
+      <Filter>Platform\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="Platform\Windows\Window\WindowManager.h">
+      <Filter>Platform\Windows\Window</Filter>
+    </ClInclude>
+    <ClInclude Include="Platform\Windows\file\daiFileManager.h">
+      <Filter>Platform\Windows\file</Filter>
+    </ClInclude>
+    <ClInclude Include="Platform\Windows\file\duiFileManager.h">
+      <Filter>Platform\Windows\file</Filter>
+    </ClInclude>
+    <ClInclude Include="Platform\Windows\file\fileManager.h">
+      <Filter>Platform\Windows\file</Filter>
+    </ClInclude>
+    <ClInclude Include="Platform\Windows\file\readFile.h">
+      <Filter>Platform\Windows\file</Filter>
+    </ClInclude>
+    <ClInclude Include="Platform\Windows\resource\imageLoader.h">
+      <Filter>Platform\Windows\resource</Filter>
+    </ClInclude>
+    <ClInclude Include="Platform\Windows\resource\loadIcon.h">
+      <Filter>Platform\Windows\resource</Filter>
+    </ClInclude>
+    <ClInclude Include="Platform\Windows\resource\modelManager.h">
+      <Filter>Platform\Windows\resource</Filter>
+    </ClInclude>
+    <ClInclude Include="Platform\Windows\resource\objectLoader.h">
+      <Filter>Platform\Windows\resource</Filter>
+    </ClInclude>
+    <ClInclude Include="Platform\Windows\thread\ExecutionHandle.h">
+      <Filter>Platform\Windows\thread</Filter>
+    </ClInclude>
+    <ClInclude Include="Platform\Windows\thread\InternalThread.h">
+      <Filter>Platform\Windows\thread</Filter>
+    </ClInclude>
+    <ClInclude Include="Platform\Windows\thread\threadManager.h">
+      <Filter>Platform\Windows\thread</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\Backend\Components\FrameBuffer.h">
+      <Filter>Renderer\Backend\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\Backend\Components\SwapChain.h">
+      <Filter>Renderer\Backend\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\Backend\Components\TextOverlay.h">
+      <Filter>Renderer\Backend\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\Backend\Primitives\FrameBuffer.h">
+      <Filter>Renderer\Backend\Primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\Backend\Primitives\IndexBuffer.h">
+      <Filter>Renderer\Backend\Primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\Backend\Primitives\Pipeline.h">
+      <Filter>Renderer\Backend\Primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\Backend\Primitives\PipelineCache.h">
+      <Filter>Renderer\Backend\Primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\Backend\Primitives\PrimitiveContainer.h">
+      <Filter>Renderer\Backend\Primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\Backend\Primitives\RenderPass.h">
+      <Filter>Renderer\Backend\Primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\Backend\Primitives\RenderPrimitive.h">
+      <Filter>Renderer\Backend\Primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\Backend\Primitives\Shader.h">
+      <Filter>Renderer\Backend\Primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\Backend\Primitives\SwapChain.h">
+      <Filter>Renderer\Backend\Primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\Backend\Primitives\TextOverlay.h">
+      <Filter>Renderer\Backend\Primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\Backend\Primitives\TextureData.h">
+      <Filter>Renderer\Backend\Primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\Backend\Primitives\UniformBuffer.h">
+      <Filter>Renderer\Backend\Primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\Backend\Primitives\VertexBuffer.h">
+      <Filter>Renderer\Backend\Primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Attachments\VulkanBRDF.h">
+      <Filter>Renderer\Backend\Vulkan\Renderer Backend Layer\Attachments</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Attachments\VulkanIrradianceCube.h">
+      <Filter>Renderer\Backend\Vulkan\Renderer Backend Layer\Attachments</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Attachments\VulkanPrefilteredCube.h">
+      <Filter>Renderer\Backend\Vulkan\Renderer Backend Layer\Attachments</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Common\VulkanAttachment.h">
+      <Filter>Renderer\Backend\Vulkan\Renderer Backend Layer\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Common\VulkanBufferFactory.h">
+      <Filter>Renderer\Backend\Vulkan\Renderer Backend Layer\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Common\VulkanControlHeader.h">
+      <Filter>Renderer\Backend\Vulkan\Renderer Backend Layer\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Common\VulkanDescriptor.h">
+      <Filter>Renderer\Backend\Vulkan\Renderer Backend Layer\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Common\VulkanExtensionsManager.h">
+      <Filter>Renderer\Backend\Vulkan\Renderer Backend Layer\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Common\VulkanOneTimeCommandBuffer.h">
+      <Filter>Renderer\Backend\Vulkan\Renderer Backend Layer\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Common\VulkanTextureFactory.h">
+      <Filter>Renderer\Backend\Vulkan\Renderer Backend Layer\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Common\VulkanUtilities.h">
+      <Filter>Renderer\Backend\Vulkan\Renderer Backend Layer\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Common\VulkanValidator.h">
+      <Filter>Renderer\Backend\Vulkan\Renderer Backend Layer\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Compute\VulkanComputeBufferObject.h">
+      <Filter>Renderer\Backend\Vulkan\Renderer Backend Layer\Compute</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Compute\VulkanComputeCommandBuffer.h">
+      <Filter>Renderer\Backend\Vulkan\Renderer Backend Layer\Compute</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Compute\VulkanComputeCore.h">
+      <Filter>Renderer\Backend\Vulkan\Renderer Backend Layer\Compute</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Compute\VulkanComputeDescriptor.h">
+      <Filter>Renderer\Backend\Vulkan\Renderer Backend Layer\Compute</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Compute\VulkanComputeFunctions.h">
+      <Filter>Renderer\Backend\Vulkan\Renderer Backend Layer\Compute</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Compute\VulkanComputeImageObject.h">
+      <Filter>Renderer\Backend\Vulkan\Renderer Backend Layer\Compute</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Compute\VulkanComputeManager.h">
+      <Filter>Renderer\Backend\Vulkan\Renderer Backend Layer\Compute</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Compute\VulkanComputeObject.h">
+      <Filter>Renderer\Backend\Vulkan\Renderer Backend Layer\Compute</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Compute\VulkanComputePipeline.h">
+      <Filter>Renderer\Backend\Vulkan\Renderer Backend Layer\Compute</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Compute\VulkanComputeRBLIndex.h">
+      <Filter>Renderer\Backend\Vulkan\Renderer Backend Layer\Compute</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Compute\VulkanComputeShader.h">
+      <Filter>Renderer\Backend\Vulkan\Renderer Backend Layer\Compute</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Compute\VulkanOneTimeCompute.h">
+      <Filter>Renderer\Backend\Vulkan\Renderer Backend Layer\Compute</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsColorBuffer.h">
+      <Filter>Renderer\Backend\Vulkan\Renderer Backend Layer\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsCommandBuffer.h">
+      <Filter>Renderer\Backend\Vulkan\Renderer Backend Layer\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsContainers.h">
+      <Filter>Renderer\Backend\Vulkan\Renderer Backend Layer\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsCore.h">
+      <Filter>Renderer\Backend\Vulkan\Renderer Backend Layer\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsDepthBuffer.h">
+      <Filter>Renderer\Backend\Vulkan\Renderer Backend Layer\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsDescriptor.h">
+      <Filter>Renderer\Backend\Vulkan\Renderer Backend Layer\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsFrameBuffer.h">
+      <Filter>Renderer\Backend\Vulkan\Renderer Backend Layer\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsPipeline.h">
+      <Filter>Renderer\Backend\Vulkan\Renderer Backend Layer\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsPushConstant.h">
+      <Filter>Renderer\Backend\Vulkan\Renderer Backend Layer\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsRBLIndex.h">
+      <Filter>Renderer\Backend\Vulkan\Renderer Backend Layer\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsRenderContext.h">
+      <Filter>Renderer\Backend\Vulkan\Renderer Backend Layer\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsShader.h">
+      <Filter>Renderer\Backend\Vulkan\Renderer Backend Layer\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsSupportObject.h">
+      <Filter>Renderer\Backend\Vulkan\Renderer Backend Layer\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsSwapChain.h">
+      <Filter>Renderer\Backend\Vulkan\Renderer Backend Layer\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\Backend\Vulkan\Renderer Backend Layer\VulkanGraphicsSwapChain3D.h">
+      <Filter>Renderer\Backend\Vulkan\Renderer Backend Layer</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\Backend\Vulkan\Renderer Backend Layer\VulkanParticleSystem.h">
+      <Filter>Renderer\Backend\Vulkan\Renderer Backend Layer</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\Backend\Vulkan\Renderer Backend Layer\VulkanTextOverlay.h">
+      <Filter>Renderer\Backend\Vulkan\Renderer Backend Layer</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\Backend\Vulkan\VulkanPresets.h">
+      <Filter>Renderer\Backend\Vulkan</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\Backend\Vulkan\VulkanRBL.h">
+      <Filter>Renderer\Backend\Vulkan</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\Backend\base\RendererBackendBase.h">
+      <Filter>Renderer\Backend\base</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\Components\Attachments\Global\BRDF.h">
+      <Filter>Renderer\Components\Attachments\Global</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\Components\Attachments\Global\IrradianceCube.h">
+      <Filter>Renderer\Components\Attachments\Global</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\Components\Attachments\Global\PreFilteredCube.h">
+      <Filter>Renderer\Components\Attachments\Global</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\Components\Attachments\Internal\ColorAttachment.h">
+      <Filter>Renderer\Components\Attachments\Internal</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\Components\Attachments\Internal\DepthAttachment.h">
+      <Filter>Renderer\Components\Attachments\Internal</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\Components\Attachments\Internal\InternalAttachment.h">
+      <Filter>Renderer\Components\Attachments\Internal</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\Components\Attachments\RenderAttachment.h">
+      <Filter>Renderer\Components\Attachments</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\Components\SceneComponent\Animation\AnimatedObject.h">
+      <Filter>Renderer\Components\SceneComponent\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\Components\SceneComponent\Animation\SkeletalAnimation.h">
+      <Filter>Renderer\Components\SceneComponent\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\Components\SceneComponent\Basic\DebugObject.h">
+      <Filter>Renderer\Components\SceneComponent\Basic</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\Components\SceneComponent\Basic\SkyBoxObject.h">
+      <Filter>Renderer\Components\SceneComponent\Basic</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\Components\SceneComponent\Basic\StaticObject.h">
+      <Filter>Renderer\Components\SceneComponent\Basic</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\Components\SceneComponent\SceneComponent.h">
+      <Filter>Renderer\Components\SceneComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\Components\SceneComponent\VFX\ParticleSystem.h">
+      <Filter>Renderer\Components\SceneComponent\VFX</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\Layers\layer.h">
+      <Filter>Renderer\Layers</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\Layers\layerStack.h">
+      <Filter>Renderer\Layers</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\Renderer.h">
+      <Filter>Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\Renderer3D.h">
+      <Filter>Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\RendererThread.h">
+      <Filter>Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\StartupRenderer\Backend\Shader.h">
+      <Filter>Renderer\StartupRenderer\Backend</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\StartupRenderer\Backend\Texture.h">
+      <Filter>Renderer\StartupRenderer\Backend</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\StartupRenderer\Backend\VertexBuffer.h">
+      <Filter>Renderer\StartupRenderer\Backend</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\StartupRenderer\StartupRenderer.h">
+      <Filter>Renderer\StartupRenderer</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\UniformBufferObject.h">
+      <Filter>Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\Wrapper\dll_wrapper.h">
+      <Filter>Renderer\Wrapper</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\Wrapper\internal_wrapper.h">
+      <Filter>Renderer\Wrapper</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\defines.h">
+      <Filter>Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\rendererCommandQueue.h">
+      <Filter>Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="Tools\DynamikResource\DRLoader.h">
+      <Filter>Tools\DynamikResource</Filter>
+    </ClInclude>
+    <ClInclude Include="Tools\DynamikResource\DResFile.h">
+      <Filter>Tools\DynamikResource</Filter>
+    </ClInclude>
+    <ClInclude Include="Utilities\Functions\DMK_Functions.h">
+      <Filter>Utilities\Functions</Filter>
+    </ClInclude>
+    <ClInclude Include="core.h" />
+    <ClInclude Include="engineControlUnit.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Audio\Backend\AudioEngine.cpp">
+      <Filter>Audio\Backend</Filter>
+    </ClCompile>
+    <ClCompile Include="Audio\Backend\AudioObject.cpp">
+      <Filter>Audio\Backend</Filter>
+    </ClCompile>
+    <ClCompile Include="Audio\Backend\AudioObjectController.cpp">
+      <Filter>Audio\Backend</Filter>
+    </ClCompile>
+    <ClCompile Include="Audio\Backend\AudioObjectControllers\BackgroundAudioController.cpp">
+      <Filter>Audio\Backend\AudioObjectControllers</Filter>
+    </ClCompile>
+    <ClCompile Include="Audio\Backend\AudioObjectControllers\BasicAudioController.cpp">
+      <Filter>Audio\Backend\AudioObjectControllers</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Algorithm\Private\CubemapCreator.cpp">
+      <Filter>Core\Algorithm\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\DataTypes\Private\DynamicPointer.cpp">
+      <Filter>Core\DataTypes\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\DataTypes\Private\FastString.cpp">
+      <Filter>Core\DataTypes\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\DataTypes\Private\IndexedArray.cpp">
+      <Filter>Core\DataTypes\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\DataTypes\Private\String.cpp">
+      <Filter>Core\DataTypes\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Memory\Private\Allocator.cpp">
+      <Filter>Core\Memory\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Memory\Private\AutomatedHeap.cpp">
+      <Filter>Core\Memory\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Memory\Private\doubleBufferedAllocator.cpp">
+      <Filter>Core\Memory\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Memory\Private\doubleBufferedPoolAllocator.cpp">
+      <Filter>Core\Memory\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Memory\Private\doubleBufferedStackAllocator.cpp">
+      <Filter>Core\Memory\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Memory\Private\memoryManager.cpp">
+      <Filter>Core\Memory\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Memory\Private\oneTimeAllocator.cpp">
+      <Filter>Core\Memory\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Memory\Private\poolAllocator.cpp">
+      <Filter>Core\Memory\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Memory\Private\stackAllocator.cpp">
+      <Filter>Core\Memory\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\PCH\dmkafx.cpp">
+      <Filter>Core\PCH</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\System\Private\Console.cpp">
+      <Filter>Core\System\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="DataHub\dataPipeline.cpp">
+      <Filter>DataHub</Filter>
+    </ClCompile>
+    <ClCompile Include="DataHub\network\messageData.cpp">
+      <Filter>DataHub\network</Filter>
+    </ClCompile>
+    <ClCompile Include="Dynamik.cpp" />
+    <ClCompile Include="Events\EventManager.cpp">
+      <Filter>Events</Filter>
+    </ClCompile>
+    <ClCompile Include="GameLibraries\GameObject.cpp">
+      <Filter>GameLibraries</Filter>
+    </ClCompile>
+    <ClCompile Include="GameLibraries\GameObjectDescriptors.cpp">
+      <Filter>GameLibraries</Filter>
+    </ClCompile>
+    <ClCompile Include="Intellect\Backend\Intellect\neuralNetwork.cpp">
+      <Filter>Intellect\Backend\Intellect</Filter>
+    </ClCompile>
+    <ClCompile Include="Intellect\Backend\Maths\mathDefinitions.cpp">
+      <Filter>Intellect\Backend\Maths</Filter>
+    </ClCompile>
+    <ClCompile Include="Managers\Asset\AssetManager.cpp">
+      <Filter>Managers\Asset</Filter>
+    </ClCompile>
+    <ClCompile Include="Networking\Backend\client.cpp">
+      <Filter>Networking\Backend</Filter>
+    </ClCompile>
+    <ClCompile Include="Networking\Backend\server.cpp">
+      <Filter>Networking\Backend</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects\InternalFormat\InternalFormat.cpp">
+      <Filter>Objects\InternalFormat</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects\Mesh\Mesh.cpp">
+      <Filter>Objects\Mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects\Texture\Texture.cpp">
+      <Filter>Objects\Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="Platform\Windows\Window\WindowManager.cpp">
+      <Filter>Platform\Windows\Window</Filter>
+    </ClCompile>
+    <ClCompile Include="Platform\Windows\file\daiFileManager.cpp">
+      <Filter>Platform\Windows\file</Filter>
+    </ClCompile>
+    <ClCompile Include="Platform\Windows\file\duiFileManager.cpp">
+      <Filter>Platform\Windows\file</Filter>
+    </ClCompile>
+    <ClCompile Include="Platform\Windows\file\fileManager.cpp">
+      <Filter>Platform\Windows\file</Filter>
+    </ClCompile>
+    <ClCompile Include="Platform\Windows\file\readFile.cpp">
+      <Filter>Platform\Windows\file</Filter>
+    </ClCompile>
+    <ClCompile Include="Platform\Windows\resource\imageLoader.cpp">
+      <Filter>Platform\Windows\resource</Filter>
+    </ClCompile>
+    <ClCompile Include="Platform\Windows\resource\loadIcon.cpp">
+      <Filter>Platform\Windows\resource</Filter>
+    </ClCompile>
+    <ClCompile Include="Platform\Windows\resource\modelManager.cpp">
+      <Filter>Platform\Windows\resource</Filter>
+    </ClCompile>
+    <ClCompile Include="Platform\Windows\resource\objectLoader.cpp">
+      <Filter>Platform\Windows\resource</Filter>
+    </ClCompile>
+    <ClCompile Include="Platform\Windows\thread\ExecutionHandle.cpp">
+      <Filter>Platform\Windows\thread</Filter>
+    </ClCompile>
+    <ClCompile Include="Platform\Windows\thread\InternalThread.cpp">
+      <Filter>Platform\Windows\thread</Filter>
+    </ClCompile>
+    <ClCompile Include="Platform\Windows\thread\threadManager.cpp">
+      <Filter>Platform\Windows\thread</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Attachments\VulkanBRDF.cpp">
+      <Filter>Renderer\Backend\Vulkan\Renderer Backend Layer\Attachments</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Attachments\VulkanIrradianceCube.cpp">
+      <Filter>Renderer\Backend\Vulkan\Renderer Backend Layer\Attachments</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Attachments\VulkanPrefilteredCube.cpp">
+      <Filter>Renderer\Backend\Vulkan\Renderer Backend Layer\Attachments</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Common\VulkanBufferFactory.cpp">
+      <Filter>Renderer\Backend\Vulkan\Renderer Backend Layer\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Common\VulkanDescriptor.cpp">
+      <Filter>Renderer\Backend\Vulkan\Renderer Backend Layer\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Common\VulkanExtensionsManager.cpp">
+      <Filter>Renderer\Backend\Vulkan\Renderer Backend Layer\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Common\VulkanOneTimeCommandBuffer.cpp">
+      <Filter>Renderer\Backend\Vulkan\Renderer Backend Layer\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Common\VulkanTextureFactory.cpp">
+      <Filter>Renderer\Backend\Vulkan\Renderer Backend Layer\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Common\VulkanUtilities.cpp">
+      <Filter>Renderer\Backend\Vulkan\Renderer Backend Layer\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Common\VulkanValidator.cpp">
+      <Filter>Renderer\Backend\Vulkan\Renderer Backend Layer\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Compute\ComputeExample.cpp">
+      <Filter>Renderer\Backend\Vulkan\Renderer Backend Layer\Compute</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Compute\VulkanComputeBufferObject.cpp">
+      <Filter>Renderer\Backend\Vulkan\Renderer Backend Layer\Compute</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Compute\VulkanComputeCommandBuffer.cpp">
+      <Filter>Renderer\Backend\Vulkan\Renderer Backend Layer\Compute</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Compute\VulkanComputeCore.cpp">
+      <Filter>Renderer\Backend\Vulkan\Renderer Backend Layer\Compute</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Compute\VulkanComputeDescriptor.cpp">
+      <Filter>Renderer\Backend\Vulkan\Renderer Backend Layer\Compute</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Compute\VulkanComputeFunctions.cpp">
+      <Filter>Renderer\Backend\Vulkan\Renderer Backend Layer\Compute</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Compute\VulkanComputeImageObject.cpp">
+      <Filter>Renderer\Backend\Vulkan\Renderer Backend Layer\Compute</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Compute\VulkanComputeManager.cpp">
+      <Filter>Renderer\Backend\Vulkan\Renderer Backend Layer\Compute</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Compute\VulkanComputeObject.cpp">
+      <Filter>Renderer\Backend\Vulkan\Renderer Backend Layer\Compute</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Compute\VulkanComputePipeline.cpp">
+      <Filter>Renderer\Backend\Vulkan\Renderer Backend Layer\Compute</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Compute\VulkanComputeShader.cpp">
+      <Filter>Renderer\Backend\Vulkan\Renderer Backend Layer\Compute</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Compute\VulkanOneTimeCompute.cpp">
+      <Filter>Renderer\Backend\Vulkan\Renderer Backend Layer\Compute</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsColorBuffer.cpp">
+      <Filter>Renderer\Backend\Vulkan\Renderer Backend Layer\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsCommandBuffer.cpp">
+      <Filter>Renderer\Backend\Vulkan\Renderer Backend Layer\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsCore.cpp">
+      <Filter>Renderer\Backend\Vulkan\Renderer Backend Layer\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsDepthBuffer.cpp">
+      <Filter>Renderer\Backend\Vulkan\Renderer Backend Layer\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsDescriptor.cpp">
+      <Filter>Renderer\Backend\Vulkan\Renderer Backend Layer\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsFrameBuffer.cpp">
+      <Filter>Renderer\Backend\Vulkan\Renderer Backend Layer\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsPipeline.cpp">
+      <Filter>Renderer\Backend\Vulkan\Renderer Backend Layer\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsPushConstant.cpp">
+      <Filter>Renderer\Backend\Vulkan\Renderer Backend Layer\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsRenderContext.cpp">
+      <Filter>Renderer\Backend\Vulkan\Renderer Backend Layer\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsShader.cpp">
+      <Filter>Renderer\Backend\Vulkan\Renderer Backend Layer\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsSwapChain.cpp">
+      <Filter>Renderer\Backend\Vulkan\Renderer Backend Layer\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\Backend\Vulkan\Renderer Backend Layer\VulkanGraphicsSwapChain3D.cpp">
+      <Filter>Renderer\Backend\Vulkan\Renderer Backend Layer</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\Backend\Vulkan\Renderer Backend Layer\VulkanParticleSystem.cpp">
+      <Filter>Renderer\Backend\Vulkan\Renderer Backend Layer</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\Backend\Vulkan\Renderer Backend Layer\VulkanTextOverlay.cpp">
+      <Filter>Renderer\Backend\Vulkan\Renderer Backend Layer</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\Backend\Vulkan\VulkanPresets.cpp">
+      <Filter>Renderer\Backend\Vulkan</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\Backend\Vulkan\VulkanRBL.cpp">
+      <Filter>Renderer\Backend\Vulkan</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\Components\Attachments\Global\BRDF.cpp">
+      <Filter>Renderer\Components\Attachments\Global</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\Components\Attachments\Global\IrradianceCube.cpp">
+      <Filter>Renderer\Components\Attachments\Global</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\Components\Attachments\Global\PreFilteredCube.cpp">
+      <Filter>Renderer\Components\Attachments\Global</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\Components\Attachments\Internal\ColorAttachment.cpp">
+      <Filter>Renderer\Components\Attachments\Internal</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\Components\Attachments\Internal\DepthAttachment.cpp">
+      <Filter>Renderer\Components\Attachments\Internal</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\Components\SceneComponent\Animation\SkeletalAnimation.cpp">
+      <Filter>Renderer\Components\SceneComponent\Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\Components\SceneComponent\Basic\DebugObject.cpp">
+      <Filter>Renderer\Components\SceneComponent\Basic</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\Components\SceneComponent\Basic\SkyBoxObject.cpp">
+      <Filter>Renderer\Components\SceneComponent\Basic</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\Components\SceneComponent\Basic\StaticObject.cpp">
+      <Filter>Renderer\Components\SceneComponent\Basic</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\Components\SceneComponent\VFX\ParticleSystem.cpp">
+      <Filter>Renderer\Components\SceneComponent\VFX</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\Layers\layer.cpp">
+      <Filter>Renderer\Layers</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\Layers\layerStack.cpp">
+      <Filter>Renderer\Layers</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\Renderer.cpp">
+      <Filter>Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\Renderer3D.cpp">
+      <Filter>Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\RendererThread.cpp">
+      <Filter>Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\StartupRenderer\Backend\Shader.cpp">
+      <Filter>Renderer\StartupRenderer\Backend</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\StartupRenderer\Backend\Texture.cpp">
+      <Filter>Renderer\StartupRenderer\Backend</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\StartupRenderer\Backend\VertexBuffer.cpp">
+      <Filter>Renderer\StartupRenderer\Backend</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\StartupRenderer\StartupRenderer.cpp">
+      <Filter>Renderer\StartupRenderer</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\Wrapper\dll_wrapper.cpp">
+      <Filter>Renderer\Wrapper</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\Wrapper\internal_wrapper.cpp">
+      <Filter>Renderer\Wrapper</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\rendererCommandQueue.cpp">
+      <Filter>Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="Tools\DynamikResource\DRLoader.cpp">
+      <Filter>Tools\DynamikResource</Filter>
+    </ClCompile>
+    <ClCompile Include="Tools\DynamikResource\DResFile.cpp">
+      <Filter>Tools\DynamikResource</Filter>
+    </ClCompile>
+    <ClCompile Include="Utilities\Functions\DMK_Functions.cpp">
+      <Filter>Utilities\Functions</Filter>
+    </ClCompile>
+    <ClCompile Include="engineControlUnit.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Audio\Samples\license.txt">
+      <Filter>Audio\Samples</Filter>
+    </None>
+    <None Include="Dynamik.lua" />
+    <None Include="IMPORTANT.txt" />
+    <None Include="architecture.txt" />
+  </ItemGroup>
+</Project>

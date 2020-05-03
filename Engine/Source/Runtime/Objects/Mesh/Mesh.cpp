@@ -23,48 +23,37 @@ namespace Dynamik {
 				{
 				case DMKVertexData::DMK_VERTEX_DATA_POSITION:
 					_tempArray = _getAttributeData(attribute.dataType, _store.position);
-					moveBytes(nextPtr, _tempArray.begin(), _tempArray.end());
-					nextPtr += _getNextPointerAddress(attribute);
 					break;
 
 				case DMKVertexData::DMK_VERTEX_DATA_COLOR:
 					_tempArray = _getAttributeData(attribute.dataType, _store.color);
-					moveBytes(nextPtr, _tempArray.begin(), _tempArray.end());
-					nextPtr += _getNextPointerAddress(attribute);
 					break;
 
 				case DMKVertexData::DMK_VERTEX_DATA_TEXTURE_COORDINATES:
 					_tempArray = _getAttributeData(attribute.dataType, _store.textureCoordinate);
-					moveBytes(nextPtr, _tempArray.begin(), _tempArray.end());
-					nextPtr += _getNextPointerAddress(attribute);
 					break;
 
 				case DMKVertexData::DMK_VERTEX_DATA_NORMAL_VECTORS:
 					_tempArray = _getAttributeData(attribute.dataType, _store.normal);
-					moveBytes(nextPtr, _tempArray.begin(), _tempArray.end());
-					nextPtr += _getNextPointerAddress(attribute);
 					break;
 
 				case DMKVertexData::DMK_VERTEX_DATA_SPACE_VECTORS:
 					_tempArray = _getAttributeData(attribute.dataType, _store.space);
-					moveBytes(nextPtr, _tempArray.begin(), _tempArray.end());
-					nextPtr += _getNextPointerAddress(attribute);
 					break;
 
 				case DMKVertexData::DMK_VERTEX_DATA_INTEGRITY:
 					_tempArray = { _store.integrity };
-					moveBytes(nextPtr, _tempArray.begin(), _tempArray.end());
-					nextPtr += _getNextPointerAddress(attribute);
-					break;
-
-				default:
 					break;
 				}
+
+				moveBytes(nextPtr, _tempArray.begin(), _tempArray.end());
+				nextPtr += _getNextPointerAddress(attribute);
 			}
 
 		}
 
 		moveBytes((POINTER<F32>)ptr, _pool, nextPtr);
+		StaticAllocator<F32>::deAllocate(_pool, nextPtr);
 	}
 
 	ARRAY<F32> Mesh::_getAttributeData(DMKDataType type, VEC3 data)
@@ -77,7 +66,7 @@ namespace Dynamik {
 		if (_typeSize % sizeof(F32) != 0)
 			DMK_CORE_FATAL("Unsupported Vartex Data Format!");
 
-		_dataCount = sizeof(F32) / _typeSize;
+		_dataCount = _typeSize / sizeof(F32);
 
 		if (_dataCount >= 4)
 			DMK_CORE_FATAL("Data count is out of bound!");
@@ -90,7 +79,7 @@ namespace Dynamik {
 
 	UI32 Mesh::_getNextPointerAddress(DMKVertexAttribute attribute)
 	{
-		return sizeof(F32) / (UI32)attribute.dataType;
+		return (UI32)attribute.dataType / sizeof(F32);
 	}
 	
 	B1 MeshPointStore::operator==(const MeshPointStore& other) const

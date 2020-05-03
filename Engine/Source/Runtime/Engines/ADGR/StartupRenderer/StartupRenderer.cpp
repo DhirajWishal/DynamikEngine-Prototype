@@ -23,10 +23,12 @@ namespace Dynamik {
 			glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
 			glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 5);
 			glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+			glfwWindowHint(GLFW_DECORATED, GLFW_FALSE);
 
 #if defined(DMK_DEBUG)
 			instance.window = glfwCreateWindow(instance.windowWidth, instance.windowHeight, "Dynamik Engine", nullptr, nullptr);
-
+			glfwSetWindowPos(instance.window, 0.5f, 0.5f);
+			glfwSetWindowOpacity(instance.window, 1);
 #else
 			GLFWmonitor* monitor = glfwGetPrimaryMonitor();
 			const GLFWvidmode* mode = glfwGetVideoMode(monitor);

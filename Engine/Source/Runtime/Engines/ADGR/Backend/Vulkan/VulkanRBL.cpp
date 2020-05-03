@@ -314,13 +314,15 @@ namespace Dynamik {
 					DMK_BEGIN_PROFILE_TIMER();
 
 					/* Currently the Vulkan RBL supports vertex shader uniform buffer updation only */
-					DMKUniformBufferObjectDescriptor _description = info.formats[index]->descriptor.uniformBufferObjectDescriptions[_itr];
-					if (_description.location != DMKShaderLocation::DMK_SHADER_LOCATION_VERTEX)
+					if (info.formats[index]->descriptor.uniformBufferObjectDescriptions[_itr].location != DMKShaderLocation::DMK_SHADER_LOCATION_VERTEX)
 						continue;
 
 					/* Update the objects uniform buffer memory */
-					ADGRVulkanUnformBufferContainer _container = myResourceContainers[inUseIndex].renderData[index].uniformBufferContainers[_itr];
-					VulkanUtilities::updateUniformBuffer(myGraphicsCore.logicalDevice, info.formats[index]->onUpdate(info.cameraData), _container.bufferMemories[imageIndex], _description);
+					VulkanUtilities::updateUniformBuffer(
+						myGraphicsCore.logicalDevice,
+						info.formats[index]->onUpdate(info.cameraData),
+						myResourceContainers[inUseIndex].renderData[index].uniformBufferContainers[_itr].bufferMemories[imageIndex],
+						info.formats[index]->descriptor.uniformBufferObjectDescriptions[_itr]);
 				}
 			}
 
@@ -438,9 +440,9 @@ namespace Dynamik {
 			ADGRVulkanBufferContainer _container;
 			_container.dataCount = mesh.vertexDataStore.size();
 
-			VkDeviceSize bufferSize = _container.dataCount * DMKVertexBufferObjectDescriptor::vertexByteSize(attributes);
-			VkBuffer stagingBuffer;
-			VkDeviceMemory stagingBufferMemory;
+			VkDeviceSize bufferSize = mesh.allocatableSize(attributes);
+			VkBuffer stagingBuffer = VK_NULL_HANDLE;
+			VkDeviceMemory stagingBufferMemory = VK_NULL_HANDLE;
 
 			ADGRVulkanCreateBufferInfo bufferInfo;
 			bufferInfo.bufferSize = bufferSize;
@@ -448,7 +450,6 @@ namespace Dynamik {
 			bufferInfo.bufferMemoryPropertyflags = VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT;
 			bufferInfo.buffer = &stagingBuffer;
 			bufferInfo.bufferMemory = &stagingBufferMemory;
-
 			VulkanUtilities::createBuffer(myGraphicsCore.logicalDevice, myGraphicsCore.physicalDevice, bufferInfo);
 
 			void* data = nullptr;
@@ -462,7 +463,6 @@ namespace Dynamik {
 			vertBufferInfo.bufferMemoryPropertyflags = VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT;
 			vertBufferInfo.buffer = &_container.buffer;
 			vertBufferInfo.bufferMemory = &_container.bufferMemory;
-
 			VulkanUtilities::createBuffer(myGraphicsCore.logicalDevice, myGraphicsCore.physicalDevice, vertBufferInfo);
 
 			VulkanUtilities::copyBuffer(myGraphicsCore.logicalDevice, myMainCommandBuffer.pool, myGraphicsCore.graphicsQueue, myGraphicsCore.presentQueue, stagingBuffer, _container.buffer, bufferSize);
@@ -479,9 +479,8 @@ namespace Dynamik {
 			_container.dataCount = mesh.indexes.size();
 
 			VkDeviceSize bufferSize = _container.dataCount * (UI32)type;
-
-			VkBuffer stagingBuffer;
-			VkDeviceMemory stagingBufferMemory;
+			VkBuffer stagingBuffer = VK_NULL_HANDLE;
+			VkDeviceMemory stagingBufferMemory = VK_NULL_HANDLE;
 
 			ADGRVulkanCreateBufferInfo bufferInfo;
 			bufferInfo.bufferSize = bufferSize;
@@ -489,7 +488,6 @@ namespace Dynamik {
 			bufferInfo.bufferMemoryPropertyflags = VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT;
 			bufferInfo.buffer = &stagingBuffer;
 			bufferInfo.bufferMemory = &stagingBufferMemory;
-
 			VulkanUtilities::createBuffer(myGraphicsCore.logicalDevice, myGraphicsCore.physicalDevice, bufferInfo);
 
 			void* data = nullptr;
@@ -503,7 +501,6 @@ namespace Dynamik {
 			indexBufferInfo.bufferMemoryPropertyflags = VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT;
 			indexBufferInfo.buffer = &_container.buffer;
 			indexBufferInfo.bufferMemory = &_container.bufferMemory;
-
 			VulkanUtilities::createBuffer(myGraphicsCore.logicalDevice, myGraphicsCore.physicalDevice, indexBufferInfo);
 
 			VulkanUtilities::copyBuffer(myGraphicsCore.logicalDevice, myMainCommandBuffer.pool, myGraphicsCore.graphicsQueue, myGraphicsCore.presentQueue, stagingBuffer, _container.buffer, bufferSize);

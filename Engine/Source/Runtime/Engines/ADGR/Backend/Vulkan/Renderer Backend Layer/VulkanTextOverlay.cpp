@@ -517,16 +517,16 @@ namespace Dynamik {
 					_shaders.pushBack(_shader);
 				}
 
-				VulkanGraphicsRenderableObject _object;
-				_object.myRenderData = myRenderData;
-				_object.setSwapChainContainer(&mySwapChainObject);
-				ADGRVulkanGraphicsRenderableObjectInitInfo objInitInfo;
-				objInitInfo.logicalDevice = myCoreObject.logicalDevice;
-				objInitInfo.physicalDevice = myCoreObject.physicalDevice;
-				objInitInfo.commandPool = commandBufferManager.pool;
-				objInitInfo.graphicsQueue = myCoreObject.graphicsQueue;
-				objInitInfo.presentQueue = myCoreObject.presentQueue;
-				_object.initializeResources(objInitInfo);
+				//VulkanGraphicsRenderableObject _object;
+				//_object.myRenderData = myRenderData;
+				//_object.setSwapChainContainer(&mySwapChainObject);
+				//ADGRVulkanGraphicsRenderableObjectInitInfo objInitInfo;
+				//objInitInfo.logicalDevice = myCoreObject.logicalDevice;
+				//objInitInfo.physicalDevice = myCoreObject.physicalDevice;
+				//objInitInfo.commandPool = commandBufferManager.pool;
+				//objInitInfo.graphicsQueue = myCoreObject.graphicsQueue;
+				//objInitInfo.presentQueue = myCoreObject.presentQueue;
+				//_object.initializeResources(objInitInfo);
 
 				ADGRVulkanGraphicsPipelineInitInfo initInfo;
 				initInfo.colorBlendingColorBlendCount = 0;
@@ -546,9 +546,9 @@ namespace Dynamik {
 				//initInfo.vertexAttributeDescription = VertexP2N2::getAttributeDescriptions();
 				initInfo.shaders = _shaders;
 				initInfo.pipelineCache = pipelineCache;
-				_object.initializePipeline(initInfo);
+				//_object.initializePipeline(initInfo);
 
-				myRenderData = _object.getRenderData();
+				//myRenderData = _object.getRenderData();
 			}
 
 			void VulkanTextOverlay::_beginUpdate()

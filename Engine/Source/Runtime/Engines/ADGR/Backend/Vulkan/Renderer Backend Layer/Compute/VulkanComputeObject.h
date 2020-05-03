@@ -5,7 +5,7 @@
 #include "VulkanComputePipeline.h"
 #include "VulkanComputeDescriptor.h"
 
-#include "../Graphics/VulkanGraphicsRenderableObject.h"
+#include "../Graphics/VulkanGraphicsContainers.h"
 
 namespace Dynamik {
 	namespace ADGR {

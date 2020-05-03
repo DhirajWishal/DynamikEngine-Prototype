@@ -2,18 +2,12 @@
 #ifndef _DYNAMIK_ADGR_VULKAN_GRAPHICS_COMMAND_BUFFER_H
 #define _DYNAMIK_ADGR_VULKAN_GRAPHICS_COMMAND_BUFFER_H
 
-#include "VulkanGraphicsRenderableObject.h"
+#include "VulkanGraphicsContainers.h"
 #include "VulkanGraphicsFrameBuffer.h"
 
 namespace Dynamik {
 	namespace ADGR {
 		namespace Backend {
-			struct ADGRVulkanGraphicsCommandBufferInitResources {
-				VkDevice logicalDevice = VK_NULL_HANDLE;
-				VkPhysicalDevice physicalDevice = VK_NULL_HANDLE;
-				VkSurfaceKHR surface = VK_NULL_HANDLE;
-			};
-
 			struct ADGRVulkanGraphicsCommandBufferInitInfo {
 				ARRAY<ADGRVulkanRenderData> objects;
 				VulkanGraphicsSwapChain swapChain;

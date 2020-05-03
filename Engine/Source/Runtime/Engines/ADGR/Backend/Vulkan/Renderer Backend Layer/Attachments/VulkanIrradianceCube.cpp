@@ -308,9 +308,9 @@ namespace Dynamik {
 
 						VkDeviceSize offsets[1] = { 0 };
 
-						vkCmdBindVertexBuffers(buffer, 0, 1, &skyboxRenderData.vertexBuffers[0], offsets);
-						vkCmdBindIndexBuffer(buffer, skyboxRenderData.indexBuffers[0], 0, VK_INDEX_TYPE_UINT32);
-						vkCmdDrawIndexed(buffer, skyboxRenderData.indexCount, 1, 0, 0, 0);
+						//vkCmdBindVertexBuffers(buffer, 0, 1, &skyboxRenderData.vertexBuffers[0], offsets);
+						//vkCmdBindIndexBuffer(buffer, skyboxRenderData.indexBuffers[0], 0, VK_INDEX_TYPE_UINT32);
+						//vkCmdDrawIndexed(buffer, skyboxRenderData.indexCount, 1, 0, 0, 0);
 
 						vkCmdEndRenderPass(buffer);
 

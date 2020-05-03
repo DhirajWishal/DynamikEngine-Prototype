@@ -3,7 +3,7 @@
 #define _DYNAMIK_ADGR_VULKAN_COMPUTE_IMAGE_OBJECT_H
 
 #include "VulkanComputeObject.h"
-#include "../Graphics/VulkanGraphicsRenderableObject.h"
+#include "../Graphics/VulkanGraphicsContainers.h"
 
 namespace Dynamik {
 	namespace ADGR {

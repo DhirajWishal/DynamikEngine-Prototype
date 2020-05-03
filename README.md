@@ -2,7 +2,6 @@
 # 
 Dynamik Engine is a community driven game engine currently at its basic stages. This engine is primarily
 designed for 3D FPS games.
-The engine is intended to have a physically based renderer and the default API is Vulkan.
 
 The engine is still basic and could be subjected for some major architectural changes.
 Currently following the rule "Every component is a Game Object".

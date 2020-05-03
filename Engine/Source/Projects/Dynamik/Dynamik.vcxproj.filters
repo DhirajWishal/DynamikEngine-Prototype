@@ -82,9 +82,6 @@
     <Filter Include="Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer">
       <UniqueIdentifier>{909B97D2-7C5B-2877-E578-1082D1573B89}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Animations">
-      <UniqueIdentifier>{D21811B1-3E8D-A60E-07D7-F31D730A3242}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Attachments">
       <UniqueIdentifier>{1BF3EF57-07F5-3368-F077-2A61DC182F0D}</UniqueIdentifier>
     </Filter>
@@ -456,9 +453,6 @@
     <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\Primitives\VertexBuffer.h">
       <Filter>Runtime\Engines\ADGR\Backend\Primitives</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Animations\VulkanSkeletalAnimation.h">
-      <Filter>Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Animations</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Attachments\VulkanBRDF.h">
       <Filter>Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Attachments</Filter>
     </ClInclude>
@@ -472,6 +466,9 @@
       <Filter>Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Common</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Common\VulkanBufferFactory.h">
+      <Filter>Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Common\VulkanControlHeader.h">
       <Filter>Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Common</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Common\VulkanDescriptor.h">
@@ -528,13 +525,13 @@
     <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Compute\VulkanOneTimeCompute.h">
       <Filter>Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Compute</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanControlHeader.h">
-      <Filter>Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsColorBuffer.h">
       <Filter>Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsCommandBuffer.h">
+      <Filter>Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsContainers.h">
       <Filter>Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsCore.h">
@@ -561,9 +558,6 @@
     <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsRenderContext.h">
       <Filter>Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsRenderableObject.h">
-      <Filter>Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsShader.h">
       <Filter>Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics</Filter>
     </ClInclude>
@@ -573,38 +567,17 @@
     <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsSwapChain.h">
       <Filter>Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\VulkanAnimationManager.h">
-      <Filter>Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\VulkanGraphicsSwapChain3D.h">
-      <Filter>Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\VulkanObject2D.h">
-      <Filter>Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\VulkanObject3D.h">
-      <Filter>Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\VulkanOffsceenFrameBuffer.h">
-      <Filter>Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\VulkanPBRObject.h">
       <Filter>Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\VulkanParticleSystem.h">
       <Filter>Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\VulkanReflectObject.h">
-      <Filter>Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\VulkanSkyBox.h">
-      <Filter>Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\VulkanTextObject.h">
-      <Filter>Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\VulkanTextOverlay.h">
       <Filter>Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\VulkanPresets.h">
+      <Filter>Runtime\Engines\ADGR\Backend\Vulkan</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\VulkanRBL.h">
       <Filter>Runtime\Engines\ADGR\Backend\Vulkan</Filter>
@@ -965,9 +938,6 @@
     <ClCompile Include="..\..\Runtime\Dynamik.cpp">
       <Filter>Runtime</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Animations\VulkanSkeletalAnimation.cpp">
-      <Filter>Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Animations</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Attachments\VulkanBRDF.cpp">
       <Filter>Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Attachments</Filter>
     </ClCompile>
@@ -1061,41 +1031,23 @@
     <ClCompile Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsRenderContext.cpp">
       <Filter>Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsRenderableObject.cpp">
-      <Filter>Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsShader.cpp">
       <Filter>Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsSwapChain.cpp">
       <Filter>Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\Graphics</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\VulkanAnimationManager.cpp">
-      <Filter>Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\VulkanGraphicsSwapChain3D.cpp">
-      <Filter>Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\VulkanOffscreenFrameBuffer.cpp">
-      <Filter>Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\VulkanPBRObject.cpp">
       <Filter>Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\VulkanParticleSystem.cpp">
       <Filter>Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\VulkanReflectObject.cpp">
-      <Filter>Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\VulkanSkyBox.cpp">
-      <Filter>Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\VulkanTextObject.cpp">
-      <Filter>Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer\VulkanTextOverlay.cpp">
       <Filter>Runtime\Engines\ADGR\Backend\Vulkan\Renderer Backend Layer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\VulkanPresets.cpp">
+      <Filter>Runtime\Engines\ADGR\Backend\Vulkan</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Runtime\Engines\ADGR\Backend\Vulkan\VulkanRBL.cpp">
       <Filter>Runtime\Engines\ADGR\Backend\Vulkan</Filter>

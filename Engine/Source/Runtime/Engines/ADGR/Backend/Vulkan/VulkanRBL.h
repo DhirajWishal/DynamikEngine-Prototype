@@ -24,14 +24,7 @@
 #include "Renderer Backend Layer/Graphics/VulkanGraphicsRBLIndex.h"
 #include "Renderer Backend Layer/Compute/VulkanComputeRBLIndex.h"
 
-#include "Renderer Backend Layer/VulkanObject2D.h"
-#include "Renderer Backend Layer/VulkanObject3D.h"
 #include "Renderer Backend Layer/VulkanGraphicsSwapChain3D.h"
-#include "Renderer Backend Layer/VulkanTextOverlay.h"
-#include "Renderer Backend Layer/VulkanPBRObject.h"
-#include "Renderer Backend Layer/VulkanSkyBox.h"
-
-#include "Renderer Backend Layer/Animations/VulkanSkeletalAnimation.h"
 
 #include "Renderer Backend Layer/External/stb_font_consolas_24_latin1.inl"
 
@@ -48,6 +41,15 @@ namespace Dynamik {
 			VulkanGraphicsCommandBuffer commandBuffer;
 			ARRAY<ADGRVulkanRenderData> renderData;
 			ADGRVulkanResourceState state = ADGRVulkanResourceState::ADGR_VULKAN_RESOURCE_STATE_HOST_VISIBLE;
+		};
+
+		struct ADGRVulkanRenderContext {
+			VulkanGraphicsSwapChain swapChain;
+			VulkanGraphicsFrameBuffer frameBuffer;
+
+			ARRAY<ADGRVulkanRenderData> renderDatas;
+
+			VulkanGraphicsCommandBuffer inFlightCommandBuffer;
 		};
 
 		/* RENDERER BACKEND LAYER
@@ -75,6 +77,9 @@ namespace Dynamik {
 			void addObject(POINTER<InternalFormat> format);
 			void addObjects(ARRAY<POINTER<InternalFormat>> formats);
 
+			/* Returns the memory location of the objects data */
+			VPTR initializeObject(POINTER<InternalFormat> format);
+
 			void initializeCommands();
 			void initializeFinalComponents();
 
@@ -86,13 +91,15 @@ namespace Dynamik {
 			void _prepareRenderDataContainer(UI32 index);	/* Prepare the next container to be used */
 			ADGRVulkanGraphicsRenderableObjectInitInfo _getBasicInitInfo();	/* Return the basic init info */
 
+			/* Per object functions */
+			ADGRVulkanBufferContainer createVertexBuffer(Mesh mesh, ARRAY<DMKVertexAttribute> attributes);
+			ADGRVulkanBufferContainer createIndexBuffer(Mesh mesh, DMKDataType type);
+			ADGRVulkanTextureContainer createTextureImage(Texture texture);
+			ADGRVulkanUnformBufferContainer createUniformBuffers(DMKUniformBufferObjectDescriptor uniformBufferDescriptor);
+			VulkanGraphicsDescriptor createDescriptors(ARRAY<DMKUniformBufferObjectDescriptor> descriptors, ARRAY<ADGRVulkanUnformBufferContainer> uniformBufferContainers, ARRAY<ADGRVulkanTextureContainer> textureContainers);
+			VulkanGraphicsPipeline createPipeline(ARRAY<VulkanGraphicsDescriptor> descriptors, ARRAY<DMKUniformBufferObjectDescriptor> uniformBufferDescriptors, ARRAY<DMKVertexAttribute> attributes, ShaderPaths paths, DMKObjectType objectType);
+
 		public:
-			/* Initialize the object as a Static object */
-			ADGRVulkanRenderData _initializeStaticObject(POINTER<InternalFormat> format);
-
-			/* Initialize the object as a SkyBox */
-			ADGRVulkanRenderData _initializeSkyBox(POINTER<InternalFormat> format);
-
 			/* Initialize the object as s Skeletal animation */
 			ADGRVulkanRenderData _initializeSkeletalAnimation(POINTER<InternalFormat> format);
 
@@ -105,6 +112,7 @@ namespace Dynamik {
 
 			VulkanGraphicsCore myGraphicsCore;	/* Contains the Vulkan's core components */
 			VkSampleCountFlags myMsaaSamples = VkSampleCountFlagBits::VK_SAMPLE_COUNT_1_BIT;
+			VulkanGraphicsCommandBuffer myMainCommandBuffer;
 
 			/* Contains the command buffers and render datas */
 			ADGRVulkanRenderResourceContainer myResourceContainers[2];	/* Host visible and client visible */

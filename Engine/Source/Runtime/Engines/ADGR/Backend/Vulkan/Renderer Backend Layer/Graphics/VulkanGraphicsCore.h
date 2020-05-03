@@ -3,7 +3,7 @@
 #define _DYNAMIK_ADGR_VULKAN_GRAPHICS_CORE_H
 
 #include <GLFW/glfw3.h>
-#include "VulkanGraphicsRenderableObject.h"
+#include "VulkanGraphicsContainers.h"
 #include "VulkanGraphicsSwapChain.h"
 
 namespace Dynamik {

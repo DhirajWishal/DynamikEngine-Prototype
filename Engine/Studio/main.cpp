@@ -8,30 +8,50 @@
 */
 
 #include "studioafx.h"
-#include "Platform/Windows/Window.h"
+#include "Dynamik.h"
 
-using namespace Platform::Windows;
+#include "Platform/Windows.h"
+#include "Core/Objects/Camera.h"
+#include "Core/Objects/Moon.h"
+#include "Core/Objects/Skybox.h"
+
+#include "Core/Engine/RenderingEngine.h"
+using namespace Studio;
 
 int main() {
-    MainWindow win;
 
-    if (!win.Create(L"Learn to Program Windows", WS_OVERLAPPEDWINDOW))
-    {
-        return 0;
-    }
+	/* Level initialization */
+	OceanSkybox skybox;
+	Moon moon;
 
-    //ShowWindow(win.Window(), nCmdShow);
+	DMKSceneDescriptor scene1;
+	scene1.sceneID = "S001";
+	scene1.sceneIndex = 0;
+	scene1.assets = { &skybox, &moon };
 
-    // Run the message loop.
+	DMKLevelDescriptor level1;
+	level1.levelID = "001";
+	level1.levelIndex = 0;
+	level1.scenes = { scene1 };
 
-    MSG msg = { };
-    while (GetMessage(&msg, NULL, 0, 0))
-    {
-        TranslateMessage(&msg);
-        DispatchMessage(&msg);
-    }
+	WindowManager myWindowManager;
 
-    return 0;
+	DMKWindowManagerInitInfo windowInitInfo;
+	windowInitInfo.title = "Dynamik Studio";
 
+	AssetManager myAssetManager;
+
+	try
+	{
+		myWindowManager.initialize(windowInitInfo);
+
+		RenderingEngine _renderer;
+		_renderer.setWindowHandle(myWindowManager.window);
+		_renderer.initializeStageOne();
+	}
+	catch (const std::exception&)
+	{
+
+	}
 	return 0;
 }

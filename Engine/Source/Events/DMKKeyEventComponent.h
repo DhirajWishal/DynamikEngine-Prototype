@@ -6,7 +6,7 @@
 #include "keyCodes.h"
 
 namespace Dynamik {
-	class DMK_API DMKKeyEventComponent : public DMKEventComponent {
+	class  DMKKeyEventComponent : public DMKEventComponent {
 	public:
 		DMKKeyEventComponent() : DMKEventComponent(DMKEventCategory::DMK_EVENT_CATEGORY_KEY) {}
 		~DMKKeyEventComponent() {}

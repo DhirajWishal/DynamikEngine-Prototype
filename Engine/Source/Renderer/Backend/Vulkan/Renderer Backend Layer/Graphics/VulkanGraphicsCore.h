@@ -56,6 +56,8 @@ namespace Dynamik {
 
 				static VulkanQueue findQueueFamilies(VkPhysicalDevice physicalDevice, VkSurfaceKHR surface);
 
+				B1 checkSurfaceCompatibility(VkSurfaceKHR surface);
+
 			public:
 				/* DRAW CALLS */
 				virtual void syncFence(UI32 frame);

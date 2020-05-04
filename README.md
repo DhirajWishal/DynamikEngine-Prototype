@@ -3,8 +3,8 @@
 Dynamik Engine is a community driven game engine currently at its basic stages. This engine is primarily
 designed for 3D FPS games.
 
-The Dynamik Engine is a library which consists a list of APIs and Tools which the user can use to 
-develop their software with. 
+The Dynamik Engine is a library which consists a list of independent/ partially independent APIs and Tools which
+the user can use to develop their software with. 
 
 The list of APIs:
 - Dynamik/ Core:
@@ -22,14 +22,14 @@ The list of APIs:
 - Game Library
 
 The engine is intended to be compiled to platform specific dynamic link library and will support multiple platforms.
-File structure are yet to be designed.
+File structures are yet to be designed.
 
 The Studio is an application which uses the Dynamik Engine library extensively. It is a cross-platform tool
-which can be used to edit objects/ scenes/ levels, edit scripts, etc... The users can also create their own
-studio like software using the Dynamik Engine library with the help of the Studio.
+which can be used to edit and/ or create objects/ scenes/ levels scripts, etc... The users can also create their
+own studio like software using the Dynamik Engine library with the help of the Studio.
 
-The engine provides samples for users to directly work with. The users are able to chose the sample by the 
-Studio and work on it to create their own product. They can use these samples along with our APIs to create
+The engine provides samples/ templates for users to directly work with. The users are able to chose the sample by 
+the Studio and work on it to create their own product. They can use these samples along with our APIs to create
 their own samples/ templates. 
 
 The clients code is compiled into either a static link library or dynamic link library depending on the user
@@ -37,8 +37,8 @@ preference and will be linked with our executable binary which is platform speci
 export their code to other platforms using the Studio and our executable will be able to execute the users 
 application. 
 
-The Engine does not handle all the resources provided to it by its own. The users are expected to manage them 
-with the help of tools that the engine contains. The main execution loop is given to the user to work with which
+The Engine does not handle all the resources provided to it by itself. The users are expected to manage them 
+with the of tools that the engine provides. The main execution loop is given to the user to work with which
 would enable the user to optimize the code according to their preference. By default there will be at least 3 
 threads executed by the engine (Engine Control Thread, Renderer Thread, Utility Thread) which makes a total of
 4 threads depending on the number of threads the user creates during runtime. These threads are managed by the 

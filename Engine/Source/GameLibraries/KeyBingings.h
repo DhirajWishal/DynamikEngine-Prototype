@@ -4,7 +4,7 @@
 #define _DYNAMIK_KEY_BINDINGS_H
 
 #include "Events/keyCodes.h"
-#include "core.h"
+
 
 namespace Dynamik {
 	/* KEY BINDINGS FOR THE DYNAMIK ENGINE */

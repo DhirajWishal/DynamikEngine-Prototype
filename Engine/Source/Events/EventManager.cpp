@@ -81,7 +81,7 @@ namespace Dynamik {
 		return glfwGetCurrentContext();
 	}
 
-	ARRAY<DMKEventComponent*> EventManager::getEventComponents()
+	ARRAY<POINTER<DMKEventComponent>> EventManager::getEventComponents()
 	{
 		DMK_BEGIN_PROFILE_TIMER();
 

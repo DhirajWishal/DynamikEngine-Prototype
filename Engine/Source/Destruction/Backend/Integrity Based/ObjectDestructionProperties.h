@@ -6,7 +6,7 @@
 #include "DestructionEntity.h"
 
 namespace Dynamik {
-	struct DMKObjectDestructionProperties {
+	struct  DMKObjectDestructionProperties {
 		F32 integrity = 1.0;
 		F32 activeSurfaceArea = 1.0f;
 		F32 mass = 1.0f;

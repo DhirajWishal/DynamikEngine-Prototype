@@ -4,30 +4,51 @@
     <Filter Include="Core">
       <UniqueIdentifier>{2EB4837C-1AEB-840D-C3D7-6A10AFED000F}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Core\Engine">
+      <UniqueIdentifier>{F35E8B73-5F14-0469-E808-FE3F54BDFA6C}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Objects">
+      <UniqueIdentifier>{E7A0F3CA-D303-836F-7C89-BB2568CB4EF2}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Core\PCH">
       <UniqueIdentifier>{383E99C2-240B-F4CD-4D24-E2753950295C}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Platform">
-      <UniqueIdentifier>{2AC788B4-1694-E3BF-3FAD-D1672BD9184E}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Platform\Windows">
-      <UniqueIdentifier>{64FBD71A-50F4-F66C-7926-DCF1657ED678}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Core\Engine\RenderingEngine.h">
+      <Filter>Core\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Objects\Camera.h">
+      <Filter>Core\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Objects\Moon.h">
+      <Filter>Core\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Objects\Skybox.h">
+      <Filter>Core\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Objects\StudioObject.h">
+      <Filter>Core\Objects</Filter>
+    </ClInclude>
     <ClInclude Include="Core\PCH\studioafx.h">
       <Filter>Core\PCH</Filter>
     </ClInclude>
-    <ClInclude Include="Platform\Windows\Window.h">
-      <Filter>Platform\Windows</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Core\Engine\RenderingEngine.cpp">
+      <Filter>Core\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Objects\Camera.cpp">
+      <Filter>Core\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Objects\Moon.cpp">
+      <Filter>Core\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Objects\Skybox.cpp">
+      <Filter>Core\Objects</Filter>
+    </ClCompile>
     <ClCompile Include="Core\PCH\studioafx.cpp">
       <Filter>Core\PCH</Filter>
-    </ClCompile>
-    <ClCompile Include="Platform\Windows\Window.cpp">
-      <Filter>Platform\Windows</Filter>
     </ClCompile>
     <ClCompile Include="main.cpp" />
   </ItemGroup>

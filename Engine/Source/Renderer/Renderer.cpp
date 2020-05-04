@@ -23,23 +23,23 @@ namespace Dynamik {
 		VulkanRBL myRendererBackend;
 
 		/* Renderer instance definition */
-		Renderer Renderer::instance;
+		DMKRenderer DMKRenderer::instance;
 
-		void Renderer::setMSAASamples(DMKPipelineMSAASamples samples)
+		void DMKRenderer::setMSAASamples(DMKPipelineMSAASamples samples)
 		{
 
 		}
 
-		UI32 Renderer::createRenderingInstance()
+		UI32 DMKRenderer::createRenderingInstance()
 		{
 			return UI32();
 		}
 
-		void Renderer::initializeRenderingInstance(UI32 instanceID)
+		void DMKRenderer::initializeRenderingInstance(UI32 instanceID)
 		{
 		}
 
-		void Renderer::initializeStageOne(DMKRenderingAPI selectedAPI, DMKRendererSettings settings)
+		void DMKRenderer::initializeStageOne(DMKRenderingAPI selectedAPI, DMKRendererSettings settings)
 		{
 			switch (selectedAPI)
 			{
@@ -57,33 +57,38 @@ namespace Dynamik {
 			myRendererBackend.initializeGraphicsCore();
 		}
 
-		void Renderer::initializeStageTwo()
+		UI32 DMKRenderer::createNewContext(POINTER<GLFWwindow> windowHandle, DMKRenderContextType contextType)
+		{
+			return UI32();
+		}
+
+		void DMKRenderer::initializeStageTwo()
 		{
 			myRendererBackend.initializeCommands();
 		}
 
-		void Renderer::initializeStageThree()
+		void DMKRenderer::initializeStageThree()
 		{
 			myRendererBackend.initializeFinalComponents();
 		}
 
-		void Renderer::setProgressPointer(POINTER<UI32> progress)
+		void DMKRenderer::setProgressPointer(POINTER<UI32> progress)
 		{
 			instance.progressPtr = progress;
 			myRendererBackend.setProgress(progress);
 		}
 
-		void Renderer::setWindowHandle(POINTER<GLFWwindow> window)
+		void DMKRenderer::setWindowHandle(POINTER<GLFWwindow> window)
 		{
 			myRendererBackend.setWindowHandle(window);
 		}
 
-		void Renderer::setWindowExtent(UI32 width, UI32 height)
+		void DMKRenderer::setWindowExtent(UI32 width, UI32 height)
 		{
 			myRendererBackend.setWindowExtent(width, height);
 		}
 
-		void Renderer::setRenderableObjects(ARRAY<POINTER<InternalFormat>> formats)
+		void DMKRenderer::setRenderableObjects(ARRAY<POINTER<InternalFormat>> formats, UI32 contextID)
 		{
 			DMK_BEGIN_PROFILE_TIMER();
 
@@ -101,7 +106,7 @@ namespace Dynamik {
 			}
 		}
 
-		void Renderer::submitLoadedAssets()
+		void DMKRenderer::submitLoadedAssets(UI32 contextID)
 		{
 			DMK_BEGIN_PROFILE_TIMER();
 
@@ -110,24 +115,24 @@ namespace Dynamik {
 			myRendererBackend.addObjects(instance.inFlightAssets);
 		}
 
-		void Renderer::addToRenderQueue(POINTER<InternalFormat> container)
+		void DMKRenderer::addToRenderQueue(POINTER<InternalFormat> container, UI32 contextID)
 		{
 			instance.submitPendingAssets.pushBack(container);
 		}
 
-		void Renderer::drawFrame(DMKRendererDrawFrameInfo info)
+		void DMKRenderer::drawFrame(DMKRendererDrawFrameInfo info)
 		{
 			info.formats = instance.inFlightAssets;
 			myRendererBackend.drawFrame(info);
 		}
 
-		void Renderer::frameCleanup()
+		void DMKRenderer::frameCleanup()
 		{
 			DMK_BEGIN_PROFILE_TIMER();
 
 		}
 
-		void Renderer::terminate()
+		void DMKRenderer::terminate()
 		{
 			DMK_BEGIN_PROFILE_TIMER();
 

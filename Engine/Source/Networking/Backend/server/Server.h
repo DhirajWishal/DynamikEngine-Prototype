@@ -5,13 +5,13 @@
 
 #include <WinSock2.h>
 #include <string>
-#include "core.h"
+
 
 constexpr auto DEFAULT_BUFFER_LENGTH = 512;
 
 namespace Dynamik {
 	namespace Networking {
-		class DMK_API Server {
+		class  Server {
 		public:
 			Server() {}
 			virtual ~Server() {}

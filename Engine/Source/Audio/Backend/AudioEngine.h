@@ -10,7 +10,7 @@
 
 namespace Dynamik {
 	namespace Audio {
-		class DMK_API AudioEngine {
+		class  AudioEngine {
 		private:
 			irrklang::ISoundEngine* irrklangEngine;
 			std::list<AudioObject> audioObjectList;

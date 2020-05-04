@@ -12,7 +12,7 @@
 #ifndef _DYNAMIK_RENDERER_RENDERER_H
 #define _DYNAMIK_RENDERER_RENDERER_H
 
-#include "core.h"
+
 #include "rendererCommandQueue.h"
 
 #include "GameObject.h"
@@ -23,13 +23,19 @@
 
 namespace Dynamik {
 	namespace Renderer {
-		enum class DMK_API DMKRenderingAPI {
+		enum class  DMKRenderingAPI {
 			DMK_RENDERING_API_VULKAN,
 			DMK_RENDERING_API_OPENGL,
 			DMK_RENDERING_API_DIRECTX_12,
 		};
 
-		struct DMK_API DMKRendererSettings {
+		enum class  DMKRenderContextType {
+			DMK_RENDER_CONTEXT_TYPE_DEFAULT,
+			DMK_RENDER_CONTEXT_TYPE_2D,
+			DMK_RENDER_CONTEXT_TYPE_3D,
+		};
+
+		struct  DMKRendererSettings {
 			std::string myWindowTitle = ("Dynamik Engine");
 			UI32 myWindowWidth = 720;
 			UI32 myWindowHeight = 480;
@@ -43,7 +49,7 @@ namespace Dynamik {
 			};	// Dynwamik color code: rgba(2, 8, 32, 1)
 		};
 
-		struct DMK_API DMKRendererDrawFrameInfo {
+		struct  DMKRendererDrawFrameInfo {
 			DMKCameraData cameraData;
 
 			ARRAY<POINTER<InternalFormat>> formats;
@@ -52,10 +58,10 @@ namespace Dynamik {
 		/* RENDERER ABSTRACTION LAYER
 		 * Singleton
 		 */
-		class DMK_API Renderer {
-			Renderer() {}
+		class  DMKRenderer {
+			DMKRenderer() {}
 
-			static Renderer instance;
+			static DMKRenderer instance;
 
 			struct UniformBufferLocationContainer {
 				POINTER<MAT4> location;
@@ -63,12 +69,12 @@ namespace Dynamik {
 			};
 
 		public:
-			Renderer(const Renderer&) = delete;
-			Renderer(Renderer&&) = delete;
-			Renderer& operator=(const Renderer&) = delete;
-			Renderer& operator=(Renderer&&) = delete;
+			DMKRenderer(const DMKRenderer&) = delete;
+			DMKRenderer(DMKRenderer&&) = delete;
+			DMKRenderer& operator=(const DMKRenderer&) = delete;
+			DMKRenderer& operator=(DMKRenderer&&) = delete;
 
-			~Renderer() {}
+			~DMKRenderer() {}
 
 			/* Basic functions */
 			static void setMSAASamples(DMKPipelineMSAASamples samples);
@@ -78,6 +84,7 @@ namespace Dynamik {
 
 			/* Initializing */
 			static void initializeStageOne(DMKRenderingAPI selectedAPI, DMKRendererSettings settings);
+			static UI32 createNewContext(POINTER<GLFWwindow> windowHandle, DMKRenderContextType contextType = DMKRenderContextType::DMK_RENDER_CONTEXT_TYPE_DEFAULT);
 			static void initializeStageTwo();
 			static void initializeStageThree();
 
@@ -85,10 +92,10 @@ namespace Dynamik {
 			static void setProgressPointer(POINTER<UI32> progress);
 			static void setWindowHandle(POINTER<GLFWwindow> window);
 			static void setWindowExtent(UI32 width, UI32 height);
-			static void setRenderableObjects(ARRAY<POINTER<InternalFormat>> formats);
-			static void submitLoadedAssets();
+			static void setRenderableObjects(ARRAY<POINTER<InternalFormat>> formats, UI32 contextID = 0);
+			static void submitLoadedAssets(UI32 contextID = 0);
 
-			static void addToRenderQueue(POINTER<InternalFormat> format);
+			static void addToRenderQueue(POINTER<InternalFormat> format, UI32 contextID = 0);
 
 			/* Draw call */
 			static void drawFrame(DMKRendererDrawFrameInfo info);

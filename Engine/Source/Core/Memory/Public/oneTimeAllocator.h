@@ -8,7 +8,7 @@ namespace Dynamik {
 	class Allocator;
 
 	/* ONE TIME HEAP ALLOCATOR */
-	class OneTimeAllocator : public Allocator {
+	class  OneTimeAllocator : public Allocator {
 	public:
 		OneTimeAllocator() {}
 		OneTimeAllocator(UI32 size) : Allocator(size) {}

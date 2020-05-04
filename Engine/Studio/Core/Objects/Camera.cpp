@@ -1,3 +1,4 @@
+#include "studioafx.h"
 #include "Camera.h"
 
 /* Update camera data function */

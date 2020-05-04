@@ -4,15 +4,15 @@
 
 #include "Public/Array.h"
 #include "DMKEventComponent.h"
-#include "core.h"
+
 
 namespace Dynamik {
-	struct DMK_API CursorPosition {
+	struct CursorPosition {
 		D64 xOffset = 0.0f;
 		D64 yOffset = 0.0f;
 	};
 
-	class DMK_API EventManager {
+	class  EventManager {
 		EventManager() {}
 		static EventManager myInstance;
 
@@ -34,7 +34,7 @@ namespace Dynamik {
 
 		static POINTER<GLFWwindow> getCurrentContext();
 
-		static ARRAY<DMKEventComponent*> getEventComponents();
+		static ARRAY<POINTER<DMKEventComponent>> getEventComponents();
 		static B1 isCursorOnCurrent();
 
 	private:
@@ -52,7 +52,7 @@ namespace Dynamik {
 		GLFWwindow* myWindowPointer;
 		CursorPosition myCursorPosition;
 
-		ARRAY<DMKEventComponent*> events;
+		ARRAY<POINTER<DMKEventComponent>> events;
 		B1 isCursorInThisWindow = false;
 		B1 isWindowClosed = false;
 	};

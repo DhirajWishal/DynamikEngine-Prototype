@@ -7,7 +7,7 @@
 
 namespace Dynamik {
 	/* MAIN ALLOCATOR CLASS */
-	class Allocator {
+	class  Allocator {
 	public:
 		Allocator() {}
 		Allocator(UI32 size);

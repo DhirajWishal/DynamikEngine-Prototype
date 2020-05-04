@@ -5,19 +5,19 @@
 #include "Objects/DMKObject/DMKObject.h"
 #include "Public/Array.h"
 #include "GameObject.h"
-#include "core.h"
+
 #include "Objects/InternalFormat/InternalFormat.h"
 
 namespace Dynamik {
 	/* Scene data descriptor */
-	struct DMK_API DMKSceneDescriptor {
+	struct  DMKSceneDescriptor {
 		CCPTR sceneID = "Scene_1";
 		UI32 sceneIndex = 0;
 		ARRAY<DMKGameObject*> assets;
 	};
 
 	/* Level data descriptor */
-	struct DMK_API DMKLevelDescriptor {
+	struct  DMKLevelDescriptor {
 		CCPTR levelID = "Level_1";
 		UI32 levelIndex = 0;
 		ARRAY<DMKSceneDescriptor> scenes;
@@ -30,7 +30,7 @@ namespace Dynamik {
 	};
 
 	/* Asset manager for the Dynamik Engine */
-	class AssetManager : public DMKObject {
+	class  AssetManager : public DMKObject {
 		using STORE = ARRAY<AssetContainer>;
 
 	public:

@@ -6,11 +6,11 @@
 #include <string>
 #include <queue>
 
-#include "core.h"
+
 
 namespace Dynamik {
 	namespace Networking {
-		class DMK_API Client {
+		class  Client {
 		public:
 			Client() {}
 			virtual ~Client() {}

@@ -5,11 +5,11 @@
 
 #include <irrKlang.h>
 #include <string>
-#include "core.h"
+
 
 namespace Dynamik {
 	namespace Audio {
-		class DMK_API AudioObjectController {
+		class  AudioObjectController {
 		public:
 			AudioObjectController(std::string filePath);
 			std::string filepath;

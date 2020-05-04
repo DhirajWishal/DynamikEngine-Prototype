@@ -1,8 +1,9 @@
 ---------- Dynamik Engine project description ----------
 
 project "Dynamik"
-	kind "SharedLib"
+	kind "StaticLib"
 	language "C++"
+	systemversion "latest"
 
 	targetdir "$(SolutionDir)Builds/Engine/Binaries/$(Configuration)-$(Platform)"
 	objdir "$(SolutionDir)Builds/Engine/Intermediate/$(Configuration)-$(Platform)/$(ProjectName)"
@@ -50,28 +51,25 @@ project "Dynamik"
 	}
 
 	links { 
-		"glew32",
 		"glew32s",
-		"glfw3dll",
+		"glfw3",
 		"opengl32",
 		"vulkan-1",
 		"irrKlang",
 		"assimp",
-		"assimp-vc140-mt",
 		"Debugger",
 	}
 
 	filter "system:windows"
 		cppdialect "C++17"
 		staticruntime "On"
-		systemversion "latest"
 
 		defines {
 			"DMK_PLATFORM_WINDOWS",
-			"DMK_BUILD_DLL",
-			"_WINDLL",
 			"GLFW_INCLUDE_VULKAN",
 			"DMK_USE_VULKAN",
+			"GLEW_STATIC",
+			"GRAPHICS_API",
 			"GLFW_INCLUDE_NONE"
 		}
 

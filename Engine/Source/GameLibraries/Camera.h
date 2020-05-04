@@ -12,7 +12,7 @@ namespace Dynamik {
 	/* DYNAMIK CAMERA PARENT CLASS
 	 * User defined camera class for the renderer.
 	 */
-	class DMKCamera {
+	class  DMKCamera {
 	public:
 		DMKCamera() 
 		{
@@ -28,7 +28,7 @@ namespace Dynamik {
 		}
 		virtual ~DMKCamera() {}
 
-		virtual DMKCameraData update(ARRAY<DMKEventComponent*> eventComponents) { return DMKCameraData(); }
+		virtual DMKCameraData update(ARRAY<POINTER<DMKEventComponent>> eventComponents) { return DMKCameraData(); }
 		virtual MAT4 getViewMatrix() { return MAT4(); }
 
 	public:

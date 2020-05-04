@@ -35,7 +35,7 @@ namespace Dynamik {
 	 * Dynamik Array Destructor Call Modes.
 	 * This either allows the destructor to call all the destructors of stored variables or orphan them all.
 	 */
-	enum class DMKArrayDestructorCallMode {
+	enum class  DMKArrayDestructorCallMode {
 		DMK_ARRAY_DESTRUCTOR_CALL_MODE_DESTRUCT_NONE,	// Does not call the destructor in data. Execution speed is high.
 		DMK_ARRAY_DESTRUCTOR_CALL_MODE_DESTRUCT_ALL,	// Calls destructor in all elements. Execution speed depends on the time taken to destroy.
 		DMK_ARRAY_DESTRUCTOR_CALL_MODE_DESTRUCT_ALL_THREADED,	// Calls the destructor for each element in a thread.
@@ -58,7 +58,7 @@ namespace Dynamik {
 				If needed to call, DestructorCallMode must be set to either ALL or ALL THREADED.
 	 */
 	template<class TYPE, DMKArrayDestructorCallMode DestructorCallMode = DMKArrayDestructorCallMode::DMK_ARRAY_DESTRUCTOR_CALL_MODE_DESTRUCT_NONE, class Allocator = StaticAllocator<TYPE>>
-	class ARRAY {
+	class  ARRAY {
 		/* DEFAULTS */
 
 		/* STATIC ASSERT

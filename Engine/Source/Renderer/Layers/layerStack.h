@@ -7,7 +7,7 @@
 
 namespace Dynamik {
 	namespace Renderer {
-		class DMK_API layerStack {
+		class  layerStack {
 		public:
 			layerStack();
 			~layerStack();

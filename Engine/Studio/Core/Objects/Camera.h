@@ -1,6 +1,6 @@
 #pragma once
-#ifndef _APPLICATION_CAMERA_H
-#define _APPLICATION_CAMERA_H
+#ifndef _STUDIO_CAMERA_H
+#define _STUDIO_CAMERA_H
 
 #include "GameLibraries/Camera.h"
 using namespace Dynamik;
@@ -13,4 +13,4 @@ public:
 	DMKCameraData update(ARRAY<POINTER<DMKEventComponent>> eventComponents) override;
 };
 
-#endif // !_APPLICATION_CAMERA_H
+#endif // !_STUDIO_CAMERA_H

@@ -2,17 +2,17 @@
 #ifndef _DYNAMIK_RENDERER_RENDERER_THREAD_H
 #define _DYNAMIK_RENDERER_RENDERER_THREAD_H
 
-#include "core.h"
+
 #include "Renderer.h"
 
 namespace Dynamik {
-	struct DMK_API RendererThreadDataContianer : public ThreadDataContainer {
+	struct RendererThreadDataContianer : public ThreadDataContainer {
 	};
 
 	/* BASE: Thread
 	 * Rendering engine thread.
 	 */
-	class DMK_API RendererThread : public Thread {
+	class  RendererThread : public Thread {
 	public:
 		RendererThread() {}
 		~RendererThread() {}

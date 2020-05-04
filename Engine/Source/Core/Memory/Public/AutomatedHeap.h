@@ -8,7 +8,7 @@ namespace Dynamik {
 	/* Automated Heap allocator for the Dynamik Engine.
 	 * This automatically destroys/ deallocates all the allocated heap memory pools upon shutdown.
 	 */
-	class AutomatedHeap {
+	class  AutomatedHeap {
 		AutomatedHeap() {}
 		~AutomatedHeap();
 

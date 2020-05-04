@@ -2,8 +2,10 @@
 #ifndef _DYNAMIK_OBJECT_H
 #define _DYNAMIK_OBJECT_H
 
+
+
 namespace Dynamik {
-	class DMKObject {
+	class  DMKObject {
 	public:
 		DMKObject() {}
 		virtual ~DMKObject() {}

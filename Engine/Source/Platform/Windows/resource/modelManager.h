@@ -3,7 +3,7 @@
 #ifndef _DYNAMIK_MANAGERS_WINDOWS_MODEL_MANAGER_H
 #define _DYNAMIK_MANAGERS_WINDOWS_MODEL_MANAGER_H
 
-#include "core.h"
+
 #include "Objects/Mesh/Mesh.h"
 
 namespace Dynamik {

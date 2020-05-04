@@ -6,7 +6,7 @@
 #include <string>
 
 namespace Dynamik {
-	struct DMKWindowManagerInitInfo {
+	struct  DMKWindowManagerInitInfo {
 		UI32 width = 1280;
 		UI32 height = 720;
 		std::string title = "Dynamik Engine";
@@ -20,7 +20,7 @@ namespace Dynamik {
 		UI32 windowHeight = 0;
 	};
 
-	class WindowManager {
+	class  WindowManager {
 	public:
 		WindowManager() {}
 		~WindowManager() {}

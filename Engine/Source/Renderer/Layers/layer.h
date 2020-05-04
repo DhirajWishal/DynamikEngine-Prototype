@@ -4,11 +4,11 @@
 #define _DYNAMIK_RENDERER_LAYER_H
 
 #include "Events/DMKEventComponent.h"
-#include "core.h"
+
 
 namespace Dynamik {
 	namespace Renderer {
-		class DMK_API Layer {
+		class  Layer {
 		public:
 			Layer(const std::string& name = "Layer 1");
 			virtual ~Layer();

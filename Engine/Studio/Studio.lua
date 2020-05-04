@@ -6,8 +6,8 @@ project "Studio"
 	cppdialect "c++17"
 	staticruntime "On"
 
-	targetdir  "$(SolutionDir)Builds/Studio/Binaries"
-	objdir "$(SolutionDir)Builds/Studio/Intermediate/$(ProjectName)"
+	targetdir "$(SolutionDir)Builds/Engine/Binaries/$(Configuration)-$(Platform)"
+	objdir "$(SolutionDir)Builds/Engine/Intermediate/$(Configuration)-$(Platform)/$(ProjectName)"
 
 	pchheader "studioafx.h"
 	pchsource "Core/PCH/studioafx.cpp"
@@ -20,8 +20,9 @@ project "Studio"
 
 	includedirs {
 		"$(SolutionDir)Dependencies/Libraries/Local",
-		"$(SolutionDir)Engine/Source/Studio/",
-		"$(SolutionDir)Engine/Source/Studio/Core/PCH/",
+		"$(SolutionDir)Engine/Studio/",
+		"$(SolutionDir)Engine/Studio/Core/PCH/",
+		"$(SolutionDir)Engine/Source/",
 		"$(SolutionDir)Engine/Source/Core/Algorithm",
 		"$(SolutionDir)Engine/Source/Core/DataTypes",
 		"$(SolutionDir)Engine/Source/Core/Memory",
@@ -41,16 +42,22 @@ project "Studio"
 	}
 
 	libdirs {
+		"%{IncludeLib.irrKlang}",
 		"%{IncludeLib.GLFW}",
 		"%{IncludeLib.GLEW}",
 		"%{IncludeLib.Vulkan}",
+		"%{IncludeLib.Assimp}",
 	}
 
 	links { 
-		"glfw3dll",
 		"glew32s",
+		"glfw3",
 		"opengl32",
 		"vulkan-1",
+		"irrKlang",
+		"assimp",
+		"Debugger",
+		"Dynamik"
 	}
 
 	filter "system:windows"
@@ -58,9 +65,11 @@ project "Studio"
 
 		defines {
 			"DMK_PLATFORM_WINDOWS",
+			"GLFW_INCLUDE_VULKAN",
 			"DMK_USE_VULKAN",
 			"GLEW_STATIC",
-			"GLFW_INCLUDE_VULKAN"
+			"GRAPHICS_API",
+			"GLFW_INCLUDE_NONE"
 		}
 
 	filter "configurations:Debug"

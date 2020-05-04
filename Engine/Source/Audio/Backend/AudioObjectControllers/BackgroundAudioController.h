@@ -8,7 +8,7 @@
 
 namespace Dynamik {
 	namespace Audio {
-		class DMK_API BackgroundAudioController :
+		class  BackgroundAudioController :
 			public AudioObjectController {
 		public:
 

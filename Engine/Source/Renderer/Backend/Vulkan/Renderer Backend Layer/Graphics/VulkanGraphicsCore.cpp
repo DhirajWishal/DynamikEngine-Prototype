@@ -426,6 +426,11 @@ namespace Dynamik {
 				return indices;
 			}
 
+			B1 VulkanGraphicsCore::checkSurfaceCompatibility(VkSurfaceKHR newSurface)
+			{
+				return isDeviceSuitable(physicalDevice, newSurface);
+			}
+
 			void VulkanGraphicsCore::initializeSyncObjects()
 			{
 				imageAvailables.resize(MAX_FRAMES_IN_FLIGHT);

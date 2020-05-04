@@ -5,7 +5,7 @@
 #include "DMKEventComponent.h"
 
 namespace Dynamik {
-	class DMK_API DMKWindowResizeEventComponent : public DMKEventComponent {
+	class  DMKWindowResizeEventComponent : public DMKEventComponent {
 	public:
 		DMKWindowResizeEventComponent() : DMKEventComponent(DMKEventCategory::DMK_EVENT_CATEGORY_APPLICATION) {}
 		~DMKWindowResizeEventComponent() {}

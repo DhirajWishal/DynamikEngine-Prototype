@@ -11,7 +11,7 @@ namespace Dynamik {
 			DMK_RENDERER_COMMAND_SUBMIT_RENDER_DATA,
 		};
 
-		struct DMKRendererCommandContainer {
+		struct  DMKRendererCommandContainer {
 			DMKRendererCommand command = DMKRendererCommand::DMK_RENDERER_COMMAND_NONE;
 
 			VPTR data = nullptr;

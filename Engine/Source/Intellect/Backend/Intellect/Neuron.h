@@ -14,7 +14,7 @@
 #ifndef _DYNAMIK_INTELLECT_NEURON_H
 #define _DYNAMIK_INTELLECT_NEURON_H
 
-#include "core.h"
+
 
 namespace Dynamik {
 	namespace Intellect {
@@ -25,7 +25,7 @@ namespace Dynamik {
 		 This structure contains the necessary data needed for a connection between two or more
 		 neurons.
 		*/
-		struct DMK_API NeuralConnection {
+		struct NeuralConnection {
 			Neuron* myNeuron = nullptr;	// neuron
 			F32 myWeight = 0.0f;	// neuron activation weight
 			F32 myBias = 0.0f;	// neuron activation bias
@@ -34,7 +34,7 @@ namespace Dynamik {
 		/*
 		 BASE NEURON CLASS FOR THE INTELLECT NEURAL NETWORK
 		*/
-		class DMK_API Neuron {
+		class  Neuron {
 		public:
 			Neuron() {}	// default constructor
 			Neuron(UI32 layer, UI32 index) : myLayerNumber(layer), myIndex(index) {}	// default constructor

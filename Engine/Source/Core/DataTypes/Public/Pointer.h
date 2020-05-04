@@ -14,7 +14,7 @@ namespace Dynamik {
 	 * @warn: TYPE should not be void (any half type). void* is accepted.
 	 */
 	template<class TYPE>
-	class POINTER {
+	class  POINTER {
 		/* DEFAULTS */
 
 		/* STATIC ASSERT

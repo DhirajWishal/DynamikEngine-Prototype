@@ -23,10 +23,10 @@ namespace Dynamik {
 		DMK_EVENT_TYPE_UNKNOWN
 	};
 
-	struct DMKEventSubSet {
+	struct  DMKEventSubSet {
 	};
 
-	struct DMKEventContainer {
+	struct  DMKEventContainer {
 		DMKEventType eventType = DMKEventType::DMK_EVENT_TYPE_UNKNOWN;
 		int32_t code = -1;
 		UI32 count = 0;
@@ -39,7 +39,7 @@ namespace Dynamik {
 	};
 
 	// Update info
-	struct DMKUpdateInfo {
+	struct  DMKUpdateInfo {
 		// movement and rotation biases
 		float movementBiasUpDown = 0.005f;
 		float movementBiasFrontBack = 0.005f;

@@ -9,4 +9,8 @@
 
 #endif
 
+#include "GLEW/glew-2.1.0/include/GL/glew.h"
+#include "GLFW/glfw3.h"
+#include "Dynamik.h"
+
 #endif // !_STUDIO_PCH

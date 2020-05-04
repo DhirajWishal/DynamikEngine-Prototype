@@ -8,7 +8,7 @@ namespace Dynamik {
 	/* Dynamik Memory Manager
 	 * This uses a Double buffered Stack allocator.
 	 */
-	class MemoryManager {
+	class  MemoryManager {
 		MemoryManager() {}
 		~MemoryManager() {}
 

@@ -553,9 +553,6 @@
     <ClInclude Include="Platform\Windows.h">
       <Filter>Platform</Filter>
     </ClInclude>
-    <ClInclude Include="Platform\Windows\DLLInterface.h">
-      <Filter>Platform\Windows</Filter>
-    </ClInclude>
     <ClInclude Include="Platform\Windows\Window\WindowManager.h">
       <Filter>Platform\Windows\Window</Filter>
     </ClInclude>
@@ -865,7 +862,6 @@
     <ClInclude Include="Utilities\Functions\DMK_Functions.h">
       <Filter>Utilities\Functions</Filter>
     </ClInclude>
-    <ClInclude Include="core.h" />
     <ClInclude Include="engineControlUnit.h" />
   </ItemGroup>
   <ItemGroup>
@@ -1204,7 +1200,6 @@
       <Filter>Audio\Samples</Filter>
     </None>
     <None Include="Dynamik.lua" />
-    <None Include="IMPORTANT.txt" />
-    <None Include="architecture.txt" />
+    <None Include="USAGE.txt" />
   </ItemGroup>
 </Project>

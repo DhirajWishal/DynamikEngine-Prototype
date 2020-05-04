@@ -8,7 +8,7 @@ namespace Dynamik {
 	/* Dynamik SkyBox Object
 	 * This contains the basic base features of a Dynamik Skybox object.
 	 */
-	class  DMKSkyboxObject : public DMKGameObject {
+	class DMKSkyboxObject : public DMKGameObject {
 	public:
 		DMKSkyboxObject()
 		{

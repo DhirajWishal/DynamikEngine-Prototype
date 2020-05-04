@@ -1,9 +1,11 @@
 #pragma once
-#ifndef _DYNAMIK_RENDERER_WINDOWS_WINDOW_MANAGER_H
-#define _DYNAMIK_RENDERER_WINDOWS_WINDOW_MANAGER_H
+#ifndef _DYNAMIK_WINDOWS_WINDOW_H
+#define _DYNAMIK_WINDOWS_WINDOW_H
 
 #include <deque>
 #include <string>
+
+#include "Managers/Window/Window.h"
 
 namespace Dynamik {
 	struct  DMKWindowManagerInitInfo {
@@ -14,16 +16,10 @@ namespace Dynamik {
 		std::string iconPaths;
 	};
 
-	struct GLFWWindowHandleContainer {
-		POINTER<GLFWwindow*> windowPointer;
-		UI32 windowWidth = 0;
-		UI32 windowHeight = 0;
-	};
-
-	class  WindowManager {
+	class WindowsWindow : public DMKWindow {
 	public:
-		WindowManager() {}
-		~WindowManager() {}
+		WindowsWindow() {}
+		~WindowsWindow() {}
 
 		void initialize(DMKWindowManagerInitInfo info);
 		void terminate();
@@ -40,10 +36,6 @@ namespace Dynamik {
 		void setIcon(std::string paths);
 
 		void updateWindowSize();
-		UI32 windowWidth;
-		UI32 windowHeight;
-
-		GLFWWindowHandleContainer getHandle();
 
 		B1 isWindowCloseEvent = false;
 	};

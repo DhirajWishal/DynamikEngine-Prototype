@@ -232,6 +232,8 @@
     <ClInclude Include="Intellect\Intellect.h" />
     <ClInclude Include="Managers\Asset\AssetManager.h" />
     <ClInclude Include="Managers\Managers.h" />
+    <ClInclude Include="Managers\Window\Window.h" />
+    <ClInclude Include="Managers\Window\WindowManager.h" />
     <ClInclude Include="Networking\Backend\client.h" />
     <ClInclude Include="Networking\Backend\client\Client.h" />
     <ClInclude Include="Networking\Backend\server.h" />
@@ -248,7 +250,7 @@
     <ClInclude Include="Objects\UniformBufferObject\UniformBufferObject.h" />
     <ClInclude Include="Objects\VertexBufferObject\VertexBufferObject.h" />
     <ClInclude Include="Platform\Windows.h" />
-    <ClInclude Include="Platform\Windows\Window\WindowManager.h" />
+    <ClInclude Include="Platform\Windows\Window\WindowsWindow.h" />
     <ClInclude Include="Platform\Windows\file\daiFileManager.h" />
     <ClInclude Include="Platform\Windows\file\duiFileManager.h" />
     <ClInclude Include="Platform\Windows\file\fileManager.h" />
@@ -386,12 +388,13 @@
     <ClCompile Include="Intellect\Backend\Intellect\neuralNetwork.cpp" />
     <ClCompile Include="Intellect\Backend\Maths\mathDefinitions.cpp" />
     <ClCompile Include="Managers\Asset\AssetManager.cpp" />
+    <ClCompile Include="Managers\Window\WindowManager.cpp" />
     <ClCompile Include="Networking\Backend\client.cpp" />
     <ClCompile Include="Networking\Backend\server.cpp" />
     <ClCompile Include="Objects\InternalFormat\InternalFormat.cpp" />
     <ClCompile Include="Objects\Mesh\Mesh.cpp" />
     <ClCompile Include="Objects\Texture\Texture.cpp" />
-    <ClCompile Include="Platform\Windows\Window\WindowManager.cpp" />
+    <ClCompile Include="Platform\Windows\Window\WindowsWindow.cpp" />
     <ClCompile Include="Platform\Windows\file\daiFileManager.cpp" />
     <ClCompile Include="Platform\Windows\file\duiFileManager.cpp" />
     <ClCompile Include="Platform\Windows\file\fileManager.cpp" />

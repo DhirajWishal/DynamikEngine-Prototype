@@ -58,7 +58,7 @@ namespace Dynamik {
 			DMK_DAI_FILE_DATA_TYPE_MAX_ENUM
 		};
 
-		class  daiManager {
+		class daiManager {
 		public:
 			daiManager();
 			daiManager(std::string& path);

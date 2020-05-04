@@ -30,7 +30,7 @@ namespace Dynamik {
 	};
 
 	/* Asset manager for the Dynamik Engine */
-	class  AssetManager : public DMKObject {
+	class AssetManager : public DMKObject {
 		using STORE = ARRAY<AssetContainer>;
 
 	public:

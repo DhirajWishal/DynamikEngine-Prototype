@@ -34,7 +34,8 @@ int main() {
 	level1.levelIndex = 0;
 	level1.scenes = { scene1 };
 
-	WindowManager myWindowManager;
+	WindowsWindow myWindowManager;
+	DMKWindowManager::createWindow(DMKWindowAPI::DMK_WINDOW_API_GLFW);
 
 	DMKWindowManagerInitInfo windowInitInfo;
 	windowInitInfo.title = "Dynamik Studio";

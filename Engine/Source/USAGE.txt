@@ -34,3 +34,6 @@ The clients are required to create their objects and components which are given 
 from the class DMKGameObject. After initializing the game object using the resource manager, the client is given
 a pointer to an object InternalFormat. This format is then used by all the other APIs to carry out their 
 functionalities.
+
+All the user available components contains "DMK" prefix. Singletons are used for components and/ or engines
+to keep a single instance throughout.

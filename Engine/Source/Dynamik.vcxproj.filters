@@ -553,9 +553,6 @@
     <ClInclude Include="Platform\Windows.h">
       <Filter>Platform</Filter>
     </ClInclude>
-    <ClInclude Include="Platform\Windows\Window\WindowManager.h">
-      <Filter>Platform\Windows\Window</Filter>
-    </ClInclude>
     <ClInclude Include="Platform\Windows\file\daiFileManager.h">
       <Filter>Platform\Windows\file</Filter>
     </ClInclude>
@@ -863,6 +860,11 @@
       <Filter>Utilities\Functions</Filter>
     </ClInclude>
     <ClInclude Include="engineControlUnit.h" />
+    <ClInclude Include="Managers\Window\Window.h" />
+    <ClInclude Include="Managers\Window\WindowManager.h" />
+    <ClInclude Include="Platform\Windows\Window\WindowsWindow.h">
+      <Filter>Platform\Windows\Window</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Audio\Backend\AudioEngine.cpp">
@@ -967,9 +969,6 @@
     </ClCompile>
     <ClCompile Include="Objects\Texture\Texture.cpp">
       <Filter>Objects\Texture</Filter>
-    </ClCompile>
-    <ClCompile Include="Platform\Windows\Window\WindowManager.cpp">
-      <Filter>Platform\Windows\Window</Filter>
     </ClCompile>
     <ClCompile Include="Platform\Windows\file\daiFileManager.cpp">
       <Filter>Platform\Windows\file</Filter>
@@ -1194,6 +1193,10 @@
       <Filter>Utilities\Functions</Filter>
     </ClCompile>
     <ClCompile Include="engineControlUnit.cpp" />
+    <ClCompile Include="Managers\Window\WindowManager.cpp" />
+    <ClCompile Include="Platform\Windows\Window\WindowsWindow.cpp">
+      <Filter>Platform\Windows\Window</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Audio\Samples\license.txt">

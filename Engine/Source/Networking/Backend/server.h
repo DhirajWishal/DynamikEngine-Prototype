@@ -18,7 +18,7 @@
 
 namespace Dynamik {
 	namespace Networking {
-		class  server : public Server {
+		class server : public Server {
 		public:
 			server() {}
 			~server() {}

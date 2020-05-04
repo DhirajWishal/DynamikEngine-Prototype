@@ -9,7 +9,7 @@
 
 namespace Dynamik {
 	namespace Audio {
-		class  AudioObjectController {
+		class AudioObjectController {
 		public:
 			AudioObjectController(std::string filePath);
 			std::string filepath;

@@ -8,13 +8,13 @@
 #include "Dynamik/RenderingSpecifications.h"
 
 namespace Dynamik {
-	enum class  DMKTextureType {
+	enum class DMKTextureType {
 		DMK_TEXTURE_TYPE_2D,
 		DMK_TEXTURE_TYPE_3D,
 		DMK_TEXTURE_TYPE_CUBEMAP,
 	};
 
-	enum class  DMKTextureInputType {
+	enum class DMKTextureInputType {
 		DMK_TEXTURE_INPUT_TYPE_IMAGE,
 		DMK_TEXTURE_INPUT_TYPE_KTX,
 		DMK_TEXTURE_INPUT_TYPE_HDRI,
@@ -51,7 +51,7 @@ namespace Dynamik {
 		F32 dissipationFactor = 1.0f;
 	};
 
-	enum class  DMKGameObjectLightingType {
+	enum class DMKGameObjectLightingType {
 		DMK_GAME_OBJECT_LIGHTING_TYPE_EMISSIVE,
 		DMK_GAME_OBJECT_LIGHTING_TYPE_DIFFUSE,
 		DMK_GAME_OBJECT_LIGHTING_TYPE_REFLECTIVE,
@@ -96,7 +96,7 @@ namespace Dynamik {
 		DMKDataType dataType = DMKDataType::DMK_DATA_TYPE_MAT4;
 	};
 
-	class  DMKUniformBufferObjectDescriptor {
+	class DMKUniformBufferObjectDescriptor {
 	public:
 		DMKUniformBufferObjectDescriptor() {}
 		~DMKUniformBufferObjectDescriptor() {}
@@ -122,7 +122,7 @@ namespace Dynamik {
 		ARRAY<DMKRenderAttachment> renderAttachments;
 	};
 
-	class  DMKGameObjectDescriptor {
+	class DMKGameObjectDescriptor {
 	public:
 		DMKGameObjectDescriptor() {}
 		~DMKGameObjectDescriptor() {}

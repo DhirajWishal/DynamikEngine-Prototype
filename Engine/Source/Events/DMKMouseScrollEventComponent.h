@@ -5,7 +5,7 @@
 #include "DMKEventComponent.h"
 
 namespace Dynamik {
-	class  DMKMouseScrollEventComponent : public DMKEventComponent {
+	class DMKMouseScrollEventComponent : public DMKEventComponent {
 	public:
 		DMKMouseScrollEventComponent() : DMKEventComponent(DMKEventCategory::DMK_EVENT_CATEGORY_MOUSE_SCROLL) {}
 		~DMKMouseScrollEventComponent() {}

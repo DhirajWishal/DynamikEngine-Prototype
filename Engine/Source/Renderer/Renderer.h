@@ -23,13 +23,13 @@
 
 namespace Dynamik {
 	namespace Renderer {
-		enum class  DMKRenderingAPI {
+		enum class DMKRenderingAPI {
 			DMK_RENDERING_API_VULKAN,
 			DMK_RENDERING_API_OPENGL,
 			DMK_RENDERING_API_DIRECTX_12,
 		};
 
-		enum class  DMKRenderContextType {
+		enum class DMKRenderContextType {
 			DMK_RENDER_CONTEXT_TYPE_DEFAULT,
 			DMK_RENDER_CONTEXT_TYPE_2D,
 			DMK_RENDER_CONTEXT_TYPE_3D,
@@ -58,7 +58,7 @@ namespace Dynamik {
 		/* RENDERER ABSTRACTION LAYER
 		 * Singleton
 		 */
-		class  DMKRenderer {
+		class DMKRenderer {
 			DMKRenderer() {}
 
 			static DMKRenderer instance;

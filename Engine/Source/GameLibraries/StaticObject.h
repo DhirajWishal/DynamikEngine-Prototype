@@ -8,7 +8,7 @@ namespace Dynamik {
 	/* Dynamik Static Object
 	 * The static object is any object that needs to be rendered.
 	 */
-	class  DMKStaticObject : public DMKGameObject {
+	class DMKStaticObject : public DMKGameObject {
 	public:
 		DMKStaticObject() 
 		{

@@ -7,7 +7,7 @@
 
 
 namespace Dynamik {
-	enum class  DMKEventCategory {
+	enum class DMKEventCategory {
 		DMK_EVENT_CATEGORY_UNKNOWN,
 
 		DMK_EVENT_CATEGORY_KEY,
@@ -18,7 +18,7 @@ namespace Dynamik {
 		DMK_EVENT_CATEGORY_TEXT,
 	};
 
-	enum class  DMKEventType {
+	enum class DMKEventType {
 		DMK_EVENT_TYPE_UNKNOWN,
 
 		DMK_EVENT_TYPE_KEY_PRESS,
@@ -36,7 +36,7 @@ namespace Dynamik {
 		DMK_EVENT_TYPE_WINDOW_RESIZE,
 	};
 
-	class  DMKEventComponent {
+	class DMKEventComponent {
 	public:
 		DMKEventComponent() {}
 		DMKEventComponent(DMKEventCategory cat) : category(cat) {}

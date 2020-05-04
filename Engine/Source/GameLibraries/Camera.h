@@ -12,7 +12,7 @@ namespace Dynamik {
 	/* DYNAMIK CAMERA PARENT CLASS
 	 * User defined camera class for the renderer.
 	 */
-	class  DMKCamera {
+	class DMKCamera {
 	public:
 		DMKCamera() 
 		{

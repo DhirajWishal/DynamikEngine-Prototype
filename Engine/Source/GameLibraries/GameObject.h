@@ -30,7 +30,7 @@ namespace Dynamik {
        Dynamik Engine.
      *
      */
-    class  DMKGameObject : public DMKObject {
+    class DMKGameObject : public DMKObject {
     public:
         DMKGameObject() {}
         virtual ~DMKGameObject() {}

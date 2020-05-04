@@ -12,7 +12,7 @@ namespace Dynamik {
 	/* BASE: Thread
 	 * Rendering engine thread.
 	 */
-	class  RendererThread : public Thread {
+	class RendererThread : public Thread {
 	public:
 		RendererThread() {}
 		~RendererThread() {}

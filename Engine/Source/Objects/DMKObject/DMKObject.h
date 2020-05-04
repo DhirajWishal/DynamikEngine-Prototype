@@ -5,7 +5,7 @@
 
 
 namespace Dynamik {
-	class  DMKObject {
+	class DMKObject {
 	public:
 		DMKObject() {}
 		virtual ~DMKObject() {}

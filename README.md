@@ -21,8 +21,8 @@ The list of APIs:
 - Validation.
 - Game Library
 
-The engine is intended to be compiled to platform specific dynamic link library and will support multiple platforms.
-File structures are yet to be designed.
+The engine is intended to be compiled to a static link library and will support multiple platforms. File structures
+are yet to be designed.
 
 The Studio is an application which uses the Dynamik Engine library extensively. It is a cross-platform tool
 which can be used to edit and/ or create objects/ scenes/ levels scripts, etc... The users can also create their

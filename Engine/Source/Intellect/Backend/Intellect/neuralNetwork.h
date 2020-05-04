@@ -21,7 +21,7 @@ namespace Dynamik {
 		/*
 		 MAIN NEURAL NETWORK CLASS
 		*/
-		class  NeuralNetwork {
+		class NeuralNetwork {
 		public:
 			NeuralNetwork();
 			NeuralNetwork(ARRAY<ARRAY<Neuron*>> neuralLayers);

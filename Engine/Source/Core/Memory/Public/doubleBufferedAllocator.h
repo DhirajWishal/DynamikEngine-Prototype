@@ -6,7 +6,7 @@
 
 namespace Dynamik {
 	/* MAIN DOUBLE BUFFERED ALLOCATOR CLASS */
-	class  DoubleBufferedAllocator : public Allocator {
+	class DoubleBufferedAllocator : public Allocator {
 	public:
 		DoubleBufferedAllocator() {}
 		DoubleBufferedAllocator(UI32 size);

@@ -10,7 +10,7 @@
 
 namespace Dynamik {
 	namespace Networking {
-		class  Client {
+		class Client {
 		public:
 			Client() {}
 			virtual ~Client() {}

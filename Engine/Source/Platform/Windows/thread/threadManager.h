@@ -12,7 +12,7 @@ namespace Dynamik {
 	/*
 	 THREAD MANAGER
 	*/
-	class  ThreadManager {
+	class ThreadManager {
 	public:
 		ThreadManager();	// default constructor
 		~ThreadManager() {}	// default destructor

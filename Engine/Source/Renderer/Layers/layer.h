@@ -8,7 +8,7 @@
 
 namespace Dynamik {
 	namespace Renderer {
-		class  Layer {
+		class Layer {
 		public:
 			Layer(const std::string& name = "Layer 1");
 			virtual ~Layer();

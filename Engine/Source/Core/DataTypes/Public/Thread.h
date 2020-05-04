@@ -16,7 +16,7 @@ namespace Dynamik {
 	/*
 	 THREAD DATA CONTAINER (SUPER/ BASE/ PARENT CLASS)
 	*/
-	class  ThreadDataContainer {
+	class ThreadDataContainer {
 		VPTR myRawData = nullptr;	// raw data pointer
 
 		UI32 myThreadIndex = 0;	// destination thread index
@@ -25,7 +25,7 @@ namespace Dynamik {
 	/*
 	 MAIN THREAD OBJECT (SUPER/ BASE/ PARENT CLASS)
 	*/
-	class  Thread {
+	class Thread {
 	public:
 		Thread() {}	// default constructor
 		virtual ~Thread() {}	// default virtual destructor

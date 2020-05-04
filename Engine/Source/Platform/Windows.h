@@ -13,7 +13,7 @@
 #define _DYNAMIK_PLATFORM_WINDOWS_H
 
 #ifdef DMK_PLATFORM_WINDOWS
-#include "Windows/Window/WindowManager.h"
+#include "Windows/Window/WindowsWindow.h"
 
 #include "Windows/file/daiFileManager.h"
 #include "Windows/file/duiFileManager.h"

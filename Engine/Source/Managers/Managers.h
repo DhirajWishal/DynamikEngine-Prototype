@@ -7,4 +7,7 @@
 
 #endif
 
+#include "Window/Window.h"
+#include "Window/WindowsWindow.h"
+
 #endif // !_DYNAMIK_MANAGERS_H

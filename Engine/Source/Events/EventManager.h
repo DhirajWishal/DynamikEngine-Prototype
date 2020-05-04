@@ -12,7 +12,7 @@ namespace Dynamik {
 		D64 yOffset = 0.0f;
 	};
 
-	class  EventManager {
+	class EventManager {
 		EventManager() {}
 		static EventManager myInstance;
 

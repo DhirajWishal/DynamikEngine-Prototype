@@ -7,7 +7,7 @@
 #include "Public/Array.h"
 
 namespace Dynamik {
-	class  DMKDropPathEventComponent : public DMKEventComponent {
+	class DMKDropPathEventComponent : public DMKEventComponent {
 	public:
 		DMKDropPathEventComponent() : DMKEventComponent(DMKEventCategory::DMK_EVENT_CATEGORY_APPLICATION) {}
 		~DMKDropPathEventComponent() {}

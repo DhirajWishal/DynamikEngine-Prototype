@@ -9,7 +9,7 @@
 
 namespace Dynamik {
 	namespace Audio {
-		class  BasicAudioController :
+		class BasicAudioController :
 			public AudioObjectController {
 		public:
 

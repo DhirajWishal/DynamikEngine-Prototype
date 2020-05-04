@@ -6,7 +6,7 @@
 
 namespace Dynamik {
 	/* POOL ALLOCATOR CLASS */
-	class  PoolAllocator : public Allocator {
+	class PoolAllocator : public Allocator {
 	public:
 		PoolAllocator() {}
 		PoolAllocator(UI32 size);

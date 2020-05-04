@@ -34,7 +34,7 @@ namespace Dynamik {
 		/*
 		 BASE NEURON CLASS FOR THE INTELLECT NEURAL NETWORK
 		*/
-		class  Neuron {
+		class Neuron {
 		public:
 			Neuron() {}	// default constructor
 			Neuron(UI32 layer, UI32 index) : myLayerNumber(layer), myIndex(index) {}	// default constructor

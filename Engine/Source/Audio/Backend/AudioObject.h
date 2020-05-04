@@ -8,7 +8,7 @@
 
 namespace Dynamik {
 	namespace Audio {
-		class  AudioObject {
+		class AudioObject {
 			irrklang::ISoundEngine* audioEngine;
 			AudioObjectController* controller;
 			irrklang::ISound* sound;

@@ -11,7 +11,7 @@ constexpr auto DEFAULT_BUFFER_LENGTH = 512;
 
 namespace Dynamik {
 	namespace Networking {
-		class  Server {
+		class Server {
 		public:
 			Server() {}
 			virtual ~Server() {}

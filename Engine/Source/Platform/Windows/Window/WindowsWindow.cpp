@@ -1,5 +1,5 @@
 #include "dmkafx.h"
-#include "WindowManager.h"
+#include "WindowsWindow.h"
 
 #include <GLEW/glew-2.1.0/include/GL/glew.h>
 
@@ -8,7 +8,7 @@
 #include "Events/EventManager.h"
 
 namespace Dynamik {
-	void WindowManager::initialize(DMKWindowManagerInitInfo info)
+	void WindowsWindow::initialize(DMKWindowManagerInitInfo info)
 	{
 		DMK_BEGIN_PROFILE_TIMER();
 
@@ -55,21 +55,21 @@ namespace Dynamik {
 		//setIcon(info.iconPaths);
 	}
 
-	void WindowManager::terminate()
+	void WindowsWindow::terminate()
 	{
 		glfwDestroyWindow(window);
 		glfwTerminate();
 	}
 
-	void WindowManager::pollEvents() {
+	void WindowsWindow::pollEvents() {
 		glfwPollEvents();
 	}
 
-	void WindowManager::onUpdate() {
+	void WindowsWindow::onUpdate() {
 		pollEvents();
 	}
 
-	void WindowManager::setIcon(std::string paths)
+	void WindowsWindow::setIcon(std::string paths)
 	{
 		ARRAY<GLFWimage> icons;
 
@@ -91,7 +91,7 @@ namespace Dynamik {
 		glfwSetWindowIcon(window, 1, icons.data());
 	}
 
-	void WindowManager::updateWindowSize()
+	void WindowsWindow::updateWindowSize()
 	{
 		I32 width = 0, height = 0;
 		while (width == 0 || height == 0) {
@@ -103,7 +103,7 @@ namespace Dynamik {
 		windowHeight = height;
 	}
 
-	GLFWWindowHandleContainer WindowManager::getHandle()
+	GLFWWindowHandleContainer WindowsWindow::getHandle()
 	{
 		GLFWWindowHandleContainer _container;
 		_container.windowPointer = &window;

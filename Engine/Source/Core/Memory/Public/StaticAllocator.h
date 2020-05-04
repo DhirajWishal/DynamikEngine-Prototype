@@ -26,7 +26,7 @@ namespace Dynamik {
 	 * This class is used as the default memory allocator for the ARRAY<TYPE> object.
 	 */
 	template<class TYPE>
-	class  StaticAllocator : public Allocator {
+	class StaticAllocator : public Allocator {
 	public:
 		StaticAllocator() {}
 		~StaticAllocator() {}

@@ -21,6 +21,8 @@ using namespace Studio;
 int main() {
 	try
 	{
+		DMK_FLAG_INFO("HelloWorld!");
+
 		DMKInstanceDescriptor engineInstance;
 		DMKEngine::initializeInstance(engineInstance);
 

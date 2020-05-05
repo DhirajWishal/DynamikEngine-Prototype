@@ -878,6 +878,7 @@
       <Filter>Utilities\Functions</Filter>
     </ClInclude>
     <ClInclude Include="engineControlUnit.h" />
+    <ClInclude Include="Managers\Error\ErrorManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Audio\Backend\AudioEngine.cpp">
@@ -1212,6 +1213,7 @@
       <Filter>Utilities\Functions</Filter>
     </ClCompile>
     <ClCompile Include="engineControlUnit.cpp" />
+    <ClCompile Include="Managers\Error\ErrorManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Audio\Samples\license.txt">

@@ -233,6 +233,7 @@
     <ClInclude Include="Intellect\Backend\Maths\Sigmoid.h" />
     <ClInclude Include="Intellect\Intellect.h" />
     <ClInclude Include="Managers\Asset\AssetManager.h" />
+    <ClInclude Include="Managers\Error\ErrorManager.h" />
     <ClInclude Include="Managers\Managers.h" />
     <ClInclude Include="Managers\Window\Window.h" />
     <ClInclude Include="Managers\Window\WindowManager.h" />
@@ -390,6 +391,7 @@
     <ClCompile Include="Intellect\Backend\Intellect\neuralNetwork.cpp" />
     <ClCompile Include="Intellect\Backend\Maths\mathDefinitions.cpp" />
     <ClCompile Include="Managers\Asset\AssetManager.cpp" />
+    <ClCompile Include="Managers\Error\ErrorManager.cpp" />
     <ClCompile Include="Managers\Window\WindowManager.cpp" />
     <ClCompile Include="Networking\Backend\client.cpp" />
     <ClCompile Include="Networking\Backend\server.cpp" />

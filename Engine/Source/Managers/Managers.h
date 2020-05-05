@@ -10,4 +10,6 @@
 #include "Window/Window.h"
 #include "Window/WindowManager.h"
 
+#include "Error/ErrorManager.h"
+
 #endif // !_DYNAMIK_MANAGERS_H

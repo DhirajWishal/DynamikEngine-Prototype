@@ -29,6 +29,8 @@
 #include "Renderer/Renderer.h"
 #include "Platform/Windows/Window/WindowsWindow.h"
 
+#include "FileSystem/FileManager.h"
+
 #include "Camera.h"
 
 /* Managers */

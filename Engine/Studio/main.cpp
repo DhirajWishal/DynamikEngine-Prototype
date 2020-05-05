@@ -21,7 +21,8 @@ using namespace Studio;
 int main() {
 	try
 	{
-		DMK_FLAG_INFO("HelloWorld!");
+		CHR _buffer[256];
+		auto _path = GetModuleFileNameA(NULL, _buffer, 256);
 
 		DMKInstanceDescriptor engineInstance;
 		DMKEngine::initializeInstance(engineInstance);

@@ -9,6 +9,7 @@
 
 #endif
 
+#include <string>
 #include "Dynamik.h"
 
 #endif // !_STUDIO_PCH

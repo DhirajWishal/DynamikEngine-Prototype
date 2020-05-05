@@ -1,5 +1,6 @@
 #include "dmkafx.h"
 #include "fileManager.h"
+#include "..\..\..\FileSystem\FileManager.h"
 
 namespace Dynamik {
 	namespace manager {

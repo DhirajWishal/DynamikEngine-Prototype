@@ -879,6 +879,10 @@
     </ClInclude>
     <ClInclude Include="engineControlUnit.h" />
     <ClInclude Include="Managers\Error\ErrorManager.h" />
+    <ClInclude Include="Plugins\PluginImporter.h" />
+    <ClInclude Include="Plugins\Plugin.h" />
+    <ClInclude Include="Plugins\PluginAPI\PluginAPI.h" />
+    <ClInclude Include="FileSystem\FileManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Audio\Backend\AudioEngine.cpp">
@@ -1214,6 +1218,10 @@
     </ClCompile>
     <ClCompile Include="engineControlUnit.cpp" />
     <ClCompile Include="Managers\Error\ErrorManager.cpp" />
+    <ClCompile Include="Plugins\PluginImporter.cpp" />
+    <ClCompile Include="Plugins\Plugin.cpp" />
+    <ClCompile Include="Plugins\PluginAPI\PluginAPI.cpp" />
+    <ClCompile Include="FileSystem\FileManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Audio\Samples\license.txt">

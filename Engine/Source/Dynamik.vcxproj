@@ -216,6 +216,7 @@
     <ClInclude Include="Events\DMKWindowResizeEventComponent.h" />
     <ClInclude Include="Events\EventManager.h" />
     <ClInclude Include="Events\keyCodes.h" />
+    <ClInclude Include="FileSystem\FileManager.h" />
     <ClInclude Include="GameLibraries\Camera.h" />
     <ClInclude Include="GameLibraries\GameLogic.h" />
     <ClInclude Include="GameLibraries\GameObject.h" />
@@ -265,6 +266,9 @@
     <ClInclude Include="Platform\Windows\thread\ExecutionHandle.h" />
     <ClInclude Include="Platform\Windows\thread\InternalThread.h" />
     <ClInclude Include="Platform\Windows\thread\threadManager.h" />
+    <ClInclude Include="Plugins\Plugin.h" />
+    <ClInclude Include="Plugins\PluginAPI\PluginAPI.h" />
+    <ClInclude Include="Plugins\PluginImporter.h" />
     <ClInclude Include="Renderer\Backend\Components\FrameBuffer.h" />
     <ClInclude Include="Renderer\Backend\Components\SwapChain.h" />
     <ClInclude Include="Renderer\Backend\Components\TextOverlay.h" />
@@ -386,6 +390,7 @@
     <ClCompile Include="DataHub\network\messageData.cpp" />
     <ClCompile Include="Dynamik.cpp" />
     <ClCompile Include="Events\EventManager.cpp" />
+    <ClCompile Include="FileSystem\FileManager.cpp" />
     <ClCompile Include="GameLibraries\GameObject.cpp" />
     <ClCompile Include="GameLibraries\GameObjectDescriptors.cpp" />
     <ClCompile Include="Intellect\Backend\Intellect\neuralNetwork.cpp" />
@@ -410,6 +415,9 @@
     <ClCompile Include="Platform\Windows\thread\ExecutionHandle.cpp" />
     <ClCompile Include="Platform\Windows\thread\InternalThread.cpp" />
     <ClCompile Include="Platform\Windows\thread\threadManager.cpp" />
+    <ClCompile Include="Plugins\Plugin.cpp" />
+    <ClCompile Include="Plugins\PluginAPI\PluginAPI.cpp" />
+    <ClCompile Include="Plugins\PluginImporter.cpp" />
     <ClCompile Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Attachments\VulkanBRDF.cpp" />
     <ClCompile Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Attachments\VulkanIrradianceCube.cpp" />
     <ClCompile Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Attachments\VulkanPrefilteredCube.cpp" />

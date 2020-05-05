@@ -103,6 +103,9 @@
     <Filter Include="Managers\Asset">
       <UniqueIdentifier>{827BFB53-6E49-EF59-57DD-5F80434ACBBE}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Managers\Window">
+      <UniqueIdentifier>{3AB20406-A63D-72CA-AF4E-F5BE1B59CECA}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Networking">
       <UniqueIdentifier>{6D615D47-5919-9F94-C220-78F0AEF73985}</UniqueIdentifier>
     </Filter>
@@ -460,6 +463,9 @@
     <ClInclude Include="GameLibraries\Camera.h">
       <Filter>GameLibraries</Filter>
     </ClInclude>
+    <ClInclude Include="GameLibraries\GameLogic.h">
+      <Filter>GameLibraries</Filter>
+    </ClInclude>
     <ClInclude Include="GameLibraries\GameObject.h">
       <Filter>GameLibraries</Filter>
     </ClInclude>
@@ -479,6 +485,9 @@
       <Filter>GameLibraries</Filter>
     </ClInclude>
     <ClInclude Include="GameLibraries\Scene.h">
+      <Filter>GameLibraries</Filter>
+    </ClInclude>
+    <ClInclude Include="GameLibraries\SceneComponent.h">
       <Filter>GameLibraries</Filter>
     </ClInclude>
     <ClInclude Include="GameLibraries\SkyboxObject.h">
@@ -504,6 +513,12 @@
     </ClInclude>
     <ClInclude Include="Managers\Managers.h">
       <Filter>Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="Managers\Window\Window.h">
+      <Filter>Managers\Window</Filter>
+    </ClInclude>
+    <ClInclude Include="Managers\Window\WindowManager.h">
+      <Filter>Managers\Window</Filter>
     </ClInclude>
     <ClInclude Include="Networking\Backend\client.h">
       <Filter>Networking\Backend</Filter>
@@ -552,6 +567,9 @@
     </ClInclude>
     <ClInclude Include="Platform\Windows.h">
       <Filter>Platform</Filter>
+    </ClInclude>
+    <ClInclude Include="Platform\Windows\Window\WindowsWindow.h">
+      <Filter>Platform\Windows\Window</Filter>
     </ClInclude>
     <ClInclude Include="Platform\Windows\file\daiFileManager.h">
       <Filter>Platform\Windows\file</Filter>
@@ -860,11 +878,6 @@
       <Filter>Utilities\Functions</Filter>
     </ClInclude>
     <ClInclude Include="engineControlUnit.h" />
-    <ClInclude Include="Managers\Window\Window.h" />
-    <ClInclude Include="Managers\Window\WindowManager.h" />
-    <ClInclude Include="Platform\Windows\Window\WindowsWindow.h">
-      <Filter>Platform\Windows\Window</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Audio\Backend\AudioEngine.cpp">
@@ -955,6 +968,9 @@
     <ClCompile Include="Managers\Asset\AssetManager.cpp">
       <Filter>Managers\Asset</Filter>
     </ClCompile>
+    <ClCompile Include="Managers\Window\WindowManager.cpp">
+      <Filter>Managers\Window</Filter>
+    </ClCompile>
     <ClCompile Include="Networking\Backend\client.cpp">
       <Filter>Networking\Backend</Filter>
     </ClCompile>
@@ -969,6 +985,9 @@
     </ClCompile>
     <ClCompile Include="Objects\Texture\Texture.cpp">
       <Filter>Objects\Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="Platform\Windows\Window\WindowsWindow.cpp">
+      <Filter>Platform\Windows\Window</Filter>
     </ClCompile>
     <ClCompile Include="Platform\Windows\file\daiFileManager.cpp">
       <Filter>Platform\Windows\file</Filter>
@@ -1193,10 +1212,6 @@
       <Filter>Utilities\Functions</Filter>
     </ClCompile>
     <ClCompile Include="engineControlUnit.cpp" />
-    <ClCompile Include="Managers\Window\WindowManager.cpp" />
-    <ClCompile Include="Platform\Windows\Window\WindowsWindow.cpp">
-      <Filter>Platform\Windows\Window</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Audio\Samples\license.txt">

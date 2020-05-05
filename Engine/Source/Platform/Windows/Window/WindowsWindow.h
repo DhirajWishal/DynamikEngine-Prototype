@@ -8,36 +8,22 @@
 #include "Managers/Window/Window.h"
 
 namespace Dynamik {
-	struct  DMKWindowManagerInitInfo {
-		UI32 width = 1280;
-		UI32 height = 720;
-		std::string title = "Dynamik Engine";
-
-		std::string iconPaths;
-	};
-
 	class WindowsWindow : public DMKWindow {
 	public:
 		WindowsWindow() {}
 		~WindowsWindow() {}
 
-		void initialize(DMKWindowManagerInitInfo info);
-		void terminate();
+		void initialize(DMKWindowInitInfo info) override final;
+		void terminate() override final;
+
+		void pollEvents() override final;
+		void onUpdate() override final;
+
+		void setIcon(std::string paths) override final;
+
+		void updateWindowSize() override final;
 
 		GLFWwindow* window = nullptr;
-		B1 frameBufferResized = false;
-
-		B1 isFrameBufferResized() { return frameBufferResized; }
-		void frameBufferResizedUpdate(B1 state) { frameBufferResized = state; }
-
-		void pollEvents();
-		void onUpdate();
-
-		void setIcon(std::string paths);
-
-		void updateWindowSize();
-
-		B1 isWindowCloseEvent = false;
 	};
 }
 

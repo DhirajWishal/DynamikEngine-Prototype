@@ -57,7 +57,7 @@ namespace Dynamik {
 			myRendererBackend.initializeGraphicsCore();
 		}
 
-		UI32 DMKRenderer::createNewContext(POINTER<GLFWwindow> windowHandle, DMKRenderContextType contextType)
+		UI32 DMKRenderer::createNewContext(DMKWindowHandle windowHandle, DMKRenderContextType contextType)
 		{
 			return UI32();
 		}
@@ -78,9 +78,9 @@ namespace Dynamik {
 			myRendererBackend.setProgress(progress);
 		}
 
-		void DMKRenderer::setWindowHandle(POINTER<GLFWwindow> window)
+		void DMKRenderer::setWindowHandle(DMKWindowHandle windowHandle)
 		{
-			myRendererBackend.setWindowHandle(window);
+			myRendererBackend.setWindowHandle(windowHandle);
 		}
 
 		void DMKRenderer::setWindowExtent(UI32 width, UI32 height)

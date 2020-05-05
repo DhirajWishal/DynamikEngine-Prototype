@@ -13,7 +13,7 @@ namespace Studio {
 		~RenderingEngine() {}
 
 		void setWindowExtent(UI32 width, UI32 height);
-		void setWindowHandle(POINTER<GLFWwindow> windowHandle);
+		void setWindowHandle(DMKWindowHandle windowHandle);
 		void createRenderContext(DMKRenderContextType type);
 
 		void initializeStageOne();

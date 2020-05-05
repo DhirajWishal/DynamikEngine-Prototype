@@ -67,22 +67,20 @@ project "Studio"
 			"DMK_PLATFORM_WINDOWS",
 			"GLFW_INCLUDE_VULKAN",
 			"DMK_USE_VULKAN",
-			"GLEW_STATIC",
-			"GRAPHICS_API",
 			"GLFW_INCLUDE_NONE"
 		}
 
 	filter "configurations:Debug"
 		defines "DMK_DEBUG"
-		runtime "Debug"
+		--buildoptions "/MTd"
 		symbols "On"
 		
 	filter "configurations:Release"
 		defines "DMK_RELEASE"
-		runtime "Release"
+		--buildoptions "/MT"
 		optimize "On"
 
 	filter "configurations:Distribution"
 		defines "DMK_DISTRIBUTION"
-		runtime "Release"
+		--buildoptions "/MT"
 		optimize "On"

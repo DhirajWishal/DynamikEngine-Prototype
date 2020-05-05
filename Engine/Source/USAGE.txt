@@ -2,38 +2,11 @@ Dynamik Engine usage.
 Author:		Dhiraj Wishal
 Date:		04/05/2020
 
-The client application needs to follow these steps inorder to properly initialise the internal components
-of the engine. Without following them the engine would no be able to function properly. These are as follows:
-> (optional) Initialize the resources.
-> Create an engine instance.
-	- The engine instance 
-> (optional) start the startup renderer (for the splash screen).
-> Create the rendering window.
-> Create a rendering context.
-> Initialize the renderer stage one.
-> Submit objects to the engine.
-> Submit objects to the renderer.
-> Initialize the renderer stage two.
-> Initialize the renderer final stage.
-> Terminate the startup renderer if initiated.
-> Call the main loop.
-	> Poll Events.
-	> Update logic.
-	> Update components.
-	> Update objects.
-	> Update layers.
-	> Update/ draw the next frame.
-> Terminate the renderer.
-> Terminate the submitted objects (clear them from the memory).
-> Terminate components.
-> Terminate the engine instance.
+The Dynamik Engine APIs are provided as singletons. This allows the users to communicate with the enigine at any
+given instance only if the API is properly initialized. The clients code will be compiled to an executable which 
+is platform specific. The engine is compiled to a static library file and will be linked to the client application.
+Almost all of the clients logic is passed to the engine and it is handled internally.
 
-* Component initialization can take place at either before the rendering engine initialization or after.
-
-The clients are required to create their objects and components which are given to the Engine to be derived 
-from the class DMKGameObject. After initializing the game object using the resource manager, the client is given
-a pointer to an object InternalFormat. This format is then used by all the other APIs to carry out their 
-functionalities.
-
-All the user available components contains "DMK" prefix. Singletons are used for components and/ or engines
-to keep a single instance throughout.
+Useful links:
+Kenney (Assets) - https://www.kenney.nl/
+HDRI Heaven - https://hdrihaven.com/

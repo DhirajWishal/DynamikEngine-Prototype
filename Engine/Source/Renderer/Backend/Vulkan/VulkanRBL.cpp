@@ -37,9 +37,13 @@ namespace Dynamik {
 		{
 		}
 
-		void VulkanRBL::setWindowHandle(POINTER<GLFWwindow> windowHandle)
+		void VulkanRBL::setWindowHandle(DMKWindowHandle windowHandle)
 		{
-			myWindowHandle = windowHandle;
+#ifdef DMK_PLATFORM_WINDOWS
+			WindowsWindow _window = *(WindowsWindow*)windowHandle.get();
+			myWindowHandle = _window.window;
+
+#endif // DMK_PLATFORM_WINDOWS
 		}
 
 		void VulkanRBL::setWindowExtent(UI32 width, UI32 height)

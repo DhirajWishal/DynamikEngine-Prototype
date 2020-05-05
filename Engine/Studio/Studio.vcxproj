@@ -79,7 +79,7 @@
       <PrecompiledHeader>Create</PrecompiledHeader>
       <PrecompiledHeaderFile>studioafx.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>DMK_PLATFORM_WINDOWS;GLFW_INCLUDE_VULKAN;DMK_USE_VULKAN;GLEW_STATIC;GRAPHICS_API;GLFW_INCLUDE_NONE;DMK_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>DMK_PLATFORM_WINDOWS;GLFW_INCLUDE_VULKAN;DMK_USE_VULKAN;GLFW_INCLUDE_NONE;DMK_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\Libraries\Local;$(SolutionDir)Engine\Studio;$(SolutionDir)Engine\Studio\Core\PCH;$(SolutionDir)Engine\Source;$(SolutionDir)Engine\Source\Core\Algorithm;$(SolutionDir)Engine\Source\Core\DataTypes;$(SolutionDir)Engine\Source\Core\Memory;$(SolutionDir)Engine\Source\Core\System;$(SolutionDir)Engine\Source\GameLibraries;$(SolutionDir)Dependencies\Programs\Debugger\src;$(SolutionDir)Dependencies\Programs\DevCon\src;$(SolutionDir)Dependencies\Libraries\External\glfw\include;$(SolutionDir)Dependencies\GLEW\include;$(SolutionDir)Dependencies\Libraries\External\glm;$(SolutionDir)Dependencies\Libraries\External\stb;$(SolutionDir)Dependencies\Libraries\External\tinyobjloader;$(SolutionDir)Dependencies\Libraries\Local\irrKlang\include;$(SolutionDir)Dependencies\Libraries\Local\assimp;$(SolutionDir)Dependencies\Libraries\External\Vulkan\include;$(SolutionDir)Dependencies\Libraries\External\gli\gli;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
@@ -98,14 +98,14 @@
       <PrecompiledHeader>Create</PrecompiledHeader>
       <PrecompiledHeaderFile>studioafx.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>DMK_PLATFORM_WINDOWS;GLFW_INCLUDE_VULKAN;DMK_USE_VULKAN;GLEW_STATIC;GRAPHICS_API;GLFW_INCLUDE_NONE;DMK_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>DMK_PLATFORM_WINDOWS;GLFW_INCLUDE_VULKAN;DMK_USE_VULKAN;GLFW_INCLUDE_NONE;DMK_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\Libraries\Local;$(SolutionDir)Engine\Studio;$(SolutionDir)Engine\Studio\Core\PCH;$(SolutionDir)Engine\Source;$(SolutionDir)Engine\Source\Core\Algorithm;$(SolutionDir)Engine\Source\Core\DataTypes;$(SolutionDir)Engine\Source\Core\Memory;$(SolutionDir)Engine\Source\Core\System;$(SolutionDir)Engine\Source\GameLibraries;$(SolutionDir)Dependencies\Programs\Debugger\src;$(SolutionDir)Dependencies\Programs\DevCon\src;$(SolutionDir)Dependencies\Libraries\External\glfw\include;$(SolutionDir)Dependencies\GLEW\include;$(SolutionDir)Dependencies\Libraries\External\glm;$(SolutionDir)Dependencies\Libraries\External\stb;$(SolutionDir)Dependencies\Libraries\External\tinyobjloader;$(SolutionDir)Dependencies\Libraries\Local\irrKlang\include;$(SolutionDir)Dependencies\Libraries\Local\assimp;$(SolutionDir)Dependencies\Libraries\External\Vulkan\include;$(SolutionDir)Dependencies\Libraries\External\gli\gli;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <MinimalRebuild>false</MinimalRebuild>
       <StringPooling>true</StringPooling>
-      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -121,14 +121,14 @@
       <PrecompiledHeader>Create</PrecompiledHeader>
       <PrecompiledHeaderFile>studioafx.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>DMK_PLATFORM_WINDOWS;GLFW_INCLUDE_VULKAN;DMK_USE_VULKAN;GLEW_STATIC;GRAPHICS_API;GLFW_INCLUDE_NONE;DMK_DISTRIBUTION;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>DMK_PLATFORM_WINDOWS;GLFW_INCLUDE_VULKAN;DMK_USE_VULKAN;GLFW_INCLUDE_NONE;DMK_DISTRIBUTION;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\Libraries\Local;$(SolutionDir)Engine\Studio;$(SolutionDir)Engine\Studio\Core\PCH;$(SolutionDir)Engine\Source;$(SolutionDir)Engine\Source\Core\Algorithm;$(SolutionDir)Engine\Source\Core\DataTypes;$(SolutionDir)Engine\Source\Core\Memory;$(SolutionDir)Engine\Source\Core\System;$(SolutionDir)Engine\Source\GameLibraries;$(SolutionDir)Dependencies\Programs\Debugger\src;$(SolutionDir)Dependencies\Programs\DevCon\src;$(SolutionDir)Dependencies\Libraries\External\glfw\include;$(SolutionDir)Dependencies\GLEW\include;$(SolutionDir)Dependencies\Libraries\External\glm;$(SolutionDir)Dependencies\Libraries\External\stb;$(SolutionDir)Dependencies\Libraries\External\tinyobjloader;$(SolutionDir)Dependencies\Libraries\Local\irrKlang\include;$(SolutionDir)Dependencies\Libraries\Local\assimp;$(SolutionDir)Dependencies\Libraries\External\Vulkan\include;$(SolutionDir)Dependencies\Libraries\External\gli\gli;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <MinimalRebuild>false</MinimalRebuild>
       <StringPooling>true</StringPooling>
-      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>

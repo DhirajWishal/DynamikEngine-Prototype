@@ -68,7 +68,7 @@ namespace Dynamik {
 			~VulkanRBL() {}
 
 			void setMsaaSamples(DMKPipelineMSAASamples samples);
-			void setWindowHandle(POINTER<GLFWwindow> windowHandle);
+			void setWindowHandle(DMKWindowHandle windowHandle);
 			void setWindowExtent(UI32 width, UI32 height);
 			void setProgress(POINTER<UI32> progress);
 

@@ -6,14 +6,27 @@
 #include "Public/datatypes.h"
 
 namespace Dynamik {
+	struct DMKWindowInitInfo {
+		std::string title = "Dynamik Engine v1";
+		UI32 width = 1280U;
+		UI32 height = 720U;
+	};
+
 	class DMKWindow {
 	public:
 		DMKWindow() {}
-		DMKWindow(UI32 width, UI32 height) : windowWidth(width), windowHeight(height) {}
 		virtual ~DMKWindow() {}
 
-		UI32 windowWidth = 0, windowHeight = 0;
+		virtual void initialize(DMKWindowInitInfo initInfo) {}
+		virtual void terminate() {}
+		virtual void updateWindowSize() {}
+		virtual void onUpdate() {}
+		virtual void pollEvents() {}
+		virtual void setIcon(std::string path) {}
+
+	public:
 		std::string windowTitle = "";
+		UI32 windowWidth = 0, windowHeight = 0;
 	};
 }
 

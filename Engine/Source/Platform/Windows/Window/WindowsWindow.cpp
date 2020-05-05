@@ -8,7 +8,7 @@
 #include "Events/EventManager.h"
 
 namespace Dynamik {
-	void WindowsWindow::initialize(DMKWindowManagerInitInfo info)
+	void WindowsWindow::initialize(DMKWindowInitInfo info)
 	{
 		DMK_BEGIN_PROFILE_TIMER();
 
@@ -101,14 +101,5 @@ namespace Dynamik {
 
 		windowWidth = width;
 		windowHeight = height;
-	}
-
-	GLFWWindowHandleContainer WindowsWindow::getHandle()
-	{
-		GLFWWindowHandleContainer _container;
-		_container.windowPointer = &window;
-		_container.windowWidth = windowWidth;
-		_container.windowHeight = windowHeight;
-		return _container;
 	}
 }

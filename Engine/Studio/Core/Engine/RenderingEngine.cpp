@@ -7,10 +7,9 @@ namespace Studio {
 		DMKRenderer::setWindowExtent(width, height);
 	}
 	
-	void RenderingEngine::setWindowHandle(POINTER<GLFWwindow> windowHandle)
+	void RenderingEngine::setWindowHandle(DMKWindowHandle windowHandle)
 	{
 		DMKRenderer::setWindowHandle(windowHandle);
-		windowPointer = windowHandle;
 	}
 	
 	void RenderingEngine::createRenderContext(DMKRenderContextType type)

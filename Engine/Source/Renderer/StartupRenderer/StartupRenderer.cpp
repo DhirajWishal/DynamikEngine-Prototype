@@ -38,11 +38,11 @@ namespace Dynamik {
 			glfwWindowHint(GLFW_BLUE_BITS, mode->blueBits);
 			glfwWindowHint(GLFW_REFRESH_RATE, mode->refreshRate);
 
-			instance.window = glfwCreateWindow(mode->width, mode->height, info.title.c_str(), monitor, NULL);
+			instance.window = glfwCreateWindow(mode->width, mode->height, "Dynamik Engine", monitor, NULL);
 			instance.windowWidth = mode->width;
 			instance.windowHeight = mode->height;
 
-			glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
+			glfwSetInputMode(instance.window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
 
 #endif
 

@@ -31,6 +31,9 @@
 
 #include "Camera.h"
 
+/* Managers */
+#include "Managers/Managers.h"
+
 /* Rendering engine */
 #include "Renderer/Renderer.h"
 
@@ -52,7 +55,7 @@ namespace Dynamik {
 		DMK_ENGINE_VALIDATION_MODE_TEXT_FILE,
 	};
 
-	struct  DMKInstanceDescriptor {
+	struct DMKInstanceDescriptor {
 		CCPTR DynamikName = "Dynamik";
 		CCPTR windowTitle = "Dynamik Engine";
 
@@ -67,6 +70,94 @@ namespace Dynamik {
 
 		ARRAY<CCPTR> engineStartupImages;
 	};
+
+	/* MAIN DYNAMIK ENGINE API OBJECT
+	 * SINGLETON
+	 *
+	 * This class contains all the necessary commands to initialize, run and terminate the Dynamik Engine.
+	 * DMKEngine class contains APIs for:
+	 *	- Advanced Dynamik Graphics Renderer (ADGR)
+	 *	- Audio Engine
+	 *	- Physics Engine
+	 *	- Desctruction Engine
+	 *
+	 * This class handles resouces internally.
+	 */
+	class DMKEngine {
+		DMKEngine() {}
+		static DMKEngine instance;
+
+	public:
+		DMKEngine(const DMKEngine&) = delete;
+		DMKEngine(DMKEngine&&) = delete;
+		DMKEngine& operator=(const DMKEngine&) = delete;
+		DMKEngine& operator=(DMKEngine&&) = delete;
+
+		/* Dynamik commands */
+		static void initializeInstance(DMKInstanceDescriptor descriptor);
+		static UI32 addLevel(DMKLevelDescriptor level);
+		static void loadLevel(UI32 levelIndex);
+		static void loadScene(UI32 sceneIndex);
+		static void loadCurrentScene();
+		static UI32 addAsset(DMKGameObject* object);
+
+		static void updateSceneIndex(UI32 index);
+		static void updateLevelIndex(UI32 index);
+
+		static void updateMovementSpeed(F32 speed);
+		static void updateMouseSensitivity(F32 sensitivity);
+		static void updateAnimationSpeed(F32 speed);
+
+		static void setupCamera(DMKCamera* camera);
+
+		static void terminateInstance();
+
+		/* Rendering engine commands */
+		static void initializeRendererStageOne();
+		static void genarateRenderables();
+		static void submitLoadedAssets();
+		static void addToRenderingQueue(DMKGameObject* object);
+		static void initializeRendererStageTwo();
+		static void initializeRendererStageThree();
+
+		/* Main loop */
+		static void run();
+
+		/* Termination */
+		static void terminate();
+
+	private:
+		inline static B1 isRenderableAsset(AssetContainer asset);
+		inline static void cleanUniformBuffers();
+		inline static void onUpdateCleanup();
+
+		AssetManager myAssetManager;
+		UI32 levelIndex = 0;
+		UI32 sceneIndex = 0;
+		UI32 progress = 0;
+
+		DMKInstanceDescriptor myInstanceDescriptor;
+
+		DMKCamera* myCamera;
+		DMKCameraData cameraData;
+		UI32 FOV = 60.0f;
+		UI32 aspectRatio = 0.5f;
+		UI32 frustumNear = 0.001f;
+		UI32 frustumFar = 256.0f;
+
+		ARRAY<POINTER<DMKEventComponent>> eventComponents;
+
+		ARRAY<POINTER<InternalFormat>> internalFormats;
+
+	private:
+		F32 movementSpeed = 1.0f;
+		F32 mouseSensitivity = 1.0f;
+		F32 animationSpeed = 1.0f;
+
+	private:
+		std::thread myStartypRendererThread;
+	};
+
 }
 
 #endif // !_DYNAMIK_H

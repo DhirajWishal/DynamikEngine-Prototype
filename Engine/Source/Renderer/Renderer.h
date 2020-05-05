@@ -18,6 +18,7 @@
 #include "GameObject.h"
 #include "Objects/InternalFormat/InternalFormat.h"
 #include "Managers/Asset/AssetManager.h"
+#include "Managers/Window/WindowManager.h"
 
 #include "Camera.h"
 
@@ -84,13 +85,13 @@ namespace Dynamik {
 
 			/* Initializing */
 			static void initializeStageOne(DMKRenderingAPI selectedAPI, DMKRendererSettings settings);
-			static UI32 createNewContext(POINTER<GLFWwindow> windowHandle, DMKRenderContextType contextType = DMKRenderContextType::DMK_RENDER_CONTEXT_TYPE_DEFAULT);
+			static UI32 createNewContext(DMKWindowHandle windowHandle, DMKRenderContextType contextType = DMKRenderContextType::DMK_RENDER_CONTEXT_TYPE_DEFAULT);
 			static void initializeStageTwo();
 			static void initializeStageThree();
 
 			/* Setting containers and assets */
 			static void setProgressPointer(POINTER<UI32> progress);
-			static void setWindowHandle(POINTER<GLFWwindow> window);
+			static void setWindowHandle(DMKWindowHandle windowHandle);
 			static void setWindowExtent(UI32 width, UI32 height);
 			static void setRenderableObjects(ARRAY<POINTER<InternalFormat>> formats, UI32 contextID = 0);
 			static void submitLoadedAssets(UI32 contextID = 0);

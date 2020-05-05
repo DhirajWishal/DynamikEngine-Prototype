@@ -7,19 +7,19 @@
 namespace Dynamik {
 	typedef POINTER<DMKWindow> DMKWindowHandle;
 
-	class DMKWindowManager {
-		DMKWindowManager() {}
-		~DMKWindowManager() {}
+	class WindowManager {
+		WindowManager() {}
+		~WindowManager() {}
 
-		static DMKWindowManager instance;
+		static WindowManager instance;
 	public:
-		DMKWindowManager() = delete;
-		DMKWindowManager(const DMKWindowManager&) = delete;
-		DMKWindowManager(DMKWindowManager&&) = delete;
+		WindowManager(const WindowManager&) = delete;
+		WindowManager(WindowManager&&) = delete;
 
 		static void setWindowIcon(std::string path);
 
-		static DMKWindowHandle createWindow(UI32 width = 1280U, UI32 height = 720U);
+		static DMKWindowHandle createWindow(DMKWindowInitInfo initInfo);
+		static void destroyWindow(DMKWindowHandle windowHandle);
 
 	private:
 		std::string myIconPath = "";

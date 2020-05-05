@@ -51,12 +51,14 @@ project "Dynamik"
 	}
 
 	links { 
+		"glew32",
 		"glew32s",
-		"glfw3",
+		"glfw3dll",
 		"opengl32",
 		"vulkan-1",
 		"irrKlang",
 		"assimp",
+		"assimp-vc140-mt",
 		"Debugger",
 	}
 
@@ -68,8 +70,6 @@ project "Dynamik"
 			"DMK_PLATFORM_WINDOWS",
 			"GLFW_INCLUDE_VULKAN",
 			"DMK_USE_VULKAN",
-			"GLEW_STATIC",
-			"GRAPHICS_API",
 			"GLFW_INCLUDE_NONE"
 		}
 

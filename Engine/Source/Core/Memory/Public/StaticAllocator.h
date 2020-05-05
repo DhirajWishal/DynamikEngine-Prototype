@@ -31,7 +31,7 @@ namespace Dynamik {
 		StaticAllocator() {}
 		~StaticAllocator() {}
 
-		static TYPE* allocate(UI32 size = 1, UI32 align = DMK_MEMORY_ALIGN, UI32 offset = 0)
+		static TYPE* allocate(UI32 size = sizeof(TYPE), UI32 align = DMK_MEMORY_ALIGN, UI32 offset = 0)
 		{
 #if defined(DMK_MEMORY_USE_MALLOC)
 			return (TYPE*)malloc(size);

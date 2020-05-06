@@ -118,6 +118,7 @@ namespace Dynamik {
 		DMKPipelineFrontFace pipelineFrontFace = DMKPipelineFrontFace::DMK_PIPELINE_FRONT_FACE_POSITIVE;
 		DMKPipelinePolygonMode pipelinePolygonMode = DMKPipelinePolygonMode::DMK_PIPELINE_POLYGON_MODE_FILL;
 		DMKPipelineTopology pipelineTopology = DMKPipelineTopology::DMK_PIPELINE_TOPOLOGY_TRIANGLE_LIST;
+		DMKRenderingTechnology renderingTechnology = DMKRenderingTechnology::DMK_RENDERING_TECHNOLOGY_INDEXED;
 
 		ARRAY<DMKRenderAttachment> renderAttachments;
 	};

@@ -7,7 +7,7 @@
 
  Author:	Dhiraj Wishal
  Project:	Dynamik
- Date:		15/6/2019	(DEVELOPMENTS ONGOING)
+ Date:		15/06/2019	(DEVELOPMENTS ONGOING)
  IDE:		MS Visual Studio Community 2019
 
  This file contains the main DMKEngine class which is the Dynamik Engine API.

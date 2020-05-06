@@ -10,6 +10,7 @@ namespace Dynamik {
 		~FileManager() {}
 
 	public:
+		static std::string getCurrentDirectory();
 		static std::string getExecutableLocation();
 	};
 }

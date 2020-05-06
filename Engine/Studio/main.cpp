@@ -10,6 +10,8 @@
 #include "studioafx.h"
 #include "Dynamik.h"
 
+#include <filesystem>
+
 #include "Platform/Windows.h"
 #include "Core/Objects/Camera.h"
 #include "Core/Objects/Moon.h"
@@ -18,12 +20,11 @@
 #include "Core/Engine/RenderingEngine.h"
 using namespace Studio;
 
-int main() {
+#define _SOLUTION_DIR
+
+int main(int argc, char* argv[]) {
 	try
 	{
-		CHR _buffer[256];
-		auto _path = GetModuleFileNameA(NULL, _buffer, 256);
-
 		DMKInstanceDescriptor engineInstance;
 		DMKEngine::initializeInstance(engineInstance);
 
@@ -32,12 +33,16 @@ int main() {
 
 		/* Level initialization */
 		OceanSkybox skybox;
+		//skybox.descriptor.renderSpecification.renderingTechnology = DMKRenderingTechnology::DMK_RENDERING_TECHNOLOGY_VERTEX;
 		Moon moon;
+		//moon.descriptor.renderSpecification.renderingTechnology = DMKRenderingTechnology::DMK_RENDERING_TECHNOLOGY_VERTEX;
+		//moon.descriptor.transformDescriptor.location = { 0.0f, 0.0f, 1.0f };
 
 		DMKSceneDescriptor scene1;
 		scene1.sceneID = "S001";
 		scene1.sceneIndex = 0;
 		scene1.assets = { &skybox, &moon };
+		//scene1.assets = { &moon };
 
 		DMKLevelDescriptor level1;
 		level1.levelID = "001";

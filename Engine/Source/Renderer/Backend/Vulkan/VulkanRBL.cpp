@@ -231,6 +231,7 @@ namespace Dynamik {
 			DMK_BEGIN_PROFILE_TIMER();
 
 			VulkanRenderData _renderData;
+			_renderData.renderTechnology = format->descriptor.renderSpecification.renderingTechnology;
 			_renderData.indexBufferType = format->descriptor.indexBufferType;
 
 			/* Initialize mesh data */

@@ -95,6 +95,13 @@ namespace Dynamik {
 		return myInstance.isCursorInThisWindow;
 	}
 
+	std::pair<D64, D64> EventManager::getCursorPoss()
+	{
+		D64 _xOffset = 0.0, _yOffset = 0.0;
+		glfwGetCursorPos(myInstance.myWindowPointer, &_xOffset, &_yOffset);
+		return { _xOffset, _yOffset };
+	}
+
 	void EventManager::_keyCallback(GLFWwindow* window, I32 key, I32 scancode, I32 action, I32 mods)
 	{
 		DMKKeyEventComponent _component;
@@ -103,13 +110,13 @@ namespace Dynamik {
 		switch (action)
 		{
 		case DMK_PRESS:
-			_component.type = DMKEventType::DMK_EVENT_TYPE_KEY_PRESS;
+			_component.type = DMKEventType::DMK_EVENT_TYPE_PRESS;
 			break;
 		case DMK_REPEAT:
-			_component.type = DMKEventType::DMK_EVENT_TYPE_KEY_REPEAT;
+			_component.type = DMKEventType::DMK_EVENT_TYPE_REPEAT;
 			break;
 		case DMK_BUTTON_RELEASE:
-			_component.type = DMKEventType::DMK_EVENT_TYPE_KEY_RELEASE;
+			_component.type = DMKEventType::DMK_EVENT_TYPE_RELEASE;
 			break;
 
 		default:
@@ -152,13 +159,13 @@ namespace Dynamik {
 		switch (action)
 		{
 		case DMK_PRESS:
-			_component.type = DMKEventType::DMK_EVENT_TYPE_KEY_PRESS;
+			_component.type = DMKEventType::DMK_EVENT_TYPE_PRESS;
 			break;
 		case DMK_REPEAT:
-			_component.type = DMKEventType::DMK_EVENT_TYPE_KEY_REPEAT;
+			_component.type = DMKEventType::DMK_EVENT_TYPE_REPEAT;
 			break;
 		case DMK_BUTTON_RELEASE:
-			_component.type = DMKEventType::DMK_EVENT_TYPE_KEY_RELEASE;
+			_component.type = DMKEventType::DMK_EVENT_TYPE_RELEASE;
 			break;
 
 		default:

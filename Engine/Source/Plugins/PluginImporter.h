@@ -2,11 +2,19 @@
 #ifndef _DYNAMIK_PLUGIN_IMPORTER_H
 #define _DYNAMIK_PLUGIN_IMPORTER_H
 
+#include "PluginAPI/PluginAPI.h"
+#include "Plugin.h"
+
 namespace Dynamik {
 	class PluginImporter {
-	public:
 		PluginImporter() {}
 		~PluginImporter() {}
+
+	public:
+		PluginImporter(const PluginImporter&) = delete;
+		PluginImporter(PluginImporter&&) = delete;
+
+		static Plugin& loadPlugin(std::string libraryPath);
 	};
 }
 

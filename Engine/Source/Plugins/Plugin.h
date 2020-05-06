@@ -3,6 +3,7 @@
 #define _DYNAMIK_PLUGIN_H
 
 #include <string>
+#include "PluginAPI/PluginAPI.h"
 
 namespace Dynamik {
 	/* Main Plugin object for the Dynamik Engine.
@@ -10,7 +11,7 @@ namespace Dynamik {
 	 * These plugins are downloaded from their github repositories and compiled to the library file
 	   in the current platform the engine is on. This procedure is done by the Studio.
 	 */
-	class Plugin {
+	class Plugin  : public DMKPluginAPI {
 	public:
 		Plugin() {}
 		Plugin(std::string path) : myPath(path) {}

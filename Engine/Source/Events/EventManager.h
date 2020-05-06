@@ -36,6 +36,7 @@ namespace Dynamik {
 
 		static ARRAY<POINTER<DMKEventComponent>> getEventComponents();
 		static B1 isCursorOnCurrent();
+		static std::pair<D64, D64> getCursorPoss();
 
 	private:
 		static void _keyCallback(GLFWwindow* window, I32 key, I32 scancode, I32 action, I32 mods);

@@ -268,6 +268,7 @@
     <ClInclude Include="Platform\Windows\thread\threadManager.h" />
     <ClInclude Include="Plugins\Plugin.h" />
     <ClInclude Include="Plugins\PluginAPI\PluginAPI.h" />
+    <ClInclude Include="Plugins\PluginAPI\RenderPlugin.h" />
     <ClInclude Include="Plugins\PluginImporter.h" />
     <ClInclude Include="Renderer\Backend\Components\FrameBuffer.h" />
     <ClInclude Include="Renderer\Backend\Components\SwapChain.h" />
@@ -417,6 +418,7 @@
     <ClCompile Include="Platform\Windows\thread\threadManager.cpp" />
     <ClCompile Include="Plugins\Plugin.cpp" />
     <ClCompile Include="Plugins\PluginAPI\PluginAPI.cpp" />
+    <ClCompile Include="Plugins\PluginAPI\RenderPlugin.cpp" />
     <ClCompile Include="Plugins\PluginImporter.cpp" />
     <ClCompile Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Attachments\VulkanBRDF.cpp" />
     <ClCompile Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Attachments\VulkanIrradianceCube.cpp" />

@@ -56,6 +56,24 @@ namespace Dynamik {
 		ARRAY<POINTER<DMKEventComponent>> events;
 		B1 isCursorInThisWindow = false;
 		B1 isWindowClosed = false;
+
+		template<class TYPE>
+		static inline void _pushToContainer(const TYPE& component)
+		{
+			std::lock_guard<std::mutex> _lockGuard(myMutex);
+
+			POINTER<DMKEventComponent> _component = StaticAllocator<DMKEventComponent>::allocate(sizeof(TYPE));
+			StaticAllocator<TYPE>::set(_component, (TYPE&&)component);
+
+			myInstance.events.pushBack(_component);
+		}
+		static inline void _clearContainer();
+	};
+
+	class DMKEventBuffer {
+	public:
+		DMKEventBuffer() {}
+		~DMKEventBuffer() {}
 	};
 }
 

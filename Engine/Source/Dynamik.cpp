@@ -214,6 +214,9 @@ namespace Dynamik {
 			instance.eventComponents = EventManager::getEventComponents();
 
 			/* Update the camera and store its tada locally */
+			/* TODO
+			 When updating, send them one by one from a for or while loop and ignore handled events.
+			*/
 			instance.cameraData = instance.myCamera->update(instance.eventComponents);
 
 			/* Draw the frame using the camera data */

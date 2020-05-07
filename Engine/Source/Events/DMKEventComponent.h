@@ -24,6 +24,8 @@ namespace Dynamik {
 		DMK_EVENT_TYPE_PRESS,
 		DMK_EVENT_TYPE_REPEAT,
 		DMK_EVENT_TYPE_RELEASE,
+
+		DMK_EVENT_TYPE_SCROLL,
 	};
 
 	enum class DMKEvent : UI32 {

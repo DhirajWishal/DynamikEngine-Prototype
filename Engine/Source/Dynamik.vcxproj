@@ -236,6 +236,7 @@
     <ClInclude Include="Managers\Asset\AssetManager.h" />
     <ClInclude Include="Managers\Error\ErrorManager.h" />
     <ClInclude Include="Managers\Managers.h" />
+    <ClInclude Include="Managers\Thread\ThreadManager.h" />
     <ClInclude Include="Managers\Window\Window.h" />
     <ClInclude Include="Managers\Window\WindowManager.h" />
     <ClInclude Include="Networking\Backend\client.h" />
@@ -398,6 +399,7 @@
     <ClCompile Include="Intellect\Backend\Maths\mathDefinitions.cpp" />
     <ClCompile Include="Managers\Asset\AssetManager.cpp" />
     <ClCompile Include="Managers\Error\ErrorManager.cpp" />
+    <ClCompile Include="Managers\Thread\ThreadManager.cpp" />
     <ClCompile Include="Managers\Window\WindowManager.cpp" />
     <ClCompile Include="Networking\Backend\client.cpp" />
     <ClCompile Include="Networking\Backend\server.cpp" />

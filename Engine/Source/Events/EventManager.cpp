@@ -45,7 +45,6 @@ namespace Dynamik {
 	/* Returns false if the GLFW window is closed */
 	B1 EventManager::pollEventsGLFW()
 	{
-		myInstance.events = {};
 		glfwPollEvents();
 
 		return !myInstance.isWindowClosed;
@@ -222,5 +221,13 @@ namespace Dynamik {
 	void EventManager::_windowCloseCallback(GLFWwindow* window)
 	{
 		myInstance.isWindowClosed = true;
+	}
+	
+	inline void EventManager::_clearContainer()
+	{
+		for (auto _component : myInstance.events)
+			StaticAllocator<DMKEventComponent>::deAllocate(_component);
+
+		myInstance.events = {};
 	}
 }

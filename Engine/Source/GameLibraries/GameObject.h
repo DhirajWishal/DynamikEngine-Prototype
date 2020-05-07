@@ -20,6 +20,10 @@
 #include "Core/DataTypes/Dynamik/objectSpecifications.h"
 #include "Objects/DMKObject/DMKObject.h"
 
+#include "Events/DMKKeyEventComponent.h"
+#include "Events/DMKMouseButtonEventComponent.h"
+#include "Events/DMKMouseScrollEventComponent.h"
+
 #include "GameObjectDescriptors.h"
 
 // Dynamik namespace
@@ -42,6 +46,15 @@ namespace Dynamik {
            be flagged.
          */
         virtual DMKUniformBufferData onUpdate(DMKCameraData data) { return DMKUniformBufferData(); }
+
+        /* VIRTUAL FUNCTION
+         * Event handlers for the Dynamik Game Object.
+         * Dynamik engine uses a threaded blocking event management system. When an event occurs, a 
+           key event component structure is created. A new thread is then created to handle the event.
+         */
+        virtual void onKeyEvent(DMKKeyEventComponent component) {}
+        virtual void onMouseButtonEvent(DMKMouseButtonEventComponent component) {}
+        virtual void onMouseScrollEvent(DMKMouseScrollEventComponent component) {}
 
         DMKObjectType type = DMKObjectType::DMK_OBJECT_TYPE_STATIC;
 

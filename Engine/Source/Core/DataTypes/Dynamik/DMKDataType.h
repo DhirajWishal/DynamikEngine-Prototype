@@ -2,6 +2,8 @@
 #ifndef _DYNAMIK_DATA_TYPE_H
 #define _DYNAMIK_DATA_TYPE_H
 
+#include "Public/datatypes.h"
+
 namespace Dynamik {
 	/* Data types enum for the Dynamik Engine 
 	 * DMK_TYPE_NAME = BYTE_SIZE
@@ -51,6 +53,11 @@ namespace Dynamik {
 		DMK_DATA_TYPE_MAT2 = 16,
 		DMK_DATA_TYPE_MAT3 = 36,
 		DMK_DATA_TYPE_MAT4 = 64,
+	};
+
+	struct DMKVirtualDataContainer {
+		DMKDataType type = DMKDataType::DMK_DATA_TYPE_UNDEFINED;
+		VPTR data = nullptr;
 	};
 }
 

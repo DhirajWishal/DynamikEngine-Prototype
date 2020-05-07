@@ -884,6 +884,7 @@
     <ClInclude Include="Plugins\PluginAPI\PluginAPI.h" />
     <ClInclude Include="FileSystem\FileManager.h" />
     <ClInclude Include="Plugins\PluginAPI\RenderPlugin.h" />
+    <ClInclude Include="Managers\Thread\ThreadManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Audio\Backend\AudioEngine.cpp">
@@ -1224,6 +1225,7 @@
     <ClCompile Include="Plugins\PluginAPI\PluginAPI.cpp" />
     <ClCompile Include="FileSystem\FileManager.cpp" />
     <ClCompile Include="Plugins\PluginAPI\RenderPlugin.cpp" />
+    <ClCompile Include="Managers\Thread\ThreadManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Audio\Samples\license.txt">

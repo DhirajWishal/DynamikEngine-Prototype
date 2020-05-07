@@ -20,25 +20,13 @@ DMKCameraData Camera::update(ARRAY<POINTER<DMKEventComponent>> eventComponents)
         case Dynamik::DMKEventType::DMK_EVENT_TYPE_UNKNOWN:
             return myData;
             break;
-        case Dynamik::DMKEventType::DMK_EVENT_TYPE_KEY_PRESS:
+        case Dynamik::DMKEventType::DMK_EVENT_TYPE_PRESS:
             break;
-        case Dynamik::DMKEventType::DMK_EVENT_TYPE_KEY_REPEAT:
+        case Dynamik::DMKEventType::DMK_EVENT_TYPE_REPEAT:
             break;
-        case Dynamik::DMKEventType::DMK_EVENT_TYPE_KEY_RELEASE:
+        case Dynamik::DMKEventType::DMK_EVENT_TYPE_RELEASE:
             break;
-        case Dynamik::DMKEventType::DMK_EVENT_TYPE_MOUSE_SCROLL:
-            break;
-        case Dynamik::DMKEventType::DMK_EVENT_TYPE_MOUSE_BUTTON_PRESS:
-            break;
-        case Dynamik::DMKEventType::DMK_EVENT_TYPE_MOUSE_BUTTON_REPEAT:
-            break;
-        case Dynamik::DMKEventType::DMK_EVENT_TYPE_MOUSE_BUTTON_RELEASE:
-            break;
-        case Dynamik::DMKEventType::DMK_EVENT_TYPE_WINDOW_ON_FOCUS:
-            break;
-        case Dynamik::DMKEventType::DMK_EVENT_TYPE_WINDOW_OUTOF_FOCUS:
-            break;
-        case Dynamik::DMKEventType::DMK_EVENT_TYPE_WINDOW_RESIZE:
+        case Dynamik::DMKEventType::DMK_EVENT_TYPE_SCROLL:
             break;
 		}
 	}

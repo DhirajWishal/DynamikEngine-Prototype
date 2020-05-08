@@ -63,7 +63,7 @@ namespace Dynamik {
 				for (VkImageView _view : mySwapChainObject.swapChainImageViews)
 					frameBufferInitInfo.attachments.pushBack(_view);
 				frameBufferInitInfo.attachments.pushBack(depthBuffer.imageView);
-				myFrameBuffer.initializeFrameBuffer(myCoreObject.logicalDevice, frameBufferInitInfo);
+				myFrameBuffer.initialize(myCoreObject.logicalDevice, frameBufferInitInfo);
 
 				_initializeDescriptorSetLayout();
 				_initializePipelineLayout();

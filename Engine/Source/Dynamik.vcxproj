@@ -322,6 +322,7 @@
     <ClInclude Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsPushConstant.h" />
     <ClInclude Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsRBLIndex.h" />
     <ClInclude Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsRenderContext.h" />
+    <ClInclude Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsRenderPass.h" />
     <ClInclude Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsShader.h" />
     <ClInclude Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsSupportObject.h" />
     <ClInclude Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsSwapChain.h" />
@@ -453,6 +454,7 @@
     <ClCompile Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsPipeline.cpp" />
     <ClCompile Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsPushConstant.cpp" />
     <ClCompile Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsRenderContext.cpp" />
+    <ClCompile Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsRenderPass.cpp" />
     <ClCompile Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsShader.cpp" />
     <ClCompile Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsSwapChain.cpp" />
     <ClCompile Include="Renderer\Backend\Vulkan\Renderer Backend Layer\VulkanGraphicsSwapChain3D.cpp" />

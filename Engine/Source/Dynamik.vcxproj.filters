@@ -885,6 +885,7 @@
     <ClInclude Include="Events\DropPathEventComponent.h">
       <Filter>Events</Filter>
     </ClInclude>
+    <ClInclude Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsRenderPass.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Audio\Backend\AudioEngine.cpp">
@@ -1226,6 +1227,7 @@
     <ClCompile Include="FileSystem\FileManager.cpp" />
     <ClCompile Include="Plugins\PluginAPI\RenderPlugin.cpp" />
     <ClCompile Include="Managers\Thread\ThreadManager.cpp" />
+    <ClCompile Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsRenderPass.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Audio\Samples\license.txt">

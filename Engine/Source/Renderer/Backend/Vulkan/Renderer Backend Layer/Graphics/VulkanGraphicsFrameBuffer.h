@@ -7,17 +7,6 @@
 namespace Dynamik {
 	namespace Renderer {
 		namespace Backend {
-			struct VulkanRenderPassInitInfo {
-				UI32 destinationSubpass = 0;
-				VkAccessFlags accessFlags = 0;
-				B1 overrideDependencies = false;
-
-				ARRAY<VkAttachmentDescription> attachments;
-
-				ARRAY<VkSubpassDescription> subPasses;
-				ARRAY<VkSubpassDependency> additionalSubPassDependencies;
-			};
-
 			struct VulkanGraphicsFrameBufferInitInfo {
 				UI32 bufferCount = 0;
 				VkExtent2D swapChainExtent;
@@ -32,9 +21,7 @@ namespace Dynamik {
 				VulkanGraphicsFrameBuffer() {}
 				virtual ~VulkanGraphicsFrameBuffer() {}
 
-				virtual void initializeRenderPass(VkDevice logicalDevice, VulkanRenderPassInitInfo info);
-				virtual void initializeFrameBuffer(VkDevice logicalDevice, VulkanGraphicsFrameBufferInitInfo info);
-
+				virtual void initialize(VkDevice logicalDevice, VulkanGraphicsFrameBufferInitInfo info);
 				virtual void terminate(VkDevice logicalDevice);
 
 				static VkFramebuffer createFrameBuffer(

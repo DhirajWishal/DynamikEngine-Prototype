@@ -3,6 +3,7 @@
 #define _DYNAMIK_RENDERER_VULKAN_GRAPHICS_COMMAND_BUFFER_H
 
 #include "VulkanGraphicsContainers.h"
+#include "VulkanGraphicsRenderPass.h"
 #include "VulkanGraphicsFrameBuffer.h"
 
 namespace Dynamik {
@@ -11,6 +12,7 @@ namespace Dynamik {
 			struct VulkanGraphicsCommandBufferInitInfo {
 				ARRAY<VulkanRenderData> objects;
 				VulkanGraphicsSwapChain swapChain;
+				VulkanGraphicsRenderPass renderPass;
 				VulkanGraphicsFrameBuffer frameBuffer;
 				ARRAY<F32> clearValues = {
 					(2.0f / 256.0f),

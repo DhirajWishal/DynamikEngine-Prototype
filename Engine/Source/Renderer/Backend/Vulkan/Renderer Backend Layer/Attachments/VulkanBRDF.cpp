@@ -116,7 +116,7 @@ namespace Dynamik {
 				initInfo.bufferCount = 1;
 				initInfo.attachments = { myTextureContainer.imageView };
 				initInfo.swapChainExtent = { dimentions , dimentions };
-				myFrameBuffer.initializeFrameBuffer(logicalDevice, initInfo);
+				myFrameBuffer.initialize(logicalDevice, initInfo);
 			}
 
 			void VulkanBRDF::_initializeDescriptorSetLayout()

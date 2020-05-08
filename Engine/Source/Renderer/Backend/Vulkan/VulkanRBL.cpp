@@ -125,7 +125,7 @@ namespace Dynamik {
 			frameBufferInitInfo.swapChainImageViews = mySwapChain.swapChainContainer.swapChainImageViews;
 			frameBufferInitInfo.bufferCount = mySwapChain.swapChainContainer.swapChainImages.size();
 			frameBufferInitInfo.swapChainExtent = mySwapChain.swapChainContainer.swapChainExtent;
-			myFrameBuffer.initializeFrameBuffer(myGraphicsCore.logicalDevice, frameBufferInitInfo);
+			myFrameBuffer.initialize(myGraphicsCore.logicalDevice, frameBufferInitInfo);
 
 			/* Initialize the overlay */
 			/* TODO: Overlay */
@@ -133,6 +133,23 @@ namespace Dynamik {
 
 		void VulkanRBL::initializeComputeCore()
 		{
+		}
+
+		void VulkanRBL::createNewContext(DMKRenderContextType type)
+		{
+			VulkanRenderContext _context;
+			_context.type = type;
+			_context.renderPass.initialize(myGraphicsCore.logicalDevice, _getDefaultRenderPassInfo());
+
+			_sortRenderContexts();
+		}
+
+		UI32 VulkanRBL::createNewSubContext(DMKRenderContextType type)
+		{
+			if (!myRenderContexts.isValidIndex((UI32)type))
+				createNewContext(type);
+
+			VulkanRenderSubContext _context;
 		}
 
 		void VulkanRBL::addObject(POINTER<InternalFormat> format)
@@ -273,6 +290,7 @@ namespace Dynamik {
 			initInfo.frameBuffer = myFrameBuffer;
 			initInfo.swapChain = mySwapChain.swapChainContainer;
 			initInfo.objects = myResourceContainers[inUseIndex].renderData;
+			initInfo.renderPass = myRenderPass;
 
 			myResourceContainers[inUseIndex].commandBuffer.initializeCommandBuffers(initInfo);
 		}
@@ -353,7 +371,7 @@ namespace Dynamik {
 		{
 		}
 
-		void VulkanRBL::_initializeRenderPass()
+		VulkanRenderPassInitInfo VulkanRBL::_getDefaultRenderPassInfo()
 		{
 			DMK_BEGIN_PROFILE_TIMER();
 
@@ -419,7 +437,14 @@ namespace Dynamik {
 			VulkanRenderPassInitInfo renderPassInitInfo;
 			renderPassInitInfo.attachments = attachments;
 			renderPassInitInfo.subPasses = subPasses;
-			myFrameBuffer.initializeRenderPass(myGraphicsCore.logicalDevice, renderPassInitInfo);
+			return renderPassInitInfo;
+		}
+
+		void VulkanRBL::_initializeRenderPass()
+		{
+			DMK_BEGIN_PROFILE_TIMER();
+
+			myRenderPass.initialize(myGraphicsCore.logicalDevice, _getDefaultRenderPassInfo());
 		}
 
 		void VulkanRBL::_prepareRenderDataContainer(UI32 index)
@@ -774,6 +799,26 @@ namespace Dynamik {
 			//VulkanSkeletalAnimation* _renderObject = Cast<VulkanSkeletalAnimation*>(format.get());
 
 			return VulkanRenderData();
+		}
+		
+		inline void VulkanRBL::_sortRenderContexts()
+		{
+			UI32 _size = myRenderContexts.size() - 1, _indexCount = 0;
+			UI32 _index = 0, _itr = 0;
+
+			while (_indexCount < _size)
+			{
+				_index = 0;
+				_itr = 0;
+				while (_itr < _size - _indexCount)
+				{
+					if (myRenderContexts[_index].type > myRenderContexts[_itr].type)
+						std::swap(myRenderContexts[_index], myRenderContexts[_itr]);
+					_index++;
+					_itr++;
+				}
+				_indexCount++;
+			}
 		}
 	}
 }

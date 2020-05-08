@@ -11,6 +11,7 @@
 #include "VulkanGraphicsCore.h"
 #include "VulkanGraphicsCommandBuffer.h"
 #include "VulkanGraphicsSwapChain.h"
+#include "VulkanGraphicsRenderPass.h"
 #include "VulkanGraphicsFrameBuffer.h"
 
 #endif // !_DYNAMIK_RENDERER_VULKAN_RENDERER_BACKEND_LAYER_INDEX_H

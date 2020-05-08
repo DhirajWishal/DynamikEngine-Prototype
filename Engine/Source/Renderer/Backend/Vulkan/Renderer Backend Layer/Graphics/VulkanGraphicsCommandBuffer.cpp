@@ -171,7 +171,7 @@ namespace Dynamik {
 
 					VkRenderPassBeginInfo renderPassInfo = {};
 					renderPassInfo.sType = VK_STRUCTURE_TYPE_RENDER_PASS_BEGIN_INFO;
-					renderPassInfo.renderPass = info.frameBuffer.renderPass;
+					renderPassInfo.renderPass = info.renderPass.renderPass;
 					renderPassInfo.framebuffer = info.frameBuffer.buffers[i];
 					renderPassInfo.renderArea.offset = { 0, 0 };
 					renderPassInfo.renderArea.extent = info.swapChain.swapChainExtent;

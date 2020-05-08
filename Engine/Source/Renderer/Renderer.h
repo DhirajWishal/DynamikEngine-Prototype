@@ -33,6 +33,8 @@ namespace Dynamik {
 		/*
 		 Rendering context types.
 		 These rendering contexts describes how an object gets rendered in space (color, depth, etc...). 
+		 One or more render contexts can be in flight at a given instance and a prefered context can be 
+		 selected at runtime.
 
 		 Rendering context contains (in Vulkan),
 		 * Render pass.
@@ -44,7 +46,7 @@ namespace Dynamik {
 		 * Frame Buffer.
 		 * Per object pipeline (contains a pointer to the render data).
 		*/
-		enum class DMKRenderContextType {
+		enum class DMKRenderContextType : UI32 {
 			DMK_RENDER_CONTEXT_TYPE_2D,				/* Renderes only 2D */
 			DMK_RENDER_CONTEXT_TYPE_3D,				/* Renderes only 3D */
 			DMK_RENDER_CONTEXT_TYPE_DEFAULT,		/* Renderes both 2D and 3D */

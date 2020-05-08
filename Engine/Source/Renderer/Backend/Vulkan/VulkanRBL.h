@@ -44,13 +44,25 @@ namespace Dynamik {
 			VulkanResourceState state = VulkanResourceState::ADGR_VULKAN_RESOURCE_STATE_HOST_VISIBLE;
 		};
 
+		/* Vulkan Render Context */
 		struct VulkanRenderContext {
+			DMKRenderContextType type = DMKRenderContextType::DMK_RENDER_CONTEXT_TYPE_DEFAULT;
+
+			VulkanGraphicsRenderPass renderPass;
+			ARRAY<VulkanRenderData> renderDatas;
+		};
+
+		/* Vulkan Render Sub-Context */
+		struct VulkanRenderSubContext {
+			POINTER<VulkanRenderContext> renderContext;
+
+			VkSurfaceKHR surface = VK_NULL_HANDLE;
 			VulkanGraphicsSwapChain swapChain;
+			VulkanGraphicsRenderPass renderPass;
 			VulkanGraphicsFrameBuffer frameBuffer;
 
-			ARRAY<VulkanRenderData> renderDatas;
-
 			VulkanGraphicsCommandBuffer inFlightCommandBuffer;
+			VulkanResourceState state = VulkanResourceState::ADGR_VULKAN_RESOURCE_STATE_HOST_VISIBLE;
 		};
 
 		/* RENDERER BACKEND LAYER
@@ -75,6 +87,14 @@ namespace Dynamik {
 			void initializeGraphicsCore();
 			void initializeComputeCore();
 
+			/* 
+			 Creates a new render context and stores it in the render context container accorfing to the
+			 DMKRenderContextType enum.
+			*/
+			void createNewContext(DMKRenderContextType type);
+			/* Create a new sub context and return its index in the context container. */
+			UI32 createNewSubContext(DMKRenderContextType type);
+
 			void addObject(POINTER<InternalFormat> format);
 			void addObjects(ARRAY<POINTER<InternalFormat>> formats);
 
@@ -88,6 +108,7 @@ namespace Dynamik {
 			void recreateSwapChain();
 
 		private:
+			VulkanRenderPassInitInfo _getDefaultRenderPassInfo();
 			void _initializeRenderPass();	/* Initialize the render pass */
 			void _prepareRenderDataContainer(UI32 index);	/* Prepare the next container to be used */
 			VulkanGraphicsRenderableObjectInitInfo _getBasicInitInfo();	/* Return the basic init info */
@@ -124,12 +145,17 @@ namespace Dynamik {
 			VulkanGraphicsColorBuffer myColorBuffer;	/* Core Vulkan attachments */
 			VulkanGraphicsDepthBuffer myDepthBuffer;	/* Core Vulkan attachments */
 
+			VulkanGraphicsRenderPass myRenderPass;		/* Graphics render pass */
 			VulkanGraphicsFrameBuffer myFrameBuffer;	/* Graphics frame buffer */
 
 			/* Draw call variables */
 			UI32 imageIndex = 0;
 			UI32 currentFrame = 0;
 			VkResult result = VkResult::VK_ERROR_UNKNOWN;
+
+			/* Render context container */
+			ARRAY<VulkanRenderContext> myRenderContexts;
+			inline void _sortRenderContexts();
 
 			/* Attachment container */
 		};

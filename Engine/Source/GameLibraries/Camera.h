@@ -3,7 +3,7 @@
 #define _DYNAMIK_CAMERA_H
 
 #include "GameObject.h"
-#include "Events/DMKEventComponent.h"
+#include "Events/EventComponent.h"
 #include "GameObjectDescriptors.h"
 
 #include "Public/Array.h"

@@ -20,9 +20,9 @@
 #include "Core/DataTypes/Dynamik/objectSpecifications.h"
 #include "Objects/DMKObject/DMKObject.h"
 
-#include "Events/DMKKeyEventComponent.h"
-#include "Events/DMKMouseButtonEventComponent.h"
-#include "Events/DMKMouseScrollEventComponent.h"
+#include "Events/KeyEventComponent.h"
+#include "Events/MouseButtonEventComponent.h"
+#include "Events/MouseScrollEventComponent.h"
 
 #include "GameObjectDescriptors.h"
 

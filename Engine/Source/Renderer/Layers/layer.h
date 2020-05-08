@@ -3,7 +3,7 @@
 #ifndef _DYNAMIK_RENDERER_LAYER_H
 #define _DYNAMIK_RENDERER_LAYER_H
 
-#include "Events/DMKEventComponent.h"
+#include "Events/EventComponent.h"
 
 
 namespace Dynamik {

@@ -433,27 +433,6 @@
       <Filter>Destruction</Filter>
     </ClInclude>
     <ClInclude Include="Dynamik.h" />
-    <ClInclude Include="Events\DMKDropPathEventComponent.h">
-      <Filter>Events</Filter>
-    </ClInclude>
-    <ClInclude Include="Events\DMKEventComponent.h">
-      <Filter>Events</Filter>
-    </ClInclude>
-    <ClInclude Include="Events\DMKKeyEventComponent.h">
-      <Filter>Events</Filter>
-    </ClInclude>
-    <ClInclude Include="Events\DMKMouseButtonEventComponent.h">
-      <Filter>Events</Filter>
-    </ClInclude>
-    <ClInclude Include="Events\DMKMouseScrollEventComponent.h">
-      <Filter>Events</Filter>
-    </ClInclude>
-    <ClInclude Include="Events\DMKTextEventComponent.h">
-      <Filter>Events</Filter>
-    </ClInclude>
-    <ClInclude Include="Events\DMKWindowResizeEventComponent.h">
-      <Filter>Events</Filter>
-    </ClInclude>
     <ClInclude Include="Events\EventManager.h">
       <Filter>Events</Filter>
     </ClInclude>
@@ -885,6 +864,27 @@
     <ClInclude Include="FileSystem\FileManager.h" />
     <ClInclude Include="Plugins\PluginAPI\RenderPlugin.h" />
     <ClInclude Include="Managers\Thread\ThreadManager.h" />
+    <ClInclude Include="Events\WindowResizeEventComponent.h">
+      <Filter>Events</Filter>
+    </ClInclude>
+    <ClInclude Include="Events\TextEventComponent.h">
+      <Filter>Events</Filter>
+    </ClInclude>
+    <ClInclude Include="Events\MouseScrollEventComponent.h">
+      <Filter>Events</Filter>
+    </ClInclude>
+    <ClInclude Include="Events\MouseButtonEventComponent.h">
+      <Filter>Events</Filter>
+    </ClInclude>
+    <ClInclude Include="Events\KeyEventComponent.h">
+      <Filter>Events</Filter>
+    </ClInclude>
+    <ClInclude Include="Events\EventComponent.h">
+      <Filter>Events</Filter>
+    </ClInclude>
+    <ClInclude Include="Events\DropPathEventComponent.h">
+      <Filter>Events</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Audio\Backend\AudioEngine.cpp">

@@ -1,12 +1,12 @@
 #include "dmkafx.h"
 #include "EventManager.h"
 
-#include "DMKKeyEventComponent.h"
-#include "DMKTextEventComponent.h"
-#include "DMKMouseButtonEventComponent.h"
-#include "DMKMouseScrollEventComponent.h"
-#include "DMKDropPathEventComponent.h"
-#include "DMKWindowResizeEventComponent.h"
+#include "KeyEventComponent.h"
+#include "TextEventComponent.h"
+#include "MouseButtonEventComponent.h"
+#include "MouseScrollEventComponent.h"
+#include "DropPathEventComponent.h"
+#include "WindowResizeEventComponent.h"
 
 #include "keyCodes.h"
 
@@ -16,8 +16,6 @@
 											}
 
 namespace Dynamik {
-	std::mutex myMutex;
-
 	EventManager EventManager::myInstance;
 	
 	void EventManager::setEventCallbacks(GLFWwindow* window)
@@ -84,9 +82,12 @@ namespace Dynamik {
 	{
 		DMK_BEGIN_PROFILE_TIMER();
 
-		auto _events = myInstance.events;
-		myInstance.events = {};
-		return _events;
+		return myInstance.events;
+	}
+
+	void EventManager::clearContainer()
+	{
+		myInstance._clearContainer();
 	}
 
 	B1 EventManager::isCursorOnCurrent()
@@ -127,7 +128,7 @@ namespace Dynamik {
 		_component.scancode = scancode;
 		_component.mods = mods;
 
-		LOCK_AND_ADD_COMPONENT(_component)
+		_pushToContainer(_component);
 	}
 	
 	void EventManager::_textCallback(GLFWwindow* window, UI32 codepoint)
@@ -137,7 +138,7 @@ namespace Dynamik {
 
 		_component.charCode = codepoint;
 
-		LOCK_AND_ADD_COMPONENT(_component)
+		_pushToContainer(_component);
 	}
 	
 	void EventManager::_cursorPositionCallback(GLFWwindow* window, D64 xOffset, D64 yOffset)
@@ -175,7 +176,7 @@ namespace Dynamik {
 		_component.button = button;
 		_component.mods = mods;
 
-		LOCK_AND_ADD_COMPONENT(_component)
+		_pushToContainer(_component);
 	}
 	
 	void EventManager::_mouseScrollCallback(GLFWwindow* window, D64 xOffset, D64 yOffset)
@@ -186,7 +187,7 @@ namespace Dynamik {
 		_component.xOffset = xOffset;
 		_component.yOffset = yOffset;
 
-		LOCK_AND_ADD_COMPONENT(_component)
+		_pushToContainer(_component);
 	}
 	
 	void EventManager::_mouseCursorEnterCallback(GLFWwindow* window, I32 entered)
@@ -204,7 +205,7 @@ namespace Dynamik {
 		for (UI32 i = 0; i < count; i++)
 			_component.paths.pushBack(strings[i]);
 
-		LOCK_AND_ADD_COMPONENT(_component)
+		_pushToContainer(_component);
 	}
 	
 	void EventManager::_applicationResizeCallback(GLFWwindow* window, I32 width, I32 height)
@@ -215,7 +216,7 @@ namespace Dynamik {
 		_component.width = width;
 		_component.height = height;
 
-		LOCK_AND_ADD_COMPONENT(_component)
+		_pushToContainer(_component);
 	}
 	
 	void EventManager::_windowCloseCallback(GLFWwindow* window)
@@ -225,9 +226,12 @@ namespace Dynamik {
 	
 	inline void EventManager::_clearContainer()
 	{
-		for (auto _component : myInstance.events)
-			StaticAllocator<DMKEventComponent>::deAllocate(_component);
+		if (!myInstance.events.size())
+			return;
 
-		myInstance.events = {};
+		for (auto _component : myInstance.events)
+			StaticAllocator<DMKEventComponent>::deAllocate(_component, 0);
+
+		myInstance.events.clear();
 	}
 }

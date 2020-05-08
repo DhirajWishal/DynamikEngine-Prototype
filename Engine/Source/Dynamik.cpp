@@ -222,6 +222,8 @@ namespace Dynamik {
 			/* Draw the frame using the camera data */
 			info.cameraData = instance.cameraData;
 			Renderer::DMKRenderer::drawFrame(info);
+
+			EventManager::clearContainer();
 		}
 
 		/* Clean the rendering engine right after the window gets terminated */
@@ -248,7 +250,7 @@ namespace Dynamik {
 	inline void DMKEngine::onUpdateCleanup()
 	{
 		cleanUniformBuffers();
-		instance.eventComponents = {};
+		instance.eventComponents.clear();
 	}
 
 }

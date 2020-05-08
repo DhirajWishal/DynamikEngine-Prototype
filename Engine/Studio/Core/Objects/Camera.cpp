@@ -15,19 +15,72 @@ DMKCameraData Camera::update(ARRAY<POINTER<DMKEventComponent>> eventComponents)
 {
 	for (auto component : eventComponents)
 	{
-		switch (component->type)
+		if (!component.isValid())
+			continue;
+
+		if (component->type == DMKEventType::DMK_EVENT_TYPE_PRESS)
 		{
-        case Dynamik::DMKEventType::DMK_EVENT_TYPE_UNKNOWN:
-            return myData;
-            break;
-        case Dynamik::DMKEventType::DMK_EVENT_TYPE_PRESS:
-            break;
-        case Dynamik::DMKEventType::DMK_EVENT_TYPE_REPEAT:
-            break;
-        case Dynamik::DMKEventType::DMK_EVENT_TYPE_RELEASE:
-            break;
-        case Dynamik::DMKEventType::DMK_EVENT_TYPE_SCROLL:
-            break;
+			DMKKeyEventComponent eventContainer = *(DMKKeyEventComponent*)component.get();
+			switch (eventContainer.keycode) {
+			case DMK_KEY_W:
+				myData.cameraPosition += myData.cameraFront;
+				break;
+			case DMK_KEY_A:
+				myData.cameraPosition += myData.cameraRight;
+				break;
+			case DMK_KEY_S:
+				myData.cameraPosition -= myData.cameraFront;
+				break;
+			case DMK_KEY_D:
+				myData.cameraPosition -= myData.cameraRight;
+				break;
+			case DMK_KEY_UP:
+				myData.cameraPosition += myData.cameraUp;
+				break;
+			case DMK_KEY_DOWN:
+				myData.cameraPosition -= myData.cameraUp;
+				break;
+			case DMK_KEY_LEFT:
+				break;
+			case DMK_KEY_RIGHT:
+				break;
+			case DMK_KEY_KP_ADD:
+				break;
+			case DMK_KEY_KP_SUBTRACT:
+				break;
+			}
+		}
+		else if (component->type == DMKEventType::DMK_EVENT_TYPE_REPEAT)
+		{
+			DMKKeyEventComponent eventContainer = *(DMKKeyEventComponent*)component.get();
+			switch (eventContainer.keycode) {
+			case DMK_KEY_W:
+				myData.cameraPosition += myData.cameraFront;
+				break;
+			case DMK_KEY_A:
+				myData.cameraPosition += myData.cameraRight;
+				break;
+			case DMK_KEY_S:
+				myData.cameraPosition -= myData.cameraFront;
+				break;
+			case DMK_KEY_D:
+				myData.cameraPosition -= myData.cameraRight;
+				break;
+			case DMK_KEY_UP:
+				myData.cameraPosition += myData.cameraUp;
+				break;
+			case DMK_KEY_DOWN:
+				myData.cameraPosition -= myData.cameraUp;
+				break;
+			case DMK_KEY_LEFT:
+				break;
+			case DMK_KEY_RIGHT:
+				break;
+			case DMK_KEY_KP_ADD:
+				break;
+			case DMK_KEY_KP_SUBTRACT:
+				break;
+			}
 		}
 	}
 

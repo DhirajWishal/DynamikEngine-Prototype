@@ -30,10 +30,27 @@ namespace Dynamik {
 			DMK_RENDERING_API_DIRECTX_12,
 		};
 
+		/*
+		 Rendering context types.
+		 These rendering contexts describes how an object gets rendered in space (color, depth, etc...). 
+
+		 Rendering context contains (in Vulkan),
+		 * Render pass.
+		 * Render data (renderable object data - API agnostic).
+
+		 Rendering sub-context contains (in Vulkan),
+		 * Surface (window).
+		 * Swap Chain.
+		 * Frame Buffer.
+		 * Per object pipeline (contains a pointer to the render data).
+		*/
 		enum class DMKRenderContextType {
-			DMK_RENDER_CONTEXT_TYPE_DEFAULT,
-			DMK_RENDER_CONTEXT_TYPE_2D,
-			DMK_RENDER_CONTEXT_TYPE_3D,
+			DMK_RENDER_CONTEXT_TYPE_2D,				/* Renderes only 2D */
+			DMK_RENDER_CONTEXT_TYPE_3D,				/* Renderes only 3D */
+			DMK_RENDER_CONTEXT_TYPE_DEFAULT,		/* Renderes both 2D and 3D */
+			DMK_RENDER_CONTEXT_TYPE_DEFAULT_HDR,	/* Renderes both 2D and 3D in HDR */
+			DMK_RENDER_CONTEXT_TYPE_DEFAULT_MONO,	/* Renderes both 2D and 3D in monochrome */
+			DMK_RENDER_CONTEXT_TYPE_DEBUG,			/* Renderes both 2D and 3D in debug mode */
 		};
 
 		struct  DMKRendererSettings {

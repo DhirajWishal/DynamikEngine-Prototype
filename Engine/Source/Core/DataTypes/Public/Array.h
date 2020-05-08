@@ -576,10 +576,7 @@ namespace Dynamik {
 		void clear()
 		{
 			_terminate();
-			_reAllocateAssign(_getNextSize());
-			_fillWithData(capacity(), TYPE());
-
-			myDataCount = 0;
+			_setLocalDataToDefault();
 		}
 
 		/* FUNCTION

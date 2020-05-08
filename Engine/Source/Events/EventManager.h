@@ -3,8 +3,7 @@
 #define _DYNAMIK_EVENT_MANAGER_H
 
 #include "Public/Array.h"
-#include "DMKEventComponent.h"
-
+#include "EventComponent.h"
 
 namespace Dynamik {
 	struct CursorPosition {
@@ -14,13 +13,12 @@ namespace Dynamik {
 
 	class EventManager {
 		EventManager() {}
+		~EventManager() {}
 		static EventManager myInstance;
 
 	public:
 		EventManager(const EventManager&) = delete;
 		EventManager& operator=(EventManager&&) = delete;
-
-		~EventManager() {}
 
 		static void setEventCallbacks(GLFWwindow* window);
 		static B1 pollEventsGLFW();
@@ -35,6 +33,7 @@ namespace Dynamik {
 		static POINTER<GLFWwindow> getCurrentContext();
 
 		static ARRAY<POINTER<DMKEventComponent>> getEventComponents();
+		static void clearContainer();
 		static B1 isCursorOnCurrent();
 		static std::pair<D64, D64> getCursorPoss();
 
@@ -57,17 +56,21 @@ namespace Dynamik {
 		B1 isCursorInThisWindow = false;
 		B1 isWindowClosed = false;
 
+		/* This function is passed to GLFW to push a new ecent container to the queue. */
 		template<class TYPE>
 		static inline void _pushToContainer(const TYPE& component)
 		{
-			std::lock_guard<std::mutex> _lockGuard(myMutex);
-
 			POINTER<DMKEventComponent> _component = StaticAllocator<DMKEventComponent>::allocate(sizeof(TYPE));
 			StaticAllocator<TYPE>::set(_component, (TYPE&&)component);
 
+			std::lock_guard<std::mutex> _lockGuard(myInstance.myMutex);
 			myInstance.events.pushBack(_component);
 		}
+
 		static inline void _clearContainer();
+
+		POINTER<std::thread> utilityThread;
+		std::mutex myMutex;
 	};
 
 	class DMKEventBuffer {

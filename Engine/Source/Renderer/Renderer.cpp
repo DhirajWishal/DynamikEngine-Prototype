@@ -27,7 +27,7 @@ namespace Dynamik {
 
 		void DMKRenderer::setMSAASamples(DMKPipelineMSAASamples samples)
 		{
-
+			myRendererBackend.setMsaaSamples(samples);
 		}
 
 		UI32 DMKRenderer::createRenderingInstance()

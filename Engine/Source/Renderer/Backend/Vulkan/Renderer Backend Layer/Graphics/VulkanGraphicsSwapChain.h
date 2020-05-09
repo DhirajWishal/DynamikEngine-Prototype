@@ -4,6 +4,7 @@
 
 #include <vulkan/vulkan.h>
 #include "Public/Array.h"
+#include "VulkanGraphicsCore.h"
 
 namespace Dynamik {
 	namespace Renderer {
@@ -19,7 +20,7 @@ namespace Dynamik {
 				VulkanGraphicsSwapChain() {}
 				~VulkanGraphicsSwapChain() {}
 
-				void setBasicData(VkDevice device, VkPhysicalDevice physicalDevice, VkSurfaceKHR surface, VkSurfaceCapabilitiesKHR surfaceCapabilities);
+				void setBasicData(VkDevice device, VkPhysicalDevice physicalDevice, VulkanSurfaceContainer container);
 				virtual void terminate();
 
 				virtual void initializeSwapChain(UI32 width, UI32 height);
@@ -38,8 +39,7 @@ namespace Dynamik {
 
 				VkDevice logicalDevice = VK_NULL_HANDLE;
 				VkPhysicalDevice physicalDevice = VK_NULL_HANDLE;
-				VkSurfaceKHR surface = VK_NULL_HANDLE;
-				VkSurfaceCapabilitiesKHR surfaceCapabilities = {};
+				VulkanSurfaceContainer surfaceContainer = {};
 			};
 		}
 	}

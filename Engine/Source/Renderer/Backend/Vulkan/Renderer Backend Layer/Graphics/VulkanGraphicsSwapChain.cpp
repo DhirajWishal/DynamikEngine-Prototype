@@ -48,12 +48,11 @@ namespace Dynamik {
 				}
 			}
 
-			void VulkanGraphicsSwapChain::setBasicData(VkDevice device, VkPhysicalDevice physical, VkSurfaceKHR sur, VkSurfaceCapabilitiesKHR capabilities)
+			void VulkanGraphicsSwapChain::setBasicData(VkDevice device, VkPhysicalDevice physical, VulkanSurfaceContainer container)
 			{
 				logicalDevice = device;
 				physicalDevice = physical;
-				surface = sur;
-				surfaceCapabilities = capabilities;
+				surfaceContainer = container;
 			}
 
 			void VulkanGraphicsSwapChain::terminate()
@@ -63,18 +62,18 @@ namespace Dynamik {
 
 			void VulkanGraphicsSwapChain::initializeSwapChain(UI32 width, UI32 height)
 			{
-				VulkanGraphicsSwapChainSupportDetails swapChainSupport = querySwapChainSupport(&physicalDevice, &surface);
+				VulkanGraphicsSwapChainSupportDetails swapChainSupport = querySwapChainSupport(&physicalDevice, &surfaceContainer.surface);
 
 				VkSurfaceFormatKHR surfaceFormat = chooseSwapSurfaceFormat(swapChainSupport.formats);
 				VkPresentModeKHR presentMode = chooseSwapPresentMode(swapChainSupport.presentModes);
 				VkExtent2D extent = chooseSwapExtent(swapChainSupport.capabilities, width, height);
 
 				VkCompositeAlphaFlagBitsKHR surfaceComposite =
-					(surfaceCapabilities.supportedCompositeAlpha & VK_COMPOSITE_ALPHA_OPAQUE_BIT_KHR)
+					(surfaceContainer.surfaceCapabilities.supportedCompositeAlpha & VK_COMPOSITE_ALPHA_OPAQUE_BIT_KHR)
 					? VK_COMPOSITE_ALPHA_OPAQUE_BIT_KHR
-					: (surfaceCapabilities.supportedCompositeAlpha & VK_COMPOSITE_ALPHA_PRE_MULTIPLIED_BIT_KHR)
+					: (surfaceContainer.surfaceCapabilities.supportedCompositeAlpha & VK_COMPOSITE_ALPHA_PRE_MULTIPLIED_BIT_KHR)
 					? VK_COMPOSITE_ALPHA_PRE_MULTIPLIED_BIT_KHR
-					: (surfaceCapabilities.supportedCompositeAlpha & VK_COMPOSITE_ALPHA_POST_MULTIPLIED_BIT_KHR)
+					: (surfaceContainer.surfaceCapabilities.supportedCompositeAlpha & VK_COMPOSITE_ALPHA_POST_MULTIPLIED_BIT_KHR)
 					? VK_COMPOSITE_ALPHA_POST_MULTIPLIED_BIT_KHR
 					: VK_COMPOSITE_ALPHA_INHERIT_BIT_KHR;
 
@@ -85,7 +84,7 @@ namespace Dynamik {
 
 				VkSwapchainCreateInfoKHR createInfo = {};
 				createInfo.sType = VK_STRUCTURE_TYPE_SWAPCHAIN_CREATE_INFO_KHR;
-				createInfo.surface = surface;
+				createInfo.surface = surfaceContainer.surface;
 				createInfo.minImageCount = imageCount;
 				createInfo.imageFormat = surfaceFormat.format;
 				createInfo.imageColorSpace = surfaceFormat.colorSpace;
@@ -94,7 +93,7 @@ namespace Dynamik {
 				createInfo.imageUsage = VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT;
 				//createInfo.imageUsage = VK_IMAGE_USAGE_TRANSFER_DST_BIT;
 
-				VulkanQueue indices = VulkanGraphicsCore::findQueueFamilies(physicalDevice, surface);
+				VulkanQueue indices = VulkanGraphicsCore::findQueueFamilies(physicalDevice, surfaceContainer.surface);
 				UI32 queueFamilyindices[] = {
 					indices.graphicsFamily.value(),
 					indices.presentFamily.value()

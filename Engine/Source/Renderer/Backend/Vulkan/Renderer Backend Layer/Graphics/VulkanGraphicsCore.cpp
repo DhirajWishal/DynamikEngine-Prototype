@@ -119,15 +119,6 @@ namespace Dynamik {
 					func(instance, debugMessenger, pAllocator);
 			}
 
-			void VulkanGraphicsCore::initialize(VulkanGraphicsCoreInitDescriptor initInfo)
-			{
-				initializeInstance(initInfo.instanceInitInfo);
-				initializeDebugger();
-				initializeSurface(initInfo.windowPointer);
-				initializeDevice();
-				initializeSyncObjects();
-			}
-
 			void VulkanGraphicsCore::terminate()
 			{
 				terminateSyncObjects();
@@ -173,15 +164,34 @@ namespace Dynamik {
 					DMK_CORE_FATAL("Failed to create instance!");
 			}
 
-			void VulkanGraphicsCore::initializeSurface(POINTER<GLFWwindow> windowPtr)
+			VulkanSurfaceContainer VulkanGraphicsCore::createSurface(POINTER<GLFWwindow> windowHandle)
 			{
-				if (glfwCreateWindowSurface(instance, windowPtr.get(), nullptr, &surface) != VK_SUCCESS)
+				VulkanSurfaceContainer _container;
+				if (glfwCreateWindowSurface(instance, windowHandle.get(), nullptr, &_container.surface) != VK_SUCCESS)
 					DMK_CORE_FATAL("Failed to create window surface!");
+
+				return _container;
+			}
+
+			void VulkanGraphicsCore::validateSurface(VkSurfaceKHR surface)
+			{
+				if (!isDeviceSuitable(physicalDevice, surface))
+					DMK_CORE_FATAL("Vulkan Surface not supported!");
+			}
+
+			void VulkanGraphicsCore::getSurfaceCapabilities(POINTER<VulkanSurfaceContainer> container)
+			{
+				if (vkGetPhysicalDeviceSurfaceCapabilitiesKHR(physicalDevice, container->surface, &container->surfaceCapabilities) != VK_SUCCESS)
+					DMK_CORE_FATAL("Failed to get surface capabilities!");
+			}
+
+			void VulkanGraphicsCore::terminateSurface(VulkanSurfaceContainer container)
+			{
+				vkDestroySurfaceKHR(instance, container.surface, nullptr);
 			}
 
 			void VulkanGraphicsCore::terminateInstance()
 			{
-				vkDestroySurfaceKHR(instance, surface, nullptr);
 				vkDestroyInstance(instance, nullptr);
 			}
 
@@ -270,10 +280,10 @@ namespace Dynamik {
 				createInfo.pfnUserCallback = debugCallback;
 			}
 
-			void VulkanGraphicsCore::initializeDevice()
+			void VulkanGraphicsCore::initializeDevice(VkSurfaceKHR baseSurface)
 			{
-				initPhysicalDevice();
-				initLogicalDevice();
+				initPhysicalDevice(baseSurface);
+				initLogicalDevice(baseSurface);
 			}
 
 			void VulkanGraphicsCore::terminateDevice()
@@ -281,7 +291,7 @@ namespace Dynamik {
 				vkDestroyDevice(logicalDevice, nullptr);
 			}
 
-			void VulkanGraphicsCore::initPhysicalDevice()
+			void VulkanGraphicsCore::initPhysicalDevice(VkSurfaceKHR baseSurface)
 			{
 				UI32 deviceCount = 0;
 				vkEnumeratePhysicalDevices(instance, &deviceCount, nullptr);
@@ -296,7 +306,7 @@ namespace Dynamik {
 
 				auto props = VkPhysicalDeviceProperties{};
 				for (const auto& device : devices) {
-					if (isDeviceSuitable(device, surface)) {
+					if (isDeviceSuitable(device, baseSurface)) {
 						vkGetPhysicalDeviceProperties(device, &props);
 
 						if (props.deviceType == VkPhysicalDeviceType::VK_PHYSICAL_DEVICE_TYPE_DISCRETE_GPU)
@@ -306,7 +316,7 @@ namespace Dynamik {
 						else
 							physicalDevice = device;
 
-						msaaSamples = VulkanUtilities::getMaxUsableSampleCount(physicalDevice);
+						maxMSAASamples = VulkanUtilities::getMaxUsableSampleCount(physicalDevice);
 						break;
 					}
 
@@ -348,9 +358,9 @@ namespace Dynamik {
 #endif
 			}
 
-			void VulkanGraphicsCore::initLogicalDevice()
+			void VulkanGraphicsCore::initLogicalDevice(VkSurfaceKHR baseSurface)
 			{
-				VulkanQueue indices = findQueueFamilies(physicalDevice, surface);
+				VulkanQueue indices = findQueueFamilies(physicalDevice, baseSurface);
 
 				ARRAY<VkDeviceQueueCreateInfo> queueCreateInfos;
 				std::set<UI32> uniqueQueueFamilies = {

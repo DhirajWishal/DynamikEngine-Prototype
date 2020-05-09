@@ -35,6 +35,33 @@ namespace Dynamik {
 #endif
 		void VulkanRBL::setMsaaSamples(DMKPipelineMSAASamples samples)
 		{
+			switch (samples)
+			{
+			case Dynamik::DMKPipelineMSAASamples::DMK_PIPELINE_MSAA_SAMPLES_1:
+				myMsaaSamples = VK_SAMPLE_COUNT_1_BIT;
+				break;
+			case Dynamik::DMKPipelineMSAASamples::DMK_PIPELINE_MSAA_SAMPLES_2:
+				myMsaaSamples = VK_SAMPLE_COUNT_2_BIT;
+				break;
+			case Dynamik::DMKPipelineMSAASamples::DMK_PIPELINE_MSAA_SAMPLES_4:
+				myMsaaSamples = VK_SAMPLE_COUNT_4_BIT;
+				break;
+			case Dynamik::DMKPipelineMSAASamples::DMK_PIPELINE_MSAA_SAMPLES_8:
+				myMsaaSamples = VK_SAMPLE_COUNT_8_BIT;
+				break;
+			case Dynamik::DMKPipelineMSAASamples::DMK_PIPELINE_MSAA_SAMPLES_16:
+				myMsaaSamples = VK_SAMPLE_COUNT_16_BIT;
+				break;
+			case Dynamik::DMKPipelineMSAASamples::DMK_PIPELINE_MSAA_SAMPLES_32:
+				myMsaaSamples = VK_SAMPLE_COUNT_32_BIT;
+				break;
+			case Dynamik::DMKPipelineMSAASamples::DMK_PIPELINE_MSAA_SAMPLES_64:
+				myMsaaSamples = VK_SAMPLE_COUNT_64_BIT;
+				break;
+			default:
+				DMK_CORE_FATAL("Invalid MSAA sample count!");
+				break;
+			}
 		}
 
 		void VulkanRBL::setWindowHandle(DMKWindowHandle windowHandle)
@@ -67,65 +94,30 @@ namespace Dynamik {
 			instanceInitInfo.engineName = "Dynamik";
 			myGraphicsCore.initializeInstance(instanceInitInfo);
 
-			/* Initialize the window surface */
-			myGraphicsCore.initializeSurface(myWindowHandle);
+			/* Create the basic window surface */
+			myBasicSurface = myGraphicsCore.createSurface(myWindowHandle);
 
 			/* Initialize the device (physical and logical) */
-			myGraphicsCore.initializeDevice();
+			myGraphicsCore.initializeDevice(myBasicSurface.surface);
+
+			/* Validate the provided MSAA samples */
+			if (!_validateMSAASamples())
+			{
+				DMK_CORE_WARN("Provided MSAA samples are not supported by the GPU. Samples will be set to the maximum sample count available.");
+				myMsaaSamples = myGraphicsCore.maxMSAASamples;
+			}
+
+			/* Validate and get surface capabilities */
+			myGraphicsCore.validateSurface(myBasicSurface.surface);
+			myGraphicsCore.getSurfaceCapabilities(&myBasicSurface);
 
 			/* Initialize command pools (both host visible and client visible) */
 			VulkanGraphicsCommandBufferInitResources commandBufferResourceInitInfo;
 			commandBufferResourceInitInfo.logicalDevice = myGraphicsCore.logicalDevice;
 			commandBufferResourceInitInfo.physicalDevice = myGraphicsCore.physicalDevice;
-			commandBufferResourceInitInfo.surface = myGraphicsCore.surface;
-			myResourceContainers[0].commandBuffer.initializeResources(commandBufferResourceInitInfo);
-			myResourceContainers[0].commandBuffer.initializeCommandPool();
-			myResourceContainers[1].commandBuffer.initializeResources(commandBufferResourceInitInfo);
-			myResourceContainers[1].commandBuffer.initializeCommandPool();
+			commandBufferResourceInitInfo.surface = myBasicSurface.surface;
 			myMainCommandBuffer.initializeResources(commandBufferResourceInitInfo);
 			myMainCommandBuffer.initializeCommandPool();
-
-			/* Initialize the SwapChain */
-			mySwapChain.basicInitialize(
-				myGraphicsCore.logicalDevice,
-				myGraphicsCore.physicalDevice,
-				myGraphicsCore.surface,
-				myGraphicsCore.surfaceCapabilities);
-			mySwapChain.initializeSwapChain(windowWidth, windowHeight);
-
-			/* Initialize Render pass */
-			_initializeRenderPass();
-
-			/* Initialize attachments */
-			/* Initialize color buffer */
-			myColorBuffer.initialize(
-				myGraphicsCore.logicalDevice,
-				myGraphicsCore.physicalDevice,
-				myResourceContainers[inUseIndex].commandBuffer.pool,
-				myGraphicsCore.graphicsQueue,
-				myGraphicsCore.presentQueue,
-				mySwapChain.swapChainContainer.swapChainImageFormat,
-				mySwapChain.swapChainContainer.swapChainExtent,
-				myGraphicsCore.msaaSamples);
-
-			/* Initialize color buffer */
-			myDepthBuffer.initialize(
-				myGraphicsCore.logicalDevice,
-				myGraphicsCore.physicalDevice,
-				myResourceContainers[inUseIndex].commandBuffer.pool,
-				myGraphicsCore.graphicsQueue,
-				myGraphicsCore.presentQueue,
-				mySwapChain.swapChainContainer.swapChainExtent,
-				myGraphicsCore.msaaSamples);
-
-			/* Initialize Frame Buffer */
-			VulkanGraphicsFrameBufferInitInfo frameBufferInitInfo;
-			frameBufferInitInfo.attachments.pushBack(myColorBuffer.imageView);
-			frameBufferInitInfo.attachments.pushBack(myDepthBuffer.imageView);
-			frameBufferInitInfo.swapChainImageViews = mySwapChain.swapChainContainer.swapChainImageViews;
-			frameBufferInitInfo.bufferCount = mySwapChain.swapChainContainer.swapChainImages.size();
-			frameBufferInitInfo.swapChainExtent = mySwapChain.swapChainContainer.swapChainExtent;
-			myFrameBuffer.initialize(myGraphicsCore.logicalDevice, frameBufferInitInfo);
 
 			/* Initialize the overlay */
 			/* TODO: Overlay */
@@ -135,21 +127,90 @@ namespace Dynamik {
 		{
 		}
 
-		void VulkanRBL::createNewContext(DMKRenderContextType type)
+		void VulkanRBL::createNewContext(DMKRenderContextType type, POINTER<GLFWwindow> windowHandle)
 		{
 			VulkanRenderContext _context;
 			_context.type = type;
-			_context.renderPass.initialize(myGraphicsCore.logicalDevice, _getDefaultRenderPassInfo());
+
+			_context.surfaceContainer = _createNewSurface(windowHandle);
+			_context.swapChain.setBasicData(myGraphicsCore.logicalDevice, myGraphicsCore.physicalDevice, _context.surfaceContainer);
+
+			I32 _width = 0, _height = 0;
+			glfwGetWindowSize(windowHandle.get(), &_width, &_height);
+			_context.swapChain.initializeSwapChain(_width, _height);
+
+			_context.renderPass.initialize(myGraphicsCore.logicalDevice, _getDefaultRenderPassInfo(_context.swapChain.swapChainImageFormat));
+
+			VulkanGraphicsCommandBufferInitResources commandBufferResourceInitInfo;
+			commandBufferResourceInitInfo.logicalDevice = myGraphicsCore.logicalDevice;
+			commandBufferResourceInitInfo.physicalDevice = myGraphicsCore.physicalDevice;
+			commandBufferResourceInitInfo.surface = _context.surfaceContainer.surface;
+			_context.inFlightCommandBuffer.initializeResources(commandBufferResourceInitInfo);
+			_context.inFlightCommandBuffer.pool = myMainCommandBuffer.pool;
+
+			/* Initialize attachments */
+			/* Initialize color buffer */
+			myColorBuffer.initialize(
+				myGraphicsCore.logicalDevice,
+				myGraphicsCore.physicalDevice,
+				myMainCommandBuffer.pool,
+				myGraphicsCore.graphicsQueue,
+				myGraphicsCore.presentQueue,
+				_context.swapChain.swapChainImageFormat,
+				_context.swapChain.swapChainExtent,
+				myMsaaSamples);
+
+			/* Initialize color buffer */
+			myDepthBuffer.initialize(
+				myGraphicsCore.logicalDevice,
+				myGraphicsCore.physicalDevice,
+				myMainCommandBuffer.pool,
+				myGraphicsCore.graphicsQueue,
+				myGraphicsCore.presentQueue,
+				_context.swapChain.swapChainExtent,
+				myMsaaSamples);
+
+			VulkanGraphicsFrameBufferInitInfo frameBufferInitInfo;
+			switch (type)
+			{
+			case Dynamik::Renderer::DMKRenderContextType::DMK_RENDER_CONTEXT_TYPE_2D:
+				frameBufferInitInfo.attachments.pushBack(myColorBuffer.imageView);
+				break;
+
+			case Dynamik::Renderer::DMKRenderContextType::DMK_RENDER_CONTEXT_TYPE_3D:
+				frameBufferInitInfo.attachments.pushBack(myColorBuffer.imageView);
+				frameBufferInitInfo.attachments.pushBack(myDepthBuffer.imageView);
+				break;
+
+			case Dynamik::Renderer::DMKRenderContextType::DMK_RENDER_CONTEXT_TYPE_DEFAULT:
+				frameBufferInitInfo.attachments.pushBack(myColorBuffer.imageView);
+				frameBufferInitInfo.attachments.pushBack(myDepthBuffer.imageView);
+				break;
+
+			case Dynamik::Renderer::DMKRenderContextType::DMK_RENDER_CONTEXT_TYPE_DEFAULT_HDR:
+				frameBufferInitInfo.attachments.pushBack(myColorBuffer.imageView);
+				frameBufferInitInfo.attachments.pushBack(myDepthBuffer.imageView);
+				break;
+
+			case Dynamik::Renderer::DMKRenderContextType::DMK_RENDER_CONTEXT_TYPE_DEFAULT_MONO:
+				frameBufferInitInfo.attachments.pushBack(myDepthBuffer.imageView);
+				break;
+
+			case Dynamik::Renderer::DMKRenderContextType::DMK_RENDER_CONTEXT_TYPE_DEBUG:
+				frameBufferInitInfo.attachments.pushBack(myColorBuffer.imageView);
+				frameBufferInitInfo.attachments.pushBack(myDepthBuffer.imageView);
+				break;
+
+			default:
+				DMK_CORE_FATAL("Invalid Render Context type!");
+				break;
+			}
+			frameBufferInitInfo.swapChainImageViews = _context.swapChain.swapChainImageViews;
+			frameBufferInitInfo.bufferCount = _context.swapChain.swapChainImages.size();
+			frameBufferInitInfo.swapChainExtent = _context.swapChain.swapChainExtent;
+			_context.frameBuffer.initialize(myGraphicsCore.logicalDevice, frameBufferInitInfo);
 
 			_sortRenderContexts();
-		}
-
-		UI32 VulkanRBL::createNewSubContext(DMKRenderContextType type)
-		{
-			if (!myRenderContexts.isValidIndex((UI32)type))
-				createNewContext(type);
-
-			VulkanRenderSubContext _context;
 		}
 
 		void VulkanRBL::addObject(POINTER<InternalFormat> format)
@@ -243,9 +304,16 @@ namespace Dynamik {
 					initializeObject(format);
 		}
 
-		VPTR VulkanRBL::initializeObject(POINTER<InternalFormat> format)
+		VPTR VulkanRBL::initializeObject(POINTER<InternalFormat> format, DMKRenderContextType context)
 		{
 			DMK_BEGIN_PROFILE_TIMER();
+
+			if (myRenderContexts.isValidIndex((UI32)context))
+				if (myRenderContexts[(UI32)context].type != context)
+					//createNewContext(context, myWindowHandle);
+					DMK_CORE_FATAL("Specified context type is not yet initialized. Make sure to create the required contexts prior to loading objects.");
+
+			auto _context = myRenderContexts[(UI32)context];
 
 			VulkanRenderData _renderData;
 			_renderData.renderTechnology = format->descriptor.renderSpecification.renderingTechnology;
@@ -268,31 +336,36 @@ namespace Dynamik {
 			/* Initialize uniform buffers */
 			for (auto _uniformBufferDescription : format->descriptor.uniformBufferObjectDescriptions)
 				if (_uniformBufferDescription.type == DMKUniformType::DMK_UNIFORM_TYPE_BUFFER_OBJECT)
-					_renderData.uniformBufferContainers.pushBack(createUniformBuffers(_uniformBufferDescription));
+					_renderData.uniformBufferContainers.pushBack(createUniformBuffers(_uniformBufferDescription, _context.swapChain.swapChainImages.size()));
 
 			/* Initialize Descriptors */
 			_renderData.descriptors = createDescriptors(format->descriptor.uniformBufferObjectDescriptions, _renderData.uniformBufferContainers, _renderData.textures);
 
 			/* Initialize pipeline */
-			_renderData.pipelineContainers.pushBack(createPipeline({ _renderData.descriptors }, format->descriptor.uniformBufferObjectDescriptions, format->descriptor.vertexBufferObjectDescription.attributes, format->shaderPaths, format->type));
+			_renderData.pipelineContainers.pushBack(createPipeline({ _renderData.descriptors }, format->descriptor.uniformBufferObjectDescriptions, format->descriptor.vertexBufferObjectDescription.attributes, format->shaderPaths, format->type, _context));
 
 			/* Add data to the container and return its address */
-			myResourceContainers[inUseIndex].renderData.pushBack(_renderData);
-			return &myResourceContainers[inUseIndex].renderData[myResourceContainers[inUseIndex].renderData.size() - 1];
+			myRenderContexts[(UI32)context].renderDatas.pushBack(_renderData);
+			return &myRenderContexts[(UI32)context].renderDatas[myRenderContexts[(UI32)context].renderDatas.size() - 1];
 		}
 
 		void VulkanRBL::initializeCommands()
 		{
 			DMK_BEGIN_PROFILE_TIMER();
 
-			VulkanGraphicsCommandBufferInitInfo initInfo;
-			initInfo.count = mySwapChain.swapChainContainer.swapChainImages.size();
-			initInfo.frameBuffer = myFrameBuffer;
-			initInfo.swapChain = mySwapChain.swapChainContainer;
-			initInfo.objects = myResourceContainers[inUseIndex].renderData;
-			initInfo.renderPass = myRenderPass;
+			for (auto _context : myRenderContexts)
+			{
+				if (_context.state != VulkanResourceState::ADGR_VULKAN_RESOURCE_STATE_HOST_VISIBLE)
+					continue;
 
-			myResourceContainers[inUseIndex].commandBuffer.initializeCommandBuffers(initInfo);
+				VulkanGraphicsCommandBufferInitInfo initInfo;
+				initInfo.count = _context.swapChain.swapChainImages.size();;
+				initInfo.frameBuffer = _context.frameBuffer;
+				initInfo.swapChain = _context.swapChain;
+				initInfo.objects = _context.renderDatas;
+				initInfo.renderPass = _context.renderPass;
+				_context.inFlightCommandBuffer.initializeCommandBuffers(initInfo);
+			}
 		}
 
 		void VulkanRBL::initializeFinalComponents()
@@ -302,12 +375,15 @@ namespace Dynamik {
 			myGraphicsCore.initializeSyncObjects();
 		}
 
-		void VulkanRBL::drawFrame(DMKRendererDrawFrameInfo info)
+		void VulkanRBL::drawFrame(DMKRendererDrawFrameInfo info, DMKRenderContextType context)
 		{
 			DMK_BEGIN_PROFILE_TIMER();
 
+			/* Get the render data from the context */
+			auto _renderContext = myRenderContexts[(UI32)context];
+
 			/* Check if the number of update objects are equal to the in-flight objects */
-			if (info.formats.size() != myResourceContainers[inUseIndex].renderData.size())
+			if (info.formats.size() != _renderContext.renderDatas.size())
 				DMK_CORE_FATAL("Invalid amount of update formats sent to the Draw call!");
 
 			/* Sync Vulkan Fences */
@@ -315,7 +391,7 @@ namespace Dynamik {
 
 			/* Get the current image index */
 			imageIndex = 0;
-			result = myGraphicsCore.getNextImage(mySwapChain.swapChainContainer.swapChain, &imageIndex, currentFrame);
+			result = myGraphicsCore.getNextImage(_renderContext.swapChain.swapChain, &imageIndex, currentFrame);
 
 			/* Check if any errors were encountered */
 			if (result == VK_ERROR_OUT_OF_DATE_KHR)
@@ -344,16 +420,16 @@ namespace Dynamik {
 					VulkanUtilities::updateUniformBuffer(
 						myGraphicsCore.logicalDevice,
 						info.formats[index]->onUpdate(info.cameraData),
-						myResourceContainers[inUseIndex].renderData[index].uniformBufferContainers[_itr].bufferMemories[imageIndex],
+						_renderContext.renderDatas[index].uniformBufferContainers[_itr].bufferMemories[imageIndex],
 						info.formats[index]->descriptor.uniformBufferObjectDescriptions[_itr]);
 				}
 			}
 
 			/* Submit queues */
 			result = myGraphicsCore.submitQueues(
-				{ mySwapChain.swapChainContainer.swapChain },
+				{ _renderContext.swapChain.swapChain },
 				imageIndex, currentFrame,
-				{ myResourceContainers[inUseIndex].commandBuffer.buffers[imageIndex] });
+				{ _renderContext.inFlightCommandBuffer.buffers[imageIndex] });
 
 			/* Check for any errors */
 			if (result == VK_ERROR_OUT_OF_DATE_KHR || result == VK_SUBOPTIMAL_KHR)
@@ -371,7 +447,21 @@ namespace Dynamik {
 		{
 		}
 
-		VulkanRenderPassInitInfo VulkanRBL::_getDefaultRenderPassInfo()
+		inline B1 VulkanRBL::_validateMSAASamples()
+		{
+			return myMsaaSamples <= myGraphicsCore.maxMSAASamples;
+		}
+
+		inline VulkanSurfaceContainer VulkanRBL::_createNewSurface(POINTER<GLFWwindow> windowHandle)
+		{
+			VulkanSurfaceContainer _container = myGraphicsCore.createSurface(windowHandle);
+			myGraphicsCore.validateSurface(_container.surface);
+			myGraphicsCore.getSurfaceCapabilities(&_container);
+
+			return _container;
+		}
+
+		VulkanRenderPassInitInfo VulkanRBL::_getDefaultRenderPassInfo(VkFormat swapChainImageFormat)
 		{
 			DMK_BEGIN_PROFILE_TIMER();
 
@@ -379,8 +469,8 @@ namespace Dynamik {
 
 			// attachment descriptions
 			VkAttachmentDescription colorAttachment = {};
-			colorAttachment.format = mySwapChain.swapChainContainer.swapChainImageFormat;
-			colorAttachment.samples = myGraphicsCore.msaaSamples;
+			colorAttachment.format = swapChainImageFormat;
+			colorAttachment.samples = myMsaaSamples;
 			colorAttachment.loadOp = VK_ATTACHMENT_LOAD_OP_CLEAR;
 			colorAttachment.storeOp = VK_ATTACHMENT_STORE_OP_STORE;
 			colorAttachment.stencilLoadOp = VK_ATTACHMENT_LOAD_OP_DONT_CARE;
@@ -401,7 +491,7 @@ namespace Dynamik {
 
 			VkAttachmentDescription depthAttachment = {};
 			depthAttachment.format = VulkanUtilities::findDepthFormat(myGraphicsCore.physicalDevice);
-			depthAttachment.samples = myGraphicsCore.msaaSamples;
+			depthAttachment.samples = myMsaaSamples;
 			depthAttachment.loadOp = VK_ATTACHMENT_LOAD_OP_CLEAR;
 			depthAttachment.storeOp = VK_ATTACHMENT_STORE_OP_DONT_CARE;
 			depthAttachment.stencilLoadOp = VK_ATTACHMENT_LOAD_OP_DONT_CARE;
@@ -416,7 +506,7 @@ namespace Dynamik {
 			subpass.pDepthStencilAttachment = &depthAttachmentRef;
 
 			VkAttachmentDescription colorAttachmentResolve = {};
-			colorAttachmentResolve.format = mySwapChain.swapChainContainer.swapChainImageFormat;
+			colorAttachmentResolve.format = swapChainImageFormat;
 			colorAttachmentResolve.samples = VK_SAMPLE_COUNT_1_BIT;
 			colorAttachmentResolve.loadOp = VK_ATTACHMENT_LOAD_OP_DONT_CARE;
 			colorAttachmentResolve.storeOp = VK_ATTACHMENT_STORE_OP_STORE;
@@ -440,25 +530,12 @@ namespace Dynamik {
 			return renderPassInitInfo;
 		}
 
-		void VulkanRBL::_initializeRenderPass()
-		{
-			DMK_BEGIN_PROFILE_TIMER();
-
-			myRenderPass.initialize(myGraphicsCore.logicalDevice, _getDefaultRenderPassInfo());
-		}
-
-		void VulkanRBL::_prepareRenderDataContainer(UI32 index)
-		{
-			myResourceContainers[index].commandBuffer.terminateCommandBuffers();
-			myResourceContainers[index].renderData = {};
-		}
-
 		VulkanGraphicsRenderableObjectInitInfo VulkanRBL::_getBasicInitInfo()
 		{
 			VulkanGraphicsRenderableObjectInitInfo _info;
 			_info.logicalDevice = myGraphicsCore.logicalDevice;
 			_info.physicalDevice = myGraphicsCore.physicalDevice;
-			_info.commandPool = myResourceContainers[inUseIndex].commandBuffer.pool;
+			_info.commandPool = myMainCommandBuffer.pool;
 			_info.graphicsQueue = myGraphicsCore.graphicsQueue;
 			_info.presentQueue = myGraphicsCore.presentQueue;
 
@@ -561,13 +638,13 @@ namespace Dynamik {
 			return VulkanUtilities::createTexture(initInfo, texture);
 		}
 
-		VulkanUnformBufferContainer VulkanRBL::createUniformBuffers(DMKUniformBufferObjectDescriptor uniformBufferDescriptor)
+		VulkanUnformBufferContainer VulkanRBL::createUniformBuffers(DMKUniformBufferObjectDescriptor uniformBufferDescriptor, UI32 bufferCount)
 		{
 			return VulkanUtilities::createUniformBuffers(
 				myGraphicsCore.logicalDevice,
 				myGraphicsCore.physicalDevice,
 				DMKUniformBufferObjectDescriptor::uniformByteSize(uniformBufferDescriptor.attributes),
-				mySwapChain.swapChainContainer.swapChainImages.size());
+				bufferCount);
 		}
 
 		VulkanGraphicsDescriptor VulkanRBL::createDescriptors(ARRAY<DMKUniformBufferObjectDescriptor> descriptors, ARRAY<VulkanUnformBufferContainer> uniformBufferContainers, ARRAY<VulkanTextureContainer> textureContainers)
@@ -654,7 +731,13 @@ namespace Dynamik {
 			return _descriptor;
 		}
 
-		VulkanGraphicsPipeline VulkanRBL::createPipeline(ARRAY<VulkanGraphicsDescriptor> descriptors, ARRAY<DMKUniformBufferObjectDescriptor> uniformBufferDescriptors, ARRAY<DMKVertexAttribute> attributes, ShaderPaths paths, DMKObjectType objectType)
+		VulkanGraphicsPipeline VulkanRBL::createPipeline(
+			ARRAY<VulkanGraphicsDescriptor> descriptors,
+			ARRAY<DMKUniformBufferObjectDescriptor> uniformBufferDescriptors,
+			ARRAY<DMKVertexAttribute> attributes,
+			ShaderPaths paths,
+			DMKObjectType objectType,
+			VulkanRenderContext context)
 		{
 			VulkanGraphicsPipeline _pipeline;
 
@@ -690,66 +773,66 @@ namespace Dynamik {
 					myGraphicsCore.logicalDevice,
 					VulkanPresets::pipelinePreset3D(
 						myGraphicsCore.logicalDevice,
-						myGraphicsCore.msaaSamples,
-						myFrameBuffer.renderPass,
+						myMsaaSamples,
+						context.renderPass.renderPass,
 						_shaders,
 						attributes,
-						mySwapChain.swapChainContainer.swapChainExtent));
+						context.swapChain.swapChainExtent));
 				break;
 			case Dynamik::DMKObjectType::DMK_OBJECT_TYPE_MESH:
 				_pipeline.initializePipeline(
 					myGraphicsCore.logicalDevice,
 					VulkanPresets::pipelinePreset3D(
 						myGraphicsCore.logicalDevice,
-						myGraphicsCore.msaaSamples,
-						myFrameBuffer.renderPass,
+						myMsaaSamples,
+						context.renderPass.renderPass,
 						_shaders,
 						attributes,
-						mySwapChain.swapChainContainer.swapChainExtent));
+						context.swapChain.swapChainExtent));
 				break;
 			case Dynamik::DMKObjectType::DMK_OBJECT_TYPE_STATIC:
 				_pipeline.initializePipeline(
 					myGraphicsCore.logicalDevice,
 					VulkanPresets::pipelinePreset3D(
 						myGraphicsCore.logicalDevice,
-						myGraphicsCore.msaaSamples,
-						myFrameBuffer.renderPass,
+						myMsaaSamples,
+						context.renderPass.renderPass,
 						_shaders,
 						attributes,
-						mySwapChain.swapChainContainer.swapChainExtent));
+						context.swapChain.swapChainExtent));
 				break;
 			case Dynamik::DMKObjectType::DMK_OBJECT_TYPE_INTERACTIVE_OBJECT:
 				_pipeline.initializePipeline(
 					myGraphicsCore.logicalDevice,
 					VulkanPresets::pipelinePreset3D(
 						myGraphicsCore.logicalDevice,
-						myGraphicsCore.msaaSamples,
-						myFrameBuffer.renderPass,
+						myMsaaSamples,
+						context.renderPass.renderPass,
 						_shaders,
 						attributes,
-						mySwapChain.swapChainContainer.swapChainExtent));
+						context.swapChain.swapChainExtent));
 				break;
 			case Dynamik::DMKObjectType::DMK_OBJECT_TYPE_PLAYER:
 				_pipeline.initializePipeline(
 					myGraphicsCore.logicalDevice,
 					VulkanPresets::pipelinePreset3D(
 						myGraphicsCore.logicalDevice,
-						myGraphicsCore.msaaSamples,
-						myFrameBuffer.renderPass,
+						myMsaaSamples,
+						context.renderPass.renderPass,
 						_shaders,
 						attributes,
-						mySwapChain.swapChainContainer.swapChainExtent));
+						context.swapChain.swapChainExtent));
 				break;
 			case Dynamik::DMKObjectType::DMK_OBJECT_TYPE_NPC:
 				_pipeline.initializePipeline(
 					myGraphicsCore.logicalDevice,
 					VulkanPresets::pipelinePreset3D(
 						myGraphicsCore.logicalDevice,
-						myGraphicsCore.msaaSamples,
-						myFrameBuffer.renderPass,
+						myMsaaSamples,
+						context.renderPass.renderPass,
 						_shaders,
 						attributes,
-						mySwapChain.swapChainContainer.swapChainExtent));
+						context.swapChain.swapChainExtent));
 				break;
 			case Dynamik::DMKObjectType::DMK_OBJECT_TYPE_TEXTURE_UI:
 				break;
@@ -758,11 +841,11 @@ namespace Dynamik {
 					myGraphicsCore.logicalDevice,
 					VulkanPresets::pipelinePresetSkyBox(
 						myGraphicsCore.logicalDevice,
-						myGraphicsCore.msaaSamples,
-						myFrameBuffer.renderPass,
+						myMsaaSamples,
+						context.renderPass.renderPass,
 						_shaders,
 						attributes,
-						mySwapChain.swapChainContainer.swapChainExtent));
+						context.swapChain.swapChainExtent));
 				break;
 			case Dynamik::DMKObjectType::DMK_OBJECT_TYPE_SPRITES:
 				break;
@@ -781,11 +864,11 @@ namespace Dynamik {
 					myGraphicsCore.logicalDevice,
 					VulkanPresets::pipelinePreset3D(
 						myGraphicsCore.logicalDevice,
-						myGraphicsCore.msaaSamples,
-						myFrameBuffer.renderPass,
+						myMsaaSamples,
+						context.renderPass.renderPass,
 						_shaders,
 						attributes,
-						mySwapChain.swapChainContainer.swapChainExtent));
+						context.swapChain.swapChainExtent));
 				break;
 			case Dynamik::DMKObjectType::DMK_OBJECT_TYPE_LIGHT:
 				break;
@@ -800,7 +883,7 @@ namespace Dynamik {
 
 			return VulkanRenderData();
 		}
-		
+
 		inline void VulkanRBL::_sortRenderContexts()
 		{
 			UI32 _size = myRenderContexts.size() - 1, _indexCount = 0;

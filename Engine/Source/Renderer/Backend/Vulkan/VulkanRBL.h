@@ -49,19 +49,13 @@ namespace Dynamik {
 			DMKRenderContextType type = DMKRenderContextType::DMK_RENDER_CONTEXT_TYPE_DEFAULT;
 
 			VulkanGraphicsRenderPass renderPass;
-			ARRAY<VulkanRenderData> renderDatas;
-		};
-
-		/* Vulkan Render Sub-Context */
-		struct VulkanRenderSubContext {
-			POINTER<VulkanRenderContext> renderContext;
-
-			VkSurfaceKHR surface = VK_NULL_HANDLE;
+			VulkanSurfaceContainer surfaceContainer;
 			VulkanGraphicsSwapChain swapChain;
 			VulkanGraphicsRenderPass renderPass;
 			VulkanGraphicsFrameBuffer frameBuffer;
 
 			VulkanGraphicsCommandBuffer inFlightCommandBuffer;
+			ARRAY<VulkanRenderData> renderDatas;
 			VulkanResourceState state = VulkanResourceState::ADGR_VULKAN_RESOURCE_STATE_HOST_VISIBLE;
 		};
 
@@ -91,35 +85,33 @@ namespace Dynamik {
 			 Creates a new render context and stores it in the render context container accorfing to the
 			 DMKRenderContextType enum.
 			*/
-			void createNewContext(DMKRenderContextType type);
-			/* Create a new sub context and return its index in the context container. */
-			UI32 createNewSubContext(DMKRenderContextType type);
+			void createNewContext(DMKRenderContextType type, POINTER<GLFWwindow> windowHandle);
 
 			void addObject(POINTER<InternalFormat> format);
 			void addObjects(ARRAY<POINTER<InternalFormat>> formats);
 
 			/* Returns the memory location of the objects data */
-			VPTR initializeObject(POINTER<InternalFormat> format);
+			VPTR initializeObject(POINTER<InternalFormat> format, DMKRenderContextType context = DMKRenderContextType::DMK_RENDER_CONTEXT_TYPE_DEFAULT);
 
 			void initializeCommands();
 			void initializeFinalComponents();
 
-			void drawFrame(DMKRendererDrawFrameInfo info);
+			void drawFrame(DMKRendererDrawFrameInfo info, DMKRenderContextType context = DMKRenderContextType::DMK_RENDER_CONTEXT_TYPE_DEFAULT);
 			void recreateSwapChain();
 
 		private:
-			VulkanRenderPassInitInfo _getDefaultRenderPassInfo();
-			void _initializeRenderPass();	/* Initialize the render pass */
-			void _prepareRenderDataContainer(UI32 index);	/* Prepare the next container to be used */
-			VulkanGraphicsRenderableObjectInitInfo _getBasicInitInfo();	/* Return the basic init info */
+			inline B1 _validateMSAASamples();
+			inline VulkanSurfaceContainer _createNewSurface(POINTER<GLFWwindow> windowHandle);
+			inline VulkanRenderPassInitInfo _getDefaultRenderPassInfo(VkFormat swapChainImageFormat);
+			inline VulkanGraphicsRenderableObjectInitInfo _getBasicInitInfo();	/* Return the basic init info */
 
 			/* Per object functions */
-			VulkanBufferContainer createVertexBuffer(Mesh mesh, ARRAY<DMKVertexAttribute> attributes);
-			VulkanBufferContainer createIndexBuffer(Mesh mesh, DMKDataType type);
-			VulkanTextureContainer createTextureImage(Texture texture);
-			VulkanUnformBufferContainer createUniformBuffers(DMKUniformBufferObjectDescriptor uniformBufferDescriptor);
-			VulkanGraphicsDescriptor createDescriptors(ARRAY<DMKUniformBufferObjectDescriptor> descriptors, ARRAY<VulkanUnformBufferContainer> uniformBufferContainers, ARRAY<VulkanTextureContainer> textureContainers);
-			VulkanGraphicsPipeline createPipeline(ARRAY<VulkanGraphicsDescriptor> descriptors, ARRAY<DMKUniformBufferObjectDescriptor> uniformBufferDescriptors, ARRAY<DMKVertexAttribute> attributes, ShaderPaths paths, DMKObjectType objectType);
+			inline VulkanBufferContainer createVertexBuffer(Mesh mesh, ARRAY<DMKVertexAttribute> attributes);
+			inline VulkanBufferContainer createIndexBuffer(Mesh mesh, DMKDataType type);
+			inline VulkanTextureContainer createTextureImage(Texture texture);
+			inline VulkanUnformBufferContainer createUniformBuffers(DMKUniformBufferObjectDescriptor uniformBufferDescriptor, UI32 bufferCount);
+			inline VulkanGraphicsDescriptor createDescriptors(ARRAY<DMKUniformBufferObjectDescriptor> descriptors, ARRAY<VulkanUnformBufferContainer> uniformBufferContainers, ARRAY<VulkanTextureContainer> textureContainers);
+			inline VulkanGraphicsPipeline createPipeline(ARRAY<VulkanGraphicsDescriptor> descriptors, ARRAY<DMKUniformBufferObjectDescriptor> uniformBufferDescriptors, ARRAY<DMKVertexAttribute> attributes, ShaderPaths paths, DMKObjectType objectType, VulkanRenderContext context);
 
 		public:
 			/* Initialize the object as s Skeletal animation */
@@ -133,20 +125,14 @@ namespace Dynamik {
 			UI32 windowHeight = 0;	/* Window height */
 
 			VulkanGraphicsCore myGraphicsCore;	/* Contains the Vulkan's core components */
-			VkSampleCountFlags myMsaaSamples = VkSampleCountFlagBits::VK_SAMPLE_COUNT_1_BIT;
+			VkSampleCountFlagBits myMsaaSamples = VkSampleCountFlagBits::VK_SAMPLE_COUNT_1_BIT;
 			VulkanGraphicsCommandBuffer myMainCommandBuffer;
 
 			/* Contains the command buffers and render datas */
-			VulkanRenderResourceContainer myResourceContainers[2];	/* Host visible and client visible */
 			B1 inUseIndex = false;	/* Resource index of the container which is currently being used (client visible) */
-
-			VulkanGraphicsSwapChain3D mySwapChain;	/* 3D Swap Chain */
 
 			VulkanGraphicsColorBuffer myColorBuffer;	/* Core Vulkan attachments */
 			VulkanGraphicsDepthBuffer myDepthBuffer;	/* Core Vulkan attachments */
-
-			VulkanGraphicsRenderPass myRenderPass;		/* Graphics render pass */
-			VulkanGraphicsFrameBuffer myFrameBuffer;	/* Graphics frame buffer */
 
 			/* Draw call variables */
 			UI32 imageIndex = 0;
@@ -154,6 +140,7 @@ namespace Dynamik {
 			VkResult result = VkResult::VK_ERROR_UNKNOWN;
 
 			/* Render context container */
+			VulkanSurfaceContainer myBasicSurface = {};		/* Parent window surface */
 			ARRAY<VulkanRenderContext> myRenderContexts;
 			inline void _sortRenderContexts();
 

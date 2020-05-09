@@ -36,11 +36,10 @@ namespace Dynamik {
 		 One or more render contexts can be in flight at a given instance and a prefered context can be 
 		 selected at runtime.
 
+		 On strtup, the default render context is initialized and used.
+
 		 Rendering context contains (in Vulkan),
 		 * Render pass.
-		 * Render data (renderable object data - API agnostic).
-
-		 Rendering sub-context contains (in Vulkan),
 		 * Surface (window).
 		 * Swap Chain.
 		 * Frame Buffer.
@@ -53,6 +52,13 @@ namespace Dynamik {
 			DMK_RENDER_CONTEXT_TYPE_DEFAULT_HDR,	/* Renderes both 2D and 3D in HDR */
 			DMK_RENDER_CONTEXT_TYPE_DEFAULT_MONO,	/* Renderes both 2D and 3D in monochrome */
 			DMK_RENDER_CONTEXT_TYPE_DEBUG,			/* Renderes both 2D and 3D in debug mode */
+
+			DMK_RENDER_CONTEXT_TYPE_VR_2D,				/* Renderes VR in only 2D */
+			DMK_RENDER_CONTEXT_TYPE_VR_3D,				/* Renderes VR in only 3D */
+			DMK_RENDER_CONTEXT_TYPE_VR_DEFAULT,			/* Renderes VR in both 2D and 3D */
+			DMK_RENDER_CONTEXT_TYPE_VR_DEFAULT_HDR,		/* Renderes VR in both 2D and 3D in HDR */
+			DMK_RENDER_CONTEXT_TYPE_VR_DEFAULT_MONO,	/* Renderes VR in both 2D and 3D in monochrome */
+			DMK_RENDER_CONTEXT_TYPE_VR_DEBUG,			/* Renderes VR in both 2D and 3D in debug mode */
 		};
 
 		struct  DMKRendererSettings {

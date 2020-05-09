@@ -24,10 +24,33 @@ namespace Dynamik {
 	/* For internal use */
 	static B1 finishStartUpRenderer = false;
 
+	DMKEngine::DMKEngine()
+	{
+	}
+
+	DMKEngine::~DMKEngine()
+	{
+	}
+
 	void DMKEngine::initializeInstance(DMKInstanceDescriptor descriptor)
 	{
 		DMK_BEGIN_PROFILING();
 		DMK_BEGIN_PROFILE_TIMER();
+
+		/* Generate global variable data. */
+		/*
+		 There are a set number of threads which the Dynamik Engine will use throughout its runtime.
+		 These threads are for utilities, engines, resources and controlling functions. Since all the
+		 devices the engine will work on dosent support the same amount of threads, it is required to
+		 allocate a maximum number of threads the Engine can work with.
+
+		 The count is calculated by subrtacting the total number of threads vailable by 1/4th of the
+		 maximum thread count.
+		 ie: In a quadcore processor (8 threads) the maximum usable thread count = 8 - (8 / 4) = 6.
+		 The rest is given to the system to run other applications in the background/ foreground.
+		*/
+		UI32 maxThreadCount = std::thread::hardware_concurrency();
+		instance.maximumUsableThreadCount = maxThreadCount - (maxThreadCount / 4);
 
 		/* Initialize the startup renderer to render basic data while the main renderer is activated.		*/
 		/* This way the user is not presented with a blank screen while all the scene data are loaded.		*/
@@ -253,4 +276,28 @@ namespace Dynamik {
 		instance.eventComponents.clear();
 	}
 
+	/* DYNAMIK UTILITIES */
+	DMKKeyEventComponent DMKUtilities::getKeyEvent(POINTER<DMKEventComponent> component)
+	{
+		if (component->category == DMKEventCategory::DMK_EVENT_CATEGORY_KEY)
+			return *(DMKKeyEventComponent*)component.get();
+
+		return DMKKeyEventComponent();
+	}
+
+	DMKMouseButtonEventComponent DMKUtilities::getMouseButtonEvent(POINTER<DMKEventComponent> component)
+	{
+		if (component->category == DMKEventCategory::DMK_EVENT_CATEGORY_MOUSE_BUTTON)
+			return *(DMKMouseButtonEventComponent*)component.get();
+
+		return DMKMouseButtonEventComponent();
+	}
+
+	DMKMouseScrollEventComponent DMKUtilities::getMouseScrollEvent(POINTER<DMKEventComponent> component)
+	{
+		if (component->category == DMKEventCategory::DMK_EVENT_CATEGORY_MOUSE_SCROLL)
+			return *(DMKMouseScrollEventComponent*)component.get();
+
+		return DMKMouseScrollEventComponent();
+	}
 }

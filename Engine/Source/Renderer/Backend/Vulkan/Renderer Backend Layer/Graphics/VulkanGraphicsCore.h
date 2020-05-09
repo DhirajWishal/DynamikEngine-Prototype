@@ -17,15 +17,6 @@ namespace Dynamik {
 				std::string engineName = "Dynamik";
 			};
 
-			struct VulkanGraphicsCoreInitDescriptor {
-				VulkanInstanceInitInfo instanceInitInfo;
-
-				UI32 width = 0;
-				UI32 height = 0;
-
-				POINTER<GLFWwindow*> windowPointer;
-			};
-
 			struct VulkanQueue {
 				std::optional<UI32> graphicsFamily;
 				std::optional<UI32> presentFamily;
@@ -33,22 +24,29 @@ namespace Dynamik {
 				B1 isComplete();
 			};
 
+			struct VulkanSurfaceContainer {
+				VkSurfaceKHR surface = VK_NULL_HANDLE;
+				VkSurfaceCapabilitiesKHR surfaceCapabilities = {};
+			};
+
 			class VulkanGraphicsCore {
 			public:
 				VulkanGraphicsCore() {}
 				~VulkanGraphicsCore() {}
 
-				void initialize(VulkanGraphicsCoreInitDescriptor initInfo);
 				void terminate();
 
 				void initializeInstance(VulkanInstanceInitInfo info);
-				void initializeSurface(POINTER<GLFWwindow> windowPtr);
+				VulkanSurfaceContainer createSurface(POINTER<GLFWwindow> windowHandle);
+				void validateSurface(VkSurfaceKHR surface);
+				void getSurfaceCapabilities(POINTER<VulkanSurfaceContainer> container);
+				void terminateSurface(VulkanSurfaceContainer container);
 				void terminateInstance();
 
 				void initializeDebugger();
 				void terminateDebugger();
 
-				void initializeDevice();
+				void initializeDevice(VkSurfaceKHR baseSurface);
 				void terminateDevice();
 
 				void initializeSyncObjects();
@@ -66,13 +64,10 @@ namespace Dynamik {
 
 				void populateDebugMessegerCreateInfo(VkDebugUtilsMessengerCreateInfoEXT& createInfo);
 
-				void initPhysicalDevice();
-				void initLogicalDevice();
+				void initPhysicalDevice(VkSurfaceKHR baseSurface);
+				void initLogicalDevice(VkSurfaceKHR baseSurface);
 
 				VkInstance instance = VK_NULL_HANDLE;
-				VkSurfaceKHR surface = VK_NULL_HANDLE;
-				VkSurfaceCapabilitiesKHR surfaceCapabilities = {};
-
 				VkDevice logicalDevice = VK_NULL_HANDLE;
 				VkPhysicalDevice physicalDevice = VK_NULL_HANDLE;
 
@@ -81,7 +76,7 @@ namespace Dynamik {
 				VkQueue graphicsQueue = VK_NULL_HANDLE;
 				VkQueue presentQueue = VK_NULL_HANDLE;
 
-				VkSampleCountFlagBits msaaSamples = VK_SAMPLE_COUNT_1_BIT;
+				VkSampleCountFlagBits maxMSAASamples = VK_SAMPLE_COUNT_1_BIT;
 
 				UI32 minMipLevel = 0;
 				UI32 maxMipLevel = 0;

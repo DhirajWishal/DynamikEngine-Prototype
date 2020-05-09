@@ -86,7 +86,8 @@ namespace Dynamik {
 	 * This class handles resouces internally.
 	 */
 	class DMKEngine {
-		DMKEngine() {}
+		DMKEngine();
+		~DMKEngine();
 		static DMKEngine instance;
 
 	public:
@@ -133,15 +134,15 @@ namespace Dynamik {
 		inline static void cleanUniformBuffers();
 		inline static void onUpdateCleanup();
 
-		AssetManager myAssetManager;
+		AssetManager myAssetManager = {};
 		UI32 levelIndex = 0;
 		UI32 sceneIndex = 0;
 		UI32 progress = 0;
 
-		DMKInstanceDescriptor myInstanceDescriptor;
+		DMKInstanceDescriptor myInstanceDescriptor = {};
 
-		DMKCamera* myCamera;
-		DMKCameraData cameraData;
+		DMKCamera* myCamera = nullptr;
+		DMKCameraData cameraData = {};
 		UI32 FOV = 60.0f;
 		UI32 aspectRatio = 0.5f;
 		UI32 frustumNear = 0.001f;
@@ -157,9 +158,29 @@ namespace Dynamik {
 		F32 animationSpeed = 1.0f;
 
 	private:
+		UI32 maximumUsableThreadCount = 0;
 		std::thread myStartypRendererThread;
 	};
 
+	/*
+	 Contains utility functions for the client application.
+	*/
+	class DMKUtilities {
+	public:
+		DMKUtilities() = delete;
+		~DMKUtilities() = delete;
+		DMKUtilities(const DMKUtilities&) = delete;
+		DMKUtilities(DMKUtilities&&) = delete;
+		DMKUtilities& operator=(const DMKUtilities&) = delete;
+		DMKUtilities& operator=(DMKUtilities&&) = delete;
+
+		/* Validates and returns the key event component. Returns an empty component if the given component is not valid. */
+		static DMKKeyEventComponent getKeyEvent(POINTER<DMKEventComponent> component);
+		/* Validates and returns the mouse button event component. Returns an empty component if the given component is not valid. */
+		static DMKMouseButtonEventComponent getMouseButtonEvent(POINTER<DMKEventComponent> component);
+		/* Validates and returns the mouse scroll event component. Returns an empty component if the given component is not valid. */
+		static DMKMouseScrollEventComponent getMouseScrollEvent(POINTER<DMKEventComponent> component);
+	};
 }
 
 #endif // !_DYNAMIK_H

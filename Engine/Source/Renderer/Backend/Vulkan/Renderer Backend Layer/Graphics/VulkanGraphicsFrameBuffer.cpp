@@ -4,11 +4,6 @@
 namespace Dynamik {
 	namespace Renderer {
 		namespace Backend {
-			void VulkanGraphicsFrameBuffer::initializeRenderPass(VkDevice logicalDevice, VulkanRenderPassInitInfo info)
-			{
-				
-			}
-
 			void VulkanGraphicsFrameBuffer::initialize(VkDevice logicalDevice, VulkanGraphicsFrameBufferInitInfo info)
 			{
 				frameHeight = info.swapChainExtent.height;
@@ -25,12 +20,7 @@ namespace Dynamik {
 
 					VkFramebufferCreateInfo framebufferInfo = {};
 					framebufferInfo.sType = VK_STRUCTURE_TYPE_FRAMEBUFFER_CREATE_INFO;
-					framebufferInfo.renderPass = renderPass;
-					if (info.overrideRenderPass != VK_NULL_HANDLE)
-					{
-						framebufferInfo.renderPass = info.overrideRenderPass;
-						renderPass = info.overrideRenderPass;
-					}
+					framebufferInfo.renderPass = info.renderPass;
 					framebufferInfo.attachmentCount = static_cast<UI32>(attachments.size());
 					framebufferInfo.pAttachments = attachments.data();
 					framebufferInfo.width = info.swapChainExtent.width;

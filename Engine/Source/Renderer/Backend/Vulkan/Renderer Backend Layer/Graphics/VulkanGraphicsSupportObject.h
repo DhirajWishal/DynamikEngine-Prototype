@@ -4,6 +4,7 @@
 
 #include "VulkanGraphicsPipeline.h"
 #include "VulkanGraphicsDescriptor.h"
+#include "VulkanGraphicsRenderPass.h"
 #include "VulkanGraphicsFrameBuffer.h"
 #include "VulkanGraphicsContainers.h"
 
@@ -59,6 +60,7 @@ namespace Dynamik {
 
 				VulkanTextureContainer myTextureContainer;
 				VulkanGraphicsDescriptor myDescriptorContainer;
+				VulkanGraphicsRenderPass myRenderPass;
 				VulkanGraphicsFrameBuffer myFrameBuffer;
 				VulkanGraphicsPipeline myPipeline;
 

@@ -107,7 +107,7 @@ namespace Dynamik {
 				initInfo.additionalSubPassDependencies = { dependencies[0], dependencies[1] };
 				initInfo.subPasses = { subpassDescription };
 				initInfo.overrideDependencies = true;
-				myFrameBuffer.initializeRenderPass(logicalDevice, initInfo);
+				myRenderPass.initialize(logicalDevice, initInfo);
 			}
 
 			void VulkanBRDF::_initializeFrameBuffer()
@@ -170,7 +170,7 @@ namespace Dynamik {
 				initInfo.swapChainExtent.width = dimentions;
 				initInfo.swapChainExtent.height = dimentions;
 				initInfo.inputAssemblyTopology = VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST;
-				initInfo.renderPass = myFrameBuffer.renderPass;
+				//initInfo.renderPass = myFrameBuffer.renderPass;
 				myPipeline.initializePipeline(logicalDevice, initInfo);
 			}
 
@@ -182,7 +182,7 @@ namespace Dynamik {
 
 				VkRenderPassBeginInfo renderPassInfo = {};
 				renderPassInfo.sType = VK_STRUCTURE_TYPE_RENDER_PASS_BEGIN_INFO;
-				renderPassInfo.renderPass = myFrameBuffer.renderPass;
+				//renderPassInfo.renderPass = myFrameBuffer.renderPass;
 				renderPassInfo.framebuffer = myFrameBuffer.buffers[0];
 				renderPassInfo.renderArea.offset = { 0, 0 };
 				renderPassInfo.renderArea.extent.width = myFrameBuffer.frameWidth;

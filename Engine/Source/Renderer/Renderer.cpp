@@ -112,6 +112,7 @@ namespace Dynamik {
 
 			instance.inFlightAssets = instance.submitPendingAssets;
 			instance.submitPendingAssets = {};
+			myRendererBackend.createNewContext(DMKRenderContextType::DMK_RENDER_CONTEXT_TYPE_DEFAULT, POINTER<GLFWwindow>());
 			myRendererBackend.addObjects(instance.inFlightAssets);
 		}
 

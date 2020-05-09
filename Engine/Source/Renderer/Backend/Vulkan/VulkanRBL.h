@@ -51,7 +51,6 @@ namespace Dynamik {
 			VulkanGraphicsRenderPass renderPass;
 			VulkanSurfaceContainer surfaceContainer;
 			VulkanGraphicsSwapChain swapChain;
-			VulkanGraphicsRenderPass renderPass;
 			VulkanGraphicsFrameBuffer frameBuffer;
 
 			VulkanGraphicsCommandBuffer inFlightCommandBuffer;

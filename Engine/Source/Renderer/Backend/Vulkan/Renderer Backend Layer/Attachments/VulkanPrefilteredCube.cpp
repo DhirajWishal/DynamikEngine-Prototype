@@ -102,7 +102,7 @@ namespace Dynamik {
 				initInfo.swapChainExtent.width = dimentions;
 				initInfo.swapChainExtent.height = dimentions;
 				initInfo.inputAssemblyTopology = VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST;
-				initInfo.renderPass = myFrameBuffer.renderPass;
+				//initInfo.renderPass = myFrameBuffer.renderPass;
 				initInfo.dynamicStateEnable = true;
 				myPipeline.initializePipeline(logicalDevice, initInfo);
 			}
@@ -130,7 +130,7 @@ namespace Dynamik {
 
 				VkRenderPassBeginInfo renderPassInfo = {};
 				renderPassInfo.sType = VK_STRUCTURE_TYPE_RENDER_PASS_BEGIN_INFO;
-				renderPassInfo.renderPass = myFrameBuffer.renderPass;
+				//renderPassInfo.renderPass = myFrameBuffer.renderPass;
 				renderPassInfo.framebuffer = offscreenContainer.frameBuffer;
 				renderPassInfo.renderArea.offset = { 0, 0 };
 				renderPassInfo.renderArea.extent.width = dimentions;

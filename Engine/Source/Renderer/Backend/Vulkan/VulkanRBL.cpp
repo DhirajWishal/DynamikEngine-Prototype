@@ -129,6 +129,12 @@ namespace Dynamik {
 
 		void VulkanRBL::createNewContext(DMKRenderContextType type, POINTER<GLFWwindow> windowHandle)
 		{
+			if (!windowHandle.isValid())
+			{
+				DMK_CORE_WARN("Invalid window handle passed! Setting the window surface to the parent.");
+				windowHandle = myWindowHandle;
+			}
+
 			VulkanRenderContext _context;
 			_context.type = type;
 
@@ -137,9 +143,74 @@ namespace Dynamik {
 
 			I32 _width = 0, _height = 0;
 			glfwGetWindowSize(windowHandle.get(), &_width, &_height);
-			_context.swapChain.initializeSwapChain(_width, _height);
+			_context.swapChain.initialize(_width, _height, _context.surfaceContainer);
 
-			_context.renderPass.initialize(myGraphicsCore.logicalDevice, _getDefaultRenderPassInfo(_context.swapChain.swapChainImageFormat));
+			/* ----------********** TEMPORAY **********---------- */
+			ARRAY<VkAttachmentDescription> attachments;
+
+			// attachment descriptions
+			VkAttachmentDescription colorAttachment = {};
+			colorAttachment.format = _context.swapChain.swapChainImageFormat;
+			colorAttachment.samples = myMsaaSamples;
+			colorAttachment.loadOp = VK_ATTACHMENT_LOAD_OP_CLEAR;
+			colorAttachment.storeOp = VK_ATTACHMENT_STORE_OP_STORE;
+			colorAttachment.stencilLoadOp = VK_ATTACHMENT_LOAD_OP_DONT_CARE;
+			colorAttachment.stencilStoreOp = VK_ATTACHMENT_STORE_OP_DONT_CARE;
+			colorAttachment.initialLayout = VK_IMAGE_LAYOUT_UNDEFINED;
+			colorAttachment.finalLayout = VK_IMAGE_LAYOUT_PRESENT_SRC_KHR;
+			attachments.push_back(colorAttachment);
+
+			VkAttachmentReference colorAttachmentRef = {};
+			colorAttachmentRef.attachment = 0;
+			colorAttachmentRef.layout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
+
+			// sub passes
+			VkSubpassDescription subpass = {};
+			subpass.pipelineBindPoint = VK_PIPELINE_BIND_POINT_GRAPHICS;
+			subpass.colorAttachmentCount = 1;
+			subpass.pColorAttachments = &colorAttachmentRef;
+
+			VkAttachmentDescription depthAttachment = {};
+			depthAttachment.format = VulkanUtilities::findDepthFormat(myGraphicsCore.physicalDevice);
+			depthAttachment.samples = myMsaaSamples;
+			depthAttachment.loadOp = VK_ATTACHMENT_LOAD_OP_CLEAR;
+			depthAttachment.storeOp = VK_ATTACHMENT_STORE_OP_DONT_CARE;
+			depthAttachment.stencilLoadOp = VK_ATTACHMENT_LOAD_OP_DONT_CARE;
+			depthAttachment.stencilStoreOp = VK_ATTACHMENT_STORE_OP_DONT_CARE;
+			depthAttachment.initialLayout = VK_IMAGE_LAYOUT_UNDEFINED;
+			depthAttachment.finalLayout = VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL;
+			attachments.push_back(depthAttachment);
+
+			VkAttachmentReference depthAttachmentRef = {};
+			depthAttachmentRef.attachment = 1;
+			depthAttachmentRef.layout = VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL;
+			subpass.pDepthStencilAttachment = &depthAttachmentRef;
+
+			VkAttachmentDescription colorAttachmentResolve = {};
+			colorAttachmentResolve.format = _context.swapChain.swapChainImageFormat;
+			colorAttachmentResolve.samples = VK_SAMPLE_COUNT_1_BIT;
+			colorAttachmentResolve.loadOp = VK_ATTACHMENT_LOAD_OP_DONT_CARE;
+			colorAttachmentResolve.storeOp = VK_ATTACHMENT_STORE_OP_STORE;
+			colorAttachmentResolve.stencilLoadOp = VK_ATTACHMENT_LOAD_OP_DONT_CARE;
+			colorAttachmentResolve.stencilStoreOp = VK_ATTACHMENT_STORE_OP_DONT_CARE;
+			colorAttachmentResolve.initialLayout = VK_IMAGE_LAYOUT_UNDEFINED;
+			colorAttachmentResolve.finalLayout = VK_IMAGE_LAYOUT_PRESENT_SRC_KHR;
+			attachments.push_back(colorAttachmentResolve);
+
+			VkAttachmentReference colorAttachmentResolveRef = {};
+			colorAttachmentResolveRef.attachment = 2;
+			colorAttachmentResolveRef.layout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
+			subpass.pResolveAttachments = &colorAttachmentResolveRef;
+
+			ARRAY<VkSubpassDescription> subPasses;
+			subPasses.push_back(subpass);
+
+			VulkanRenderPassInitInfo renderPassInitInfo;
+			renderPassInitInfo.attachments = attachments;
+			renderPassInitInfo.subPasses = subPasses;
+			/* ----------********** TEMPORAY **********---------- */
+
+			_context.renderPass.initialize(myGraphicsCore.logicalDevice, renderPassInitInfo);
 
 			VulkanGraphicsCommandBufferInitResources commandBufferResourceInitInfo;
 			commandBufferResourceInitInfo.logicalDevice = myGraphicsCore.logicalDevice;
@@ -208,8 +279,10 @@ namespace Dynamik {
 			frameBufferInitInfo.swapChainImageViews = _context.swapChain.swapChainImageViews;
 			frameBufferInitInfo.bufferCount = _context.swapChain.swapChainImages.size();
 			frameBufferInitInfo.swapChainExtent = _context.swapChain.swapChainExtent;
+			frameBufferInitInfo.renderPass = _context.renderPass.renderPass;
 			_context.frameBuffer.initialize(myGraphicsCore.logicalDevice, frameBufferInitInfo);
 
+			myRenderContexts.pushBack(_context);
 			_sortRenderContexts();
 		}
 
@@ -308,12 +381,21 @@ namespace Dynamik {
 		{
 			DMK_BEGIN_PROFILE_TIMER();
 
+			VulkanRenderContext _context;
+
 			if (myRenderContexts.isValidIndex((UI32)context))
+			{
 				if (myRenderContexts[(UI32)context].type != context)
+				{
 					//createNewContext(context, myWindowHandle);
 					DMK_CORE_FATAL("Specified context type is not yet initialized. Make sure to create the required contexts prior to loading objects.");
-
-			auto _context = myRenderContexts[(UI32)context];
+				}
+			}
+			else 
+			{
+				DMK_CORE_ERROR("Specified render context is not initialized. The objects are set to use the default context.");
+				_context = myRenderContexts[0];
+			}
 
 			VulkanRenderData _renderData;
 			_renderData.renderTechnology = format->descriptor.renderSpecification.renderingTechnology;
@@ -353,18 +435,18 @@ namespace Dynamik {
 		{
 			DMK_BEGIN_PROFILE_TIMER();
 
-			for (auto _context : myRenderContexts)
+			for (UI32 _itr = 0; _itr < myRenderContexts.size(); _itr++)
 			{
-				if (_context.state != VulkanResourceState::ADGR_VULKAN_RESOURCE_STATE_HOST_VISIBLE)
+				if (myRenderContexts[_itr].state != VulkanResourceState::ADGR_VULKAN_RESOURCE_STATE_HOST_VISIBLE)
 					continue;
 
 				VulkanGraphicsCommandBufferInitInfo initInfo;
-				initInfo.count = _context.swapChain.swapChainImages.size();;
-				initInfo.frameBuffer = _context.frameBuffer;
-				initInfo.swapChain = _context.swapChain;
-				initInfo.objects = _context.renderDatas;
-				initInfo.renderPass = _context.renderPass;
-				_context.inFlightCommandBuffer.initializeCommandBuffers(initInfo);
+				initInfo.count = myRenderContexts[_itr].swapChain.swapChainImages.size();;
+				initInfo.frameBuffer = myRenderContexts[_itr].frameBuffer;
+				initInfo.swapChain = myRenderContexts[_itr].swapChain;
+				initInfo.objects = myRenderContexts[_itr].renderDatas;
+				initInfo.renderPass = myRenderContexts[_itr].renderPass;
+				myRenderContexts[_itr].inFlightCommandBuffer.initializeCommandBuffers(initInfo);
 			}
 		}
 

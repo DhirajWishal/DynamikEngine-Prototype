@@ -13,7 +13,7 @@ namespace Dynamik {
 				~VulkanGraphicsSwapChain3D() {}
 
 				void basicInitialize(VkDevice device, VkPhysicalDevice physicalDevice, VulkanSurfaceContainer container);
-				void initializeSwapChain(UI32 width, UI32 height);
+				void initialize(UI32 width, UI32 height);
 
 				void terminate();
 

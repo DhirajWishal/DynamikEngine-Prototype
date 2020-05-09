@@ -13,7 +13,7 @@ namespace Dynamik {
 				ARRAY<VkImageView> swapChainImageViews;
 
 				ARRAY<VkImageView> attachments;
-				VkRenderPass overrideRenderPass = VK_NULL_HANDLE;
+				VkRenderPass renderPass = VK_NULL_HANDLE;
 			};
 
 			class VulkanGraphicsFrameBuffer {
@@ -32,7 +32,6 @@ namespace Dynamik {
 					UI32 layerCount = 1);
 				static void terminateFrameBuffer(VkDevice logicalDevice, VkFramebuffer buffer);
 
-				VkRenderPass renderPass = VK_NULL_HANDLE;
 				ARRAY<VkFramebuffer> buffers;
 				UI32 frameWidth = 0;
 				UI32 frameHeight = 0;

@@ -52,15 +52,9 @@ namespace Dynamik {
 			{
 				logicalDevice = device;
 				physicalDevice = physical;
-				surfaceContainer = container;
 			}
 
-			void VulkanGraphicsSwapChain::terminate()
-			{
-				terminateSwapChain();
-			}
-
-			void VulkanGraphicsSwapChain::initializeSwapChain(UI32 width, UI32 height)
+			void VulkanGraphicsSwapChain::initialize(UI32 width, UI32 height, VulkanSurfaceContainer surfaceContainer)
 			{
 				VulkanGraphicsSwapChainSupportDetails swapChainSupport = querySwapChainSupport(&physicalDevice, &surfaceContainer.surface);
 
@@ -129,7 +123,7 @@ namespace Dynamik {
 				initializeSwapChainImageViews();
 			}
 
-			void VulkanGraphicsSwapChain::terminateSwapChain()
+			void VulkanGraphicsSwapChain::terminate()
 			{
 				// destroy swapchain image views
 				for (size_t i = 0; i < swapChainImageViews.size(); i++)

@@ -181,7 +181,7 @@ namespace Dynamik {
 
 			VkRenderPass VulkanTextOverlay::getRenderPass()
 			{
-				return myFrameBuffer.renderPass;
+				return VkRenderPass();
 			}
 
 			void VulkanTextOverlay::_initializeCommandPool()
@@ -189,19 +189,18 @@ namespace Dynamik {
 				VulkanGraphicsCommandBufferInitResources resourceInit;
 				resourceInit.logicalDevice = myCoreObject.logicalDevice;
 				resourceInit.physicalDevice = myCoreObject.physicalDevice;
-				resourceInit.surface = myCoreObject.surface;
+				//resourceInit.surface = myCoreObject.surface;
 				commandBufferManager.initializeResources(resourceInit);
 				commandBufferManager.initializeCommandPool();
 			}
 
 			void VulkanTextOverlay::_initializeSwapChain()
 			{
-				mySwapChainObject.setBasicData(
-					myCoreObject.logicalDevice,
-					myCoreObject.physicalDevice,
-					myCoreObject.surface,
-					myCoreObject.surfaceCapabilities);
-				mySwapChainObject.initializeSwapChain(width, height);
+				//mySwapChainObject.setBasicData(
+				//	myCoreObject.logicalDevice,
+				//	myCoreObject.physicalDevice,
+				//	myCoreObject);
+				//mySwapChainObject.initialize(width, height);
 				_initializeRenderPass();
 			}
 
@@ -273,7 +272,7 @@ namespace Dynamik {
 				renderPassInitInfo.subPasses = subPasses;
 				renderPassInitInfo.additionalSubPassDependencies = { subpassDependencies[0], subpassDependencies[1] };
 				renderPassInitInfo.overrideDependencies = true;
-				myFrameBuffer.initializeRenderPass(myCoreObject.logicalDevice, renderPassInitInfo);
+				//myFrameBuffer.initializeRenderPass(myCoreObject.logicalDevice, renderPassInitInfo);
 			}
 
 			void VulkanTextOverlay::_initializeVertexBuffer()
@@ -622,7 +621,7 @@ namespace Dynamik {
 
 					VkRenderPassBeginInfo renderPassInfo = {};
 					renderPassInfo.sType = VK_STRUCTURE_TYPE_RENDER_PASS_BEGIN_INFO;
-					renderPassInfo.renderPass = info.frameBuffer.renderPass;
+					//renderPassInfo.renderPass = info.frameBuffer.renderPass;
 					renderPassInfo.framebuffer = info.frameBuffer.buffers[i];
 					renderPassInfo.renderArea.offset = { 0, 0 };
 					renderPassInfo.renderArea.extent = info.swapChain.swapChainExtent;

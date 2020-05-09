@@ -12,9 +12,9 @@ namespace Dynamik {
 				swapChainContainer.setBasicData(device, physicalDevice, container);
 			}
 
-			void VulkanGraphicsSwapChain3D::initializeSwapChain(UI32 width, UI32 height)
+			void VulkanGraphicsSwapChain3D::initialize(UI32 width, UI32 height)
 			{
-				swapChainContainer.initializeSwapChain(width, height);
+				swapChainContainer.initialize(width, height, VulkanSurfaceContainer());
 			}
 
 			void VulkanGraphicsSwapChain3D::terminate()

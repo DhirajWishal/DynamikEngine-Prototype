@@ -4,11 +4,13 @@
 
 #include <vulkan/vulkan.h>
 #include "Public/Array.h"
-#include "VulkanGraphicsCore.h"
+#include "VulkanGraphicsContainers.h"
 
 namespace Dynamik {
 	namespace Renderer {
 		namespace Backend {
+			struct VulkanSurfaceContainer;
+
 			struct VulkanGraphicsSwapChainSupportDetails {
 				VkSurfaceCapabilitiesKHR capabilities = {};
 				ARRAY<VkSurfaceFormatKHR> formats = {};
@@ -21,10 +23,9 @@ namespace Dynamik {
 				~VulkanGraphicsSwapChain() {}
 
 				void setBasicData(VkDevice device, VkPhysicalDevice physicalDevice, VulkanSurfaceContainer container);
-				virtual void terminate();
 
-				virtual void initializeSwapChain(UI32 width, UI32 height);
-				virtual void terminateSwapChain();
+				virtual void initialize(UI32 width, UI32 height, VulkanSurfaceContainer container);
+				virtual void terminate();
 
 				static VulkanGraphicsSwapChainSupportDetails querySwapChainSupport(VkPhysicalDevice* device, VkSurfaceKHR* surface);
 
@@ -39,7 +40,6 @@ namespace Dynamik {
 
 				VkDevice logicalDevice = VK_NULL_HANDLE;
 				VkPhysicalDevice physicalDevice = VK_NULL_HANDLE;
-				VulkanSurfaceContainer surfaceContainer = {};
 			};
 		}
 	}

@@ -39,15 +39,13 @@ namespace Dynamik {
 
 		/* Generate global variable data. */
 		/*
-		 There are a set number of threads which the Dynamik Engine will use throughout its runtime.
-		 These threads are for utilities, engines, resources and controlling functions. Since all the
-		 devices the engine will work on dosent support the same amount of threads, it is required to
-		 allocate a maximum number of threads the Engine can work with.
+		 There are a set number of threads which the Dynamik Engine will use throughout its runtime concurrently.
+		 These threads are for utilities, engines, resources and controlling functions, etc...
+		 Since all the devices the engine will work on dosent support the same amount of threads, 
+		 it is required to allocate a maximum number of threads the Engine can work with.
 
-		 The count is calculated by subrtacting the total number of threads vailable by 1/4th of the
-		 maximum thread count.
-		 ie: In a quadcore processor (8 threads) the maximum usable thread count = 8 - (8 / 4) = 6.
-		 The rest is given to the system to run other applications in the background/ foreground.
+		 The engine is by default set to work on 75% of the thread count in the CPU and the rest is given
+		 to the system to run other applications and/ or services in the background/ foreground.
 		*/
 		UI32 maxThreadCount = std::thread::hardware_concurrency();
 		instance.maximumUsableThreadCount = maxThreadCount - (maxThreadCount / 4);

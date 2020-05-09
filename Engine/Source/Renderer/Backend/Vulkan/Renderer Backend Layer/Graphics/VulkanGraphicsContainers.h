@@ -19,6 +19,9 @@
 namespace Dynamik {
 	namespace Renderer {
 		namespace Backend {
+			class VulkanGraphicsSwapChain;
+			class VulkanGraphicsFrameBuffer;
+
 			struct VulkanGraphicsRenderableObjectInitInfo {
 				VkDevice logicalDevice = VK_NULL_HANDLE;
 				VkPhysicalDevice physicalDevice = VK_NULL_HANDLE;
@@ -110,6 +113,11 @@ namespace Dynamik {
 				VkDevice logicalDevice = VK_NULL_HANDLE;
 				VkPhysicalDevice physicalDevice = VK_NULL_HANDLE;
 				VkSurfaceKHR surface = VK_NULL_HANDLE;
+			};
+
+			struct VulkanSurfaceContainer {
+				VkSurfaceKHR surface = VK_NULL_HANDLE;
+				VkSurfaceCapabilitiesKHR surfaceCapabilities = {};
 			};
 		}
 	}

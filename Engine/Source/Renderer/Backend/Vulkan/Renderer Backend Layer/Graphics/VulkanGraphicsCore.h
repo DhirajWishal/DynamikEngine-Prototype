@@ -11,6 +11,7 @@ namespace Dynamik {
 		namespace Backend {
 			struct VulkanRenderData;
 			class VulkanGraphicsSwapChain;
+			struct VulkanSurfaceContainer;
 
 			struct VulkanInstanceInitInfo {
 				std::string applicationName = "Dynamik Engine";
@@ -22,11 +23,6 @@ namespace Dynamik {
 				std::optional<UI32> presentFamily;
 
 				B1 isComplete();
-			};
-
-			struct VulkanSurfaceContainer {
-				VkSurfaceKHR surface = VK_NULL_HANDLE;
-				VkSurfaceCapabilitiesKHR surfaceCapabilities = {};
 			};
 
 			class VulkanGraphicsCore {

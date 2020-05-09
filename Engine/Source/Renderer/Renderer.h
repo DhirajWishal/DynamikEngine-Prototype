@@ -46,9 +46,9 @@ namespace Dynamik {
 		 * Per object pipeline (contains a pointer to the render data).
 		*/
 		enum class DMKRenderContextType : UI32 {
+			DMK_RENDER_CONTEXT_TYPE_DEFAULT,		/* Renderes both 2D and 3D */
 			DMK_RENDER_CONTEXT_TYPE_2D,				/* Renderes only 2D */
 			DMK_RENDER_CONTEXT_TYPE_3D,				/* Renderes only 3D */
-			DMK_RENDER_CONTEXT_TYPE_DEFAULT,		/* Renderes both 2D and 3D */
 			DMK_RENDER_CONTEXT_TYPE_DEFAULT_HDR,	/* Renderes both 2D and 3D in HDR */
 			DMK_RENDER_CONTEXT_TYPE_DEFAULT_MONO,	/* Renderes both 2D and 3D in monochrome */
 			DMK_RENDER_CONTEXT_TYPE_DEBUG,			/* Renderes both 2D and 3D in debug mode */

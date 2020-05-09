@@ -1661,13 +1661,10 @@ namespace Dynamik {
 		 *
 		 * @param index: Index to be processed.
 		 */
-		inline UI32 _getProcessedIndex(UI32 index)
+		inline UI32 _getProcessedIndex(I32 index)
 		{
 			if (index < 0)
-			{
-				index *= (-1);
-				index = (_getSizeOfThis() - index);
-			}
+				index = (_getSizeOfThis() + index);
 
 			return index;
 		}

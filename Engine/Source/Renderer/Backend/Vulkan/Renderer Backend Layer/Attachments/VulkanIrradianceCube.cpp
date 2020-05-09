@@ -95,7 +95,7 @@ namespace Dynamik {
 				initInfo.subPasses = { subpassDescription };
 				initInfo.additionalSubPassDependencies = { dependencies[0], dependencies[1] };
 				initInfo.overrideDependencies = true;
-				myFrameBuffer.initializeRenderPass(logicalDevice, initInfo);
+				myRenderPass.initialize(logicalDevice, initInfo);
 			}
 
 			void VulkanIrradianceCube::_initializeOffscreenFrameBuffer()
@@ -121,11 +121,11 @@ namespace Dynamik {
 				cinfo2.aspectFlags = VK_IMAGE_ASPECT_COLOR_BIT;
 				offscreenContainer.imageView = VulkanUtilities::createImageView(logicalDevice, cinfo2);
 
-				offscreenContainer.frameBuffer = VulkanGraphicsFrameBuffer::createFrameBuffer(
-					logicalDevice,
-					myFrameBuffer.renderPass,
-					{ offscreenContainer.imageView },
-					{ dimentions, dimentions });
+				//offscreenContainer.frameBuffer = VulkanGraphicsFrameBuffer::createFrameBuffer(
+				//	logicalDevice,
+				//	myFrameBuffer.renderPass,
+				//	{ offscreenContainer.imageView },
+				//	{ dimentions, dimentions });
 
 				VulkanTransitionImageLayoutInfo transitionInfo;
 				transitionInfo.image = offscreenContainer.image;
@@ -224,7 +224,7 @@ namespace Dynamik {
 				initInfo.swapChainExtent.width = dimentions;
 				initInfo.swapChainExtent.height = dimentions;
 				initInfo.inputAssemblyTopology = VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST;
-				initInfo.renderPass = myFrameBuffer.renderPass;
+				//initInfo.renderPass = myFrameBuffer.renderPass;
 				initInfo.dynamicStateEnable = true;
 				myPipeline.initializePipeline(logicalDevice, initInfo);
 			}
@@ -252,7 +252,7 @@ namespace Dynamik {
 
 				VkRenderPassBeginInfo renderPassInfo = {};
 				renderPassInfo.sType = VK_STRUCTURE_TYPE_RENDER_PASS_BEGIN_INFO;
-				renderPassInfo.renderPass = myFrameBuffer.renderPass;
+				//renderPassInfo.renderPass = myFrameBuffer.renderPass;
 				renderPassInfo.framebuffer = offscreenContainer.frameBuffer;
 				renderPassInfo.renderArea.offset = { 0, 0 };
 				renderPassInfo.renderArea.extent.width = dimentions;

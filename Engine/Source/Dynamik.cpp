@@ -13,8 +13,6 @@
 
 #include "Renderer/StartupRenderer/StartupRenderer.h"
 
-#include "Events/EventManager.h"
-
 #include "core/benchmark/profiler.h"
 
 namespace Dynamik {
@@ -230,7 +228,7 @@ namespace Dynamik {
 		/* Main execution loop of the Dynamik Engine									*/
 		/* First it polls events and checks whether the window is still valid.			*/
 		/* If the window is invalid (closed), it goes to the termination subroutine.	*/
-		while (EventManager::pollEventsGLFW())
+		while (DMKEventManager::pollEventsGLFW())
 		{
 			DMK_BEGIN_PROFILE_TIMER();
 
@@ -238,7 +236,7 @@ namespace Dynamik {
 			onUpdateCleanup();
 
 			/* Get the events and store them locally */
-			instance.eventComponents = EventManager::getEventComponents();
+			instance.eventComponents = DMKEventManager::getEventComponents();
 
 			/* Update the camera and store its tada locally */
 			/* TODO
@@ -254,7 +252,7 @@ namespace Dynamik {
 			info.cameraData.cameraFar = instance.frustumFar;
 			Renderer::DMKRenderer::drawFrame(info);
 
-			EventManager::clearContainer();
+			DMKEventManager::clearContainer();
 		}
 
 		/* Clean the rendering engine right after the window gets terminated */

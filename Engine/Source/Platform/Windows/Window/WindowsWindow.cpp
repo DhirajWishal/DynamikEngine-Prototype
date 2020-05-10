@@ -44,7 +44,7 @@ namespace Dynamik {
 #endif
 		//glfwMakeContextCurrent(window);
 
-		EventManager::setEventCallbacks(window);
+		DMKEventManager::setEventCallbacks(window);
 
 		//glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 

@@ -554,7 +554,7 @@ namespace Dynamik {
 				void* data;
 				if (vkMapMemory(info.logicalDevice, stagingBufferMemory, 0, static_cast<size_t>(imageSize), 0, &data) != VK_SUCCESS)
 					DMK_CORE_FATAL("Failed to map memory!");
-				memcpy(data, texture.textureData.get(), static_cast<size_t>(imageSize / 6));
+				memcpy(data, texture.textureData.get(), static_cast<size_t>(imageSize));
 				vkUnmapMemory(info.logicalDevice, stagingBufferMemory);
 
 				VulkanCreateImageInfo cinfo;
@@ -586,6 +586,8 @@ namespace Dynamik {
 				cpyInfo.image = _container.image;
 				cpyInfo.width = _container.width;
 				cpyInfo.height = _container.height;
+				cpyInfo.baseArrayCount = 0;
+				cpyInfo.layerCount = arrayLayers;
 				VulkanUtilities::copyBufferToImage(info.logicalDevice, info.commandPool, info.processQueue, info.utilityQueue, cpyInfo);
 
 				transitionInfo.image = _container.image;

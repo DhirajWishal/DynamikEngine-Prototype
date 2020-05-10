@@ -11,14 +11,14 @@ namespace Dynamik {
 		D64 yOffset = 0.0f;
 	};
 
-	class EventManager {
-		EventManager() {}
-		~EventManager() {}
-		static EventManager myInstance;
+	class DMKEventManager {
+		DMKEventManager() {}
+		~DMKEventManager() {}
+		static DMKEventManager myInstance;
 
 	public:
-		EventManager(const EventManager&) = delete;
-		EventManager& operator=(EventManager&&) = delete;
+		DMKEventManager(const DMKEventManager&) = delete;
+		DMKEventManager& operator=(DMKEventManager&&) = delete;
 
 		static void setEventCallbacks(GLFWwindow* window);
 		static B1 pollEventsGLFW();
@@ -35,7 +35,6 @@ namespace Dynamik {
 		static ARRAY<POINTER<DMKEventComponent>> getEventComponents();
 		static void clearContainer();
 		static B1 isCursorOnCurrent();
-		static std::pair<D64, D64> getCursorPoss();
 
 	private:
 		static void _keyCallback(GLFWwindow* window, I32 key, I32 scancode, I32 action, I32 mods);

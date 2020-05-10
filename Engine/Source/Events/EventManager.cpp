@@ -16,9 +16,9 @@
 											}
 
 namespace Dynamik {
-	EventManager EventManager::myInstance;
+	DMKEventManager DMKEventManager::myInstance;
 	
-	void EventManager::setEventCallbacks(GLFWwindow* window)
+	void DMKEventManager::setEventCallbacks(GLFWwindow* window)
 	{
 		DMK_BEGIN_PROFILE_TIMER();
 
@@ -41,68 +41,62 @@ namespace Dynamik {
 	}
 
 	/* Returns false if the GLFW window is closed */
-	B1 EventManager::pollEventsGLFW()
+	B1 DMKEventManager::pollEventsGLFW()
 	{
 		glfwPollEvents();
 
 		return !myInstance.isWindowClosed;
 	}
 	
-	CursorPosition EventManager::getCursorPosition()
+	CursorPosition DMKEventManager::getCursorPosition()
 	{
+		glfwGetCursorPos(myInstance.myWindowPointer, &myInstance.myCursorPosition.xOffset, &myInstance.myCursorPosition.yOffset);
 		return myInstance.myCursorPosition;
 	}
 
-	D64 EventManager::getTime()
+	D64 DMKEventManager::getTime()
 	{
 		return glfwGetTime();
 	}
 
-	void EventManager::setTime(D64 time)
+	void DMKEventManager::setTime(D64 time)
 	{
 		glfwSetTime(time);
 	}
 
-	std::string EventManager::getClipboard()
+	std::string DMKEventManager::getClipboard()
 	{
 		return glfwGetClipboardString(NULL);
 	}
 
-	void EventManager::setClipboard(std::string text)
+	void DMKEventManager::setClipboard(std::string text)
 	{
 		glfwSetClipboardString(myInstance.myWindowPointer, text.c_str());
 	}
 
-	POINTER<GLFWwindow> EventManager::getCurrentContext()
+	POINTER<GLFWwindow> DMKEventManager::getCurrentContext()
 	{
 		return glfwGetCurrentContext();
 	}
 
-	ARRAY<POINTER<DMKEventComponent>> EventManager::getEventComponents()
+	ARRAY<POINTER<DMKEventComponent>> DMKEventManager::getEventComponents()
 	{
 		DMK_BEGIN_PROFILE_TIMER();
 
 		return myInstance.events;
 	}
 
-	void EventManager::clearContainer()
+	void DMKEventManager::clearContainer()
 	{
 		myInstance._clearContainer();
 	}
 
-	B1 EventManager::isCursorOnCurrent()
+	B1 DMKEventManager::isCursorOnCurrent()
 	{
 		return myInstance.isCursorInThisWindow;
 	}
 
-	std::pair<D64, D64> EventManager::getCursorPoss()
-	{
-		D64 _xOffset = 0.0, _yOffset = 0.0;
-		glfwGetCursorPos(myInstance.myWindowPointer, &_xOffset, &_yOffset);
-		return { _xOffset, _yOffset };
-	}
-
-	void EventManager::_keyCallback(GLFWwindow* window, I32 key, I32 scancode, I32 action, I32 mods)
+	void DMKEventManager::_keyCallback(GLFWwindow* window, I32 key, I32 scancode, I32 action, I32 mods)
 	{
 		DMKKeyEventComponent _component;
 		_component.window = window;
@@ -131,7 +125,7 @@ namespace Dynamik {
 		_pushToContainer(_component);
 	}
 	
-	void EventManager::_textCallback(GLFWwindow* window, UI32 codepoint)
+	void DMKEventManager::_textCallback(GLFWwindow* window, UI32 codepoint)
 	{
 		DMKTextEventComponent _component;
 		_component.window = window;
@@ -141,7 +135,7 @@ namespace Dynamik {
 		_pushToContainer(_component);
 	}
 	
-	void EventManager::_cursorPositionCallback(GLFWwindow* window, D64 xOffset, D64 yOffset)
+	void DMKEventManager::_cursorPositionCallback(GLFWwindow* window, D64 xOffset, D64 yOffset)
 	{
 		CursorPosition _positionContainer;
 
@@ -151,7 +145,7 @@ namespace Dynamik {
 		myInstance.myCursorPosition = _positionContainer;
 	}
 	
-	void EventManager::_mouseButtonCallback(GLFWwindow* window, I32 button, I32 action, I32 mods)
+	void DMKEventManager::_mouseButtonCallback(GLFWwindow* window, I32 button, I32 action, I32 mods)
 	{
 		DMKMouseButtonEventComponent _component;
 		_component.window = window;
@@ -179,7 +173,7 @@ namespace Dynamik {
 		_pushToContainer(_component);
 	}
 	
-	void EventManager::_mouseScrollCallback(GLFWwindow* window, D64 xOffset, D64 yOffset)
+	void DMKEventManager::_mouseScrollCallback(GLFWwindow* window, D64 xOffset, D64 yOffset)
 	{
 		DMKMouseScrollEventComponent _component;
 		_component.window = window;
@@ -190,12 +184,12 @@ namespace Dynamik {
 		_pushToContainer(_component);
 	}
 	
-	void EventManager::_mouseCursorEnterCallback(GLFWwindow* window, I32 entered)
+	void DMKEventManager::_mouseCursorEnterCallback(GLFWwindow* window, I32 entered)
 	{
 		myInstance.isCursorInThisWindow = entered;
 	}
 	
-	void EventManager::_applicationDropPathCallback(GLFWwindow* window, I32 count, const CHR** strings)
+	void DMKEventManager::_applicationDropPathCallback(GLFWwindow* window, I32 count, const CHR** strings)
 	{
 		DMKDropPathEventComponent _component;
 		_component.window = window;
@@ -208,7 +202,7 @@ namespace Dynamik {
 		_pushToContainer(_component);
 	}
 	
-	void EventManager::_applicationResizeCallback(GLFWwindow* window, I32 width, I32 height)
+	void DMKEventManager::_applicationResizeCallback(GLFWwindow* window, I32 width, I32 height)
 	{
 		DMKWindowResizeEventComponent _component;
 		_component.window = window;
@@ -219,12 +213,12 @@ namespace Dynamik {
 		_pushToContainer(_component);
 	}
 	
-	void EventManager::_windowCloseCallback(GLFWwindow* window)
+	void DMKEventManager::_windowCloseCallback(GLFWwindow* window)
 	{
 		myInstance.isWindowClosed = true;
 	}
 	
-	inline void EventManager::_clearContainer()
+	inline void DMKEventManager::_clearContainer()
 	{
 		if (!myInstance.events.size())
 			return;

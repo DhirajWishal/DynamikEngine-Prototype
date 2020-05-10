@@ -67,11 +67,12 @@ namespace Dynamik {
 			for (UI32 index = 0; index < paths.size(); index++)
 				_pool[index] = stbi_load(paths[index].c_str(), &width, &height, &fileChannels, STBI_rgb_alpha);
 
+			fileChannels = 4;
 			textureData = StaticAllocator<UCHR>::allocate(size());
 			UI32 layerSize = size() / 6;
 
 			for (UI32 itr = 0; itr < paths.size(); itr++)
-				memcpy((void*)((UI64(textureData.get())) + (layerSize * itr)), _pool[itr], layerSize);
+				memcpy((void*)(UI64(textureData.get()) + (layerSize * itr)), _pool[itr], layerSize);
 		}
 
 		_getFormatFromChannels();

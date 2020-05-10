@@ -143,10 +143,10 @@ namespace Dynamik {
 
 		DMKCamera* myCamera = nullptr;
 		DMKCameraData cameraData = {};
-		UI32 FOV = 60.0f;
-		UI32 aspectRatio = 0.5f;
-		UI32 frustumNear = 0.001f;
-		UI32 frustumFar = 256.0f;
+		F32 FOV = 60.0f;
+		F32 aspectRatio = 0.5f;
+		F32 frustumNear = 0.001f;
+		F32 frustumFar = 256.0f;
 
 		ARRAY<POINTER<DMKEventComponent>> eventComponents;
 

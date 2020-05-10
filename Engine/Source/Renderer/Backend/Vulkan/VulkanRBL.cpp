@@ -31,6 +31,47 @@ namespace Dynamik {
 #ifdef DMK_DEBUG
 		Debugger::benchmark::FPS myFPSCal;
 
+		struct _debugVertex {
+			VEC3 position = { 0.0f, 0.0f, 0.0f };
+			VEC3 color = { 0.0f, 0.0f, 0.0f };
+			VEC2 tex = { 0.0f, 0.0f };
+			F32 integrity = 1.0f;
+		};
+
+		ARRAY<_debugVertex> _debugVertexBuffer()
+		{
+			ARRAY<_debugVertex> _container;
+			_debugVertex _vertex;
+
+			/* Triangle 1 */
+			_vertex.position = { 1.0f, 1.0f, 1.0f };
+			_vertex.tex = { 1.0f, 1.0f };
+			_container.pushBack(_vertex);
+
+			_vertex.position = { -1.0f, -1.0f, 1.0f };
+			_vertex.tex = { 1.0f, 0.0f };
+			_container.pushBack(_vertex);
+
+			_vertex.position = { -1.0f, 1.0f, 1.0f };
+			_vertex.tex = { 0.0f, 1.0f };
+			_container.pushBack(_vertex);
+
+			/* Triangle 2 */
+			_vertex.position = { 1.0f, -1.0f, 1.0f };
+			_vertex.tex = { 0.0f, 0.0f };
+			_container.pushBack(_vertex);
+
+			_vertex.position = { 1.0f, 1.0f, 1.0f };
+			_vertex.tex = { 1.0f, 1.0f };
+			_container.pushBack(_vertex);
+
+			_vertex.position = { -1.0f, -1.0f, 1.0f };
+			_vertex.tex = { 1.0f, 0.0f };
+			_container.pushBack(_vertex);
+
+			return _container;
+		}
+
 		// ----------
 #endif
 		void VulkanRBL::setMsaaSamples(DMKPipelineMSAASamples samples)
@@ -94,6 +135,9 @@ namespace Dynamik {
 			instanceInitInfo.engineName = "Dynamik";
 			myGraphicsCore.initializeInstance(instanceInitInfo);
 
+			/* Initialize the debugger */
+			myGraphicsCore.initializeDebugger();
+
 			/* Create the basic window surface */
 			myBasicSurface = myGraphicsCore.createSurface(myWindowHandle);
 
@@ -131,7 +175,7 @@ namespace Dynamik {
 		{
 			if (!windowHandle.isValid())
 			{
-				DMK_CORE_WARN("Invalid window handle passed! Setting the window surface to the parent.");
+				DMK_CORE_WARN("Invalid window handle passed! Setting the window handle to the parent.");
 				windowHandle = myWindowHandle;
 			}
 
@@ -391,7 +435,7 @@ namespace Dynamik {
 					DMK_CORE_FATAL("Specified context type is not yet initialized. Make sure to create the required contexts prior to loading objects.");
 				}
 			}
-			else 
+			else
 			{
 				DMK_CORE_ERROR("Specified render context is not initialized. The objects are set to use the default context.");
 				_context = myRenderContexts[0];
@@ -441,7 +485,7 @@ namespace Dynamik {
 					continue;
 
 				VulkanGraphicsCommandBufferInitInfo initInfo;
-				initInfo.count = myRenderContexts[_itr].swapChain.swapChainImages.size();;
+				initInfo.count = myRenderContexts[_itr].swapChain.swapChainImages.size();
 				initInfo.frameBuffer = myRenderContexts[_itr].frameBuffer;
 				initInfo.swapChain = myRenderContexts[_itr].swapChain;
 				initInfo.objects = myRenderContexts[_itr].renderDatas;
@@ -711,9 +755,18 @@ namespace Dynamik {
 			initInfo.mipLevels = 1;
 			initInfo.minMipLevels = 0;
 			initInfo.maxMipLevels = 1;
-			initInfo.modeU = VK_SAMPLER_ADDRESS_MODE_REPEAT;
-			initInfo.modeV = VK_SAMPLER_ADDRESS_MODE_REPEAT;
-			initInfo.modeW = VK_SAMPLER_ADDRESS_MODE_REPEAT;
+			if (texture.type == DMKTextureType::DMK_TEXTURE_TYPE_CUBEMAP)
+			{
+				initInfo.modeU = VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE;
+				initInfo.modeV = VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE;
+				initInfo.modeW = VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE;
+			}
+			else
+			{
+				initInfo.modeU = VK_SAMPLER_ADDRESS_MODE_REPEAT;
+				initInfo.modeV = VK_SAMPLER_ADDRESS_MODE_REPEAT;
+				initInfo.modeW = VK_SAMPLER_ADDRESS_MODE_REPEAT;
+			}
 			initInfo.magFilter = VK_FILTER_LINEAR;
 			initInfo.minFilter = VK_FILTER_LINEAR;
 			initInfo.aspectFlags = VK_IMAGE_ASPECT_COLOR_BIT;

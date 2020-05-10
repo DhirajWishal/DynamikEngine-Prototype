@@ -124,7 +124,7 @@ namespace Dynamik {
 			UI32 windowHeight = 0;	/* Window height */
 
 			VulkanGraphicsCore myGraphicsCore;	/* Contains the Vulkan's core components */
-			VkSampleCountFlagBits myMsaaSamples = VkSampleCountFlagBits::VK_SAMPLE_COUNT_1_BIT;
+			VkSampleCountFlagBits myMsaaSamples = VkSampleCountFlagBits::VK_SAMPLE_COUNT_64_BIT;
 			VulkanGraphicsCommandBuffer myMainCommandBuffer;
 
 			/* Contains the command buffers and render datas */

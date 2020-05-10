@@ -151,7 +151,7 @@ namespace Dynamik {
 					createInfo.enabledLayerCount = static_cast<UI32>(VulkanValidator::validationLayer.size());
 					createInfo.ppEnabledLayerNames = VulkanValidator::validationLayer.data();
 
-					populateDebugMessegerCreateInfo(debugCreateInfo);
+					populateDebugMessegerCreateInfo(&debugCreateInfo);
 					createInfo.pNext = (VkDebugUtilsMessengerCreateInfoEXT*)&debugCreateInfo;
 				}
 				else {
@@ -201,7 +201,7 @@ namespace Dynamik {
 					return;
 
 				VkDebugUtilsMessengerCreateInfoEXT createInfo;
-				populateDebugMessegerCreateInfo(createInfo);
+				populateDebugMessegerCreateInfo(&createInfo);
 
 				if (createDebugUtilsMessengerEXT(instance, &createInfo, nullptr, &debugMessenger) != VK_SUCCESS)
 					DMK_CORE_FATAL("Failed to set up debug messenger!");
@@ -267,17 +267,20 @@ namespace Dynamik {
 				return vkQueuePresentKHR(presentQueue, &presentInfo);
 			}
 
-			void VulkanGraphicsCore::populateDebugMessegerCreateInfo(VkDebugUtilsMessengerCreateInfoEXT& createInfo)
+			void VulkanGraphicsCore::populateDebugMessegerCreateInfo(POINTER<VkDebugUtilsMessengerCreateInfoEXT> createInfo)
 			{
-				createInfo = {};
-				createInfo.sType = VK_STRUCTURE_TYPE_DEBUG_UTILS_MESSENGER_CREATE_INFO_EXT;
-				createInfo.messageSeverity = VK_DEBUG_UTILS_MESSAGE_SEVERITY_VERBOSE_BIT_EXT
+				createInfo->sType = VK_STRUCTURE_TYPE_DEBUG_UTILS_MESSENGER_CREATE_INFO_EXT;
+				createInfo->messageSeverity = VK_DEBUG_UTILS_MESSAGE_SEVERITY_VERBOSE_BIT_EXT
 					| VK_DEBUG_UTILS_MESSAGE_SEVERITY_WARNING_BIT_EXT
 					| VK_DEBUG_UTILS_MESSAGE_SEVERITY_ERROR_BIT_EXT;
-				createInfo.messageType = VK_DEBUG_UTILS_MESSAGE_TYPE_GENERAL_BIT_EXT
+				createInfo->messageType = VK_DEBUG_UTILS_MESSAGE_TYPE_GENERAL_BIT_EXT
 					| VK_DEBUG_UTILS_MESSAGE_TYPE_VALIDATION_BIT_EXT
 					| VK_DEBUG_UTILS_MESSAGE_TYPE_PERFORMANCE_BIT_EXT;
-				createInfo.pfnUserCallback = debugCallback;
+				createInfo->pfnUserCallback = debugCallback;
+
+				createInfo->pNext = VK_NULL_HANDLE;
+				createInfo->pUserData = VK_NULL_HANDLE;
+				createInfo->flags = VK_NULL_HANDLE;
 			}
 
 			void VulkanGraphicsCore::initializeDevice(VkSurfaceKHR baseSurface)

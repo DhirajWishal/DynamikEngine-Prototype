@@ -22,7 +22,6 @@ namespace Dynamik {
 				pipelineInitInfo.vertexBindingDescription = VulkanUtilities::getBindingDescription(vertexAttributes, 1);
 				pipelineInitInfo.vertexAttributeDescription = VulkanUtilities::getAttributeDescriptions(vertexAttributes);
 				pipelineInitInfo.isTexturesAvailable = true;
-				pipelineInitInfo.rasterizerFrontFace = VK_FRONT_FACE_COUNTER_CLOCKWISE;
 				pipelineInitInfo.renderPass = renderPass;
 				pipelineInitInfo.swapChainExtent = extent;
 				return pipelineInitInfo;

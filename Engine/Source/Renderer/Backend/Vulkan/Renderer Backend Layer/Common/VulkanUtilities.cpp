@@ -279,7 +279,7 @@ namespace Dynamik {
 
 				return _format;
 			}
-			
+
 			ARRAY<VkVertexInputBindingDescription> VulkanUtilities::getBindingDescription(ARRAY<DMKVertexAttribute> attributes, UI32 bindCount)
 			{
 				ARRAY<VkVertexInputBindingDescription> bindingDescription(bindCount);
@@ -519,7 +519,7 @@ namespace Dynamik {
 				if (texture.format == DMKFormat::DMK_FORMAT_RGBA_8_UNIFORM)
 					_container.format = VK_FORMAT_R8G8B8A8_UNORM;
 				else if (texture.format == DMKFormat::DMK_FORMAT_RGB_8_UNIFORM)
-					_container.format = VK_FORMAT_R8G8B8_UNORM;
+					_container.format = VK_FORMAT_R8G8B8A8_UNORM;
 
 				_container.width = texture.width;
 				_container.height = texture.height;
@@ -616,6 +616,11 @@ namespace Dynamik {
 				samplerInitInfo.modeU = info.modeU;
 				samplerInitInfo.modeV = info.modeV;
 				samplerInitInfo.modeW = info.modeW;
+				samplerInitInfo.mipLoadBias = 0.0f;
+				samplerInitInfo.mipMapMode = VK_SAMPLER_MIPMAP_MODE_LINEAR;
+				samplerInitInfo.compareOp = VK_COMPARE_OP_NEVER;
+				samplerInitInfo.borderColor = VK_BORDER_COLOR_FLOAT_OPAQUE_WHITE;
+				samplerInitInfo.maxAnisotrophy = 1.0f;
 				_container.imageSampler = VulkanUtilities::createImageSampler(info.logicalDevice, samplerInitInfo);
 
 				VulkanCreateImageViewInfo cinfo2;
@@ -624,6 +629,9 @@ namespace Dynamik {
 				cinfo2.mipLevels = _container.mipLevels;
 				cinfo2.aspectFlags = info.aspectFlags;
 				cinfo2.viewType = imageViewType;
+				cinfo2.layerCount = arrayLayers;
+				if (texture.type == DMKTextureType::DMK_TEXTURE_TYPE_CUBEMAP)
+					cinfo2.component = { VK_COMPONENT_SWIZZLE_R, VK_COMPONENT_SWIZZLE_G, VK_COMPONENT_SWIZZLE_B, VK_COMPONENT_SWIZZLE_A };
 				_container.imageView = VulkanUtilities::createImageView(info.logicalDevice, cinfo2);
 
 				return _container;
@@ -716,7 +724,7 @@ namespace Dynamik {
 					VK_IMAGE_TILING_OPTIMAL,
 					VK_FORMAT_FEATURE_DEPTH_STENCIL_ATTACHMENT_BIT,
 					physicalDevice
-					);
+				);
 			}
 
 			void VulkanUtilities::copyBuffer(VkDevice logicalDevice, VkCommandPool commandPool, VkQueue graphicsQueue, VkQueue presentQueue, VkBuffer srcBuffer, VkBuffer dstBuffer, VkDeviceSize size)
@@ -771,7 +779,118 @@ namespace Dynamik {
 				VulkanOneTimeCommandBuffer oneTimeCommandBuffer(logicalDevice, commandPool, graphicsQueue, presentQueue);
 				VkCommandBuffer commandBuffer = oneTimeCommandBuffer.buffer;
 
-				transitionImageLayout(logicalDevice, commandBuffer, info);
+				VkImageMemoryBarrier barrier = {};
+				barrier.sType = VK_STRUCTURE_TYPE_IMAGE_MEMORY_BARRIER;
+				barrier.oldLayout = info.oldLayout;
+				barrier.newLayout = info.newLayout;
+				barrier.srcQueueFamilyIndex = VK_QUEUE_FAMILY_IGNORED;
+				barrier.dstQueueFamilyIndex = VK_QUEUE_FAMILY_IGNORED;
+				barrier.image = info.image;
+
+				if (info.newLayout == VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL) {
+					barrier.subresourceRange.aspectMask = VK_IMAGE_ASPECT_DEPTH_BIT;
+
+					if (hasStencilComponent(info.format)) {
+						barrier.subresourceRange.aspectMask |= VK_IMAGE_ASPECT_STENCIL_BIT;
+					}
+				}
+				else {
+					barrier.subresourceRange.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
+				}
+
+				barrier.subresourceRange.baseMipLevel = 0;
+				barrier.subresourceRange.levelCount = info.mipLevels;
+				barrier.subresourceRange.baseArrayLayer = info.arrayLayers;
+				barrier.subresourceRange.layerCount = info.layerCount;
+				barrier.srcAccessMask = 0; // TODO
+				barrier.dstAccessMask = 0; // TODO
+
+				VkPipelineStageFlags sourceStage = VK_PIPELINE_STAGE_ALL_COMMANDS_BIT;
+				VkPipelineStageFlags destinationStage = VK_PIPELINE_STAGE_ALL_COMMANDS_BIT;
+
+				switch (info.oldLayout)
+				{
+				case VK_IMAGE_LAYOUT_UNDEFINED:
+					sourceStage = VK_PIPELINE_STAGE_TOP_OF_PIPE_BIT;
+					barrier.srcAccessMask = 0;
+					break;
+
+				case VK_IMAGE_LAYOUT_PREINITIALIZED:
+					barrier.srcAccessMask = VK_ACCESS_HOST_WRITE_BIT;
+					break;
+
+				case VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL:
+					barrier.srcAccessMask = VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT;
+					break;
+
+				case VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL:
+					barrier.srcAccessMask = VK_ACCESS_DEPTH_STENCIL_ATTACHMENT_WRITE_BIT;
+					break;
+
+				case VK_IMAGE_LAYOUT_TRANSFER_SRC_OPTIMAL:
+					barrier.srcAccessMask = VK_ACCESS_TRANSFER_READ_BIT;
+					break;
+
+				case VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL:
+					sourceStage = VK_PIPELINE_STAGE_TRANSFER_BIT;
+					barrier.srcAccessMask = VK_ACCESS_TRANSFER_WRITE_BIT;
+					break;
+
+				case VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL:
+					destinationStage = VK_PIPELINE_STAGE_FRAGMENT_SHADER_BIT;
+					barrier.srcAccessMask = VK_ACCESS_SHADER_READ_BIT;
+					break;
+				default:
+					DMK_CORE_FATAL("unsupported layout transition!");
+					break;
+				}
+
+				switch (info.newLayout)
+				{
+				case VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL:
+					destinationStage = VK_PIPELINE_STAGE_TRANSFER_BIT;
+					barrier.dstAccessMask = VK_ACCESS_TRANSFER_WRITE_BIT;
+					break;
+
+				case VK_IMAGE_LAYOUT_TRANSFER_SRC_OPTIMAL:
+					barrier.dstAccessMask = VK_ACCESS_TRANSFER_READ_BIT;
+					break;
+
+				case VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL:
+					destinationStage = VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT;
+					barrier.dstAccessMask = VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT;
+					break;
+
+				case VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL:
+					destinationStage = VK_PIPELINE_STAGE_EARLY_FRAGMENT_TESTS_BIT;
+					barrier.dstAccessMask = barrier.dstAccessMask | VK_ACCESS_DEPTH_STENCIL_ATTACHMENT_WRITE_BIT;
+					break;
+
+				case VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL:
+					if (barrier.srcAccessMask == 0)
+					{
+						barrier.srcAccessMask = VK_ACCESS_HOST_WRITE_BIT | VK_ACCESS_TRANSFER_WRITE_BIT;
+					}
+					barrier.dstAccessMask = VK_ACCESS_SHADER_READ_BIT;
+					destinationStage = VK_PIPELINE_STAGE_FRAGMENT_SHADER_BIT;
+					break;
+
+				case VK_IMAGE_LAYOUT_GENERAL:
+					destinationStage = VK_PIPELINE_STAGE_ALL_COMMANDS_BIT;
+					break;
+				default:
+					DMK_CORE_FATAL("unsupported layout transition!");
+					break;
+				}
+
+				vkCmdPipelineBarrier(
+					commandBuffer,
+					sourceStage, destinationStage,
+					0,
+					0, nullptr,
+					0, nullptr,
+					1, &barrier
+				);
 			}
 
 			void VulkanUtilities::transitionImageLayout(VkDevice logicalDevice, VkCommandBuffer commandBuffer, VulkanTransitionImageLayoutInfo info)
@@ -887,7 +1006,7 @@ namespace Dynamik {
 					0, nullptr,
 					0, nullptr,
 					1, &barrier
-					);
+				);
 			}
 
 			VkImageView VulkanUtilities::createImageView(VkDevice device, VulkanCreateImageViewInfo info)
@@ -945,7 +1064,7 @@ namespace Dynamik {
 					info.destinationImageLayout,
 					1,
 					&region
-					);
+				);
 			}
 
 			void VulkanUtilities::copyBufferToImageOverride(VkDevice logicalDevice, VkCommandPool commandPool, VkQueue graphicsQueue, VkQueue presentQueue, VulkanCopyBufferToImageInfo info, ARRAY<VkBufferImageCopy> copyRegions)
@@ -1015,6 +1134,12 @@ namespace Dynamik {
 
 				return _container;
 			}
+
+			struct UBO_MVP {
+				MAT4 model = glm::mat4(1.0f);
+				MAT4 view = glm::mat4(1.0f);
+				MAT4 proj = glm::mat4(1.0f);
+			};
 
 			void VulkanUtilities::updateUniformBuffer(VkDevice device, ARRAY<MAT4> uniformData, VkDeviceMemory uniformBufferMemory, DMKUniformBufferObjectDescriptor descriptor)
 			{
@@ -1104,7 +1229,7 @@ namespace Dynamik {
 
 				return bindings;
 			}
-			
+
 			ARRAY<VkDescriptorPoolSize> VulkanUtilities::getPoolSizes(ARRAY<DMKUniformBufferObjectDescriptor> descriptors, UI32 uniformBufferCount, UI32 textureImageCount)
 			{
 				ARRAY<VkDescriptorPoolSize> poolSizes = {};

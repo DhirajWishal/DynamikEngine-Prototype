@@ -9,8 +9,7 @@ namespace Dynamik {
 
 	void Mesh::packData(ARRAY<DMKVertexAttribute> attributes, VPTR ptr)
 	{
-		POINTER<F32> _pool = StaticAllocator<F32>::allocate(allocatableSize(attributes));
-		POINTER<F32> nextPtr = _pool;
+		POINTER<F32> nextPtr = ptr;
 		UI32 _baseSize = sizeof(F32);
 
 		for (MeshPointStore _store : vertexDataStore)
@@ -49,11 +48,7 @@ namespace Dynamik {
 				moveBytes(nextPtr, _tempArray.begin(), _tempArray.end());
 				nextPtr += _getNextPointerAddress(attribute);
 			}
-
 		}
-
-		moveBytes((POINTER<F32>)ptr, _pool, nextPtr);
-		StaticAllocator<F32>::deAllocate(_pool, nextPtr);
 	}
 
 	ARRAY<F32> Mesh::_getAttributeData(DMKDataType type, VEC3 data)
@@ -66,9 +61,12 @@ namespace Dynamik {
 		if (_typeSize % sizeof(F32) != 0)
 			DMK_CORE_FATAL("Unsupported Vartex Data Format!");
 
-		_dataCount = _typeSize / sizeof(F32);
+		if ((type == DMKDataType::DMK_DATA_TYPE_VEC3) || (type == DMKDataType::DMK_DATA_TYPE_BVEC3) || (type == DMKDataType::DMK_DATA_TYPE_UVEC3))
+			_dataCount = 3;
+		else
+			_dataCount = _typeSize / sizeof(F32);
 
-		if (_dataCount >= 4)
+		if (_dataCount >= 4 && _typeSize != 16)
 			DMK_CORE_FATAL("Data count is out of bound!");
 
 		for (UI32 _itr = 0; _itr < _dataCount; _itr++)
@@ -81,7 +79,7 @@ namespace Dynamik {
 	{
 		return (UI32)attribute.dataType / sizeof(F32);
 	}
-	
+
 	B1 MeshPointStore::operator==(const MeshPointStore& other) const
 	{
 		return (

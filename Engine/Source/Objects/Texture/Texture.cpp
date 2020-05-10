@@ -65,7 +65,7 @@ namespace Dynamik {
 			imageCount = 6;
 			POINTER<UCHR> _pool[6] = { };
 			for (UI32 index = 0; index < paths.size(); index++)
-				_pool[index] = stbi_load(paths[index].c_str(), &width, &height, &fileChannels, NULL);
+				_pool[index] = stbi_load(paths[index].c_str(), &width, &height, &fileChannels, STBI_rgb_alpha);
 
 			textureData = StaticAllocator<UCHR>::allocate(size());
 			UI32 layerSize = size() / 6;

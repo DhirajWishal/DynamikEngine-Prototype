@@ -22,6 +22,7 @@ namespace Dynamik {
 	DMKEngine DMKEngine::instance;
 
 	/* For internal use */
+	static B1 isStartupComplete = false;
 	static B1 finishStartUpRenderer = false;
 
 	DMKEngine::DMKEngine()
@@ -62,6 +63,7 @@ namespace Dynamik {
 				Renderer::StartupRenderer::initializeVertexBuffers();
 				Renderer::StartupRenderer::initializeTextureImage();
 
+				isStartupComplete = true;
 				while (!finishStartUpRenderer)
 				{
 					DMK_BEGIN_PROFILE_TIMER();
@@ -73,6 +75,9 @@ namespace Dynamik {
 
 			}, descriptor.iconPath
 			));
+
+		/* Wait till the startup renderer is initialized. */
+		while (!isStartupComplete);
 	}
 
 	UI32 DMKEngine::addLevel(DMKLevelDescriptor level)
@@ -164,6 +169,7 @@ namespace Dynamik {
 
 		/* Initialize window */
 		auto windowHandle = WindowManager::createWindow(DMKWindowInitInfo());
+		instance.aspectRatio = windowHandle->windowWidth / windowHandle->windowHeight;
 
 		/* Set basic initializing data to the rendering engine */
 		Renderer::DMKRenderer::setProgressPointer(&instance.progress);
@@ -242,6 +248,10 @@ namespace Dynamik {
 
 			/* Draw the frame using the camera data */
 			info.cameraData = instance.cameraData;
+			info.cameraData.aspectRatio = instance.aspectRatio;
+			info.cameraData.fieldOfView = 60.0f;
+			info.cameraData.cameraNear = instance.frustumNear;
+			info.cameraData.cameraFar = instance.frustumFar;
 			Renderer::DMKRenderer::drawFrame(info);
 
 			EventManager::clearContainer();

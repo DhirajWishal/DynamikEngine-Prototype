@@ -58,7 +58,7 @@ namespace Dynamik {
 				virtual VkResult getNextImage(VkSwapchainKHR swapChain, POINTER<UI32> index, UI32 frame);
 				virtual VkResult submitQueues(ARRAY<VkSwapchainKHR> swapChains, UI32 index, UI32 frame, ARRAY<VkCommandBuffer> buffers);
 
-				void populateDebugMessegerCreateInfo(VkDebugUtilsMessengerCreateInfoEXT& createInfo);
+				void populateDebugMessegerCreateInfo(POINTER<VkDebugUtilsMessengerCreateInfoEXT> createInfo);
 
 				void initPhysicalDevice(VkSurfaceKHR baseSurface);
 				void initLogicalDevice(VkSurfaceKHR baseSurface);

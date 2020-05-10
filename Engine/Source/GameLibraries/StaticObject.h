@@ -87,6 +87,7 @@ namespace Dynamik {
 			MAT4 model = glm::mat4(1.0f);
 			MAT4 view = glm::lookAt(data.cameraPosition, data.cameraPosition + data.cameraRight, data.cameraUp);
 			MAT4 projection = glm::perspective(glm::radians(data.fieldOfView), data.aspectRatio, data.cameraNear, data.cameraFar);
+			projection[1][1] *= -1;
 
 			return { model, view, projection };
 		}

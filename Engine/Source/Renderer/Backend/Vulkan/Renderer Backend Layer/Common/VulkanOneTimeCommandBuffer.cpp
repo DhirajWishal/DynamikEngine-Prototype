@@ -29,7 +29,7 @@ namespace Dynamik {
 				vkBeginCommandBuffer(buffer, &beginInfo);
 			}
 
-			VulkanOneTimeCommandBuffer::VulkanOneTimeCommandBuffer()
+			VulkanOneTimeCommandBuffer::~VulkanOneTimeCommandBuffer()
 			{
 				vkEndCommandBuffer(buffer);
 

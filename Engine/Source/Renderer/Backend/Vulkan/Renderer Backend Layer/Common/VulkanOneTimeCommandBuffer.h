@@ -14,7 +14,7 @@ namespace Dynamik {
 					VkCommandPool commandPool,
 					VkQueue processQueue,
 					VkQueue utilityQueue);
-				VulkanOneTimeCommandBuffer();
+				~VulkanOneTimeCommandBuffer();
 
 				VkCommandBuffer buffer = VK_NULL_HANDLE;
 

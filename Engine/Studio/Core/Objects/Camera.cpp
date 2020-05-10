@@ -13,6 +13,8 @@ Camera::~Camera()
 
 DMKCameraData Camera::update(ARRAY<POINTER<DMKEventComponent>> eventComponents)
 {
+	const F32 movementBias = 0.05f;
+
 	for (auto component : eventComponents)
 	{
 		if (!component.isValid())
@@ -23,22 +25,22 @@ DMKCameraData Camera::update(ARRAY<POINTER<DMKEventComponent>> eventComponents)
 			DMKKeyEventComponent eventContainer = *(DMKKeyEventComponent*)component.get();
 			switch (eventContainer.keycode) {
 			case DMK_KEY_W:
-				myData.cameraPosition += myData.cameraFront;
+				myData.cameraPosition += myData.cameraFront * movementBias;
 				break;
 			case DMK_KEY_A:
-				myData.cameraPosition += myData.cameraRight;
+				myData.cameraPosition += myData.cameraRight * movementBias;
 				break;
 			case DMK_KEY_S:
-				myData.cameraPosition -= myData.cameraFront;
+				myData.cameraPosition -= myData.cameraFront * movementBias;
 				break;
 			case DMK_KEY_D:
-				myData.cameraPosition -= myData.cameraRight;
+				myData.cameraPosition -= myData.cameraRight * movementBias;
 				break;
 			case DMK_KEY_UP:
-				myData.cameraPosition += myData.cameraUp;
+				myData.cameraPosition += myData.cameraUp * movementBias;
 				break;
 			case DMK_KEY_DOWN:
-				myData.cameraPosition -= myData.cameraUp;
+				myData.cameraPosition -= myData.cameraUp * movementBias;
 				break;
 			case DMK_KEY_LEFT:
 				break;
@@ -55,22 +57,22 @@ DMKCameraData Camera::update(ARRAY<POINTER<DMKEventComponent>> eventComponents)
 			DMKKeyEventComponent eventContainer = *(DMKKeyEventComponent*)component.get();
 			switch (eventContainer.keycode) {
 			case DMK_KEY_W:
-				myData.cameraPosition += myData.cameraFront;
+				myData.cameraPosition += myData.cameraFront * movementBias;
 				break;
 			case DMK_KEY_A:
-				myData.cameraPosition += myData.cameraRight;
+				myData.cameraPosition += myData.cameraRight * movementBias;
 				break;
 			case DMK_KEY_S:
-				myData.cameraPosition -= myData.cameraFront;
+				myData.cameraPosition -= myData.cameraFront * movementBias;
 				break;
 			case DMK_KEY_D:
-				myData.cameraPosition -= myData.cameraRight;
+				myData.cameraPosition -= myData.cameraRight * movementBias;
 				break;
 			case DMK_KEY_UP:
-				myData.cameraPosition += myData.cameraUp;
+				myData.cameraPosition += myData.cameraUp * movementBias;
 				break;
 			case DMK_KEY_DOWN:
-				myData.cameraPosition -= myData.cameraUp;
+				myData.cameraPosition -= myData.cameraUp * movementBias;
 				break;
 			case DMK_KEY_LEFT:
 				break;

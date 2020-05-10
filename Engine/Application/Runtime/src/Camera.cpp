@@ -12,35 +12,78 @@ Camera::~Camera()
 
 DMKCameraData Camera::update(ARRAY<POINTER<DMKEventComponent>> eventComponents)
 {
+	const F32 movementBias = 0.05f;
+
 	for (auto component : eventComponents)
 	{
-		switch (component->type)
+		if (!component.isValid())
+			continue;
+
+		if (component->type == DMKEventType::DMK_EVENT_TYPE_PRESS)
 		{
-        case Dynamik::DMKEventType::DMK_EVENT_TYPE_UNKNOWN:
-            return myData;
-            break;
-        case Dynamik::DMKEventType::DMK_EVENT_TYPE_KEY_PRESS:
-            break;
-        case Dynamik::DMKEventType::DMK_EVENT_TYPE_KEY_REPEAT:
-            break;
-        case Dynamik::DMKEventType::DMK_EVENT_TYPE_KEY_RELEASE:
-            break;
-        case Dynamik::DMKEventType::DMK_EVENT_TYPE_MOUSE_SCROLL:
-            break;
-        case Dynamik::DMKEventType::DMK_EVENT_TYPE_MOUSE_BUTTON_PRESS:
-            break;
-        case Dynamik::DMKEventType::DMK_EVENT_TYPE_MOUSE_BUTTON_REPEAT:
-            break;
-        case Dynamik::DMKEventType::DMK_EVENT_TYPE_MOUSE_BUTTON_RELEASE:
-            break;
-        case Dynamik::DMKEventType::DMK_EVENT_TYPE_WINDOW_ON_FOCUS:
-            break;
-        case Dynamik::DMKEventType::DMK_EVENT_TYPE_WINDOW_OUTOF_FOCUS:
-            break;
-        case Dynamik::DMKEventType::DMK_EVENT_TYPE_WINDOW_RESIZE:
-            break;
+			DMKKeyEventComponent eventContainer = *(DMKKeyEventComponent*)component.get();
+			switch (eventContainer.keycode) {
+			case DMK_KEY_W:
+				myData.cameraPosition += myData.cameraFront * movementBias;
+				break;
+			case DMK_KEY_A:
+				myData.cameraPosition += myData.cameraRight * movementBias;
+				break;
+			case DMK_KEY_S:
+				myData.cameraPosition -= myData.cameraFront * movementBias;
+				break;
+			case DMK_KEY_D:
+				myData.cameraPosition -= myData.cameraRight * movementBias;
+				break;
+			case DMK_KEY_UP:
+				myData.cameraPosition += myData.cameraUp * movementBias;
+				break;
+			case DMK_KEY_DOWN:
+				myData.cameraPosition -= myData.cameraUp * movementBias;
+				break;
+			case DMK_KEY_LEFT:
+				break;
+			case DMK_KEY_RIGHT:
+				break;
+			case DMK_KEY_KP_ADD:
+				break;
+			case DMK_KEY_KP_SUBTRACT:
+				break;
+			}
+		}
+		else if (component->type == DMKEventType::DMK_EVENT_TYPE_REPEAT)
+		{
+			DMKKeyEventComponent eventContainer = *(DMKKeyEventComponent*)component.get();
+			switch (eventContainer.keycode) {
+			case DMK_KEY_W:
+				myData.cameraPosition += myData.cameraFront * movementBias;
+				break;
+			case DMK_KEY_A:
+				myData.cameraPosition += myData.cameraRight * movementBias;
+				break;
+			case DMK_KEY_S:
+				myData.cameraPosition -= myData.cameraFront * movementBias;
+				break;
+			case DMK_KEY_D:
+				myData.cameraPosition -= myData.cameraRight * movementBias;
+				break;
+			case DMK_KEY_UP:
+				myData.cameraPosition += myData.cameraUp * movementBias;
+				break;
+			case DMK_KEY_DOWN:
+				myData.cameraPosition -= myData.cameraUp * movementBias;
+				break;
+			case DMK_KEY_LEFT:
+				break;
+			case DMK_KEY_RIGHT:
+				break;
+			case DMK_KEY_KP_ADD:
+				break;
+			case DMK_KEY_KP_SUBTRACT:
+				break;
+			}
 		}
 	}
 
-    return myData;
+	return myData;
 }

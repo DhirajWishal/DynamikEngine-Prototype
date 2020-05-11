@@ -886,6 +886,7 @@
       <Filter>Events</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsRenderPass.h" />
+    <ClInclude Include="Objects\Mesh\AnimatedMesh.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Audio\Backend\AudioEngine.cpp">
@@ -1228,6 +1229,7 @@
     <ClCompile Include="Plugins\PluginAPI\RenderPlugin.cpp" />
     <ClCompile Include="Managers\Thread\ThreadManager.cpp" />
     <ClCompile Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsRenderPass.cpp" />
+    <ClCompile Include="Objects\Mesh\AnimatedMesh.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Audio\Samples\license.txt">

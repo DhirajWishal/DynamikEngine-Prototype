@@ -52,6 +52,8 @@ namespace Dynamik {
 
 				B1 checkSurfaceCompatibility(VkSurfaceKHR surface);
 
+				VkPhysicalDeviceProperties deviceProperties;
+
 			public:
 				/* DRAW CALLS */
 				virtual void syncFence(UI32 frame);

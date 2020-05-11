@@ -23,7 +23,7 @@ namespace Dynamik {
 	class Mesh {
 	public:
 		Mesh() {}
-		~Mesh() {}
+		virtual ~Mesh() {}
 
 		CCPTR name = "";
 		ARRAY<MeshPointStore> vertexDataStore;
@@ -33,7 +33,7 @@ namespace Dynamik {
 		UI32 allocatableSize(ARRAY<DMKVertexAttribute> attributes);
 		void packData(ARRAY<DMKVertexAttribute> attributes, VPTR data);
 
-	private:
+	protected:
 		ARRAY<F32> _getAttributeData(DMKDataType type, VEC3 data);
 		UI32 _getNextPointerAddress(DMKVertexAttribute attribute);
 	};

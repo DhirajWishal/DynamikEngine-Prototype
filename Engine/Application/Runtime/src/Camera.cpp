@@ -13,7 +13,7 @@ Camera::~Camera()
 
 DMKCameraData Camera::update(ARRAY<POINTER<DMKEventComponent>> eventComponents)
 {
-	const F32 movementBias = 1.0f;
+	const F32 movementBias = 0.05f;
 
 	for (auto component : eventComponents)
 	{
@@ -37,10 +37,10 @@ DMKCameraData Camera::update(ARRAY<POINTER<DMKEventComponent>> eventComponents)
 				myData.cameraPosition -= myData.cameraFront * movementBias;
 				break;
 			case DMK_KEY_UP:
-				myData.cameraPosition += myData.cameraUp * movementBias;
+				myData.cameraPosition -= myData.cameraUp * movementBias;
 				break;
 			case DMK_KEY_DOWN:
-				myData.cameraPosition -= myData.cameraUp * movementBias;
+				myData.cameraPosition += myData.cameraUp * movementBias;
 				break;
 			case DMK_KEY_LEFT:
 				break;
@@ -69,10 +69,10 @@ DMKCameraData Camera::update(ARRAY<POINTER<DMKEventComponent>> eventComponents)
 				myData.cameraPosition -= myData.cameraFront * movementBias;
 				break;
 			case DMK_KEY_UP:
-				myData.cameraPosition += myData.cameraUp * movementBias;
+				myData.cameraPosition -= myData.cameraUp * movementBias;
 				break;
 			case DMK_KEY_DOWN:
-				myData.cameraPosition -= myData.cameraUp * movementBias;
+				myData.cameraPosition += myData.cameraUp * movementBias;
 				break;
 			case DMK_KEY_LEFT:
 				break;
@@ -84,35 +84,41 @@ DMKCameraData Camera::update(ARRAY<POINTER<DMKEventComponent>> eventComponents)
 				break;
 			}
 		}
-		//else if (component->category == DMKEventCategory::DMK_EVENT_CATEGORY_MOUSE_BUTTON)
-		//{
-		//	auto eventContainer = DMKUtilities::getMouseButtonEvent(component);
-		//	if (eventContainer.button == DMK_MOUSE_BUTTON_LEFT)
-		//	{
-		//		
-		//	}
-		//}
+		else if (component->category == DMKEventCategory::DMK_EVENT_CATEGORY_MOUSE_SCROLL)
+		{
+			auto eventContainer = DMKUtilities::getMouseScrollEvent(component);
+			if (myData.fieldOfView >= 1.0f && myData.fieldOfView <= 60.0f)
+				myData.fieldOfView -= eventContainer.yOffset;
+			else if (myData.fieldOfView <= 1.0f)
+				myData.fieldOfView = 1.0f;
+			else if (myData.fieldOfView >= 60.0f)
+				myData.fieldOfView = 60.0f;
+		}
 
 	}
-	if (!Dynamik::DMKEventManager::isCursorOnCurrent());
+	if (!Dynamik::DMKEventManager::isCursorOnCurrent())
+	{
+		calculateVectors();
+		return myData;
+	}
 
 	auto _pos = Dynamik::DMKEventManager::getCursorPosition();
-	angelX = cos(glm::radians(_pos.xOffset)) * cos(glm::radians(_pos.yOffset));
-	angelY = sin(glm::radians(_pos.yOffset));
-	angelZ = sin(glm::radians(_pos.xOffset)) * cos(glm::radians(_pos.yOffset));
-
 	if (firstMouse)
 	{
-		lastX = angelX;
-		lastY = angelY;
+		lastX = _pos.xOffset;
+		lastY = _pos.yOffset;
 		firstMouse = false;
 	}
 
-	float xoffset = angelX - lastX;
-	float yoffset = lastY - angelY; // reversed since y-coordinates go from bottom to top
+	F32 xoffset = _pos.xOffset - lastX;
+	F32 yoffset = lastY - _pos.yOffset; // reversed since y-coordinates go from bottom to top
 
-	lastX = angelX;
-	lastY = angelY;
+	F32 sensitivity = 0.1f;
+	xoffset *= sensitivity;
+	yoffset *= sensitivity;
+
+	lastX = _pos.xOffset;
+	lastY = _pos.yOffset;
 
 	Yaw += xoffset;
 	Pitch += yoffset;
@@ -122,6 +128,13 @@ DMKCameraData Camera::update(ARRAY<POINTER<DMKEventComponent>> eventComponents)
 	if (Pitch < -89.0f)
 		Pitch = -89.0f;
 
+	calculateVectors();
+
+	return myData;
+}
+
+void Camera::calculateVectors()
+{
 	glm::vec3 front;
 	front.x = cos(glm::radians(Yaw)) * cos(glm::radians(Pitch));
 	front.y = sin(glm::radians(Pitch));
@@ -129,6 +142,4 @@ DMKCameraData Camera::update(ARRAY<POINTER<DMKEventComponent>> eventComponents)
 	myData.cameraFront = glm::normalize(front);
 	myData.cameraRight = glm::normalize(glm::cross(myData.cameraFront, myData.cameraUp));
 	myData.cameraUp = glm::normalize(glm::cross(myData.cameraRight, myData.cameraFront));
-
-	return myData;
 }

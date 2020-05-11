@@ -4,7 +4,76 @@
 #include "Platform/Windows.h"
 #include "Objects/InternalFormat/InternalFormat.h"
 
+#include "assimp/Importer.hpp"
+#include "assimp/scene.h"
+#include "assimp/postprocess.h"
+
 namespace Dynamik {
+	/* Helper function */
+	Mesh loadData(aiMesh* mesh, const aiScene* scene)
+	{
+		Mesh _mesh;
+		MeshPointStore _store;
+
+		for (UI32 index = 0; index < mesh->mNumVertices; index++)
+		{
+			if (mesh->HasPositions())
+				_store.position = { mesh->mVertices[index].x, mesh->mVertices[index].y, mesh->mVertices[index].z };
+			if (mesh->mColors[0])
+				_store.color = { mesh->mColors[0][index].r, mesh->mColors[0][index].g, mesh->mColors[0][index].b };
+			if (mesh->mTextureCoords[0])
+				_store.textureCoordinate = { mesh->mTextureCoords[0][index].x, mesh->mTextureCoords[0][index].y, mesh->mTextureCoords[0][index].z };
+			if (mesh->HasNormals())
+				_store.normal = { mesh->mNormals[index].x, mesh->mNormals[index].y, mesh->mNormals[index].z };
+			_store.integrity = 1.0f;
+
+			_mesh.vertexDataStore.pushBack(_store);
+		}
+
+		aiFace face;
+		for (UI32 index = 0; index < mesh->mNumFaces; index++)
+		{
+			face = mesh->mFaces[index];
+			for (UI32 itr = 0; itr < face.mNumIndices; itr++)
+				_mesh.indexes.pushBack(face.mIndices[itr]);
+		}
+
+		return _mesh;
+	}
+
+	void processNode(aiNode* node, const aiScene* scene, POINTER<InternalFormat> format)
+	{
+		// process all the node's meshes (if any)
+		for (unsigned int i = 0; i < node->mNumMeshes; i++)
+		{
+			aiMesh* mesh = scene->mMeshes[node->mMeshes[i]];
+			auto _mesh = loadData(mesh, scene);
+
+			Texture _texture;
+			if (format->descriptor.assetDescription.textureType == DMKTextureType::DMK_TEXTURE_TYPE_2D || format->descriptor.assetDescription.textureType == DMKTextureType::DMK_TEXTURE_TYPE_3D)
+			{
+				for (auto _path : format->texturePaths)
+				{
+					_texture.loadTexture(_path, format->descriptor.assetDescription.textureType, format->descriptor.assetDescription.textureInputType);
+					_mesh.textureDatas.pushBack(_texture);
+				}
+			}
+			else
+			{
+				_texture.loadCubemap(format->texturePaths, format->descriptor.assetDescription.textureInputType);
+				_mesh.textureDatas.pushBack(_texture);
+			}
+
+			format->meshDatas.push_back(_mesh);
+		}
+		// then do the same for each of its children
+		for (unsigned int i = 0; i < node->mNumChildren; i++)
+		{
+			processNode(node->mChildren[i], scene, format);
+		}
+	}
+
+	/* Asset Manager class definitions */
 	AssetManager::~AssetManager()
 	{
 		for (auto level : assets)
@@ -67,7 +136,7 @@ namespace Dynamik {
 		/* Initialize the scene data to get the required data from .dai file */
 		STORE _scene = _initializeSceneData(assets[levelIndex][sceneIndex]);
 
-		{			
+		{
 			DMK_BEGIN_PROFILE_TIMER();
 
 			/* Run each object loading function in a separate thread to make things faster */
@@ -77,19 +146,7 @@ namespace Dynamik {
 				DMK_BEGIN_PROFILE_TIMER();
 
 				POINTER<InternalFormat> _format = _scene[index].address;
-
-				DMKAssetLoadInfo info;
-				info.path = _format->objectPath;
-				info.vertexOffset = {
-					_format->descriptor.transformDescriptor.location[0],
-					_format->descriptor.transformDescriptor.location[1],
-					_format->descriptor.transformDescriptor.location[2],
-				};
-				info.meshes = &_format->meshDatas;
-				info.textureType = _format->descriptor.assetDescription.textureType;
-				info.texturePaths = _format->texturePaths;
-				info.textureInputType = _format->descriptor.assetDescription.textureInputType;
-				threads.pushBack(std::async(std::launch::async, loadModel, info));
+				threads.pushBack(std::async(std::launch::async, LoadAsset, _format));
 			}
 		}
 
@@ -150,6 +207,21 @@ namespace Dynamik {
 	{
 		container->type = format->type;
 		memcpy(container->address.get(), format.get(), format.getTypeSize());
+	}
+
+	void AssetManager::LoadAsset(POINTER<InternalFormat> format)
+	{
+		Assimp::Importer myImporter;
+		auto scene = myImporter.ReadFile(format->objectPath, aiProcess_Triangulate | aiProcess_FlipUVs);
+
+		if (!scene)
+			DMK_CORE_FATAL("Unable to load the specified file!");
+
+		processNode(scene->mRootNode, scene, format);
+	}
+
+	void AssetManager::LoadAnimation(POINTER<InternalFormat> format)
+	{
 	}
 
 	AssetManager::STORE AssetManager::_initializeSceneData(ARRAY<AssetContainer> scene)

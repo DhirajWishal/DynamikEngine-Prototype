@@ -16,6 +16,7 @@ namespace Dynamik {
 		else if (type == DMKTextureType::DMK_TEXTURE_TYPE_3D)
 		{
 		}
+		else if (type == DMKTextureType::DMK_TEXTURE_TYPE_CUBEMAP);
 
 		_getFormatFromChannels();
 	}

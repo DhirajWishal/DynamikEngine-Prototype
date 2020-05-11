@@ -129,19 +129,21 @@ private:
 
 class Camera : public DMKCamera {
 public:
-	Camera();
-	~Camera();
+    Camera();
+    ~Camera();
 
-	DMKCameraData update(ARRAY<POINTER<DMKEventComponent>> eventComponents) override;
+    DMKCameraData update(ARRAY<POINTER<DMKEventComponent>> eventComponents) override;
 
-public:
-	F32 angelX = 0.0f;
-	F32 angelY = 0.0f;
-	F32 angelZ = 0.0f;
+private:
+    void calculateVectors();
 
-	F32 lastX = 0.0f;
-	F32 lastY = 0.0f;
-	B1 firstMouse = true;
+    F32 angelX = 0.0f;
+    F32 angelY = 0.0f;
+    F32 angelZ = 0.0f;
+
+    F32 lastX = 0.0f;
+    F32 lastY = 0.0f;
+    B1 firstMouse = true;
 
     F32 Yaw = -90.0f;
     F32 Pitch = 0.0f;

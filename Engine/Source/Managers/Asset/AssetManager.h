@@ -63,6 +63,11 @@ namespace Dynamik {
 		static AssetContainer createAssetContainer(POINTER<DMKGameObject> object);
 		static void copyToAssetContainer(POINTER<AssetContainer> container, POINTER<InternalFormat> format);
 
+		/* Load FBX files */
+		/* Loads a full scene to multiple meshes and rendered using one shader */
+		static void LoadAsset(POINTER<InternalFormat> format);
+		static void LoadAnimation(POINTER<InternalFormat> format);
+
 	private:
 		ARRAY<ARRAY<ARRAY<AssetContainer>>> assets;
 		ARRAY<ARRAY<ARRAY<AssetContainer>>> renderableObjects;

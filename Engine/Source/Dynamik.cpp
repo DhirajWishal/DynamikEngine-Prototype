@@ -167,7 +167,7 @@ namespace Dynamik {
 
 		/* Initialize window */
 		auto windowHandle = WindowManager::createWindow(DMKWindowInitInfo());
-		instance.aspectRatio = windowHandle->windowWidth / windowHandle->windowHeight;
+		instance.aspectRatio = (F32)windowHandle->windowWidth / (F32)windowHandle->windowHeight;
 
 		/* Set basic initializing data to the rendering engine */
 		Renderer::DMKRenderer::setProgressPointer(&instance.progress);
@@ -247,7 +247,6 @@ namespace Dynamik {
 			/* Draw the frame using the camera data */
 			info.cameraData = instance.cameraData;
 			info.cameraData.aspectRatio = instance.aspectRatio;
-			info.cameraData.fieldOfView = 60.0f;
 			info.cameraData.cameraNear = instance.frustumNear;
 			info.cameraData.cameraFar = instance.frustumFar;
 			Renderer::DMKRenderer::drawFrame(info);

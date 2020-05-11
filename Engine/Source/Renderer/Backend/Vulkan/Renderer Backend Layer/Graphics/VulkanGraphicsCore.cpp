@@ -307,14 +307,13 @@ namespace Dynamik {
 
 				//std::multimap<I32, VkPhysicalDevice> candidates;
 
-				auto props = VkPhysicalDeviceProperties{};
 				for (const auto& device : devices) {
 					if (isDeviceSuitable(device, baseSurface)) {
-						vkGetPhysicalDeviceProperties(device, &props);
+						vkGetPhysicalDeviceProperties(device, &deviceProperties);
 
-						if (props.deviceType == VkPhysicalDeviceType::VK_PHYSICAL_DEVICE_TYPE_DISCRETE_GPU)
+						if (deviceProperties.deviceType == VkPhysicalDeviceType::VK_PHYSICAL_DEVICE_TYPE_DISCRETE_GPU)
 							physicalDevice = device;
-						else if (props.deviceType == VkPhysicalDeviceType::VK_PHYSICAL_DEVICE_TYPE_INTEGRATED_GPU)
+						else if (deviceProperties.deviceType == VkPhysicalDeviceType::VK_PHYSICAL_DEVICE_TYPE_INTEGRATED_GPU)
 							physicalDevice = device;
 						else
 							physicalDevice = device;
@@ -331,12 +330,12 @@ namespace Dynamik {
 
 #if defined(DMK_DEBUG)
 				printf("\n\t---------- VULKAN PHYSICAL DEVICE INFO ----------\n");
-				printf("API Version: %I32d\n", props.apiVersion);
-				printf("Driver Version: %I32d\n", props.driverVersion);
-				printf("Vendor ID: %I32d\n", props.vendorID);
-				printf("Device ID: %I32d\n", props.deviceID);
+				printf("API Version: %I32d\n", deviceProperties.apiVersion);
+				printf("Driver Version: %I32d\n", deviceProperties.driverVersion);
+				printf("Vendor ID: %I32d\n", deviceProperties.vendorID);
+				printf("Device ID: %I32d\n", deviceProperties.deviceID);
 
-				switch (props.deviceType) {
+				switch (deviceProperties.deviceType) {
 				case VkPhysicalDeviceType::VK_PHYSICAL_DEVICE_TYPE_OTHER:
 					printf("Device Type: Other GPU\n");
 					break;
@@ -354,7 +353,7 @@ namespace Dynamik {
 					break;
 				}
 
-				printf("Device Name: %s\n", props.deviceName);
+				printf("Device Name: %s\n", deviceProperties.deviceName);
 				printf("\t-------------------------------------------------\n\n");
 
 				// ----------

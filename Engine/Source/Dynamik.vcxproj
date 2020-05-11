@@ -250,6 +250,7 @@
     <ClInclude Include="Objects\IndexBufferObject\IndexBufferObjectUI32.h" />
     <ClInclude Include="Objects\IndexBufferObject\IndexBufferObjectUI8.h" />
     <ClInclude Include="Objects\InternalFormat\InternalFormat.h" />
+    <ClInclude Include="Objects\Mesh\AnimatedMesh.h" />
     <ClInclude Include="Objects\Mesh\Mesh.h" />
     <ClInclude Include="Objects\Texture\Texture.h" />
     <ClInclude Include="Objects\UniformBufferObject\UniformBufferObject.h" />
@@ -405,6 +406,7 @@
     <ClCompile Include="Networking\Backend\client.cpp" />
     <ClCompile Include="Networking\Backend\server.cpp" />
     <ClCompile Include="Objects\InternalFormat\InternalFormat.cpp" />
+    <ClCompile Include="Objects\Mesh\AnimatedMesh.cpp" />
     <ClCompile Include="Objects\Mesh\Mesh.cpp" />
     <ClCompile Include="Objects\Texture\Texture.cpp" />
     <ClCompile Include="Platform\Windows\Window\WindowsWindow.cpp" />

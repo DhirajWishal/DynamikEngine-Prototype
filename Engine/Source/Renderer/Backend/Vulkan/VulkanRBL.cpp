@@ -546,8 +546,7 @@ namespace Dynamik {
 					VulkanUtilities::updateUniformBuffer(
 						myGraphicsCore.logicalDevice,
 						info.formats[index]->onUpdate(info.cameraData),
-						_renderContext.renderDatas[index].uniformBufferContainers[_itr].bufferMemories[imageIndex],
-						info.formats[index]->descriptor.uniformBufferObjectDescriptions[_itr]);
+						_renderContext.renderDatas[index].uniformBufferContainers[_itr].bufferMemories[imageIndex]);
 				}
 			}
 

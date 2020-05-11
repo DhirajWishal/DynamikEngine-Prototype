@@ -141,8 +141,34 @@ namespace Dynamik {
 		ARRAY<DMKUniformBufferObjectDescriptor> uniformBufferObjectDescriptions;
 	};
 
-	/* Uniform buffer data typedef */
-	 typedef ARRAY<MAT4> DMKUniformBufferData;
+	/*
+	 Dynamik Uniform Buffer Data Container
+	 This container is used to store the uniform buffer data.
+	 This is only indended to use for the Uniform Buffer Object.
+	*/
+	class DMKUniformBufferData {
+	public:
+		DMKUniformBufferData();
+		~DMKUniformBufferData();
+
+		void initialize(ARRAY<DMKUniformAttribute> attributes);
+		void clear();
+		void terminate();
+		VPTR data() { return store; }
+		UI32 size() { return allocationSize; }
+
+		void addData(VPTR data, UI32 dataSize, UI32 dataLocation);
+
+	private:
+		void _incrementPtr(UI32 byteCount);
+
+		VPTR store = nullptr;
+		VPTR nextPtr = store;
+		B1 isTerminated = false;
+		UI32 allocationSize = 0;
+
+		ARRAY<DMKUniformAttribute> _attributes;
+	};
 }
 
 #endif // !_DYNAMIK_GAME_OBJECT_DESCRIPTORS_H

@@ -69,6 +69,9 @@ namespace Dynamik {
 			uAttribute3.dataType = DMKDataType::DMK_DATA_TYPE_MAT4;
 			UBODescriptor.attributes.pushBack(uAttribute3);
 
+			/* Initialize the Uniform Buffer Data Store */
+			uniformBufferDataStore.initialize(UBODescriptor.attributes);
+
 			/* Texture sampler */
 			DMKUniformBufferObjectDescriptor TexSampler;
 			TexSampler.type = DMKUniformType::DMK_UNIFORM_TYPE_IMAGE_SAMPLER_2D;
@@ -85,12 +88,18 @@ namespace Dynamik {
 		virtual DMKUniformBufferData onUpdate(DMKCameraData data) override
 		{
 			MAT4 model = glm::mat4(1.0f);
-			MAT4 view = glm::lookAt(data.cameraPosition, data.cameraPosition + data.cameraFront, data.cameraUp);
-			MAT4 projection = glm::perspective(glm::radians(data.fieldOfView), data.aspectRatio, data.cameraNear, data.cameraFar);
-			projection[1][1] *= -1;
+			uniformBufferDataStore.addData(&model, sizeof(MAT4), 0);
 
-			return { model, view, projection };
+			MAT4 view = glm::lookAt(data.cameraPosition, data.cameraPosition + data.cameraFront, data.cameraUp);
+			uniformBufferDataStore.addData(&view, sizeof(MAT4), 1);
+			
+			MAT4 projection = glm::perspective(glm::radians(data.fieldOfView), data.aspectRatio, data.cameraNear, data.cameraFar);
+			uniformBufferDataStore.addData(&projection, sizeof(MAT4), 2);
+
+			return uniformBufferDataStore;
 		}
+
+	protected:
 	};
 }
 

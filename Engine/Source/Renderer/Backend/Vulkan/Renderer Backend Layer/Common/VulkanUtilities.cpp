@@ -1143,15 +1143,13 @@ namespace Dynamik {
 				MAT4 proj = glm::mat4(1.0f);
 			};
 
-			void VulkanUtilities::updateUniformBuffer(VkDevice device, ARRAY<MAT4> uniformData, VkDeviceMemory uniformBufferMemory, DMKUniformBufferObjectDescriptor descriptor)
+			void VulkanUtilities::updateUniformBuffer(VkDevice device, DMKUniformBufferData uniformData, VkDeviceMemory uniformBufferMemory)
 			{
 				DMK_BEGIN_PROFILE_TIMER();
 
-				UI32 _bufferSize = DMKUniformBufferObjectDescriptor::uniformByteSize(descriptor.attributes);
-
 				VPTR data = nullptr;
-				vkMapMemory(device, uniformBufferMemory, 0, _bufferSize, 0, &data);
-				memcpy(data, uniformData.data(), _bufferSize);
+				vkMapMemory(device, uniformBufferMemory, 0, uniformData.size(), 0, &data);
+				memcpy(data, uniformData.data(), uniformData.size());
 				vkUnmapMemory(device, uniformBufferMemory);
 			}
 

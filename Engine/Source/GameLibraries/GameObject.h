@@ -59,6 +59,9 @@ namespace Dynamik {
         DMKObjectType type = DMKObjectType::DMK_OBJECT_TYPE_STATIC;
 
         DMKGameObjectDescriptor descriptor;
+
+    protected:
+        DMKUniformBufferData uniformBufferDataStore;
     };
 }
 

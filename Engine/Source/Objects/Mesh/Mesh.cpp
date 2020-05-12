@@ -9,7 +9,7 @@ namespace Dynamik {
 
 	void Mesh::packData(std::vector<DMKVertexAttribute> attributes, VPTR ptr)
 	{
-		POINTER<F32> nextPtr = ptr;
+		POINTER<BYTE> nextPtr = ptr;
 
 		for (MeshPointStore _store : vertexDataStore)
 		{
@@ -42,7 +42,7 @@ namespace Dynamik {
 					break;
 				}
 
-				nextPtr += _getNextPointerAddress(attribute);
+				nextPtr += (UI32)attribute.dataType;
 			}
 		}
 	}

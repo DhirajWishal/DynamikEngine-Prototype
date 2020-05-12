@@ -3,7 +3,7 @@
 #define _DYNAMIK_RENDERER_VULKAN_GRAPHICS_RENDER_PASS_H
 
 #include <vulkan/vulkan.h>
-#include "Public/Array.h"
+#include <vector>
 
 namespace Dynamik {
 	namespace Renderer {
@@ -13,10 +13,10 @@ namespace Dynamik {
 				VkAccessFlags accessFlags = 0;
 				B1 overrideDependencies = false;
 
-				ARRAY<VkAttachmentDescription> attachments;
+				std::vector<VkAttachmentDescription> attachments;
 
-				ARRAY<VkSubpassDescription> subPasses;
-				ARRAY<VkSubpassDependency> additionalSubPassDependencies;
+				std::vector<VkSubpassDescription> subPasses;
+				std::vector<VkSubpassDependency> additionalSubPassDependencies;
 			};
 
 			class VulkanGraphicsRenderPass {

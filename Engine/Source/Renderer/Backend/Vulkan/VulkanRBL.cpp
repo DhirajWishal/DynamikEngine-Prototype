@@ -38,36 +38,36 @@ namespace Dynamik {
 			F32 integrity = 1.0f;
 		};
 
-		ARRAY<_debugVertex> _debugVertexBuffer()
+		std::vector<_debugVertex> _debugVertexBuffer()
 		{
-			ARRAY<_debugVertex> _container;
+			std::vector<_debugVertex> _container;
 			_debugVertex _vertex;
 
 			/* Triangle 1 */
 			_vertex.position = { 1.0f, 1.0f, 1.0f };
 			_vertex.tex = { 1.0f, 1.0f };
-			_container.pushBack(_vertex);
+			_container.push_back(_vertex);
 
 			_vertex.position = { -1.0f, -1.0f, 1.0f };
 			_vertex.tex = { 1.0f, 0.0f };
-			_container.pushBack(_vertex);
+			_container.push_back(_vertex);
 
 			_vertex.position = { -1.0f, 1.0f, 1.0f };
 			_vertex.tex = { 0.0f, 1.0f };
-			_container.pushBack(_vertex);
+			_container.push_back(_vertex);
 
 			/* Triangle 2 */
 			_vertex.position = { 1.0f, -1.0f, 1.0f };
 			_vertex.tex = { 0.0f, 0.0f };
-			_container.pushBack(_vertex);
+			_container.push_back(_vertex);
 
 			_vertex.position = { 1.0f, 1.0f, 1.0f };
 			_vertex.tex = { 1.0f, 1.0f };
-			_container.pushBack(_vertex);
+			_container.push_back(_vertex);
 
 			_vertex.position = { -1.0f, -1.0f, 1.0f };
 			_vertex.tex = { 1.0f, 0.0f };
-			_container.pushBack(_vertex);
+			_container.push_back(_vertex);
 
 			return _container;
 		}
@@ -190,7 +190,7 @@ namespace Dynamik {
 			_context.swapChain.initialize(_width, _height, _context.surfaceContainer);
 
 			/* ----------********** TEMPORAY **********---------- */
-			ARRAY<VkAttachmentDescription> attachments;
+			std::vector<VkAttachmentDescription> attachments;
 
 			// attachment descriptions
 			VkAttachmentDescription colorAttachment = {};
@@ -246,7 +246,7 @@ namespace Dynamik {
 			colorAttachmentResolveRef.layout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
 			subpass.pResolveAttachments = &colorAttachmentResolveRef;
 
-			ARRAY<VkSubpassDescription> subPasses;
+			std::vector<VkSubpassDescription> subPasses;
 			subPasses.push_back(subpass);
 
 			VulkanRenderPassInitInfo renderPassInitInfo;
@@ -289,31 +289,31 @@ namespace Dynamik {
 			switch (type)
 			{
 			case Dynamik::Renderer::DMKRenderContextType::DMK_RENDER_CONTEXT_TYPE_2D:
-				frameBufferInitInfo.attachments.pushBack(myColorBuffer.imageView);
+				frameBufferInitInfo.attachments.push_back(myColorBuffer.imageView);
 				break;
 
 			case Dynamik::Renderer::DMKRenderContextType::DMK_RENDER_CONTEXT_TYPE_3D:
-				frameBufferInitInfo.attachments.pushBack(myColorBuffer.imageView);
-				frameBufferInitInfo.attachments.pushBack(myDepthBuffer.imageView);
+				frameBufferInitInfo.attachments.push_back(myColorBuffer.imageView);
+				frameBufferInitInfo.attachments.push_back(myDepthBuffer.imageView);
 				break;
 
 			case Dynamik::Renderer::DMKRenderContextType::DMK_RENDER_CONTEXT_TYPE_DEFAULT:
-				frameBufferInitInfo.attachments.pushBack(myColorBuffer.imageView);
-				frameBufferInitInfo.attachments.pushBack(myDepthBuffer.imageView);
+				frameBufferInitInfo.attachments.push_back(myColorBuffer.imageView);
+				frameBufferInitInfo.attachments.push_back(myDepthBuffer.imageView);
 				break;
 
 			case Dynamik::Renderer::DMKRenderContextType::DMK_RENDER_CONTEXT_TYPE_DEFAULT_HDR:
-				frameBufferInitInfo.attachments.pushBack(myColorBuffer.imageView);
-				frameBufferInitInfo.attachments.pushBack(myDepthBuffer.imageView);
+				frameBufferInitInfo.attachments.push_back(myColorBuffer.imageView);
+				frameBufferInitInfo.attachments.push_back(myDepthBuffer.imageView);
 				break;
 
 			case Dynamik::Renderer::DMKRenderContextType::DMK_RENDER_CONTEXT_TYPE_DEFAULT_MONO:
-				frameBufferInitInfo.attachments.pushBack(myDepthBuffer.imageView);
+				frameBufferInitInfo.attachments.push_back(myDepthBuffer.imageView);
 				break;
 
 			case Dynamik::Renderer::DMKRenderContextType::DMK_RENDER_CONTEXT_TYPE_DEBUG:
-				frameBufferInitInfo.attachments.pushBack(myColorBuffer.imageView);
-				frameBufferInitInfo.attachments.pushBack(myDepthBuffer.imageView);
+				frameBufferInitInfo.attachments.push_back(myColorBuffer.imageView);
+				frameBufferInitInfo.attachments.push_back(myDepthBuffer.imageView);
 				break;
 
 			default:
@@ -326,7 +326,7 @@ namespace Dynamik {
 			frameBufferInitInfo.renderPass = _context.renderPass.renderPass;
 			_context.frameBuffer.initialize(myGraphicsCore.logicalDevice, frameBufferInitInfo);
 
-			myRenderContexts.pushBack(_context);
+			myRenderContexts.push_back(_context);
 			_sortRenderContexts();
 		}
 
@@ -414,7 +414,7 @@ namespace Dynamik {
 			}
 		}
 
-		void VulkanRBL::addObjects(ARRAY<POINTER<InternalFormat>> formats)
+		void VulkanRBL::addObjects(std::vector<POINTER<InternalFormat>> formats)
 		{
 			for (auto format : formats)
 				if (format.isValid())
@@ -448,13 +448,15 @@ namespace Dynamik {
 				}
 			}
 
-			if (myRenderContexts.isValidIndex((UI32)context))
+			if ((UI32)context < myRenderContexts.size())
 			{
 				if (myRenderContexts[(UI32)context].type != context)
 				{
 					//createNewContext(context, myWindowHandle);
 					DMK_CORE_FATAL("Specified context type is not yet initialized. Make sure to create the required contexts prior to loading objects.");
 				}
+				else
+					_context = myRenderContexts[(UI32)context];
 			}
 			else
 			{
@@ -469,30 +471,30 @@ namespace Dynamik {
 			for (auto mesh : format->meshDatas)
 			{
 				/* initialize vertex buffers */
-				_renderData.vertexBufferContainer.pushBack(createVertexBuffer(mesh, format->descriptor.vertexBufferObjectDescription.attributes));
+				_renderData.vertexBufferContainer.push_back(createVertexBuffer(mesh, format->descriptor.vertexBufferObjectDescription.attributes));
 
 				/* initialize index buffers */
-				_renderData.indexBufferContainer.pushBack(createIndexBuffer(mesh, format->descriptor.indexBufferType));
+				_renderData.indexBufferContainer.push_back(createIndexBuffer(mesh, format->descriptor.indexBufferType));
 
 				/* initialize textures */
 				if (!isTextureAvailable)
 					for (UI32 i = 0; i < mesh.textureDatas.size(); i++)
-						_renderData.textures.pushBack(createTextureImage(mesh.textureDatas[i]));
+						_renderData.textures.push_back(createTextureImage(mesh.textureDatas[i]));
 			}
 
 			/* Initialize uniform buffers */
 			for (auto _uniformBufferDescription : format->descriptor.uniformBufferObjectDescriptions)
 				if (_uniformBufferDescription.type == DMKUniformType::DMK_UNIFORM_TYPE_BUFFER_OBJECT)
-					_renderData.uniformBufferContainers.pushBack(createUniformBuffers(_uniformBufferDescription, _context.swapChain.swapChainImages.size()));
+					_renderData.uniformBufferContainers.push_back(createUniformBuffers(_uniformBufferDescription, _context.swapChain.swapChainImages.size()));
 
 			/* Initialize Descriptors */
 			_renderData.descriptors = createDescriptors(format->descriptor.uniformBufferObjectDescriptions, _renderData.uniformBufferContainers, _renderData.textures);
 
 			/* Initialize pipeline */
-			_renderData.pipelineContainers.pushBack(createPipeline({ _renderData.descriptors }, format->descriptor.uniformBufferObjectDescriptions, format->descriptor.vertexBufferObjectDescription.attributes, format->shaderPaths, format->type, _context));
+			_renderData.pipelineContainers.push_back(createPipeline({ _renderData.descriptors }, format->descriptor.uniformBufferObjectDescriptions, format->descriptor.vertexBufferObjectDescription.attributes, format->shaderPaths, format->type, _context));
 
 			/* Add data to the container and return its address */
-			myRenderContexts[(UI32)context].renderDatas.pushBack(_renderData);
+			myRenderContexts[(UI32)context].renderDatas.push_back(_renderData);
 			auto _address = &myRenderContexts[(UI32)context].renderDatas[myRenderContexts[(UI32)context].renderDatas.size() - 1];
 
 			if (format->type == DMKObjectType::DMK_OBJECT_TYPE_SKYBOX)
@@ -620,7 +622,7 @@ namespace Dynamik {
 		{
 			DMK_BEGIN_PROFILE_TIMER();
 
-			ARRAY<VkAttachmentDescription> attachments;
+			std::vector<VkAttachmentDescription> attachments;
 
 			// attachment descriptions
 			VkAttachmentDescription colorAttachment = {};
@@ -676,7 +678,7 @@ namespace Dynamik {
 			colorAttachmentResolveRef.layout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
 			subpass.pResolveAttachments = &colorAttachmentResolveRef;
 
-			ARRAY<VkSubpassDescription> subPasses;
+			std::vector<VkSubpassDescription> subPasses;
 			subPasses.push_back(subpass);
 
 			VulkanRenderPassInitInfo renderPassInitInfo;
@@ -697,7 +699,7 @@ namespace Dynamik {
 			return _info;
 		}
 
-		VulkanBufferContainer VulkanRBL::createVertexBuffer(Mesh mesh, ARRAY<DMKVertexAttribute> attributes)
+		VulkanBufferContainer VulkanRBL::createVertexBuffer(Mesh mesh, std::vector<DMKVertexAttribute> attributes)
 		{
 			VulkanBufferContainer _container;
 			_container.dataCount = mesh.vertexDataStore.size();
@@ -811,7 +813,7 @@ namespace Dynamik {
 				bufferCount);
 		}
 
-		VulkanGraphicsDescriptor VulkanRBL::createDescriptors(ARRAY<DMKUniformBufferObjectDescriptor> descriptors, ARRAY<VulkanUnformBufferContainer> uniformBufferContainers, ARRAY<VulkanTextureContainer> textureContainers)
+		VulkanGraphicsDescriptor VulkanRBL::createDescriptors(std::vector<DMKUniformBufferObjectDescriptor> descriptors, std::vector<VulkanUnformBufferContainer> uniformBufferContainers, std::vector<VulkanTextureContainer> textureContainers)
 		{
 			VulkanGraphicsDescriptor _descriptor;
 
@@ -826,12 +828,11 @@ namespace Dynamik {
 			_descriptor.initializePool(myGraphicsCore.logicalDevice, initInfo);
 
 			/* Initialize descriptor sets */
-			ARRAY<VkWriteDescriptorSet> _writes;
+			std::vector<VkDescriptorBufferInfo> bufferInfos;
+			std::vector<VkWriteDescriptorSet> _writes;
 
 			for (UI32 binding = 0; binding < descriptors.size(); binding++)
 			{
-				ARRAY<VkDescriptorBufferInfo> bufferInfos;
-
 				switch (descriptors[binding].type)
 				{
 					/* Initialize Uniform buffer descriptor */
@@ -844,7 +845,7 @@ namespace Dynamik {
 							bufferInfo.buffer = uniformBufferContainers[itr].buffers[i];
 							bufferInfo.offset = 0;
 							bufferInfo.range = DMKUniformBufferObjectDescriptor::uniformByteSize(descriptors[binding].attributes);
-							bufferInfos.pushBack(bufferInfo);
+							bufferInfos.push_back(bufferInfo);
 						}
 					}
 
@@ -896,9 +897,9 @@ namespace Dynamik {
 		}
 
 		VulkanGraphicsPipeline VulkanRBL::createPipeline(
-			ARRAY<VulkanGraphicsDescriptor> descriptors,
-			ARRAY<DMKUniformBufferObjectDescriptor> uniformBufferDescriptors,
-			ARRAY<DMKVertexAttribute> attributes,
+			std::vector<VulkanGraphicsDescriptor> descriptors,
+			std::vector<DMKUniformBufferObjectDescriptor> uniformBufferDescriptors,
+			std::vector<DMKVertexAttribute> attributes,
 			ShaderPaths paths,
 			DMKObjectType objectType,
 			VulkanRenderContext context)
@@ -908,7 +909,7 @@ namespace Dynamik {
 			/* Initialize pipeline layout */
 			VulkanGraphicsPipelineLayoutInitInfo layoutInitInfo;
 			for (auto _descriptor : descriptors)
-				layoutInitInfo.layouts.pushBack(_descriptor.layout);
+				layoutInitInfo.layouts.push_back(_descriptor.layout);
 
 			UI32 _oldRangeSize = 0;
 			for (auto _description : uniformBufferDescriptors)
@@ -920,7 +921,7 @@ namespace Dynamik {
 				_range.stageFlags = VulkanUtilities::getShaderStage(_description.location);
 				_range.size = DMKUniformBufferObjectDescriptor::uniformByteSize(_description.attributes);
 				_range.offset = _oldRangeSize;
-				layoutInitInfo.pushConstantRanges.pushBack(_range);
+				layoutInitInfo.pushConstantRanges.push_back(_range);
 
 				_oldRangeSize += _range.size;
 			}

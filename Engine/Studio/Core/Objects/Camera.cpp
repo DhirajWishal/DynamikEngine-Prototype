@@ -11,7 +11,7 @@ Camera::~Camera()
 {
 }
 
-DMKCameraData Camera::update(ARRAY<POINTER<DMKEventComponent>> eventComponents)
+DMKCameraData Camera::update(std::vector<POINTER<DMKEventComponent>> eventComponents)
 {
 	const F32 movementBias = 0.05f;
 

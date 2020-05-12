@@ -12,14 +12,14 @@
 
 namespace Dynamik {
 	namespace utils {
-		ARRAY<char> readFile(const std::string& filePath) {
+		std::vector<char> readFile(const std::string& filePath) {
 			std::ifstream file(filePath, std::ios::ate | std::ios::binary);
 
 			if (!file.is_open())
 				throw std::runtime_error("Failed to Open file!");
 
 			size_t fileSize = (size_t)file.tellg();
-			ARRAY<char> buffer(fileSize);
+			std::vector<char> buffer(fileSize);
 			file.seekg(0);
 			file.read(buffer.data(), fileSize);
 

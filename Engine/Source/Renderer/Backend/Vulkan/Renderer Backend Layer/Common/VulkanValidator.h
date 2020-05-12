@@ -13,7 +13,7 @@ namespace Dynamik {
 				VulkanValidator() {}
 				~VulkanValidator() {}
 
-				static ARRAY<const char*> validationLayer;
+				static std::vector<const char*> validationLayer;
 
 #if defined(DMK_DEBUG)
 				static const B1 enableValidationLayers = true;

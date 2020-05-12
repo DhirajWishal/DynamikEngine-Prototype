@@ -15,7 +15,7 @@ namespace Dynamik {
 		virtual ~Texture() {}
 
 		virtual void loadTexture(std::string path, DMKTextureType type, DMKTextureInputType inputType);
-		virtual void loadCubemap(ARRAY<std::string> paths, DMKTextureInputType inputType);
+		virtual void loadCubemap(std::vector<std::string> paths, DMKTextureInputType inputType);
 		virtual void unloadTexture();
 		virtual UI32 size();
 

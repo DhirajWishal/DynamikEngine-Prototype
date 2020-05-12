@@ -24,7 +24,7 @@ namespace Dynamik {
 			auto it = std::find(layers.begin(), layers.end(), layer);
 
 			if (it != layers.end()) {
-				layers.remove(it);
+				layers.erase(it);
 				layerInsert--;
 			}
 		}
@@ -33,7 +33,7 @@ namespace Dynamik {
 			auto it = std::find(layers.begin(), layers.end(), overlay);
 
 			if (it != layers.end())
-				layers.remove(it);
+				layers.erase(it);
 		}
 	}
 }

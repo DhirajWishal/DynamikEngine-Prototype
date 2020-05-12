@@ -44,7 +44,7 @@ namespace Dynamik {
 				inputAssembly.primitiveRestartEnable = info.inputAssemblyPrimitiveRestartEnable;
 
 				// initialize the viewport(s)
-				ARRAY<VkViewport> viewports;
+				std::vector<VkViewport> viewports;
 				for (I32 i = 0; i < info.viweportCount; i++) {
 					VkViewport viewport = {};
 					viewport.x = 0.0f;
@@ -58,7 +58,7 @@ namespace Dynamik {
 				}
 
 				// initialize the scissor(s)
-				ARRAY<VkRect2D> scissors;
+				std::vector<VkRect2D> scissors;
 				for (I32 i = 0; i < info.scissorCount; i++) {
 					VkRect2D scissor = {};
 					scissor.offset = info.offsets[0];
@@ -101,7 +101,7 @@ namespace Dynamik {
 				depthStencil.depthBoundsTestEnable = info.depthStencilBoundsTestEnable;
 				depthStencil.stencilTestEnable = info.depthStencilTestEnable;
 
-				ARRAY<VkPipelineColorBlendAttachmentState> colorBlendAttachments;
+				std::vector<VkPipelineColorBlendAttachmentState> colorBlendAttachments;
 
 				// initialize the color blender(s)
 				for (I32 i = 0; i < info.colorBlendingColorBlendCount; i++) {
@@ -113,7 +113,7 @@ namespace Dynamik {
 				}
 
 				for (VkPipelineColorBlendAttachmentState _state : info.additionalColorBlendStates)
-					colorBlendAttachments.pushBack(_state);
+					colorBlendAttachments.push_back(_state);
 
 				// initialize the color blender state
 				VkPipelineColorBlendStateCreateInfo colorBlending = {};
@@ -130,7 +130,7 @@ namespace Dynamik {
 				// initialize dynamic state
 				VkPipelineDynamicStateCreateInfo dynamicStateInfo = {};
 				if (info.dynamicStateEnable) {
-					ARRAY<VkDynamicState> dynamicState = {
+					std::vector<VkDynamicState> dynamicState = {
 						VK_DYNAMIC_STATE_VIEWPORT,
 						VK_DYNAMIC_STATE_SCISSOR
 					};
@@ -141,9 +141,9 @@ namespace Dynamik {
 					dynamicStateInfo.flags = info.dynamicStateFlags;
 				}
 
-				ARRAY<VkPipelineShaderStageCreateInfo> shaderStages;
+				std::vector<VkPipelineShaderStageCreateInfo> shaderStages;
 				for (VulkanGraphicsShader shader : info.shaders)
-					shaderStages.pushBack(shader.stageCreateInfo);
+					shaderStages.push_back(shader.stageCreateInfo);
 
 				// initialize the pipeline
 				VkGraphicsPipelineCreateInfo pipelineInfo = {};

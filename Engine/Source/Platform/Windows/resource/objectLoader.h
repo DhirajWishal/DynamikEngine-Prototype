@@ -7,41 +7,41 @@
 #include <fstream>
 #include <vector>
 
-#include "Public/Array.h"
+#include <vector>
 #include "Objects/InternalFormat/InternalFormat.h"
 
 namespace Dynamik {
 	namespace resources {
 		//struct ObjectData {
 		//	tinyobj::attrib_t attributes;
-		//	ARRAY<tinyobj::shape_t> shapes;
-		//	ARRAY<tinyobj::material_t> materials;
+		//	std::vector<tinyobj::shape_t> shapes;
+		//	std::vector<tinyobj::material_t> materials;
 		//	std::string warnings, errors;
 		//
 		//	bool loadObject(std::string path);
 		//};
 
 		template<typename Alloc>
-		void loadObject(std::string& path, ARRAY<Alloc>* vertices, ARRAY<UI32>* indices);
+		void loadObject(std::string& path, std::vector<Alloc>* vertices, std::vector<UI32>* indices);
 	}
 	namespace utils {
 		// Object data container
 		struct  DMKObjectDataContainer {
-			ARRAY<ARRAY<float>> myVertices = {};
-			ARRAY<ARRAY<float>> myTextureCoordinates = {};
-			ARRAY<ARRAY<float>> myNormals = {};
-			ARRAY<ARRAY<float>> myParameterSpaces = {};
-			ARRAY<ARRAY<UI32>> myLineElements = {};
-			ARRAY<std::string> myMTLFile = {};
+			std::vector<std::vector<float>> myVertices = {};
+			std::vector<std::vector<float>> myTextureCoordinates = {};
+			std::vector<std::vector<float>> myNormals = {};
+			std::vector<std::vector<float>> myParameterSpaces = {};
+			std::vector<std::vector<UI32>> myLineElements = {};
+			std::vector<std::string> myMTLFile = {};
 
-			ARRAY<UI32> myVertexIndex = {};
-			ARRAY<UI32> myTextureCoordinateIndex = {};
-			ARRAY<UI32> myNormalIndex = {};
+			std::vector<UI32> myVertexIndex = {};
+			std::vector<UI32> myTextureCoordinateIndex = {};
+			std::vector<UI32> myNormalIndex = {};
 			UI32 myIndexCount = 0;
 		};
 
 		// obj file loader
-		//ARRAY<DMKObjectDataContainer> loadObjFileData(std::string_view path);
+		//std::vector<DMKObjectDataContainer> loadObjFileData(std::string_view path);
 		void loadObjFileData(POINTER<InternalFormat> myInternalFormat);
 	}
 }

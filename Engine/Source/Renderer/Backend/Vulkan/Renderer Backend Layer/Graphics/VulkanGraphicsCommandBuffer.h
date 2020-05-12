@@ -10,11 +10,11 @@ namespace Dynamik {
 	namespace Renderer {
 		namespace Backend {
 			struct VulkanGraphicsCommandBufferInitInfo {
-				ARRAY<VulkanRenderData> objects;
+				std::vector<VulkanRenderData> objects;
 				VulkanGraphicsSwapChain swapChain;
 				VulkanGraphicsRenderPass renderPass;
 				VulkanGraphicsFrameBuffer frameBuffer;
-				ARRAY<F32> clearValues = {
+				std::vector<F32> clearValues = {
 					(2.0f / 256.0f),
 					(8.0f / 256.0f),
 					(32.0f / 256.0f),
@@ -39,7 +39,7 @@ namespace Dynamik {
 				void terminateCommandBuffers();
 
 				VkCommandPool pool = VK_NULL_HANDLE;
-				ARRAY<VkCommandBuffer> buffers;
+				std::vector<VkCommandBuffer> buffers;
 
 			protected:
 				VkDevice logicalDevice = VK_NULL_HANDLE;

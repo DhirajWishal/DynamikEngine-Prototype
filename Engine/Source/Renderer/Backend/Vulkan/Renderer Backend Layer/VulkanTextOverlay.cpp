@@ -59,10 +59,10 @@ namespace Dynamik {
 					VK_SAMPLE_COUNT_1_BIT);
 
 				VulkanGraphicsFrameBufferInitInfo frameBufferInitInfo;
-				frameBufferInitInfo.attachments.pushBack(colorBuffer.imageView);
+				frameBufferInitInfo.attachments.push_back(colorBuffer.imageView);
 				for (VkImageView _view : mySwapChainObject.swapChainImageViews)
-					frameBufferInitInfo.attachments.pushBack(_view);
-				frameBufferInitInfo.attachments.pushBack(depthBuffer.imageView);
+					frameBufferInitInfo.attachments.push_back(_view);
+				frameBufferInitInfo.attachments.push_back(depthBuffer.imageView);
 				myFrameBuffer.initialize(myCoreObject.logicalDevice, frameBufferInitInfo);
 
 				_initializeDescriptorSetLayout();
@@ -264,7 +264,7 @@ namespace Dynamik {
 				subpassDependencies[1].dstAccessMask = VK_ACCESS_MEMORY_READ_BIT;
 				subpassDependencies[1].dependencyFlags = VK_DEPENDENCY_BY_REGION_BIT;
 
-				ARRAY<VkSubpassDescription> subPasses;
+				std::vector<VkSubpassDescription> subPasses;
 				subPasses.push_back(subpass);
 
 				VulkanRenderPassInitInfo renderPassInitInfo;
@@ -450,7 +450,7 @@ namespace Dynamik {
 
 				vkUpdateDescriptorSets(myCoreObject.logicalDevice, 1, &_writes, 0, nullptr);
 
-				myRenderData.descriptors.descriptorSets.pushBack(_descriptorSet);
+				myRenderData.descriptors.descriptorSets.push_back(_descriptorSet);
 			}
 
 			void VulkanTextOverlay::_initializePipelineCache()
@@ -473,7 +473,7 @@ namespace Dynamik {
 				blendAttachmentState.dstAlphaBlendFactor = VK_BLEND_FACTOR_ZERO;
 				blendAttachmentState.alphaBlendOp = VK_BLEND_OP_ADD;
 
-				ARRAY<VulkanGraphicsShader> _shaders;
+				std::vector<VulkanGraphicsShader> _shaders;
 
 				if (vertexShaderPath.size() && vertexShaderPath != "NONE")
 				{
@@ -483,7 +483,7 @@ namespace Dynamik {
 
 					VulkanGraphicsShader _shader;
 					_shader.initialize(myCoreObject.logicalDevice, _initInfo);
-					_shaders.pushBack(_shader);
+					_shaders.push_back(_shader);
 				}
 				if (tessellationShaderPath.size() && tessellationShaderPath != "NONE")
 				{
@@ -493,7 +493,7 @@ namespace Dynamik {
 
 					VulkanGraphicsShader _shader;
 					_shader.initialize(myCoreObject.logicalDevice, _initInfo);
-					_shaders.pushBack(_shader);
+					_shaders.push_back(_shader);
 				}
 				if (geometryShaderPath.size() && geometryShaderPath != "NONE")
 				{
@@ -503,7 +503,7 @@ namespace Dynamik {
 
 					VulkanGraphicsShader _shader;
 					_shader.initialize(myCoreObject.logicalDevice, _initInfo);
-					_shaders.pushBack(_shader);
+					_shaders.push_back(_shader);
 				}
 				if (fragmentShaderPath.size() && fragmentShaderPath != "NONE")
 				{
@@ -513,7 +513,7 @@ namespace Dynamik {
 
 					VulkanGraphicsShader _shader;
 					_shader.initialize(myCoreObject.logicalDevice, _initInfo);
-					_shaders.pushBack(_shader);
+					_shaders.push_back(_shader);
 				}
 
 				//VulkanGraphicsRenderableObject _object;

@@ -8,10 +8,10 @@
 namespace Dynamik {
 	class Level {
 	public:
-		Level(ARRAY<Scene*>& scenes) : myScenes(scenes) {}
+		Level(std::vector<Scene*>& scenes) : myScenes(scenes) {}
 		virtual ~Level() {}
 
-		ARRAY<Scene*> myScenes = {};
+		std::vector<Scene*> myScenes = {};
 		std::string name = "";
 		std::string ID = "";
 

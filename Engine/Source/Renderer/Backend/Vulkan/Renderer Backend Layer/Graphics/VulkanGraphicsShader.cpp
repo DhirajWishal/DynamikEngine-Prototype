@@ -33,7 +33,7 @@ namespace Dynamik {
 				vkDestroyShaderModule(logicalDevice, shaderModule, nullptr);
 			}
 
-			VkShaderModule VulkanGraphicsShader::createShaderModule(VkDevice logicalDevice, ARRAY<CHR> code)
+			VkShaderModule VulkanGraphicsShader::createShaderModule(VkDevice logicalDevice, std::vector<CHR> code)
 			{
 				VkShaderModuleCreateInfo createInfo = {};
 				createInfo.sType = VK_STRUCTURE_TYPE_SHADER_MODULE_CREATE_INFO;
@@ -47,7 +47,7 @@ namespace Dynamik {
 				return shaderModule;
 			}
 
-			ARRAY<CHR> VulkanGraphicsShader::getCode(std::string path)
+			std::vector<CHR> VulkanGraphicsShader::getCode(std::string path)
 			{
 				std::ifstream file(path, std::ios::ate | std::ios::binary);
 
@@ -55,7 +55,7 @@ namespace Dynamik {
 					throw std::runtime_error("Failed to Open file!");
 
 				size_t fileSize = (size_t)file.tellg();
-				ARRAY<char> buffer(fileSize);
+				std::vector<char> buffer(fileSize);
 				file.seekg(0);
 				file.read(buffer.data(), fileSize);
 

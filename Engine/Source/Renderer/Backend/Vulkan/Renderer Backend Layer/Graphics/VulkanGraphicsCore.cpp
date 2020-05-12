@@ -15,7 +15,7 @@ namespace Dynamik {
 		namespace Backend {
 			/* HELPER FUNCTIONS */
 			/* DEVICE */
-			const ARRAY<CCPTR> deviceExtensions = {
+			const std::vector<CCPTR> deviceExtensions = {
 				VK_KHR_SWAPCHAIN_EXTENSION_NAME
 			};
 
@@ -23,7 +23,7 @@ namespace Dynamik {
 				UI32 extensionCount = 0;
 				vkEnumerateDeviceExtensionProperties(device, nullptr, &extensionCount, nullptr);
 
-				ARRAY<VkExtensionProperties> availableExtensions(extensionCount);
+				std::vector<VkExtensionProperties> availableExtensions(extensionCount);
 				vkEnumerateDeviceExtensionProperties(device, nullptr, &extensionCount, availableExtensions.data());
 
 				std::set<std::string> requiredExtensions(deviceExtensions.begin(), deviceExtensions.end());
@@ -42,7 +42,7 @@ namespace Dynamik {
 				B1 swapChainAdequate = false;
 				if (extensionsSupported) {
 					VulkanGraphicsSwapChainSupportDetails swapChainSupport = VulkanGraphicsSwapChain::querySwapChainSupport(&physicalDevice, &surface);
-					swapChainAdequate = (swapChainSupport.formats.empty()) && (swapChainSupport.presentModes.empty());
+					swapChainAdequate = (!swapChainSupport.formats.empty()) && (!swapChainSupport.presentModes.empty());
 				}
 
 				VkPhysicalDeviceFeatures supportedFeatures;
@@ -224,7 +224,7 @@ namespace Dynamik {
 					imageAvailables[frame], VK_NULL_HANDLE, index);
 			}
 
-			VkResult VulkanGraphicsCore::submitQueues(ARRAY<VkSwapchainKHR> swapChains, UI32 index, UI32 frame, ARRAY<VkCommandBuffer> buffers)
+			VkResult VulkanGraphicsCore::submitQueues(std::vector<VkSwapchainKHR> swapChains, UI32 index, UI32 frame, std::vector<VkCommandBuffer> buffers)
 			{
 				if (!buffers.size())
 					DMK_CORE_FATAL("No command buffers were submitted!");
@@ -302,7 +302,7 @@ namespace Dynamik {
 				if (deviceCount == 0)
 					DMK_CORE_FATAL("Failed to find GPUs with Vulkan support!");
 
-				ARRAY<VkPhysicalDevice> devices(deviceCount);
+				std::vector<VkPhysicalDevice> devices(deviceCount);
 				vkEnumeratePhysicalDevices(instance, &deviceCount, devices.data());
 
 				//std::multimap<I32, VkPhysicalDevice> candidates;
@@ -364,7 +364,7 @@ namespace Dynamik {
 			{
 				VulkanQueue indices = findQueueFamilies(physicalDevice, baseSurface);
 
-				ARRAY<VkDeviceQueueCreateInfo> queueCreateInfos;
+				std::vector<VkDeviceQueueCreateInfo> queueCreateInfos;
 				std::set<UI32> uniqueQueueFamilies = {
 					indices.graphicsFamily.value(),
 					indices.presentFamily.value()
@@ -414,7 +414,7 @@ namespace Dynamik {
 				UI32 queueFamilyCount = 0;
 				vkGetPhysicalDeviceQueueFamilyProperties(physicalDevice, &queueFamilyCount, nullptr);
 
-				ARRAY<VkQueueFamilyProperties> queueFamilies(queueFamilyCount);
+				std::vector<VkQueueFamilyProperties> queueFamilies(queueFamilyCount);
 				vkGetPhysicalDeviceQueueFamilyProperties(physicalDevice, &queueFamilyCount, queueFamilies.data());
 
 				I32 i = 0;

@@ -88,7 +88,7 @@ namespace Dynamik {
 			myRendererBackend.setWindowExtent(width, height);
 		}
 
-		void DMKRenderer::setRenderableObjects(ARRAY<POINTER<InternalFormat>> formats, UI32 contextID)
+		void DMKRenderer::setRenderableObjects(std::vector<POINTER<InternalFormat>> formats, UI32 contextID)
 		{
 			DMK_BEGIN_PROFILE_TIMER();
 
@@ -96,13 +96,13 @@ namespace Dynamik {
 			{
 				if (format->descriptor.assetDescription.physicallyBased)
 				{
-					format->descriptor.renderSpecification.renderAttachments.pushBack(DMKRenderAttachment::DMK_RENDER_ATTACHMENT_SKYBOX);
-					format->descriptor.renderSpecification.renderAttachments.pushBack(DMKRenderAttachment::DMK_RENDER_ATTACHMENT_BRDF_TABLE);
-					format->descriptor.renderSpecification.renderAttachments.pushBack(DMKRenderAttachment::DMK_RENDER_ATTACHMENT_IRRADIANCE_CUBE);
-					format->descriptor.renderSpecification.renderAttachments.pushBack(DMKRenderAttachment::DMK_RENDER_ATTACHMENT_PREFILTERED_CUBE);
+					format->descriptor.renderSpecification.renderAttachments.push_back(DMKRenderAttachment::DMK_RENDER_ATTACHMENT_SKYBOX);
+					format->descriptor.renderSpecification.renderAttachments.push_back(DMKRenderAttachment::DMK_RENDER_ATTACHMENT_BRDF_TABLE);
+					format->descriptor.renderSpecification.renderAttachments.push_back(DMKRenderAttachment::DMK_RENDER_ATTACHMENT_IRRADIANCE_CUBE);
+					format->descriptor.renderSpecification.renderAttachments.push_back(DMKRenderAttachment::DMK_RENDER_ATTACHMENT_PREFILTERED_CUBE);
 				}
 
-				instance.submitPendingAssets.pushBack(format);
+				instance.submitPendingAssets.push_back(format);
 			}
 		}
 
@@ -118,7 +118,7 @@ namespace Dynamik {
 
 		void DMKRenderer::addToRenderQueue(POINTER<InternalFormat> container, UI32 contextID)
 		{
-			instance.submitPendingAssets.pushBack(container);
+			instance.submitPendingAssets.push_back(container);
 		}
 
 		void DMKRenderer::drawFrame(DMKRendererDrawFrameInfo info)

@@ -3,7 +3,7 @@
 #define _DYNAMIK_SYSTEM_CONSOLE_H
 
 #include "Public/FastString.h"
-#include "Public/Array.h"
+#include <vector>
 #include "Public/Dynamic.h"
 
 #define TO_CONSOLE(x,...) printf(x, ##__VA_ARGS__)
@@ -18,7 +18,7 @@ namespace Dynamik {
 		static void println(FSTR msg);
 
 		template<class TYPE>
-		static void print(ARRAY<TYPE> arr, CHR end = '\n')
+		static void print(std::vector<TYPE> arr, CHR end = '\n')
 		{
 			for (TYPE element : arr)
 				std::cout << element << end;
@@ -48,7 +48,7 @@ namespace Dynamik {
 		template<class... ARGS>
 		static void print(FSTR format, ARGS... arguments)
 		{
-			//ARRAY<DYNAMIC> _myDataStore;
+			//std::vector<DYNAMIC> _myDataStore;
 			B1 isInFormat = false;
 			std::string _myFinalString;
 			for (UI32 _itr = 0; _itr < format.size(); _itr++)

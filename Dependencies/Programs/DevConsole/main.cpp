@@ -5,7 +5,7 @@
 
 int main(int argc, char* argv[]) {
 	std::string input;
-	ARRAY<std::string> inputs;
+	std::vector<std::string> inputs;
 	std::stringstream ss;
 
 	for (int i = 0; i < argc; i++)

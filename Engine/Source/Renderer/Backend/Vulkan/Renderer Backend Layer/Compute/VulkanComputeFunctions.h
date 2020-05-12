@@ -20,7 +20,7 @@ namespace Dynamik {
 				static void transitionImageLayout(VkDevice logicalDevice, VkCommandPool commandPool, VkQueue computeQueue, VulkanTransitionImageLayoutInfo info);
 				static VkImageView createImageView(VkDevice device, VulkanCreateImageViewInfo info);
 				static void copyBufferToImage(VkDevice logicalDevice, VkCommandPool commandPool, VkQueue computeQueue, VulkanCopyBufferToImageInfo info);
-				static void copyBufferToImageOverride(VkDevice logicalDevice, VkCommandPool commandPool, VkQueue computeQueue, VulkanCopyBufferToImageInfo info, ARRAY<VkBufferImageCopy> copyRegions);
+				static void copyBufferToImageOverride(VkDevice logicalDevice, VkCommandPool commandPool, VkQueue computeQueue, VulkanCopyBufferToImageInfo info, std::vector<VkBufferImageCopy> copyRegions);
 				static VkSampler createImageSampler(VkDevice logicalDevice, VulkanTextureSamplerInitInfo info);
 			};
 		}

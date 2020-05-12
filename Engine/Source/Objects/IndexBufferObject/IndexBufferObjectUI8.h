@@ -3,7 +3,7 @@
 #define _DYNAMIK_INDEX_BUFFER_OBJECT_UI8_H
 
 #include "IndexBufferObject.h"
-#include "Public/Array.h"
+#include <vector>
 
 namespace Dynamik {
 	class IndexBufferObjectUI8 : public IndexBufferObject {
@@ -11,7 +11,7 @@ namespace Dynamik {
 		IndexBufferObjectUI8() {}
 		~IndexBufferObjectUI8() {}
 
-		ARRAY<UI8> object;
+		std::vector<UI8> object;
 	};
 }
 

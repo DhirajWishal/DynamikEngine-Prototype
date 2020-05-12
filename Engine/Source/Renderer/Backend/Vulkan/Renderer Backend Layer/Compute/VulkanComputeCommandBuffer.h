@@ -9,7 +9,7 @@ namespace Dynamik {
 	namespace Renderer {
 		namespace Backend {
 			struct VulkanComputeCommandBufferInitInfo {
-				ARRAY<VulkanComputeData> computeDatas;
+				std::vector<VulkanComputeData> computeDatas;
 			};
 
 			class VulkanComputeCommandBuffer {
@@ -22,7 +22,7 @@ namespace Dynamik {
 
 				UI32 computeFamilyIndex = 0;
 				VkCommandPool pool = VK_NULL_HANDLE;
-				ARRAY<VkCommandBuffer> buffers;
+				std::vector<VkCommandBuffer> buffers;
 			};
 		}
 	}

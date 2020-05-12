@@ -11,7 +11,7 @@ namespace Dynamik {
 		IndexBufferObjectUI16() {}
 		~IndexBufferObjectUI16() {}
 
-		ARRAY<UI16> object;
+		std::vector<UI16> object;
 	};
 }
 

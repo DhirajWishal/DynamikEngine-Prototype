@@ -132,7 +132,7 @@ public:
     Camera();
     ~Camera();
 
-    DMKCameraData update(ARRAY<POINTER<DMKEventComponent>> eventComponents) override;
+    DMKCameraData update(std::vector<POINTER<DMKEventComponent>> eventComponents) override;
 
 private:
     void calculateVectors();

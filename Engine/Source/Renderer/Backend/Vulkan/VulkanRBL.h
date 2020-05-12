@@ -40,7 +40,7 @@ namespace Dynamik {
 
 		struct VulkanRenderResourceContainer {
 			VulkanGraphicsCommandBuffer commandBuffer;
-			ARRAY<VulkanRenderData> renderData;
+			std::vector<VulkanRenderData> renderData;
 			VulkanResourceState state = VulkanResourceState::ADGR_VULKAN_RESOURCE_STATE_HOST_VISIBLE;
 		};
 
@@ -54,7 +54,7 @@ namespace Dynamik {
 			VulkanGraphicsFrameBuffer frameBuffer;
 
 			VulkanGraphicsCommandBuffer inFlightCommandBuffer;
-			ARRAY<VulkanRenderData> renderDatas;
+			std::vector<VulkanRenderData> renderDatas;
 			VulkanResourceState state = VulkanResourceState::ADGR_VULKAN_RESOURCE_STATE_HOST_VISIBLE;
 		};
 
@@ -87,7 +87,7 @@ namespace Dynamik {
 			void createNewContext(DMKRenderContextType type, POINTER<GLFWwindow> windowHandle);
 
 			void addObject(POINTER<InternalFormat> format);
-			void addObjects(ARRAY<POINTER<InternalFormat>> formats);
+			void addObjects(std::vector<POINTER<InternalFormat>> formats);
 
 			/* Returns the memory location of the objects data */
 			VPTR initializeObject(POINTER<InternalFormat> format, DMKRenderContextType context = DMKRenderContextType::DMK_RENDER_CONTEXT_TYPE_DEFAULT);
@@ -105,12 +105,12 @@ namespace Dynamik {
 			inline VulkanGraphicsRenderableObjectInitInfo _getBasicInitInfo();	/* Return the basic init info */
 
 			/* Per object functions */
-			inline VulkanBufferContainer createVertexBuffer(Mesh mesh, ARRAY<DMKVertexAttribute> attributes);
+			inline VulkanBufferContainer createVertexBuffer(Mesh mesh, std::vector<DMKVertexAttribute> attributes);
 			inline VulkanBufferContainer createIndexBuffer(Mesh mesh, DMKDataType type);
 			inline VulkanTextureContainer createTextureImage(Texture texture);
 			inline VulkanUnformBufferContainer createUniformBuffers(DMKUniformBufferObjectDescriptor uniformBufferDescriptor, UI32 bufferCount);
-			inline VulkanGraphicsDescriptor createDescriptors(ARRAY<DMKUniformBufferObjectDescriptor> descriptors, ARRAY<VulkanUnformBufferContainer> uniformBufferContainers, ARRAY<VulkanTextureContainer> textureContainers);
-			inline VulkanGraphicsPipeline createPipeline(ARRAY<VulkanGraphicsDescriptor> descriptors, ARRAY<DMKUniformBufferObjectDescriptor> uniformBufferDescriptors, ARRAY<DMKVertexAttribute> attributes, ShaderPaths paths, DMKObjectType objectType, VulkanRenderContext context);
+			inline VulkanGraphicsDescriptor createDescriptors(std::vector<DMKUniformBufferObjectDescriptor> descriptors, std::vector<VulkanUnformBufferContainer> uniformBufferContainers, std::vector<VulkanTextureContainer> textureContainers);
+			inline VulkanGraphicsPipeline createPipeline(std::vector<VulkanGraphicsDescriptor> descriptors, std::vector<DMKUniformBufferObjectDescriptor> uniformBufferDescriptors, std::vector<DMKVertexAttribute> attributes, ShaderPaths paths, DMKObjectType objectType, VulkanRenderContext context);
 
 		public:
 			/* Initialize the object as s Skeletal animation */
@@ -140,7 +140,7 @@ namespace Dynamik {
 
 			/* Render context container */
 			VulkanSurfaceContainer myBasicSurface = {};		/* Parent window surface */
-			ARRAY<VulkanRenderContext> myRenderContexts;
+			std::vector<VulkanRenderContext> myRenderContexts;
 			inline void _sortRenderContexts();
 
 			/* Attachment container */

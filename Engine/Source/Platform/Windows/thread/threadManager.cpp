@@ -30,7 +30,7 @@ namespace Dynamik {
 
 	void ThreadManager::runAll()
 	{
-		ARRAY<std::future<void>, DMKArrayDestructorCallMode::DMK_ARRAY_DESTRUCTOR_CALL_MODE_DESTRUCT_ALL> _handles(myThreadContainer.size() + 1);
+		std::vector<std::future<void>> _handles(myThreadContainer.size() + 1);
 		_handles.push_back(std::async(std::launch::async, internalThread, &myInternalThreadHandler));
 		for (POINTER<Thread> thread : myThreadContainer)
 			_handles.push_back(std::async(std::launch::async, internalThread, thread.get()));

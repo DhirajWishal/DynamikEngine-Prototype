@@ -213,7 +213,7 @@ namespace Dynamik {
 				//	);
 			}
 			
-			void VulkanComputeFunctions::copyBufferToImageOverride(VkDevice logicalDevice, VkCommandPool commandPool, VkQueue computeQueue, VulkanCopyBufferToImageInfo info, ARRAY<VkBufferImageCopy> copyRegions)
+			void VulkanComputeFunctions::copyBufferToImageOverride(VkDevice logicalDevice, VkCommandPool commandPool, VkQueue computeQueue, VulkanCopyBufferToImageInfo info, std::vector<VkBufferImageCopy> copyRegions)
 			{
 				//VulkanComputeOneTimeCommandBuffer oneTimeCommandBuffer(logicalDevice, commandPool, computeQueue);
 				//

@@ -21,12 +21,12 @@ namespace Dynamik {
 			if (myRowCount <= row || myColumnCount <= column)
 				myRowCount = row, myColumnCount = column;
 
-			myMatrix.setSizeAndValue(myRowCount, ARRAY<TYPE>(myColumnCount, 0));
+			myMatrix.setSizeAndValue(myRowCount, std::vector<TYPE>(myColumnCount, 0));
 		}
 		~MATRIX() {}
 
 	public:
-		void set(ARRAY<ARRAY<TYPE>> matrix)
+		void set(std::vector<std::vector<TYPE>> matrix)
 		{
 			if ((matrix.size() != myRowCount) || (matrix[0].size() != myColumnCount))
 				return;
@@ -37,7 +37,7 @@ namespace Dynamik {
 		}
 
 	private:
-		ARRAY<ARRAY<TYPE>> myMatrix;
+		std::vector<std::vector<TYPE>> myMatrix;
 		UI32 myRowCount = RowCount;
 		UI32 myColumnCount = ColumnCount;
 	};

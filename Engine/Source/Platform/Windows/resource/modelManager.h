@@ -10,12 +10,12 @@ namespace Dynamik {
 	struct  DMKAssetLoadInfo {
 		/* Object info */
 		std::string path = "";
-		ARRAY<Mesh>* meshes;
-		ARRAY<float> vertexOffset = { 0.0f, 0.0f, 0.0f };	// x, y, z
+		std::vector<Mesh>* meshes;
+		std::vector<float> vertexOffset = { 0.0f, 0.0f, 0.0f };	// x, y, z
 
 		/* Texture info */
 		DMKTextureType textureType = DMKTextureType::DMK_TEXTURE_TYPE_2D;
-		ARRAY<std::string> texturePaths;
+		std::vector<std::string> texturePaths;
 		DMKTextureInputType textureInputType = DMKTextureInputType::DMK_TEXTURE_INPUT_TYPE_AUTO;
 	};
 

@@ -27,7 +27,7 @@ namespace Dynamik {
 				_store.normal = { mesh->mNormals[index].x, mesh->mNormals[index].y, mesh->mNormals[index].z };
 			_store.integrity = 1.0f;
 
-			_mesh.vertexDataStore.pushBack(_store);
+			_mesh.vertexDataStore.push_back(_store);
 		}
 
 		aiFace face;
@@ -35,7 +35,7 @@ namespace Dynamik {
 		{
 			face = mesh->mFaces[index];
 			for (UI32 itr = 0; itr < face.mNumIndices; itr++)
-				_mesh.indexes.pushBack(face.mIndices[itr]);
+				_mesh.indexes.push_back(face.mIndices[itr]);
 		}
 
 		return _mesh;
@@ -55,13 +55,13 @@ namespace Dynamik {
 				for (auto _path : format->texturePaths)
 				{
 					_texture.loadTexture(_path, format->descriptor.assetDescription.textureType, format->descriptor.assetDescription.textureInputType);
-					_mesh.textureDatas.pushBack(_texture);
+					_mesh.textureDatas.push_back(_texture);
 				}
 			}
 			else
 			{
 				_texture.loadCubemap(format->texturePaths, format->descriptor.assetDescription.textureInputType);
-				_mesh.textureDatas.pushBack(_texture);
+				_mesh.textureDatas.push_back(_texture);
 			}
 
 			format->meshDatas.push_back(_mesh);
@@ -82,34 +82,34 @@ namespace Dynamik {
 					StaticAllocator<InternalFormat>::deAllocate(asset.address);
 	}
 
-	UI32 AssetManager::addLevel(ARRAY<ARRAY<AssetContainer>> containers)
+	UI32 AssetManager::addLevel(std::vector<std::vector<AssetContainer>> containers)
 	{
-		assets.pushBack(containers);
+		assets.push_back(containers);
 		return assets.size() - 1;
 	}
 
-	void AssetManager::updateLevel(ARRAY<ARRAY<AssetContainer>> containers, UI32 index)
+	void AssetManager::updateLevel(std::vector<std::vector<AssetContainer>> containers, UI32 index)
 	{
 		assets[index] = containers;
 	}
 
-	ARRAY<ARRAY<AssetContainer>> AssetManager::getLevel(UI32 index)
+	std::vector<std::vector<AssetContainer>> AssetManager::getLevel(UI32 index)
 	{
 		return assets[index];
 	}
 
-	UI32 AssetManager::addScene(ARRAY<AssetContainer> containers, UI32 levelIndex)
+	UI32 AssetManager::addScene(std::vector<AssetContainer> containers, UI32 levelIndex)
 	{
-		assets[levelIndex].pushBack(containers);
+		assets[levelIndex].push_back(containers);
 		return assets[levelIndex].size() - 1;
 	}
 
-	void AssetManager::updateScene(ARRAY<AssetContainer> containers, UI32 sceneIndex, UI32 levelIndex)
+	void AssetManager::updateScene(std::vector<AssetContainer> containers, UI32 sceneIndex, UI32 levelIndex)
 	{
 		assets[levelIndex][sceneIndex] = containers;
 	}
 
-	ARRAY<AssetContainer> AssetManager::getScene(UI32 sceneIndex, UI32 levelIndex)
+	std::vector<AssetContainer> AssetManager::getScene(UI32 sceneIndex, UI32 levelIndex)
 	{
 		return assets[levelIndex][sceneIndex];
 	}
@@ -117,7 +117,7 @@ namespace Dynamik {
 	UI32 AssetManager::addAsset(POINTER<DMKGameObject> object, UI32 sceneIndex, UI32 levelIndex)
 	{
 
-		assets[levelIndex][sceneIndex].pushBack(createAssetContainer(object));
+		assets[levelIndex][sceneIndex].push_back(createAssetContainer(object));
 		return assets[levelIndex][sceneIndex].size() - 1;
 	}
 
@@ -140,13 +140,13 @@ namespace Dynamik {
 			DMK_BEGIN_PROFILE_TIMER();
 
 			/* Run each object loading function in a separate thread to make things faster */
-			ARRAY<std::future<void>, DMKArrayDestructorCallMode::DMK_ARRAY_DESTRUCTOR_CALL_MODE_DESTRUCT_ALL> threads;
+			std::vector<std::future<void>> threads;
 			for (UI32 index = 0; index < _scene.size(); index++)
 			{
 				DMK_BEGIN_PROFILE_TIMER();
 
 				POINTER<InternalFormat> _format = _scene[index].address;
-				threads.pushBack(std::async(std::launch::async, LoadAsset, _format));
+				threads.push_back(std::async(std::launch::async, LoadAsset, _format));
 			}
 		}
 
@@ -154,24 +154,24 @@ namespace Dynamik {
 		updateScene(_scene, sceneIndex, levelIndex);
 	}
 
-	ARRAY<AssetContainer> AssetManager::getRenderableAssets(UI32 sceneIndex, UI32 levelIndex)
+	std::vector<AssetContainer> AssetManager::getRenderableAssets(UI32 sceneIndex, UI32 levelIndex)
 	{
 		DMK_BEGIN_PROFILE_TIMER();
 
-		ARRAY<AssetContainer>_assets;
+		std::vector<AssetContainer>_assets;
 
 		for (AssetContainer _asset : assets[levelIndex][sceneIndex])
 			if (_asset.type <= DMKObjectType::DMK_OBJECT_TYPE_CAMERA)
-				_assets.pushBack(_asset);
+				_assets.push_back(_asset);
 
 		return _assets;
 	}
 
-	ARRAY<POINTER<InternalFormat>> AssetManager::getRenderablesAsInternalFormats(UI32 sceneIndex, UI32 levelIndex)
+	std::vector<POINTER<InternalFormat>> AssetManager::getRenderablesAsInternalFormats(UI32 sceneIndex, UI32 levelIndex)
 	{
 		DMK_BEGIN_PROFILE_TIMER();
 
-		ARRAY<POINTER<InternalFormat>> _formats;
+		std::vector<POINTER<InternalFormat>> _formats;
 
 		/* Go through all the assets and return the renderable objects in the scene */
 		for (AssetContainer _asset : assets[levelIndex][sceneIndex])
@@ -180,7 +180,7 @@ namespace Dynamik {
 				continue;
 
 			if (_asset.type <= DMKObjectType::DMK_OBJECT_TYPE_CAMERA)
-				_formats.pushBack(_asset.address);
+				_formats.push_back(_asset.address);
 		}
 
 		return _formats;
@@ -224,7 +224,7 @@ namespace Dynamik {
 	{
 	}
 
-	AssetManager::STORE AssetManager::_initializeSceneData(ARRAY<AssetContainer> scene)
+	AssetManager::STORE AssetManager::_initializeSceneData(std::vector<AssetContainer> scene)
 	{
 		DMK_BEGIN_PROFILE_TIMER();
 
@@ -255,7 +255,7 @@ namespace Dynamik {
 
 			/* Get texture paths */
 			for (auto texturePath : daiManager.getData(utils::DMK_DAI_FILE_DATA_TYPE_TEXTURE))
-				_format->texturePaths.pushBack(_basePath + texturePath);
+				_format->texturePaths.push_back(_basePath + texturePath);
 
 			/* Get shader paths */
 			/* Vertex shader path */

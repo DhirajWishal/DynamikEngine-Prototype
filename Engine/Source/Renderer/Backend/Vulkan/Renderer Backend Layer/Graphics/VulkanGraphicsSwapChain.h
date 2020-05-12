@@ -3,7 +3,7 @@
 #define _DYNAMIK_RENDERER_VULKAN_GRAPHICS_SWAP_CHAIN_H
 
 #include <vulkan/vulkan.h>
-#include "Public/Array.h"
+#include <vector>
 #include "VulkanGraphicsContainers.h"
 
 namespace Dynamik {
@@ -13,8 +13,8 @@ namespace Dynamik {
 
 			struct VulkanGraphicsSwapChainSupportDetails {
 				VkSurfaceCapabilitiesKHR capabilities = {};
-				ARRAY<VkSurfaceFormatKHR> formats = {};
-				ARRAY<VkPresentModeKHR> presentModes = {};
+				std::vector<VkSurfaceFormatKHR> formats = {};
+				std::vector<VkPresentModeKHR> presentModes = {};
 			};
 
 			class VulkanGraphicsSwapChain {
@@ -30,8 +30,8 @@ namespace Dynamik {
 				static VulkanGraphicsSwapChainSupportDetails querySwapChainSupport(VkPhysicalDevice* device, VkSurfaceKHR* surface);
 
 				VkSwapchainKHR swapChain = VK_NULL_HANDLE;
-				ARRAY<VkImage> swapChainImages;
-				ARRAY<VkImageView> swapChainImageViews;
+				std::vector<VkImage> swapChainImages;
+				std::vector<VkImageView> swapChainImageViews;
 				VkFormat swapChainImageFormat = VK_FORMAT_UNDEFINED;
 				VkExtent2D swapChainExtent = { 0, 0 };
 

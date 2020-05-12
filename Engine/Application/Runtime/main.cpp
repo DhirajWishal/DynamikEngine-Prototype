@@ -33,9 +33,6 @@ int main(int argc, char** argv) {
 		/* Level initialization */
 		OceanSkybox skybox;
 		Moon moon;
-		moon.descriptor.assetDescription.dynamikResouceFilePath = "E:/Projects/Dynamik Engine/Game Repository/assets/assets/Reflect";
-		moon.descriptor.assetDescription.textureType = DMKTextureType::DMK_TEXTURE_TYPE_CUBEMAP;
-		moon.descriptor.assetDescription.textureInputType = DMKTextureInputType::DMK_TEXTURE_INPUT_TYPE_IMAGE;
 
 		Reflect reflectObject;
 
@@ -43,7 +40,8 @@ int main(int argc, char** argv) {
 		scene1.sceneID = "S001";
 		scene1.sceneIndex = 0;
 		//scene1.assets = { &skybox };
-		scene1.assets = { &skybox, &reflectObject };
+		scene1.assets = { &skybox, &moon };
+		//scene1.assets = { &moon };
 
 		DMKLevelDescriptor level1;
 		level1.levelID = "001";

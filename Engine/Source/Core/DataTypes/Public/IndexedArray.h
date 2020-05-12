@@ -43,7 +43,7 @@ namespace Dynamik {
 		IndexedArray();
 		~IndexedArray();
 
-		typedef ARRAY<AllocationData>::ITERATOR ITERATOR;
+		typedef std::vector<AllocationData>::iterator ITERATOR;
 
 		template<class SUB_TYPE>
 		void push(SUB_TYPE data, UI32 size = 0)
@@ -56,7 +56,7 @@ namespace Dynamik {
 			_myDataContainer.setTypeName<SUB_TYPE>();
 
 			StaticAllocator<SUB_TYPE>::set(_myDataContainer.myAddress, (SUB_TYPE&&)data);
-			myIndexArray.pushBack((const AllocationData)_myDataContainer);
+			myIndexArray.push_back((const AllocationData)_myDataContainer);
 		}
 
 		FSTR getTypeNameAt(I32 index = 0)
@@ -83,7 +83,7 @@ namespace Dynamik {
 		TYPE& getLastTypedData()
 		{
 			FSTR _typeName = typeid(TYPE).name();
-			for (ARRAY<AllocationData>::ITERATOR _itr = myIndexArray.end(); _itr != myIndexArray.begin(); _itr--)
+			for (std::vector<AllocationData>::ITERATOR _itr = myIndexArray.end(); _itr != myIndexArray.begin(); _itr--)
 				if (_itr->myTypeName == _typeName)
 					return *(TYPE*)_itr->myAddress;
 		}
@@ -111,7 +111,7 @@ namespace Dynamik {
 		ITERATOR end();
 
 	private:
-		ARRAY<AllocationData> myIndexArray;
+		std::vector<AllocationData> myIndexArray;
 	};
 }
 

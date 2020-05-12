@@ -17,12 +17,12 @@ namespace Dynamik {
 			void popLayer(Layer* layer);
 			void popOverLay(Layer* overLay);
 
-			ARRAY<Layer*>::iterator begin() { return layers.begin(); }
-			ARRAY<Layer*>::iterator end() { return layers.end(); }
+			std::vector<Layer*>::iterator begin() { return layers.begin(); }
+			std::vector<Layer*>::iterator end() { return layers.end(); }
 
 		private:
-			ARRAY<Layer*> layers = {};
-			ARRAY<Layer*>::iterator layerInsert = {};
+			std::vector<Layer*> layers = {};
+			std::vector<Layer*>::iterator layerInsert = {};
 		};
 	}
 }

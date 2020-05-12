@@ -280,9 +280,9 @@ namespace Dynamik {
 				return _format;
 			}
 
-			ARRAY<VkVertexInputBindingDescription> VulkanUtilities::getBindingDescription(ARRAY<DMKVertexAttribute> attributes, UI32 bindCount)
+			std::vector<VkVertexInputBindingDescription> VulkanUtilities::getBindingDescription(std::vector<DMKVertexAttribute> attributes, UI32 bindCount)
 			{
-				ARRAY<VkVertexInputBindingDescription> bindingDescription(bindCount);
+				std::vector<VkVertexInputBindingDescription> bindingDescription(bindCount);
 
 				for (int i = 0; i < bindCount; i++) {
 					bindingDescription[i].binding = i;
@@ -293,9 +293,9 @@ namespace Dynamik {
 				return bindingDescription;
 			}
 
-			ARRAY<VkVertexInputAttributeDescription> VulkanUtilities::getAttributeDescriptions(ARRAY<DMKVertexAttribute> attributes, UI32 binding)
+			std::vector<VkVertexInputAttributeDescription> VulkanUtilities::getAttributeDescriptions(std::vector<DMKVertexAttribute> attributes, UI32 binding)
 			{
-				ARRAY<VkVertexInputAttributeDescription> attributeDescriptions;
+				std::vector<VkVertexInputAttributeDescription> attributeDescriptions;
 				UI32 _previousTypeSize = 0;
 
 				for (UI32 _index = 0; _index < attributes.size(); _index++)
@@ -305,7 +305,7 @@ namespace Dynamik {
 					_description.location = _index;
 					_description.format = vertexAttributeTypeToVkFormat(attributes[_index].dataType);
 					_description.offset = _previousTypeSize;
-					attributeDescriptions.pushBack(_description);
+					attributeDescriptions.push_back(_description);
 
 					_previousTypeSize += (UI32)attributes[_index].dataType;
 				}
@@ -374,11 +374,11 @@ namespace Dynamik {
 				return VK_SHADER_STAGE_ALL;
 			}
 
-			ARRAY<VulkanGraphicsShader> VulkanUtilities::getGraphicsShaders(VkDevice logicalDevice, ShaderPaths shaderPaths)
+			std::vector<VulkanGraphicsShader> VulkanUtilities::getGraphicsShaders(VkDevice logicalDevice, ShaderPaths shaderPaths)
 			{
 				DMK_BEGIN_PROFILE_TIMER();
 
-				ARRAY<VulkanGraphicsShader> _shaders;
+				std::vector<VulkanGraphicsShader> _shaders;
 
 				if (shaderPaths.vertexShader.size() && shaderPaths.vertexShader != "NONE")
 				{
@@ -388,7 +388,7 @@ namespace Dynamik {
 
 					VulkanGraphicsShader _shader;
 					_shader.initialize(logicalDevice, _initInfo);
-					_shaders.pushBack(_shader);
+					_shaders.push_back(_shader);
 				}
 				if (shaderPaths.tessellationShader.size() && shaderPaths.tessellationShader != "NONE")
 				{
@@ -398,7 +398,7 @@ namespace Dynamik {
 
 					VulkanGraphicsShader _shader;
 					_shader.initialize(logicalDevice, _initInfo);
-					_shaders.pushBack(_shader);
+					_shaders.push_back(_shader);
 				}
 				if (shaderPaths.geometryShader.size() && shaderPaths.geometryShader != "NONE")
 				{
@@ -408,7 +408,7 @@ namespace Dynamik {
 
 					VulkanGraphicsShader _shader;
 					_shader.initialize(logicalDevice, _initInfo);
-					_shaders.pushBack(_shader);
+					_shaders.push_back(_shader);
 				}
 				if (shaderPaths.fragmentShader.size() && shaderPaths.fragmentShader != "NONE")
 				{
@@ -418,13 +418,13 @@ namespace Dynamik {
 
 					VulkanGraphicsShader _shader;
 					_shader.initialize(logicalDevice, _initInfo);
-					_shaders.pushBack(_shader);
+					_shaders.push_back(_shader);
 				}
 
 				return _shaders;
 			}
 
-			void VulkanUtilities::terminateGraphicsShaders(VkDevice logicalDevice, ARRAY<VulkanGraphicsShader> shaders)
+			void VulkanUtilities::terminateGraphicsShaders(VkDevice logicalDevice, std::vector<VulkanGraphicsShader> shaders)
 			{
 				for (auto shader : shaders)
 					shader.terminate(logicalDevice);
@@ -701,7 +701,7 @@ namespace Dynamik {
 				return format == VK_FORMAT_D32_SFLOAT_S8_UINT || format == VK_FORMAT_D24_UNORM_S8_UINT;
 			}
 
-			VkFormat VulkanUtilities::findSupportedFormat(const ARRAY<VkFormat>& candidates, VkImageTiling tiling, VkFormatFeatureFlags features, VkPhysicalDevice physicalDevice)
+			VkFormat VulkanUtilities::findSupportedFormat(const std::vector<VkFormat>& candidates, VkImageTiling tiling, VkFormatFeatureFlags features, VkPhysicalDevice physicalDevice)
 			{
 				for (VkFormat format : candidates) {
 					VkFormatProperties props;
@@ -1069,7 +1069,7 @@ namespace Dynamik {
 				);
 			}
 
-			void VulkanUtilities::copyBufferToImageOverride(VkDevice logicalDevice, VkCommandPool commandPool, VkQueue graphicsQueue, VkQueue presentQueue, VulkanCopyBufferToImageInfo info, ARRAY<VkBufferImageCopy> copyRegions)
+			void VulkanUtilities::copyBufferToImageOverride(VkDevice logicalDevice, VkCommandPool commandPool, VkQueue graphicsQueue, VkQueue presentQueue, VulkanCopyBufferToImageInfo info, std::vector<VkBufferImageCopy> copyRegions)
 			{
 				VulkanOneTimeCommandBuffer oneTimeCommandBuffer(logicalDevice, commandPool, graphicsQueue, presentQueue);
 				VkCommandBuffer commandBuffer = oneTimeCommandBuffer.buffer;
@@ -1077,7 +1077,7 @@ namespace Dynamik {
 				copyBufferToImageOverride(logicalDevice, commandBuffer, info, copyRegions);
 			}
 
-			void VulkanUtilities::copyBufferToImageOverride(VkDevice logicalDevice, VkCommandBuffer commandBuffer, VulkanCopyBufferToImageInfo info, ARRAY<VkBufferImageCopy> copyRegions)
+			void VulkanUtilities::copyBufferToImageOverride(VkDevice logicalDevice, VkCommandBuffer commandBuffer, VulkanCopyBufferToImageInfo info, std::vector<VkBufferImageCopy> copyRegions)
 			{
 				vkCmdCopyBufferToImage(
 					commandBuffer,
@@ -1212,9 +1212,9 @@ namespace Dynamik {
 				return _flag;
 			}
 
-			ARRAY<VkDescriptorSetLayoutBinding> VulkanUtilities::getDescriptorSetBindings(ARRAY<DMKUniformBufferObjectDescriptor> descriptors)
+			std::vector<VkDescriptorSetLayoutBinding> VulkanUtilities::getDescriptorSetBindings(std::vector<DMKUniformBufferObjectDescriptor> descriptors)
 			{
-				ARRAY<VkDescriptorSetLayoutBinding> bindings;
+				std::vector<VkDescriptorSetLayoutBinding> bindings;
 
 				for (UI32 binding = 0; binding < descriptors.size(); binding++)
 				{
@@ -1224,15 +1224,15 @@ namespace Dynamik {
 					uboLayoutBinding.descriptorType = getDescriptorType(descriptors[binding].type);
 					uboLayoutBinding.pImmutableSamplers = nullptr; // Optional
 					uboLayoutBinding.stageFlags = getDescriptorFlag(descriptors[binding].location);
-					bindings.pushBack(uboLayoutBinding);
+					bindings.push_back(uboLayoutBinding);
 				}
 
 				return bindings;
 			}
 
-			ARRAY<VkDescriptorPoolSize> VulkanUtilities::getPoolSizes(ARRAY<DMKUniformBufferObjectDescriptor> descriptors, UI32 uniformBufferCount, UI32 textureImageCount)
+			std::vector<VkDescriptorPoolSize> VulkanUtilities::getPoolSizes(std::vector<DMKUniformBufferObjectDescriptor> descriptors, UI32 uniformBufferCount, UI32 textureImageCount)
 			{
-				ARRAY<VkDescriptorPoolSize> poolSizes = {};
+				std::vector<VkDescriptorPoolSize> poolSizes = {};
 
 				for (auto _description : descriptors)
 				{
@@ -1242,25 +1242,25 @@ namespace Dynamik {
 					case Dynamik::DMKUniformType::DMK_UNIFORM_TYPE_BUFFER_OBJECT:
 						pool.type = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;
 						pool.descriptorCount = uniformBufferCount;
-						poolSizes.pushBack(pool);
+						poolSizes.push_back(pool);
 						break;
 
 					case Dynamik::DMKUniformType::DMK_UNIFORM_TYPE_IMAGE_SAMPLER_2D:
 						pool.type = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
 						pool.descriptorCount = textureImageCount;
-						poolSizes.pushBack(pool);
+						poolSizes.push_back(pool);
 						break;
 
 					case Dynamik::DMKUniformType::DMK_UNIFORM_TYPE_IMAGE_SAMPLER_3D:
 						pool.type = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
 						pool.descriptorCount = textureImageCount;
-						poolSizes.pushBack(pool);
+						poolSizes.push_back(pool);
 						break;
 
 					case Dynamik::DMKUniformType::DMK_UNIFORM_TYPE_IMAGE_SAMPLER_CUBEMAP:
 						pool.type = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
 						pool.descriptorCount = textureImageCount;
-						poolSizes.pushBack(pool);
+						poolSizes.push_back(pool);
 						break;
 
 					case Dynamik::DMKUniformType::DMK_UNIFORM_TYPE_CONSTANT:

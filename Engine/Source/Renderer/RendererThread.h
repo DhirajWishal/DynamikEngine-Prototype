@@ -23,9 +23,9 @@ namespace Dynamik {
 		B1 loopEndCommand() override;
 
 		void addProgress(UI32* progress);
-		void addInternalFormats(ARRAY<POINTER<InternalFormat>> formats);
+		void addInternalFormats(std::vector<POINTER<InternalFormat>> formats);
 
-		ARRAY<POINTER<InternalFormat>> _internalFormats;
+		std::vector<POINTER<InternalFormat>> _internalFormats;
 	};
 }
 

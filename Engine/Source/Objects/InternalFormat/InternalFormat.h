@@ -23,11 +23,11 @@ namespace Dynamik {
 		virtual ~InternalFormat() {}
 
 		/* Object meshes */
-		ARRAY<Mesh> meshDatas;
+		std::vector<Mesh> meshDatas;
 
 		/* Object data paths */
 		std::string objectPath = "";
-		ARRAY<std::string> texturePaths;
+		std::vector<std::string> texturePaths;
 		ShaderPaths shaderPaths;
 	};
 }

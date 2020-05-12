@@ -12,7 +12,7 @@
 
 #define LOCK_AND_ADD_COMPONENT(component)	{														\
 												std::lock_guard<std::mutex> _lockGuard(myMutex);	\
-												myInstance.events.pushBack(&component);				\
+												myInstance.events.push_back(&component);				\
 											}
 
 namespace Dynamik {
@@ -79,7 +79,7 @@ namespace Dynamik {
 		return glfwGetCurrentContext();
 	}
 
-	ARRAY<POINTER<DMKEventComponent>> DMKEventManager::getEventComponents()
+	std::vector<POINTER<DMKEventComponent>> DMKEventManager::getEventComponents()
 	{
 		DMK_BEGIN_PROFILE_TIMER();
 
@@ -207,7 +207,7 @@ namespace Dynamik {
 		_component.count = count;
 
 		for (UI32 i = 0; i < count; i++)
-			_component.paths.pushBack(strings[i]);
+			_component.paths.push_back(strings[i]);
 
 		_pushToContainer(_component);
 	}

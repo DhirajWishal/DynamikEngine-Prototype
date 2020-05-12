@@ -11,12 +11,12 @@ namespace Dynamik {
 
 				for (size_t i = 0; i < info.bufferCount; i++)
 				{
-					ARRAY<VkImageView> attachments;
+					std::vector<VkImageView> attachments;
 					for (VkImageView _imageView : info.attachments)
 						attachments.push_back(_imageView);
 
 					if ((info.swapChainImageViews[i] != VK_NULL_HANDLE) && (info.swapChainImageViews.size()))
-						attachments.pushBack(info.swapChainImageViews[i]);
+						attachments.push_back(info.swapChainImageViews[i]);
 
 					VkFramebufferCreateInfo framebufferInfo = {};
 					framebufferInfo.sType = VK_STRUCTURE_TYPE_FRAMEBUFFER_CREATE_INFO;
@@ -31,7 +31,7 @@ namespace Dynamik {
 					if (vkCreateFramebuffer(logicalDevice, &framebufferInfo, nullptr, &_buffer) != VK_SUCCESS)
 						DMK_CORE_FATAL("failed to create framebuffer!");
 
-					buffers.pushBack(_buffer);
+					buffers.push_back(_buffer);
 				}
 			}
 
@@ -46,7 +46,7 @@ namespace Dynamik {
 			VkFramebuffer VulkanGraphicsFrameBuffer::createFrameBuffer(
 				VkDevice logicalDevice,
 				VkRenderPass renderPass,
-				ARRAY<VkImageView> attachments,
+				std::vector<VkImageView> attachments,
 				VkExtent2D extent,
 				UI32 layerCount)
 			{

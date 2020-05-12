@@ -58,7 +58,7 @@ namespace Dynamik {
 				/* DRAW CALLS */
 				virtual void syncFence(UI32 frame);
 				virtual VkResult getNextImage(VkSwapchainKHR swapChain, POINTER<UI32> index, UI32 frame);
-				virtual VkResult submitQueues(ARRAY<VkSwapchainKHR> swapChains, UI32 index, UI32 frame, ARRAY<VkCommandBuffer> buffers);
+				virtual VkResult submitQueues(std::vector<VkSwapchainKHR> swapChains, UI32 index, UI32 frame, std::vector<VkCommandBuffer> buffers);
 
 				void populateDebugMessegerCreateInfo(POINTER<VkDebugUtilsMessengerCreateInfoEXT> createInfo);
 
@@ -79,9 +79,9 @@ namespace Dynamik {
 				UI32 minMipLevel = 0;
 				UI32 maxMipLevel = 0;
 
-				ARRAY<VkSemaphore> imageAvailables;
-				ARRAY<VkSemaphore> renderFinishes;
-				ARRAY<VkFence> inFlightFences;
+				std::vector<VkSemaphore> imageAvailables;
+				std::vector<VkSemaphore> renderFinishes;
+				std::vector<VkFence> inFlightFences;
 
 			private:
 				VkResult result;
@@ -90,7 +90,7 @@ namespace Dynamik {
 				VkSemaphore waitSemaphores[1];
 				VkPipelineStageFlags waitStages[1];
 				VkSemaphore signalSemaphores[1];
-				ARRAY<VkCommandBuffer> additionalCommandBuffers;
+				std::vector<VkCommandBuffer> additionalCommandBuffers;
 			};
 		}
 	}

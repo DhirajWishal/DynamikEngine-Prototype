@@ -6,11 +6,11 @@ namespace Dynamik {
 
 	IndexedArray::~IndexedArray()
 	{
-		ARRAY<POINTER<VPTR>> _myArr(myIndexArray.size());
+		std::vector<POINTER<VPTR>> _myArr(myIndexArray.size());
 		for (auto _elem : myIndexArray)
 		{
 			POINTER<VPTR> _ptr = _elem.myAddress;
-			_myArr.pushBack(_ptr);
+			_myArr.push_back(_ptr);
 		}
 
 		for (auto _elem : _myArr)

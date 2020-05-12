@@ -2,58 +2,54 @@
 #include "Mesh.h"
 
 namespace Dynamik {
-	UI32 Mesh::allocatableSize(ARRAY<DMKVertexAttribute> attributes)
+	UI32 Mesh::allocatableSize(std::vector<DMKVertexAttribute> attributes)
 	{
 		return vertexDataStore.size() * DMKVertexBufferObjectDescriptor::vertexByteSize(attributes);
 	}
 
-	void Mesh::packData(ARRAY<DMKVertexAttribute> attributes, VPTR ptr)
+	void Mesh::packData(std::vector<DMKVertexAttribute> attributes, VPTR ptr)
 	{
 		POINTER<F32> nextPtr = ptr;
-		UI32 _baseSize = sizeof(F32);
 
 		for (MeshPointStore _store : vertexDataStore)
 		{
 			for (DMKVertexAttribute attribute : attributes)
 			{
-				ARRAY<F32> _tempArray;
-
 				switch (attribute.name)
 				{
 				case DMKVertexData::DMK_VERTEX_DATA_POSITION:
-					_tempArray = _getAttributeData(attribute.dataType, _store.position);
+					memcpy(nextPtr.get(), &_store.position, (UI32)attribute.dataType);
 					break;
 
 				case DMKVertexData::DMK_VERTEX_DATA_COLOR:
-					_tempArray = _getAttributeData(attribute.dataType, _store.color);
+					memcpy(nextPtr.get(), &_store.color, (UI32)attribute.dataType);
 					break;
 
 				case DMKVertexData::DMK_VERTEX_DATA_TEXTURE_COORDINATES:
-					_tempArray = _getAttributeData(attribute.dataType, _store.textureCoordinate);
+					memcpy(nextPtr.get(), &_store.textureCoordinate, (UI32)attribute.dataType);
 					break;
 
 				case DMKVertexData::DMK_VERTEX_DATA_NORMAL_VECTORS:
-					_tempArray = _getAttributeData(attribute.dataType, _store.normal);
+					memcpy(nextPtr.get(), &_store.normal, (UI32)attribute.dataType);
 					break;
 
 				case DMKVertexData::DMK_VERTEX_DATA_SPACE_VECTORS:
-					_tempArray = _getAttributeData(attribute.dataType, _store.space);
+					memcpy(nextPtr.get(), &_store.space, (UI32)attribute.dataType);
 					break;
 
 				case DMKVertexData::DMK_VERTEX_DATA_INTEGRITY:
-					_tempArray = { _store.integrity };
+					memcpy(nextPtr.get(), &_store.integrity, (UI32)attribute.dataType);
 					break;
 				}
 
-				moveBytes(nextPtr, _tempArray.begin(), _tempArray.end());
 				nextPtr += _getNextPointerAddress(attribute);
 			}
 		}
 	}
 
-	ARRAY<F32> Mesh::_getAttributeData(DMKDataType type, VEC3 data)
+	std::vector<F32> Mesh::_getAttributeData(DMKDataType type, VEC3 data)
 	{
-		ARRAY<F32> _attributeData;
+		std::vector<F32> _attributeData;
 
 		UI32 _dataCount = 0;
 		UI32 _typeSize = (UI32)type;
@@ -70,7 +66,7 @@ namespace Dynamik {
 			DMK_CORE_FATAL("Data count is out of bound!");
 
 		for (UI32 _itr = 0; _itr < _dataCount; _itr++)
-			_attributeData.pushBack(data[_itr]);
+			_attributeData.push_back(data[_itr]);
 
 		return _attributeData;
 	}

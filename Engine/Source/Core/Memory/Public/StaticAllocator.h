@@ -23,7 +23,7 @@ namespace Dynamik {
 	 * BASE: Allocator
 	 * Static Allocator for the Dynamik Engine.
 	 * This allocator is used for manual heap allocation and deletion.
-	 * This class is used as the default memory allocator for the ARRAY<TYPE> object.
+	 * This class is used as the default memory allocator for the std::vector<TYPE> object.
 	 */
 	template<class TYPE>
 	class StaticAllocator : public Allocator {

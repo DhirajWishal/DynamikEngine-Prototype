@@ -10,9 +10,9 @@ namespace Dynamik {
 			struct VulkanGraphicsFrameBufferInitInfo {
 				UI32 bufferCount = 0;
 				VkExtent2D swapChainExtent;
-				ARRAY<VkImageView> swapChainImageViews;
+				std::vector<VkImageView> swapChainImageViews;
 
-				ARRAY<VkImageView> attachments;
+				std::vector<VkImageView> attachments;
 				VkRenderPass renderPass = VK_NULL_HANDLE;
 			};
 
@@ -27,12 +27,12 @@ namespace Dynamik {
 				static VkFramebuffer createFrameBuffer(
 					VkDevice logicalDevice,
 					VkRenderPass renderPass,
-					ARRAY<VkImageView> attachments,
+					std::vector<VkImageView> attachments,
 					VkExtent2D extent,
 					UI32 layerCount = 1);
 				static void terminateFrameBuffer(VkDevice logicalDevice, VkFramebuffer buffer);
 
-				ARRAY<VkFramebuffer> buffers;
+				std::vector<VkFramebuffer> buffers;
 				UI32 frameWidth = 0;
 				UI32 frameHeight = 0;
 			};

@@ -3,7 +3,7 @@
 #define _DYNAMIK_ALGORITHM_SORT_H
 
 #include "Public/datatypes.h"
-#include "Public/Array.h"
+#include <vector>
 
 namespace Dynamik {
 	/* TEMPLATED FUNCTION
@@ -14,7 +14,7 @@ namespace Dynamik {
 	 * @param isAsc = true: Sorting type (true = ascending, false = descending)
 	 */
 	template<class TYPE>
-	ARRAY<TYPE>& bubbleSort(ARRAY<TYPE> arr, const bool isAsc = true)
+	std::vector<TYPE>& bubbleSort(std::vector<TYPE> arr, const bool isAsc = true)
 	{
 		UI32 _indexCount = 0;
 		UI32 _size = arr.size();

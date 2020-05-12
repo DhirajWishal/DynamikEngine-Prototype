@@ -8,7 +8,7 @@ namespace Dynamik {
 		namespace Backend {
 			B1 isCandidate(VulkanComputeShaderPhysicalDeviceLimits oldLimits, VkPhysicalDeviceProperties properties)
 			{
-				ARRAY<B1> _candidateCheck(4);
+				std::vector<B1> _candidateCheck(4);
 				_candidateCheck[0] = oldLimits.maxSharedMemorySize < properties.limits.maxComputeSharedMemorySize;
 				_candidateCheck[1] =
 					oldLimits.maxWorkGroupCount[0] < properties.limits.maxComputeWorkGroupCount[0] ||
@@ -55,7 +55,7 @@ namespace Dynamik {
 				initializeLogicalDevice();
 			}
 
-			void VulkanComputeCore::submitQueue(ARRAY<VkCommandBuffer> commandBuffers)
+			void VulkanComputeCore::submitQueue(std::vector<VkCommandBuffer> commandBuffers)
 			{
 				VkSubmitInfo submitInfo;
 				submitInfo.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO;
@@ -163,7 +163,7 @@ namespace Dynamik {
 				if (deviceCount == 0)
 					DMK_CORE_FATAL("Failed to find GPUs with Vulkan support!");
 
-				ARRAY<VkPhysicalDevice> devices(deviceCount);
+				std::vector<VkPhysicalDevice> devices(deviceCount);
 				vkEnumeratePhysicalDevices(instance, &deviceCount, devices.data());
 
 				//std::multimap<I32, VkPhysicalDevice> candidates;

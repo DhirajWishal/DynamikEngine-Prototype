@@ -3,7 +3,7 @@
 #define _DYNAMIK_ASSET_MANAGER_H
 
 #include "Objects/DMKObject/DMKObject.h"
-#include "Public/Array.h"
+#include <vector>
 #include "GameObject.h"
 
 #include "Objects/InternalFormat/InternalFormat.h"
@@ -13,14 +13,14 @@ namespace Dynamik {
 	struct  DMKSceneDescriptor {
 		CCPTR sceneID = "Scene_1";
 		UI32 sceneIndex = 0;
-		ARRAY<DMKGameObject*> assets;
+		std::vector<DMKGameObject*> assets;
 	};
 
 	/* Level data descriptor */
 	struct  DMKLevelDescriptor {
 		CCPTR levelID = "Level_1";
 		UI32 levelIndex = 0;
-		ARRAY<DMKSceneDescriptor> scenes;
+		std::vector<DMKSceneDescriptor> scenes;
 		F32 levelCompletion = 0.0f;
 	};
 
@@ -31,21 +31,21 @@ namespace Dynamik {
 
 	/* Asset manager for the Dynamik Engine */
 	class AssetManager : public DMKObject {
-		using STORE = ARRAY<AssetContainer>;
+		using STORE = std::vector<AssetContainer>;
 
 	public:
 		AssetManager() {}
 		~AssetManager();
 
 		/* Returns the level index */
-		UI32 addLevel(ARRAY<ARRAY<AssetContainer>> containers);
-		void updateLevel(ARRAY<ARRAY<AssetContainer>> containers, UI32 index = 0);
-		ARRAY<ARRAY<AssetContainer>> getLevel(UI32 index);
+		UI32 addLevel(std::vector<std::vector<AssetContainer>> containers);
+		void updateLevel(std::vector<std::vector<AssetContainer>> containers, UI32 index = 0);
+		std::vector<std::vector<AssetContainer>> getLevel(UI32 index);
 
 		/* Returns the scene index */
-		UI32 addScene(ARRAY<AssetContainer> containers, UI32 levelIndex);
-		void updateScene(ARRAY<AssetContainer> containers, UI32 sceneIndex, UI32 levelIndex);
-		ARRAY<AssetContainer> getScene(UI32 sceneIndex, UI32 levelIndex);
+		UI32 addScene(std::vector<AssetContainer> containers, UI32 levelIndex);
+		void updateScene(std::vector<AssetContainer> containers, UI32 sceneIndex, UI32 levelIndex);
+		std::vector<AssetContainer> getScene(UI32 sceneIndex, UI32 levelIndex);
 
 		/* Returns the object index */
 		UI32 addAsset(POINTER<DMKGameObject> object, UI32 sceneIndex, UI32 levelIndex);
@@ -56,8 +56,8 @@ namespace Dynamik {
 		void loadScene(UI32 sceneIndex, UI32 levelIndex);
 
 		/* Filter renderable assets and return them */
-		ARRAY<AssetContainer> getRenderableAssets(UI32 sceneIndex, UI32 levelIndex);
-		ARRAY<POINTER<InternalFormat>> getRenderablesAsInternalFormats(UI32 sceneIndex, UI32 levelIndex);
+		std::vector<AssetContainer> getRenderableAssets(UI32 sceneIndex, UI32 levelIndex);
+		std::vector<POINTER<InternalFormat>> getRenderablesAsInternalFormats(UI32 sceneIndex, UI32 levelIndex);
 
 		/* Create an Asset Container statically */
 		static AssetContainer createAssetContainer(POINTER<DMKGameObject> object);
@@ -69,10 +69,10 @@ namespace Dynamik {
 		static void LoadAnimation(POINTER<InternalFormat> format);
 
 	private:
-		ARRAY<ARRAY<ARRAY<AssetContainer>>> assets;
-		ARRAY<ARRAY<ARRAY<AssetContainer>>> renderableObjects;
+		std::vector<std::vector<std::vector<AssetContainer>>> assets;
+		std::vector<std::vector<std::vector<AssetContainer>>> renderableObjects;
 
-		STORE _initializeSceneData(ARRAY<AssetContainer> scene);
+		STORE _initializeSceneData(std::vector<AssetContainer> scene);
 	};
 }
 

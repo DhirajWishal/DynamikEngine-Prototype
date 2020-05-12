@@ -5,7 +5,7 @@
 namespace Dynamik {
 	namespace Renderer {
 		namespace Backend {
-			ARRAY<CCPTR> VulkanExtensionsManager::getRequiredExtentions(B1 validationLayer)
+			std::vector<CCPTR> VulkanExtensionsManager::getRequiredExtentions(B1 validationLayer)
 			{
 				UI32 glfwExtentionCount = 0;
 				const char** glfwExtentions;

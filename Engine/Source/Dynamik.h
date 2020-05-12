@@ -71,7 +71,7 @@ namespace Dynamik {
 		DMKEngineValidationMode validationMode = DMKEngineValidationMode::DMK_ENGINE_VALIDATION_MODE_STD_COUT;
 		CCPTR engineValidationTextOutputPath = "";
 
-		ARRAY<CCPTR> engineStartupImages;
+		std::vector<CCPTR> engineStartupImages;
 	};
 
 	/* MAIN DYNAMIK ENGINE API OBJECT
@@ -149,9 +149,9 @@ namespace Dynamik {
 		F32 frustumNear = 0.001f;
 		F32 frustumFar = 256.0f;
 
-		ARRAY<POINTER<DMKEventComponent>> eventComponents;
+		std::vector<POINTER<DMKEventComponent>> eventComponents;
 
-		ARRAY<POINTER<InternalFormat>> internalFormats;
+		std::vector<POINTER<InternalFormat>> internalFormats;
 
 	private:
 		F32 movementSpeed = 1.0f;

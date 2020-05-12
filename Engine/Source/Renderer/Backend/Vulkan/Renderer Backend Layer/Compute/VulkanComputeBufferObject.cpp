@@ -77,25 +77,25 @@ namespace Dynamik {
 				_poolSize1.descriptorCount = 1;
 
 				VulkanDescriptorPoolInitInfo descriptorPoolInitInfo;
-				descriptorPoolInitInfo.poolSizes.pushBack(_poolSize1);
+				descriptorPoolInitInfo.poolSizes.push_back(_poolSize1);
 				myComputeData.computeDescriptor.initializePool(logicalDevice, descriptorPoolInitInfo);
 			}
 
 			void VulkanComputeBufferObject::_initializeDescriptorSets()
 			{
-				ARRAY<VkWriteDescriptorSet> descriptorWrites = {};
-				ARRAY<VkDescriptorBufferInfo> bufferInfos;
+				std::vector<VkWriteDescriptorSet> descriptorWrites = {};
+				std::vector<VkDescriptorBufferInfo> bufferInfos;
 
 				VkDescriptorBufferInfo bufferInfo = {};
 				bufferInfo.buffer = inputBuffer;
 				bufferInfo.offset = 0;
 				bufferInfo.range = VK_WHOLE_SIZE;
-				bufferInfos.pushBack(bufferInfo);
+				bufferInfos.push_back(bufferInfo);
 
 				bufferInfo.buffer = outputBuffer;
 				bufferInfo.offset = 0;
 				bufferInfo.range = VK_WHOLE_SIZE;
-				bufferInfos.pushBack(bufferInfo);
+				bufferInfos.push_back(bufferInfo);
 
 				VkWriteDescriptorSet _writes1;
 				_writes1.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;

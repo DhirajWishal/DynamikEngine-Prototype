@@ -2,7 +2,7 @@
 #ifndef _DYNAMIK_MESH_H
 #define _DYNAMIK_MESH_H
 
-#include "Public/Array.h"
+#include <vector>
 #include "GameObjectDescriptors.h"
 #include "../Texture/Texture.h"
 
@@ -26,15 +26,15 @@ namespace Dynamik {
 		virtual ~Mesh() {}
 
 		CCPTR name = "";
-		ARRAY<MeshPointStore> vertexDataStore;
-		ARRAY<UI32> indexes;
-		ARRAY<Texture> textureDatas;
+		std::vector<MeshPointStore> vertexDataStore;
+		std::vector<UI32> indexes;
+		std::vector<Texture> textureDatas;
 
-		UI32 allocatableSize(ARRAY<DMKVertexAttribute> attributes);
-		void packData(ARRAY<DMKVertexAttribute> attributes, VPTR data);
+		UI32 allocatableSize(std::vector<DMKVertexAttribute> attributes);
+		void packData(std::vector<DMKVertexAttribute> attributes, VPTR data);
 
 	protected:
-		ARRAY<F32> _getAttributeData(DMKDataType type, VEC3 data);
+		std::vector<F32> _getAttributeData(DMKDataType type, VEC3 data);
 		UI32 _getNextPointerAddress(DMKVertexAttribute attribute);
 	};
 }

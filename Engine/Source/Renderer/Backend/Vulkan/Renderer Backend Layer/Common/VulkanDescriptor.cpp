@@ -41,7 +41,7 @@ namespace Dynamik {
 					if (vkAllocateDescriptorSets(logicalDevice, &allocInfo, &_set) != VK_SUCCESS)
 						DMK_CORE_FATAL("failed to allocate descriptor sets!");
 
-					descriptorSets.pushBack(_set);
+					descriptorSets.push_back(_set);
 				}
 			}
 
@@ -58,7 +58,7 @@ namespace Dynamik {
 				}
 			}
 
-			void VulkanDescriptor::updateSet(VkDevice logicalDevice, ARRAY<VkWriteDescriptorSet> writes)
+			void VulkanDescriptor::updateSet(VkDevice logicalDevice, std::vector<VkWriteDescriptorSet> writes)
 			{
 				vkUpdateDescriptorSets(logicalDevice, writes.size(), writes.data(), 0, nullptr);
 			}

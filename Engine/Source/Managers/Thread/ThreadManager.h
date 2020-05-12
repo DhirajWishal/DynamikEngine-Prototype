@@ -5,7 +5,7 @@
 #include "Objects/InternalFormat/InternalFormat.h"
 #include "../Window/Window.h"
 
-#include "Public/Array.h"
+#include <vector>
 
 namespace Dynamik {
 	/* Thread manager for the Dynamik Engine.
@@ -19,16 +19,16 @@ namespace Dynamik {
 		ThreadManager() {}
 		~ThreadManager() {}
 
-		void initiateThreads(ARRAY<POINTER<InternalFormat>> formats, ARRAY<POINTER<DMKWindow>> handles);
-		void updateInFlightObjects(ARRAY<POINTER<InternalFormat>> formats);
-		void updateWindowHandles(ARRAY<POINTER<DMKWindow>> handles);
+		void initiateThreads(std::vector<POINTER<InternalFormat>> formats, std::vector<POINTER<DMKWindow>> handles);
+		void updateInFlightObjects(std::vector<POINTER<InternalFormat>> formats);
+		void updateWindowHandles(std::vector<POINTER<DMKWindow>> handles);
 
 	public:
-		static void _eventThread(POINTER<ARRAY<POINTER<InternalFormat>>> formats, POINTER<ARRAY<POINTER<DMKWindow>>> windowHandles);
+		static void _eventThread(POINTER<std::vector<POINTER<InternalFormat>>> formats, POINTER<std::vector<POINTER<DMKWindow>>> windowHandles);
 
 	private:
-		ARRAY<POINTER<InternalFormat>> inFlightObjects;
-		ARRAY<POINTER<DMKWindow>> windowHandles;
+		std::vector<POINTER<InternalFormat>> inFlightObjects;
+		std::vector<POINTER<DMKWindow>> windowHandles;
 
 		POINTER<std::thread> _eventThreadHandle;
 	};

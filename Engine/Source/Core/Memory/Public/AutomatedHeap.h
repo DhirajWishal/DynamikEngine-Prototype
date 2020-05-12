@@ -2,7 +2,7 @@
 #ifndef _DYNAMIK_AUTOMATED_HEAP_H
 #define _DYNAMIK_AUTOMATED_HEAP_H
 
-#include "Public/Array.h"
+#include <vector>
 
 namespace Dynamik {
 	/* Automated Heap allocator for the Dynamik Engine.
@@ -31,7 +31,7 @@ namespace Dynamik {
 			_internalPointerContainer _container;
 			_container.address = ptr.get();
 			_container.byteSize = byteSize;
-			instance.addressStore.pushBack(_container);
+			instance.addressStore.push_back(_container);
 
 			return ptr;
 		}
@@ -45,7 +45,7 @@ namespace Dynamik {
 		}
 
 	private:
-		ARRAY<_internalPointerContainer> addressStore;
+		std::vector<_internalPointerContainer> addressStore;
 	};
 }
 

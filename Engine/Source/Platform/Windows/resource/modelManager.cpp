@@ -49,7 +49,7 @@ namespace Dynamik {
 			{
 				Texture _localTexture;
 				_localTexture.loadCubemap(info.texturePaths, info.textureInputType);
-				_mesh.textureDatas.pushBack(_localTexture);
+				_mesh.textureDatas.push_back(_localTexture);
 			}
 			else
 			{
@@ -57,7 +57,7 @@ namespace Dynamik {
 				{
 					Texture _localTexture;
 					_localTexture.loadTexture(path, info.textureType, info.textureInputType);
-					_mesh.textureDatas.pushBack(_localTexture);
+					_mesh.textureDatas.push_back(_localTexture);
 				}
 			}
 
@@ -100,7 +100,7 @@ namespace Dynamik {
 				_mesh.indexes.push_back(uniqueVertices[_store]);
 			}
 
-			info.meshes->pushBack(_mesh);
+			info.meshes->push_back(_mesh);
 		}
 	}
 }

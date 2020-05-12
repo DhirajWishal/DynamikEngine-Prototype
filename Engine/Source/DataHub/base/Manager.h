@@ -16,11 +16,11 @@
 #define _DYNAMIK_CENTRAL_DATA_HUB_MANAGER_H
 
 #include <string>
-#include "Public/Array.h"
+#include <vector>
 #include <deque>
 
-#define _SET_VECTOR(x)	ARRAY<x>
-#define _SET_2D_VECTOR(x)	ARRAY<ARRAY<x>>
+#define _SET_VECTOR(x)	std::vector<x>
+#define _SET_2D_VECTOR(x)	std::vector<std::vector<x>>
 
 namespace Dynamik {
 	namespace Renderer {

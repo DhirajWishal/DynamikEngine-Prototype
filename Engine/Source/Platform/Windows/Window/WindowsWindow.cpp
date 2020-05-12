@@ -66,7 +66,7 @@ namespace Dynamik {
 
 	void WindowsWindow::setIcon(std::string paths)
 	{
-		ARRAY<GLFWimage> icons;
+		std::vector<GLFWimage> icons;
 
 		for (UI32 i = 0; i < 1; i++) {
 			std::string_view path = paths;

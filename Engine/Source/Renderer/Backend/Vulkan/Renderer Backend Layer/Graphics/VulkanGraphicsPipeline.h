@@ -12,15 +12,15 @@ namespace Dynamik {
 
 			struct VulkanGraphicsPipelineLayoutInitInfo {
 				// push constants info
-				ARRAY<VkPushConstantRange> pushConstantRanges;
+				std::vector<VkPushConstantRange> pushConstantRanges;
 
-				ARRAY<VkDescriptorSetLayout> layouts;
+				std::vector<VkDescriptorSetLayout> layouts;
 			};
 
 			struct VulkanGraphicsPipelineInitInfo {
-				ARRAY<VkVertexInputBindingDescription> vertexBindingDescription;
-				ARRAY<VkVertexInputAttributeDescription> vertexAttributeDescription;
-				ARRAY<VulkanGraphicsShader> shaders;
+				std::vector<VkVertexInputBindingDescription> vertexBindingDescription;
+				std::vector<VkVertexInputAttributeDescription> vertexAttributeDescription;
+				std::vector<VulkanGraphicsShader> shaders;
 				B1 isTexturesAvailable = true;
 				VkExtent2D swapChainExtent;
 
@@ -33,7 +33,7 @@ namespace Dynamik {
 
 				// scissor info
 				UI32 scissorCount = 1;											// Vulkan scissor count
-				ARRAY<VkOffset2D> offsets = { { 0, 0 } };						// Vulkan scissor offsets
+				std::vector<VkOffset2D> offsets = { { 0, 0 } };						// Vulkan scissor offsets
 
 				// rasterizer info
 				VkBool32 rasterizerDepthClampEnable = VK_FALSE;						// Vulkan rasterizer depth clamp enable
@@ -57,19 +57,19 @@ namespace Dynamik {
 				VkBool32 depthStencilTestEnable = VK_FALSE;							// Vulkan depth stencil test enable
 
 				// color blender info
-				ARRAY<VkPipelineColorBlendAttachmentState> additionalColorBlendStates;
-				ARRAY<VkColorComponentFlags> colorBlenderColorWriteMasks = {	// Vulkan color blend write masks
+				std::vector<VkPipelineColorBlendAttachmentState> additionalColorBlendStates;
+				std::vector<VkColorComponentFlags> colorBlenderColorWriteMasks = {	// Vulkan color blend write masks
 					VK_COLOR_COMPONENT_R_BIT	// Red
 					| VK_COLOR_COMPONENT_G_BIT	// Green
 					| VK_COLOR_COMPONENT_B_BIT	// Blue
 					| VK_COLOR_COMPONENT_A_BIT	// Alpha
 				};
-				ARRAY<VkBool32> colorBlenderBlendEnables = { VK_FALSE };		// Vulkan color blend blend enables
+				std::vector<VkBool32> colorBlenderBlendEnables = { VK_FALSE };		// Vulkan color blend blend enables
 
 				VkBool32 colorBlendingLogicOpEnable = VK_FALSE;						// Vulkan color blend blending logical op enable
 				VkLogicOp colorBlendingLogicOp = VkLogicOp::VK_LOGIC_OP_COPY;		// Vulkan color blend blending logical op
 				UI32 colorBlendingColorBlendCount = 1;							// Vulkan color blend blending count
-				ARRAY<F32> colorBlendingBlendConstants = {					// Vulkan color blend constants
+				std::vector<F32> colorBlendingBlendConstants = {					// Vulkan color blend constants
 					0.0f,	// Red
 					0.0f,	// Green
 					0.0f,	// Blue

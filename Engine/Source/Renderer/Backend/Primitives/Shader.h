@@ -24,10 +24,10 @@ namespace Dynamik {
 
 			std::string path;
 			DMKShaderLocation location = DMKShaderLocation::DMK_SHADER_LOCATION_VERTEX;
-			ARRAY<CHR> code;
+			std::vector<CHR> code;
 
 		protected:
-			ARRAY<CHR> getCode(std::string path)
+			std::vector<CHR> getCode(std::string path)
 			{
 				std::ifstream file(path, std::ios::ate | std::ios::binary);
 
@@ -35,7 +35,7 @@ namespace Dynamik {
 					throw std::runtime_error("Failed to Open file!");
 
 				size_t fileSize = (size_t)file.tellg();
-				ARRAY<char> buffer(fileSize);
+				std::vector<char> buffer(fileSize);
 				file.seekg(0);
 				file.read(buffer.data(), fileSize);
 

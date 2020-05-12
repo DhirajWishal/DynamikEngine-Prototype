@@ -21,7 +21,7 @@ namespace Dynamik {
 		_getFormatFromChannels();
 	}
 
-	void Texture::loadCubemap(ARRAY<std::string> paths, DMKTextureInputType inputType)
+	void Texture::loadCubemap(std::vector<std::string> paths, DMKTextureInputType inputType)
 	{
 		type = DMKTextureType::DMK_TEXTURE_TYPE_CUBEMAP;
 

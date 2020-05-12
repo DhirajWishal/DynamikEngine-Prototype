@@ -40,9 +40,9 @@ namespace Dynamik {
 		struct RenderContext {
 			POINTER<SwapChain> swapChain;
 			POINTER<RenderPass> renderPass;
-			ARRAY<POINTER<FrameBuffer>> frameBuffers;
+			std::vector<POINTER<FrameBuffer>> frameBuffers;
 
-			ARRAY<POINTER<SceneComponent>> sceneComponents;
+			std::vector<POINTER<SceneComponent>> sceneComponents;
 
 			RenderContextType type = RenderContextType::RENDER_CONTEXT_TYPE_DEFAULT;
 		};
@@ -52,7 +52,7 @@ namespace Dynamik {
 		 * This buffer is updated with the Uniform Buffer Object associated to it on draw time.
 		 */
 		struct RenderableUniformBufferContainer {
-			ARRAY<POINTER<UniformBuffer>> uniformBuffers;
+			std::vector<POINTER<UniformBuffer>> uniformBuffers;
 		};
 	}
 }

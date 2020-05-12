@@ -86,19 +86,19 @@ namespace Dynamik {
 				POINTER<VulkanGraphicsSwapChain> swapChainPointer;
 				POINTER<VulkanGraphicsFrameBuffer> frameBufferPointer;
 
-				ARRAY<VulkanBufferContainer> vertexBufferContainer;
+				std::vector<VulkanBufferContainer> vertexBufferContainer;
 
-				ARRAY<VulkanBufferContainer> indexBufferContainer;
+				std::vector<VulkanBufferContainer> indexBufferContainer;
 				DMKDataType indexBufferType = DMKDataType::DMK_DATA_TYPE_UI32;
 
-				ARRAY<VulkanTextureContainer> textures;
+				std::vector<VulkanTextureContainer> textures;
 
 				VulkanGraphicsDescriptor descriptors;
 
-				ARRAY<VulkanGraphicsPipeline> pipelineContainers;
+				std::vector<VulkanGraphicsPipeline> pipelineContainers;
 
-				ARRAY<VulkanUnformBufferContainer> uniformBufferContainers;
-				ARRAY<VulkanGraphicsPushConstant> pushConstants;
+				std::vector<VulkanUnformBufferContainer> uniformBufferContainers;
+				std::vector<VulkanGraphicsPushConstant> pushConstants;
 
 				VulkanMaterialDescriptor materialDescriptor;
 				B1 enableMaterials = false;

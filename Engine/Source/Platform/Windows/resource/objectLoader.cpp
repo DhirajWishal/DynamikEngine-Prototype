@@ -37,10 +37,10 @@ namespace Dynamik {
 		//}
 
 		template<typename Alloc>
-		void loadObject(std::string& path, ARRAY<Alloc>* vertices, ARRAY<UI32>* indices) {
+		void loadObject(std::string& path, std::vector<Alloc>* vertices, std::vector<UI32>* indices) {
 			tinyobj::attrib_t attrib;
-			ARRAY<tinyobj::shape_t> shapes;
-			ARRAY<tinyobj::material_t> materials;
+			std::vector<tinyobj::shape_t> shapes;
+			std::vector<tinyobj::material_t> materials;
 			std::string warn, err;
 
 			if (!tinyobj::LoadObj(&attrib, &shapes, &materials, &warn, &err, path.c_str()))
@@ -77,20 +77,20 @@ namespace Dynamik {
 	}
 	namespace utils {
 		// Object load function
-		ARRAY<DMKObjectDataContainer> loadObjFileData(std::string_view path) {
+		std::vector<DMKObjectDataContainer> loadObjFileData(std::string_view path) {
 			std::ifstream myObjectFile(path.data());
 			if (!myObjectFile)
-				return ARRAY<DMKObjectDataContainer>();
+				return std::vector<DMKObjectDataContainer>();
 
-			ARRAY<DMKObjectDataContainer> _containers = {};
+			std::vector<DMKObjectDataContainer> _containers = {};
 			UI32 _objectIndex = 0;
-			ARRAY<float> _positionData = {};
-			ARRAY<float> _texData = {};
-			ARRAY<float> _normalData = {};
-			ARRAY<float> _PSData = {};
-			ARRAY<UI32> _lineElementsData = {};
-			ARRAY<std::string> _splits = {};
-			ARRAY<std::string> _subSplits = {};
+			std::vector<float> _positionData = {};
+			std::vector<float> _texData = {};
+			std::vector<float> _normalData = {};
+			std::vector<float> _PSData = {};
+			std::vector<UI32> _lineElementsData = {};
+			std::vector<std::string> _splits = {};
+			std::vector<std::string> _subSplits = {};
 
 			bool _singePass = true;
 			UI32 _vertexTotalCount = 0;
@@ -201,16 +201,16 @@ namespace Dynamik {
 				if (!_objectFile)
 					continue;
 
-				ARRAY<DMKObjectDataContainer> _containers = {};
+				std::vector<DMKObjectDataContainer> _containers = {};
 				UI32 _localIndex = 0;
 				UI32 _objectIndex = 0;
-				ARRAY<float> _positionData = {};
-				ARRAY<float> _texData = {};
-				ARRAY<float> _normalData = {};
-				ARRAY<float> _PSData = {};
-				ARRAY<UI32> _lineElementsData = {};
-				ARRAY<std::string> _splits = {};
-				ARRAY<std::string> _subSplits = {};
+				std::vector<float> _positionData = {};
+				std::vector<float> _texData = {};
+				std::vector<float> _normalData = {};
+				std::vector<float> _PSData = {};
+				std::vector<UI32> _lineElementsData = {};
+				std::vector<std::string> _splits = {};
+				std::vector<std::string> _subSplits = {};
 
 				bool _singePass = true;
 				UI32 _vertexTotalCount = 0;

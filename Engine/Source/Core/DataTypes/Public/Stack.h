@@ -13,7 +13,7 @@ namespace Dynamik {
 
 		void push(TYPE& data)
 		{
-			myDataStore.pushBack(data);
+			myDataStore.push_back(data);
 		}
 
 		TYPE front()
@@ -32,7 +32,7 @@ namespace Dynamik {
 		}
 
 	private:
-		ARRAY<TYPE> myDataStore;
+		std::vector<TYPE> myDataStore;
 	};
 }
 

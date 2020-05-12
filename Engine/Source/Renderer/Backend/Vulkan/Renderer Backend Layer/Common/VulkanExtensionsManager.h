@@ -2,7 +2,7 @@
 #ifndef _DYNAMIK_RENDERER_VULKAN_EXTENSION_MANAGER_H
 #define _DYNAMIK_RENDERER_VULKAN_EXTENSION_MANAGER_H
 
-#include "Public/Array.h"
+#include <vector>
 
 namespace Dynamik {
 	namespace Renderer {
@@ -12,7 +12,7 @@ namespace Dynamik {
 				VulkanExtensionsManager() {}
 				~VulkanExtensionsManager() {}
 
-				static ARRAY<CCPTR> getRequiredExtentions(B1);
+				static std::vector<CCPTR> getRequiredExtentions(B1);
 			};
 		}
 	}

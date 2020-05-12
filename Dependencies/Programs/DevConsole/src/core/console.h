@@ -15,7 +15,7 @@ namespace Dynamik {
 		private:
 			void print();
 
-			ARRAY<std::string> myCommand = { {}, {}, {}, {} };
+			std::vector<std::string> myCommand = { {}, {}, {}, {} };
 			int location = 0;
 
 			enum format {
@@ -31,7 +31,7 @@ namespace Dynamik {
 				SYSTEM
 			};
 
-			const ARRAY<std::string> commands = {
+			const std::vector<std::string> commands = {
 				"help", "set", "clear", "back",
 				"get", "print", "system"
 			};
@@ -41,7 +41,7 @@ namespace Dynamik {
 				CORE_PRINT
 			};
 
-			const ARRAY<ARRAY<std::string>> subCommands = {
+			const std::vector<std::vector<std::string>> subCommands = {
 				{"info", "warn", "error", "fatal"},
 				{"corelog"},
 			};

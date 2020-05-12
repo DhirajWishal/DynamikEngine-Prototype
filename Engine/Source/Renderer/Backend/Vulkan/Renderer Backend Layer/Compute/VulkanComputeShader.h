@@ -15,15 +15,15 @@ namespace Dynamik {
 				void initialize(VkDevice logicalDevice, std::string path);
 				void terminate(VkDevice logicalDevice);
 
-				static VkShaderModule createShaderModule(VkDevice logicalDevice, ARRAY<CHR> code);
+				static VkShaderModule createShaderModule(VkDevice logicalDevice, std::vector<CHR> code);
 
-				ARRAY<CHR> code;
+				std::vector<CHR> code;
 				VkShaderModule shaderModule = VK_NULL_HANDLE;
 				VulkanGraphicsShaderType type;
 				VkPipelineShaderStageCreateInfo stageCreateInfo;
 
 			private:
-				ARRAY<CHR> getCode(std::string path);
+				std::vector<CHR> getCode(std::string path);
 			};
 		}
 	}

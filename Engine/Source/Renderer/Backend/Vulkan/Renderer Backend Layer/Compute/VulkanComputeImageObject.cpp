@@ -121,26 +121,26 @@ namespace Dynamik {
 				VkDescriptorPoolSize _poolSize2;
 				_poolSize2.type = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
 				_poolSize2.descriptorCount = 1;
-				descriptorPoolInitInfo.poolSizes.pushBack(_poolSize2);
+				descriptorPoolInitInfo.poolSizes.push_back(_poolSize2);
 
 				myComputeData.computeDescriptor.initializePool(logicalDevice, descriptorPoolInitInfo);
 			}
 
 			void VulkanComputeImageObject::_initializeDescriptorSets()
 			{
-				ARRAY<VkWriteDescriptorSet> descriptorWrites = {};
-				ARRAY<VkDescriptorImageInfo> imageInfos;
+				std::vector<VkWriteDescriptorSet> descriptorWrites = {};
+				std::vector<VkDescriptorImageInfo> imageInfos;
 
 				VkDescriptorImageInfo imageInfo = {};
 				imageInfo.imageLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
 				imageInfo.imageView = myOutputTextureContainer.imageView;
 				imageInfo.sampler = myOutputTextureContainer.imageSampler;
-				imageInfos.pushBack(imageInfo);
+				imageInfos.push_back(imageInfo);
 
 				imageInfo.imageLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
 				imageInfo.imageView = myInputTextureContainer.imageView;
 				imageInfo.sampler = myInputTextureContainer.imageSampler;
-				imageInfos.pushBack(imageInfo);
+				imageInfos.push_back(imageInfo);
 
 				VkWriteDescriptorSet _writes1;
 				_writes1.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;

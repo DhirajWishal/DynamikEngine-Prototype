@@ -3,7 +3,7 @@
 #define _DYNAMIK_UNIFORM_BUFFER_OBJECT_H
 
 #include "../DMKObject/DMKObject.h"
-#include "Public/Array.h"
+#include <vector>
 
 namespace Dynamik {
 	class UniformBufferObject : public DMKObject {

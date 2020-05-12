@@ -2,7 +2,7 @@
 #ifndef _DYNAMIK_GAME_OBJECT_DESCRIPTORS_H
 #define _DYNAMIK_GAME_OBJECT_DESCRIPTORS_H
 
-#include "Public/Array.h"
+#include <vector>
 #include "Dynamik/DMKDataType.h"
 #include "Dynamik/objectSpecifications.h"
 #include "Dynamik/RenderingSpecifications.h"
@@ -97,9 +97,9 @@ namespace Dynamik {
 		DMKVertexBufferObjectDescriptor() {}
 		~DMKVertexBufferObjectDescriptor() {}
 
-		static UI32 vertexByteSize(ARRAY<DMKVertexAttribute> attributes);
+		static UI32 vertexByteSize(std::vector<DMKVertexAttribute> attributes);
 
-		ARRAY<DMKVertexAttribute> attributes;
+		std::vector<DMKVertexAttribute> attributes;
 	};
 
 	struct  DMKUniformAttribute {
@@ -112,11 +112,11 @@ namespace Dynamik {
 		DMKUniformBufferObjectDescriptor() {}
 		~DMKUniformBufferObjectDescriptor() {}
 
-		static UI32 uniformByteSize(ARRAY<DMKUniformAttribute> attributes);
+		static UI32 uniformByteSize(std::vector<DMKUniformAttribute> attributes);
 
 		DMKUniformType type = DMKUniformType::DMK_UNIFORM_TYPE_BUFFER_OBJECT;
 		DMKShaderLocation location = DMKShaderLocation::DMK_SHADER_LOCATION_VERTEX;
-		ARRAY<DMKUniformAttribute> attributes;
+		std::vector<DMKUniformAttribute> attributes;
 		UI32 binding = 0;
 	};
 
@@ -131,7 +131,7 @@ namespace Dynamik {
 		DMKPipelineTopology pipelineTopology = DMKPipelineTopology::DMK_PIPELINE_TOPOLOGY_TRIANGLE_LIST;
 		DMKRenderingTechnology renderingTechnology = DMKRenderingTechnology::DMK_RENDERING_TECHNOLOGY_INDEXED;
 
-		ARRAY<DMKRenderAttachment> renderAttachments;
+		std::vector<DMKRenderAttachment> renderAttachments;
 	};
 
 	class DMKGameObjectDescriptor {
@@ -149,9 +149,9 @@ namespace Dynamik {
 
 		DMKVertexBufferObjectDescriptor vertexBufferObjectDescription;
 		DMKDataType indexBufferType = DMKDataType::DMK_DATA_TYPE_UI32;
-		ARRAY<DMKUniformBufferObjectDescriptor> uniformBufferObjectDescriptions;
+		std::vector<DMKUniformBufferObjectDescriptor> uniformBufferObjectDescriptions;
 
-		ARRAY<DMKAttachmentType> additionalAttachments;
+		std::vector<DMKAttachmentType> additionalAttachments;
 	};
 
 	/*
@@ -164,7 +164,7 @@ namespace Dynamik {
 		DMKUniformBufferData();
 		~DMKUniformBufferData();
 
-		void initialize(ARRAY<DMKUniformAttribute> attributes);
+		void initialize(std::vector<DMKUniformAttribute> attributes);
 		void clear();
 		void terminate();
 		VPTR data() { return store; }
@@ -180,7 +180,7 @@ namespace Dynamik {
 		B1 isTerminated = false;
 		UI32 allocationSize = 0;
 
-		ARRAY<DMKUniformAttribute> _attributes;
+		std::vector<DMKUniformAttribute> _attributes;
 	};
 }
 

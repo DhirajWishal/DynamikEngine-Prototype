@@ -2,7 +2,7 @@
 #include "GameObjectDescriptors.h"
 
 namespace Dynamik {
-	UI32 DMKVertexBufferObjectDescriptor::vertexByteSize(ARRAY<DMKVertexAttribute> attributes)
+	UI32 DMKVertexBufferObjectDescriptor::vertexByteSize(std::vector<DMKVertexAttribute> attributes)
 	{
 		UI32 _size = 0;
 
@@ -12,7 +12,7 @@ namespace Dynamik {
 		return _size;
 	}
 
-	UI32 DMKUniformBufferObjectDescriptor::uniformByteSize(ARRAY<DMKUniformAttribute> attributes)
+	UI32 DMKUniformBufferObjectDescriptor::uniformByteSize(std::vector<DMKUniformAttribute> attributes)
 	{
 		UI32 _size = 0;
 
@@ -33,7 +33,7 @@ namespace Dynamik {
 	{
 	}
 
-	void DMKUniformBufferData::initialize(ARRAY<DMKUniformAttribute> attributes)
+	void DMKUniformBufferData::initialize(std::vector<DMKUniformAttribute> attributes)
 	{
 		_attributes = attributes;
 

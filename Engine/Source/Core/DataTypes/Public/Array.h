@@ -45,7 +45,7 @@ namespace Dynamik {
 	/* TEMPLATED
 	 * Dynamic Array data structure for the Dynamik Engine.
 	 * This array can store any data defined in the data type TYPE and supports multiple dimensions.
-	 * Tested to be faster than the ARRAY<TYPE> library/ data type.
+	 * Tested to be faster than the std::vector<TYPE> library/ data type.
 	 * This also contains utility functions related to array and pointer manipulation.
 	 *
 	 * This can also be used as:
@@ -65,13 +65,13 @@ namespace Dynamik {
 		 * Check if the Template argument is not void.
 		 * Compile time check.
 		 */
-		static_assert(!isType<TYPE, void>::result, "void Is Not Accepted As A Template Argument! ARRAY<TYPE, Allocator>");
+		static_assert(!isType<TYPE, void>::result, "void Is Not Accepted As A Template Argument! std::vector<TYPE, Allocator>");
 
 		/* STATIC ASSERT
 		 * Check if both the template arguments are same.
 		 * Compile time check.
 		 */
-		static_assert(!isType<TYPE, Allocator>::result, "Invalid Template Arguments! ARRAY<TYPE, Allocator>");
+		static_assert(!isType<TYPE, Allocator>::result, "Invalid Template Arguments! std::vector<TYPE, Allocator>");
 
 		/* PRIVATE DATATYPE
 		 * Used as a private data type.
@@ -269,7 +269,7 @@ namespace Dynamik {
 			myNextPtr += myDataCount;
 		}
 
-		ARRAY(const ARRAY<TYPE>& arr)
+		ARRAY(const std::vector<TYPE>& arr)
 		{
 			if (arr.size())
 			{
@@ -396,7 +396,7 @@ namespace Dynamik {
 		 *
 		 * @param array: The other array.
 		 */
-		void set(const ARRAY<TYPE>& array)
+		void set(const std::vector<TYPE>& array)
 		{
 			set(array.begin(), array.end());
 		}
@@ -406,7 +406,7 @@ namespace Dynamik {
 		 *
 		 * @param data: Data to be added to the Array (lvalue).
 		 */
-		void pushBack(const TYPE& data)
+		void push_back(const TYPE& data)
 		{
 			if (myDataCount > (capacity() * 2))
 				myDataCount = 0;
@@ -424,31 +424,9 @@ namespace Dynamik {
 		 *
 		 * @param data: Data to be added to the Array (rvalue).
 		 */
-		void pushBack(TYPE&& data)
+		void push_back(TYPE&& data)
 		{
-			pushBack((TYPE&)data);
-		}
-
-		/* FUNCTION
-		 * Push Elements to the end of the Array.
-		 * Compatibility with the 'ARRAY<TYPE>::push_back(const TYPE&)' function.
-		 *
-		 * @param data: Data to be added to the Array (lvalue).
-		 */
-		void push_back(const TYPE& value)
-		{
-			pushBack(value);
-		}
-
-		/* FUNCTION
-		 * Push Elements to the end of the Array.
-		 * Compatibility with the 'ARRAY<TYPE>::push_back(const TYPE&)' function.
-		 *
-		 * @param data: Data to be added to the Array (rvalue).
-		 */
-		void push_back(TYPE&& value)
-		{
-			pushBack(value);
+			push_back((TYPE&)data);
 		}
 
 		/* FUNCTION
@@ -657,7 +635,7 @@ namespace Dynamik {
 		 *
 		 * @param arr: Array with the same type to be contacted.
 		 */
-		void insert(ARRAY<TYPE> arr)
+		void insert(std::vector<TYPE> arr)
 		{
 			if (arr.size() > capacity())
 				_reAllocateAssign(_getAllocatableSize(arr.size()));
@@ -737,7 +715,7 @@ namespace Dynamik {
 		 */
 		void bubbleSort(bool isAsc = true)
 		{
-			ARRAY<TYPE> _localArray = this;
+			std::vector<TYPE> _localArray = this;
 			UI32 _indexCount = 0;
 			UI32 _index, _itr;
 			while (_indexCount < (_getSizeOfThis() - 1))
@@ -777,14 +755,14 @@ namespace Dynamik {
 		 * @param from: First index.
 		 * @param toWhere: Last index.
 		 */
-		ARRAY<TYPE> subArray(UI32 from, UI32 toWhere)
+		std::vector<TYPE> subArray(UI32 from, UI32 toWhere)
 		{
 			if (!isValidIndexRange(from, toWhere)) return; /* TODO: Error Flagging */
 
-			ARRAY<TYPE> _local(toWhere - from);
+			std::vector<TYPE> _local(toWhere - from);
 
 			for (; from <= toWhere; from++)
-				_local.pushBack(at(from));
+				_local.push_back(at(from));
 
 			return _local;
 		}
@@ -795,14 +773,14 @@ namespace Dynamik {
 		 * @param from: First index.
 		 * @param toWhere: Last index.
 		 */
-		ARRAY<TYPE> subArray(SI32 from, SI32 toWhere)
+		std::vector<TYPE> subArray(SI32 from, SI32 toWhere)
 		{
 			if (!isValidIndexRange(from, toWhere)) return; /* TODO: Error Flagging */
 
-			ARRAY<TYPE> _local((from - toWhere) * -1);
+			std::vector<TYPE> _local((from - toWhere) * -1);
 
 			for (; from <= toWhere; from++)
-				_local.pushBack(at(from));
+				_local.push_back(at(from));
 
 			return _local;
 		}
@@ -897,13 +875,13 @@ namespace Dynamik {
 		 * @param data: Data to be searched for.
 		 * @return: Array of indexes which the gived data is found.
 		 */
-		ARRAY<UI32> find(const TYPE& data)
+		std::vector<UI32> find(const TYPE& data)
 		{
-			ARRAY<UI32> _indexContainer;
+			std::vector<UI32> _indexContainer;
 
 			for (UI32 _itr = 0; _itr < size(); _itr++)
 				if (this->at(_itr) == data)
-					_indexContainer.pushBack(_itr);
+					_indexContainer.push_back(_itr);
 
 			return _indexContainer;
 		}
@@ -914,13 +892,13 @@ namespace Dynamik {
 		 * @param data: Data to be searched for.
 		 * @return: Array of indexes which the gived data is found.
 		 */
-		ARRAY<UI32> find(TYPE&& data)
+		std::vector<UI32> find(TYPE&& data)
 		{
-			ARRAY<UI32> _indexContainer;
+			std::vector<UI32> _indexContainer;
 
 			for (UI32 _itr = 0; _itr < size(); _itr++)
 				if (this->at(_itr) == data)
-					_indexContainer.pushBack(_itr);
+					_indexContainer.push_back(_itr);
 
 			return _indexContainer;
 		}
@@ -946,12 +924,12 @@ namespace Dynamik {
 		 * Casts the data stored in this array to the provided type.
 		 */
 		template<class SUB_TYPE>
-		ARRAY<SUB_TYPE, DestructorCallMode> cast()
+		std::vector<SUB_TYPE> cast()
 		{
-			ARRAY<SUB_TYPE> _newArr;
+			std::vector<SUB_TYPE> _newArr;
 
 			for (auto _elem : *this)
-				_newArr.pushBack(Cast<SUB_TYPE>(_elem));
+				_newArr.push_back(Cast<SUB_TYPE>(_elem));
 
 			return _newArr;
 		}
@@ -988,7 +966,7 @@ namespace Dynamik {
 		 *
 		 * @param data: Array to be checked with.
 		 */
-		B1 operator==(ARRAY<TYPE>& data)
+		B1 operator==(std::vector<TYPE>& data)
 		{
 			if (this->_getSizeOfThis() != data.size())
 				return false;
@@ -1005,7 +983,7 @@ namespace Dynamik {
 		 *
 		 * @param data: Array to be contacted with.
 		 */
-		ARRAY<TYPE>& operator+(const ARRAY<TYPE>& data)
+		std::vector<TYPE>& operator+(const std::vector<TYPE>& data)
 		{
 			this->insert(data);
 			return *this;
@@ -1017,7 +995,7 @@ namespace Dynamik {
 		 *
 		 * @para arr: Array to be initialized to this.
 		 */
-		ARRAY<TYPE>& operator=(const ARRAY<TYPE>& arr)
+		std::vector<TYPE>& operator=(const std::vector<TYPE>& arr)
 		{
 			this->set(arr.begin(), arr.end());
 			return *this;
@@ -1029,7 +1007,7 @@ namespace Dynamik {
 		 *
 		 * @para arr: Array to be initialized to this.
 		 */
-		ARRAY<TYPE>& operator=(ARRAY<TYPE>&& arr) noexcept
+		std::vector<TYPE>& operator=(std::vector<TYPE>&& arr) noexcept
 		{
 			this->set(arr.begin(), arr.end());
 			return *this;
@@ -1041,7 +1019,7 @@ namespace Dynamik {
 		 *
 		 * @para arr: Raw array to be initialized to this.
 		 */
-		ARRAY<TYPE>& operator=(const PTR arr)
+		std::vector<TYPE>& operator=(const PTR arr)
 		{
 			this->set(arr);
 			return *this;
@@ -1053,7 +1031,7 @@ namespace Dynamik {
 		 *
 		 * @para list: Raw array to be initialized to this.
 		 */
-		ARRAY<TYPE>& operator=(std::initializer_list<TYPE> list)
+		std::vector<TYPE>& operator=(std::initializer_list<TYPE> list)
 		{
 			this->set(list);
 			return *this;
@@ -1065,7 +1043,7 @@ namespace Dynamik {
 		 *
 		 * @para arr: Initializer list to be initialized to this.
 		 */
-		ARRAY<TYPE>& operator=(InitializerList<TYPE> list)
+		std::vector<TYPE>& operator=(InitializerList<TYPE> list)
 		{
 			this->_initializeInitializerList(list);
 			return *this;
@@ -1078,7 +1056,7 @@ namespace Dynamik {
 		 * @param destination: Destination Array.
 		 */
 		template<class SUB_TYPE>
-		static void copy(ARRAY<SUB_TYPE>* source, ARRAY<SUB_TYPE>* destination)
+		static void copy(std::vector<SUB_TYPE>* source, std::vector<SUB_TYPE>* destination)
 		{
 			*destination = *source;
 		}
@@ -1096,7 +1074,7 @@ namespace Dynamik {
 
 			_reAllocateBack(list.size());
 			for (InitializerList<TYPE>::ITERATOR _itr = list.begin(); _itr != list.end(); ++_itr)
-				pushBack(*_itr);
+				push_back(*_itr);
 		}
 
 		/* PRIVATE FUNCTION
@@ -1389,7 +1367,7 @@ namespace Dynamik {
 		{
 			UI32 _passes = std::thread::hardware_concurrency() - 1;	// number of threads
 			UI32 _chunks = size() / std::thread::hardware_concurrency();	// number of elements thats given for each thread
-			ARRAY<std::future<void>, DMKArrayDestructorCallMode::DMK_ARRAY_DESTRUCTOR_CALL_MODE_DESTRUCT_ALL> _threads(_passes);		// threads
+			std::vector<std::future<void>, DMKArrayDestructorCallMode::DMK_ARRAY_DESTRUCTOR_CALL_MODE_DESTRUCT_ALL> _threads(_passes);		// threads
 			PTR _first;
 			_internalThread _localThread;
 
@@ -1400,7 +1378,7 @@ namespace Dynamik {
 
 				_localThread = _internalThread(_first, first);
 				//add each destructor array to threads
-				_threads.pushBack(std::async(std::launch::async, __internalThreadFunction, &_localThread));
+				_threads.push_back(std::async(std::launch::async, __internalThreadFunction, &_localThread));
 			}
 
 			// if elements are not destroyed fully, destroy them manually (in this thread)
@@ -1502,7 +1480,7 @@ namespace Dynamik {
 
 		/* PRIVATE FUNCTION
 		 * Basic initializations.
-		 * Set basic initializations for pushBack function.
+		 * Set basic initializations for push_back function.
 		 *
 		 * @param dataStore: Begin address of the new Array.
 		 * @param capacity: Capacity of the new allocation.

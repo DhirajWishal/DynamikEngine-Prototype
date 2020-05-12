@@ -4,7 +4,7 @@
 
 #include "EventComponent.h"
 #include <string>
-#include "Public/Array.h"
+#include <vector>
 
 namespace Dynamik {
 	class DMKDropPathEventComponent : public DMKEventComponent {
@@ -13,7 +13,7 @@ namespace Dynamik {
 		~DMKDropPathEventComponent() {}
 
 		I32 count = 0;
-		ARRAY<std::string> paths;
+		std::vector<std::string> paths;
 	};
 }
 

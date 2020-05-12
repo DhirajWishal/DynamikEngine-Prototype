@@ -2,7 +2,7 @@
 #ifndef _DYNAMIK_EVENT_MANAGER_H
 #define _DYNAMIK_EVENT_MANAGER_H
 
-#include "Public/Array.h"
+#include <vector>
 #include "EventComponent.h"
 
 namespace Dynamik {
@@ -32,7 +32,7 @@ namespace Dynamik {
 
 		static POINTER<GLFWwindow> getCurrentContext();
 
-		static ARRAY<POINTER<DMKEventComponent>> getEventComponents();
+		static std::vector<POINTER<DMKEventComponent>> getEventComponents();
 		static void clearContainer();
 		static B1 isCursorOnCurrent();
 		/* Returns the last recorded event of the button */
@@ -55,7 +55,7 @@ namespace Dynamik {
 		GLFWwindow* myWindowPointer;
 		CursorPosition myCursorPosition;
 
-		ARRAY<POINTER<DMKEventComponent>> events;
+		std::vector<POINTER<DMKEventComponent>> events;
 		B1 isCursorInThisWindow = false;
 		B1 isWindowClosed = false;
 
@@ -67,7 +67,7 @@ namespace Dynamik {
 			StaticAllocator<TYPE>::set(_component, (TYPE&&)component);
 
 			std::lock_guard<std::mutex> _lockGuard(myInstance.myMutex);
-			myInstance.events.pushBack(_component);
+			myInstance.events.push_back(_component);
 		}
 
 		static inline void _clearContainer();

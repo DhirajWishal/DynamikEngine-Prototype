@@ -74,10 +74,10 @@ namespace Dynamik {
 
 			void close();
 
-			ARRAY<std::string> getData(DMKDaiFileDataType type);
-			ARRAY<ARRAY<std::string>> getAllData();
-			ARRAY<float> getLocationData();
-			ARRAY<float> getRotationData();
+			std::vector<std::string> getData(DMKDaiFileDataType type);
+			std::vector<std::vector<std::string>> getAllData();
+			std::vector<float> getLocationData();
+			std::vector<float> getRotationData();
 
 		private:
 			void initDataStore();
@@ -85,9 +85,9 @@ namespace Dynamik {
 			std::string myPath = DMK_TEXT("");
 			std::fstream file = {};
 
-			ARRAY<ARRAY<std::string>> dataStore{};
-			ARRAY<float> locationData{};
-			ARRAY<float> rotationData{};
+			std::vector<std::vector<std::string>> dataStore{};
+			std::vector<float> locationData{};
+			std::vector<float> rotationData{};
 			bool isDataStoreInit = false;
 		};
 	}

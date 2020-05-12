@@ -9,7 +9,7 @@
 
 namespace Dynamik {
 
-	ARRAY<CCPTR> attributes = {
+	std::vector<CCPTR> attributes = {
 		"position",
 		"color",
 		"normal",

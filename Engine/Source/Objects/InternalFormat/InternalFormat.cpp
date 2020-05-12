@@ -4,10 +4,10 @@
 namespace Dynamik {
 	InternalFormat::InternalFormat() : DMKGameObject()
 	{
-		meshDatas = ARRAY<Mesh>();
+		meshDatas = std::vector<Mesh>();
 
 		objectPath = std::string();
-		texturePaths = ARRAY<std::string>();
+		texturePaths = std::vector<std::string>();
 		shaderPaths = ShaderPaths();
 	}
 }

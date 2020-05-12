@@ -9,7 +9,7 @@ namespace Dynamik {
 				UI32 layerCount = 0;
 				vkEnumerateInstanceLayerProperties(&layerCount, nullptr);
 
-				ARRAY<VkLayerProperties> availableLayers(layerCount);
+				std::vector<VkLayerProperties> availableLayers(layerCount);
 				vkEnumerateInstanceLayerProperties(&layerCount, availableLayers.data());
 
 				for (const char* layerName : validationLayer) {
@@ -29,7 +29,7 @@ namespace Dynamik {
 				return true;
 			}
 
-			ARRAY<const char*> VulkanValidator::validationLayer = {
+			std::vector<const char*> VulkanValidator::validationLayer = {
 				"VK_LAYER_KHRONOS_validation",
 				//"VK_LAYER_LUNARG_api_dump",
 				//"VK_LAYER_LUNARG_vktrace"

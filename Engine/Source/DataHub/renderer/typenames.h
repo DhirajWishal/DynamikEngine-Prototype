@@ -3,12 +3,12 @@
 #ifndef _DYNAMIK_RENDERER_VULKAN_TYPENAMES_H
 #define _DYNAMIK_RENDERER_VULKAN_TYPENAMES_H
 
-#include "Public/Array.h"
+#include <vector>
 
 namespace Dynamik {
 	namespace Renderer {
 		namespace core {
-			typedef ARRAY<char> DMK_ShaderCode;
+			typedef std::vector<char> DMK_ShaderCode;
 		}
 	}
 }

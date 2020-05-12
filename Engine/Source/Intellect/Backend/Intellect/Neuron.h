@@ -40,7 +40,7 @@ namespace Dynamik {
 			Neuron(UI32 layer, UI32 index) : myLayerNumber(layer), myIndex(index) {}	// default constructor
 			virtual ~Neuron() {}	// default virtual destructor
 
-			virtual F32 process(ARRAY<NeuralConnection*> connections)	// virtual process function
+			virtual F32 process(std::vector<NeuralConnection*> connections)	// virtual process function
 			{
 				myConnections = connections;
 				return myActivation;
@@ -50,7 +50,7 @@ namespace Dynamik {
 			UI32 myLayerNumber = 0;	// neuron layer number
 
 			F32 myActivation = 0.0f;	// neuron activation
-			ARRAY<NeuralConnection*> myConnections = {};
+			std::vector<NeuralConnection*> myConnections = {};
 		};
 	}
 }

@@ -6,7 +6,7 @@ namespace Dynamik {
 		namespace Backend {
 			void VulkanGraphicsRenderPass::initialize(VkDevice logicalDevice, VulkanRenderPassInitInfo info)
 			{
-				ARRAY<VkSubpassDependency> dependencies;
+				std::vector<VkSubpassDependency> dependencies;
 
 				if (!info.overrideDependencies)
 				{

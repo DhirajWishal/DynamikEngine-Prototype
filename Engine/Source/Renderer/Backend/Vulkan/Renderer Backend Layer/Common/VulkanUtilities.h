@@ -4,7 +4,7 @@
 
 #include <vulkan/vulkan.h>
 
-#include "Public/Array.h"
+#include <vector>
 #include "GameObjectDescriptors.h"
 #include "Objects/InternalFormat/InternalFormat.h"
 #include "../Graphics/VulkanGraphicsShader.h"
@@ -130,8 +130,8 @@ namespace Dynamik {
 			};
 
 			struct VulkanUnformBufferContainer {
-				ARRAY<VkBuffer> buffers;
-				ARRAY<VkDeviceMemory> bufferMemories;
+				std::vector<VkBuffer> buffers;
+				std::vector<VkDeviceMemory> bufferMemories;
 			};
 
 			class VulkanUtilities {
@@ -144,14 +144,14 @@ namespace Dynamik {
 				static VkFormat getFormat(DMKFormat format);
 
 				/* VERTEX FUNCTIONS */
-				static ARRAY<VkVertexInputBindingDescription> getBindingDescription(ARRAY<DMKVertexAttribute> attributes, UI32 bindCount = 1);
-				static ARRAY<VkVertexInputAttributeDescription> getAttributeDescriptions(ARRAY<DMKVertexAttribute> attributes, UI32 binding = 0);
+				static std::vector<VkVertexInputBindingDescription> getBindingDescription(std::vector<DMKVertexAttribute> attributes, UI32 bindCount = 1);
+				static std::vector<VkVertexInputAttributeDescription> getAttributeDescriptions(std::vector<DMKVertexAttribute> attributes, UI32 binding = 0);
 				static VkFormat vertexAttributeTypeToVkFormat(DMKDataType type);
 
 				/* SHADER FUNCTIONS */
 				static VkShaderStageFlagBits getShaderStage(DMKShaderLocation location);
-				static ARRAY<VulkanGraphicsShader> getGraphicsShaders(VkDevice logicalDevice, ShaderPaths paths);
-				static void terminateGraphicsShaders(VkDevice logicalDevice, ARRAY<VulkanGraphicsShader> shaders);
+				static std::vector<VulkanGraphicsShader> getGraphicsShaders(VkDevice logicalDevice, ShaderPaths paths);
+				static void terminateGraphicsShaders(VkDevice logicalDevice, std::vector<VulkanGraphicsShader> shaders);
 
 				/* BUFFER FUNCTIONS */
 				static void generateMipMaps(VkDevice logicalDevice, VkPhysicalDevice physicalDevice, VkCommandPool commandPool, VkQueue processQueue, VkQueue utilityQueue, POINTER<VulkanTextureContainer> container);
@@ -161,7 +161,7 @@ namespace Dynamik {
 				static UI32 findMemoryType(UI32 typeFilter, VkMemoryPropertyFlags properties, VkPhysicalDevice physicalDevice);
 				static VkSampleCountFlagBits getMaxUsableSampleCount(VkPhysicalDevice physicalDevice);
 				static B1 hasStencilComponent(VkFormat format);
-				static VkFormat findSupportedFormat(const ARRAY<VkFormat>& candidates, VkImageTiling tiling, VkFormatFeatureFlags features, VkPhysicalDevice physicalDevice);
+				static VkFormat findSupportedFormat(const std::vector<VkFormat>& candidates, VkImageTiling tiling, VkFormatFeatureFlags features, VkPhysicalDevice physicalDevice);
 				static VkFormat findDepthFormat(VkPhysicalDevice physicalDevice);
 				static void copyBuffer(VkDevice logicalDevice, VkCommandPool commandPool, VkQueue graphicsQueue, VkQueue presentQueue, VkBuffer srcBuffer, VkBuffer dstBuffer, VkDeviceSize size);
 
@@ -172,8 +172,8 @@ namespace Dynamik {
 				static VkImageView createImageView(VkDevice device, VulkanCreateImageViewInfo info);
 				static void copyBufferToImage(VkDevice logicalDevice, VkCommandPool commandPool, VkQueue graphicsQueue, VkQueue presentQueue, VulkanCopyBufferToImageInfo info);
 				static void copyBufferToImage(VkDevice logicalDevice, VkCommandBuffer commandBuffer, VulkanCopyBufferToImageInfo info);
-				static void copyBufferToImageOverride(VkDevice logicalDevice, VkCommandPool commandPool, VkQueue graphicsQueue, VkQueue presentQueue, VulkanCopyBufferToImageInfo info, ARRAY<VkBufferImageCopy> copyRegions);
-				static void copyBufferToImageOverride(VkDevice logicalDevice, VkCommandBuffer commandBuffer, VulkanCopyBufferToImageInfo info, ARRAY<VkBufferImageCopy> copyRegions);
+				static void copyBufferToImageOverride(VkDevice logicalDevice, VkCommandPool commandPool, VkQueue graphicsQueue, VkQueue presentQueue, VulkanCopyBufferToImageInfo info, std::vector<VkBufferImageCopy> copyRegions);
+				static void copyBufferToImageOverride(VkDevice logicalDevice, VkCommandBuffer commandBuffer, VulkanCopyBufferToImageInfo info, std::vector<VkBufferImageCopy> copyRegions);
 				static VkSampler createImageSampler(VkDevice logicalDevice, VulkanTextureSamplerInitInfo info);
 
 				/* UNIFORM BUFFER FUNCTIONS */
@@ -181,8 +181,8 @@ namespace Dynamik {
 				static void updateUniformBuffer(VkDevice device, DMKUniformBufferData uniformData, VkDeviceMemory uniformBufferMemory);
 				static VkDescriptorType getDescriptorType(DMKUniformType type);
 				static VkShaderStageFlagBits getDescriptorFlag(DMKShaderLocation location);
-				static ARRAY<VkDescriptorSetLayoutBinding> getDescriptorSetBindings(ARRAY<DMKUniformBufferObjectDescriptor> descriptors);
-				static ARRAY<VkDescriptorPoolSize> getPoolSizes(ARRAY<DMKUniformBufferObjectDescriptor> descriptors, UI32 uniformBufferCount = 0, UI32 textureImageCount = 0);
+				static std::vector<VkDescriptorSetLayoutBinding> getDescriptorSetBindings(std::vector<DMKUniformBufferObjectDescriptor> descriptors);
+				static std::vector<VkDescriptorPoolSize> getPoolSizes(std::vector<DMKUniformBufferObjectDescriptor> descriptors, UI32 uniformBufferCount = 0, UI32 textureImageCount = 0);
 			};
 		}
 	}

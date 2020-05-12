@@ -48,7 +48,7 @@ namespace Dynamik {
 				void initializeInstance();
 				void initializeDevice();
 
-				void submitQueue(ARRAY<VkCommandBuffer> commandBuffers);
+				void submitQueue(std::vector<VkCommandBuffer> commandBuffers);
 				void finishCompute();
 
 				static UI32 getBestTransferQueue(VkPhysicalDevice physicalDevice);

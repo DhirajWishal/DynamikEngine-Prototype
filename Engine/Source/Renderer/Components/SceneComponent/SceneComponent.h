@@ -18,7 +18,7 @@ namespace Dynamik {
 			POINTER<VertexBuffer> vertexBuffer;
 			POINTER<IndexBuffer> indexBuffer;
 			POINTER<TextureData> textureData;
-			ARRAY<POINTER<UniformBuffer>> uniformBuffers;
+			std::vector<POINTER<UniformBuffer>> uniformBuffers;
 		};
 
 		class SceneComponent {
@@ -32,7 +32,7 @@ namespace Dynamik {
 			virtual void terminate() {}
 
 			POINTER<InternalFormat> myInternalFormat;
-			ARRAY<RenderingMeshComponent> myMeshes;
+			std::vector<RenderingMeshComponent> myMeshes;
 			//POINTER<RenderContext> myRenderContext;
 			POINTER<Pipeline> myPipeline;
 

@@ -6,7 +6,7 @@
 #include "Events/EventComponent.h"
 #include "GameObjectDescriptors.h"
 
-#include "Public/Array.h"
+#include <vector>
 
 namespace Dynamik {
 	/* DYNAMIK CAMERA PARENT CLASS
@@ -28,7 +28,7 @@ namespace Dynamik {
 		}
 		virtual ~DMKCamera() {}
 
-		virtual DMKCameraData update(ARRAY<POINTER<DMKEventComponent>> eventComponents) { return DMKCameraData(); }
+		virtual DMKCameraData update(std::vector<POINTER<DMKEventComponent>> eventComponents) { return DMKCameraData(); }
 		virtual MAT4 getViewMatrix() { return MAT4(); }
 
 	public:

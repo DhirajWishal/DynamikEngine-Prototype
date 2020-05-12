@@ -12,11 +12,11 @@ namespace Dynamik {
 		~HeapStore() {}
 
 		void add(const TYPE& data) {
-			store.pushBack(data);
+			store.push_back(data);
 		}
 
 	private:
-		ARRAY<TYPE> store;
+		std::vector<TYPE> store;
 	};
 }
 

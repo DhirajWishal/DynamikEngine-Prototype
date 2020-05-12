@@ -84,19 +84,19 @@ namespace Dynamik {
 
 		/* Since each level consists of one or more scenes, we pack the given scenes to a wrapper.	*/
 		/* After wrapping them in scene wrappers, we add the assets to it.							*/
-		ARRAY<ARRAY<AssetContainer>> scenes;
+		std::vector<std::vector<AssetContainer>> scenes;
 		for (auto scene : level.scenes)
 		{
 			DMK_BEGIN_PROFILE_TIMER();
 
-			ARRAY<AssetContainer> assets;
+			std::vector<AssetContainer> assets;
 			for (auto object : scene.assets)
 			{
 				object->initialize();
-				assets.pushBack(AssetManager::createAssetContainer(object));
+				assets.push_back(AssetManager::createAssetContainer(object));
 			}
 
-			scenes.pushBack(assets);
+			scenes.push_back(assets);
 		}
 
 		/* Add the scenes to a new level and return its index. */

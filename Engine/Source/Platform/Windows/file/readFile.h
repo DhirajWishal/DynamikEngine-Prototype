@@ -19,7 +19,7 @@
 
 namespace Dynamik {
 	namespace utils {
-		ARRAY<char> readFile(const std::string& filePath);
+		std::vector<char> readFile(const std::string& filePath);
 	}
 }
 

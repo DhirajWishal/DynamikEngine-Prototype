@@ -6,7 +6,7 @@ namespace Dynamik {
 
 	static B1 closeEventThread = false;
 
-	void ThreadManager::initiateThreads(ARRAY<POINTER<InternalFormat>> formats, ARRAY<POINTER<DMKWindow>> handles)
+	void ThreadManager::initiateThreads(std::vector<POINTER<InternalFormat>> formats, std::vector<POINTER<DMKWindow>> handles)
 	{
 		this->inFlightObjects = formats;
 		this->windowHandles = handles;
@@ -14,17 +14,17 @@ namespace Dynamik {
 		_eventThreadHandle->swap(std::thread(_eventThread, &this->inFlightObjects, &this->windowHandles));
 	}
 
-	void ThreadManager::updateInFlightObjects(ARRAY<POINTER<InternalFormat>> formats)
+	void ThreadManager::updateInFlightObjects(std::vector<POINTER<InternalFormat>> formats)
 	{
 		this->inFlightObjects = formats;
 	}
 
-	void ThreadManager::updateWindowHandles(ARRAY<POINTER<DMKWindow>> handles)
+	void ThreadManager::updateWindowHandles(std::vector<POINTER<DMKWindow>> handles)
 	{
 		this->windowHandles = handles;
 	}
 	
-	void ThreadManager::_eventThread(POINTER<ARRAY<POINTER<InternalFormat>>> formats, POINTER<ARRAY<POINTER<DMKWindow>>> windowHandles)
+	void ThreadManager::_eventThread(POINTER<std::vector<POINTER<InternalFormat>>> formats, POINTER<std::vector<POINTER<DMKWindow>>> windowHandles)
 	{
 		while (!closeEventThread)
 		{

@@ -6,7 +6,7 @@
 #include "Public/datatypes.h"
 #include "Public/typecheck.h"
 
-#include "Public/Array.h"
+#include <vector>
 #include "Public/Dynamic.h"
 #include "Public/DynamicPointer.h"
 #include "Public/FastString.h"

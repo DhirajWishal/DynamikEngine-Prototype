@@ -65,9 +65,9 @@ namespace Dynamik {
 			std::string myWindowTitle = ("Dynamik Engine");
 			UI32 myWindowWidth = 720;
 			UI32 myWindowHeight = 480;
-			ARRAY<std::string> myWindowIconPaths = { ("E:/Projects/Dynamik Engine/Dynamik/core assets/icons/Dynamik.jpg") };
+			std::vector<std::string> myWindowIconPaths = { ("E:/Projects/Dynamik Engine/Dynamik/core assets/icons/Dynamik.jpg") };
 
-			ARRAY<F32> clearScreenValues = {							// Vulkan clear screen values
+			std::vector<F32> clearScreenValues = {							// Vulkan clear screen values
 				(2.0f / 256.0f),		// Red
 				(8.0f / 256.0f),		// Green
 				(32.0f / 256.0f),		// Blue
@@ -78,7 +78,7 @@ namespace Dynamik {
 		struct  DMKRendererDrawFrameInfo {
 			DMKCameraData cameraData;
 
-			ARRAY<POINTER<InternalFormat>> formats;
+			std::vector<POINTER<InternalFormat>> formats;
 		};
 
 		/* RENDERER ABSTRACTION LAYER
@@ -118,7 +118,7 @@ namespace Dynamik {
 			static void setProgressPointer(POINTER<UI32> progress);
 			static void setWindowHandle(DMKWindowHandle windowHandle);
 			static void setWindowExtent(UI32 width, UI32 height);
-			static void setRenderableObjects(ARRAY<POINTER<InternalFormat>> formats, UI32 contextID = 0);
+			static void setRenderableObjects(std::vector<POINTER<InternalFormat>> formats, UI32 contextID = 0);
 			static void submitLoadedAssets(UI32 contextID = 0);
 
 			static void addToRenderQueue(POINTER<InternalFormat> format, UI32 contextID = 0);
@@ -132,8 +132,8 @@ namespace Dynamik {
 			
 		private:
 			POINTER<UI32> progressPtr;
-			ARRAY<POINTER<InternalFormat>> inFlightAssets;
-			ARRAY<POINTER<InternalFormat>> submitPendingAssets;
+			std::vector<POINTER<InternalFormat>> inFlightAssets;
+			std::vector<POINTER<InternalFormat>> submitPendingAssets;
 		};
 	}
 }

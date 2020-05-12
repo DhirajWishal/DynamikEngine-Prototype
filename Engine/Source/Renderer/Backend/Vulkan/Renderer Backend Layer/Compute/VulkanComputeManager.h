@@ -23,7 +23,7 @@ namespace Dynamik {
 			private:
 				VulkanComputeCore myComputeCore;
 				VulkanComputeCommandBuffer myComputeCommandBuffer;
-				ARRAY<VulkanComputeData> myComputeDatas;
+				std::vector<VulkanComputeData> myComputeDatas;
 			};
 		}
 	}

@@ -15,6 +15,7 @@ DMKCameraData Camera::update(ARRAY<POINTER<DMKEventComponent>> eventComponents)
 {
 	const F32 movementBias = 0.05f;
 	static CursorPosition _pos;
+	static VEC3 scale = glm::vec3(1.0f);
 
 	for (auto component : eventComponents)
 	{
@@ -44,8 +45,10 @@ DMKCameraData Camera::update(ARRAY<POINTER<DMKEventComponent>> eventComponents)
 				myData.cameraPosition += myData.cameraUp * movementBias;
 				break;
 			case DMK_KEY_LEFT:
+				scale -= glm::vec3(1.0f);
 				break;
 			case DMK_KEY_RIGHT:
+				scale += glm::vec3(1.0f);
 				break;
 			case DMK_KEY_KP_ADD:
 				break;
@@ -76,8 +79,10 @@ DMKCameraData Camera::update(ARRAY<POINTER<DMKEventComponent>> eventComponents)
 				myData.cameraPosition += myData.cameraUp * movementBias;
 				break;
 			case DMK_KEY_LEFT:
+				scale -= glm::vec3(1.0f);
 				break;
 			case DMK_KEY_RIGHT:
+				scale += glm::vec3(1.0f);
 				break;
 			case DMK_KEY_KP_ADD:
 				break;
@@ -137,10 +142,13 @@ DMKCameraData Camera::update(ARRAY<POINTER<DMKEventComponent>> eventComponents)
 	if (Pitch < -89.0f)
 		Pitch = -89.0f;
 
-	if (DMKEventManager::getKey(DMK_KEY_LEFT_SHIFT) == DMK_PRESS)
-		myData.modelMatrix = glm::translate(glm::mat4(1.0f), myData.cameraPosition + myData.cameraFront);
-
 	calculateVectors();
+
+	if (DMKEventManager::getKey(DMK_KEY_LEFT_SHIFT) == DMK_PRESS)
+	{
+		myData.modelMatrix = glm::translate(glm::mat4(1.0f), myData.cameraPosition + myData.cameraFront);
+		myData.modelMatrix *= glm::scale(glm::mat4(1.0f), scale);
+	}
 
 	return myData;
 }

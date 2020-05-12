@@ -43,7 +43,7 @@ int main(int argc, char** argv) {
 		scene1.sceneID = "S001";
 		scene1.sceneIndex = 0;
 		//scene1.assets = { &skybox };
-		scene1.assets = { &skybox, &moon };
+		scene1.assets = { &skybox, &reflectObject };
 
 		DMKLevelDescriptor level1;
 		level1.levelID = "001";

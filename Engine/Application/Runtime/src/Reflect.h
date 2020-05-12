@@ -9,6 +9,8 @@ public:
 	Reflect();
 	~Reflect() {}
 
+	void initialize() override;
+
 	Dynamik::DMKUniformBufferData onUpdate(Dynamik::DMKCameraData camData) override final;
 };
 

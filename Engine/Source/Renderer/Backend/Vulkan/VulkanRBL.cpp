@@ -425,7 +425,28 @@ namespace Dynamik {
 		{
 			DMK_BEGIN_PROFILE_TIMER();
 
+			/* Pre initialization stage */
 			VulkanRenderContext _context;
+			VulkanRenderData _renderData;
+			_renderData.type = format->type;
+
+			/* Resolve attachments */
+			B1 isTextureAvailable = false;
+			for (auto _attachment : format->descriptor.additionalAttachments)
+			{
+				switch (_attachment)
+				{
+				case Dynamik::DMKAttachmentType::DMK_ATTACHMENT_TYPE_CUBE_MAP:
+					if (!skyboxObject->textures.size())
+						DMK_CORE_FATAL("Unable to resolve attachmen! Requested cubemap is not yet loaded. Try loading the skybox object before adding this object.");
+
+					_renderData.textures = skyboxObject->textures;
+					isTextureAvailable = true;
+					break;
+				default:
+					break;
+				}
+			}
 
 			if (myRenderContexts.isValidIndex((UI32)context))
 			{
@@ -441,7 +462,6 @@ namespace Dynamik {
 				_context = myRenderContexts[0];
 			}
 
-			VulkanRenderData _renderData;
 			_renderData.renderTechnology = format->descriptor.renderSpecification.renderingTechnology;
 			_renderData.indexBufferType = format->descriptor.indexBufferType;
 
@@ -455,8 +475,9 @@ namespace Dynamik {
 				_renderData.indexBufferContainer.pushBack(createIndexBuffer(mesh, format->descriptor.indexBufferType));
 
 				/* initialize textures */
-				for (UI32 i = 0; i < mesh.textureDatas.size(); i++)
-					_renderData.textures.pushBack(createTextureImage(mesh.textureDatas[i]));
+				if (!isTextureAvailable)
+					for (UI32 i = 0; i < mesh.textureDatas.size(); i++)
+						_renderData.textures.pushBack(createTextureImage(mesh.textureDatas[i]));
 			}
 
 			/* Initialize uniform buffers */
@@ -472,7 +493,15 @@ namespace Dynamik {
 
 			/* Add data to the container and return its address */
 			myRenderContexts[(UI32)context].renderDatas.pushBack(_renderData);
-			return &myRenderContexts[(UI32)context].renderDatas[myRenderContexts[(UI32)context].renderDatas.size() - 1];
+			auto _address = &myRenderContexts[(UI32)context].renderDatas[myRenderContexts[(UI32)context].renderDatas.size() - 1];
+
+			if (format->type == DMKObjectType::DMK_OBJECT_TYPE_SKYBOX)
+			{
+				skyboxObject = _address;
+				return skyboxObject;
+			}
+
+			return _address;
 		}
 
 		void VulkanRBL::initializeCommands()
@@ -539,7 +568,8 @@ namespace Dynamik {
 					DMK_BEGIN_PROFILE_TIMER();
 
 					/* Currently the Vulkan RBL supports vertex shader uniform buffer updation only */
-					if (info.formats[index]->descriptor.uniformBufferObjectDescriptions[_itr].location != DMKShaderLocation::DMK_SHADER_LOCATION_VERTEX)
+					if ((info.formats[index]->descriptor.uniformBufferObjectDescriptions[_itr].type != DMKUniformType::DMK_UNIFORM_TYPE_BUFFER_OBJECT) &&
+						(info.formats[index]->descriptor.uniformBufferObjectDescriptions[_itr].type != DMKUniformType::DMK_UNIFORM_TYPE_CONSTANT))
 						continue;
 
 					/* Update the objects uniform buffer memory */

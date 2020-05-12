@@ -12,6 +12,11 @@ namespace Dynamik {
 	public:
 		DMKSkyboxObject()
 		{
+		}
+		virtual ~DMKSkyboxObject() {}
+
+		virtual void initialize() override
+		{
 			/* Basic description */
 			type = DMKObjectType::DMK_OBJECT_TYPE_SKYBOX;
 
@@ -72,11 +77,12 @@ namespace Dynamik {
 			descriptor.uniformBufferObjectDescriptions.pushBack(UBODescriptor);
 			descriptor.uniformBufferObjectDescriptions.pushBack(TexSampler);
 		}
-		virtual ~DMKSkyboxObject() {}
 
 		/* Overridable virtual function */
 		virtual DMKUniformBufferData onUpdate(DMKCameraData data) override
 		{
+			uniformBufferDataStore.clear();
+
 			MAT4 model = glm::mat4(1.0f);
 			uniformBufferDataStore.addData(&model, sizeof(MAT4), 0);
 			

@@ -144,6 +144,7 @@ namespace Dynamik {
 			inline void _sortRenderContexts();
 
 			/* Attachment container */
+			POINTER<VulkanRenderData> skyboxObject;
 		};
 	}
 }

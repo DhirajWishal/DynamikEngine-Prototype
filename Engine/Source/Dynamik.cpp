@@ -91,7 +91,10 @@ namespace Dynamik {
 
 			ARRAY<AssetContainer> assets;
 			for (auto object : scene.assets)
+			{
+				object->initialize();
 				assets.pushBack(AssetManager::createAssetContainer(object));
+			}
 
 			scenes.pushBack(assets);
 		}

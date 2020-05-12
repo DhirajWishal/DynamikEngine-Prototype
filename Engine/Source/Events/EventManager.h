@@ -35,6 +35,10 @@ namespace Dynamik {
 		static ARRAY<POINTER<DMKEventComponent>> getEventComponents();
 		static void clearContainer();
 		static B1 isCursorOnCurrent();
+		/* Returns the last recorded event of the button */
+		static I32 getMouseButton(I32 button);
+		/* Returns the last recorded event of the key */
+		static I32 getKey(UI32 key);
 
 	private:
 		static void _keyCallback(GLFWwindow* window, I32 key, I32 scancode, I32 action, I32 mods);

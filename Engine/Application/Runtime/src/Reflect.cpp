@@ -3,6 +3,10 @@ using namespace Dynamik;
 
 Reflect::Reflect()
 {
+}
+
+void Reflect::initialize()
+{
 	/* Basic description */
 	type = DMKObjectType::DMK_OBJECT_TYPE_STATIC;
 
@@ -77,10 +81,15 @@ Reflect::Reflect()
 	/* Add the uniform descriptior */
 	descriptor.uniformBufferObjectDescriptions.pushBack(UBODescriptor);
 	descriptor.uniformBufferObjectDescriptions.pushBack(TexSampler);
+
+	/* Add additional attachments */
+	descriptor.additionalAttachments.pushBack(DMKAttachmentType::DMK_ATTACHMENT_TYPE_CUBE_MAP);
 }
 
 Dynamik::DMKUniformBufferData Reflect::onUpdate(Dynamik::DMKCameraData data)
 {
+	uniformBufferDataStore.clear();
+
 	MAT4 model = glm::mat4(1.0f);
 	uniformBufferDataStore.addData(&model, sizeof(MAT4), 0);
 	
@@ -88,8 +97,10 @@ Dynamik::DMKUniformBufferData Reflect::onUpdate(Dynamik::DMKCameraData data)
 	uniformBufferDataStore.addData(&view, sizeof(MAT4), 1);
 	
 	MAT4 projection = glm::perspective(glm::radians(data.fieldOfView), data.aspectRatio, data.cameraNear, data.cameraFar);
-	projection[1][1] *= -1;
+	//projection[1][1] *= -1;
 	uniformBufferDataStore.addData(&projection, sizeof(MAT4), 2);
+
+	uniformBufferDataStore.addData(&data.cameraPosition, sizeof(VEC3), 3);
 
 	return uniformBufferDataStore;
 }

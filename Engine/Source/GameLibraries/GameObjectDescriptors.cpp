@@ -31,8 +31,6 @@ namespace Dynamik {
 
 	DMKUniformBufferData::~DMKUniformBufferData()
 	{
-		if (!isTerminated)
-			terminate();
 	}
 
 	void DMKUniformBufferData::initialize(ARRAY<DMKUniformAttribute> attributes)
@@ -78,12 +76,10 @@ namespace Dynamik {
 		}
 		else
 			DMK_CORE_FATAL("Invalid data location bound!");
-
-		nextPtr = store;
 	}
 
 	void DMKUniformBufferData::_incrementPtr(UI32 byteCount)
 	{
-		nextPtr = (VPTR)(((UI64)store) + byteCount);
+		nextPtr = (VPTR)(((UI64)nextPtr) + byteCount);
 	}
 }

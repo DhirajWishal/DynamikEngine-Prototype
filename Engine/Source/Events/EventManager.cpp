@@ -96,6 +96,16 @@ namespace Dynamik {
 		return myInstance.isCursorInThisWindow;
 	}
 
+	I32 DMKEventManager::getMouseButton(I32 button)
+	{
+		return glfwGetMouseButton(myInstance.myWindowPointer, button);
+	}
+
+	I32 DMKEventManager::getKey(UI32 key)
+	{
+		return glfwGetKey(myInstance.myWindowPointer, key);
+	}
+
 	void DMKEventManager::_keyCallback(GLFWwindow* window, I32 key, I32 scancode, I32 action, I32 mods)
 	{
 		DMKKeyEventComponent _component;

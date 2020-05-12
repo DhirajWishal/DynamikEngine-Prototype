@@ -36,6 +36,7 @@ namespace Dynamik {
 
 	protected:
 		DMKCameraData myData;
+		VEC3 worldUp = glm::vec3(0.0f, 1.0f, 0.0f);
 	};
 }
 

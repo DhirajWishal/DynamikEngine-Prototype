@@ -12,6 +12,11 @@ namespace Dynamik {
 	public:
 		DMKStaticObject() 
 		{
+		}
+		virtual ~DMKStaticObject() {}
+
+		virtual void initialize() override
+		{
 			/* Basic description */
 			type = DMKObjectType::DMK_OBJECT_TYPE_STATIC;
 
@@ -82,13 +87,13 @@ namespace Dynamik {
 			descriptor.uniformBufferObjectDescriptions.pushBack(UBODescriptor);
 			descriptor.uniformBufferObjectDescriptions.pushBack(TexSampler);
 		}
-		virtual ~DMKStaticObject() {}
 
 		/* Overridable virtual function */
 		virtual DMKUniformBufferData onUpdate(DMKCameraData data) override
 		{
-			MAT4 model = glm::mat4(1.0f);
-			uniformBufferDataStore.addData(&model, sizeof(MAT4), 0);
+			uniformBufferDataStore.clear();
+
+			uniformBufferDataStore.addData(&data.modelMatrix, sizeof(MAT4), 0);
 
 			MAT4 view = glm::lookAt(data.cameraPosition, data.cameraPosition + data.cameraFront, data.cameraUp);
 			uniformBufferDataStore.addData(&view, sizeof(MAT4), 1);

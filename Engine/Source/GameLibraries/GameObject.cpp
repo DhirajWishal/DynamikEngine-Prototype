@@ -2,5 +2,8 @@
 #include "GameObject.h"
 
 namespace Dynamik {
-	//DMKUpdateInfo GameObject::draw(std::deque<DMKEventContainer>& eventContainers)
+	DMKGameObject::~DMKGameObject()
+	{
+		uniformBufferDataStore.terminate();
+	}
 }

@@ -37,7 +37,13 @@ namespace Dynamik {
     class DMKGameObject : public DMKObject {
     public:
         DMKGameObject() {}
-        virtual ~DMKGameObject() {}
+        virtual ~DMKGameObject();
+
+        /*
+         VIRTUAL FUNCTIOn
+         Initializes the basic user data provided.
+        */
+        virtual void initialize() {}
 
         /* VIRTUAL FUNCTION
          * This function returns the Uniform buffer data which is used to feed the shaders with the relavent

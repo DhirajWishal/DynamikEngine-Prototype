@@ -21,6 +21,15 @@ namespace Dynamik {
 		DMK_TEXTURE_INPUT_TYPE_AUTO,
 	};
 
+	enum class DMKAttachmentType {
+		DMK_ATTACHMENT_TYPE_CUBE_MAP,
+	};
+
+	struct MaterialDescriptor {
+		std::string materialName = "";
+		VEC4 baseColor = { 0.0f,0.0f, 0.0f, 1.0f };
+	};
+
 	struct AssetDescriptor {
 		CCPTR dynamikResouceFilePath = "";
 
@@ -73,6 +82,8 @@ namespace Dynamik {
 		F32 aspectRatio = 0.5f;
 		F32 cameraFar = 256.0f;
 		F32 cameraNear = 0.001f;
+
+		MAT4 modelMatrix = glm::mat4(1.0f);
 	};
 
 	/* Binding indexes are assigned in the same order as the vertex attributes are submitted. */
@@ -139,6 +150,8 @@ namespace Dynamik {
 		DMKVertexBufferObjectDescriptor vertexBufferObjectDescription;
 		DMKDataType indexBufferType = DMKDataType::DMK_DATA_TYPE_UI32;
 		ARRAY<DMKUniformBufferObjectDescriptor> uniformBufferObjectDescriptions;
+
+		ARRAY<DMKAttachmentType> additionalAttachments;
 	};
 
 	/*

@@ -521,6 +521,7 @@ namespace Dynamik {
 				initInfo.swapChain = myRenderContexts[_itr].swapChain;
 				initInfo.objects = myRenderContexts[_itr].renderDatas;
 				initInfo.renderPass = myRenderContexts[_itr].renderPass;
+				//initInfo.captureFrames = true;
 				myRenderContexts[_itr].inFlightCommandBuffer.initializeCommandBuffers(initInfo);
 			}
 		}
@@ -564,6 +565,8 @@ namespace Dynamik {
 			{
 				DMK_BEGIN_PROFILE_TIMER();
 
+				info.formats[index]->checkRayCollition(info.cameraData.cameraPosition, info.cameraData.rayDirection);
+
 				/* Check for the Uniform buffer attributes and add the data to the container */
 				for (UI32 _itr = 0; _itr < info.formats[index]->descriptor.uniformBufferObjectDescriptions.size(); _itr++)
 				{
@@ -587,6 +590,12 @@ namespace Dynamik {
 				{ _renderContext.swapChain.swapChain },
 				imageIndex, currentFrame,
 				{ _renderContext.inFlightCommandBuffer.buffers[imageIndex] });
+
+#ifdef DMK_DEBUG
+			//_storeData(_renderContext.inFlightCommandBuffer.getImage(imageIndex));
+
+#endif // DMK_DEBUG
+
 
 			/* Check for any errors */
 			if (result == VK_ERROR_OUT_OF_DATE_KHR || result == VK_SUBOPTIMAL_KHR)
@@ -1047,6 +1056,20 @@ namespace Dynamik {
 			//VulkanSkeletalAnimation* _renderObject = Cast<VulkanSkeletalAnimation*>(format.get());
 
 			return VulkanRenderData();
+		}
+
+		void VulkanRBL::_storeData(VulkanTextureContainer container)
+		{
+			std::ofstream _outputFile(std::string("Captures/capture_") + std::to_string(_captureCount) + std::string(".raw"), std::ostream::binary);
+
+			VPTR data = nullptr;
+			if (vkMapMemory(myGraphicsCore.logicalDevice, container.imageMemory, 0, container.width * container.height * 4, 0, &data) != VK_SUCCESS)
+				DMK_CORE_FATAL("Unable to map image memory!");
+			_outputFile.write((CPTR)data, container.width * container.height * 4);
+			vkUnmapMemory(myGraphicsCore.logicalDevice, container.imageMemory);
+
+			_outputFile.close();
+			_captureCount++;
 		}
 
 		inline void VulkanRBL::_sortRenderContexts()

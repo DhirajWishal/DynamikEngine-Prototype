@@ -768,7 +768,7 @@ namespace Dynamik {
 				allocInfo.sType = VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO;
 				allocInfo.allocationSize = memRequirements.size;
 				allocInfo.memoryTypeIndex = findMemoryType(memRequirements.memoryTypeBits,
-					VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT, physicalDevice);
+					info.properties, physicalDevice);
 
 				if (vkAllocateMemory(logicalDevice, &allocInfo, nullptr, info.imageMemory) != VK_SUCCESS)
 					DMK_CORE_FATAL("failed to allocate image memory!");

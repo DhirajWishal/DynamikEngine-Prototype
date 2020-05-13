@@ -8,6 +8,8 @@ class OceanSkybox : public Dynamik::DMKSkyboxObject {
 public:
 	OceanSkybox() {}
 	~OceanSkybox() {}
+
+	void initialize() override;
 };
 
 #endif // !_APPLICATION_SKYBOX_DEFINITION_H

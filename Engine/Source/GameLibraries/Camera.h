@@ -29,14 +29,21 @@ namespace Dynamik {
 		virtual ~DMKCamera() {}
 
 		virtual DMKCameraData update(std::vector<POINTER<DMKEventComponent>> eventComponents) { return DMKCameraData(); }
-		virtual MAT4 getViewMatrix() { return MAT4(); }
+		virtual MAT4 getViewMatrix() { return myData.viewMatrix; }
+		virtual MAT4 getProjectionMatrix() { return myData.projectionMatrix; }
+
+		virtual void setAspectRatio(F32 ratio) { myData.aspectRatio = ratio; }
+		virtual void setWindowExtent(UI32 width, UI32 height) { windowWidth = width; windowHeight = height; }
 
 	public:
 		DMKCameraType type = DMKCameraType::DMK_CAMERA_TYPE_FRUSTUM;
 
 	protected:
 		DMKCameraData myData;
-		VEC3 worldUp = glm::vec3(0.0f, 1.0f, 0.0f);
+		VEC3 worldUp = glm::vec3(0.0f, -1.0f, 0.0f);
+
+		UI32 windowWidth = 0;
+		UI32 windowHeight = 0;
 	};
 }
 

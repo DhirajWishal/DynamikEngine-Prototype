@@ -16,6 +16,7 @@ DMKCameraData Camera::update(std::vector<POINTER<DMKEventComponent>> eventCompon
 	const F32 movementBias = 0.05f;
 	static CursorPosition _pos;
 	static VEC3 scale = glm::vec3(1.0f);
+	myData.rayDirection = VEC3(0.0f, 0.0f, -1.0f);
 
 	for (auto component : eventComponents)
 	{
@@ -93,12 +94,12 @@ DMKCameraData Camera::update(std::vector<POINTER<DMKEventComponent>> eventCompon
 		else if (component->category == DMKEventCategory::DMK_EVENT_CATEGORY_MOUSE_SCROLL)
 		{
 			auto eventContainer = DMKUtilities::getMouseScrollEvent(component);
-			if (myData.fieldOfView >= 1.0f && myData.fieldOfView <= 60.0f)
+			if (myData.fieldOfView >= 1.0f && myData.fieldOfView <= 45.0f)
 				myData.fieldOfView -= eventContainer.yOffset;
 			else if (myData.fieldOfView <= 1.0f)
 				myData.fieldOfView = 1.0f;
-			else if (myData.fieldOfView >= 60.0f)
-				myData.fieldOfView = 60.0f;
+			else if (myData.fieldOfView >= 45.0f)
+				myData.fieldOfView = 45.0f;
 		}
 
 	}
@@ -111,36 +112,38 @@ DMKCameraData Camera::update(std::vector<POINTER<DMKEventComponent>> eventCompon
 	if (DMKEventManager::getMouseButton(DMK_MOUSE_BUTTON_LEFT) == DMK_PRESS)
 	{
 		_pos = Dynamik::DMKEventManager::getCursorPosition();
-		_pos.xOffset *= -1.0f;
 		if (firstMouse)
 		{
 			lastX = _pos.xOffset;
 			lastY = _pos.yOffset;
 			firstMouse = false;
 		}
+
+		F32 xoffset = _pos.xOffset - lastX;
+		F32 yoffset = lastY - _pos.yOffset; // reversed since y-coordinates go from bottom to top
+
+		F32 sensitivity = 0.1f;
+		xoffset *= sensitivity;
+		yoffset *= sensitivity;
+
+		lastX = _pos.xOffset;
+		lastY = _pos.yOffset;
+
+		Yaw += xoffset;
+		Pitch += yoffset;
+
+		if (Pitch > 89.0f)
+			Pitch = 89.0f;
+		if (Pitch < -89.0f)
+			Pitch = -89.0f;
+
+		calculateVectors();
+		calculateRay(_pos);
 	}
 	else if (DMKEventManager::getMouseButton(DMK_MOUSE_BUTTON_LEFT) == DMK_BUTTON_RELEASE)
 	{
 		firstMouse = true;
 	}
-
-	F32 xoffset = _pos.xOffset - lastX;
-	F32 yoffset = lastY - _pos.yOffset; // reversed since y-coordinates go from bottom to top
-
-	F32 sensitivity = 0.1f;
-	xoffset *= sensitivity;
-	yoffset *= sensitivity;
-
-	lastX = _pos.xOffset;
-	lastY = _pos.yOffset;
-
-	Yaw += xoffset;
-	Pitch += yoffset;
-
-	if (Pitch > 89.0f)
-		Pitch = 89.0f;
-	if (Pitch < -89.0f)
-		Pitch = -89.0f;
 
 	calculateVectors();
 
@@ -162,4 +165,31 @@ void Camera::calculateVectors()
 	myData.cameraFront = glm::normalize(front);
 	myData.cameraRight = glm::normalize(glm::cross(myData.cameraFront, worldUp));
 	myData.cameraUp = glm::normalize(glm::cross(myData.cameraRight, myData.cameraFront));
+
+	myData.viewMatrix = glm::lookAt(myData.cameraPosition, myData.cameraPosition + myData.cameraFront, myData.cameraUp);
+	myData.projectionMatrix = glm::perspective(glm::radians(myData.fieldOfView), myData.aspectRatio, myData.cameraNear, myData.cameraFar);
+	myData.projectionMatrix[1][1] *= -1.0f;
+}
+
+void Camera::calculateRay(Dynamik::CursorPosition position)
+{
+	F32 _normalizedX = (2.0f * position.xOffset) / windowWidth - 1.0f;
+	F32 _normalizedY = 1.0f - (2.0f * position.yOffset) / windowHeight;
+	VEC3 _normalizedVector = VEC3(_normalizedX, _normalizedY, 1.0f);
+
+	VEC4 _clip = VEC4(_normalizedVector.x, _normalizedVector.y, -1.0, 1.0);
+
+	VEC4 _rayOrigin = glm::inverse(myData.projectionMatrix) * _clip;
+	_rayOrigin = VEC4(_rayOrigin.x, _rayOrigin.y, -1.0, 0.0);
+
+	myData.rayDirection = VEC3(glm::inverse(myData.viewMatrix) * _rayOrigin);
+	myData.rayDirection = glm::normalize(myData.rayDirection);
+
+	std::cout << "\rDirection: " <<
+		std::to_string(myData.rayDirection.x) + " " +
+		std::to_string(myData.rayDirection.y) + " " +
+		std::to_string(myData.rayDirection.z) + " Origin: " +
+		std::to_string(myData.cameraPosition.x) + " " +
+		std::to_string(myData.cameraPosition.y) + " " +
+		std::to_string(myData.cameraPosition.z);
 }

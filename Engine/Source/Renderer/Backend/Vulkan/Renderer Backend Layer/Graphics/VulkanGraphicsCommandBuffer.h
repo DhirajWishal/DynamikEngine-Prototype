@@ -23,6 +23,8 @@ namespace Dynamik {
 				UI32 stencilIndex = 0;
 
 				UI32 count = 3;
+
+				B1 captureFrames = false;
 			};
 
 			class VulkanGraphicsCommandBuffer {
@@ -38,10 +40,17 @@ namespace Dynamik {
 				virtual void initializeCommandBuffers(VulkanGraphicsCommandBufferInitInfo info);
 				void terminateCommandBuffers();
 
+				VulkanTextureContainer getImage(UI32 index);
+
 				VkCommandPool pool = VK_NULL_HANDLE;
 				std::vector<VkCommandBuffer> buffers;
 
 			protected:
+				void _generateImages(UI32 count, VkExtent2D extent);
+				void _beginCapture(VkCommandBuffer commandBuffer, UI32 index);
+				void _endCapture(VkCommandBuffer commandBuffer, UI32 index);
+				std::vector<VulkanTextureContainer> images;
+
 				VkDevice logicalDevice = VK_NULL_HANDLE;
 				VkPhysicalDevice physicalDevice = VK_NULL_HANDLE;
 				VkSurfaceKHR surface = VK_NULL_HANDLE;

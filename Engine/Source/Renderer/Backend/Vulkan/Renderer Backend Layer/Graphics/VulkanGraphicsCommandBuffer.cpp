@@ -9,7 +9,7 @@ namespace Dynamik {
 	namespace Renderer {
 		namespace Backend {
 			// if drawing in vertex
-			void drawVertex(VkCommandBuffer buffer, I32 index, VulkanRenderData* object, VkDeviceSize* offsets) 
+			void drawVertex(VkCommandBuffer buffer, I32 index, VulkanRenderData* object, VkDeviceSize* offsets)
 			{
 				DMK_BEGIN_PROFILE_TIMER();
 
@@ -33,7 +33,7 @@ namespace Dynamik {
 			}
 
 			// if drawing in indexed
-			void drawIndexed(VkCommandBuffer buffer, I32 index, VulkanRenderData* object, VkDeviceSize* offsets) 
+			void drawIndexed(VkCommandBuffer buffer, I32 index, VulkanRenderData* object, VkDeviceSize* offsets)
 			{
 				DMK_BEGIN_PROFILE_TIMER();
 
@@ -149,6 +149,8 @@ namespace Dynamik {
 				DMK_BEGIN_PROFILE_TIMER();
 
 				buffers.resize(info.count);
+				if (info.captureFrames)
+					_generateImages(info.count, info.swapChain.swapChainExtent);
 
 				VkCommandBufferAllocateInfo allocInfo = {};
 				allocInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO;
@@ -168,6 +170,9 @@ namespace Dynamik {
 
 					if (vkBeginCommandBuffer(buffers[i], &beginInfo) != VK_SUCCESS)
 						DMK_CORE_FATAL("failed to begin recording command commandBuffers[i]!");
+
+					if (info.captureFrames)
+						_beginCapture(buffers[i], i);
 
 					VkRenderPassBeginInfo renderPassInfo = {};
 					renderPassInfo.sType = VK_STRUCTURE_TYPE_RENDER_PASS_BEGIN_INFO;
@@ -194,7 +199,7 @@ namespace Dynamik {
 					// begin render pass
 					vkCmdBeginRenderPass(buffers[i], &renderPassInfo, VK_SUBPASS_CONTENTS_INLINE);
 
-					for (I32 _itr = 0; _itr < info.objects.size(); _itr++) 
+					for (I32 _itr = 0; _itr < info.objects.size(); _itr++)
 					{
 						DMK_BEGIN_PROFILE_TIMER();
 
@@ -232,6 +237,9 @@ namespace Dynamik {
 					// end renderPass
 					vkCmdEndRenderPass(buffers[i]);
 
+					if (info.captureFrames)
+						_endCapture(buffers[i], i);
+
 					/* END VULKAN COMMANDS */
 					if (vkEndCommandBuffer(buffers[i]) != VK_SUCCESS)
 						DMK_CORE_FATAL("failed to record command commandBuffers[i]!");
@@ -254,6 +262,105 @@ namespace Dynamik {
 			void VulkanGraphicsCommandBuffer::terminateCommandBuffers()
 			{
 				vkFreeCommandBuffers(logicalDevice, pool, static_cast<UI32>(buffers.size()), buffers.data());
+			}
+
+			VulkanTextureContainer VulkanGraphicsCommandBuffer::getImage(UI32 index)
+			{
+				if (index > (images.size() - 1))
+				{
+					DMK_CORE_FATAL("Invalid image index requested! Maybe the image capture is not set.");
+					return VulkanTextureContainer();
+				}
+
+				return images[index];
+			}
+
+			void VulkanGraphicsCommandBuffer::_generateImages(UI32 count, VkExtent2D extent)
+			{
+				while (count--)
+				{
+					VulkanTextureContainer _container;
+					_container.format = VK_FORMAT_R8G8B8A8_UINT;
+					_container.width = extent.width;
+					_container.height = extent.height;
+
+					VulkanCreateImageInfo cinfo;
+					cinfo.width = extent.width;
+					cinfo.height = extent.height;
+					cinfo.format = _container.format;
+					cinfo.tiling = VK_IMAGE_TILING_OPTIMAL;
+					cinfo.usage = VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT | VK_IMAGE_USAGE_TRANSFER_SRC_BIT;
+					cinfo.properties = VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT;
+					cinfo.image = &_container.image;
+					cinfo.imageMemory = &_container.imageMemory;
+					cinfo.mipLevels = 1;
+					cinfo.numSamples = VK_SAMPLE_COUNT_1_BIT;
+					cinfo.arrayLayers = 1;
+					cinfo.flags = NULL;
+					VulkanUtilities::createImage(logicalDevice, physicalDevice, cinfo);
+
+					VulkanCreateImageViewInfo cinfo2;
+					cinfo2.image = _container.image;
+					cinfo2.format = _container.format;
+					cinfo2.mipLevels = VK_REMAINING_MIP_LEVELS;
+					cinfo2.aspectFlags = VK_IMAGE_ASPECT_COLOR_BIT;
+					cinfo2.viewType = VK_IMAGE_VIEW_TYPE_2D;
+					cinfo2.layerCount = VK_REMAINING_ARRAY_LAYERS;
+					cinfo2.component = { VK_COMPONENT_SWIZZLE_IDENTITY, VK_COMPONENT_SWIZZLE_IDENTITY, VK_COMPONENT_SWIZZLE_IDENTITY, VK_COMPONENT_SWIZZLE_IDENTITY };
+					_container.imageView = VulkanUtilities::createImageView(logicalDevice, cinfo2);
+
+					images.push_back(_container);
+				}
+			}
+
+			void VulkanGraphicsCommandBuffer::_beginCapture(VkCommandBuffer commandBuffer, UI32 index)
+			{
+				VkImageMemoryBarrier _barrier;
+				_barrier.sType = VK_STRUCTURE_TYPE_IMAGE_MEMORY_BARRIER;
+				_barrier.pNext = VK_NULL_HANDLE;
+				_barrier.srcAccessMask = VK_NULL_HANDLE;
+				_barrier.dstAccessMask = VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT;
+				_barrier.oldLayout = VK_IMAGE_LAYOUT_UNDEFINED;
+				_barrier.newLayout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
+				_barrier.srcQueueFamilyIndex = VK_QUEUE_FAMILY_IGNORED;
+				_barrier.dstQueueFamilyIndex = VK_QUEUE_FAMILY_IGNORED;
+				_barrier.image = images[index].image;
+				_barrier.subresourceRange.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
+				_barrier.subresourceRange.baseMipLevel = 0;
+				_barrier.subresourceRange.levelCount = 1;
+				_barrier.subresourceRange.baseArrayLayer = 0;
+				_barrier.subresourceRange.layerCount = 1;
+
+				vkCmdPipelineBarrier(
+					commandBuffer,
+					VK_PIPELINE_STAGE_ALL_COMMANDS_BIT,
+					VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT | VK_PIPELINE_STAGE_TOP_OF_PIPE_BIT,
+					0, 0, VK_NULL_HANDLE, 0, VK_NULL_HANDLE, 1, &_barrier);
+			}
+
+			void VulkanGraphicsCommandBuffer::_endCapture(VkCommandBuffer commandBuffer, UI32 index)
+			{
+				VkImageMemoryBarrier _barrier;
+				_barrier.sType = VK_STRUCTURE_TYPE_IMAGE_MEMORY_BARRIER;
+				_barrier.pNext = VK_NULL_HANDLE;
+				_barrier.srcAccessMask = VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT;
+				_barrier.dstAccessMask = VK_ACCESS_HOST_READ_BIT | VK_ACCESS_MEMORY_READ_BIT;
+				_barrier.oldLayout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
+				_barrier.newLayout = VK_IMAGE_LAYOUT_GENERAL;
+				_barrier.srcQueueFamilyIndex = VK_QUEUE_FAMILY_IGNORED;
+				_barrier.dstQueueFamilyIndex = VK_QUEUE_FAMILY_IGNORED;
+				_barrier.image = images[index].image;
+				_barrier.subresourceRange.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
+				_barrier.subresourceRange.baseMipLevel = 0;
+				_barrier.subresourceRange.levelCount = 1;
+				_barrier.subresourceRange.baseArrayLayer = 0;
+				_barrier.subresourceRange.layerCount = 1;
+
+				vkCmdPipelineBarrier(
+					commandBuffer,
+					VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT | VK_PIPELINE_STAGE_TOP_OF_PIPE_BIT,
+					VK_PIPELINE_STAGE_HOST_BIT,
+					0, 0, VK_NULL_HANDLE, 0, VK_NULL_HANDLE, 1, &_barrier);
 			}
 		}
 	}

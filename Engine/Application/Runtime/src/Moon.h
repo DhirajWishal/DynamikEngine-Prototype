@@ -9,6 +9,8 @@ class Moon : public Dynamik::DMKStaticObject {
 public:
 	Moon() {}
 	~Moon() {}
+
+	void initialize() override;
 };
 
 #endif // !_APPLICATION_MOON_H

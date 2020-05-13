@@ -2,6 +2,7 @@
 #ifndef _DYNAMIK_EVENT_MANAGER_H
 #define _DYNAMIK_EVENT_MANAGER_H
 
+#include <mutex>
 #include <vector>
 #include "EventComponent.h"
 

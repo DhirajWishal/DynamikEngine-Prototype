@@ -91,14 +91,8 @@ Dynamik::DMKUniformBufferData Reflect::onUpdate(Dynamik::DMKCameraData data)
 	uniformBufferDataStore.clear();
 
 	uniformBufferDataStore.addData(&data.modelMatrix, sizeof(MAT4), 0);
-	
-	MAT4 view = glm::lookAt(data.cameraPosition, data.cameraPosition + data.cameraFront, data.cameraUp);
-	uniformBufferDataStore.addData(&view, sizeof(MAT4), 1);
-	
-	MAT4 projection = glm::perspective(glm::radians(data.fieldOfView), data.aspectRatio, data.cameraNear, data.cameraFar);
-	projection[1][1] *= -1;
-	uniformBufferDataStore.addData(&projection, sizeof(MAT4), 2);
-
+	uniformBufferDataStore.addData(&data.viewMatrix, sizeof(MAT4), 1);
+	uniformBufferDataStore.addData(&data.projectionMatrix, sizeof(MAT4), 2);
 	uniformBufferDataStore.addData(&data.cameraPosition, sizeof(VEC3), 3);
 
 	return uniformBufferDataStore;

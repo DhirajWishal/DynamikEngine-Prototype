@@ -86,11 +86,10 @@ namespace Dynamik {
 			MAT4 model = glm::mat4(1.0f);
 			uniformBufferDataStore.addData(&model, sizeof(MAT4), 0);
 			
-			MAT4 view = glm::mat4(glm::mat3(glm::lookAt(data.cameraPosition, data.cameraPosition + data.cameraFront, data.cameraUp)));
+			MAT4 view = glm::mat4(glm::mat3(data.viewMatrix));
 			uniformBufferDataStore.addData(&view, sizeof(MAT4), 1);
 			
-			MAT4 projection = glm::perspective(glm::radians(data.fieldOfView), data.aspectRatio, data.cameraNear, data.cameraFar);
-			uniformBufferDataStore.addData(&projection, sizeof(MAT4), 2);
+			uniformBufferDataStore.addData(&data.projectionMatrix, sizeof(MAT4), 2);
 
 			return uniformBufferDataStore;
 		}

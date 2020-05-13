@@ -112,9 +112,13 @@ namespace Dynamik {
 			inline VulkanGraphicsDescriptor createDescriptors(std::vector<DMKUniformBufferObjectDescriptor> descriptors, std::vector<VulkanUnformBufferContainer> uniformBufferContainers, std::vector<VulkanTextureContainer> textureContainers);
 			inline VulkanGraphicsPipeline createPipeline(std::vector<VulkanGraphicsDescriptor> descriptors, std::vector<DMKUniformBufferObjectDescriptor> uniformBufferDescriptors, std::vector<DMKVertexAttribute> attributes, ShaderPaths paths, DMKObjectType objectType, VulkanRenderContext context);
 
-		public:
+		private:
 			/* Initialize the object as s Skeletal animation */
 			VulkanRenderData _initializeSkeletalAnimation(POINTER<InternalFormat> format);
+
+			/* Store the captured image to an .raw file */
+			void _storeData(VulkanTextureContainer container);
+			UI32 _captureCount = 0;
 
 		private:
 			POINTER<UI32> myProgress;	/* Progress counter */

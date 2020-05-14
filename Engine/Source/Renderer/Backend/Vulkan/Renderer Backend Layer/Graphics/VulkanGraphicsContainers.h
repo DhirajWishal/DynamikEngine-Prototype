@@ -79,26 +79,33 @@ namespace Dynamik {
 				UI32 dataCount = 0;
 			};
 
-			struct VulkanRenderData {
+			struct VulkanRenderObject {
 				DMKObjectType type = DMKObjectType::DMK_OBJECT_TYPE_STATIC;
-				DMKRenderingTechnology renderTechnology = DMKRenderingTechnology::DMK_RENDERING_TECHNOLOGY_INDEXED;
 
-				POINTER<VulkanGraphicsSwapChain> swapChainPointer;
-				POINTER<VulkanGraphicsFrameBuffer> frameBufferPointer;
+				VulkanGraphicsPipeline pipeline;
 
 				std::vector<VulkanBufferContainer> vertexBufferContainer;
 
 				std::vector<VulkanBufferContainer> indexBufferContainer;
 				DMKDataType indexBufferType = DMKDataType::DMK_DATA_TYPE_UI32;
 
-				std::vector<VulkanTextureContainer> textures;
-
 				VulkanGraphicsDescriptor descriptors;
-
-				std::vector<VulkanGraphicsPipeline> pipelineContainers;
-
 				std::vector<VulkanUnformBufferContainer> uniformBufferContainers;
+
 				std::vector<VulkanGraphicsPushConstant> pushConstants;
+
+				MeshVertexLimits limits;
+			};
+
+			struct VulkanRenderData {
+				DMKRenderingTechnology renderTechnology = DMKRenderingTechnology::DMK_RENDERING_TECHNOLOGY_INDEXED;
+
+				POINTER<VulkanGraphicsSwapChain> swapChainPointer;
+				POINTER<VulkanGraphicsFrameBuffer> frameBufferPointer;
+
+				std::vector<VulkanRenderObject> renderObject;
+
+				std::vector<VulkanTextureContainer> textures;
 
 				VulkanMaterialDescriptor materialDescriptor;
 				B1 enableMaterials = false;

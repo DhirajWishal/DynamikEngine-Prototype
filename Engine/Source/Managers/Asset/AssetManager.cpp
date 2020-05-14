@@ -146,7 +146,10 @@ namespace Dynamik {
 				DMK_BEGIN_PROFILE_TIMER();
 
 				POINTER<InternalFormat> _format = _scene[index].address;
-				threads.push_back(std::async(std::launch::async, LoadAsset, _format));
+				if (_format->type == DMKObjectType::DMK_OBJECT_TYPE_SKELETAL_ANIMATION);
+					/* Load the model data as an animated object */
+				else
+					threads.push_back(std::async(std::launch::async, LoadAsset, _format));
 			}
 		}
 

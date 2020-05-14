@@ -20,6 +20,12 @@ namespace Dynamik {
 		B1 operator==(const MeshPointStore& other) const;
 	};
 
+	struct MeshVertexLimits {
+		VEC2 limitX = VEC2(1.0f);	/* Min, Max */
+		VEC2 limitY = VEC2(1.0f);	/* Min, Max */
+		VEC2 limitZ = VEC2(1.0f);	/* Min, Max */
+	};
+
 	class Mesh {
 	public:
 		Mesh() {}

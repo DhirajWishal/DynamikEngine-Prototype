@@ -13,21 +13,21 @@ namespace Dynamik {
 			{
 				DMK_BEGIN_PROFILE_TIMER();
 
-				for (UI32 i = 0; i < object->vertexBufferContainer.size(); i++) {
-					for (UI32 _itr = 0; _itr < object->pipelineContainers.size(); _itr++)
+				for (UI32 i = 0; i < object->renderObject.size(); i++) {
+					for (UI32 _itr = 0; _itr < object->renderObject[i].vertexBufferContainer.size(); _itr++)
 					{
 						// bind pipeline
-						vkCmdBindPipeline(buffer, VK_PIPELINE_BIND_POINT_GRAPHICS, object->pipelineContainers[_itr].pipeline);
+						vkCmdBindPipeline(buffer, VK_PIPELINE_BIND_POINT_GRAPHICS, object->renderObject[_itr].pipeline.pipeline);
 
 						// vertex buffer bind
-						vkCmdBindVertexBuffers(buffer, 0, 1, &object->vertexBufferContainer[i].buffer, offsets);
+						vkCmdBindVertexBuffers(buffer, 0, 1, &object->renderObject[i].vertexBufferContainer[_itr].buffer, offsets);
 
 						// binding descriptor set(s)
-						for (VkDescriptorSet _set : object->descriptors.descriptorSets)
-							vkCmdBindDescriptorSets(buffer, VK_PIPELINE_BIND_POINT_GRAPHICS, object->pipelineContainers[_itr].layout, 0, 1, &_set, 0, nullptr);
+						for (VkDescriptorSet _set : object->renderObject[i].descriptors.descriptorSets)
+							vkCmdBindDescriptorSets(buffer, VK_PIPELINE_BIND_POINT_GRAPHICS, object->renderObject[i].pipeline.layout, 0, 1, &_set, 0, nullptr);
 
 						// draw command
-						vkCmdDraw(buffer, object->vertexBufferContainer[i].dataCount, 1, 0, 1);
+						vkCmdDraw(buffer, object->renderObject[i].vertexBufferContainer[_itr].dataCount, 1, 0, 1);
 					}
 				}
 			}
@@ -37,31 +37,31 @@ namespace Dynamik {
 			{
 				DMK_BEGIN_PROFILE_TIMER();
 
-				for (UI32 i = 0; i < object->vertexBufferContainer.size(); i++) {
-					for (UI32 _itr = 0; _itr < object->pipelineContainers.size(); _itr++)
+				for (UI32 i = 0; i < object->renderObject.size(); i++) {
+					for (UI32 _itr = 0; _itr < object->renderObject[i].vertexBufferContainer.size(); _itr++)
 					{
 						// bind pipeline
-						vkCmdBindPipeline(buffer, VK_PIPELINE_BIND_POINT_GRAPHICS, object->pipelineContainers[_itr].pipeline);
+						vkCmdBindPipeline(buffer, VK_PIPELINE_BIND_POINT_GRAPHICS, object->renderObject[i].pipeline.pipeline);
 
 						// vertex buffer bind
-						vkCmdBindVertexBuffers(buffer, 0, 1, &object->vertexBufferContainer[i].buffer, offsets);
+						vkCmdBindVertexBuffers(buffer, 0, 1, &object->renderObject[i].vertexBufferContainer[_itr].buffer, offsets);
 
 						// binding descriptor set(s)
-						for (VkDescriptorSet _set : object->descriptors.descriptorSets)
-							vkCmdBindDescriptorSets(buffer, VK_PIPELINE_BIND_POINT_GRAPHICS, object->pipelineContainers[_itr].layout, 0, 1, &_set, 0, nullptr);
+						for (VkDescriptorSet _set : object->renderObject[i].descriptors.descriptorSets)
+							vkCmdBindDescriptorSets(buffer, VK_PIPELINE_BIND_POINT_GRAPHICS, object->renderObject[i].pipeline.layout, 0, 1, &_set, 0, nullptr);
 
 						// index buffer bind
-						if (object->indexBufferType == DMKDataType::DMK_DATA_TYPE_UI8)
-							vkCmdBindIndexBuffer(buffer, object->indexBufferContainer[i].buffer, 0, VK_INDEX_TYPE_UINT8_EXT);
-						else if (object->indexBufferType == DMKDataType::DMK_DATA_TYPE_UI16)
-							vkCmdBindIndexBuffer(buffer, object->indexBufferContainer[i].buffer, 0, VK_INDEX_TYPE_UINT16);
-						else if (object->indexBufferType == DMKDataType::DMK_DATA_TYPE_UI32)
-							vkCmdBindIndexBuffer(buffer, object->indexBufferContainer[i].buffer, 0, VK_INDEX_TYPE_UINT32);
-						else if (object->indexBufferType == DMKDataType::DMK_DATA_TYPE_UI64)
-							vkCmdBindIndexBuffer(buffer, object->indexBufferContainer[i].buffer, 0, VK_INDEX_TYPE_UINT32);
+						if (object->renderObject[i].indexBufferType == DMKDataType::DMK_DATA_TYPE_UI8)
+							vkCmdBindIndexBuffer(buffer, object->renderObject[i].indexBufferContainer[_itr].buffer, 0, VK_INDEX_TYPE_UINT8_EXT);
+						else if (object->renderObject[i].indexBufferType == DMKDataType::DMK_DATA_TYPE_UI16)
+							vkCmdBindIndexBuffer(buffer, object->renderObject[i].indexBufferContainer[_itr].buffer, 0, VK_INDEX_TYPE_UINT16);
+						else if (object->renderObject[i].indexBufferType == DMKDataType::DMK_DATA_TYPE_UI32)
+							vkCmdBindIndexBuffer(buffer, object->renderObject[i].indexBufferContainer[_itr].buffer, 0, VK_INDEX_TYPE_UINT32);
+						else if (object->renderObject[i].indexBufferType == DMKDataType::DMK_DATA_TYPE_UI64)
+							vkCmdBindIndexBuffer(buffer, object->renderObject[i].indexBufferContainer[_itr].buffer, 0, VK_INDEX_TYPE_UINT32);
 
 						// draw command
-						vkCmdDrawIndexed(buffer, object->indexBufferContainer[i].dataCount, 1, 0, 0, 0);
+						vkCmdDrawIndexed(buffer, object->renderObject[i].indexBufferContainer[_itr].dataCount, 1, 0, 0, 0);
 					}
 				}
 			}
@@ -70,30 +70,31 @@ namespace Dynamik {
 			{
 				DMK_BEGIN_PROFILE_TIMER();
 
-				for (UI32 i = 0; i < object->vertexBufferContainer.size(); i++) {
-					for (UI32 _itr = 0; _itr < object->pipelineContainers.size(); _itr++)
+				for (UI32 i = 0; i < object->renderObject.size(); i++) {
+					for (UI32 _itr = 0; _itr < object->renderObject[i].vertexBufferContainer.size(); _itr++)
 					{
 						// bind pipeline
-						vkCmdBindPipeline(buffer, VK_PIPELINE_BIND_POINT_GRAPHICS, object->pipelineContainers[_itr].pipeline);
+						vkCmdBindPipeline(buffer, VK_PIPELINE_BIND_POINT_GRAPHICS, object->renderObject[i].pipeline.pipeline);
 
 						// vertex buffer bind
-						vkCmdBindVertexBuffers(buffer, 0, 1, &object->vertexBufferContainer[i].buffer, offsets);
+						vkCmdBindVertexBuffers(buffer, 0, 1, &object->renderObject[i].vertexBufferContainer[_itr].buffer, offsets);
 
 						// binding descriptor set(s)
-						for (VkDescriptorSet _set : object->descriptors.descriptorSets)
-							vkCmdBindDescriptorSets(buffer, VK_PIPELINE_BIND_POINT_GRAPHICS, object->pipelineContainers[_itr].layout, 0, 1, &_set, 0, nullptr);
+						for (VkDescriptorSet _set : object->renderObject[i].descriptors.descriptorSets)
+							vkCmdBindDescriptorSets(buffer, VK_PIPELINE_BIND_POINT_GRAPHICS, object->renderObject[_itr].pipeline.layout, 0, 1, &_set, 0, nullptr);
 
 						// index buffer bind
-						if (object->indexBufferType == DMKDataType::DMK_DATA_TYPE_UI8)
-							vkCmdBindIndexBuffer(buffer, object->indexBufferContainer[i].buffer, 0, VK_INDEX_TYPE_UINT8_EXT);
-						else if (object->indexBufferType == DMKDataType::DMK_DATA_TYPE_UI16)
-							vkCmdBindIndexBuffer(buffer, object->indexBufferContainer[i].buffer, 0, VK_INDEX_TYPE_UINT16);
-						else if (object->indexBufferType == DMKDataType::DMK_DATA_TYPE_UI32)
-							vkCmdBindIndexBuffer(buffer, object->indexBufferContainer[i].buffer, 0, VK_INDEX_TYPE_UINT32);
-						else if (object->indexBufferType == DMKDataType::DMK_DATA_TYPE_UI64)
-							vkCmdBindIndexBuffer(buffer, object->indexBufferContainer[i].buffer, 0, VK_INDEX_TYPE_UINT32);
+						if (object->renderObject[i].indexBufferType == DMKDataType::DMK_DATA_TYPE_UI8)
+							vkCmdBindIndexBuffer(buffer, object->renderObject[i].indexBufferContainer[_itr].buffer, 0, VK_INDEX_TYPE_UINT8_EXT);
+						else if (object->renderObject[i].indexBufferType == DMKDataType::DMK_DATA_TYPE_UI16)
+							vkCmdBindIndexBuffer(buffer, object->renderObject[i].indexBufferContainer[_itr].buffer, 0, VK_INDEX_TYPE_UINT16);
+						else if (object->renderObject[i].indexBufferType == DMKDataType::DMK_DATA_TYPE_UI32)
+							vkCmdBindIndexBuffer(buffer, object->renderObject[i].indexBufferContainer[_itr].buffer, 0, VK_INDEX_TYPE_UINT32);
+						else if (object->renderObject[i].indexBufferType == DMKDataType::DMK_DATA_TYPE_UI64)
+							vkCmdBindIndexBuffer(buffer, object->renderObject[i].indexBufferContainer[_itr].buffer, 0, VK_INDEX_TYPE_UINT32);
 
-						vkCmdDrawIndexed(buffer, object->indexBufferContainer[i].dataCount, 1, 0, 0, 0);
+						// draw command
+						vkCmdDrawIndexed(buffer, object->renderObject[i].indexBufferContainer[_itr].dataCount, 1, 0, 0, 0);
 						//for (uint32_t y = 0; y < GRID_DIM; y++) {
 						//	object->materialDescriptor.params.metallic = (float)y / (float)(GRID_DIM);
 						//	for (uint32_t x = 0; x < GRID_DIM; x++) {

@@ -3,6 +3,8 @@
 #include "Events/EventManager.h"
 /* Update camera data function */
 
+#define M_PI 3.141
+
 Camera::Camera()
 {
 }
@@ -16,7 +18,6 @@ DMKCameraData Camera::update(std::vector<POINTER<DMKEventComponent>> eventCompon
 	const F32 movementBias = 0.05f;
 	static CursorPosition _pos;
 	static VEC3 scale = glm::vec3(1.0f);
-	myData.rayDirection = VEC3(0.0f, 0.0f, -1.0f);
 
 	for (auto component : eventComponents)
 	{
@@ -173,17 +174,14 @@ void Camera::calculateVectors()
 
 void Camera::calculateRay(Dynamik::CursorPosition position)
 {
-	F32 _normalizedX = (2.0f * position.xOffset) / windowWidth - 1.0f;
-	F32 _normalizedY = 1.0f - (2.0f * position.yOffset) / windowHeight;
-	VEC3 _normalizedVector = VEC3(_normalizedX, _normalizedY, 1.0f);
+	float mouseX = position.xOffset / (windowWidth * 0.5f) - 1.0f;
+	float mouseY = position.yOffset / (windowHeight * 0.5f) - 1.0f;
 
-	VEC4 _clip = VEC4(_normalizedVector.x, _normalizedVector.y, -1.0, 1.0);
+	glm::mat4 invVP = glm::inverse(myData.projectionMatrix * myData.viewMatrix);
+	glm::vec4 screenPos = glm::vec4(mouseX, -mouseY, 1.0f, 1.0f);
+	glm::vec4 worldPos = invVP * screenPos;
 
-	VEC4 _rayOrigin = glm::inverse(myData.projectionMatrix) * _clip;
-	_rayOrigin = VEC4(_rayOrigin.x, _rayOrigin.y, -1.0, 0.0);
-
-	myData.rayDirection = VEC3(glm::inverse(myData.viewMatrix) * _rayOrigin);
-	myData.rayDirection = glm::normalize(myData.rayDirection);
+	myData.rayDirection = glm::normalize(glm::vec3(worldPos));
 
 	std::cout << "\rDirection: " <<
 		std::to_string(myData.rayDirection.x) + " " +

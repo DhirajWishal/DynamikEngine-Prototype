@@ -887,6 +887,9 @@
     </ClInclude>
     <ClInclude Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsRenderPass.h" />
     <ClInclude Include="Objects\Mesh\AnimatedMesh.h" />
+    <ClInclude Include="GameLibraries\AnimatedObject.h" />
+    <ClInclude Include="Utilities\Clock\Clock.h" />
+    <ClInclude Include="Renderer\Components\SceneComponent\Basic\BoundingBox.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Audio\Backend\AudioEngine.cpp">
@@ -1230,6 +1233,8 @@
     <ClCompile Include="Managers\Thread\ThreadManager.cpp" />
     <ClCompile Include="Renderer\Backend\Vulkan\Renderer Backend Layer\Graphics\VulkanGraphicsRenderPass.cpp" />
     <ClCompile Include="Objects\Mesh\AnimatedMesh.cpp" />
+    <ClCompile Include="Utilities\Clock\Clock.cpp" />
+    <ClCompile Include="Renderer\Components\SceneComponent\Basic\BoundingBox.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Audio\Samples\license.txt">

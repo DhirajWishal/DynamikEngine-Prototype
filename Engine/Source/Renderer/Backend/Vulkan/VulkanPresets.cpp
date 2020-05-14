@@ -40,6 +40,21 @@ namespace Dynamik {
 				pipelineInitInfo.swapChainExtent = extent;
 				return pipelineInitInfo;
 			}
+			
+			VulkanGraphicsPipelineInitInfo VulkanPresets::pipelinePresetBoundingBox(VkDevice logicalDevice, VkSampleCountFlagBits msaaSamples, VkRenderPass renderPass, std::vector<VulkanGraphicsShader> shaders, std::vector<DMKVertexAttribute> vertexAttributes, VkExtent2D extent)
+			{
+				VulkanGraphicsPipelineInitInfo pipelineInitInfo;
+				pipelineInitInfo.shaders = shaders;
+				pipelineInitInfo.multisamplerMsaaSamples = msaaSamples;
+				pipelineInitInfo.vertexBindingDescription = VulkanUtilities::getBindingDescription(vertexAttributes, 1);
+				pipelineInitInfo.vertexAttributeDescription = VulkanUtilities::getAttributeDescriptions(vertexAttributes);
+				pipelineInitInfo.isTexturesAvailable = true;
+				pipelineInitInfo.renderPass = renderPass;
+				pipelineInitInfo.swapChainExtent = extent;
+				pipelineInitInfo.rasterizerPolygonMode = VkPolygonMode::VK_POLYGON_MODE_FILL;
+				pipelineInitInfo.inputAssemblyTopology = VkPrimitiveTopology::VK_PRIMITIVE_TOPOLOGY_LINE_STRIP;
+				return pipelineInitInfo;
+			}
 		}
 	}
 }

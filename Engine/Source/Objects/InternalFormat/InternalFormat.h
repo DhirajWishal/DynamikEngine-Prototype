@@ -22,7 +22,8 @@ namespace Dynamik {
 		InternalFormat();
 		virtual ~InternalFormat() {}
 
-		B1 checkRayCollition(VEC3 rayOrigin, VEC3 rayDirection);
+		B1 checkRayCollition(VEC3 rayOrigin, VEC3 rayDirection, MeshVertexLimits limits);
+		B1 isSelected = false;
 
 		/* Object meshes */
 		std::vector<Mesh> meshDatas;

@@ -18,6 +18,7 @@ namespace Dynamik {
 				static VulkanGraphicsPipelineLayoutInitInfo pipelineLayoutPreset(std::vector<VkDescriptorSetLayout> layouts, std::vector<VkPushConstantRange> pushConstants = {});
 				static VulkanGraphicsPipelineInitInfo pipelinePreset3D(VkDevice logicalDevice, VkSampleCountFlagBits msaaSamples, VkRenderPass renderPass, std::vector<VulkanGraphicsShader> shaders, std::vector<DMKVertexAttribute> vertexAttributes, VkExtent2D extent);
 				static VulkanGraphicsPipelineInitInfo pipelinePresetSkyBox(VkDevice logicalDevice, VkSampleCountFlagBits msaaSamples, VkRenderPass renderPass, std::vector<VulkanGraphicsShader> shaders, std::vector<DMKVertexAttribute> vertexAttributes, VkExtent2D extent);
+				static VulkanGraphicsPipelineInitInfo pipelinePresetBoundingBox(VkDevice logicalDevice, VkSampleCountFlagBits msaaSamples, VkRenderPass renderPass, std::vector<VulkanGraphicsShader> shaders, std::vector<DMKVertexAttribute> vertexAttributes, VkExtent2D extent);
 			};
 		}
 	}

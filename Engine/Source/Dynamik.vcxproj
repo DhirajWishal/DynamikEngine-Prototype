@@ -217,6 +217,7 @@
     <ClInclude Include="Events\EventManager.h" />
     <ClInclude Include="Events\keyCodes.h" />
     <ClInclude Include="FileSystem\FileManager.h" />
+    <ClInclude Include="GameLibraries\AnimatedObject.h" />
     <ClInclude Include="GameLibraries\Camera.h" />
     <ClInclude Include="GameLibraries\GameLogic.h" />
     <ClInclude Include="GameLibraries\GameObject.h" />
@@ -342,6 +343,7 @@
     <ClInclude Include="Renderer\Components\Attachments\RenderAttachment.h" />
     <ClInclude Include="Renderer\Components\SceneComponent\Animation\AnimatedObject.h" />
     <ClInclude Include="Renderer\Components\SceneComponent\Animation\SkeletalAnimation.h" />
+    <ClInclude Include="Renderer\Components\SceneComponent\Basic\BoundingBox.h" />
     <ClInclude Include="Renderer\Components\SceneComponent\Basic\DebugObject.h" />
     <ClInclude Include="Renderer\Components\SceneComponent\Basic\SkyBoxObject.h" />
     <ClInclude Include="Renderer\Components\SceneComponent\Basic\StaticObject.h" />
@@ -363,6 +365,7 @@
     <ClInclude Include="Renderer\rendererCommandQueue.h" />
     <ClInclude Include="Tools\DynamikResource\DRLoader.h" />
     <ClInclude Include="Tools\DynamikResource\DResFile.h" />
+    <ClInclude Include="Utilities\Clock\Clock.h" />
     <ClInclude Include="Utilities\Functions\DMK_Functions.h" />
     <ClInclude Include="engineControlUnit.h" />
   </ItemGroup>
@@ -470,6 +473,7 @@
     <ClCompile Include="Renderer\Components\Attachments\Internal\ColorAttachment.cpp" />
     <ClCompile Include="Renderer\Components\Attachments\Internal\DepthAttachment.cpp" />
     <ClCompile Include="Renderer\Components\SceneComponent\Animation\SkeletalAnimation.cpp" />
+    <ClCompile Include="Renderer\Components\SceneComponent\Basic\BoundingBox.cpp" />
     <ClCompile Include="Renderer\Components\SceneComponent\Basic\DebugObject.cpp" />
     <ClCompile Include="Renderer\Components\SceneComponent\Basic\SkyBoxObject.cpp" />
     <ClCompile Include="Renderer\Components\SceneComponent\Basic\StaticObject.cpp" />
@@ -490,6 +494,7 @@
     <ClCompile Include="Renderer\rendererCommandQueue.cpp" />
     <ClCompile Include="Tools\DynamikResource\DRLoader.cpp" />
     <ClCompile Include="Tools\DynamikResource\DResFile.cpp" />
+    <ClCompile Include="Utilities\Clock\Clock.cpp" />
     <ClCompile Include="Utilities\Functions\DMK_Functions.cpp" />
     <ClCompile Include="engineControlUnit.cpp" />
   </ItemGroup>

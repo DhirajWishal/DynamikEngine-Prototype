@@ -396,7 +396,7 @@ namespace Dynamik {
 				if (vkCreateDescriptorPool(myCoreObject.logicalDevice, &poolInfo, nullptr, &_localDescriptorPool) != VK_SUCCESS)
 					DMK_CORE_FATAL("failed to create descriptor pool!");
 
-				myRenderData.descriptors.pool = _localDescriptorPool;
+				//myRenderData.descriptors.pool = _localDescriptorPool;
 			}
 
 			void VulkanTextOverlay::_initializeDescriptorSetLayout()
@@ -424,7 +424,7 @@ namespace Dynamik {
 
 				VkDescriptorSetAllocateInfo allocInfo = {};
 				allocInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_ALLOCATE_INFO;
-				allocInfo.descriptorPool = myRenderData.descriptors.pool;
+				//allocInfo.descriptorPool = myRenderData.descriptors.pool;
 				allocInfo.descriptorSetCount = 1;
 				allocInfo.pSetLayouts = &_layout;
 
@@ -450,7 +450,7 @@ namespace Dynamik {
 
 				vkUpdateDescriptorSets(myCoreObject.logicalDevice, 1, &_writes, 0, nullptr);
 
-				myRenderData.descriptors.descriptorSets.push_back(_descriptorSet);
+				//myRenderData.descriptors.descriptorSets.push_back(_descriptorSet);
 			}
 
 			void VulkanTextOverlay::_initializePipelineCache()
@@ -585,7 +585,7 @@ namespace Dynamik {
 
 			void VulkanTextOverlay::_terminateDescriptorPool()
 			{
-				vkDestroyDescriptorPool(myCoreObject.logicalDevice, myRenderData.descriptors.pool, nullptr);
+				//vkDestroyDescriptorPool(myCoreObject.logicalDevice, myRenderData.descriptors.pool, nullptr);
 			}
 
 			void VulkanTextOverlay::_terminatePipeline()

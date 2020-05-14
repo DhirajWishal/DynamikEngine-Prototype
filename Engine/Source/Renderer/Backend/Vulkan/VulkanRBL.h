@@ -19,6 +19,7 @@
 
 #include "GameObject.h"
 #include "debugger.h"
+#include "Renderer/Components/SceneComponent/Basic/BoundingBox.h"
 
 #include "Managers/Asset/AssetManager.h"
 
@@ -92,6 +93,7 @@ namespace Dynamik {
 			/* Returns the memory location of the objects data */
 			VPTR initializeObject(POINTER<InternalFormat> format, DMKRenderContextType context = DMKRenderContextType::DMK_RENDER_CONTEXT_TYPE_DEFAULT);
 
+			void generateBoundingBoxes();
 			void initializeCommands();
 			void initializeFinalComponents();
 
@@ -106,6 +108,8 @@ namespace Dynamik {
 
 			/* Per object functions */
 			inline VulkanBufferContainer createVertexBuffer(Mesh mesh, std::vector<DMKVertexAttribute> attributes);
+			inline MeshVertexLimits getVertexLimits(Mesh mesh);
+			inline VulkanRenderObject createBoundingBox(Mesh mesh, VulkanRenderContext context);
 			inline VulkanBufferContainer createIndexBuffer(Mesh mesh, DMKDataType type);
 			inline VulkanTextureContainer createTextureImage(Texture texture);
 			inline VulkanUnformBufferContainer createUniformBuffers(DMKUniformBufferObjectDescriptor uniformBufferDescriptor, UI32 bufferCount);
@@ -149,6 +153,7 @@ namespace Dynamik {
 
 			/* Attachment container */
 			POINTER<VulkanRenderData> skyboxObject;
+			BoundingBox myBoundingBox;
 		};
 	}
 }

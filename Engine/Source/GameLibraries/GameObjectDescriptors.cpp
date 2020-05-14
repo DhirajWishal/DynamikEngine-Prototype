@@ -17,7 +17,7 @@ namespace Dynamik {
 		UI32 _size = 0;
 
 		for (auto attribute : attributes)
-			_size += (UI32)attribute.dataType;
+			_size += ((UI32)attribute.dataType * attribute.arrayCount);
 
 		return _size;
 	}

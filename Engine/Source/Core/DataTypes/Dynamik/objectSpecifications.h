@@ -17,6 +17,7 @@ namespace Dynamik {
 	enum class DMKObjectType {
 		DMK_OBJECT_TYPE_IMAGE_2D,
 		DMK_OBJECT_TYPE_DEBUG_OBJECT,
+		DMK_OBJECT_TYPE_BOUNDING_BOX,
 
 		DMK_OBJECT_TYPE_MESH,					// per object ubo
 		DMK_OBJECT_TYPE_STATIC,					// terrain ubo

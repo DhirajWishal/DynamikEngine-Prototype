@@ -72,6 +72,50 @@ namespace Dynamik {
 			return _container;
 		}
 
+		std::vector<MeshPointStore> _generateBoundingMesh()
+		{
+			F32 _position = 0.1f;
+
+			std::vector<MeshPointStore> _vertexBufferObject;
+			MeshPointStore _store;
+			_store.color = { 1.0f, 1.0f, 1.0f };
+
+			_store.position = { -_position, _position, _position };
+			_vertexBufferObject.push_back(_store);
+
+			_store.position = { -_position, _position, -_position };
+			_vertexBufferObject.push_back(_store);
+
+			_store.position = { _position,  _position, -_position };
+			_vertexBufferObject.push_back(_store);
+
+			_store.position = { _position,  _position, _position };
+			_vertexBufferObject.push_back(_store);
+
+			_store.position = { _position, -_position, _position };
+			_vertexBufferObject.push_back(_store);
+
+			_store.position = { _position, -_position, -_position };
+			_vertexBufferObject.push_back(_store);
+
+			_store.position = { -_position, -_position, -_position };
+			_vertexBufferObject.push_back(_store);
+
+			_store.position = { -_position, -_position, _position };
+			_vertexBufferObject.push_back(_store);
+
+			return _vertexBufferObject;
+		}
+
+		std::vector<UI32> _generateBoundingMeshIndices()
+		{
+			return {
+				0, 1, 1, 2, 2, 3, 3, 0,
+				3, 4, 4, 5, 5, 2, 5, 6,
+				6, 1, 6, 7, 7, 0, 7, 4
+			};
+		}
+
 		// ----------
 #endif
 		void VulkanRBL::setMsaaSamples(DMKPipelineMSAASamples samples)
@@ -428,7 +472,8 @@ namespace Dynamik {
 			/* Pre initialization stage */
 			VulkanRenderContext _context;
 			VulkanRenderData _renderData;
-			_renderData.type = format->type;
+			VulkanRenderObject _object;
+			_object.type = format->type;
 
 			/* Resolve attachments */
 			B1 isTextureAvailable = false;
@@ -465,33 +510,38 @@ namespace Dynamik {
 			}
 
 			_renderData.renderTechnology = format->descriptor.renderSpecification.renderingTechnology;
-			_renderData.indexBufferType = format->descriptor.indexBufferType;
+			_object.indexBufferType = format->descriptor.indexBufferType;
 
 			/* Initialize mesh data */
 			for (auto mesh : format->meshDatas)
 			{
 				/* initialize vertex buffers */
-				_renderData.vertexBufferContainer.push_back(createVertexBuffer(mesh, format->descriptor.vertexBufferObjectDescription.attributes));
+				_object.vertexBufferContainer.push_back(createVertexBuffer(mesh, format->descriptor.vertexBufferObjectDescription.attributes));
 
 				/* initialize index buffers */
-				_renderData.indexBufferContainer.push_back(createIndexBuffer(mesh, format->descriptor.indexBufferType));
+				_object.indexBufferContainer.push_back(createIndexBuffer(mesh, format->descriptor.indexBufferType));
 
 				/* initialize textures */
 				if (!isTextureAvailable)
 					for (UI32 i = 0; i < mesh.textureDatas.size(); i++)
 						_renderData.textures.push_back(createTextureImage(mesh.textureDatas[i]));
+
+				if (format->type != DMKObjectType::DMK_OBJECT_TYPE_SKYBOX)
+					_renderData.renderObject.push_back(createBoundingBox(mesh, myRenderContexts[(UI32)context]));
 			}
 
 			/* Initialize uniform buffers */
 			for (auto _uniformBufferDescription : format->descriptor.uniformBufferObjectDescriptions)
 				if (_uniformBufferDescription.type == DMKUniformType::DMK_UNIFORM_TYPE_BUFFER_OBJECT)
-					_renderData.uniformBufferContainers.push_back(createUniformBuffers(_uniformBufferDescription, _context.swapChain.swapChainImages.size()));
+					_object.uniformBufferContainers.push_back(createUniformBuffers(_uniformBufferDescription, _context.swapChain.swapChainImages.size()));
 
 			/* Initialize Descriptors */
-			_renderData.descriptors = createDescriptors(format->descriptor.uniformBufferObjectDescriptions, _renderData.uniformBufferContainers, _renderData.textures);
+			_object.descriptors = createDescriptors(format->descriptor.uniformBufferObjectDescriptions, _object.uniformBufferContainers, _renderData.textures);
 
 			/* Initialize pipeline */
-			_renderData.pipelineContainers.push_back(createPipeline({ _renderData.descriptors }, format->descriptor.uniformBufferObjectDescriptions, format->descriptor.vertexBufferObjectDescription.attributes, format->shaderPaths, format->type, _context));
+			_object.pipeline = createPipeline({ _object.descriptors }, format->descriptor.uniformBufferObjectDescriptions, format->descriptor.vertexBufferObjectDescription.attributes, format->shaderPaths, format->type, _context);
+
+			_renderData.renderObject.push_back(_object);
 
 			/* Add data to the container and return its address */
 			myRenderContexts[(UI32)context].renderDatas.push_back(_renderData);
@@ -504,6 +554,14 @@ namespace Dynamik {
 			}
 
 			return _address;
+		}
+
+		void VulkanRBL::generateBoundingBoxes()
+		{
+			DMK_CORE_INFO("Generating bounding boxes! Binding context is set to default.");
+			auto _context = myRenderContexts[0];
+
+			myBoundingBox.initialize();
 		}
 
 		void VulkanRBL::initializeCommands()
@@ -565,8 +623,6 @@ namespace Dynamik {
 			{
 				DMK_BEGIN_PROFILE_TIMER();
 
-				info.formats[index]->checkRayCollition(info.cameraData.cameraPosition, info.cameraData.rayDirection);
-
 				/* Check for the Uniform buffer attributes and add the data to the container */
 				for (UI32 _itr = 0; _itr < info.formats[index]->descriptor.uniformBufferObjectDescriptions.size(); _itr++)
 				{
@@ -578,10 +634,28 @@ namespace Dynamik {
 						continue;
 
 					/* Update the objects uniform buffer memory */
-					VulkanUtilities::updateUniformBuffer(
-						myGraphicsCore.logicalDevice,
-						info.formats[index]->onUpdate(info.cameraData),
-						_renderContext.renderDatas[index].uniformBufferContainers[_itr].bufferMemories[imageIndex]);
+					for (auto _object : _renderContext.renderDatas[index].renderObject)
+					{
+						if (_object.type == DMKObjectType::DMK_OBJECT_TYPE_BOUNDING_BOX)
+						{
+							info.formats[index]->checkRayCollition(info.cameraData.cameraPosition, info.cameraData.rayDirection - info.cameraData.cameraFront, _object.limits);
+
+							VulkanUtilities::updateBoundingBox(
+								myGraphicsCore.logicalDevice,
+								info.formats[index]->onUpdate(info.cameraData),
+								_object.uniformBufferContainers[_itr].bufferMemories[imageIndex],
+								_object.limits,
+								info.formats[index]->descriptor.transformDescriptor.location,
+								info.formats[index]->isSelected);
+						}
+						else
+						{
+							VulkanUtilities::updateUniformBuffer(
+								myGraphicsCore.logicalDevice,
+								info.formats[index]->onUpdate(info.cameraData),
+								_object.uniformBufferContainers[_itr].bufferMemories[imageIndex]);
+						}
+					}
 				}
 			}
 
@@ -744,6 +818,85 @@ namespace Dynamik {
 			vkFreeMemory(myGraphicsCore.logicalDevice, stagingBufferMemory, nullptr);
 
 			return _container;
+		}
+
+		inline MeshVertexLimits VulkanRBL::getVertexLimits(Mesh mesh)
+		{
+			MeshVertexLimits _limits;
+			_limits.limitX.x = mesh.vertexDataStore[0].position.x;
+			_limits.limitX.y = mesh.vertexDataStore[0].position.x;
+			_limits.limitY.x = mesh.vertexDataStore[0].position.y;
+			_limits.limitY.y = mesh.vertexDataStore[0].position.y;
+			_limits.limitZ.x = mesh.vertexDataStore[0].position.z;
+			_limits.limitZ.y = mesh.vertexDataStore[0].position.z;
+
+			for (auto _vertex : mesh.vertexDataStore)
+			{
+				if (_vertex.position.x < _limits.limitX.x) _limits.limitX.x = _vertex.position.x;
+				if (_vertex.position.x > _limits.limitX.y) _limits.limitX.y = _vertex.position.x;
+				if (_vertex.position.y < _limits.limitY.x) _limits.limitY.x = _vertex.position.y;
+				if (_vertex.position.y > _limits.limitY.y) _limits.limitY.y = _vertex.position.y;
+				if (_vertex.position.z < _limits.limitZ.x) _limits.limitZ.x = _vertex.position.z;
+				if (_vertex.position.z > _limits.limitZ.y) _limits.limitZ.y = _vertex.position.z;
+			}
+
+			return _limits;
+		}
+
+		inline VulkanRenderObject VulkanRBL::createBoundingBox(Mesh mesh, VulkanRenderContext context)
+		{
+			VulkanRenderObject _object;
+			_object.type = DMKObjectType::DMK_OBJECT_TYPE_BOUNDING_BOX;
+
+			Mesh _meshObject;
+			_meshObject.vertexDataStore = _generateBoundingMesh();
+			_meshObject.indexes = _generateBoundingMeshIndices();
+
+			std::vector<DMKVertexAttribute> _attributes;
+			DMKVertexAttribute _attribute;
+			_attribute.dataType = DMKDataType::DMK_DATA_TYPE_VEC3;
+			_attribute.name = DMKVertexData::DMK_VERTEX_DATA_POSITION;
+			_attributes.push_back(_attribute);
+
+			_attribute.dataType = DMKDataType::DMK_DATA_TYPE_VEC3;
+			_attribute.name = DMKVertexData::DMK_VERTEX_DATA_COLOR;
+			_attributes.push_back(_attribute);
+
+			_object.vertexBufferContainer.push_back(createVertexBuffer(_meshObject, _attributes));
+			_object.indexBufferContainer.push_back(createIndexBuffer(_meshObject, DMKDataType::DMK_DATA_TYPE_UI32));
+
+			DMKUniformBufferObjectDescriptor UBODescriptor;
+			UBODescriptor.type = DMKUniformType::DMK_UNIFORM_TYPE_BUFFER_OBJECT;
+			UBODescriptor.location = DMKShaderLocation::DMK_SHADER_LOCATION_VERTEX;
+			UBODescriptor.binding = 0;
+
+			DMKUniformAttribute uAttribute1;
+			uAttribute1.name = DMKUniformData::DMK_UNIFORM_DATA_MODEL;
+			uAttribute1.dataType = DMKDataType::DMK_DATA_TYPE_MAT4;
+			UBODescriptor.attributes.push_back(uAttribute1);
+
+			DMKUniformAttribute uAttribute2;
+			uAttribute2.name = DMKUniformData::DMK_UNIFORM_DATA_VIEW;
+			uAttribute2.dataType = DMKDataType::DMK_DATA_TYPE_MAT4;
+			UBODescriptor.attributes.push_back(uAttribute2);
+
+			DMKUniformAttribute uAttribute3;
+			uAttribute3.name = DMKUniformData::DMK_UNIFORM_DATA_PROJECTION;
+			uAttribute3.dataType = DMKDataType::DMK_DATA_TYPE_MAT4;
+			UBODescriptor.attributes.push_back(uAttribute3);
+
+			_object.uniformBufferContainers.push_back(createUniformBuffers(UBODescriptor, context.swapChain.swapChainImages.size()));
+
+			_object.descriptors = createDescriptors({ UBODescriptor }, _object.uniformBufferContainers, {});
+
+			ShaderPaths _paths;
+			_paths.vertexShader = "Shaders/BoundingBox/vert.spv";
+			_paths.fragmentShader = "Shaders/BoundingBox/frag.spv";
+			_object.pipeline = createPipeline({ _object.descriptors }, { UBODescriptor }, _attributes, _paths, DMKObjectType::DMK_OBJECT_TYPE_BOUNDING_BOX, context);
+
+			_object.limits = getVertexLimits(mesh);
+
+			return _object;
 		}
 
 		VulkanBufferContainer VulkanRBL::createIndexBuffer(Mesh mesh, DMKDataType type)
@@ -941,6 +1094,17 @@ namespace Dynamik {
 			switch (objectType)
 			{
 			case Dynamik::DMKObjectType::DMK_OBJECT_TYPE_IMAGE_2D:
+				break;
+			case Dynamik::DMKObjectType::DMK_OBJECT_TYPE_BOUNDING_BOX:
+				_pipeline.initializePipeline(
+					myGraphicsCore.logicalDevice,
+					VulkanPresets::pipelinePresetBoundingBox(
+						myGraphicsCore.logicalDevice,
+						myMsaaSamples,
+						context.renderPass.renderPass,
+						_shaders,
+						attributes,
+						context.swapChain.swapChainExtent));
 				break;
 			case Dynamik::DMKObjectType::DMK_OBJECT_TYPE_DEBUG_OBJECT:
 				_pipeline.initializePipeline(

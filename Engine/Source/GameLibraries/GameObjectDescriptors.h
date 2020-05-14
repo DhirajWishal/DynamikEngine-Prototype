@@ -111,6 +111,7 @@ namespace Dynamik {
 	struct  DMKUniformAttribute {
 		DMKUniformData name = DMKUniformData::DMK_UNIFORM_DATA_MODEL;
 		DMKDataType dataType = DMKDataType::DMK_DATA_TYPE_MAT4;
+		UI32 arrayCount = 1;
 	};
 
 	class DMKUniformBufferObjectDescriptor {

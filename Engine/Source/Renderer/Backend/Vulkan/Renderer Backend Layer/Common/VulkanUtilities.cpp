@@ -1153,6 +1153,23 @@ namespace Dynamik {
 				vkUnmapMemory(device, uniformBufferMemory);
 			}
 
+			void VulkanUtilities::updateBoundingBox(
+				VkDevice device,
+				DMKUniformBufferData uniformData,
+				VkDeviceMemory uniformBufferMemory,
+				MeshVertexLimits limits,
+				VEC3 location,
+				B1 shouldRender)
+			{
+				DMK_BEGIN_PROFILE_TIMER();
+
+				VPTR data = nullptr;
+				vkMapMemory(device, uniformBufferMemory, 0, uniformData.size(), 0, &data);
+				if (shouldRender) memcpy(data, uniformData.data(), uniformData.size());
+				else memset(data, 0, uniformData.size());
+				vkUnmapMemory(device, uniformBufferMemory);
+			}
+
 			VkDescriptorType VulkanUtilities::getDescriptorType(DMKUniformType type)
 			{
 				VkDescriptorType _descriptorType;

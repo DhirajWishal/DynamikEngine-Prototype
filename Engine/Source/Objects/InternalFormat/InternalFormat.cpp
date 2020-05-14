@@ -13,34 +13,41 @@ namespace Dynamik {
 		shaderPaths = ShaderPaths();
 	}
 
-	B1 InternalFormat::checkRayCollition(VEC3 rayOrigin, VEC3 rayDirection)
+	B1 InternalFormat::checkRayCollition(VEC3 rayOrigin, VEC3 rayDirection, MeshVertexLimits limits)
 	{
-		VEC3 v = descriptor.transformDescriptor.location - rayDirection;
-		D64 a = glm::dot(rayDirection, rayDirection);
-		D64 b = 2.0 * glm::dot(v, rayDirection);
-		D64 c = glm::dot(v, v) - descriptor.transformDescriptor.hitBoxRadius * descriptor.transformDescriptor.hitBoxRadius;
-		D64 b_squared_minus_4ac = b * b + (-4.0) * a * c;
+		F32 tmin, tmax, tymin, tymax, tzmin, tzmax;
 
-		if (b_squared_minus_4ac > 0)
+		tmin = (limits.limitX.x - rayOrigin.x) / rayDirection.x;
+		tmax = (limits.limitX.y - rayOrigin.x) / rayDirection.x;
+		tymin = (limits.limitY.x - rayOrigin.y) / rayDirection.y;
+		tymax = (limits.limitY.y - rayOrigin.y) / rayDirection.y;
+
+		if ((tmin > tymax) || (tymin > tmax))
 		{
-			// Herein lies the problem
-			D64 x1 = (-b - sqrt(b_squared_minus_4ac)) / (2.0 * a);
-			D64 x2 = (-b + sqrt(b_squared_minus_4ac)) / (2.0 * a);
-
-			// Neither test true from far away
-			if (x1 >= 0.0 && x2 >= 0.0)
-			{
-				DMK_CORE_INFO("Ray collided with object! " + std::to_string((UI32)type));
-				return true;
-			}
-			if (x1 < 0.0 && x2 >= 0.0)
-			{
-				//DMK_CORE_WARN("Ray collided with object! " + std::to_string((UI32)type));
-				return true;
-			}
+			isSelected = false;
+			return false;
 		}
 
-		return false;
+		if (tymin > tmin)
+			tmin = tymin;
+		if (tymax < tmax)
+			tmax = tymax;
 
+		tzmin = (limits.limitZ.x - rayOrigin.z) / rayDirection.z;
+		tzmax = (limits.limitZ.y - rayOrigin.z) / rayDirection.z;
+
+		if ((tmin > tzmax) || (tzmin > tmax))
+		{
+			isSelected = false;
+			return false;
+		}
+
+		if (tzmin > tmin)
+			tmin = tzmin;
+		if (tzmax < tmax)
+			tmax = tzmax;
+
+		isSelected = true;
+		return true;
 	}
 }

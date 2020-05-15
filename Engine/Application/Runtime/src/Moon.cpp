@@ -73,3 +73,15 @@ void Moon::initialize()
 	descriptor.uniformBufferObjectDescriptions.push_back(UBODescriptor);
 	descriptor.uniformBufferObjectDescriptions.push_back(TexSampler);
 }
+
+DMKUniformBufferData Moon::onUpdate(DMKCameraData data)
+{
+	uniformBufferDataStore.clear();
+
+	myModelMatrix = glm::rotate(glm::translate(MAT4(1.0f), descriptor.transformDescriptor.location), glm::radians(45.0f), VEC3(1.0f, 0.0f, 0.0f));
+	uniformBufferDataStore.addData(&myModelMatrix, sizeof(MAT4), 0);
+	uniformBufferDataStore.addData(&data.viewMatrix, sizeof(MAT4), 1);
+	uniformBufferDataStore.addData(&data.projectionMatrix, sizeof(MAT4), 2);
+
+	return uniformBufferDataStore;
+}

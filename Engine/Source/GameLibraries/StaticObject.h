@@ -101,7 +101,10 @@ namespace Dynamik {
 			return uniformBufferDataStore;
 		}
 
+		virtual MAT4 getModelMatrix() { return myModelMatrix; }
+
 	protected:
+		MAT4 myModelMatrix = MAT4(1.0f);
 	};
 }
 

@@ -87,7 +87,7 @@ namespace Dynamik {
 			uniformBufferDataStore.addData(&model, sizeof(MAT4), 0);
 			
 			MAT4 view = glm::mat4(glm::mat3(data.viewMatrix));
-			uniformBufferDataStore.addData(&view, sizeof(MAT4), 1);
+			uniformBufferDataStore.addData(&data.viewMatrix, sizeof(MAT4), 1);
 			
 			uniformBufferDataStore.addData(&data.projectionMatrix, sizeof(MAT4), 2);
 

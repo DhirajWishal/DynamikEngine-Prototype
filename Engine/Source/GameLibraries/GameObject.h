@@ -54,6 +54,27 @@ namespace Dynamik {
         virtual DMKUniformBufferData onUpdate(DMKCameraData data) { return DMKUniformBufferData(); }
 
         /* VIRTUAL FUNCTION
+         * Rotate the object in the X axis (Pitch).
+         *
+         * @param angle: Angle in which to rotate the object;
+         */
+        virtual void rotateAxisX(F32 radians) {}
+
+        /* VIRTUAL FUNCTION
+         * Rotate the object in the Y axis (Yaw).
+         *
+         * @param angle: Angle in which to rotate the object;
+         */
+        virtual void rotateAxisY(F32 radians) {}
+
+        /* VIRTUAL FUNCTION
+         * Rotate the object in the Z axis (Roll).
+         *
+         * @param angle: Angle in which to rotate the object;
+         */
+        virtual void rotateAxisZ(F32 radians) {}
+
+        /* VIRTUAL FUNCTION
          * Event handlers for the Dynamik Game Object.
          * Dynamik engine uses a threaded blocking event management system. When an event occurs, a 
            key event component structure is created. A new thread is then created to handle the event.

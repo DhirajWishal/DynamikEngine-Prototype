@@ -90,7 +90,7 @@ Dynamik::DMKUniformBufferData Reflect::onUpdate(Dynamik::DMKCameraData data)
 {
 	uniformBufferDataStore.clear();
 
-	uniformBufferDataStore.addData(&data.modelMatrix, sizeof(MAT4), 0);
+	uniformBufferDataStore.addData(&myModelMatrix, sizeof(MAT4), 0);
 	uniformBufferDataStore.addData(&data.viewMatrix, sizeof(MAT4), 1);
 	uniformBufferDataStore.addData(&data.projectionMatrix, sizeof(MAT4), 2);
 	uniformBufferDataStore.addData(&data.cameraPosition, sizeof(VEC3), 3);

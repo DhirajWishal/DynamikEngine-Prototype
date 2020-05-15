@@ -11,6 +11,8 @@ public:
 	~Moon() {}
 
 	void initialize() override;
+
+	DMKUniformBufferData onUpdate(DMKCameraData data) override;
 };
 
 #endif // !_APPLICATION_MOON_H

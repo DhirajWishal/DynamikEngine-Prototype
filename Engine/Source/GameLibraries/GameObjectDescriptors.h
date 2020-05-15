@@ -76,18 +76,9 @@ namespace Dynamik {
 
 	struct  DMKCameraData {
 		VEC3 cameraPosition = { 0.0f, 0.0f, 0.0f };
-		VEC3 cameraUp = { 0.0f, 1.0f, 0.0f };
-		VEC3 cameraFront = { 0.0f, 0.0f, -1.0f };
-		VEC3 cameraRight = { 1.0f, 0.0f, 0.0f };
+		VEC3 rayOrigin = { 0.0f, 0.0f, 0.0f };
+		VEC3 rayDirection = { 0.0f, 0.0f, 0.0f };
 
-		VEC3 rayDirection = { 1.0f, 0.0f, 0.0f };
-
-		F32 fieldOfView = 45.0f;
-		F32 aspectRatio = 0.5f;
-		F32 cameraFar = 256.0f;
-		F32 cameraNear = 0.001f;
-
-		MAT4 modelMatrix = glm::mat4(1.0f);
 		MAT4 viewMatrix = glm::mat4(1.0f);
 		MAT4 projectionMatrix = glm::mat4(1.0f);
 	};

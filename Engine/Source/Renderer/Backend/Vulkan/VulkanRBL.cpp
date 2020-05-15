@@ -638,7 +638,7 @@ namespace Dynamik {
 					{
 						if (_object.type == DMKObjectType::DMK_OBJECT_TYPE_BOUNDING_BOX)
 						{
-							info.formats[index]->checkRayCollition(info.cameraData.cameraPosition, info.cameraData.rayDirection - info.cameraData.cameraFront, _object.limits);
+							info.formats[index]->checkRayCollition(info.cameraData.cameraPosition, info.cameraData.rayDirection, _object.limits);
 
 							VulkanUtilities::updateBoundingBox(
 								myGraphicsCore.logicalDevice,

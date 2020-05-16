@@ -109,7 +109,7 @@ namespace Dynamik {
 			/* Per object functions */
 			inline VulkanBufferContainer createVertexBuffer(Mesh mesh, std::vector<DMKVertexAttribute> attributes);
 			inline MeshVertexLimits getVertexLimits(Mesh mesh);
-			inline VulkanRenderObject createBoundingBox(Mesh mesh, VulkanRenderContext context);
+			inline VulkanRenderObject createBoundingBox(Mesh mesh, VulkanRenderContext context, F32 hitboxRadius);
 			inline VulkanBufferContainer createIndexBuffer(Mesh mesh, DMKDataType type);
 			inline VulkanTextureContainer createTextureImage(Texture texture);
 			inline VulkanUnformBufferContainer createUniformBuffers(DMKUniformBufferObjectDescriptor uniformBufferDescriptor, UI32 bufferCount);

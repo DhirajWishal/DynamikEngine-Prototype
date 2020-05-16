@@ -63,3 +63,18 @@ void OceanSkybox::initialize()
 	descriptor.uniformBufferObjectDescriptions.push_back(UBODescriptor);
 	descriptor.uniformBufferObjectDescriptions.push_back(TexSampler);
 }
+
+DMKUniformBufferData OceanSkybox::onUpdate(DMKCameraData data)
+{
+	uniformBufferDataStore.clear();
+
+	MAT4 model = glm::rotate(glm::translate(MAT4(1.0f), descriptor.transformDescriptor.location), glm::radians(180.0f), VEC3(1.0f, 0.0f, 0.0f));
+	uniformBufferDataStore.addData(&model, sizeof(MAT4), 0);
+
+	MAT4 view = glm::mat4(glm::mat3(data.viewMatrix));
+	uniformBufferDataStore.addData(&data.viewMatrix, sizeof(MAT4), 1);
+
+	uniformBufferDataStore.addData(&data.projectionMatrix, sizeof(MAT4), 2);
+
+	return uniformBufferDataStore;
+}

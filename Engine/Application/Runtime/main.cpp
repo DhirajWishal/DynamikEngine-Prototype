@@ -14,6 +14,7 @@
 #include "src/Skybox.h"
 #include "src/Moon.h"
 #include "src/Reflect.h"
+#include "src/VikingRoom.h"
 
 /* -----||||| MAIN LAUNCH SYSTEM |||||----- */
 
@@ -33,6 +34,7 @@ int main(int argc, char** argv) {
 		/* Level initialization */
 		OceanSkybox skybox;
 		Moon moon;
+		VikingRoom room;
 
 		Reflect reflectObject;
 
@@ -40,7 +42,8 @@ int main(int argc, char** argv) {
 		scene1.sceneID = "S001";
 		scene1.sceneIndex = 0;
 		//scene1.assets = { &skybox };
-		scene1.assets = { &skybox, &moon };
+		//scene1.assets = { &skybox, &moon, &room };
+		scene1.assets = { &skybox, &room };
 		//scene1.assets = { &moon };
 
 		DMKLevelDescriptor level1;

@@ -10,6 +10,8 @@ public:
 	~OceanSkybox() {}
 
 	void initialize() override;
+
+	DMKUniformBufferData onUpdate(DMKCameraData data) override;
 };
 
 #endif // !_APPLICATION_SKYBOX_DEFINITION_H

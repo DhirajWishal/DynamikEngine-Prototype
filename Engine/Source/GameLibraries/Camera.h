@@ -41,10 +41,10 @@ namespace Dynamik {
 	protected:
 		DMKCameraData myData;
 
-		VEC3 cameraUp = { 0.0f, -1.0f, 0.0f };
+		VEC3 cameraUp = { 0.0f, 1.0f, 0.0f };
 		VEC3 cameraFront = { 0.0f, 0.0f, -1.0f };
 		VEC3 cameraRight = { 1.0f, 0.0f, 0.0f };
-		VEC3 worldUp = glm::vec3(0.0f, -1.0f, 0.0f);
+		VEC3 worldUp = glm::vec3(0.0f, 1.0f, 0.0f);
 
 		F32 fieldOfView = 45.0f;
 		F32 aspectRatio = 0.5f;

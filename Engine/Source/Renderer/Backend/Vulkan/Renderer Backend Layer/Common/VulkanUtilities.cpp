@@ -519,7 +519,7 @@ namespace Dynamik {
 				if (texture.format == DMKFormat::DMK_FORMAT_RGBA_8_UNIFORM)
 					_container.format = VK_FORMAT_R8G8B8A8_UNORM;
 				else if (texture.format == DMKFormat::DMK_FORMAT_RGB_8_UNIFORM)
-					_container.format = VK_FORMAT_R8G8B8A8_UNORM;
+					_container.format = VK_FORMAT_R8G8B8_UNORM;
 
 				_container.width = texture.width;
 				_container.height = texture.height;

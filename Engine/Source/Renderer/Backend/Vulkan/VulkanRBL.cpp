@@ -72,10 +72,8 @@ namespace Dynamik {
 			return _container;
 		}
 
-		std::vector<MeshPointStore> _generateBoundingMesh()
+		std::vector<MeshPointStore> _generateBoundingMesh(F32 _position)
 		{
-			F32 _position = 0.1f;
-
 			std::vector<MeshPointStore> _vertexBufferObject;
 			MeshPointStore _store;
 			_store.color = { 1.0f, 1.0f, 1.0f };
@@ -527,7 +525,7 @@ namespace Dynamik {
 						_renderData.textures.push_back(createTextureImage(mesh.textureDatas[i]));
 
 				if (format->type != DMKObjectType::DMK_OBJECT_TYPE_SKYBOX)
-					_renderData.renderObject.push_back(createBoundingBox(mesh, myRenderContexts[(UI32)context]));
+					_renderData.renderObject.push_back(createBoundingBox(mesh, myRenderContexts[(UI32)context], format->descriptor.transformDescriptor.hitBoxRadius));
 			}
 
 			/* Initialize uniform buffers */
@@ -638,7 +636,7 @@ namespace Dynamik {
 					{
 						if (_object.type == DMKObjectType::DMK_OBJECT_TYPE_BOUNDING_BOX)
 						{
-							info.formats[index]->checkRayCollition(info.cameraData.cameraPosition, info.cameraData.rayDirection, _object.limits);
+							info.formats[index]->checkRayCollition(info.cameraData.rayOrigin, info.cameraData.rayDirection, _object.limits);
 
 							VulkanUtilities::updateBoundingBox(
 								myGraphicsCore.logicalDevice,
@@ -843,13 +841,13 @@ namespace Dynamik {
 			return _limits;
 		}
 
-		inline VulkanRenderObject VulkanRBL::createBoundingBox(Mesh mesh, VulkanRenderContext context)
+		inline VulkanRenderObject VulkanRBL::createBoundingBox(Mesh mesh, VulkanRenderContext context, F32 hitboxRadius)
 		{
 			VulkanRenderObject _object;
 			_object.type = DMKObjectType::DMK_OBJECT_TYPE_BOUNDING_BOX;
 
 			Mesh _meshObject;
-			_meshObject.vertexDataStore = _generateBoundingMesh();
+			_meshObject.vertexDataStore = _generateBoundingMesh(hitboxRadius);
 			_meshObject.indexes = _generateBoundingMeshIndices();
 
 			std::vector<DMKVertexAttribute> _attributes;

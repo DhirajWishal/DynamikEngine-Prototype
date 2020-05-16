@@ -22,7 +22,7 @@ namespace Dynamik {
 			if (mesh->mColors[0])
 				_store.color = { mesh->mColors[0][index].r, mesh->mColors[0][index].g, mesh->mColors[0][index].b };
 			if (mesh->mTextureCoords[0])
-				_store.textureCoordinate = { mesh->mTextureCoords[0][index].x, mesh->mTextureCoords[0][index].y, mesh->mTextureCoords[0][index].z };
+				_store.textureCoordinate = { mesh->mTextureCoords[0][index].x, 1.0f - mesh->mTextureCoords[0][index].y, mesh->mTextureCoords[0][index].z };
 			if (mesh->HasNormals())
 				_store.normal = { mesh->mNormals[index].x, mesh->mNormals[index].y, mesh->mNormals[index].z };
 			_store.integrity = 1.0f;

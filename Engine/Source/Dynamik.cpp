@@ -52,6 +52,7 @@ namespace Dynamik {
 		/* Initialize the startup renderer to render basic data while the main renderer is activated.		*/
 		/* This way the user is not presented with a blank screen while all the scene data are loaded.		*/
 		/* The startup renderer is run on a separate thread to make sure that it wont affect the Engine.	*/
+#if 0
 		instance.myStartypRendererThread.swap(std::thread(
 			[](CCPTR iconPath)
 			{
@@ -72,10 +73,12 @@ namespace Dynamik {
 				Renderer::StartupRenderer::terminate();
 
 			}, descriptor.iconPath
-			));
+		));
 
 		/* Wait till the startup renderer is initialized. */
 		while (!isStartupComplete);
+#endif // 0
+
 	}
 
 	UI32 DMKEngine::addLevel(DMKLevelDescriptor level)
@@ -223,8 +226,10 @@ namespace Dynamik {
 		DMK_BEGIN_PROFILE_TIMER();
 
 		/* Terminate the StartupRenderer */
+#if 0
 		finishStartUpRenderer = true;
 		instance.myStartypRendererThread.join();
+#endif
 
 		/* Instanciate draw frame info structure */
 		DMKRendererDrawFrameInfo info;

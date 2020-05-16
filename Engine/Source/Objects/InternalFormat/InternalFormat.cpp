@@ -28,6 +28,13 @@ namespace Dynamik {
 		float tMin = 0.0f;
 		float tMax = 100000.0f;
 
+		if ((ray_direction.x > 0.0f) ||
+			(ray_direction.y > 0.0f) ||
+			(ray_direction.z > 0.0f))
+		{
+			int lol = 10;
+		}
+
 		glm::vec3 OBBposition_worldspace(ModelMatrix[3].x, ModelMatrix[3].y, ModelMatrix[3].z);
 
 		glm::vec3 delta = OBBposition_worldspace - ray_origin;
@@ -39,22 +46,14 @@ namespace Dynamik {
 			float f = glm::dot(ray_direction, xaxis);
 
 			if (fabs(f) > 0.001f) { // Standard case
-				float t1 = (e + aabb_min.x) / f; // Intersection with the "left" plane
-				float t2 = (e + aabb_max.x) / f; // Intersection with the "right" plane
+				float min = (e + aabb_min.x) / f; // Intersection with the "left" plane
+				float max = (e + aabb_max.x) / f; // Intersection with the "right" plane
 				// t1 and t2 now contain distances betwen ray origin and ray-plane intersections
 
-				// We want t1 to represent the nearest intersection, 
-				// so if it's not the case, invert t1 and t2
-				if (t1 > t2) {
-					float w = t1; t1 = t2; t2 = w; // swap t1 and t2
-				}
-
-				// tMax is the nearest "far" intersection (amongst the X,Y and Z planes pairs)
-				if (t2 < tMax)
-					tMax = t2;
-				// tMin is the farthest "near" intersection (amongst the X,Y and Z planes pairs)
-				if (t1 > tMin)
-					tMin = t1;
+				if (min < max)
+					tMin = min, tMax = max;
+				else
+					tMin = max, tMax = min;
 
 				// And here's the trick :
 				// If "far" is closer than "near", then there is NO intersection.
@@ -76,15 +75,15 @@ namespace Dynamik {
 			float f = glm::dot(ray_direction, yaxis);
 
 			if (fabs(f) > 0.001f) {
-				float t1 = (e + aabb_min.y) / f;
-				float t2 = (e + aabb_max.y) / f;
+				float min = (e + aabb_min.y) / f; // Intersection with the "left" plane
+				float max = (e + aabb_max.y) / f; // Intersection with the "right" plane
+				// t1 and t2 now contain distances betwen ray origin and ray-plane intersections
 
-				if (t1 > t2) { float w = t1; t1 = t2; t2 = w; }
+				if (min < max)
+					tMin = std::max(tMin, min), tMax = std::min(tMax, max);
+				else
+					tMin = std::max(tMin, max), tMax = std::min(tMax, min);
 
-				if (t2 < tMax)
-					tMax = t2;
-				if (t1 > tMin)
-					tMin = t1;
 				if (tMin > tMax)
 					return false;
 			}
@@ -102,14 +101,15 @@ namespace Dynamik {
 			float f = glm::dot(ray_direction, zaxis);
 
 			if (fabs(f) > 0.001f) {
-				float t1 = (e + aabb_min.z) / f;
-				float t2 = (e + aabb_max.z) / f;
+				float min = (e + aabb_min.z) / f; // Intersection with the "left" plane
+				float max = (e + aabb_max.z) / f; // Intersection with the "right" plane
+				// t1 and t2 now contain distances betwen ray origin and ray-plane intersections
 
-				if (t1 > t2) { float w = t1; t1 = t2; t2 = w; }
-				if (t2 < tMax)
-					tMax = t2;
-				if (t1 > tMin)
-					tMin = t1;
+				if (min < max)
+					tMin = std::max(tMin, min), tMax = std::min(tMax, max);
+				else
+					tMin = std::max(tMin, max), tMax = std::min(tMax, min);
+
 				if (tMin > tMax)
 					return false;
 			}
@@ -120,8 +120,6 @@ namespace Dynamik {
 		}
 
 		intersection_distance = tMin;
-		if (intersection_distance)
-			DMK_CORE_INFO("Intersected!");
 
 		return true;
 	}
@@ -137,8 +135,7 @@ namespace Dynamik {
 			VEC3(limits.limitX.y, limits.limitY.y, limits.limitZ.y),
 			object->getModelMatrix(), _intersectionSize);
 
-		if (_intersectionSize)
-			DMK_CORE_INFO("Intersected!");
+		//std::cout << _intersectionSize << "\r";
 
 		return isSelected;
 	}

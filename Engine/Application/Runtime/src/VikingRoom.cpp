@@ -1,18 +1,18 @@
-#include "Moon.h"
+#include "VikingRoom.h"
 
-void Moon::initialize()
+void VikingRoom::initialize()
 {
 	/* Basic description */
 	type = DMKObjectType::DMK_OBJECT_TYPE_STATIC;
 
 	/* Asset description */
-	descriptor.assetDescription.dynamikResouceFilePath = "E:/Projects/Dynamik Engine/Game Repository/assets/assets/moon";
+	descriptor.assetDescription.dynamikResouceFilePath = "E:/Projects/Dynamik Engine/Game Repository/assets/assets/VikingRoom";
 	descriptor.assetDescription.physicallyBased = false;
 	descriptor.assetDescription.textureInputType = DMKTextureInputType::DMK_TEXTURE_INPUT_TYPE_IMAGE;
 	descriptor.assetDescription.textureType = DMKTextureType::DMK_TEXTURE_TYPE_2D;
 
 	/* Transformation description */
-	descriptor.transformDescriptor.location = VEC3(1.0f, 0.0f, 2.0f);
+	descriptor.transformDescriptor.location = VEC3(2.0f, 0.0f, 0.0f);
 	descriptor.transformDescriptor.hitBoxRadius = 1.0f;
 
 	/* Vertex attributes description */
@@ -30,11 +30,6 @@ void Moon::initialize()
 	vAttribute3.name = DMKVertexData::DMK_VERTEX_DATA_TEXTURE_COORDINATES;
 	vAttribute3.dataType = DMKDataType::DMK_DATA_TYPE_VEC2;
 	descriptor.vertexBufferObjectDescription.attributes.push_back(vAttribute3);
-
-	DMKVertexAttribute vAttribute4;		/* location = 3 */
-	vAttribute4.name = DMKVertexData::DMK_VERTEX_DATA_INTEGRITY;
-	vAttribute4.dataType = DMKDataType::DMK_DATA_TYPE_F32;
-	descriptor.vertexBufferObjectDescription.attributes.push_back(vAttribute4);
 
 	/* Index buffer description */
 	descriptor.indexBufferType = DMKDataType::DMK_DATA_TYPE_UI32;
@@ -74,14 +69,13 @@ void Moon::initialize()
 	descriptor.uniformBufferObjectDescriptions.push_back(TexSampler);
 }
 
-DMKUniformBufferData Moon::onUpdate(DMKCameraData data)
+DMKUniformBufferData VikingRoom::onUpdate(DMKCameraData data)
 {
 	uniformBufferDataStore.clear();
 
-
 	//myModelMatrix = glm::rotate(glm::translate(MAT4(1.0f), descriptor.transformDescriptor.location), glm::radians(-90.0f), VEC3(1.0f, 0.0f, 0.0f));
-	myModelMatrix = MAT4(1.0f);
-	uniformBufferDataStore.addData(&myModelMatrix, sizeof(MAT4), 0);
+	MAT4 model = glm::translate(MAT4(1.0f), descriptor.transformDescriptor.location);
+	uniformBufferDataStore.addData(&model, sizeof(MAT4), 0);
 	uniformBufferDataStore.addData(&data.viewMatrix, sizeof(MAT4), 1);
 	uniformBufferDataStore.addData(&data.projectionMatrix, sizeof(MAT4), 2);
 

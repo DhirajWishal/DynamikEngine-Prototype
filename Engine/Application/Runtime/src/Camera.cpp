@@ -113,6 +113,8 @@ DMKCameraData Camera::update(std::vector<POINTER<DMKEventComponent>> eventCompon
 	if (DMKEventManager::getMouseButton(DMK_MOUSE_BUTTON_LEFT) == DMK_PRESS)
 	{
 		_pos = Dynamik::DMKEventManager::getCursorPosition();
+		_pos.xOffset *= -1.0f;
+		_pos.yOffset *= -1.0f;
 		if (firstMouse)
 		{
 			lastX = _pos.xOffset;
@@ -216,16 +218,31 @@ void ScreenPosToWorldRay(
 
 void Camera::calculateRay(Dynamik::CursorPosition position)
 {
-	ScreenPosToWorldRay(position.xOffset, position.yOffset,
-		windowWidth, windowHeight,
-		myData.viewMatrix, myData.projectionMatrix,
-		myData.rayOrigin, myData.rayDirection);
+	//ScreenPosToWorldRay(position.xOffset, position.yOffset,
+	//	windowWidth, windowHeight,
+	//	myData.viewMatrix, myData.projectionMatrix,
+	//	myData.rayOrigin, myData.rayDirection);
 
-	std::cout << "\rDirection: " <<
-		std::to_string(myData.rayDirection.x) + " " +
-		std::to_string(myData.rayDirection.y) + " " +
-		std::to_string(myData.rayDirection.z) + " Origin: " +
-		std::to_string(myData.cameraPosition.x) + " " +
-		std::to_string(myData.cameraPosition.y) + " " +
-		std::to_string(myData.cameraPosition.z);
+	F32 normalX = ((position.xOffset / windowWidth) * 2) - 1;
+	F32 normalY = 1 - ((position.yOffset / windowHeight) * 2);
+
+	VEC4 clip = VEC4(normalX, normalY, -1.0f, 1.0f);
+
+	auto eye = VEC4(1.0f) * glm::inverse(myData.projectionMatrix) * clip;
+	eye[2] = -1.0f;
+	eye[3] = 0.0f;
+
+	auto world = VEC4(1.0f) * eye * glm::inverse(myData.viewMatrix);
+	myData.rayDirection = VEC3(world.x, world.y, world.z);
+	myData.rayDirection = glm::normalize(myData.rayDirection);
+
+	myData.rayOrigin = myData.cameraPosition;
+
+	//std::cout << "\rDirection: " <<
+	//	std::to_string(myData.rayDirection.x) + " " +
+	//	std::to_string(myData.rayDirection.y) + " " +
+	//	std::to_string(myData.rayDirection.z) + " Origin: " +
+	//	std::to_string(myData.rayOrigin.x) + " " +
+	//	std::to_string(myData.rayOrigin.y) + " " +
+	//	std::to_string(myData.rayOrigin.z);
 }

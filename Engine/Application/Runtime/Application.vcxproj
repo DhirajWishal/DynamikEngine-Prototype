@@ -135,6 +135,7 @@
     <ClInclude Include="src\Moon.h" />
     <ClInclude Include="src\Reflect.h" />
     <ClInclude Include="src\Skybox.h" />
+    <ClInclude Include="src\VikingRoom.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -142,6 +143,7 @@
     <ClCompile Include="src\Moon.cpp" />
     <ClCompile Include="src\Reflect.cpp" />
     <ClCompile Include="src\Skybox.cpp" />
+    <ClCompile Include="src\VikingRoom.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Application.lua" />

@@ -16,6 +16,7 @@
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="src\Reflect.h" />
+    <ClInclude Include="src\VikingRoom.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -29,6 +30,7 @@
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="src\Reflect.cpp" />
+    <ClCompile Include="src\VikingRoom.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Application.lua" />

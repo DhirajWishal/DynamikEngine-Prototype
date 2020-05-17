@@ -221,6 +221,15 @@ namespace Dynamik {
 				windowHandle = myWindowHandle;
 			}
 
+			for (auto _context : myRenderContexts)
+			{
+				if (_context.type == type)
+				{
+					DMK_CORE_ERROR("The requested conetxt is already been initialized!");
+					return;
+				}
+			}
+
 			VulkanRenderContext _context;
 			_context.type = type;
 
@@ -571,11 +580,14 @@ namespace Dynamik {
 				if (myRenderContexts[_itr].state != VulkanResourceState::ADGR_VULKAN_RESOURCE_STATE_HOST_VISIBLE)
 					continue;
 
+				myRenderContexts[_itr].inFlight = myRenderContexts[_itr].renderDatas;
+				myRenderContexts[_itr].renderDatas.clear();
+
 				VulkanGraphicsCommandBufferInitInfo initInfo;
 				initInfo.count = myRenderContexts[_itr].swapChain.swapChainImages.size();
 				initInfo.frameBuffer = myRenderContexts[_itr].frameBuffer;
 				initInfo.swapChain = myRenderContexts[_itr].swapChain;
-				initInfo.objects = myRenderContexts[_itr].renderDatas;
+				initInfo.objects = myRenderContexts[_itr].inFlight;
 				initInfo.renderPass = myRenderContexts[_itr].renderPass;
 				//initInfo.captureFrames = true;
 				myRenderContexts[_itr].inFlightCommandBuffer.initializeCommandBuffers(initInfo);
@@ -597,7 +609,7 @@ namespace Dynamik {
 			auto _renderContext = myRenderContexts[(UI32)context];
 
 			/* Check if the number of update objects are equal to the in-flight objects */
-			if (info.formats.size() != _renderContext.renderDatas.size())
+			if (info.formats.size() != _renderContext.inFlight.size())
 				DMK_CORE_FATAL("Invalid amount of update formats sent to the Draw call!");
 
 			/* Sync Vulkan Fences */
@@ -632,7 +644,7 @@ namespace Dynamik {
 						continue;
 
 					/* Update the objects uniform buffer memory */
-					for (auto _object : _renderContext.renderDatas[index].renderObject)
+					for (auto _object : _renderContext.inFlight[index].renderObject)
 					{
 						if (_object.type == DMKObjectType::DMK_OBJECT_TYPE_BOUNDING_BOX)
 						{
@@ -645,6 +657,22 @@ namespace Dynamik {
 								_object.limits,
 								info.formats[index]->descriptor.transformDescriptor.location,
 								info.formats[index]->isSelected);
+						}
+						else if (info.formats[index]->type == DMKObjectType::DMK_OBJECT_TYPE_SKELETAL_ANIMATION)
+						{
+							for (auto _animation : info.formats[index]->animation)
+							{
+								_animation.update(runningTime);
+
+								boneTransforms.clear();
+								for (auto _transform : _animation.boneTransforms)
+									boneTransforms.push_back(glm::make_mat4(&_transform.a1));
+
+								VulkanUtilities::updateUniformBuffer(
+									myGraphicsCore.logicalDevice,
+									info.formats[index]->onUpdate(info.cameraData, boneTransforms),
+									_object.uniformBufferContainers[_itr].bufferMemories[imageIndex]);
+							}
 						}
 						else
 						{
@@ -679,6 +707,7 @@ namespace Dynamik {
 
 			/* Update the current frame number */
 			currentFrame = (currentFrame + 1) % MAX_FRAMES_IN_FLIGHT;
+			runningTime++;
 		}
 
 		void VulkanRBL::recreateSwapChain()

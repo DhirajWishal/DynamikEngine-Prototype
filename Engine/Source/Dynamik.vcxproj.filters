@@ -890,6 +890,7 @@
     <ClInclude Include="GameLibraries\AnimatedObject.h" />
     <ClInclude Include="Utilities\Clock\Clock.h" />
     <ClInclude Include="Renderer\Components\SceneComponent\Basic\BoundingBox.h" />
+    <ClInclude Include="Objects\InternalFormat\DefaultObject.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Audio\Backend\AudioEngine.cpp">
@@ -1235,6 +1236,7 @@
     <ClCompile Include="Objects\Mesh\AnimatedMesh.cpp" />
     <ClCompile Include="Utilities\Clock\Clock.cpp" />
     <ClCompile Include="Renderer\Components\SceneComponent\Basic\BoundingBox.cpp" />
+    <ClCompile Include="Objects\InternalFormat\DefaultObject.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Audio\Samples\license.txt">

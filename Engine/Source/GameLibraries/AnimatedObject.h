@@ -11,7 +11,7 @@ namespace Dynamik {
 	template<UI32 BoneCount = 100>
 	class DMKAnimatedObject : public DMKGameObject {
 	public:
-		DMKAnimatedObject() : DMKGameObject(DMKObjectType::DMK_OBJECT_TYPE_SKELETAL_ANIMATION) {}
+		DMKAnimatedObject() {}
 		virtual ~DMKAnimatedObject() {}
 	};
 }

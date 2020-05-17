@@ -75,6 +75,8 @@ namespace Dynamik {
 
 		POINTER<std::thread> utilityThread;
 		std::mutex myMutex;
+
+		VEC3 _nextLocation = { -1.0f, 0.0f, 0.0f };
 	};
 
 	class DMKEventBuffer {

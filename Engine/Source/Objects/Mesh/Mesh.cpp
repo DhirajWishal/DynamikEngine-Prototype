@@ -2,6 +2,32 @@
 #include "Mesh.h"
 
 namespace Dynamik {
+	void VertexBoneData8::addBone(UI32 boneID, F32 weight)
+	{
+		for (UI32 _itr = 0; _itr < 8; _itr++)
+		{
+			if (boneWeights[_itr] == 0.0f)
+			{
+				boneIDs[_itr] = boneID;
+				boneWeights[_itr] = weight;
+				return;
+			}
+		}
+	}
+
+	void VertexBoneData16::addBone(UI32 boneID, F32 weight)
+	{
+		for (UI32 _itr = 0; _itr < 16; _itr++)
+		{
+			if (boneWeights[_itr] == 0.0f)
+			{
+				boneIDs[_itr] = boneID;
+				boneWeights[_itr] = weight;
+				return;
+			}
+		}
+	}
+
 	UI32 Mesh::allocatableSize(std::vector<DMKVertexAttribute> attributes)
 	{
 		return vertexDataStore.size() * DMKVertexBufferObjectDescriptor::vertexByteSize(attributes);
@@ -39,6 +65,14 @@ namespace Dynamik {
 
 				case DMKVertexData::DMK_VERTEX_DATA_INTEGRITY:
 					memcpy(nextPtr.get(), &_store.integrity, (UI32)attribute.dataType);
+					break;
+
+				case DMKVertexData::DMK_VERTEX_DATA_BONE_ID:
+					memcpy(nextPtr.get(), &_store.boneData->boneIDs, (UI32)attribute.dataType);
+					break;
+
+				case DMKVertexData::DMK_VERTEX_DATA_BONE_WEIGHTS:
+					memcpy(nextPtr.get(), &_store.boneData->boneWeights, (UI32)attribute.dataType);
 					break;
 				}
 

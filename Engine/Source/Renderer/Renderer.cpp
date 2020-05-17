@@ -92,17 +92,18 @@ namespace Dynamik {
 		{
 			DMK_BEGIN_PROFILE_TIMER();
 
-			for (auto format : formats)
+			instance.submitPendingAssets.resize(formats.size());
+			for (UI32 index = 0; index < formats.size(); index++)
 			{
-				if (format->descriptor.assetDescription.physicallyBased)
+				if (formats[index]->descriptor.assetDescription.physicallyBased)
 				{
-					format->descriptor.renderSpecification.renderAttachments.push_back(DMKRenderAttachment::DMK_RENDER_ATTACHMENT_SKYBOX);
-					format->descriptor.renderSpecification.renderAttachments.push_back(DMKRenderAttachment::DMK_RENDER_ATTACHMENT_BRDF_TABLE);
-					format->descriptor.renderSpecification.renderAttachments.push_back(DMKRenderAttachment::DMK_RENDER_ATTACHMENT_IRRADIANCE_CUBE);
-					format->descriptor.renderSpecification.renderAttachments.push_back(DMKRenderAttachment::DMK_RENDER_ATTACHMENT_PREFILTERED_CUBE);
+					formats[index]->descriptor.renderSpecification.renderAttachments.push_back(DMKRenderAttachment::DMK_RENDER_ATTACHMENT_SKYBOX);
+					formats[index]->descriptor.renderSpecification.renderAttachments.push_back(DMKRenderAttachment::DMK_RENDER_ATTACHMENT_BRDF_TABLE);
+					formats[index]->descriptor.renderSpecification.renderAttachments.push_back(DMKRenderAttachment::DMK_RENDER_ATTACHMENT_IRRADIANCE_CUBE);
+					formats[index]->descriptor.renderSpecification.renderAttachments.push_back(DMKRenderAttachment::DMK_RENDER_ATTACHMENT_PREFILTERED_CUBE);
 				}
 
-				instance.submitPendingAssets.push_back(format);
+				instance.submitPendingAssets[index] = formats[index];
 			}
 		}
 
@@ -111,7 +112,7 @@ namespace Dynamik {
 			DMK_BEGIN_PROFILE_TIMER();
 
 			instance.inFlightAssets = instance.submitPendingAssets;
-			instance.submitPendingAssets = {};
+			instance.submitPendingAssets.clear();
 			myRendererBackend.createNewContext(DMKRenderContextType::DMK_RENDER_CONTEXT_TYPE_DEFAULT, POINTER<GLFWwindow>());
 			myRendererBackend.addObjects(instance.inFlightAssets);
 		}

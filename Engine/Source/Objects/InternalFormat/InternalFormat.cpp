@@ -126,16 +126,19 @@ namespace Dynamik {
 
 	B1 InternalFormat::checkRayCollition(VEC3 rayOrigin, VEC3 rayDirection, MeshVertexLimits limits)
 	{
+
 		DMKStaticObject* object = (DMKStaticObject*)this;
 
 		F32 _intersectionSize = 0.0f;
 
-		isSelected = TestRayOBBIntersection(rayOrigin, rayDirection,
-			VEC3(limits.limitX.x, limits.limitY.x, limits.limitZ.x),
-			VEC3(limits.limitX.y, limits.limitY.y, limits.limitZ.y),
-			object->getModelMatrix(), _intersectionSize);
+		//isSelected = TestRayOBBIntersection(rayOrigin, rayDirection,
+		//	VEC3(limits.limitX.x, limits.limitY.x, limits.limitZ.x),
+		//	VEC3(limits.limitX.y, limits.limitY.y, limits.limitZ.y),
+		//	object->getModelMatrix(), _intersectionSize);
 
 		//std::cout << _intersectionSize << "\r";
+
+		isSelected = true;
 
 		return isSelected;
 	}

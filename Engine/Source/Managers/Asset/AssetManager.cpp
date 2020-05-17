@@ -41,13 +41,86 @@ namespace Dynamik {
 		return _mesh;
 	}
 
+	Mesh loadAnimData(aiMesh* mesh, const aiScene* scene, std::vector<VertexBoneData8> boneData)
+	{
+		Mesh _mesh;
+		MeshPointStore _store;
+
+		for (UI32 index = 0; index < mesh->mNumVertices; index++)
+		{
+			if (mesh->HasPositions())
+				_store.position = { mesh->mVertices[index].x, mesh->mVertices[index].y, mesh->mVertices[index].z };
+			if (mesh->mColors[0])
+				_store.color = { mesh->mColors[0][index].r, mesh->mColors[0][index].g, mesh->mColors[0][index].b };
+			if (mesh->mTextureCoords[0])
+				_store.textureCoordinate = { mesh->mTextureCoords[0][index].x, 1.0f - mesh->mTextureCoords[0][index].y, mesh->mTextureCoords[0][index].z };
+			if (mesh->HasNormals())
+				_store.normal = { mesh->mNormals[index].x, mesh->mNormals[index].y, mesh->mNormals[index].z };
+			_store.integrity = 1.0f;
+
+			VertexBoneData8* _data = StaticAllocator<VertexBoneData8>::allocate();
+			for (UI32 i = 0; i < 8; i++)
+			{
+				_data->boneIDs[i] = boneData[index].boneIDs[i];
+				_data->boneWeights[i] = boneData[index].boneWeights[i];
+			}
+			_store.boneData = _data;
+
+			_mesh.vertexDataStore.push_back(_store);
+		}
+
+		aiFace face;
+		for (UI32 index = 0; index < mesh->mNumFaces; index++)
+		{
+			face = mesh->mFaces[index];
+			for (UI32 itr = 0; itr < face.mNumIndices; itr++)
+				_mesh.indexes.push_back(face.mIndices[itr]);
+		}
+
+		return _mesh;
+	}
+
 	void processNode(aiNode* node, const aiScene* scene, POINTER<InternalFormat> format)
 	{
 		// process all the node's meshes (if any)
 		for (unsigned int i = 0; i < node->mNumMeshes; i++)
 		{
 			aiMesh* mesh = scene->mMeshes[node->mMeshes[i]];
+
 			auto _mesh = loadData(mesh, scene);
+
+			Texture _texture;
+			if (format->descriptor.assetDescription.textureType == DMKTextureType::DMK_TEXTURE_TYPE_2D || format->descriptor.assetDescription.textureType == DMKTextureType::DMK_TEXTURE_TYPE_3D)
+			{
+				for (auto _path : format->texturePaths)
+				{
+					_texture.loadTexture(_path, format->descriptor.assetDescription.textureType, format->descriptor.assetDescription.textureInputType);
+					_mesh.textureDatas.push_back(_texture);
+				}
+			}
+			else
+			{
+				_texture.loadCubemap(format->texturePaths, format->descriptor.assetDescription.textureInputType);
+				_mesh.textureDatas.push_back(_texture);
+			}
+
+			format->meshDatas.push_back(_mesh);
+		}
+		// then do the same for each of its children
+		for (unsigned int i = 0; i < node->mNumChildren; i++)
+		{
+			processNode(node->mChildren[i], scene, format);
+		}
+	}
+
+	void processNode(aiNode* node, const aiScene* scene, POINTER<InternalFormat> format, AnimatedMesh animMesh)
+	{
+		// process all the node's meshes (if any)
+		for (unsigned int i = 0; i < node->mNumMeshes; i++)
+		{
+			aiMesh* mesh = scene->mMeshes[node->mMeshes[i]];
+
+			auto _mesh = loadAnimData(mesh, scene, animMesh.bones);;
 
 			Texture _texture;
 			if (format->descriptor.assetDescription.textureType == DMKTextureType::DMK_TEXTURE_TYPE_2D || format->descriptor.assetDescription.textureType == DMKTextureType::DMK_TEXTURE_TYPE_3D)
@@ -116,7 +189,6 @@ namespace Dynamik {
 
 	UI32 AssetManager::addAsset(POINTER<DMKGameObject> object, UI32 sceneIndex, UI32 levelIndex)
 	{
-
 		assets[levelIndex][sceneIndex].push_back(createAssetContainer(object));
 		return assets[levelIndex][sceneIndex].size() - 1;
 	}
@@ -133,6 +205,9 @@ namespace Dynamik {
 
 	void AssetManager::loadScene(UI32 sceneIndex, UI32 levelIndex)
 	{
+		currentLevel = levelIndex;
+		currentScene = sceneIndex;
+
 		/* Initialize the scene data to get the required data from .dai file */
 		STORE _scene = _initializeSceneData(assets[levelIndex][sceneIndex]);
 
@@ -146,8 +221,11 @@ namespace Dynamik {
 				DMK_BEGIN_PROFILE_TIMER();
 
 				POINTER<InternalFormat> _format = _scene[index].address;
-				if (_format->type == DMKObjectType::DMK_OBJECT_TYPE_SKELETAL_ANIMATION);
-					/* Load the model data as an animated object */
+				if (_format->meshDatas.size())
+					continue;
+
+				if (_format->type == DMKObjectType::DMK_OBJECT_TYPE_SKELETAL_ANIMATION)
+					threads.push_back(std::async(std::launch::async, LoadAnimation, _format));
 				else
 					threads.push_back(std::async(std::launch::async, LoadAsset, _format));
 			}
@@ -225,6 +303,104 @@ namespace Dynamik {
 
 	void AssetManager::LoadAnimation(POINTER<InternalFormat> format)
 	{
+		Assimp::Importer myImporter;
+		AnimatedMesh _animatedMesh;
+		_animatedMesh.scene = myImporter.ReadFile(format->objectPath,
+			aiProcess_Triangulate | aiProcess_GenSmoothNormals | aiProcess_FlipUVs);
+		_animatedMesh.setAnimation(0);
+
+		if (!_animatedMesh.scene)
+			DMK_CORE_FATAL("Unable to load the specified file!");
+
+		UI32 vertexCount = 0;
+		for (UI32 m = 0; m < _animatedMesh.scene->mNumMeshes; m++) {
+			vertexCount += _animatedMesh.scene->mMeshes[m]->mNumVertices;
+		};
+		_animatedMesh.bones.resize(vertexCount);
+		_animatedMesh.globalInverseTransform = _animatedMesh.scene->mRootNode->mTransformation;
+		_animatedMesh.globalInverseTransform.Inverse();
+
+		UI32 vertexBase(0);
+		for (UI32 m = 0; m < _animatedMesh.scene->mNumMeshes; m++) {
+			aiMesh* paiMesh = _animatedMesh.scene->mMeshes[m];
+			if (paiMesh->mNumBones > 0)
+				_animatedMesh.loadBones(paiMesh, vertexBase, _animatedMesh.bones);
+			vertexBase += _animatedMesh.scene->mMeshes[m]->mNumVertices;
+		}
+
+		Mesh _mesh;
+		MeshPointStore _store;
+		for (UI32 m = 0; m < _animatedMesh.scene->mNumMeshes; m++) {
+			for (UI32 index = 0; index < _animatedMesh.scene->mMeshes[m]->mNumVertices; index++) {
+				if (_animatedMesh.scene->mMeshes[m]->HasPositions())
+					_store.position =
+				{
+					_animatedMesh.scene->mMeshes[m]->mVertices[index].x,
+					_animatedMesh.scene->mMeshes[m]->mVertices[index].y,
+					_animatedMesh.scene->mMeshes[m]->mVertices[index].z
+				};
+				if (_animatedMesh.scene->mMeshes[m]->mColors[0])
+					_store.color =
+				{
+					_animatedMesh.scene->mMeshes[m]->mColors[0][index].r,
+					_animatedMesh.scene->mMeshes[m]->mColors[0][index].g,
+					_animatedMesh.scene->mMeshes[m]->mColors[0][index].b
+				};
+				if (_animatedMesh.scene->mMeshes[m]->mTextureCoords[0])
+					_store.textureCoordinate =
+				{
+					_animatedMesh.scene->mMeshes[m]->mTextureCoords[0][index].x,
+					1.0f - _animatedMesh.scene->mMeshes[m]->mTextureCoords[0][index].y,
+					_animatedMesh.scene->mMeshes[m]->mTextureCoords[0][index].z
+				};
+				if (_animatedMesh.scene->mMeshes[m]->HasNormals())
+					_store.normal =
+				{
+					_animatedMesh.scene->mMeshes[m]->mNormals[index].x,
+					_animatedMesh.scene->mMeshes[m]->mNormals[index].y,
+					_animatedMesh.scene->mMeshes[m]->mNormals[index].z
+				};
+				_store.integrity = 1.0f;
+
+				VertexBoneData8* _data = StaticAllocator<VertexBoneData8>::allocate();
+				for (UI32 i = 0; i < 8; i++)
+				{
+					_data->boneIDs[i] = _animatedMesh.bones[index].boneIDs[i];
+					_data->boneWeights[i] = _animatedMesh.bones[index].boneWeights[i];
+				}
+				_store.boneData = _data;
+
+				_mesh.vertexDataStore.push_back(_store);
+			}
+
+			aiFace face;
+			for (UI32 index = 0; index < _animatedMesh.scene->mMeshes[m]->mNumFaces; index++)
+			{
+				face = _animatedMesh.scene->mMeshes[m]->mFaces[index];
+				for (UI32 itr = 0; itr < face.mNumIndices; itr++)
+					_mesh.indexes.push_back(face.mIndices[itr]);
+			}
+
+			Texture _texture;
+			if (format->descriptor.assetDescription.textureType == DMKTextureType::DMK_TEXTURE_TYPE_2D || format->descriptor.assetDescription.textureType == DMKTextureType::DMK_TEXTURE_TYPE_3D)
+			{
+				for (auto _path : format->texturePaths)
+				{
+					_texture.loadTexture(_path, format->descriptor.assetDescription.textureType, format->descriptor.assetDescription.textureInputType);
+					_mesh.textureDatas.push_back(_texture);
+				}
+			}
+			else
+			{
+				_texture.loadCubemap(format->texturePaths, format->descriptor.assetDescription.textureInputType);
+				_mesh.textureDatas.push_back(_texture);
+			}
+
+			format->meshDatas.push_back(_mesh);
+		}
+
+		processNode(_animatedMesh.scene->mRootNode, _animatedMesh.scene, format, _animatedMesh);
+		format->animation.push_back(_animatedMesh);
 	}
 
 	AssetManager::STORE AssetManager::_initializeSceneData(std::vector<AssetContainer> scene)
@@ -238,44 +414,69 @@ namespace Dynamik {
 			/* Update addresses from DMKGameObject* to POINTER<InternalFormat> */
 			POINTER<InternalFormat> _format = scene[index].address;
 
-			/* Instantiate a dai file manager */
-			utils::daiManager daiManager;
+			if (_format->objectPath.size())
+				continue;
 
-			/* Create the basepath for the resources */
 			std::string _basePath = _format->descriptor.assetDescription.dynamikResouceFilePath;
-			_basePath += ((_basePath[_basePath.size() - 1] == '/' || _basePath[_basePath.size() - 1] == '\\') ? "" : "/");
-			std::string _fullPath = _basePath + "modelData.dai";
-
-			/* Open the DAI file */
-			daiManager.open(_fullPath);
 
 			/* Check if the file is successfully opened */
-			if (!daiManager.isOpen())
-				DMK_CORE_FATAL("Unable to open the DAI file @ " + _basePath);
+			if (
+				(_basePath.find(".obj") != std::string::npos) ||
+				(_basePath.find(".fbx") != std::string::npos) ||
+				(_basePath.find(".dae") != std::string::npos) ||
+				(_basePath.find(".fmt") != std::string::npos))
+			{
+				DMK_CORE_ERROR("Unable to open the DAI file. Attempting to open the file as a default object.");
 
-			/* Get object path */
-			_format->objectPath = _basePath + daiManager.getData(utils::DMKDaiFileDataType::DMK_DAI_FILE_DATA_TYPE_MODEL)[0];
+				_format->objectPath = _basePath;
+				_format->texturePaths.push_back("Defaults/default.png");
+				_format->shaderPaths.vertexShader = "Defaults/vert.spv";
+				_format->shaderPaths.fragmentShader = "Defaults/frag.spv";
+			}
+			else
+			{
+				/* Instantiate a dai file manager */
+				utils::daiManager daiManager;
 
-			/* Get texture paths */
-			for (auto texturePath : daiManager.getData(utils::DMK_DAI_FILE_DATA_TYPE_TEXTURE))
-				_format->texturePaths.push_back(_basePath + texturePath);
+				if (_basePath.find(".dai") != std::string::npos)
+				{
+					daiManager.open(_basePath);
+					_basePath = _basePath.substr(0, _basePath.size() - 13);
+				}
+				else
+				{
+					/* Create the basepath for the resources */
+					_basePath += ((_basePath[_basePath.size() - 1] == '/' || _basePath[_basePath.size() - 1] == '\\') ? "" : "/");
+					std::string _fullPath = _basePath + "modelData.dai";
 
-			/* Get shader paths */
-			/* Vertex shader path */
-			if (daiManager.getData(utils::DMK_DAI_FILE_DATA_TYPE_VERTEX).size())
-				_format->shaderPaths.vertexShader = _basePath + daiManager.getData(utils::DMK_DAI_FILE_DATA_TYPE_VERTEX)[0];
+					/* Open the DAI file */
+					daiManager.open(_fullPath);
+				}
 
-			/* Tessellation shader path */
-			if (daiManager.getData(utils::DMK_DAI_FILE_DATA_TYPE_TESSELLATION).size())
-				_format->shaderPaths.tessellationShader = _basePath + daiManager.getData(utils::DMK_DAI_FILE_DATA_TYPE_TESSELLATION)[0];
+				/* Get object path */
+				_format->objectPath = _basePath + daiManager.getData(utils::DMKDaiFileDataType::DMK_DAI_FILE_DATA_TYPE_MODEL)[0];
 
-			/* Geometry shader path */
-			if (daiManager.getData(utils::DMK_DAI_FILE_DATA_TYPE_GEOMETRY).size())
-				_format->shaderPaths.geometryShader = _basePath + daiManager.getData(utils::DMK_DAI_FILE_DATA_TYPE_GEOMETRY)[0];
+				/* Get texture paths */
+				for (auto texturePath : daiManager.getData(utils::DMK_DAI_FILE_DATA_TYPE_TEXTURE))
+					_format->texturePaths.push_back(_basePath + texturePath);
 
-			/* Fragment shader path */
-			if (daiManager.getData(utils::DMK_DAI_FILE_DATA_TYPE_FRAGMENT).size())
-				_format->shaderPaths.fragmentShader = _basePath + daiManager.getData(utils::DMK_DAI_FILE_DATA_TYPE_FRAGMENT)[0];
+				/* Get shader paths */
+				/* Vertex shader path */
+				if (daiManager.getData(utils::DMK_DAI_FILE_DATA_TYPE_VERTEX).size())
+					_format->shaderPaths.vertexShader = _basePath + daiManager.getData(utils::DMK_DAI_FILE_DATA_TYPE_VERTEX)[0];
+
+				/* Tessellation shader path */
+				if (daiManager.getData(utils::DMK_DAI_FILE_DATA_TYPE_TESSELLATION).size())
+					_format->shaderPaths.tessellationShader = _basePath + daiManager.getData(utils::DMK_DAI_FILE_DATA_TYPE_TESSELLATION)[0];
+
+				/* Geometry shader path */
+				if (daiManager.getData(utils::DMK_DAI_FILE_DATA_TYPE_GEOMETRY).size())
+					_format->shaderPaths.geometryShader = _basePath + daiManager.getData(utils::DMK_DAI_FILE_DATA_TYPE_GEOMETRY)[0];
+
+				/* Fragment shader path */
+				if (daiManager.getData(utils::DMK_DAI_FILE_DATA_TYPE_FRAGMENT).size())
+					_format->shaderPaths.fragmentShader = _basePath + daiManager.getData(utils::DMK_DAI_FILE_DATA_TYPE_FRAGMENT)[0];
+			}
 
 			copyToAssetContainer(&scene[index], _format);
 		}

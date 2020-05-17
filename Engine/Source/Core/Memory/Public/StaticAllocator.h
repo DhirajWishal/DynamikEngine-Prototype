@@ -38,7 +38,9 @@ namespace Dynamik {
 
 #elif defined(DMK_MEMORY_USE_NEW)
 			//return (TYPE*)operator new[](size, std::align_val_t{ (size_t)align });
-			return (TYPE*)operator new[](size);
+			auto ptr = (TYPE*)operator new[](size);
+			set(ptr, TYPE());
+			return ptr;
 #endif
 		}
 

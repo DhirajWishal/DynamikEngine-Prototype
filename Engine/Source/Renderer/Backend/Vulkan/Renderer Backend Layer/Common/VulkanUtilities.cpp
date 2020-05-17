@@ -9,33 +9,31 @@ namespace Dynamik {
 		namespace Backend {
 			VkFormat VulkanUtilities::getFormat(DMKFormat format)
 			{
-				VkFormat _format = VK_FORMAT_UNDEFINED;
-
 				switch (format)
 				{
 				case Dynamik::DMKFormat::DMK_FORMAT_UNDEFINED:
-					_format = VK_FORMAT_UNDEFINED;
+					return VK_FORMAT_UNDEFINED;
 					break;
 				case Dynamik::DMKFormat::DMK_FORMAT_R_8_INT:
-					_format = VK_FORMAT_R8_UINT;
+					return VK_FORMAT_R8_SINT;
 					break;
 				case Dynamik::DMKFormat::DMK_FORMAT_R_8_UINT:
-					_format = VK_FORMAT_R8_UINT;
+					return VK_FORMAT_R8_UINT;
 					break;
 				case Dynamik::DMKFormat::DMK_FORMAT_R_8_SINT:
-					_format = VK_FORMAT_R8_SINT;
+					return VK_FORMAT_R8_SINT;
 					break;
 				case Dynamik::DMKFormat::DMK_FORMAT_R_8_F32:
-					_format = VK_FORMAT_R8_UNORM;
+					return VK_FORMAT_R8_UNORM;
 					break;
 				case Dynamik::DMKFormat::DMK_FORMAT_R_8_UF32:
-					_format = VK_FORMAT_R8_UNORM;
+					return VK_FORMAT_R8_UNORM;
 					break;
 				case Dynamik::DMKFormat::DMK_FORMAT_R_8_SF32:
-					_format = VK_FORMAT_R8_UNORM;
+					return VK_FORMAT_R8_UNORM;
 					break;
 				case Dynamik::DMKFormat::DMK_FORMAT_R_8_UNIFORM:
-					_format = VK_FORMAT_R8_UNORM;
+					return VK_FORMAT_R8_UNORM;
 					break;
 				case Dynamik::DMKFormat::DMK_FORMAT_R_16_INT:
 					break;
@@ -275,9 +273,89 @@ namespace Dynamik {
 					break;
 				case Dynamik::DMKFormat::DMK_FORMAT_BGRA_32_UNIFORM:
 					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_RGBA_ASTC_4X4_UNORM_BLOCK16:
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_RGBA_ASTC_4X4_SRGB_BLOCK16:
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_RGBA_ASTC_5X4_UNORM_BLOCK16:
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_RGBA_ASTC_5X4_SRGB_BLOCK16:
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_RGBA_ASTC_5X5_UNORM_BLOCK16:
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_RGBA_ASTC_5X5_SRGB_BLOCK16:
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_RGBA_ASTC_6X5_UNORM_BLOCK16:
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_RGBA_ASTC_6X5_SRGB_BLOCK16:
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_RGBA_ASTC_6X6_UNORM_BLOCK16:
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_RGBA_ASTC_6X6_SRGB_BLOCK16:
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_RGBA_ASTC_8X5_UNORM_BLOCK16:
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_RGBA_ASTC_8X5_SRGB_BLOCK16:
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_RGBA_ASTC_8X6_UNORM_BLOCK16:
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_RGBA_ASTC_8X6_SRGB_BLOCK16:
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_RGBA_ASTC_8X8_UNORM_BLOCK16:
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_RGBA_ASTC_8X8_SRGB_BLOCK16:
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_RGBA_ASTC_10X5_UNORM_BLOCK16:
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_RGBA_ASTC_10X5_SRGB_BLOCK16:
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_RGBA_ASTC_10X6_UNORM_BLOCK16:
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_RGBA_ASTC_10X6_SRGB_BLOCK16:
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_RGBA_ASTC_10X8_UNORM_BLOCK16:
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_RGBA_ASTC_10X8_SRGB_BLOCK16:
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_RGBA_ASTC_10X10_UNORM_BLOCK16:
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_RGBA_ASTC_10X10_SRGB_BLOCK16:
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_RGBA_ASTC_12X10_UNORM_BLOCK16:
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_RGBA_ASTC_12X10_SRGB_BLOCK16:
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_RGBA_ASTC_12X12_UNORM_BLOCK16:
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_RGBA_ASTC_12X12_SRGB_BLOCK16:
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_RGB_PVRTC1_8X8_UNORM_BLOCK32:
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_RGB_PVRTC1_8X8_SRGB_BLOCK32:
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_RGB_PVRTC1_16X8_UNORM_BLOCK32:
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_RGB_PVRTC1_16X8_SRGB_BLOCK32:
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_RGBA_PVRTC1_8X8_UNORM_BLOCK32:
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_RGBA_PVRTC1_8X8_SRGB_BLOCK32:
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_RGBA_PVRTC1_16X8_UNORM_BLOCK32:
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_RGBA_PVRTC1_16X8_SRGB_BLOCK32:
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_RGBA_PVRTC2_4X4_UNORM_BLOCK8:
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_RGBA_PVRTC2_4X4_SRGB_BLOCK8:
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_RGBA_PVRTC2_8X4_UNORM_BLOCK8:
+					break;
+				case Dynamik::DMKFormat::DMK_FORMAT_RGBA_PVRTC2_8X4_SRGB_BLOCK8:
+					break;
 				}
 
-				return _format;
+				return VK_FORMAT_UNDEFINED;
 			}
 
 			std::vector<VkVertexInputBindingDescription> VulkanUtilities::getBindingDescription(std::vector<DMKVertexAttribute> attributes, UI32 bindCount)

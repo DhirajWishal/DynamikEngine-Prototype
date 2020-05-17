@@ -7,6 +7,27 @@
 #include "../Texture/Texture.h"
 
 namespace Dynamik {
+	struct VertexBoneData {
+		VertexBoneData() {}
+		virtual ~VertexBoneData() {}
+
+		virtual void addBone(UI32 boneID, F32 weight) {}
+	};
+
+	struct VertexBoneData8 : public VertexBoneData {
+		UI32 boneIDs[8] = { 0 };
+		F32 boneWeights[8] = { 0.0f };
+
+		void addBone(UI32 boneID, F32 weight) override;
+	};
+
+	struct VertexBoneData16 : public VertexBoneData {
+		UI32 boneIDs[16] = { 0 };
+		F32 boneWeights[16] = { 0.0f };
+
+		void addBone(UI32 boneID, F32 weight) override;
+	};
+
 	struct MeshPointStore {
 		VEC3 position;
 		VEC3 color;
@@ -16,6 +37,8 @@ namespace Dynamik {
 		CCPTR matlabLibrary;
 
 		F32 integrity = 1.0f;
+
+		POINTER<VertexBoneData8> boneData;
 
 		B1 operator==(const MeshPointStore& other) const;
 	};

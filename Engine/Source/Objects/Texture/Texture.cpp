@@ -9,9 +9,43 @@ namespace Dynamik {
 	{
 		if (type == DMKTextureType::DMK_TEXTURE_TYPE_2D)
 		{
-			stbi_set_flip_vertically_on_load(true);
-			auto data = stbi_load(path.c_str(), &width, &height, &fileChannels, NULL);
-			textureData = data;
+			if (path.find(".ktx") != std::string::npos)
+			{
+
+				gli::texture ktxFile = gli::load_ktx(path);
+
+				if (ktxFile.empty())
+					DMK_CORE_FATAL("Failed to load the *.ktx file!");
+
+				textureData = StaticAllocator<UCHR>::allocate(ktxFile.size());
+				memcpy(textureData.get(), ktxFile.data(), ktxFile.size());
+
+				width = ktxFile.extent().x;
+				height = ktxFile.extent().y;
+
+				switch (ktxFile.format())
+				{
+				case gli::texture::format_type::FORMAT_RGBA8_UNORM_PACK8:
+					fileChannels = 4;
+					break;
+
+				case gli::texture::format_type::FORMAT_RGB8_UNORM_PACK8:
+					fileChannels = 3;
+					break;
+				case gli::texture::format_type::FORMAT_RGBA_ASTC_8X8_UNORM_BLOCK16:
+					fileChannels = 4;
+					break;
+				default:
+					break;
+				}
+				inputType = DMKTextureInputType::DMK_TEXTURE_INPUT_TYPE_KTX;
+			}
+			else
+			{
+				stbi_set_flip_vertically_on_load(true);
+				auto data = stbi_load(path.c_str(), &width, &height, &fileChannels, NULL);
+				textureData = data;
+			}
 		}
 		else if (type == DMKTextureType::DMK_TEXTURE_TYPE_3D)
 		{
@@ -28,7 +62,36 @@ namespace Dynamik {
 		if (inputType == DMKTextureInputType::DMK_TEXTURE_INPUT_TYPE_AUTO)
 		{
 			if ((paths[0].find(".ktx") != std::string::npos) && (paths.size() < 6))
+			{
+
+				gli::texture ktxFile = gli::load_ktx(paths[0]);
+
+				if (ktxFile.empty())
+					DMK_CORE_FATAL("Failed to load the *.ktx file!");
+
+				textureData = StaticAllocator<UCHR>::allocate(ktxFile.size());
+				memcpy(textureData.get(), ktxFile.data(), ktxFile.size());
+
+				width = ktxFile.extent().x;
+				height = ktxFile.extent().y;
+
+				switch (ktxFile.format())
+				{
+				case gli::texture::format_type::FORMAT_RGBA8_UNORM_PACK8:
+					fileChannels = 4;
+					break;
+
+				case gli::texture::format_type::FORMAT_RGB8_UNORM_PACK8:
+					fileChannels = 3;
+					break;
+				case gli::texture::format_type::FORMAT_RGBA_ASTC_8X8_UNORM_BLOCK16:
+					fileChannels = 4;
+					break;
+				default:
+					break;
+				}
 				inputType = DMKTextureInputType::DMK_TEXTURE_INPUT_TYPE_KTX;
+			}
 			else if ((paths[0].find(".hdri")) && (paths.size() < 6))
 				inputType = DMKTextureInputType::DMK_TEXTURE_INPUT_TYPE_HDRI;
 			else
@@ -38,20 +101,27 @@ namespace Dynamik {
 		if (inputType == DMKTextureInputType::DMK_TEXTURE_INPUT_TYPE_KTX)
 		{
 			gli::texture ktxFile = gli::load_ktx(paths[0]);
-			
+
 			if (ktxFile.empty())
 				DMK_CORE_FATAL("Failed to load the *.ktx file!");
-			
-			textureData = (UCHR*)ktxFile.data();
-			
+
+			textureData = StaticAllocator<UCHR>::allocate(ktxFile.size());
+			memcpy(textureData.get(), ktxFile.data(), ktxFile.size());
+
+			width = ktxFile.extent().x;
+			height = ktxFile.extent().y;
+
 			switch (ktxFile.format())
 			{
 			case gli::texture::format_type::FORMAT_RGBA8_UNORM_PACK8:
 				fileChannels = 4;
 				break;
-			
+
 			case gli::texture::format_type::FORMAT_RGB8_UNORM_PACK8:
 				fileChannels = 3;
+				break;
+			case gli::texture::format_type::FORMAT_RGBA_ASTC_8X8_UNORM_BLOCK16:
+				fileChannels = 4;
 				break;
 			default:
 				break;

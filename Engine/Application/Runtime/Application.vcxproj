@@ -132,6 +132,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="src\Camera.h" />
+    <ClInclude Include="src\Goblin.h" />
     <ClInclude Include="src\Moon.h" />
     <ClInclude Include="src\Reflect.h" />
     <ClInclude Include="src\Skybox.h" />
@@ -140,6 +141,7 @@
   <ItemGroup>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="src\Camera.cpp" />
+    <ClCompile Include="src\Goblin.cpp" />
     <ClCompile Include="src\Moon.cpp" />
     <ClCompile Include="src\Reflect.cpp" />
     <ClCompile Include="src\Skybox.cpp" />

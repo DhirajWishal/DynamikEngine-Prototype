@@ -55,6 +55,7 @@ namespace Dynamik {
 			VulkanGraphicsFrameBuffer frameBuffer;
 
 			VulkanGraphicsCommandBuffer inFlightCommandBuffer;
+			std::vector<VulkanRenderData> inFlight;
 			std::vector<VulkanRenderData> renderDatas;
 			VulkanResourceState state = VulkanResourceState::ADGR_VULKAN_RESOURCE_STATE_HOST_VISIBLE;
 		};
@@ -145,6 +146,8 @@ namespace Dynamik {
 			UI32 imageIndex = 0;
 			UI32 currentFrame = 0;
 			VkResult result = VkResult::VK_ERROR_UNKNOWN;
+			F32 runningTime = 0.0f;
+			std::vector<MAT4> boneTransforms;
 
 			/* Render context container */
 			VulkanSurfaceContainer myBasicSurface = {};		/* Parent window surface */

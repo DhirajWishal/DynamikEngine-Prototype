@@ -15,6 +15,7 @@
 #include "src/Moon.h"
 #include "src/Reflect.h"
 #include "src/VikingRoom.h"
+#include "src/Goblin.h"
 
 /* -----||||| MAIN LAUNCH SYSTEM |||||----- */
 
@@ -35,15 +36,16 @@ int main(int argc, char** argv) {
 		OceanSkybox skybox;
 		Moon moon;
 		VikingRoom room;
+		Goblin giblin;
 
 		Reflect reflectObject;
 
 		DMKSceneDescriptor scene1;
 		scene1.sceneID = "S001";
 		scene1.sceneIndex = 0;
-		//scene1.assets = { &skybox };
+		scene1.assets = { &skybox };
 		//scene1.assets = { &skybox, &moon, &room };
-		scene1.assets = { &skybox, &room };
+		//scene1.assets = { &skybox, &room };
 		//scene1.assets = { &moon };
 
 		DMKLevelDescriptor level1;

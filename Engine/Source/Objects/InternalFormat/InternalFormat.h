@@ -5,6 +5,7 @@
 #include "GameObject.h"
 #include "../Texture/Texture.h"
 #include "../Mesh/Mesh.h"
+#include "../Mesh/AnimatedMesh.h"
 
 namespace Dynamik {
 	struct ShaderPaths {
@@ -27,6 +28,7 @@ namespace Dynamik {
 
 		/* Object meshes */
 		std::vector<Mesh> meshDatas;
+		std::vector<AnimatedMesh> animation;
 
 		/* Object data paths */
 		std::string objectPath = "";

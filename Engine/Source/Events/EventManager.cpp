@@ -10,6 +10,9 @@
 
 #include "keyCodes.h"
 
+#include "Objects/InternalFormat/DefaultObject.h"
+#include "Dynamik.h"
+
 #define LOCK_AND_ADD_COMPONENT(component)	{														\
 												std::lock_guard<std::mutex> _lockGuard(myMutex);	\
 												myInstance.events.push_back(&component);				\
@@ -17,7 +20,7 @@
 
 namespace Dynamik {
 	DMKEventManager DMKEventManager::myInstance;
-	
+
 	void DMKEventManager::setEventCallbacks(GLFWwindow* window)
 	{
 		DMK_BEGIN_PROFILE_TIMER();
@@ -47,7 +50,7 @@ namespace Dynamik {
 
 		return !myInstance.isWindowClosed;
 	}
-	
+
 	CursorPosition DMKEventManager::getCursorPosition()
 	{
 		glfwGetCursorPos(myInstance.myWindowPointer, &myInstance.myCursorPosition.xOffset, &myInstance.myCursorPosition.yOffset);
@@ -134,7 +137,7 @@ namespace Dynamik {
 
 		_pushToContainer(_component);
 	}
-	
+
 	void DMKEventManager::_textCallback(GLFWwindow* window, UI32 codepoint)
 	{
 		DMKTextEventComponent _component;
@@ -144,7 +147,7 @@ namespace Dynamik {
 
 		_pushToContainer(_component);
 	}
-	
+
 	void DMKEventManager::_cursorPositionCallback(GLFWwindow* window, D64 xOffset, D64 yOffset)
 	{
 		CursorPosition _positionContainer;
@@ -154,7 +157,7 @@ namespace Dynamik {
 
 		myInstance.myCursorPosition = _positionContainer;
 	}
-	
+
 	void DMKEventManager::_mouseButtonCallback(GLFWwindow* window, I32 button, I32 action, I32 mods)
 	{
 		DMKMouseButtonEventComponent _component;
@@ -182,7 +185,7 @@ namespace Dynamik {
 
 		_pushToContainer(_component);
 	}
-	
+
 	void DMKEventManager::_mouseScrollCallback(GLFWwindow* window, D64 xOffset, D64 yOffset)
 	{
 		DMKMouseScrollEventComponent _component;
@@ -193,12 +196,12 @@ namespace Dynamik {
 
 		_pushToContainer(_component);
 	}
-	
+
 	void DMKEventManager::_mouseCursorEnterCallback(GLFWwindow* window, I32 entered)
 	{
 		myInstance.isCursorInThisWindow = entered;
 	}
-	
+
 	void DMKEventManager::_applicationDropPathCallback(GLFWwindow* window, I32 count, const CHR** strings)
 	{
 		DMKDropPathEventComponent _component;
@@ -207,11 +210,27 @@ namespace Dynamik {
 		_component.count = count;
 
 		for (UI32 i = 0; i < count; i++)
+		{
 			_component.paths.push_back(strings[i]);
+			POINTER<DefaultObject> _object = StaticAllocator<DefaultObject>::allocate();
+
+			_object->descriptor.assetDescription.dynamikResouceFilePath = strings[i];
+			_object->descriptor.transformDescriptor.location = myInstance._nextLocation;
+			myInstance._nextLocation += VEC3(-2.0f, 0.0f, 0.0f);
+
+			_object->initialize();
+			DMKEngine::addToRenderingQueue(_object);
+		}
+
+		DMKEngine::loadCurrentScene();
+		DMKEngine::genarateRenderables();
+		DMKEngine::submitLoadedAssets();
+		DMKEngine::initializeRendererStageTwo();
+		DMKEngine::initializeRendererStageThree();
 
 		_pushToContainer(_component);
 	}
-	
+
 	void DMKEventManager::_applicationResizeCallback(GLFWwindow* window, I32 width, I32 height)
 	{
 		DMKWindowResizeEventComponent _component;
@@ -222,12 +241,12 @@ namespace Dynamik {
 
 		_pushToContainer(_component);
 	}
-	
+
 	void DMKEventManager::_windowCloseCallback(GLFWwindow* window)
 	{
 		myInstance.isWindowClosed = true;
 	}
-	
+
 	inline void DMKEventManager::_clearContainer()
 	{
 		if (!myInstance.events.size())

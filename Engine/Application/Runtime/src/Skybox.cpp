@@ -68,7 +68,8 @@ DMKUniformBufferData OceanSkybox::onUpdate(DMKCameraData data)
 {
 	uniformBufferDataStore.clear();
 
-	MAT4 model = glm::rotate(glm::translate(MAT4(1.0f), descriptor.transformDescriptor.location), glm::radians(180.0f), VEC3(1.0f, 0.0f, 0.0f));
+	//MAT4 model = glm::rotate(glm::translate(MAT4(1.0f), descriptor.transformDescriptor.location), glm::radians(180.0f), VEC3(1.0f, 0.0f, 0.0f));
+	MAT4 model = MAT4(1.0f);
 	uniformBufferDataStore.addData(&model, sizeof(MAT4), 0);
 
 	MAT4 view = glm::mat4(glm::mat3(data.viewMatrix));

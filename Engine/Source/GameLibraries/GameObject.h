@@ -54,6 +54,15 @@ namespace Dynamik {
         virtual DMKUniformBufferData onUpdate(DMKCameraData data) { return DMKUniformBufferData(); }
 
         /* VIRTUAL FUNCTION
+         * This function returns the Uniform buffer data which is used to feed the shaders with the relavent
+           Uniform data.
+         * The data returned from this function must match the Uniform Buffer Descriptor or else an error will
+           be flagged.
+         * Used to update and submit Animations.
+         */
+        virtual DMKUniformBufferData onUpdate(DMKCameraData data, std::vector<MAT4> boneTransforms) { return DMKUniformBufferData(); }
+
+        /* VIRTUAL FUNCTION
          * Rotate the object in the X axis (Pitch).
          *
          * @param angle: Angle in which to rotate the object;

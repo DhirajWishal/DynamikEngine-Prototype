@@ -26,19 +26,19 @@ void Reflect::initialize()
 	descriptor.vertexBufferObjectDescription.attributes.push_back(vAttribute1);
 
 	DMKVertexAttribute vAttribute2;		/* location = 1 */
-	vAttribute2.name = DMKVertexData::DMK_VERTEX_DATA_COLOR;
-	vAttribute2.dataType = DMKDataType::DMK_DATA_TYPE_VEC3;
+	vAttribute2.name = DMKVertexData::DMK_VERTEX_DATA_UV_COORDINATES;
+	vAttribute2.dataType = DMKDataType::DMK_DATA_TYPE_VEC2;
 	descriptor.vertexBufferObjectDescription.attributes.push_back(vAttribute2);
 
 	DMKVertexAttribute vAttribute3;		/* location = 2 */
-	vAttribute3.name = DMKVertexData::DMK_VERTEX_DATA_TEXTURE_COORDINATES;
-	vAttribute3.dataType = DMKDataType::DMK_DATA_TYPE_VEC2;
+	vAttribute3.name = DMKVertexData::DMK_VERTEX_DATA_NORMAL_VECTORS;
+	vAttribute3.dataType = DMKDataType::DMK_DATA_TYPE_VEC3;
 	descriptor.vertexBufferObjectDescription.attributes.push_back(vAttribute3);
 
-	DMKVertexAttribute vAttribute4;		/* location = 3 */
-	vAttribute4.name = DMKVertexData::DMK_VERTEX_DATA_INTEGRITY;
-	vAttribute4.dataType = DMKDataType::DMK_DATA_TYPE_F32;
-	descriptor.vertexBufferObjectDescription.attributes.push_back(vAttribute4);
+	//DMKVertexAttribute vAttribute4;		/* location = 3 */
+	//vAttribute4.name = DMKVertexData::DMK_VERTEX_DATA_NORMAL_VECTORS;
+	//vAttribute4.dataType = DMKDataType::DMK_DATA_TYPE_VEC3;
+	//descriptor.vertexBufferObjectDescription.attributes.push_back(vAttribute4);
 
 	/* Index buffer description */
 	descriptor.indexBufferType = DMKDataType::DMK_DATA_TYPE_UI32;
@@ -74,16 +74,90 @@ void Reflect::initialize()
 
 	/* Texture sampler */
 	DMKUniformBufferObjectDescriptor TexSampler;
+	TexSampler.type = DMKUniformType::DMK_UNIFORM_TYPE_IMAGE_SAMPLER_CUBEMAP;
+	TexSampler.location = DMKShaderLocation::DMK_SHADER_LOCATION_FRAGMENT;
+	TexSampler.binding = 2;
+	descriptor.uniformBufferObjectDescriptions.push_back(TexSampler);
+
 	TexSampler.type = DMKUniformType::DMK_UNIFORM_TYPE_IMAGE_SAMPLER_2D;
 	TexSampler.location = DMKShaderLocation::DMK_SHADER_LOCATION_FRAGMENT;
-	TexSampler.binding = 1;
+	TexSampler.binding = 3;
+	descriptor.uniformBufferObjectDescriptions.push_back(TexSampler);
+
+	TexSampler.type = DMKUniformType::DMK_UNIFORM_TYPE_IMAGE_SAMPLER_CUBEMAP;
+	TexSampler.location = DMKShaderLocation::DMK_SHADER_LOCATION_FRAGMENT;
+	TexSampler.binding = 4;
+	descriptor.uniformBufferObjectDescriptions.push_back(TexSampler);
 
 	/* Add the uniform descriptior */
 	descriptor.uniformBufferObjectDescriptions.push_back(UBODescriptor);
-	descriptor.uniformBufferObjectDescriptions.push_back(TexSampler);
+
+	UBODescriptor.location = DMKShaderLocation::DMK_SHADER_LOCATION_FRAGMENT;
+	UBODescriptor.binding = 0;
+	descriptor.uniformBufferObjectDescriptions.push_back(UBODescriptor);
+
+	UBODescriptor.type = DMKUniformType::DMK_UNIFORM_TYPE_BUFFER_OBJECT;
+	UBODescriptor.location = DMKShaderLocation::DMK_SHADER_LOCATION_FRAGMENT;
+	UBODescriptor.binding = 1;
+
+	uAttribute1.name = DMKUniformData::DMK_UNIFORM_DATA_CUSTOM;
+	uAttribute1.dataType = DMKDataType::DMK_DATA_TYPE_VEC4;
+	uAttribute1.arrayCount = 4;
+	UBODescriptor.attributes.push_back(uAttribute1);
+	uAttribute1.arrayCount = 1;
+
+	uAttribute1.name = DMKUniformData::DMK_UNIFORM_DATA_CUSTOM;
+	uAttribute1.dataType = DMKDataType::DMK_DATA_TYPE_F32;
+	UBODescriptor.attributes.push_back(uAttribute1);
+
+	uAttribute1.name = DMKUniformData::DMK_UNIFORM_DATA_CUSTOM;
+	uAttribute1.dataType = DMKDataType::DMK_DATA_TYPE_F32;
+	UBODescriptor.attributes.push_back(uAttribute1);
+
+	descriptor.uniformBufferObjectDescriptions.push_back(UBODescriptor);
+
+	/* Push constants */
+	DMKUniformBufferObjectDescriptor PushConstantDescriptor;
+	PushConstantDescriptor.type = DMKUniformType::DMK_UNIFORM_TYPE_CONSTANT;
+	PushConstantDescriptor.location = DMKShaderLocation::DMK_SHADER_LOCATION_FRAGMENT;
+
+	uAttribute1.name = DMKUniformData::DMK_UNIFORM_DATA_CUSTOM;
+	uAttribute1.dataType = DMKDataType::DMK_DATA_TYPE_F32;
+	PushConstantDescriptor.attributes.push_back(uAttribute1);
+
+	uAttribute1.name = DMKUniformData::DMK_UNIFORM_DATA_CUSTOM;
+	uAttribute1.dataType = DMKDataType::DMK_DATA_TYPE_F32;
+	PushConstantDescriptor.attributes.push_back(uAttribute1);
+
+	uAttribute1.name = DMKUniformData::DMK_UNIFORM_DATA_CUSTOM;
+	uAttribute1.dataType = DMKDataType::DMK_DATA_TYPE_F32;
+	PushConstantDescriptor.attributes.push_back(uAttribute1);
+
+	uAttribute1.name = DMKUniformData::DMK_UNIFORM_DATA_CUSTOM;
+	uAttribute1.dataType = DMKDataType::DMK_DATA_TYPE_F32;
+	PushConstantDescriptor.attributes.push_back(uAttribute1);
+
+	uAttribute1.name = DMKUniformData::DMK_UNIFORM_DATA_CUSTOM;
+	uAttribute1.dataType = DMKDataType::DMK_DATA_TYPE_F32;
+	PushConstantDescriptor.attributes.push_back(uAttribute1);
+
+	uAttribute1.name = DMKUniformData::DMK_UNIFORM_DATA_CUSTOM;
+	uAttribute1.dataType = DMKDataType::DMK_DATA_TYPE_F32;
+	PushConstantDescriptor.attributes.push_back(uAttribute1);
+
+	descriptor.uniformBufferObjectDescriptions.push_back(PushConstantDescriptor);
+
+	PushConstantDescriptor.location = DMKShaderLocation::DMK_SHADER_LOCATION_VERTEX;
+	PushConstantDescriptor.attributes.clear();
+
+	uAttribute1.name = DMKUniformData::DMK_UNIFORM_DATA_CUSTOM;
+	uAttribute1.dataType = DMKDataType::DMK_DATA_TYPE_VEC3;
+	PushConstantDescriptor.attributes.push_back(uAttribute1);
+
+	descriptor.uniformBufferObjectDescriptions.push_back(PushConstantDescriptor);
 
 	/* Add additional attachments */
-	descriptor.additionalAttachments.push_back(DMKAttachmentType::DMK_ATTACHMENT_TYPE_CUBE_MAP);
+	descriptor.additionalAttachments.push_back(DMKAttachmentType::DMK_ATTACHMENT_TYPE_IMAGE_BASED_LIGHTING);
 }
 
 Dynamik::DMKUniformBufferData Reflect::onUpdate(Dynamik::DMKCameraData data)

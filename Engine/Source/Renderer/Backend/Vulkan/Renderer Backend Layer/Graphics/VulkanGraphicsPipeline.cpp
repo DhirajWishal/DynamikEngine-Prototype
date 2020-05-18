@@ -129,12 +129,11 @@ namespace Dynamik {
 
 				// initialize dynamic state
 				VkPipelineDynamicStateCreateInfo dynamicStateInfo = {};
+				std::vector<VkDynamicState> dynamicState = {
+					VK_DYNAMIC_STATE_VIEWPORT,
+					VK_DYNAMIC_STATE_SCISSOR
+				};
 				if (info.dynamicStateEnable) {
-					std::vector<VkDynamicState> dynamicState = {
-						VK_DYNAMIC_STATE_VIEWPORT,
-						VK_DYNAMIC_STATE_SCISSOR
-					};
-
 					dynamicStateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_DYNAMIC_STATE_CREATE_INFO;
 					dynamicStateInfo.dynamicStateCount = static_cast<UI32>(dynamicState.size());
 					dynamicStateInfo.pDynamicStates = dynamicState.data();

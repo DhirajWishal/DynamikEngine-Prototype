@@ -64,6 +64,9 @@ namespace Dynamik {
 
 		void DMKRenderer::initializeStageTwo()
 		{
+			myRendererBackend.initializeBRDFTable();
+			myRendererBackend.initializeIrradianceCube();
+			myRendererBackend.initializePrefilteredCube();
 			myRendererBackend.initializeCommands();
 		}
 

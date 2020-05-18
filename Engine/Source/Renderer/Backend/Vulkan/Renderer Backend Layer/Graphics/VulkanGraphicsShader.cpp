@@ -4,6 +4,7 @@
 namespace Dynamik {
 	namespace Renderer {
 		namespace Backend {
+
 			void VulkanGraphicsShader::initialize(VkDevice logicalDevice, VulkanGraphicsShaderInitInfo info)
 			{
 				type = info.type;

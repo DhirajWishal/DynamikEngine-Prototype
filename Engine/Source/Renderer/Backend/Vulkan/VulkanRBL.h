@@ -94,6 +94,10 @@ namespace Dynamik {
 			/* Returns the memory location of the objects data */
 			VPTR initializeObject(POINTER<InternalFormat> format, DMKRenderContextType context = DMKRenderContextType::DMK_RENDER_CONTEXT_TYPE_DEFAULT);
 
+			void initializeBRDFTable();
+			void initializeIrradianceCube();
+			void initializePrefilteredCube();
+
 			void generateBoundingBoxes();
 			void initializeCommands();
 			void initializeFinalComponents();
@@ -157,6 +161,9 @@ namespace Dynamik {
 			/* Attachment container */
 			POINTER<VulkanRenderData> skyboxObject;
 			BoundingBox myBoundingBox;
+			VulkanRenderData BRDFObject;
+			VulkanRenderData irradianceCube;
+			VulkanRenderData prefilteredCube;
 		};
 	}
 }

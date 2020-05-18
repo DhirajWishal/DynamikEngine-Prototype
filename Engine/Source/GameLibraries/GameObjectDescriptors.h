@@ -23,6 +23,7 @@ namespace Dynamik {
 
 	enum class DMKAttachmentType {
 		DMK_ATTACHMENT_TYPE_CUBE_MAP,
+		DMK_ATTACHMENT_TYPE_IMAGE_BASED_LIGHTING,
 	};
 
 	struct MaterialDescriptor {
@@ -116,6 +117,7 @@ namespace Dynamik {
 		DMKShaderLocation location = DMKShaderLocation::DMK_SHADER_LOCATION_VERTEX;
 		std::vector<DMKUniformAttribute> attributes;
 		UI32 binding = 0;
+		UI32 offset = 0;
 	};
 
 	/* Render Specifications */

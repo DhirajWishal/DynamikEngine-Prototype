@@ -18,8 +18,10 @@
 #include "Renderer Backend Layer/Common/VulkanUtilities.h"
 #include "VulkanPresets.h"
 #include "Renderer Backend Layer/Common/VulkanControlHeader.h"
+#include "Renderer Backend Layer/Common/VulkanOneTimeCommandBuffer.h"
 
 #define TEXTOVERLAY_MAX_CHAR_COUNT 2048
+#define M_PI	3.14159265359
 
 /* IDEAS
  Make one time compute objects so that we can compute something at a given instance
@@ -495,7 +497,15 @@ namespace Dynamik {
 					_renderData.textures = skyboxObject->textures;
 					isTextureAvailable = true;
 					break;
-				default:
+
+				case Dynamik::DMKAttachmentType::DMK_ATTACHMENT_TYPE_IMAGE_BASED_LIGHTING:
+					if (!skyboxObject->textures.size())
+						DMK_CORE_FATAL("Unable to resolve attachmen! Requested cubemap is not yet loaded. Try loading the skybox object before adding this object.");
+
+					_renderData.textures.push_back(irradianceCube.textures[0]);
+					_renderData.textures.push_back(BRDFObject.textures[0]);
+					_renderData.textures.push_back(prefilteredCube.textures[0]);
+					isTextureAvailable = true;
 					break;
 				}
 			}
@@ -557,10 +567,873 @@ namespace Dynamik {
 			if (format->type == DMKObjectType::DMK_OBJECT_TYPE_SKYBOX)
 			{
 				skyboxObject = _address;
+
+				initializeBRDFTable();
+				initializeIrradianceCube();
+				initializePrefilteredCube();
+
 				return skyboxObject;
 			}
 
 			return _address;
+		}
+
+		void VulkanRBL::initializeBRDFTable()
+		{
+			VkFormat format = VK_FORMAT_R16G16_SFLOAT;
+			const I32 dim = 512;
+
+			VulkanTextureContainer BRDFTexture;
+			BRDFTexture.mipLevels = 1;
+			BRDFTexture.format = format;
+			BRDFTexture.width = dim;
+			BRDFTexture.height = dim;
+
+			VulkanCreateImageInfo imageInfo;
+			imageInfo.width = dim;
+			imageInfo.height = dim;
+			imageInfo.format = format;
+			imageInfo.tiling = VK_IMAGE_TILING_OPTIMAL;
+			imageInfo.usage = VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT | VK_IMAGE_USAGE_SAMPLED_BIT;
+			imageInfo.properties = VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT;
+			imageInfo.image = &BRDFTexture.image;
+			imageInfo.imageMemory = &BRDFTexture.imageMemory;
+			imageInfo.mipLevels = BRDFTexture.mipLevels;
+			imageInfo.numSamples = VK_SAMPLE_COUNT_1_BIT;
+			imageInfo.arrayLayers = 1;
+			imageInfo.flags = NULL;
+			VulkanUtilities::createImage(myGraphicsCore.logicalDevice, myGraphicsCore.physicalDevice, imageInfo);
+
+			VulkanTextureSamplerInitInfo samplerInitInfo;
+			samplerInitInfo.magFilter = VK_FILTER_LINEAR;
+			samplerInitInfo.minFilter = VK_FILTER_LINEAR;
+			samplerInitInfo.maxMipLevels = 1.0f;
+			samplerInitInfo.minMipLevels = 0.0f;
+			samplerInitInfo.modeU = VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE;
+			samplerInitInfo.modeV = VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE;
+			samplerInitInfo.modeW = VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE;
+			samplerInitInfo.mipLoadBias = 0.0f;
+			samplerInitInfo.mipMapMode = VK_SAMPLER_MIPMAP_MODE_LINEAR;
+			samplerInitInfo.compareOp = VK_COMPARE_OP_NEVER;
+			samplerInitInfo.borderColor = VK_BORDER_COLOR_FLOAT_OPAQUE_WHITE;
+			samplerInitInfo.maxAnisotrophy = 1.0f;
+			BRDFTexture.imageSampler = VulkanUtilities::createImageSampler(myGraphicsCore.logicalDevice, samplerInitInfo);
+
+			VulkanCreateImageViewInfo cinfo2;
+			cinfo2.image = BRDFTexture.image;
+			cinfo2.format = BRDFTexture.format;
+			cinfo2.mipLevels = BRDFTexture.mipLevels;
+			cinfo2.aspectFlags = VK_IMAGE_ASPECT_COLOR_BIT;
+			cinfo2.viewType = VK_IMAGE_VIEW_TYPE_2D;
+			cinfo2.layerCount = 1;
+			BRDFTexture.imageView = VulkanUtilities::createImageView(myGraphicsCore.logicalDevice, cinfo2);
+
+			BRDFObject.textures.push_back(BRDFTexture);
+
+			VkAttachmentDescription attDesc = {};
+			// Color attachment
+			attDesc.format = format;
+			attDesc.samples = VK_SAMPLE_COUNT_1_BIT;
+			attDesc.loadOp = VK_ATTACHMENT_LOAD_OP_CLEAR;
+			attDesc.storeOp = VK_ATTACHMENT_STORE_OP_STORE;
+			attDesc.stencilLoadOp = VK_ATTACHMENT_LOAD_OP_DONT_CARE;
+			attDesc.stencilStoreOp = VK_ATTACHMENT_STORE_OP_DONT_CARE;
+			attDesc.initialLayout = VK_IMAGE_LAYOUT_UNDEFINED;
+			attDesc.finalLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
+			VkAttachmentReference colorReference = { 0, VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL };
+
+			VkSubpassDescription subpassDescription = {};
+			subpassDescription.pipelineBindPoint = VK_PIPELINE_BIND_POINT_GRAPHICS;
+			subpassDescription.colorAttachmentCount = 1;
+			subpassDescription.pColorAttachments = &colorReference;
+
+			// Use subpass dependencies for layout transitions
+			std::array<VkSubpassDependency, 2> dependencies;
+			dependencies[0].srcSubpass = VK_SUBPASS_EXTERNAL;
+			dependencies[0].dstSubpass = 0;
+			dependencies[0].srcStageMask = VK_PIPELINE_STAGE_BOTTOM_OF_PIPE_BIT;
+			dependencies[0].dstStageMask = VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT;
+			dependencies[0].srcAccessMask = VK_ACCESS_MEMORY_READ_BIT;
+			dependencies[0].dstAccessMask = VK_ACCESS_COLOR_ATTACHMENT_READ_BIT | VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT;
+			dependencies[0].dependencyFlags = VK_DEPENDENCY_BY_REGION_BIT;
+			dependencies[1].srcSubpass = 0;
+			dependencies[1].dstSubpass = VK_SUBPASS_EXTERNAL;
+			dependencies[1].srcStageMask = VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT;
+			dependencies[1].dstStageMask = VK_PIPELINE_STAGE_BOTTOM_OF_PIPE_BIT;
+			dependencies[1].srcAccessMask = VK_ACCESS_COLOR_ATTACHMENT_READ_BIT | VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT;
+			dependencies[1].dstAccessMask = VK_ACCESS_MEMORY_READ_BIT;
+			dependencies[1].dependencyFlags = VK_DEPENDENCY_BY_REGION_BIT;
+
+			VulkanRenderContext _context;
+			VulkanRenderPassInitInfo renderPassInitInfo;
+			renderPassInitInfo.additionalSubPassDependencies = { dependencies[0], dependencies[1] };
+			renderPassInitInfo.attachments = { attDesc };
+			renderPassInitInfo.subPasses = { subpassDescription };
+			renderPassInitInfo.overrideDependencies = true;
+			_context.renderPass.initialize(myGraphicsCore.logicalDevice, renderPassInitInfo);
+
+			VulkanGraphicsFrameBufferInitInfo frameBufferInitInfo;
+			frameBufferInitInfo.renderPass = _context.renderPass.renderPass;
+			frameBufferInitInfo.swapChainExtent = { dim, dim };
+			frameBufferInitInfo.bufferCount = 1;
+			frameBufferInitInfo.attachments = { BRDFTexture.imageView };
+			_context.frameBuffer.initialize(myGraphicsCore.logicalDevice, frameBufferInitInfo);
+
+			VulkanDescriptor descriptor;
+			descriptor.initializeLayout(myGraphicsCore.logicalDevice, VulkanDescriptorSetLayoutInitInfo());
+
+			VkDescriptorPoolSize _poolInfo;
+			_poolInfo.descriptorCount = 1;
+			_poolInfo.type = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
+
+			VulkanDescriptorPoolInitInfo poolInitInfo;
+			poolInitInfo.maxDescriptorSets = 1;
+			poolInitInfo.poolSizes = { _poolInfo };
+			descriptor.initializePool(myGraphicsCore.logicalDevice, poolInitInfo);
+
+			descriptor.allocateSets(myGraphicsCore.logicalDevice, 1);
+
+			VulkanGraphicsPipeline pipeline;
+			VulkanGraphicsPipelineLayoutInitInfo pipelineLayoutInitInfo;
+			pipelineLayoutInitInfo.layouts = { descriptor.layout };
+			pipeline.initializePipelineLayout(myGraphicsCore.logicalDevice, pipelineLayoutInitInfo);
+
+			ShaderPaths _shaderPaths;
+			_shaderPaths.vertexShader = "Shaders/BRDF/vert.spv";
+			_shaderPaths.fragmentShader = "Shaders/BRDF/frag.spv";
+			auto _shaders = VulkanUtilities::getGraphicsShaders(myGraphicsCore.logicalDevice, _shaderPaths);
+
+			VulkanGraphicsPipelineInitInfo pipelineInitInfo = VulkanPresets::pipelinePreset3D(
+				VK_SAMPLE_COUNT_1_BIT,
+				_context.renderPass.renderPass,
+				_shaders, {}, { dim, dim });
+			pipelineInitInfo.dynamicStateEnable = true;
+			pipelineInitInfo.depthStencilCompareOp = VK_COMPARE_OP_LESS_OR_EQUAL;
+			pipelineInitInfo.rasterizerCullMode = VK_CULL_MODE_NONE;
+			pipelineInitInfo.rasterizerFrontFace = VK_FRONT_FACE_COUNTER_CLOCKWISE;
+			pipelineInitInfo.swapChainExtent = { dim, dim };
+			pipeline.initializePipeline(myGraphicsCore.logicalDevice, pipelineInitInfo);
+
+			/* Command buffer */
+			{
+				VkRenderPassBeginInfo renderPassInfo = {};
+				renderPassInfo.sType = VK_STRUCTURE_TYPE_RENDER_PASS_BEGIN_INFO;
+				renderPassInfo.renderPass = _context.renderPass.renderPass;
+				renderPassInfo.framebuffer = _context.frameBuffer.buffers[0];
+				renderPassInfo.renderArea.offset = { 0, 0 };
+				renderPassInfo.renderArea.extent = { dim, dim };
+
+				std::array<VkClearValue, 2> clearValues = {};
+				clearValues[0].color = {
+					0.0f, 0.0f, 0.0f, 0.0f
+				};
+				renderPassInfo.clearValueCount = static_cast<UI32>(clearValues.size());
+				renderPassInfo.pClearValues = clearValues.data();
+
+				VulkanOneTimeCommandBuffer cmdBuf(myGraphicsCore.logicalDevice, myMainCommandBuffer.pool, myGraphicsCore.graphicsQueue, myGraphicsCore.presentQueue);
+				vkCmdBeginRenderPass(cmdBuf.buffer, &renderPassInfo, VK_SUBPASS_CONTENTS_INLINE);
+
+				VkViewport viewport;
+				viewport.width = (F32)dim;
+				viewport.height = (F32)dim;
+				viewport.minDepth = 0.0f;
+				viewport.maxDepth = 1.0f;
+				viewport.x = 0;
+				viewport.y = 0;
+
+				VkRect2D scissor;
+				scissor.extent = { dim, dim };
+				scissor.offset = { 0, 0 };
+
+				vkCmdSetViewport(cmdBuf.buffer, 0, 1, &viewport);
+				vkCmdSetScissor(cmdBuf.buffer, 0, 1, &scissor);
+
+				vkCmdBindPipeline(cmdBuf.buffer, VK_PIPELINE_BIND_POINT_GRAPHICS, pipeline.pipeline);
+
+				vkCmdDraw(cmdBuf.buffer, 3, 1, 0, 0);
+
+				vkCmdEndRenderPass(cmdBuf.buffer);
+			}
+
+			vkQueueWaitIdle(myGraphicsCore.presentQueue);
+		}
+
+		void VulkanRBL::initializeIrradianceCube()
+		{
+			VkFormat format = VK_FORMAT_R32G32B32A32_SFLOAT;
+			const I32 dim = 64;
+
+			VulkanTextureContainer IrradianceCube;
+			IrradianceCube.mipLevels = static_cast<uint32_t>(floor(log2(dim))) + 1;
+			IrradianceCube.format = format;
+			IrradianceCube.width = dim;
+			IrradianceCube.height = dim;
+
+			VulkanCreateImageInfo imageInfo;
+			imageInfo.width = dim;
+			imageInfo.height = dim;
+			imageInfo.format = format;
+			imageInfo.tiling = VK_IMAGE_TILING_OPTIMAL;
+			imageInfo.usage = VK_IMAGE_USAGE_SAMPLED_BIT | VK_IMAGE_USAGE_TRANSFER_DST_BIT;
+			imageInfo.properties = VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT;
+			imageInfo.image = &IrradianceCube.image;
+			imageInfo.imageMemory = &IrradianceCube.imageMemory;
+			imageInfo.mipLevels = IrradianceCube.mipLevels;
+			imageInfo.numSamples = VK_SAMPLE_COUNT_1_BIT;
+			imageInfo.arrayLayers = 6;
+			imageInfo.flags = VK_IMAGE_CREATE_CUBE_COMPATIBLE_BIT;
+			VulkanUtilities::createImage(myGraphicsCore.logicalDevice, myGraphicsCore.physicalDevice, imageInfo);
+
+			VulkanTextureSamplerInitInfo samplerInitInfo;
+			samplerInitInfo.magFilter = VK_FILTER_LINEAR;
+			samplerInitInfo.minFilter = VK_FILTER_LINEAR;
+			samplerInitInfo.maxMipLevels = 1.0f;
+			samplerInitInfo.minMipLevels = IrradianceCube.mipLevels;
+			samplerInitInfo.modeU = VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE;
+			samplerInitInfo.modeV = VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE;
+			samplerInitInfo.modeW = VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE;
+			samplerInitInfo.mipLoadBias = 0.0f;
+			samplerInitInfo.mipMapMode = VK_SAMPLER_MIPMAP_MODE_LINEAR;
+			samplerInitInfo.compareOp = VK_COMPARE_OP_NEVER;
+			samplerInitInfo.borderColor = VK_BORDER_COLOR_FLOAT_OPAQUE_WHITE;
+			samplerInitInfo.maxAnisotrophy = 1.0f;
+			IrradianceCube.imageSampler = VulkanUtilities::createImageSampler(myGraphicsCore.logicalDevice, samplerInitInfo);
+
+			VulkanCreateImageViewInfo cinfo2;
+			cinfo2.image = IrradianceCube.image;
+			cinfo2.format = IrradianceCube.format;
+			cinfo2.mipLevels = IrradianceCube.mipLevels;
+			cinfo2.aspectFlags = VK_IMAGE_ASPECT_COLOR_BIT;
+			cinfo2.viewType = VK_IMAGE_VIEW_TYPE_CUBE;
+			cinfo2.layerCount = 6;
+			IrradianceCube.imageView = VulkanUtilities::createImageView(myGraphicsCore.logicalDevice, cinfo2);
+
+			irradianceCube.textures.push_back(IrradianceCube);
+
+			VkAttachmentDescription attDesc = {};
+			// Color attachment
+			attDesc.format = format;
+			attDesc.samples = VK_SAMPLE_COUNT_1_BIT;
+			attDesc.loadOp = VK_ATTACHMENT_LOAD_OP_CLEAR;
+			attDesc.storeOp = VK_ATTACHMENT_STORE_OP_STORE;
+			attDesc.stencilLoadOp = VK_ATTACHMENT_LOAD_OP_DONT_CARE;
+			attDesc.stencilStoreOp = VK_ATTACHMENT_STORE_OP_DONT_CARE;
+			attDesc.initialLayout = VK_IMAGE_LAYOUT_UNDEFINED;
+			attDesc.finalLayout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
+			VkAttachmentReference colorReference = { 0, VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL };
+
+			VkSubpassDescription subpassDescription = {};
+			subpassDescription.pipelineBindPoint = VK_PIPELINE_BIND_POINT_GRAPHICS;
+			subpassDescription.colorAttachmentCount = 1;
+			subpassDescription.pColorAttachments = &colorReference;
+
+			// Use subpass dependencies for layout transitions
+			std::array<VkSubpassDependency, 2> dependencies;
+			dependencies[0].srcSubpass = VK_SUBPASS_EXTERNAL;
+			dependencies[0].dstSubpass = 0;
+			dependencies[0].srcStageMask = VK_PIPELINE_STAGE_BOTTOM_OF_PIPE_BIT;
+			dependencies[0].dstStageMask = VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT;
+			dependencies[0].srcAccessMask = VK_ACCESS_MEMORY_READ_BIT;
+			dependencies[0].dstAccessMask = VK_ACCESS_COLOR_ATTACHMENT_READ_BIT | VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT;
+			dependencies[0].dependencyFlags = VK_DEPENDENCY_BY_REGION_BIT;
+			dependencies[1].srcSubpass = 0;
+			dependencies[1].dstSubpass = VK_SUBPASS_EXTERNAL;
+			dependencies[1].srcStageMask = VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT;
+			dependencies[1].dstStageMask = VK_PIPELINE_STAGE_BOTTOM_OF_PIPE_BIT;
+			dependencies[1].srcAccessMask = VK_ACCESS_COLOR_ATTACHMENT_READ_BIT | VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT;
+			dependencies[1].dstAccessMask = VK_ACCESS_MEMORY_READ_BIT;
+			dependencies[1].dependencyFlags = VK_DEPENDENCY_BY_REGION_BIT;
+
+			VulkanRenderContext _context;
+			VulkanRenderPassInitInfo renderPassInitInfo;
+			renderPassInitInfo.additionalSubPassDependencies = { dependencies[0], dependencies[1] };
+			renderPassInitInfo.attachments = { attDesc };
+			renderPassInitInfo.subPasses = { subpassDescription };
+			renderPassInitInfo.overrideDependencies = true;
+			_context.renderPass.initialize(myGraphicsCore.logicalDevice, renderPassInitInfo);
+
+			VulkanTextureContainer offscreenTexture;
+			offscreenTexture.mipLevels = 1.0f;
+			offscreenTexture.format = format;
+			offscreenTexture.width = dim;
+			offscreenTexture.height = dim;
+			{
+				VulkanCreateImageInfo imageInfo;
+				imageInfo.width = dim;
+				imageInfo.height = dim;
+				imageInfo.format = format;
+				imageInfo.tiling = VK_IMAGE_TILING_OPTIMAL;
+				imageInfo.usage = VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT | VK_IMAGE_USAGE_TRANSFER_SRC_BIT;
+				imageInfo.properties = VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT;
+				imageInfo.image = &offscreenTexture.image;
+				imageInfo.imageMemory = &offscreenTexture.imageMemory;
+				imageInfo.mipLevels = offscreenTexture.mipLevels;
+				imageInfo.numSamples = VK_SAMPLE_COUNT_1_BIT;
+				imageInfo.arrayLayers = 1;
+				imageInfo.flags = NULL;
+				VulkanUtilities::createImage(myGraphicsCore.logicalDevice, myGraphicsCore.physicalDevice, imageInfo);
+
+				VulkanCreateImageViewInfo cinfo2;
+				cinfo2.image = offscreenTexture.image;
+				cinfo2.format = offscreenTexture.format;
+				cinfo2.mipLevels = offscreenTexture.mipLevels;
+				cinfo2.aspectFlags = VK_IMAGE_ASPECT_COLOR_BIT;
+				cinfo2.viewType = VK_IMAGE_VIEW_TYPE_2D;
+				cinfo2.layerCount = 1;
+				offscreenTexture.imageView = VulkanUtilities::createImageView(myGraphicsCore.logicalDevice, cinfo2);
+
+				VulkanGraphicsFrameBufferInitInfo frameBufferInitInfo;
+				frameBufferInitInfo.attachments = { offscreenTexture.imageView };
+				frameBufferInitInfo.renderPass = _context.renderPass.renderPass;
+				frameBufferInitInfo.bufferCount = 1;
+				frameBufferInitInfo.swapChainExtent = { dim, dim };
+				_context.frameBuffer.initialize(myGraphicsCore.logicalDevice, frameBufferInitInfo);
+
+				VulkanTransitionImageLayoutInfo transitionInfo;
+				transitionInfo.image = offscreenTexture.image;
+				transitionInfo.format = offscreenTexture.format;
+				transitionInfo.oldLayout = VK_IMAGE_LAYOUT_UNDEFINED;
+				transitionInfo.newLayout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
+				transitionInfo.mipLevels = offscreenTexture.mipLevels;
+				transitionInfo.layerCount = 1;
+				VulkanUtilities::transitionImageLayout(myGraphicsCore.logicalDevice, myMainCommandBuffer.pool, myGraphicsCore.graphicsQueue, myGraphicsCore.presentQueue, transitionInfo);
+			}
+
+			struct PushBlock {
+				glm::mat4 mvp;
+				// Sampling deltas
+				float deltaPhi = (2.0f * float(M_PI)) / 180.0f;
+				float deltaTheta = (0.5f * float(M_PI)) / 64.0f;
+			} pushBlock;
+
+			VulkanGraphicsPipeline pipeline;
+			VkPushConstantRange _range;
+			_range.offset = 0;
+			_range.size = sizeof(pushBlock);
+			_range.stageFlags = VK_SHADER_STAGE_VERTEX_BIT | VK_SHADER_STAGE_FRAGMENT_BIT;
+
+			VulkanGraphicsPipelineLayoutInitInfo pipelineLayoutInitInfo;
+			pipelineLayoutInitInfo.layouts = { skyboxObject->renderObject[0].descriptors.layout };
+			pipelineLayoutInitInfo.pushConstantRanges = { _range };
+			pipeline.initializePipelineLayout(myGraphicsCore.logicalDevice, pipelineLayoutInitInfo);
+
+			ShaderPaths _shaderPaths;
+			_shaderPaths.vertexShader = "Shaders/IrradianceCube/vert.spv";
+			_shaderPaths.fragmentShader = "Shaders/IrradianceCube/frag.spv";
+			auto _shaders = VulkanUtilities::getGraphicsShaders(myGraphicsCore.logicalDevice, _shaderPaths);
+
+			DMKVertexAttribute _attribute;
+			_attribute.dataType = DMKDataType::DMK_DATA_TYPE_VEC3;
+			_attribute.name = DMKVertexData::DMK_VERTEX_DATA_POSITION;
+
+			VulkanGraphicsPipelineInitInfo pipelineInitInfo = VulkanPresets::pipelinePreset3D(
+				VK_SAMPLE_COUNT_1_BIT,
+				_context.renderPass.renderPass,
+				_shaders, { _attribute }, { dim, dim });
+			pipelineInitInfo.dynamicStateEnable = true;
+			pipelineInitInfo.depthStencilCompareOp = VK_COMPARE_OP_LESS_OR_EQUAL;
+			pipelineInitInfo.rasterizerCullMode = VK_CULL_MODE_NONE;
+			pipelineInitInfo.rasterizerFrontFace = VK_FRONT_FACE_COUNTER_CLOCKWISE;
+			pipelineInitInfo.swapChainExtent = { dim, dim };
+			pipeline.initializePipeline(myGraphicsCore.logicalDevice, pipelineInitInfo);
+
+			/* Command buffer */
+			{
+				VkRenderPassBeginInfo renderPassInfo = {};
+				renderPassInfo.sType = VK_STRUCTURE_TYPE_RENDER_PASS_BEGIN_INFO;
+				renderPassInfo.renderPass = _context.renderPass.renderPass;
+				renderPassInfo.framebuffer = _context.frameBuffer.buffers[0];
+				renderPassInfo.renderArea.offset = { 0, 0 };
+				renderPassInfo.renderArea.extent = { dim, dim };
+
+				std::array<VkClearValue, 2> clearValues = {};
+				clearValues[0].color = {
+					0.0f, 0.0f, 0.0f, 0.0f
+				};
+				renderPassInfo.clearValueCount = static_cast<UI32>(clearValues.size());
+				renderPassInfo.pClearValues = clearValues.data();
+
+				std::vector<glm::mat4> matrices = {
+					// POSITIVE_X
+					glm::rotate(glm::rotate(glm::mat4(1.0f), glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f)), glm::radians(180.0f), glm::vec3(1.0f, 0.0f, 0.0f)),
+					// NEGATIVE_X
+					glm::rotate(glm::rotate(glm::mat4(1.0f), glm::radians(-90.0f), glm::vec3(0.0f, 1.0f, 0.0f)), glm::radians(180.0f), glm::vec3(1.0f, 0.0f, 0.0f)),
+					// POSITIVE_Y
+					glm::rotate(glm::mat4(1.0f), glm::radians(-90.0f), glm::vec3(1.0f, 0.0f, 0.0f)),
+					// NEGATIVE_Y
+					glm::rotate(glm::mat4(1.0f), glm::radians(90.0f), glm::vec3(1.0f, 0.0f, 0.0f)),
+					// POSITIVE_Z
+					glm::rotate(glm::mat4(1.0f), glm::radians(180.0f), glm::vec3(1.0f, 0.0f, 0.0f)),
+					// NEGATIVE_Z
+					glm::rotate(glm::mat4(1.0f), glm::radians(180.0f), glm::vec3(0.0f, 0.0f, 1.0f)),
+				};
+
+				VulkanOneTimeCommandBuffer cmdBuf(myGraphicsCore.logicalDevice, myMainCommandBuffer.pool, myGraphicsCore.graphicsQueue, myGraphicsCore.presentQueue);
+
+				VkViewport viewport;
+				viewport.width = (F32)dim;
+				viewport.height = (F32)dim;
+				viewport.minDepth = 0.0f;
+				viewport.maxDepth = 1.0f;
+				viewport.x = 0;
+				viewport.y = 0;
+
+				VkRect2D scissor;
+				scissor.extent = { dim, dim };
+				scissor.offset = { 0, 0 };
+
+				vkCmdSetViewport(cmdBuf.buffer, 0, 1, &viewport);
+				vkCmdSetScissor(cmdBuf.buffer, 0, 1, &scissor);
+
+				VkImageSubresourceRange subresourceRange = {};
+				subresourceRange.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
+				subresourceRange.baseMipLevel = 0;
+				subresourceRange.levelCount = IrradianceCube.mipLevels;
+				subresourceRange.layerCount = 6;
+
+				VulkanTransitionImageLayoutInfo transitionInfo;
+				transitionInfo.image = IrradianceCube.image;
+				transitionInfo.format = IrradianceCube.format;
+				transitionInfo.oldLayout = VK_IMAGE_LAYOUT_UNDEFINED;
+				transitionInfo.newLayout = VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL;
+				transitionInfo.mipLevels = IrradianceCube.mipLevels;
+				transitionInfo.layerCount = 6;
+				VulkanUtilities::transitionImageLayout(myGraphicsCore.logicalDevice, myMainCommandBuffer.pool, myGraphicsCore.graphicsQueue, myGraphicsCore.presentQueue, transitionInfo);
+
+				for (uint32_t m = 0; m < IrradianceCube.mipLevels; m++) {
+					for (uint32_t f = 0; f < 6; f++) {
+						viewport.width = static_cast<float>(dim * std::pow(0.5f, m));
+						viewport.height = static_cast<float>(dim * std::pow(0.5f, m));
+						vkCmdSetViewport(cmdBuf.buffer, 0, 1, &viewport);
+
+						// Render scene from cube face's point of view
+						vkCmdBeginRenderPass(cmdBuf.buffer, &renderPassInfo, VK_SUBPASS_CONTENTS_INLINE);
+
+						// Update shader push constant block
+						float FOV = M_PI / 2.0f;
+						pushBlock.mvp = glm::perspective(FOV, 1.0f, 0.1f, 512.0f) * matrices[f];
+
+						vkCmdPushConstants(cmdBuf.buffer, pipeline.layout, VK_SHADER_STAGE_VERTEX_BIT | VK_SHADER_STAGE_FRAGMENT_BIT, 0, sizeof(PushBlock), &pushBlock);
+
+						vkCmdBindPipeline(cmdBuf.buffer, VK_PIPELINE_BIND_POINT_GRAPHICS, pipeline.pipeline);
+
+						for (auto _object : skyboxObject->renderObject)
+						{
+							for (VkDescriptorSet _set : _object.descriptors.descriptorSets)
+								vkCmdBindDescriptorSets(cmdBuf.buffer, VK_PIPELINE_BIND_POINT_GRAPHICS, pipeline.layout, 0, 1, &_set, 0, NULL);
+
+							VkDeviceSize offsets[1] = { 0 };
+
+							for (UI32 itr = 0; itr < _object.vertexBufferContainer.size(); itr++)
+							{
+								vkCmdBindVertexBuffers(cmdBuf.buffer, 0, 1, &_object.vertexBufferContainer[itr].buffer, offsets);
+								vkCmdBindIndexBuffer(cmdBuf.buffer, _object.indexBufferContainer[itr].buffer, 0, VK_INDEX_TYPE_UINT32);
+								vkCmdDrawIndexed(cmdBuf.buffer, _object.indexBufferContainer[itr].dataCount, 1, 0, 0, 0);
+							}
+						}
+
+						vkCmdEndRenderPass(cmdBuf.buffer);
+
+						transitionInfo.image = offscreenTexture.image;
+						transitionInfo.format = offscreenTexture.format;
+						transitionInfo.oldLayout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
+						transitionInfo.newLayout = VK_IMAGE_LAYOUT_TRANSFER_SRC_OPTIMAL;
+						transitionInfo.mipLevels = 1;
+						transitionInfo.layerCount = 1;
+						VulkanUtilities::transitionImageLayout(myGraphicsCore.logicalDevice, myMainCommandBuffer.pool, myGraphicsCore.graphicsQueue, myGraphicsCore.presentQueue, transitionInfo);
+
+						// Copy region for transfer from framebuffer to cube face
+						VkImageCopy copyRegion = {};
+
+						copyRegion.srcSubresource.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
+						copyRegion.srcSubresource.baseArrayLayer = 0;
+						copyRegion.srcSubresource.mipLevel = 0;
+						copyRegion.srcSubresource.layerCount = 1;
+						copyRegion.srcOffset = { 0, 0, 0 };
+
+						copyRegion.dstSubresource.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
+						copyRegion.dstSubresource.baseArrayLayer = f;
+						copyRegion.dstSubresource.mipLevel = m;
+						copyRegion.dstSubresource.layerCount = 1;
+						copyRegion.dstOffset = { 0, 0, 0 };
+
+						copyRegion.extent.width = static_cast<UI32>(viewport.width);
+						copyRegion.extent.height = static_cast<UI32>(viewport.height);
+						copyRegion.extent.depth = 1;
+
+						{
+							VulkanOneTimeCommandBuffer oneTimeBuffer(myGraphicsCore.logicalDevice, myMainCommandBuffer.pool, myGraphicsCore.graphicsQueue, myGraphicsCore.presentQueue);
+
+							vkCmdCopyImage(
+								oneTimeBuffer.buffer,
+								offscreenTexture.image,
+								VK_IMAGE_LAYOUT_TRANSFER_SRC_OPTIMAL,
+								IrradianceCube.image,
+								VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL,
+								1,
+								&copyRegion);
+						}
+
+						// Transform framebuffer color attachment back 
+						transitionInfo.image = offscreenTexture.image;
+						transitionInfo.format = offscreenTexture.format;
+						transitionInfo.oldLayout = VK_IMAGE_LAYOUT_TRANSFER_SRC_OPTIMAL;
+						transitionInfo.newLayout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
+						transitionInfo.mipLevels = 1;
+						transitionInfo.layerCount = 1;
+						VulkanUtilities::transitionImageLayout(myGraphicsCore.logicalDevice, myMainCommandBuffer.pool, myGraphicsCore.graphicsQueue, myGraphicsCore.presentQueue, transitionInfo);
+					}
+				}
+
+				transitionInfo.image = IrradianceCube.image;
+				transitionInfo.format = IrradianceCube.format;
+				transitionInfo.oldLayout = VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL;
+				transitionInfo.newLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
+				transitionInfo.mipLevels = IrradianceCube.mipLevels;
+				transitionInfo.layerCount = 6;
+				VulkanUtilities::transitionImageLayout(myGraphicsCore.logicalDevice, myMainCommandBuffer.pool, myGraphicsCore.graphicsQueue, myGraphicsCore.presentQueue, transitionInfo);
+			}
+
+			vkQueueWaitIdle(myGraphicsCore.presentQueue);
+		}
+
+		void VulkanRBL::initializePrefilteredCube()
+		{
+			VkFormat format = VK_FORMAT_R32G32B32A32_SFLOAT;
+			const I32 dim = 512;
+
+			VulkanTextureContainer PrefilteredCube;
+			PrefilteredCube.mipLevels = static_cast<uint32_t>(floor(log2(dim))) + 1;
+			PrefilteredCube.format = format;
+			PrefilteredCube.width = dim;
+			PrefilteredCube.height = dim;
+
+			VulkanCreateImageInfo imageInfo;
+			imageInfo.width = dim;
+			imageInfo.height = dim;
+			imageInfo.format = format;
+			imageInfo.tiling = VK_IMAGE_TILING_OPTIMAL;
+			imageInfo.usage = VK_IMAGE_USAGE_SAMPLED_BIT | VK_IMAGE_USAGE_TRANSFER_DST_BIT;
+			imageInfo.properties = VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT;
+			imageInfo.image = &PrefilteredCube.image;
+			imageInfo.imageMemory = &PrefilteredCube.imageMemory;
+			imageInfo.mipLevels = PrefilteredCube.mipLevels;
+			imageInfo.numSamples = VK_SAMPLE_COUNT_1_BIT;
+			imageInfo.arrayLayers = 6;
+			imageInfo.flags = VK_IMAGE_CREATE_CUBE_COMPATIBLE_BIT;
+			VulkanUtilities::createImage(myGraphicsCore.logicalDevice, myGraphicsCore.physicalDevice, imageInfo);
+
+			VulkanTextureSamplerInitInfo samplerInitInfo;
+			samplerInitInfo.magFilter = VK_FILTER_LINEAR;
+			samplerInitInfo.minFilter = VK_FILTER_LINEAR;
+			samplerInitInfo.maxMipLevels = 1.0f;
+			samplerInitInfo.minMipLevels = PrefilteredCube.mipLevels;
+			samplerInitInfo.modeU = VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE;
+			samplerInitInfo.modeV = VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE;
+			samplerInitInfo.modeW = VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE;
+			samplerInitInfo.mipLoadBias = 0.0f;
+			samplerInitInfo.mipMapMode = VK_SAMPLER_MIPMAP_MODE_LINEAR;
+			samplerInitInfo.compareOp = VK_COMPARE_OP_NEVER;
+			samplerInitInfo.borderColor = VK_BORDER_COLOR_FLOAT_OPAQUE_WHITE;
+			samplerInitInfo.maxAnisotrophy = 1.0f;
+			PrefilteredCube.imageSampler = VulkanUtilities::createImageSampler(myGraphicsCore.logicalDevice, samplerInitInfo);
+
+			VulkanCreateImageViewInfo cinfo2;
+			cinfo2.image = PrefilteredCube.image;
+			cinfo2.format = PrefilteredCube.format;
+			cinfo2.mipLevels = PrefilteredCube.mipLevels;
+			cinfo2.aspectFlags = VK_IMAGE_ASPECT_COLOR_BIT;
+			cinfo2.viewType = VK_IMAGE_VIEW_TYPE_CUBE;
+			cinfo2.layerCount = 6;
+			PrefilteredCube.imageView = VulkanUtilities::createImageView(myGraphicsCore.logicalDevice, cinfo2);
+
+			prefilteredCube.textures.push_back(PrefilteredCube);
+
+			VkAttachmentDescription attDesc = {};
+			// Color attachment
+			attDesc.format = format;
+			attDesc.samples = VK_SAMPLE_COUNT_1_BIT;
+			attDesc.loadOp = VK_ATTACHMENT_LOAD_OP_CLEAR;
+			attDesc.storeOp = VK_ATTACHMENT_STORE_OP_STORE;
+			attDesc.stencilLoadOp = VK_ATTACHMENT_LOAD_OP_DONT_CARE;
+			attDesc.stencilStoreOp = VK_ATTACHMENT_STORE_OP_DONT_CARE;
+			attDesc.initialLayout = VK_IMAGE_LAYOUT_UNDEFINED;
+			attDesc.finalLayout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
+			VkAttachmentReference colorReference = { 0, VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL };
+
+			VkSubpassDescription subpassDescription = {};
+			subpassDescription.pipelineBindPoint = VK_PIPELINE_BIND_POINT_GRAPHICS;
+			subpassDescription.colorAttachmentCount = 1;
+			subpassDescription.pColorAttachments = &colorReference;
+
+			// Use subpass dependencies for layout transitions
+			std::array<VkSubpassDependency, 2> dependencies;
+			dependencies[0].srcSubpass = VK_SUBPASS_EXTERNAL;
+			dependencies[0].dstSubpass = 0;
+			dependencies[0].srcStageMask = VK_PIPELINE_STAGE_BOTTOM_OF_PIPE_BIT;
+			dependencies[0].dstStageMask = VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT;
+			dependencies[0].srcAccessMask = VK_ACCESS_MEMORY_READ_BIT;
+			dependencies[0].dstAccessMask = VK_ACCESS_COLOR_ATTACHMENT_READ_BIT | VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT;
+			dependencies[0].dependencyFlags = VK_DEPENDENCY_BY_REGION_BIT;
+			dependencies[1].srcSubpass = 0;
+			dependencies[1].dstSubpass = VK_SUBPASS_EXTERNAL;
+			dependencies[1].srcStageMask = VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT;
+			dependencies[1].dstStageMask = VK_PIPELINE_STAGE_BOTTOM_OF_PIPE_BIT;
+			dependencies[1].srcAccessMask = VK_ACCESS_COLOR_ATTACHMENT_READ_BIT | VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT;
+			dependencies[1].dstAccessMask = VK_ACCESS_MEMORY_READ_BIT;
+			dependencies[1].dependencyFlags = VK_DEPENDENCY_BY_REGION_BIT;
+
+			VulkanRenderContext _context;
+			VulkanRenderPassInitInfo renderPassInitInfo;
+			renderPassInitInfo.additionalSubPassDependencies = { dependencies[0], dependencies[1] };
+			renderPassInitInfo.attachments = { attDesc };
+			renderPassInitInfo.subPasses = { subpassDescription };
+			renderPassInitInfo.overrideDependencies = true;
+			_context.renderPass.initialize(myGraphicsCore.logicalDevice, renderPassInitInfo);
+
+			VulkanTextureContainer offscreenTexture;
+			offscreenTexture.mipLevels = 1.0f;
+			offscreenTexture.format = format;
+			offscreenTexture.width = dim;
+			offscreenTexture.height = dim;
+			{
+				VulkanCreateImageInfo imageInfo;
+				imageInfo.width = dim;
+				imageInfo.height = dim;
+				imageInfo.format = format;
+				imageInfo.tiling = VK_IMAGE_TILING_OPTIMAL;
+				imageInfo.usage = VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT | VK_IMAGE_USAGE_TRANSFER_SRC_BIT;
+				imageInfo.properties = VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT;
+				imageInfo.image = &offscreenTexture.image;
+				imageInfo.imageMemory = &offscreenTexture.imageMemory;
+				imageInfo.mipLevels = offscreenTexture.mipLevels;
+				imageInfo.numSamples = VK_SAMPLE_COUNT_1_BIT;
+				imageInfo.arrayLayers = 1;
+				imageInfo.flags = NULL;
+				VulkanUtilities::createImage(myGraphicsCore.logicalDevice, myGraphicsCore.physicalDevice, imageInfo);
+
+				VulkanCreateImageViewInfo cinfo2;
+				cinfo2.image = offscreenTexture.image;
+				cinfo2.format = offscreenTexture.format;
+				cinfo2.mipLevels = offscreenTexture.mipLevels;
+				cinfo2.aspectFlags = VK_IMAGE_ASPECT_COLOR_BIT;
+				cinfo2.viewType = VK_IMAGE_VIEW_TYPE_2D;
+				cinfo2.layerCount = 1;
+				offscreenTexture.imageView = VulkanUtilities::createImageView(myGraphicsCore.logicalDevice, cinfo2);
+
+				VulkanGraphicsFrameBufferInitInfo frameBufferInitInfo;
+				frameBufferInitInfo.attachments = { offscreenTexture.imageView };
+				frameBufferInitInfo.renderPass = _context.renderPass.renderPass;
+				frameBufferInitInfo.bufferCount = 1;
+				frameBufferInitInfo.swapChainExtent = { dim, dim };
+				_context.frameBuffer.initialize(myGraphicsCore.logicalDevice, frameBufferInitInfo);
+
+				VulkanTransitionImageLayoutInfo transitionInfo;
+				transitionInfo.image = offscreenTexture.image;
+				transitionInfo.format = offscreenTexture.format;
+				transitionInfo.oldLayout = VK_IMAGE_LAYOUT_UNDEFINED;
+				transitionInfo.newLayout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
+				transitionInfo.mipLevels = offscreenTexture.mipLevels;
+				transitionInfo.layerCount = 1;
+				VulkanUtilities::transitionImageLayout(myGraphicsCore.logicalDevice, myMainCommandBuffer.pool, myGraphicsCore.graphicsQueue, myGraphicsCore.presentQueue, transitionInfo);
+			}
+
+			struct PushBlock {
+				glm::mat4 mvp;
+				// Sampling deltas
+				float roughness;
+				uint32_t numSamples = 32u;
+			} pushBlock;
+
+			VulkanGraphicsPipeline pipeline;
+			VkPushConstantRange _range;
+			_range.offset = 0;
+			_range.size = sizeof(pushBlock);
+			_range.stageFlags = VK_SHADER_STAGE_VERTEX_BIT | VK_SHADER_STAGE_FRAGMENT_BIT;
+
+			VulkanGraphicsPipelineLayoutInitInfo pipelineLayoutInitInfo;
+			pipelineLayoutInitInfo.layouts = { skyboxObject->renderObject[0].descriptors.layout };
+			pipelineLayoutInitInfo.pushConstantRanges = { _range };
+			pipeline.initializePipelineLayout(myGraphicsCore.logicalDevice, pipelineLayoutInitInfo);
+
+			ShaderPaths _shaderPaths;
+			_shaderPaths.vertexShader = "Shaders/PrefilteredCube/vert.spv";
+			_shaderPaths.fragmentShader = "Shaders/PrefilteredCube/frag.spv";
+			auto _shaders = VulkanUtilities::getGraphicsShaders(myGraphicsCore.logicalDevice, _shaderPaths);
+
+			DMKVertexAttribute _attribute;
+			_attribute.dataType = DMKDataType::DMK_DATA_TYPE_VEC3;
+			_attribute.name = DMKVertexData::DMK_VERTEX_DATA_POSITION;
+
+			VulkanGraphicsPipelineInitInfo pipelineInitInfo = VulkanPresets::pipelinePreset3D(
+				VK_SAMPLE_COUNT_1_BIT,
+				_context.renderPass.renderPass,
+				_shaders, { _attribute }, { dim, dim });
+			pipelineInitInfo.dynamicStateEnable = true;
+			pipelineInitInfo.depthStencilCompareOp = VK_COMPARE_OP_LESS_OR_EQUAL;
+			pipelineInitInfo.rasterizerCullMode = VK_CULL_MODE_NONE;
+			pipelineInitInfo.rasterizerFrontFace = VK_FRONT_FACE_COUNTER_CLOCKWISE;
+			pipelineInitInfo.swapChainExtent = { dim, dim };
+			pipeline.initializePipeline(myGraphicsCore.logicalDevice, pipelineInitInfo);
+
+			/* Command buffer */
+			{
+				VkRenderPassBeginInfo renderPassInfo = {};
+				renderPassInfo.sType = VK_STRUCTURE_TYPE_RENDER_PASS_BEGIN_INFO;
+				renderPassInfo.renderPass = _context.renderPass.renderPass;
+				renderPassInfo.framebuffer = _context.frameBuffer.buffers[0];
+				renderPassInfo.renderArea.offset = { 0, 0 };
+				renderPassInfo.renderArea.extent = { dim, dim };
+
+				std::array<VkClearValue, 2> clearValues = {};
+				clearValues[0].color = {
+					0.0f, 0.0f, 0.0f, 0.0f
+				};
+				renderPassInfo.clearValueCount = static_cast<UI32>(clearValues.size());
+				renderPassInfo.pClearValues = clearValues.data();
+
+				std::vector<glm::mat4> matrices = {
+					// POSITIVE_X
+					glm::rotate(glm::rotate(glm::mat4(1.0f), glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f)), glm::radians(180.0f), glm::vec3(1.0f, 0.0f, 0.0f)),
+					// NEGATIVE_X
+					glm::rotate(glm::rotate(glm::mat4(1.0f), glm::radians(-90.0f), glm::vec3(0.0f, 1.0f, 0.0f)), glm::radians(180.0f), glm::vec3(1.0f, 0.0f, 0.0f)),
+					// POSITIVE_Y
+					glm::rotate(glm::mat4(1.0f), glm::radians(-90.0f), glm::vec3(1.0f, 0.0f, 0.0f)),
+					// NEGATIVE_Y
+					glm::rotate(glm::mat4(1.0f), glm::radians(90.0f), glm::vec3(1.0f, 0.0f, 0.0f)),
+					// POSITIVE_Z
+					glm::rotate(glm::mat4(1.0f), glm::radians(180.0f), glm::vec3(1.0f, 0.0f, 0.0f)),
+					// NEGATIVE_Z
+					glm::rotate(glm::mat4(1.0f), glm::radians(180.0f), glm::vec3(0.0f, 0.0f, 1.0f)),
+				};
+
+				VulkanOneTimeCommandBuffer cmdBuf(myGraphicsCore.logicalDevice, myMainCommandBuffer.pool, myGraphicsCore.graphicsQueue, myGraphicsCore.presentQueue);
+
+				VkViewport viewport;
+				viewport.width = (F32)dim;
+				viewport.height = (F32)dim;
+				viewport.minDepth = 0.0f;
+				viewport.maxDepth = 1.0f;
+				viewport.x = 0;
+				viewport.y = 0;
+
+				VkRect2D scissor;
+				scissor.extent = { dim, dim };
+				scissor.offset = { 0, 0 };
+
+				vkCmdSetViewport(cmdBuf.buffer, 0, 1, &viewport);
+				vkCmdSetScissor(cmdBuf.buffer, 0, 1, &scissor);
+
+				VkImageSubresourceRange subresourceRange = {};
+				subresourceRange.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
+				subresourceRange.baseMipLevel = 0;
+				subresourceRange.levelCount = PrefilteredCube.mipLevels;
+				subresourceRange.layerCount = 6;
+
+				VulkanTransitionImageLayoutInfo transitionInfo;
+				transitionInfo.image = PrefilteredCube.image;
+				transitionInfo.format = PrefilteredCube.format;
+				transitionInfo.oldLayout = VK_IMAGE_LAYOUT_UNDEFINED;
+				transitionInfo.newLayout = VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL;
+				transitionInfo.mipLevels = PrefilteredCube.mipLevels;
+				transitionInfo.layerCount = 6;
+				VulkanUtilities::transitionImageLayout(myGraphicsCore.logicalDevice, myMainCommandBuffer.pool, myGraphicsCore.graphicsQueue, myGraphicsCore.presentQueue, transitionInfo);
+
+				for (uint32_t m = 0; m < PrefilteredCube.mipLevels; m++) {
+					for (uint32_t f = 0; f < 6; f++) {
+						viewport.width = static_cast<float>(dim * std::pow(0.5f, m));
+						viewport.height = static_cast<float>(dim * std::pow(0.5f, m));
+						vkCmdSetViewport(cmdBuf.buffer, 0, 1, &viewport);
+
+						// Render scene from cube face's point of view
+						vkCmdBeginRenderPass(cmdBuf.buffer, &renderPassInfo, VK_SUBPASS_CONTENTS_INLINE);
+
+						// Update shader push constant block
+						float FOV = M_PI / 2.0f;
+						pushBlock.mvp = glm::perspective(FOV, 1.0f, 0.1f, 512.0f) * matrices[f];
+
+						vkCmdPushConstants(cmdBuf.buffer, pipeline.layout, VK_SHADER_STAGE_VERTEX_BIT | VK_SHADER_STAGE_FRAGMENT_BIT, 0, sizeof(PushBlock), &pushBlock);
+
+						vkCmdBindPipeline(cmdBuf.buffer, VK_PIPELINE_BIND_POINT_GRAPHICS, pipeline.pipeline);
+
+						for (auto _object : skyboxObject->renderObject)
+						{
+							for (VkDescriptorSet _set : _object.descriptors.descriptorSets)
+								vkCmdBindDescriptorSets(cmdBuf.buffer, VK_PIPELINE_BIND_POINT_GRAPHICS, pipeline.layout, 0, 1, &_set, 0, NULL);
+
+							VkDeviceSize offsets[1] = { 0 };
+
+							for (UI32 itr = 0; itr < _object.vertexBufferContainer.size(); itr++)
+							{
+								vkCmdBindVertexBuffers(cmdBuf.buffer, 0, 1, &_object.vertexBufferContainer[itr].buffer, offsets);
+								vkCmdBindIndexBuffer(cmdBuf.buffer, _object.indexBufferContainer[itr].buffer, 0, VK_INDEX_TYPE_UINT32);
+								vkCmdDrawIndexed(cmdBuf.buffer, _object.indexBufferContainer[itr].dataCount, 1, 0, 0, 0);
+							}
+						}
+
+						vkCmdEndRenderPass(cmdBuf.buffer);
+
+						transitionInfo.image = offscreenTexture.image;
+						transitionInfo.format = offscreenTexture.format;
+						transitionInfo.oldLayout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
+						transitionInfo.newLayout = VK_IMAGE_LAYOUT_TRANSFER_SRC_OPTIMAL;
+						transitionInfo.mipLevels = 1;
+						transitionInfo.layerCount = 1;
+						VulkanUtilities::transitionImageLayout(myGraphicsCore.logicalDevice, myMainCommandBuffer.pool, myGraphicsCore.graphicsQueue, myGraphicsCore.presentQueue, transitionInfo);
+
+						// Copy region for transfer from framebuffer to cube face
+						VkImageCopy copyRegion = {};
+
+						copyRegion.srcSubresource.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
+						copyRegion.srcSubresource.baseArrayLayer = 0;
+						copyRegion.srcSubresource.mipLevel = 0;
+						copyRegion.srcSubresource.layerCount = 1;
+						copyRegion.srcOffset = { 0, 0, 0 };
+
+						copyRegion.dstSubresource.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
+						copyRegion.dstSubresource.baseArrayLayer = f;
+						copyRegion.dstSubresource.mipLevel = m;
+						copyRegion.dstSubresource.layerCount = 1;
+						copyRegion.dstOffset = { 0, 0, 0 };
+
+						copyRegion.extent.width = static_cast<UI32>(viewport.width);
+						copyRegion.extent.height = static_cast<UI32>(viewport.height);
+						copyRegion.extent.depth = 1;
+
+						{
+							VulkanOneTimeCommandBuffer oneTimeBuffer(myGraphicsCore.logicalDevice, myMainCommandBuffer.pool, myGraphicsCore.graphicsQueue, myGraphicsCore.presentQueue);
+
+							vkCmdCopyImage(
+								oneTimeBuffer.buffer,
+								offscreenTexture.image,
+								VK_IMAGE_LAYOUT_TRANSFER_SRC_OPTIMAL,
+								PrefilteredCube.image,
+								VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL,
+								1,
+								&copyRegion);
+						}
+
+						// Transform framebuffer color attachment back 
+						transitionInfo.image = offscreenTexture.image;
+						transitionInfo.format = offscreenTexture.format;
+						transitionInfo.oldLayout = VK_IMAGE_LAYOUT_TRANSFER_SRC_OPTIMAL;
+						transitionInfo.newLayout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
+						transitionInfo.mipLevels = 1;
+						transitionInfo.layerCount = 1;
+						VulkanUtilities::transitionImageLayout(myGraphicsCore.logicalDevice, myMainCommandBuffer.pool, myGraphicsCore.graphicsQueue, myGraphicsCore.presentQueue, transitionInfo);
+					}
+				}
+
+				transitionInfo.image = PrefilteredCube.image;
+				transitionInfo.format = PrefilteredCube.format;
+				transitionInfo.oldLayout = VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL;
+				transitionInfo.newLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
+				transitionInfo.mipLevels = PrefilteredCube.mipLevels;
+				transitionInfo.layerCount = 6;
+				VulkanUtilities::transitionImageLayout(myGraphicsCore.logicalDevice, myMainCommandBuffer.pool, myGraphicsCore.graphicsQueue, myGraphicsCore.presentQueue, transitionInfo);
+			}
+
+			vkQueueWaitIdle(myGraphicsCore.presentQueue);
 		}
 
 		void VulkanRBL::generateBoundingBoxes()
@@ -1017,63 +1890,65 @@ namespace Dynamik {
 			_descriptor.initializePool(myGraphicsCore.logicalDevice, initInfo);
 
 			/* Initialize descriptor sets */
-			std::vector<VkDescriptorBufferInfo> bufferInfos;
-			std::vector<VkWriteDescriptorSet> _writes;
+			std::vector<std::vector<VkDescriptorBufferInfo>> bufferInfos;
+			std::vector<VkWriteDescriptorSet> _writes(layoutInitInfo.bindings.size(), VkWriteDescriptorSet());
 
+			UI32 uniformIndex = 0;
+			UI32 textureIndex = 0;
 			for (UI32 binding = 0; binding < descriptors.size(); binding++)
 			{
 				switch (descriptors[binding].type)
 				{
 					/* Initialize Uniform buffer descriptor */
 				case Dynamik::DMKUniformType::DMK_UNIFORM_TYPE_BUFFER_OBJECT:
-					for (UI32 itr = 0; itr < uniformBufferContainers.size(); itr++)
+					bufferInfos.push_back(std::vector<VkDescriptorBufferInfo>());
+					for (UI32 i = 0; i < uniformBufferContainers[uniformIndex].buffers.size(); i++)
 					{
-						for (UI32 i = 0; i < uniformBufferContainers[itr].buffers.size(); i++)
-						{
-							VkDescriptorBufferInfo bufferInfo = {};
-							bufferInfo.buffer = uniformBufferContainers[itr].buffers[i];
-							bufferInfo.offset = 0;
-							bufferInfo.range = DMKUniformBufferObjectDescriptor::uniformByteSize(descriptors[binding].attributes);
-							bufferInfos.push_back(bufferInfo);
-						}
+						VkDescriptorBufferInfo bufferInfo = {};
+						bufferInfo.buffer = uniformBufferContainers[uniformIndex].buffers[i];
+						bufferInfo.offset = 0;
+						bufferInfo.range = DMKUniformBufferObjectDescriptor::uniformByteSize(descriptors[binding].attributes);
+						bufferInfos[uniformIndex].push_back(bufferInfo);
 					}
 
 					VkWriteDescriptorSet _writes1;
 					_writes1.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
-					_writes1.dstBinding = 0;
+					_writes1.dstBinding = descriptors[binding].binding;
 					_writes1.dstArrayElement = 0;
 					_writes1.descriptorType = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;
 					_writes1.descriptorCount = 1;
-					_writes1.pBufferInfo = bufferInfos.data();
+					_writes1.pBufferInfo = bufferInfos[uniformIndex].data();
 					_writes1.pNext = VK_NULL_HANDLE;
 					_writes1.pImageInfo = VK_NULL_HANDLE;
 					_writes1.pTexelBufferView = VK_NULL_HANDLE;
-					_writes.push_back(_writes1);
+					_writes[binding] = _writes1;
+
+					uniformIndex++;
 					break;
 
 				case Dynamik::DMKUniformType::DMK_UNIFORM_TYPE_CONSTANT:
+					continue;
 					break;
 
 				default:
-					for (UI32 _texIndex = 0; _texIndex < textureContainers.size(); _texIndex++)
-					{
-						VkDescriptorImageInfo imageInfo = {};
-						imageInfo.imageLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
-						imageInfo.imageView = textureContainers[_texIndex].imageView;
-						imageInfo.sampler = textureContainers[_texIndex].imageSampler;
+					VkDescriptorImageInfo imageInfo = {};
+					imageInfo.imageLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
+					imageInfo.imageView = textureContainers[textureIndex].imageView;
+					imageInfo.sampler = textureContainers[textureIndex].imageSampler;
 
-						VkWriteDescriptorSet _writes2;
-						_writes2.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
-						_writes2.dstBinding = 1;
-						_writes2.dstArrayElement = 0;
-						_writes2.descriptorType = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
-						_writes2.descriptorCount = 1;
-						_writes2.pImageInfo = &imageInfo;
-						_writes2.pNext = VK_NULL_HANDLE;
-						_writes2.pTexelBufferView = VK_NULL_HANDLE;
-						_writes2.pBufferInfo = VK_NULL_HANDLE;
-						_writes.push_back(_writes2);
-					}
+					VkWriteDescriptorSet _writes2;
+					_writes2.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
+					_writes2.dstBinding = descriptors[binding].binding;
+					_writes2.dstArrayElement = 0;
+					_writes2.descriptorType = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
+					_writes2.descriptorCount = 1;
+					_writes2.pImageInfo = &imageInfo;
+					_writes2.pNext = VK_NULL_HANDLE;
+					_writes2.pTexelBufferView = VK_NULL_HANDLE;
+					_writes2.pBufferInfo = VK_NULL_HANDLE;
+					_writes[binding] = _writes2;
+
+					textureIndex++;
 					break;
 				}
 			}
@@ -1109,7 +1984,7 @@ namespace Dynamik {
 				VkPushConstantRange _range;
 				_range.stageFlags = VulkanUtilities::getShaderStage(_description.location);
 				_range.size = DMKUniformBufferObjectDescriptor::uniformByteSize(_description.attributes);
-				_range.offset = _oldRangeSize;
+				_range.offset = _description.offset;
 				layoutInitInfo.pushConstantRanges.push_back(_range);
 
 				_oldRangeSize += _range.size;
@@ -1126,7 +2001,6 @@ namespace Dynamik {
 				_pipeline.initializePipeline(
 					myGraphicsCore.logicalDevice,
 					VulkanPresets::pipelinePresetBoundingBox(
-						myGraphicsCore.logicalDevice,
 						myMsaaSamples,
 						context.renderPass.renderPass,
 						_shaders,
@@ -1137,7 +2011,6 @@ namespace Dynamik {
 				_pipeline.initializePipeline(
 					myGraphicsCore.logicalDevice,
 					VulkanPresets::pipelinePreset3D(
-						myGraphicsCore.logicalDevice,
 						myMsaaSamples,
 						context.renderPass.renderPass,
 						_shaders,
@@ -1148,7 +2021,6 @@ namespace Dynamik {
 				_pipeline.initializePipeline(
 					myGraphicsCore.logicalDevice,
 					VulkanPresets::pipelinePreset3D(
-						myGraphicsCore.logicalDevice,
 						myMsaaSamples,
 						context.renderPass.renderPass,
 						_shaders,
@@ -1159,7 +2031,6 @@ namespace Dynamik {
 				_pipeline.initializePipeline(
 					myGraphicsCore.logicalDevice,
 					VulkanPresets::pipelinePreset3D(
-						myGraphicsCore.logicalDevice,
 						myMsaaSamples,
 						context.renderPass.renderPass,
 						_shaders,
@@ -1170,7 +2041,6 @@ namespace Dynamik {
 				_pipeline.initializePipeline(
 					myGraphicsCore.logicalDevice,
 					VulkanPresets::pipelinePreset3D(
-						myGraphicsCore.logicalDevice,
 						myMsaaSamples,
 						context.renderPass.renderPass,
 						_shaders,
@@ -1181,7 +2051,6 @@ namespace Dynamik {
 				_pipeline.initializePipeline(
 					myGraphicsCore.logicalDevice,
 					VulkanPresets::pipelinePreset3D(
-						myGraphicsCore.logicalDevice,
 						myMsaaSamples,
 						context.renderPass.renderPass,
 						_shaders,
@@ -1192,7 +2061,6 @@ namespace Dynamik {
 				_pipeline.initializePipeline(
 					myGraphicsCore.logicalDevice,
 					VulkanPresets::pipelinePreset3D(
-						myGraphicsCore.logicalDevice,
 						myMsaaSamples,
 						context.renderPass.renderPass,
 						_shaders,
@@ -1205,7 +2073,6 @@ namespace Dynamik {
 				_pipeline.initializePipeline(
 					myGraphicsCore.logicalDevice,
 					VulkanPresets::pipelinePresetSkyBox(
-						myGraphicsCore.logicalDevice,
 						myMsaaSamples,
 						context.renderPass.renderPass,
 						_shaders,
@@ -1228,7 +2095,6 @@ namespace Dynamik {
 				_pipeline.initializePipeline(
 					myGraphicsCore.logicalDevice,
 					VulkanPresets::pipelinePreset3D(
-						myGraphicsCore.logicalDevice,
 						myMsaaSamples,
 						context.renderPass.renderPass,
 						_shaders,

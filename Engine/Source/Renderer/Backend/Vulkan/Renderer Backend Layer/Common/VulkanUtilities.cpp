@@ -1296,7 +1296,7 @@ namespace Dynamik {
 					break;
 
 				case Dynamik::DMKShaderLocation::DMK_SHADER_LOCATION_FRAGMENT:
-					_flag = VkShaderStageFlagBits::VK_SHADER_STAGE_FRAGMENT_BIT;
+					_flag = (VkShaderStageFlagBits)(VkShaderStageFlagBits::VK_SHADER_STAGE_VERTEX_BIT | VkShaderStageFlagBits::VK_SHADER_STAGE_FRAGMENT_BIT);
 					break;
 
 				case Dynamik::DMKShaderLocation::DMK_SHADER_LOCATION_COMPUTE:
@@ -1313,6 +1313,9 @@ namespace Dynamik {
 
 				for (UI32 binding = 0; binding < descriptors.size(); binding++)
 				{
+					if (descriptors[binding].type == DMKUniformType::DMK_UNIFORM_TYPE_CONSTANT)
+						continue;
+
 					VkDescriptorSetLayoutBinding uboLayoutBinding = {};
 					uboLayoutBinding.binding = descriptors[binding].binding; // info.bindIndex;
 					uboLayoutBinding.descriptorCount = 1;

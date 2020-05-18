@@ -15,8 +15,9 @@ namespace Dynamik {
 					for (VkImageView _imageView : info.attachments)
 						attachments.push_back(_imageView);
 
-					if ((info.swapChainImageViews[i] != VK_NULL_HANDLE) && (info.swapChainImageViews.size()))
-						attachments.push_back(info.swapChainImageViews[i]);
+					if (info.swapChainImageViews.size())
+						if (info.swapChainImageViews[i] != VK_NULL_HANDLE)
+							attachments.push_back(info.swapChainImageViews[i]);
 
 					VkFramebufferCreateInfo framebufferInfo = {};
 					framebufferInfo.sType = VK_STRUCTURE_TYPE_FRAMEBUFFER_CREATE_INFO;

@@ -78,7 +78,6 @@ DMKUniformBufferData Moon::onUpdate(DMKCameraData data)
 {
 	uniformBufferDataStore.clear();
 
-
 	//myModelMatrix = glm::rotate(glm::translate(MAT4(1.0f), descriptor.transformDescriptor.location), glm::radians(-90.0f), VEC3(1.0f, 0.0f, 0.0f));
 	myModelMatrix = MAT4(1.0f);
 	uniformBufferDataStore.addData(&myModelMatrix, sizeof(MAT4), 0);

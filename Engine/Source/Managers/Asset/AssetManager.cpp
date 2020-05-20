@@ -3,6 +3,8 @@
 
 #include "Platform/Windows.h"
 #include "Objects/InternalFormat/InternalFormat.h"
+#include "StaticObject.h"
+#include "SkyboxObject.h"
 
 #include "assimp/Importer.hpp"
 #include "assimp/scene.h"
@@ -441,7 +443,10 @@ namespace Dynamik {
 				if (_basePath.find(".dai") != std::string::npos)
 				{
 					daiManager.open(_basePath);
+					daiManager.initDataStore();
 					_basePath = _basePath.substr(0, _basePath.size() - 13);
+
+					_format = createAssetContainer(_resolveObject(daiManager.getObjectType())).address;
 				}
 				else
 				{
@@ -482,5 +487,71 @@ namespace Dynamik {
 		}
 
 		return scene;
+	}
+	
+	POINTER<DMKGameObject> AssetManager::_resolveObject(DMKObjectType type)
+	{
+		POINTER<DMKGameObject> _object;
+
+		switch (type)
+		{
+		case Dynamik::DMKObjectType::DMK_OBJECT_TYPE_IMAGE_2D:
+			break;
+		case Dynamik::DMKObjectType::DMK_OBJECT_TYPE_DEBUG_OBJECT:
+			break;
+		case Dynamik::DMKObjectType::DMK_OBJECT_TYPE_BOUNDING_BOX:
+			break;
+		case Dynamik::DMKObjectType::DMK_OBJECT_TYPE_MESH:
+			break;
+		case Dynamik::DMKObjectType::DMK_OBJECT_TYPE_STATIC:
+			_object = StaticAllocator<DMKStaticObject>::allocate();
+			break;
+		case Dynamik::DMKObjectType::DMK_OBJECT_TYPE_INTERACTIVE_OBJECT:
+			break;
+		case Dynamik::DMKObjectType::DMK_OBJECT_TYPE_PLAYER:
+			break;
+		case Dynamik::DMKObjectType::DMK_OBJECT_TYPE_NPC:
+			break;
+		case Dynamik::DMKObjectType::DMK_OBJECT_TYPE_TEXTURE_UI:
+			break;
+		case Dynamik::DMKObjectType::DMK_OBJECT_TYPE_SKYBOX:
+			_object = StaticAllocator<DMKSkyboxObject>::allocate();
+			break;
+		case Dynamik::DMKObjectType::DMK_OBJECT_TYPE_SPRITES:
+			break;
+		case Dynamik::DMKObjectType::DMK_OBJECT_TYPE_FONT:
+			break;
+		case Dynamik::DMKObjectType::DMK_OBJECT_TYPE_TEXT_OVERLAY:
+			break;
+		case Dynamik::DMKObjectType::DMK_OBJECT_TYPE_PARTICLE:
+			break;
+		case Dynamik::DMKObjectType::DMK_OBJECT_TYPE_DESTRUCTION:
+			break;
+		case Dynamik::DMKObjectType::DMK_OBJECT_TYPE_DESTRUCTOR:
+			break;
+		case Dynamik::DMKObjectType::DMK_OBJECT_TYPE_SKELETAL_ANIMATION:
+			break;
+		case Dynamik::DMKObjectType::DMK_OBJECT_TYPE_LIGHT:
+			break;
+		case Dynamik::DMKObjectType::DMK_OBJECT_TYPE_CAMERA:
+			break;
+		case Dynamik::DMKObjectType::DMK_OBJECT_TYPE_AUDIO:
+			break;
+		case Dynamik::DMKObjectType::DMK_OBJECT_TYPE_VIDEO:
+			break;
+		case Dynamik::DMKObjectType::DMK_OBJECT_TYPE_WIND:
+			break;
+		case Dynamik::DMKObjectType::DMK_OBJECT_TYPE_AI:
+			break;
+		case Dynamik::DMKObjectType::DMK_OBJECT_TYPE_SCRIPT:
+			break;
+		case Dynamik::DMKObjectType::DMK_OBJECT_TYPE_KEY_BINDINGS:
+			break;
+		default:
+			break;
+		}
+
+		_object->initialize();
+		return _object;
 	}
 }

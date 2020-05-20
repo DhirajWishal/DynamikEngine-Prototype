@@ -60,7 +60,7 @@ namespace Dynamik {
 		B1 isCursorInThisWindow = false;
 		B1 isWindowClosed = false;
 
-		/* This function is passed to GLFW to push a new ecent container to the queue. */
+		/* This function is passed to GLFW to push a new event container to the queue. */
 		template<class TYPE>
 		static inline void _pushToContainer(const TYPE& component)
 		{

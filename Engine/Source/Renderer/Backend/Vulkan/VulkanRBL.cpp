@@ -568,9 +568,9 @@ namespace Dynamik {
 			{
 				skyboxObject = _address;
 
-				initializeBRDFTable();
-				initializeIrradianceCube();
-				initializePrefilteredCube();
+				//initializeBRDFTable();
+				//initializeIrradianceCube();
+				//initializePrefilteredCube();
 
 				return skyboxObject;
 			}

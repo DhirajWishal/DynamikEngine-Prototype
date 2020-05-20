@@ -45,6 +45,11 @@ namespace Dynamik {
 			file.close();
 		}
 
+		DMKObjectType daiManager::getObjectType()
+		{
+			return type;
+		}
+
 		std::vector<std::string> daiManager::getData(DMKDaiFileDataType type) {
 			if (!isDataStoreInit)
 				initDataStore();
@@ -116,6 +121,13 @@ namespace Dynamik {
 						rotationData[1] = std::stof(_line.substr(3, _line.size() - 3));
 					if (_line[1] == 'Z' || _line[1] == 'z')	// Z-Axis
 						rotationData[2] = std::stof(_line.substr(3, _line.size() - 3));
+				}
+				else if (_line[0] == '>')
+				{
+					std::string _objTy = _line.substr(2, _line.size() - 2);
+
+					if (_objTy == "STATIC") type = DMKObjectType::DMK_OBJECT_TYPE_STATIC;
+					else if (_objTy == "SKYBOX") type = DMKObjectType::DMK_OBJECT_TYPE_SKYBOX;
 				}
 			}
 

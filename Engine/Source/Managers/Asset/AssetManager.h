@@ -73,6 +73,7 @@ namespace Dynamik {
 		std::vector<std::vector<std::vector<AssetContainer>>> renderableObjects;
 
 		STORE _initializeSceneData(std::vector<AssetContainer> scene);
+		POINTER<DMKGameObject> _resolveObject(DMKObjectType type);
 
 		UI32 currentLevel = 0;
 		UI32 currentScene = 0;

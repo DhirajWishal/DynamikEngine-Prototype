@@ -39,6 +39,7 @@
 #include <string>
 #include <fstream>
 #include <vector>
+#include "GameObject.h"
 
 namespace Dynamik {
 	namespace utils {
@@ -74,13 +75,15 @@ namespace Dynamik {
 
 			void close();
 
+			DMKObjectType getObjectType();
+
 			std::vector<std::string> getData(DMKDaiFileDataType type);
 			std::vector<std::vector<std::string>> getAllData();
 			std::vector<float> getLocationData();
 			std::vector<float> getRotationData();
+			void initDataStore();
 
 		private:
-			void initDataStore();
 
 			std::string myPath = DMK_TEXT("");
 			std::fstream file = {};
@@ -89,6 +92,7 @@ namespace Dynamik {
 			std::vector<float> locationData{};
 			std::vector<float> rotationData{};
 			bool isDataStoreInit = false;
+			DMKObjectType type = DMKObjectType::DMK_OBJECT_TYPE_STATIC;
 		};
 	}
 }

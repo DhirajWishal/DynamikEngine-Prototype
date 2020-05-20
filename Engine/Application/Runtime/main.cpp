@@ -45,7 +45,7 @@ int main(int argc, char** argv) {
 		scene1.sceneIndex = 0;
 		//scene1.assets = { &skybox };
 		//scene1.assets = { &skybox, &moon, &room };
-		scene1.assets = { &skybox, &reflectObject };
+		//scene1.assets = { &skybox, &reflectObject };
 		//scene1.assets = { &moon };
 
 		DMKLevelDescriptor level1;

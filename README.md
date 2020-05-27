@@ -12,8 +12,4 @@
 5. Run the Build and Run the solution. 
 
 ### Developer notice
-If anyone is intrested to support this engine, please make sure to send me an email (wishaldhiraj@gmail.com)
-and you can be a contributor of this engine.
-Primarily there will be 3 branches: master, engine-dev and studio-dev and contributors can contribute to any
-of the above branches except for the master branch. Each branch will be merged after a successful release.
-Contributors must write a header for each file as defined in the Header Convention.txt file.
+This repository is officially closed. The final version of the engine is still on its early stages. Furthermore this repository will be used as a test bed to test out new experimental features for the final version.

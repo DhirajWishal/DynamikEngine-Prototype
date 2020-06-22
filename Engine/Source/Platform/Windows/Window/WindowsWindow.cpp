@@ -23,7 +23,7 @@ namespace Dynamik {
 		glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 		glfwWindowHint(GLFW_DECORATED, GLFW_TRUE);
 
-#if defined(DMK_DEBUG)
+#if defined(DMK_DEBUG) || defined(DMK_RELEASE)
 		window = glfwCreateWindow(windowWidth, windowHeight, info.title.c_str(), nullptr, nullptr);
 
 #else

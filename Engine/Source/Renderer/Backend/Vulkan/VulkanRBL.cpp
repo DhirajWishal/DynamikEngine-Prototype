@@ -33,6 +33,8 @@ namespace Dynamik {
 #ifdef DMK_DEBUG
 		Debugger::benchmark::FPS myFPSCal;
 
+#endif
+
 		struct _debugVertex {
 			VEC3 position = { 0.0f, 0.0f, 0.0f };
 			VEC3 color = { 0.0f, 0.0f, 0.0f };
@@ -117,7 +119,7 @@ namespace Dynamik {
 		}
 
 		// ----------
-#endif
+
 		void VulkanRBL::setMsaaSamples(DMKPipelineMSAASamples samples)
 		{
 			switch (samples)
@@ -530,21 +532,23 @@ namespace Dynamik {
 			_object.indexBufferType = format->descriptor.indexBufferType;
 
 			/* Initialize mesh data */
-			for (auto mesh : format->meshDatas)
+			for (UI32 index = 0; index < format->meshDatas.size(); index++)
 			{
 				/* initialize vertex buffers */
-				_object.vertexBufferContainer.push_back(createVertexBuffer(mesh, format->descriptor.vertexBufferObjectDescription.attributes));
+				_object.vertexBufferContainer.push_back(createVertexBuffer(format->meshDatas[index], format->descriptor.vertexBufferObjectDescription.attributes));
+				format->meshDatas[index].vertexDataStore.clear();
 
 				/* initialize index buffers */
-				_object.indexBufferContainer.push_back(createIndexBuffer(mesh, format->descriptor.indexBufferType));
+				_object.indexBufferContainer.push_back(createIndexBuffer(format->meshDatas[index], format->descriptor.indexBufferType));
+				format->meshDatas[index].indexes.clear();
 
 				/* initialize textures */
 				if (!isTextureAvailable)
-					for (UI32 i = 0; i < mesh.textureDatas.size(); i++)
-						_renderData.textures.push_back(createTextureImage(mesh.textureDatas[i]));
+					for (UI32 i = 0; i < format->meshDatas[index].textureDatas.size(); i++)
+						_renderData.textures.push_back(createTextureImage(format->meshDatas[index].textureDatas[i]));
 
 				if (format->type != DMKObjectType::DMK_OBJECT_TYPE_SKYBOX)
-					_renderData.renderObject.push_back(createBoundingBox(mesh, myRenderContexts[(UI32)context], format->descriptor.transformDescriptor.hitBoxRadius));
+					_renderData.renderObject.push_back(createBoundingBox(format->meshDatas[index], myRenderContexts[(UI32)context], format->descriptor.transformDescriptor.hitBoxRadius));
 			}
 
 			/* Initialize uniform buffers */

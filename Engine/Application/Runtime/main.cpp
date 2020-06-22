@@ -24,7 +24,7 @@ using namespace Dynamik;
 #ifdef DMK_PLATFORM_WINDOWS
 /* ---------- ########## ////////// MAIN LOOP \\\\\\\\\\ ########## ---------- */
 int main(int argc, char** argv) {
-	try 
+	try
 	{
 		DMKInstanceDescriptor engineInstance;
 		DMKEngine::initializeInstance(engineInstance);
@@ -43,7 +43,7 @@ int main(int argc, char** argv) {
 		DMKSceneDescriptor scene1;
 		scene1.sceneID = "S001";
 		scene1.sceneIndex = 0;
-		//scene1.assets = { &skybox };
+		scene1.assets = { &skybox };
 		//scene1.assets = { &skybox, &moon, &room };
 		//scene1.assets = { &skybox, &reflectObject };
 		//scene1.assets = { &moon };
@@ -67,7 +67,7 @@ int main(int argc, char** argv) {
 
 		DMKEngine::terminate();
 	}
-	catch (std::exception& e) 
+	catch (std::exception& e)
 	{
 		std::cout << e.what();
 	}
